@@ -1,0 +1,1376 @@
+1|Text mai mare
+2|A{0}A{1}
+3|Prototip
+4|Conectare
+5|{0}fettle{1} {2}(verb, Lancashire, cca {3}){4}: a pregăti, a pune în ordine.
+6|Pregătește-ți casa.
+7|Dacă diseară s-ar opri curentul, apa sau telefoanele, s-ar descurca familia ta trei zile? Răspunde la câteva întrebări simple și îți spunem exact de ce ai nevoie, cât îți trebuie și ce să faci mai întâi.
+8|Verifică-mi gospodăria
+9|Gratuit. Cam {0} minute. Fără cont până nu îți vezi planul.
+10|Bazat pe ghiduri oficiale din Regatul Unit de la Cabinet Office, NHS, Food Standards Agency și pompieri.
+11|Se întâmplă deja.
+12|Nu un dezastru îndepărtat. Întreruperi obișnuite care durează destul cât să conteze.
+13|Peste {0} de locuințe rămân fără curent într-o furtună
+14|Inclusiv locuințe din Greater Manchester, Cumbria și Lancashire. {0}{1}news, citând Sky News{2}
+15|O conductă spartă lasă fără apă {0} de proprietăți
+16|Nu s-a dat un termen pentru reparație. Oamenii au stat la coadă la punctele cu apă îmbuteliată. {0}Newswav{1}
+17|Inundațiile obligă peste {0} de persoane să își părăsească locuințele în Greater Manchester
+18|Un incident major, urmat de o alertă de frig. {0}Hits Radio{1}
+19|Agenția britanică de securitate cibernetică avertizează că sistemele de energie și apă vor fi ținta atacurilor
+20|Spune că atacurile cu AI asupra infrastructurii critice sunt „foarte probabile” până în {0}. {1}National Security News{2}
+21|Guvernul cere acum fiecărei locuințe să se descurce trei zile.
+22|În {0} {1}, Cabinet Office a lansat {2}Be Ready{3}, cerând gospodăriilor să păstreze suficientă apă și mâncare pentru trei zile. {4}GOV.UK{5}
+23|Dar lista e aceeași pentru toată lumea. O familie de la etajul nouă, cu un bebeluș și aragaz electric, are nevoie de un plan foarte diferit față de un cuplu într-o casă cu aragaz pe gaz și grădină.
+24|Apartament, etajul {0}
+25|{0} adulți, un bebeluș cu lapte praf, plită electrică, fără grădină
+26|{0}Lapte praf gata preparat.{1} Fără curent nu poți fierbe apa pentru laptele praf.
+27|{0}{1} litri de apă, puși deoparte de acum.{2} Pompele clădirii au nevoie de curent.
+28|{0}Doar mâncare care nu se gătește.{1} Nu există un loc sigur pentru o lampă de gătit de camping.
+29|Casă cu grădină
+30|{0} adulți, aragaz pe gaz, centrală pe gaz
+31|{0}Un detector de monoxid de carbon.{1} Aparate pe gaz și tentația de a găti în casă.
+32|{0}Pături și o cameră caldă.{1} Centrala pe gaz se oprește fără curent.
+33|{0}Chibrituri lângă aragaz.{1} Gazul poate merge în continuare, scânteia nu.
+34|De aceea Fettle pornește de la casa ta, nu de la o listă generală.
+35|Majoritatea dintre noi nu suntem încă pregătiți.
+36|Studiul guvernului din {0}, cu peste {1} de persoane, a arătat:
+37|{0}{1}%{2} au acasă apă îmbuteliată pentru mai puțin de o zi.
+38|{0}{1}%{2} au un plan de urgență pentru gospodărie.
+39|{0}{1}%{2} nu au nimic din lucrurile de bază de pe lista guvernului.
+40|{0}{1}%{2} din Anglia și Țara Galilor nu au auzit niciodată de Local Resilience Forum din zona lor.
+41|Sursa: {0}Cabinet Office, UK Public Survey of Risk Perception, Resilience and Preparedness {1}{2}
+42|De ce amână oamenii și cum facem totul ușor.
+43|Acestea sunt motivele date de oameni în același studiu.
+44|„Costă prea mult.” {0}{1}%{2}
+45|Întâi sarcinile gratuite, apoi câte puțin în fiecare lună, cu un buget ales de tine. Vei vedea data la care vei fi pregătit.
+46|„Oricum o să expire.” {0}{1}%{2}
+47|Lista ta de mâncare cuprinde lucruri pe care le mănânci deja, folosite în mesele obișnuite și înlocuite. Îți amintim în fiecare anotimp.
+48|„Nu știu ce să fac.” {0}{1}%{2}
+49|Întrebări simple, răspunsuri simple. Cantități reale, nu „mâncare pentru trei zile”.
+50|„Mă stresează să mă gândesc la asta.” {0}{1}%{2}
+51|Pași mici și liniștiți. Fără frică, fără truse de apocalipsă. Majoritatea sarcinilor durează mai puțin de o oră.
+52|„Nu avem loc.” {0}{1}%{2}
+53|O listă scurtă, pe măsura gospodăriei tale. Nimic de care nu ai nevoie.
+54|Cum funcționează
+55|Răspunde la câteva întrebări simple
+56|Despre casa ta, cine locuiește acolo și ce ai deja. Cam {0} minute.
+57|Primește planul gratuit
+58|Scorul tău de pregătire, sarcini gratuite de făcut mai întâi, o listă de cumpărături cu cantități reale și un plan lună de lună.
+59|Ia Cartea Fettle
+60|Planul tău complet pentru {0} de ore, ca o carte adevărată, cu numerele tale, rețete, prim ajutor și un ghid pentru discuția în familie.
+61|Cartea{0}Fettle
+62|Gospodăria Boyce{0}{1}Rochdale{2}
+63|O carte pentru sertarul din bucătărie.
+64|Când nu e curent, o aplicație de telefon nu te ajută. Cartea Fettle este planul tău, tipărit, scris pentru casa ta.
+65|Numerele de urgență pe interiorul copertei
+66|Primele {0} de ore, oră cu oră
+67|Ghiduri despre apă, mâncare, căldură, medicamente și prim ajutor
+68|Rețete fără gătit, din ce ai în dulap
+69|Un ghid de {0} de minute pentru discuția în familie
+70|Ce să împachetezi și unde să mergi dacă trebuie să pleci de acasă
+71|Pagini de verificat și actualizat în fiecare anotimp
+72|Fotografie
+73|„Am planificat logistica pentru evacuarea a mii de oameni din Kabul în {0}. Să pregătești o gospodărie pentru trei zile e aceeași muncă, doar mai mică: lucrurile potrivite, la locul potrivit, și toată lumea știe ce are de făcut.”
+74|{0}[Numele fondatorului]{1}, fondator, Rochdale. {2}[Citat provizoriu, de scris de tine.]{3}
+75|Începe gratuit.
+76|Verificarea pregătirii
+77|Gratuit
+78|Scorul tău, sarcini, lista de cumpărături, plan lunar, modul de urgență și planuri pentru mama sau alte rude.
+79|Cartea Fettle, digitală
+80|Cartea ta completă, de tipărit sau de salvat ca PDF. O singură plată.
+81|Cartea Fettle, tipărită
+82|Un exemplar tipărit trimis prin poștă, cu un an de Fettle Plus inclus.
+83|Fettle Plus
+84|pe lună
+85|Verificări cu familia, alerte locale, mementouri de expirare și partajare cu cei din casă.
+86|Prețuri de test pentru prototip. {0}Oferă Cartea Fettle cadou{1}
+87|{0}Fettle for Communities{1} Pentru consilii locale, furnizori de locuințe și echipe de sprijin
+88|Cei mai expuși riscului sunt cei mai puțin probabil să descarce o aplicație.
+89|Vârstnici care locuiesc singuri. Persoane care depind de oxigen sau de un pat electric. Familii cu un nou-născut în locuințe temporare. Persoane care nu citesc bine în engleză. Fettle oferă personalului de teren o vizită de {0} minute care se încheie cu un plan real și o carte tipărită.
+90|{0}Vizite cu sprijin.{1} Personalul parcurge întrebările împreună cu locuitorul, după ce citește cu voce tare textul de consimțământ.
+91|{0}O carte tipărită pentru fiecare casă{1}, în engleză, poloneză, română, punjabi sau urdu, cu litere mari pentru vârstnici.
+92|{0}Înscrieri în Priority Services Register{1} făcute în timpul vizitei, și numărate.
+93|{0}Progres pe care îl poți raporta.{1} Pregătirea la prima vizită și la vizita de control, pe gospodărie și pe circumscripție.
+94|{0}Totaluri anonime pe circumscripții{1} pentru cei care planifică situațiile de urgență: cine depinde de echipamente electrice, cine locuiește singur, cine locuiește sus. Numerele mici sunt mereu ascunse.
+95|{0}Instruire pentru personalul de teren{1} și o listă de verificare pentru vizite la domiciliu.
+96|Vezi lista de cazuri model
+97|Cont profesional
+98|Proiecte pilot de la {0} de gospodării. Cămine de bătrâni: revizuirea planurilor, fișe de evacuare pentru rezidenți, instruirea personalului și exerciții. Întreabă-ne.
+99|Întrebări
+100|Este un sfat oficial?
+101|Fettle este independent. Tot ce recomandăm provine din surse oficiale din Regatul Unit, la care punem linkuri, și transformăm totul într-un plan pentru casa ta. În caz de urgență, urmează întotdeauna alertele oficiale.
+102|Trebuie să cumpăr multe lucruri?
+103|Nu. Multe dintre cele mai importante sarcini sunt gratuite, cum ar fi înscrierea în Priority Services Register. Restul se împarte pe luni, cu un buget ales de tine. Nu vindem niciodată truse de apocalipsă.
+104|Stau cu chirie sau la bloc. Este și pentru mine?
+105|Da. Apartamentele, mai ales cele de la etajele de sus, au propriile riscuri, cum ar fi pompele de apă și liftul care au nevoie de curent. Planul ține cont de asta.
+106|Ce faceți cu răspunsurile mele despre sănătate?
+107|Sunt opționale, folosite doar pentru planul tău și niciodată împărtășite sau vândute. Dacă un angajat al consiliului local sau al unei organizații caritabile te ajută să faci planul, îl poate vedea și el. Doar dacă ești de acord, răspunsurile tale sunt incluse în totaluri anonime pentru zona ta, iar numerele mici sunt mereu ascunse.
+108|Este Fettle disponibil și în alte limbi?
+109|Da. Fettle și Cartea Fettle sunt disponibile în engleză, poloneză, română, punjabi și urdu. Alege limba din partea de sus a paginii.
+110|Pot face un plan pentru mama mea?
+111|Da. Adaugă încă o gospodărie, cu acordul ei, și păstrează ambele planuri în același loc.
+112|Câștigați bani din produsele pe care le recomandați?
+113|Da, uneori. Unele sugestii de produse sunt linkuri Amazon, marcate „paid link”. Ca Asociat Amazon, Fettle câștigă din achizițiile eligibile, fără cost suplimentar pentru tine. Asta nu schimbă niciodată ce recomandăm și poți cumpăra de oriunde. Cartea tipărită nu are linkuri de cumpărături.
+114|Trei minute acum. Liniște pentru trei zile.
+115|Gratuit. Fără cont până nu îți vezi planul.
+116|Înapoi
+117|Continuă
+118|Salvează și termină mai târziu
+119|Înapoi la planul meu
+120|Cartea gospodăriei tale. A{0}, {1}{2} pagini.
+121|Litere mari
+122|Tipărește sau salvează ca PDF
+123|Pași de urgență
+124|fettle: pași de urgență
+125|Închide
+126|Ca Asociat Amazon, câștig din achizițiile eligibile.
+127|{0}Prototip.{1} Nimic nu se salvează și nu se plătește. Prețurile sunt estimative, iar riscurile locale sunt text de exemplu. Textele despre sănătate și siguranță trebuie încă verificate de un specialist NHS și de pompieri. În caz de urgență, urmează alertele oficiale și sună la {2} dacă e în pericol o viață.
+128|Surse: {0}Be Ready{1}, {2}Food Standards Agency{3}, {4}Chief Medical Officers{5}, {6}NCT{7}, {8}NHS{9}, {10}GOSH{11}, {12}Ofgem{13}, {14}Electricity North West{15}, {16}United Utilities{17}, {18}British Red Cross{19}.
+129|Casa ta
+130|{0} din {1}
+131|În ce fel de locuință stai?
+132|Casă
+133|Casă fără etaj
+134|Apartament sau duplex
+135|Altceva
+136|Rulotă, casă mobilă sau casă plutitoare
+137|Alege un răspuns ca să continui.
+138|La ce etaj este ușa de la intrare?
+139|Etajele de sus depind de pompe electrice pentru apă și de lift ca să intri și să ieși.
+140|Parter
+141|Etajul {0} sau {1}
+142|Etajele {0}-{1}
+143|Etajul {0} sau mai sus
+144|Dacă liftul s-ar opri, ar putea toată lumea să urce și să coboare scările?
+145|Da
+146|Pentru cineva ar fi greu
+147|Nu, cineva n-ar putea
+148|Există un spațiu exterior la nivelul solului, cum ar fi o grădină sau o curte?
+149|Aragazele de camping și grătarele emană un gaz mortal numit monoxid de carbon. Se folosesc doar afară, în aer liber. Balconul nu se pune.
+150|Da, o grădină sau o curte
+151|Doar un balcon
+152|Nu
+153|Locuința e a ta sau stai cu chirie?
+154|Dacă stai cu chirie, o parte din echipamentele de siguranță sunt responsabilitatea proprietarului, nu a ta.
+155|E a mea
+156|Chirie la un proprietar privat
+157|Chirie de la consiliul local sau de la o asociație de locuințe
+158|Închiriez o cameră într-o casă comună
+159|Cine locuiește aici
+160|Cine locuiește cu tine?
+161|Numără pe toți cei care dorm de obicei acolo, inclusiv pe tine.
+162|Adulți
+163|{0}-{1} ani
+164|Unul mai puțin: Adulți
+165|Unul în plus: Adulți
+166|Vârstnici
+167|{0} ani sau mai mult
+168|Unul mai puțin: Vârstnici
+169|Unul în plus: Vârstnici
+170|Copii
+171|Unul mai puțin: Copii
+172|Unul în plus: Copii
+173|Copii mici
+174|Sub {0} ani
+175|Unul mai puțin: Copii mici
+176|Unul în plus: Copii mici
+177|Câini
+178|Unul mai puțin: Câini
+179|Unul în plus: Câini
+180|Pisici
+181|Una mai puțin: Pisici
+182|Una în plus: Pisici
+183|Cum este hrănit acum cel mai mic copil?
+184|Bebelușii sunt cei mai expuși dacă nu există apă curată sau curent.
+185|Doar alăptat
+186|Lapte praf
+187|Cel care se amestecă cu apă
+188|Alăptat și lapte praf
+189|Lapte praf gata preparat, lichid
+190|Vine în cutie sau sticlă, fără amestecare
+191|Mănâncă mâncare obișnuită acum
+192|Cam câte biberoane pe zi?
+193|Folosim asta ca să calculăm cât lapte gata preparat să ții. O estimare e suficientă.
+194|Biberoane pe zi
+195|Mai puține biberoane
+196|Mai multe biberoane
+197|Curent și încălzire
+198|Cum se încălzește locuința?
+199|Cum îți dai seama
+200|Dacă ai o centrală pe perete și un contor de gaz, e pe gaz. Caloriferele cu acumulare sunt radiatoare electrice mari care se încălzesc peste noapte. O pompă de căldură are o cutie cu ventilator în afara casei.
+201|Calorifere și centrală pe gaz
+202|Radiatoare electrice sau calorifere cu acumulare
+203|Pompă de căldură
+204|Rezervor de motorină sau GPL
+205|Sobă pe lemne sau cărbune
+206|Nu sunt sigur
+207|Pe ce gătești?
+208|Gazul face flacără albastră. Plita electrică are ochiuri sau o suprafață plată care se înroșește. Inducția e o sticlă plată care merge doar cu anumite vase.
+209|Aragaz pe gaz
+210|Plită electrică
+211|Plită cu inducție
+212|Iarna, cât de repede se răcește locuința când se oprește încălzirea?
+213|Majoritatea sistemelor de încălzire, chiar și pe gaz, nu mai merg când se ia curentul, pentru că au nevoie de electricitate.
+214|În câteva ore
+215|Curent pe la geamuri, ferestre vechi sau geam simplu
+216|Rămâne caldă o vreme
+217|Cine îți furnizează gazul și curentul?
+218|Scrie pe factura de energie sau în aplicație. Îl folosim ca să îți dăm datele de contact corecte.
+219|Alege furnizorul de energie
+228|Alt furnizor
+229|Sănătate
+230|Are cineva nevoi de sănătate de care ar trebui să ținem cont?
+231|Răspunsurile despre sănătate sunt folosite doar pentru planul tău. Nu sunt niciodată împărtășite sau vândute.
+232|Asta schimbă planul mai mult decât orice altceva.
+233|Prefer să nu spun
+234|Planul tău va fi mai puțin precis
+235|Care dintre acestea se aplică?
+236|Alege tot ce se potrivește.
+237|Ia medicamente zilnic
+238|Are un medicament care se ține la frigider
+239|De exemplu insulina
+240|Folosește echipamente care au nevoie de curent
+241|Concentrator de oxigen, dializă la domiciliu, aparat CPAP, pat electric, macara de transfer sau lift de scară
+242|Urcă greu scările sau ar ieși încet din casă
+243|Are pierderi de auz
+244|Are pierderi de vedere
+245|Are probleme de memorie sau demență
+246|Are o alergie alimentară, boală celiacă, diabet sau dificultăți la înghițire
+247|Are o alarmă personală
+248|Un buton sau pandantiv pe care îl apeși ca să chemi ajutor
+249|Ești înscris în Priority Services Register?
+250|Este o listă gratuită ținută de companiile de energie și apă, cu persoanele care au nevoie de ajutor în plus, de exemplu informații în timpul întreruperilor de curent sau apă îmbuteliată adusă acasă. Majoritatea oamenilor n-au auzit niciodată de ea.
+251|Ce ai deja
+252|Câtă apă îmbuteliată ai acum acasă?
+253|Pentru {0} persoane, trei zile înseamnă
+254|{0} litri
+255|Adică aproximativ {0}{1} sticle mari de {2} litri{3}. Recomandarea oficială este {4} litri de persoană pe zi, pentru băut și gătit simplu.
+256|Deloc
+257|Câteva sticle
+258|Cam jumătate
+259|Toată sau mai mult
+260|Ai putea hrăni pe toată lumea trei zile fără aragaz sau frigider?
+261|Asta înseamnă
+262|{0} de mese și {1} gustări
+263|Mâncare care se mănâncă rece, direct din conservă sau din pachet. De exemplu: conserve cu deschidere ușoară, biscuiți sărați, batoane de cereale, lapte UHT.
+264|Da, ușor
+265|Cam o zi
+266|Pe care dintre acestea le ai acum acasă?
+267|Bifează doar lucrurile pe care le-ai găsi pe întuneric și care funcționează.
+268|Nu am niciunul dintre acestea
+269|O lanternă care funcționează
+270|Cu baterii de rezervă
+271|Un radio care merge fără priză
+272|Cu baterii sau cu manivelă
+273|O baterie externă încărcată
+274|Pentru încărcat telefoanele
+275|O trusă de prim ajutor
+276|Numerar, cam £{0}
+277|£{0} de persoană, în bancnote și monede
+278|Un deschizător de conserve care nu e electric
+279|Destule pături și haine groase pentru toată lumea
+280|Numere importante scrise pe hârtie
+281|Sari peste
+282|A făcut cineva din casă un curs de prim ajutor în ultimii trei ani?
+283|Într-o urgență mare, ambulanța poate veni mult mai greu decât de obicei.
+284|Buget
+285|Cât ai putea cheltui pe lună ca să completezi ce lipsește?
+286|Începem cu lucrurile gratuite, apoi împărțim restul ca să-ți permiți.
+287|Nimic deocamdată
+288|£{0} sau mai mult
+289|Vezi planul meu
+290|Cartea ta
+291|Ce nume să scriem pe copertă?
+292|De exemplu, Boyce. Va scrie „Gospodăria Boyce”.
+293|Numele de familie
+294|Mâncare
+295|Trebuie cineva să evite anumite alimente?
+296|Ca lista de mâncare și rețetele să conțină doar ce poate mânca toată lumea.
+297|Nu, mâncăm orice
+298|Vegetarian sau vegan
+299|Halal
+300|Kosher
+301|Fără gluten
+302|Alergie la nuci
+303|Fără lactate
+304|Diabet
+305|Mâncare moale sau pasată
+306|Bani
+307|Îți încarci gazul sau curentul înainte să-l folosești?
+308|Cu cheie, card sau aplicație. Se numește contor cu preplată.
+309|Nu, plătim factura
+310|Curent
+311|Ai panouri solare?
+312|Da, doar panouri
+313|Da, cu baterie de casă
+314|Transport
+315|Ai mașină?
+316|Benzină sau motorină
+317|Electrică
+318|Apă
+319|Cine îți furnizează apa?
+320|Scrie pe factura de apă.
+321|Alege compania de apă
+322|United Utilities (majoritatea zonei Greater Manchester)
+323|Altă companie de apă (numărul e pe factura de apă)
+324|Contacte
+325|Pe cine ai suna primul într-o urgență?
+326|Va fi tipărit în cartea ta. Telefoanele se pot descărca, așa că hârtia contează.
+327|Nume și număr
+328|Cu cine din afara zonei ar putea lua legătura toată familia?
+329|Dacă liniile locale sunt aglomerate, un apel către cineva mai departe trece adesea.
+330|Unde v-ați întâlni dacă nu ați putea ajunge acasă?
+331|Alege un loc pe care îl știe toată lumea și unde se poate ajunge pe jos.
+332|De exemplu, biblioteca de pe strada principală
+333|Dacă ar trebui să pleci de acasă, unde ai putea sta?
+334|La un prieten sau o rudă din apropiere. Dacă nu ai unde, consiliile deschid centre de adăpost în urgențele mari.
+335|Nume și adresă
+336|Cabinetul medicului de familie (GP) și numărul lui
+337|Lasă gol ca să-l scrii de mână în carte.
+338|Numele cabinetului și numărul
+339|Farmacia ta obișnuită și numărul ei
+340|Numele farmaciei și numărul
+341|Numărul veterinarului
+342|Numele veterinarului și numărul
+343|Merg copiii la școală sau la grădiniță/creșă?
+344|Fă-mi cartea
+345|Gospodăria mea
+346|+ Plan pentru mama sau o rudă
+347|pregătit pentru {0} de ore
+348|Ghidurile verificate ultima dată pe {0} {1} {2}. Verificare clinică: în așteptare.
+349|{0} lucruri de rezolvat: {1} gratuite, {2} de cumpărat pentru cam £{3} în total. Cu £{4} pe lună vei fi pregătit până în {5}{6} {7}{8}.
+350|Fă astea mai întâi. Sunt gratuite.
+351|Gata: Înscrie-te în Priority Services Register
+352|Înscrie-te în Priority Services Register{0}Mai întâi{1}
+353|Gratuit, cam {0} minute fiecare
+354|Te înscrii la furnizorul de energie, la rețeaua de electricitate și la compania de apă. Contactele sunt mai jos.
+355|{0}. Furnizorul tău de energie
+356|Furnizor de energie
+357|Octopus Energy: înscrie-te în Priority Services Register
+358|{0}. Rețeaua ta de electricitate: Electricity North West
+359|Telefon
+360|{0} {1} {2} sau {3}
+361|Online
+363|Ei se ocupă de liniile electrice din Greater Manchester. Roagă-i să trimită datele tale și companiilor de gaz și apă.
+364|{0}. Compania ta de apă
+365|Compania de apă
+366|Numărul e pe factura de apă.
+367|Gata: Verifică dacă alarma personală merge fără curent
+368|Verifică dacă alarma personală merge fără curent{0}Mai întâi{1}
+369|Un telefon la furnizorul alarmei sau al telefonului
+370|Ofcom le cere furnizorilor de telefonie doar cel puțin o oră de alimentare de rezervă pentru telefoanele fixe digitale.
+371|Gata: Fă un plan de rezervă pentru echipament
+372|Fă un plan de rezervă pentru echipament{0}Mai întâi{1}
+373|Durata bateriei, numărul furnizorului disponibil {0} de ore, unde să mergi
+374|Întreabă furnizorul sau echipa de îngrijire ce să faci dacă nu e curent ore întregi.
+375|Gata: Fă-ți rezervă de medicamente pentru o săptămână și notează cum se păstrează
+376|Fă-ți rezervă de medicamente pentru o săptămână și notează cum se păstrează{0}Mai întâi{1}
+377|Întreabă medicul de familie sau farmacistul
+378|Adaugă fiecare medicament mai jos. Scanează prospectul și extragem instrucțiunile de păstrare.
+379|+ Adaugă un medicament
+380|Urmează mereu prospectul și sfatul farmacistului. Noi doar copiem ce scrie în prospect, nu dăm sfaturi.
+381|Gata: Învață noțiuni de prim ajutor
+382|Învață noțiuni de prim ajutor{0}Apoi{1}
+383|O oră sau două, gratuit
+384|Variante gratuite:
+385|{0}British Red Cross: ghiduri gratuite de prim ajutor{1}. Ajutor pas cu pas pentru sângerări, arsuri, sufocare, infarct, accident vascular și altele.
+386|{0}British Red Cross: prim ajutor pentru bebeluși și copii{1}. Gratuit, online, în ritmul tău.
+387|{0}British Red Cross: aplicație gratuită de prim ajutor{1}. Merge pe telefon, inclusiv ghiduri offline.
+388|{0}British Red Cross: atelier gratuit de prim ajutor ({1}+){2}. Online sau față în față. Fără certificat.
+389|Gata: Stabilește cine va trece să vadă ce faci
+390|Stabilește cine va trece să vadă ce faci{0}Apoi{1}
+391|Un vecin sau o rudă
+392|Stabiliți ore fixe la care bate la ușă dacă telefoanele nu merg.
+393|Gata: Cere pompierilor o vizită gratuită de siguranță acasă
+394|Cere pompierilor o vizită gratuită de siguranță acasă{0}Apoi{1}
+395|Un telefon
+396|Pot monta detectoare de fum care clipesc sau vibrează.
+397|Gata: Pune deoparte niște numerar
+398|Pune deoparte niște numerar{0}Apoi{1}
+399|Cam £{0} în bancnote și monede
+400|Aparatele de card și bancomatele au nevoie de curent.
+401|Gata: Discutați planul acasă
+402|Discutați planul acasă{0}Mai târziu{1}
+403|{0} de minute la masa din bucătărie
+404|Cartea ta include o ordine de discuție tipărită.
+405|Gata: Dă-i unui vecin un cartonaș „verifică dacă sunt bine”
+406|Dă-i unui vecin un cartonaș „verifică dacă sunt bine”{0}Mai târziu{1}
+407|Tipărește, completează, pune-l în cutia poștală
+408|Schimbă numerele de telefon cu un vecin, mai ales cu cineva care locuiește singur.
+409|Tipărește {0} cartonașe
+410|Grupuri locale: Communities Prepared
+411|Gata: Fotografiază casa și lucrurile de valoare
+412|Fotografiază casa și lucrurile de valoare{0}Mai târziu{1}
+413|{0} minute cu telefonul
+414|Treci prin fiecare cameră filmând încet. Notează în carte numărul poliței de asigurare și linia pentru daune. Face mult mai ușoară o cerere de despăgubire după inundație sau incendiu.
+415|Gata: Scrie numerele importante pe hârtie
+416|Scrie numerele importante pe hârtie{0}Mai târziu{1}
+417|Familie, medic, școală, vecini
+418|Cartea ta are o pagină pentru asta.
+419|Lista ta de cumpărături
+420|Calculată pentru {0} persoane pentru trei zile. Prețurile sunt estimative. Cumpără de unde vrei: mâncarea și apa sunt de obicei cele mai ieftine la supermarket.
+421|Gata: Apă de băut
+422|Apă de băut{0}Mai întâi{1}
+423|{0} sticle mari de {1} litri
+424|{0} persoane × {1} litri × {2} zile = {3} litri. Apartamentul tău e sus. Pompele care urcă apa în clădire au nevoie de curent, așa că robinetele se pot opri chiar dacă pe stradă încă e apă. Și animalele au nevoie de apă.
+425|Sugestii
+426|(linkurile marcate „paid link” ne aduc un mic comision)
+427|Bidon pliabil pentru apă Highlander de {0} litri
+428|Se pliază ca să nu ocupe loc. Umple-l de la robinet când ești avertizat că s-ar putea opri apa.
+429|Vezi pe Amazon {0}(paid link){1}
+430|Gata: Lapte praf gata preparat, lichid
+431|Lapte praf gata preparat, lichid{0}Mai întâi{1}
+432|Pentru {0} mese, plus {1} biberoane și tetine curate
+433|Laptele praf trebuie preparat cu apă proaspăt fiartă, de cel puțin {0}°C. Fără curent nu poți fierbe apa. Apa îmbuteliată nu e recomandată pentru laptele praf. Folosește marca obișnuită a bebelușului.
+434|Gata: Pături și haine groase
+435|Pături și haine groase{0}Mai întâi{1}
+436|{0} pături sau saci de dormit, căciuli și șosete groase
+437|Încălzirea probabil se va opri când se ia curentul, chiar și cea pe gaz. Locuința ta pierde căldura repede. Vârstnicii și copiii mici răcesc cel mai repede.
+438|Pături termice de urgență
+439|Ușoare și ieftine. Folosește-le ca strat suplimentar peste o pătură normală.
+440|Termofor cu husă tricotată
+441|Umple-l cât încă ai apă caldă. Nu folosi niciodată apă clocotită.
+442|Gata: Lucruri pentru bebeluș
+443|Lucruri pentru bebeluș{0}Apoi{1}
+444|Scutece și șervețele pentru {0} zile, plus haine de schimb
+445|Și ceva cunoscut, care să-l liniștească.
+446|Gata: Mâncare care se mănâncă rece
+447|Mâncare care se mănâncă rece{0}Apoi{1}
+448|{0}{1} conserve de fasole sau năut{2}. Fasole albă mare, cannellini, năut, salată de trei feluri de fasole.
+449|{0} conserve de linte sau legume mixte
+450|{0}{1} conserve de porumb și {2} conserve de fructe{3}. Fructele în suc, nu în sirop, te și hidratează.
+451|{0}{1} pachete de biscuiți sărați fără gluten sau rondele de orez{2}. În loc de pâine, care se învechește.
+452|{0}{1} pachet de fulgi de ovăz fără gluten și {2} litri de lapte UHT de ovăz sau soia{3}. Pentru ovăz înmuiat peste noapte: nu trebuie gătit.
+453|{0}{1} budinci de orez fără lactate sau caserole cu fructe gata de mâncat{2}. Din cele care se păstrează la temperatura camerei.
+454|{0}{1} borcan de unt din semințe de floarea-soarelui{2}. Proteine care țin luni de zile.
+455|{0}{1} gustări{2}. Batoane de cereale, fructe uscate, biscuiți (fără nuci). Ceva ce vă place: ridică moralul.
+456|Plita ta are nevoie de curent. Nu ai un loc sigur unde să gătești afară. Cartea ta are rețete simple, fără gătit.
+457|Gata: Deschizător de conserve care nu e electric
+458|Deschizător de conserve care nu e electric{0}Apoi{1}
+459|Nu toate conservele au deschidere ușoară.
+460|Deschizător de conserve OXO Good Grips
+461|Ușor de ținut în mână dacă mâinile sunt reci sau înțepenite.
+462|Gata: Trusă de prim ajutor
+463|Trusă de prim ajutor{0}Apoi{1}
+464|{0} trusă, plus câteva medicamente
+465|Plasturi de diferite mărimi
+466|Pansamente sterile pentru tăieturi mai mari
+467|Bandaje elastice și o eșarfă triunghiulară (pentru braț)
+468|Leucoplast
+469|Șervețele și cremă antiseptică
+470|Pensetă și foarfecă cu vârf rotunjit
+471|Un termometru digital
+472|Soluție pentru spălat ochii
+473|Paracetamol și ibuprofen, inclusiv variante pentru copii potrivite vârstei lor
+474|Plicuri de rehidratare orală, pentru diaree
+475|Antihistaminice, pentru reacții alergice
+476|După ghidurile NHS. Ține-o unde adulții o găsesc pe întuneric și copiii nu ajung la ea.
+477|Trusă de prim ajutor Steroplast, {0} piese
+478|Acoperă majoritatea listei NHS. Medicamentele adaugă-le separat.
+479|Trusă de prim ajutor pentru casă St John Ambulance
+480|Cumpărată direct din magazinul organizației caritabile, deci banii susțin cursurile de prim ajutor. Nu e link de afiliere.
+481|Vezi în magazinul organizației
+482|Gata: Lanternă și baterii de rezervă
+483|Lanternă și baterii de rezervă{0}Apoi{1}
+484|{0} lanterne
+485|Lumânările provoacă incendii.
+486|Lanternă frontală Petzl Tikkina
+487|Îți lasă ambele mâini libere ca să cari apă sau un copil. Merge cu {0} baterii AAA.
+488|Baterii Duracell Plus AAA, pachet de {0}
+489|Rezerve pentru lanterna frontală. Verifică ce baterii folosește lanterna ta.
+490|Gata: Radio cu baterii sau cu manivelă
+491|Radio cu baterii sau cu manivelă{0}Apoi{1}
+492|{0}, cu FM
+493|Dacă telefoanele și internetul nu mai merg, anunțurile de urgență se dau pe BBC Radio {0} și Radio {1}.
+494|Radio de urgență Nedis cu manivelă
+495|Radio FM cu manivelă și panou solar, deci nu are nevoie de baterii. Are și lanternă și încărcător de telefon.
+496|Radio Esky cu manivelă și panou solar
+497|O variantă mai ieftină, cu FM, manivelă, lanternă și o baterie externă mică.
+498|Gata: Un bagaj de urgență pentru plecare rapidă
+499|Un bagaj de urgență pentru plecare rapidă{0}Apoi{1}
+500|{0} geantă, pregătită și lângă ușă
+501|Lanternă și baterii de rezervă, sau o lanternă cu manivelă
+502|Încărcător de telefon și o baterie externă încărcată
+503|Copii după acte, asigurări și rețete într-o folie de plastic
+504|Chei de rezervă de la casă și mașină
+505|Câteva zile din fiecare medicament și o copie a rețetei
+506|Ochelari, lentile de contact, baterii pentru aparatul auditiv
+507|O trusă mică de prim ajutor, dezinfectant de mâini și șervețele
+508|Apă îmbuteliată și gustări cu termen lung
+509|Haine groase, căciuli, mănuși și o pătură termică
+510|Un carnețel, un pix și un fluier
+511|Scutece, șervețele, lapte praf gata preparat și haine de schimb pentru bebeluș
+512|Hrană pentru animale, lesă sau cușcă de transport și medicamentele lor
+513|Încărcătoare și baterii pentru echipamentul medical, plus numărul furnizorului
+514|Pentru inundații, incendii, scurgeri de gaz sau când ți se spune să pleci. Cele mai multe lucruri le ai deja. Doar {0}% dintre oameni au unul.
+515|Gata: Baterie externă
+516|Baterie externă{0}Mai târziu{1}
+517|{0}, ținută încărcată
+518|Reîncarc-o o dată pe lună.
+519|Baterie externă Anker {0} (PowerCore {1}K)
+520|Încarcă un telefon obișnuit de cam două ori. Reîncarc-o o dată pe anotimp.
+521|Gata: Lucruri pentru animale
+522|Lucruri pentru animale{0}Mai târziu{1}
+523|Hrană pentru {0} zile pentru {1} animale
+524|Plus medicamentele animalelor și o lesă sau cușcă de transport lângă ușă.
+525|Lună de lună
+526|Luna aceasta: lucruri gratuite{0}{1}
+527|Înscrie-te în Priority Services Register
+528|Verifică dacă alarma personală merge fără curent
+529|Fă un plan de rezervă pentru echipament
+530|Fă-ți rezervă de medicamente pentru o săptămână și notează cum se păstrează
+531|Învață noțiuni de prim ajutor
+532|Stabilește cine va trece să vadă ce faci
+533|Cere pompierilor o vizită gratuită de siguranță acasă
+534|Pune deoparte niște numerar
+535|Discutați planul acasă
+536|Dă-i unui vecin un cartonaș „verifică dacă sunt bine”
+537|Fotografiază casa și lucrurile de valoare
+538|Scrie numerele importante pe hârtie
+539|Apă de băut
+540|Strânge bani pentru: lapte praf gata preparat
+541|Strânge bani pentru: pături și haine groase
+542|Pături și haine groase
+543|Strânge bani pentru: lucruri pentru bebeluș
+544|Lucruri pentru bebeluș
+545|Strânge bani pentru: mâncare care se mănâncă rece
+546|Mâncare care se mănâncă rece
+547|Deschizător de conserve care nu e electric
+548|Strânge bani pentru: trusa de prim ajutor
+549|Trusă de prim ajutor
+550|Lanternă și baterii de rezervă
+551|Strânge bani pentru: radio cu baterii sau cu manivelă
+552|Radio cu baterii sau cu manivelă
+553|Strânge bani pentru: bagajul de urgență
+554|Un bagaj de urgență pentru plecare rapidă
+555|Strânge bani pentru: baterie externă
+556|Baterie externă
+557|Lucruri pentru animale
+558|Cartea Fettle
+559|Gospodăria {0}
+560|Planul tău ca o carte adevărată: numerele tale, cele {0} de ore ale tale, rețete fără gătit, prim ajutor, medicamente, un ghid pentru discuția în familie și pagini pentru actualizare.
+561|Ia Cartea Fettle: £{0} digitală, £{1} tipărită
+562|Prototip: nu se încasează nicio plată.
+563|Dacă trebuie să pleci de acasă
+564|Dacă ți se spune să pleci sau ești în pericol, pleacă. Nu aștepta să mai împachetezi.
+565|Ia bagajul de urgență. Ar trebui să fie deja lângă ușă.
+566|Ajută-l mai întâi pe cel care are cea mai mare nevoie. Dacă cineva nu poate ieși, sună la {0} și spune unde se află.
+567|Ia geanta bebelușului: lapte gata preparat, scutece și haine de schimb.
+568|Ia animalele cu tine dacă e sigur, cu mâncarea și lesa sau cușca lor.
+569|Dacă ai timp și e sigur, oprește gazul, curentul și apa. Nu atinge niciodată un întrerupător când stai în apă.
+570|Încuie și ia cheile și telefonul.
+571|Mergi la {0}.
+572|Spune-i primului tău contact ({0}) unde mergi.
+573|Nu merge pe jos, cu bicicleta sau cu mașina prin apa de inundație.
+574|Păstrează-l pe telefon
+575|Întreruperile de curent opresc internetul de acasă, iar datele mobile pot fi slabe. Salvează o copie care merge fără semnal.
+576|Descarcă planul meu de urgență
+577|Încearcă modul de urgență
+578|Schimbă răspunsurile
+579|Data de expirare sau de verificare
+580|Ce se întâmplă?
+581|Pană de curent
+582|Fără apă
+583|Avertizare de inundație
+584|Ni s-a spus să plecăm
+585|Cineva e rănit
+586|Urgență
+587|Gaz
+588|NHS
+589|Pană de curent, pasul {0} din {1}
+590|Verifică dacă toată lumea e în siguranță. Dacă e în pericol viața cuiva, sună la {0}.
+591|Pasul următor
+592|Verifică mai întâi persoana în vârstă, copiii mici și pe cine folosește echipamente electrice.
+593|Verifică bateria echipamentului. Dacă e slabă, sună acum la numărul furnizorului disponibil {0} de ore.
+594|Găsește lanterna. Nu umbla prin casă cu lumânări.
+595|Pornește radioul. Mesajele naționale de urgență se dau pe BBC Radio {0} și Radio {1}.
+596|Telefonul fix și alarma pot merge doar cam o oră. Pune un mobil încărcat lângă persoana care folosește alarma.
+597|Trimite familiei un singur mesaj că ești bine, apoi economisește bateria telefonului.
+598|Umple acum cada, chiuvetele și recipientele mari, cât timp apa încă ajunge la etajul tău.
+599|Ține frigiderul și congelatorul închise. Frigiderul ține rece cam {0} ore. Un congelator plin ține înghețat cam {1} zile.
+600|Oprește aparatele care erau pornite, în afară de o lampă, ca să știi când revine curentul.
+601|Beți din apa pusă deoparte: cam {0} litri pe zi pentru toți.
+602|Anunță pana de curent la {0}. E gratuit.
+603|Apoi urmează restul planului de {0} de ore.
+604|Gata
+605|Primii pași sunt gata.
+606|Ține radioul pornit și urmează planul de {0} de ore. Verifică vecinii dacă e sigur.
+607|Te-a ajutat?
+608|Nu prea
+609|Fără apă, pasul {0} din {1}
+610|Pentru băut folosește întâi apa îmbuteliată pusă deoparte: cam {0} litri pe zi pentru toți.
+611|Umple acum cada și oalele dacă mai ai presiune.
+612|Dacă nu merge apa la toaletă, toarnă o găleată de apă în vas.
+613|Pentru mâini folosește dezinfectant și șervețele.
+614|Dacă cineva din casă are nevoie de ajutor în plus, sună la compania de apă și întreabă de livrări.
+615|Vezi ce fel de anunț este. „Boil water” înseamnă să fierbi apa și s-o lași să se răcească înainte de folosire. „Do not drink” înseamnă doar apă îmbuteliată, chiar și pentru spălat pe dinți și pentru bebeluș.
+616|Pentru bebeluș, folosește lapte praf gata preparat.
+617|Verifică vecinii, mai ales pe cei care locuiesc singuri.
+618|Avertizare de inundație, pasul {0} din {1}
+619|O avertizare severă de inundație înseamnă pericol de moarte. Dacă tu sau altcineva sunteți în pericol imediat, sună la {0}.
+620|Mută oamenii, animalele și lucrurile de valoare la etaj sau pe un teren mai înalt.
+621|Pune bagajul de urgență și actele undeva sus.
+622|Oprește gazul, curentul și apa dacă e sigur. Nu atinge niciodată un întrerupător când stai în apă.
+623|Ascultă noutățile la radioul local sau sună la Floodline: {0} {1} {2}.
+624|Dacă serviciile de urgență îți spun să pleci, pleacă.
+625|Ni s-a spus să plecăm, pasul {0} din {1}
+626|Cineva e rănit, pasul {0} din {1}
+627|Dacă cineva e grav bolnav sau rănit, sună acum la {0}.
+628|Rămâi cu persoana. Operatorul îți spune ce să faci până vine ajutorul.
+629|Dacă e urgent, dar nu pune viața în pericol, sună la {0}.
+630|Folosește trusa de prim ajutor. Cartea ta are îndrumări de prim ajutor.
+631|Mulțumim. Ne ajută să-l îmbunătățim.
+632|Mulțumim. Spune-ne ce a lipsit la hello@[domain] (prototip).
+633|Gospodăria {0}: plan de urgență
+634|Salvat pe {0}.{1}.{2}. Merge fără internet.
+635|Numere
+636|Poliție, pompieri, ambulanță sau paza de coastă când e în pericol o viață. Merge și {0}.
+637|NHS, când e urgent, dar nu pune viața în pericol.
+638|Pană de curent, oriunde în Marea Britanie. Gratuit.
+639|Urgență de gaz, dacă miroase a gaz. Gratuit, {0} de ore din 24.
+640|Floodline, pentru avertizări de inundație.
+641|Poliția, când nu e o urgență.
+642|Samaritans, gratuit, oricând, dacă simți că e prea mult.
+643|Primul apel
+644|Punctul de întâlnire
+645|Prima oră: Verifică pe toată lumea, află ce se întâmplă
+646|Orele {0}-{1}: Păstrează frigul în frigider și căldura în casă
+647|Verifică pagina de medicamente ca să vezi cât poate sta medicamentul din frigider în afara lui.
+648|Ține animalele înăuntru și dă-le apă.
+649|Orele {0}-{1}: Rămâneți la căldură și hrăniți
+650|Alegeți o singură cameră în care să stați. Trageți draperiile, blocați curentul de sub ușă cu un prosop, puneți căciuli și haine în straturi.
+651|Nu poți găti în siguranță. Folosește rețetele fără gătit.
+652|Nu aduce niciodată în casă un grătar, un aragaz de camping sau un încălzitor de exterior. Monoxidul de carbon poate ucide în câteva minute.
+653|Folosește laptele gata preparat. Laptele praf se face doar cu apă de la robinet proaspăt fiartă, de cel puțin {0}°C. Nu folosi apă îmbuteliată pentru laptele praf.
+654|După {0} ore fără curent, copiii mici, femeile însărcinate și vârstnicii nu ar trebui să mănânce alimente refrigerate gata de mâncat sau resturi.
+655|Ia medicamentele la orele obișnuite.
+656|Ziua {0}: Drămuiți-vă puterile
+657|Mâncați întâi ce e în frigider, apoi ce se dezgheață, apoi ce e în dulap.
+658|Dacă nu merge apa la toaletă, toarnă în vas o găleată de apă din cadă.
+659|Dacă e puțină apă, folosește dezinfectant de mâini și șervețele.
+660|Bate la ușa vecinilor, mai ales a celor care locuiesc singuri.
+661|Dacă ai puțin credit pe contor, întreabă furnizorul de energie despre creditul de urgență.
+662|Plătește cash dacă aparatele de card nu merg.
+663|Ziua {0}: Refacere și reaprovizionare
+664|Ascultă sfaturile oficiale despre când apa de la robinet e din nou sigură. Anunțurile „boil your water” și „do not drink” înseamnă lucruri diferite.
+665|Aruncă mâncarea care a stat prea mult în condiții nesigure. Dacă ai dubii, arunc-o.
+666|Notează ce s-a terminat, ca următorul plan să acopere.
+667|Bagaj de urgență
+668|Cartonașe „verifică dacă sunt bine”
+669|Verifică dacă sunt bine
+670|Dacă se ia curentul, e furtună sau inundație, te rog bate la ușă sau sună.
+671|Nume: ______________________
+672|Numărul apartamentului sau al casei: ________
+673|Telefon: _____________________
+674|Aș putea avea nevoie de ajutor cu: ____________________________
+675|Și eu voi verifica dacă ești bine. Numărul meu e pe spate.
+676|Cartea gospodăriei tale. A{0}, {1}{2}{3} pagini.
+677|Trei zile fără curent, apă sau telefon, rezolvate. Scrisă pentru o singură casă.
+678|{0}Gospodăria {1}{2}Rochdale, Greater Manchester
+679|Ediția: {0} {1}
+680|Ține-o lângă lanternă
+681|În caz de urgență
+682|Punctul nostru de întâlnire
+683|Mergi la {0}Primele {1} de ore{2}, pagina {3}.
+684|Cuprins
+685|Începe aici
+686|Introducere
+687|Cum să folosești această carte
+688|Gospodăria ta pe scurt
+689|Înainte
+690|Lista ta de sarcini
+691|În timpul
+692|Primele {0} de ore
+693|Plecarea de acasă
+694|Ghiduri
+695|Mâncare și rețete fără gătit
+696|Bebeluși și copii mici
+697|Cum să stai la căldură
+698|Medicamente
+699|Prim ajutor
+700|Curent, lumină și știri
+701|Animale de companie
+702|Chirie
+703|Asigurări și acte
+704|Împreună
+705|Discuția în familie
+706|Numere importante
+707|Verifică pe cineva
+708|Jurnalul de verificare pe anotimpuri
+709|De ce există această carte și de ce trei zile.
+710|Majoritatea urgențelor din Regatul Unit nu sunt dramatice. O furtună doboară liniile de curent. O conductă spartă taie apa. Zăpada închide drumurile. De obicei, lumina revine în câteva ore. Uneori durează zile.
+711|În {0} {1}, guvernul a lansat campania Be Ready, cerând fiecărei gospodării să se poată descurca singură trei zile: apă, mâncare, căldură, lumină, medicamente și o cale de a afla știrile. Serviciile de urgență se vor ocupa întotdeauna întâi de cazurile cele mai grave. Pentru toți ceilalți, primele {2} de ore înseamnă să aveți grijă de voi și de vecini.
+712|Studiul guvernului din {0} a arătat că doar {1}% dintre oameni au un plan pentru gospodărie și doar {2}% țin apă de băut pentru trei zile. Dacă ai luat cartea asta, ești deja înainte.
+713|{0}Această carte este scrisă pentru gospodăria {1}.{2} Se bazează pe casa ta, pe oamenii din ea și pe ce aveți deja. Nimic din ea nu e general.
+714|De unde vin sfaturile
+715|Fiecare recomandare vine din ghiduri oficiale din Regatul Unit: campania Be Ready a Cabinet Office, NHS, Food Standards Agency, medicii-șefi ai Regatului Unit, pompierii, Ofgem, British Red Cross și companiile locale de energie și apă. Le transformăm într-un plan pentru casa ta.
+716|Această carte nu înlocuiește avertizările oficiale. În caz de urgență, ascultă radioul și fă ce spun serviciile de urgență. Dacă e în pericol viața cuiva, sună la {0}.
+717|Citește-o o dată acum. Ține-o unde ai căuta pe întuneric.
+718|{0}. Citește-o săptămâna asta
+719|Stai jos cu un ceai și citește-o o dată de la cap la coadă. Durează cam o jumătate de oră.
+720|{0}. Discutați la masa din bucătărie
+721|Pagina „Discuția în familie” îți dă o ordine de discuție de {0} de minute. Toți cei care locuiesc cu tine ar trebui să fie de față.
+722|{0}. Parcurge listele
+723|Întâi sarcinile gratuite, apoi lista de cumpărături, puțin câte puțin. Bifează pe măsură ce le faci.
+724|{0}. Ține-o la locul potrivit
+725|Undeva unde știe toată lumea și ajunge pe întuneric: într-un sertar din bucătărie, cu lanterna. Nu în telefon.
+726|{0}. Verific-o de patru ori pe an
+727|Ultimele pagini au un jurnal de verificare. În fiecare anotimp, înlocuiește ce a expirat, reîncarcă bateria externă și actualizează numerele.
+728|Mergi direct la paginile colorate: „Primele {0} de ore”. Urmează-le în ordine.
+729|Faptele pe care se bazează acest plan.
+730|{0} adult, {1} adult peste {2} ani, {3} copil de {4}-{5} ani, {6} copil sub {7} ani, {8} câine, {9} pisică
+731|Locuință
+732|Apartament, etajul {0} sau mai sus
+733|Încălzire
+734|Gătit
+735|Spațiu exterior
+736|Zonă
+737|Rochdale, Greater Manchester
+738|Ce înseamnă asta pentru tine
+739|Încălzirea ta se va opri aproape sigur când se ia curentul.
+740|Nu vei putea găti în casă fără curent.
+741|Nu ai un loc sigur unde să gătești afară, așa că planifică mâncare care nu se gătește.
+742|Apa ta depinde de pompe. Pune apă deoparte înainte să ai nevoie.
+743|Bebelușul tău are nevoie de lapte gata preparat dacă nu poți fierbe apa.
+744|Cineva de aici are nevoie de ajutor în plus. Înscrie-te în Priority Services Register.
+745|Riscuri în zona ta
+746|Exemplu până adăugăm Community Risk Register al Greater Manchester Resilience Forum: furtuni puternice, pene de curent de peste o zi, inundații, frig extrem și lipsa apei.
+747|Întâi lucrurile gratuite. Majoritatea durează mai puțin de o oră.
+748|{0}{1}Înscrie-te în Priority Services Register
+749|Gratuit, cam {0} minute fiecare. Te înscrii la furnizorul de energie, la rețeaua de electricitate și la compania de apă.
+750|{0}{1}Verifică dacă alarma personală merge fără curent
+751|Un telefon la furnizorul alarmei sau al telefonului. Ofcom le cere furnizorilor doar cel puțin o oră de alimentare de rezervă pentru telefoanele fixe digitale.
+752|{0}{1}Fă un plan de rezervă pentru echipament
+753|Durata bateriei, numărul furnizorului disponibil {0} de ore, unde să mergi. Întreabă furnizorul sau echipa de îngrijire ce să faci dacă nu e curent ore întregi.
+754|{0}{1}Fă-ți rezervă de medicamente pentru o săptămână și notează cum se păstrează
+755|Întreabă medicul de familie sau farmacistul.
+756|{0}{1}Învață noțiuni de prim ajutor
+757|O oră sau două, gratuit. Variante gratuite:
+758|{0}{1}Stabilește cine va trece să vadă ce faci
+759|Un vecin sau o rudă. Stabiliți ore fixe la care bate la ușă dacă telefoanele nu merg.
+760|{0}{1}Cere pompierilor o vizită gratuită de siguranță acasă
+761|Un telefon. Pot monta detectoare de fum care clipesc sau vibrează.
+762|{0}{1}Pune deoparte niște numerar
+763|Cam £{0} în bancnote și monede. Aparatele de card și bancomatele au nevoie de curent.
+764|{0}{1}Discutați planul acasă
+765|{0} de minute la masa din bucătărie. Cartea ta include o ordine de discuție tipărită.
+766|{0}{1}Dă-i unui vecin un cartonaș „verifică dacă sunt bine”
+767|Tipărește, completează, pune-l în cutia poștală. Schimbă numerele cu un vecin, mai ales cu cineva care locuiește singur.
+768|{0}{1}Fotografiază casa și lucrurile de valoare
+769|{0} minute cu telefonul. Treci prin fiecare cameră filmând încet. Notează în carte numărul poliței și linia pentru daune. Face mult mai ușoară o cerere după inundație sau incendiu.
+770|{0}{1}Scrie numerele importante pe hârtie
+771|Familie, medic, școală, vecini. Cartea ta are o pagină pentru asta.
+772|Calculată pentru {0} persoane pentru trei zile.
+773|{0}{1}Apă de băut: {2} sticle mari de {3} litri
+774|{0}{1}Lapte praf gata preparat: pentru {2} mese, plus {3} biberoane și tetine curate
+775|{0}{1}Pături și haine groase: {2} pături sau saci de dormit, căciuli și șosete groase
+776|{0}{1}Lucruri pentru bebeluș: scutece și șervețele pentru {2} zile, plus haine de schimb
+777|{0}{1}Mâncare care se mănâncă rece: {2} de mese și {3} gustări
+778|{0} conserve de fasole sau năut
+779|{0} conserve de porumb și {1} conserve de fructe
+780|{0} pachete de biscuiți sărați fără gluten sau rondele de orez
+781|{0} pachet de fulgi de ovăz fără gluten și {1} litri de lapte UHT de ovăz sau soia
+782|{0} budinci de orez fără lactate sau caserole cu fructe gata de mâncat
+783|{0} borcan de unt din semințe de floarea-soarelui
+784|{0} gustări
+785|{0}{1}Deschizător de conserve care nu e electric: {2}
+786|{0}{1}Trusă de prim ajutor: {2} trusă, plus câteva medicamente
+787|{0}{1}Lanternă și baterii de rezervă: {2} lanterne
+788|{0}{1}Radio cu baterii sau cu manivelă: {2}, cu FM
+789|{0}{1}Un bagaj de urgență pentru plecare rapidă: {2} geantă, pregătită și lângă ușă
+790|{0}{1}Baterie externă: {2}, ținută încărcată
+791|{0}{1}Lucruri pentru animale: hrană pentru {2} zile pentru {3} animale
+792|Prețurile din aplicație sunt estimative. Cumpără câte puțin în fiecare lună: întâi apă și medicamente.
+793|Urmează aceste pagini în ordine când se întâmplă ceva.
+794|Inundații, incendiu, scurgere de gaz sau când ți se spune să pleci.
+795|Dacă ți se spune să pleci sau ești în pericol, pleacă. Lucrurile se pot înlocui.
+796|Pas cu pas
+797|Bagajul tău de urgență
+798|{0}{1}Lanternă și baterii de rezervă, sau o lanternă cu manivelă
+799|{0}{1}Încărcător de telefon și o baterie externă încărcată
+800|{0}{1}Copii după acte, asigurări și rețete într-o folie de plastic
+801|{0}{1}Numerar, cam £{2}
+802|{0}{1}Chei de rezervă de la casă și mașină
+803|{0}{1}Câteva zile din fiecare medicament și o copie a rețetei
+804|{0}{1}Ochelari, lentile de contact, baterii pentru aparatul auditiv
+805|{0}{1}O trusă mică de prim ajutor, dezinfectant de mâini și șervețele
+806|{0}{1}Apă îmbuteliată și gustări cu termen lung
+807|{0}{1}Haine groase, căciuli, mănuși și o pătură termică
+808|{0}{1}Un carnețel, un pix și un fluier
+809|{0}{1}Scutece, șervețele, lapte praf gata preparat și haine de schimb pentru bebeluș
+810|{0}{1}Hrană pentru animale, lesă sau cușcă de transport și medicamentele lor
+811|{0}{1}Încărcătoare și baterii pentru echipamentul medical, plus numărul furnizorului
+812|Unde vom merge
+813|A doua variantă:
+814|Robineți și întrerupătoare
+815|Ce
+816|Unde e în casa noastră
+817|Robinetul principal de apă
+818|Tabloul electric (siguranțele)
+819|Surse: sfaturile GOV.UK despre inundații, lista de bagaj de urgență Staffordshire Prepared. Verificat ultima dată: {0} {1}.
+820|Cât, cum se păstrează și ce faci când nu mai curge apa la robinet.
+821|Ai nevoie de {0}{1} litri{2} pentru trei zile: {3} persoane × {4} litri × {5} zile. Adică cam {6} sticle mari de {7} litri. Asta e pentru băut și preparat simplu de mâncare. Spălatul și toaleta au nevoie de mai mult.
+822|Păstrarea
+823|Cumpără apă îmbuteliată sigilată și ține-o într-un loc răcoros și întunecat, nu pe podea.
+824|Verifică datele în fiecare anotimp. Folosește sticlele mai vechi zilnic și înlocuiește-le.
+825|Dacă ești avertizat că s-ar putea opri apa, umple cada și oalele mari pentru toaletă și spălat.
+826|Toaleta fără apă de la rețea
+827|Toarnă repede o găleată de apă în vas. Nu folosi apă de băut pentru asta.
+828|Anunțurile de fierbere și de interdicție a consumului
+829|{0}Anunț „boil water”:{1} apa de la robinet e sigură după ce o fierbi și o lași să se răcească.
+830|{0}Anunț „do not drink”:{1} nu bea apă de la robinet nici fiartă. Folosește apă îmbuteliată sau pusă deoparte, chiar și pentru spălat pe dinți și pentru laptele bebelușului.
+831|Locuiești sus. Pompele de apă din clădirile înalte au nevoie de curent, așa că poți rămâne fără apă la o pană de curent chiar dacă pe stradă există apă.
+832|Ghiduri verificate ultima dată: {0} {1}. Verificare clinică: în așteptare.
+833|Mâncat bine fără aragaz sau frigider.
+834|Ordinea în care mănânci
+835|Mâncarea din frigider, cât încă e rece. Frigiderul ține rece cam {0} ore.
+836|Mâncarea din congelator, pe măsură ce se dezgheață. Un congelator plin ține înghețat cam {0} zile, unul pe jumătate plin cam {1} zi.
+837|Mâncare proaspătă care nu are nevoie de frigider, ca pâinea și fructele.
+838|Conservele și pachetele la final.
+839|După {0} ore fără curent, copiii mici, femeile însărcinate și vârstnicii nu ar trebui să mănânce alimente refrigerate gata de mâncat sau resturi (medicii-șefi ai Regatului Unit).
+840|Nu aduce niciodată un grătar, un aragaz de camping sau un încălzitor de terasă în casă, în garaj sau pe balcon. Emană monoxid de carbon, care poate ucide în câteva minute.
+841|Salată de fasole cu porumb {0}(Porții: {1}){2}
+842|{0} conservă de fasole sau năut, scursă
+843|{0} conservă mică de porumb, scursă
+844|{0} conservă de linte, scursă
+845|Puțină zeamă de lămâie din sticlă, sare și piper
+846|Amestecă totul într-un bol. Mănâncă imediat. Resturile nu pot merge la frigider, așa că fă doar cât mănânci.
+847|Pastă de năut pe biscuiți {0}(Porții: {1}){2}
+848|{0} conservă de năut, scursă
+849|{0} lingură de unt din semințe de floarea-soarelui sau puțin ulei de măsline
+850|Sare, piper, orice ierburi uscate
+851|Biscuiți sărați fără gluten sau rondele de orez
+852|Zdrobește năutul cu furculița. Amestecă restul. Unge pe biscuiți.
+853|Ovăz înmuiat peste noapte {0}(Porții: {1}){2}
+854|{0} linguri de fulgi de ovăz fără gluten
+855|Cam {0} ml de lapte UHT de ovăz sau soia
+856|Câteva linguri de fructe din conservă
+857|Pune ovăzul și laptele într-un borcan sau o cană, amestecă și lasă cel puțin {0} ore sau peste noapte. Pune fructe deasupra. Folosește laptele UHT deschis în aceeași zi dacă nu ai frigider.
+858|Rulouri {0}(Porții: {1}){2}
+859|Lipie fără gluten sau rondele de orez
+860|Fasole zdrobită
+861|Porumb
+862|Unge, adaugă porumbul, rulează.
+863|Fructe cu budincă {0}(Porții: {1}){2}
+864|{0} conservă de fructe, scursă
+865|{0} caserole de budincă fără lactate, gata de mâncat
+866|Pune fructele peste budincă. Un desert liniștitor pentru copii.
+867|Biscuiți cu unt din semințe {0}(Gustare){1}
+868|Biscuiți sărați fără gluten
+869|Unt din semințe de floarea-soarelui
+870|Fructe uscate
+871|Unge și pune fructe uscate deasupra.
+872|Hrănire, căldură și liniștire.
+873|Hrănire
+874|Laptele praf nu e steril, așa că trebuie preparat cu apă de la robinet proaspăt fiartă, de cel puțin {0}°C. Dacă nu poți fierbe apa, folosește lapte gata preparat lichid. Apa îmbuteliată nu e recomandată pentru laptele praf. Ține în trusă {1} porții gata preparate și biberoane curate.
+875|Dacă poți fierbe apă pentru scurt timp, un termos încălzit întâi cu apă clocotită, apoi umplut cu apă proaspăt fiartă, o ține fierbinte câteva ore. Cu cât e mai multă apă în termos, cu atât rămâne caldă mai mult.
+876|Căldură
+877|Bebelușii pierd căldura repede. Ține-i în camera cea mai caldă, îmbrăcați în straturi, cu căciulă. Nu-i lăsa să se supraîncălzească.
+878|Pentru întrebări despre hrănire, linia NCT pentru alimentația bebelușilor este {0} {1} {2}, sau vorbește cu asistenta medicală comunitară (health visitor).
+879|Când se oprește încălzirea.
+880|Alege o singură cameră în care să stați, ideal una cu cei mai puțini pereți spre exterior.
+881|Trage draperiile la apus și pune un prosop rulat sub ușă.
+882|Straturile țin căldura: lenjerie termică, pulovere, căciuli și șosete groase.
+883|Umple termofoarele cât încă ai apă caldă. Nu folosi niciodată apă clocotită.
+884|Mișcă-te puțin în fiecare oră.
+885|Vârstnicii și copiii mici răcesc cel mai repede. Verifică-i des.
+886|Nu folosi niciodată aragazul sau cuptorul pe gaz ca să încălzești camera. Nu folosi niciodată în casă încălzitoare de exterior.
+887|Rezerve și păstrare.
+888|Încearcă să ai cel puțin o săptămână din fiecare medicament obișnuit. Comandă rețetele repetate din timp și întreabă farmacistul despre tot ce se ține la frigider.
+889|Medicament
+890|Cine
+891|Cum se păstrează
+892|Copiat din prospect. Verifică mereu cu farmacistul.
+893|Ce să ai și unde să înveți.
+894|Trusa ta de prim ajutor
+895|{0}{1}Plasturi de diferite mărimi
+896|{0}{1}Pansamente sterile pentru tăieturi mai mari
+897|{0}{1}Bandaje elastice și o eșarfă triunghiulară (pentru braț)
+898|{0}{1}Leucoplast
+899|{0}{1}Șervețele și cremă antiseptică
+900|{0}{1}Pensetă și foarfecă cu vârf rotunjit
+901|{0}{1}Un termometru digital
+902|{0}{1}Soluție pentru spălat ochii
+903|{0}{1}Paracetamol și ibuprofen, inclusiv variante pentru copii potrivite vârstei lor
+904|{0}{1}Plicuri de rehidratare orală, pentru diaree
+905|{0}{1}Antihistaminice, pentru reacții alergice
+906|După ghidurile NHS și ale Great Ormond Street Hospital. Ține medicamentele departe de copii. Nu da niciodată aspirină copiilor sub {0} ani decât dacă e prescrisă.
+907|Învață prim ajutor
+908|{0}British Red Cross: ghiduri gratuite de prim ajutor{1}: Ajutor pas cu pas pentru sângerări, arsuri, sufocare, infarct, accident vascular și altele. www.redcross.org.uk/first-aid/learn-first-aid
+909|{0}British Red Cross: prim ajutor pentru bebeluși și copii{1}: Gratuit, online, în ritmul tău. www.redcross.org.uk/first-aid/learn-first-aid-for-babies-and-children
+910|{0}British Red Cross: aplicație gratuită de prim ajutor{1}: Merge pe telefon, inclusiv ghiduri offline. www.redcross.org.uk/first-aid/first-aid-apps
+911|{0}British Red Cross: atelier gratuit de prim ajutor ({1}+){2}: Online sau față în față. Fără certificat. www.redcross.org.uk/get-involved/teaching-resources/community-education-workshops/first-aid-workshop-for-adults
+912|{0}British Red Cross: înscrie-te la un curs{1}: Cursuri cu plată, cu certificat. www.redcross.org.uk/first-aid/book-a-first-aid-course
+913|{0}St John Ambulance: cursuri pentru comunitate{1}: Cursuri pentru persoane și familii. shop.sja.org.uk/collections/community-courses
+914|Dacă cineva e grav bolnav sau rănit, sună la {0}. Operatorul îți spune ce să faci până vine ajutorul.
+915|Cum afli ce se întâmplă când se stinge lumina.
+916|Anunță o pană de curent la {0}. E gratuit.
+917|Mesajele naționale de urgență se dau pe BBC Radio {0} și Radio {1}. Ține un radio cu baterii sau cu manivelă.
+918|Folosește lanterne, nu lumânări.
+919|Ține bateria externă încărcată. Reîncarc-o în fiecare anotimp.
+920|Iarna, ține mașina încărcată sau alimentată peste jumătate.
+921|Află de acum cum obții credit de urgență pe contorul cu preplată.
+922|Priority Services Register
+923|O listă gratuită ținută de companiile de energie și apă. Cei înscriși primesc informații despre penele de curent și ajutor în plus. Înscrie-te la furnizorul de energie, la Electricity North West ({0} {1} {2} sau {3}, enwl.co.uk/priority) și la compania de apă.
+924|Și ele au nevoie de un plan.
+925|Mâncare și apă pentru trei zile.
+926|Medicamentele lor și numărul veterinarului.
+927|O lesă sau cușcă de transport lângă ușă.
+928|Ține animalele înăuntru în timpul furtunilor și inundațiilor.
+929|Ce trebuie să facă proprietarul și ce să-l întrebi.
+930|Proprietarii privați din Anglia trebuie să monteze un detector de fum la fiecare etaj și un detector de monoxid de carbon în orice cameră cu un aparat fix care arde combustibil, cum ar fi o centrală sau o sobă pe lemne. Aragazele pe gaz nu se pun. Trebuie să repare sau să înlocuiască detectoarele când raportezi o defecțiune. Proprietarii de locuințe sociale au obligații asemănătoare.
+931|Întreabă proprietarul, în scris
+932|{0}{1}Sunt montate și funcționează detectoarele de fum și de monoxid de carbon?
+933|{0}{1}Unde e robinetul principal de apă și se poate închide?
+934|{0}{1}Pe cine sun în afara programului dacă nu merge încălzirea sau apa?
+935|{0}{1}Are clădirea un plan de urgență? (blocuri)
+936|Surse: ghidurile GOV.UK pentru proprietari; rezumatul Ipswich Borough Council. Verificat ultima dată: {0} {1}.
+937|Ca să-ți revii mai ușor.
+938|O dată pe an, filmează încet fiecare cameră cu telefonul, inclusiv în dulapuri.
+939|Fotografiază bonurile pentru lucrurile scumpe.
+940|Ține copii după acte, asigurări și rețete în bagajul de urgență.
+941|Asigurătorul locuinței
+942|Numărul poliței
+943|Linia pentru daune
+944|O ordine de discuție de {0} de minute. Toți cei care locuiesc aici ar trebui să fie de față.
+945|Timp
+946|Ce faceți
+947|{0}-{1} min
+948|{0}De ce facem asta.{1} Citiți introducerea cu voce tare. Cu calm: e vorba să fim pregătiți, nu speriați.
+949|{0}Faceți împreună un tur al casei.{1} Găsiți robinetul principal de apă, tabloul electric, lanterna, trusa de prim ajutor și această carte.
+950|{0}Cine are grijă de cine.{1} Stabiliți cine verifică persoanele care au nevoie de ajutor în plus, cine are grijă de animale și cine verifică vecinii.
+951|{0}Contacte și punct de întâlnire.{1} Citiți pagina cu numere. Stabiliți unde vă întâlniți dacă nu puteți ajunge acasă.
+952|{0}Împărțiți sarcinile.{1} Alegeți nume pentru lista de sarcini și cumpărături. Scrieți-le.
+953|{0}Stabiliți două date.{1} O seară de exercițiu și prima verificare de anotimp.
+954|Sarcini
+955|Sarcină
+956|Are grijă de rezerva de apă
+957|Verifică trusa de prim ajutor
+958|Încarcă bateria externă
+959|Verifică vecinii
+960|Actualizează această carte
+961|Seara de exercițiu
+962|Alegeți o seară. Stingeți luminile principale o oră după ce se întunecă și folosiți doar lanterne și radioul. Mâncați o masă fără gătit. Observați ce lipsește.
+963|Data: {0}{1}
+964|Ține această pagină la zi. Copiaz-o și în telefoanele tuturor.
+965|Dacă nu auzi sau nu poți vorbi la telefon, înscrie-te din timp la emergencySMS trimițând un SMS cu „register” la {0}.
+966|Numerele tale
+967|Contact în afara zonei
+968|Medic de familie (GP)
+969|Farmacie
+970|Veterinar
+971|Octopus Energy (numărul de pe factură)
+972|Rețeaua de electricitate
+973|Electricity North West: {0} sau {1} {2} {3}
+974|Numărul de pe factura de apă
+975|Școală sau creșă/grădiniță
+976|Proprietar sau biroul de locuințe
+977|Asigurarea locuinței
+978|Consiliul local în afara programului
+979|Vecin
+980|Decupează și pune-l în cutia poștală a unui vecin.
+981|Nume:
+982|Telefon:
+983|Aș putea avea nevoie de ajutor cu:
+984|Vrei să faci mai mult? Communities Prepared sprijină grupuri locale de voluntari (groundwork.org.uk).
+985|De patru ori pe an. Durează {0} minute.
+986|În fiecare anotimp, parcurge lista și bifează.
+987|{0}{1}Apa e încă în termen? Folosește și înlocuiește sticlele mai vechi.
+988|{0}{1}Mâncarea e încă în termen? Mâncați conservele mai vechi în mesele obișnuite și înlocuiți-le.
+989|{0}{1}Bateria externă reîncărcată. Bateriile lanternei și radioului merg.
+990|{0}{1}Trusa de prim ajutor completată. Medicamentele expirate duse la farmacie.
+991|{0}{1}Medicamente: rezervă pentru o săptămână.
+992|{0}{1}Numerele de pe pagina de contacte sunt încă bune.
+993|{0}{1}Datele din Priority Services Register sunt încă bune.
+994|Anotimp
+995|Data verificării
+996|De către
+997|Primăvară
+998|Vară
+999|Toamnă
+1000|Iarnă
+1001|fettle (verb, Lancashire, cca {0}): a pregăti, a pune în ordine.
+1002|Această carte a fost făcută pentru gospodăria {0} pe baza răspunsurilor tale. Actualizeaz-o în fiecare anotimp și de fiecare dată când se schimbă ceva acasă.
+1003|Pe baza ghidurilor Cabinet Office, NHS, Food Standards Agency, medicilor-șefi ai Regatului Unit, pompierilor, Ofgem, British Red Cross, Electricity North West și United Utilities. Această carte nu înlocuiește sfaturile oficiale. În caz de urgență, sună la {0}.
+1004|Un detector de monoxid de carbon
+1005|Un detector mic, separat de detectorul de fum, de obicei marcat CO
+1006|De exemplu, {0}. Va scrie „Gospodăria {1}”.
+1007|{0} lucruri de rezolvat: {1} gratuite, {2} de cumpărat pentru cam £{3} în total.
+1008|Sună la numărul de pe factura sau din aplicația British Gas și cere înscrierea în Priority Services Register, sau începe de aici:
+1011|Gata: Verifică trusa de prim ajutor
+1012|Verifică trusa de prim ajutor{0}Mai târziu{1}
+1013|Durează {0} minute
+1014|Înlocuiește ce s-a folosit sau a expirat. Du medicamentele vechi la farmacie.
+1015|{0} persoane × {1} litri × {2} zile = {3} litri.
+1016|Ține o rezervă pentru trei zile.
+1017|Încălzirea probabil se va opri când se ia curentul, chiar și cea pe gaz. Vârstnicii și copiii mici răcesc cel mai repede.
+1018|{0}{1} conserve de ton, macrou sau pui{2}. Cu deschidere ușoară. Gata de mâncat reci.
+1019|{0}{1} pachete de biscuiți sărați, biscuiți de ovăz sau lipii{2}. În loc de pâine, care se învechește.
+1020|{0}{1} pachet de fulgi de ovăz și {2} litri de lapte UHT{3}. Pentru ovăz înmuiat peste noapte: nu trebuie gătit.
+1021|{0}{1} caserole de budincă de vanilie sau de orez, gata de mâncat{2}. Din cele care se păstrează la temperatura camerei.
+1022|{0}{1} borcan de unt de arahide{2}. Proteine care țin luni de zile.
+1023|{0}{1} gustări{2}. Batoane de cereale, fructe uscate, biscuiți, nuci. Ceva ce vă place: ridică moralul.
+1024|Aragazul pe gaz poate merge în continuare dacă îl aprinzi cu chibritul, dar planifică de parcă n-ar merge. Un aragaz de camping e în regulă afară în grădină, niciodată în casă. Cartea ta are rețete simple, fără gătit.
+1025|Medicamentele pe care le iei
+1026|Verifică trusa de prim ajutor
+1027|Când poți{0}{1}
+1028|cam £{0}
+1029|Gospodăria ta
+1030|Mergi la un prieten sau o rudă. Dacă nu ai unde, consiliul deschide centre de adăpost: ascultă radioul local.
+1031|Spune-i primului tău contact unde mergi.
+1032|Verifică întâi copiii mici.
+1033|Dacă s-ar putea opri apa, umple acum cada pentru toaletă și spălat.
+1034|Centrala ta probabil nu va merge fără curent, deși e pe gaz.
+1035|Gospodăria ta: plan de urgență
+1036|Aragazul pe gaz poate merge în continuare. Aprinde-l cu chibritul, pentru că scânteia electrică nu va merge.
+1037|{0}Gospodăria ta{1}Rochdale, Greater Manchester
+1038|{0}Această carte e scrisă pentru gospodăria ta.{1} Se bazează pe casa ta, pe oamenii din ea și pe ce aveți deja. Nimic din ea nu e general.
+1039|{0} adulți, {1} copii de {2}-{3} ani, {4} copil sub {5} ani
+1040|Centrală pe gaz
+1041|Grădină sau curte
+1042|S-ar putea să poți găti în continuare pe aragazul pe gaz, aprins cu chibritul.
+1043|Poți folosi un aragaz de camping afară, în grădină.
+1044|{0}{1}Verifică trusa de prim ajutor
+1045|Durează {0} minute. Înlocuiește ce s-a folosit sau a expirat. Du medicamentele vechi la farmacie.
+1046|{0} conserve de ton, macrou sau pui
+1047|{0} pachete de biscuiți sărați, biscuiți de ovăz sau lipii
+1048|{0} pachet de fulgi de ovăz și {1} litri de lapte UHT
+1049|{0} caserole de budincă de vanilie sau de orez, gata de mâncat
+1050|{0} borcan de unt de arahide
+1051|{0}{1}Medicamentele pe care le iei
+1052|Contorul de gaz și maneta
+1053|{0} conservă de ton sau macrou
+1054|{0} lingură de unt de arahide sau puțin ulei de măsline
+1055|Biscuiți sărați, biscuiți de ovăz sau lipii
+1056|{0} linguri de fulgi de ovăz
+1057|Cam {0} ml de lapte UHT
+1058|{0} lipie
+1059|Jumătate de conservă de pui sau ton
+1060|Biscuiți cu unt de arahide {0}(Gustare){1}
+1061|Biscuiți sărați sau de ovăz
+1062|Unt de arahide
+1063|Ține cel puțin un sfert de rezervor de combustibil. Nu porni niciodată motorul într-un garaj închis.
+1064|O listă gratuită ținută de companiile de energie și apă. Cei înscriși primesc informații despre penele de curent și ajutor în plus. Înscrie-te la furnizorul de energie, la Electricity North West ({0} {1} {2} sau {3}, enwl.co.uk/priority) și la compania de apă (United Utilities, {4} {5} {6}).
+1065|{0}Faceți împreună un tur al casei.{1} Găsiți robinetul principal de apă, tabloul electric, contorul de gaz și maneta lui, lanterna, trusa de prim ajutor și această carte.
+1066|{0}Cine are grijă de cine.{1} Stabiliți cine verifică persoanele care au nevoie de ajutor în plus și cine verifică vecinii.
+1067|British Gas (numărul de pe factură)
+1068|United Utilities: {0} {1} {2} (Priority Services)
+1069|Această carte a fost făcută pentru gospodăria ta pe baza răspunsurilor tale. Actualizeaz-o în fiecare anotimp și de fiecare dată când se schimbă ceva acasă.
+1070|În ce fel de locuință stă?
+1071|Locuința e a ei sau stă cu chirie?
+1072|Cine locuiește acolo?
+1073|Are nevoi de sănătate de care ar trebui să ținem cont?
+1074|Răspunsurile despre sănătate sunt folosite doar pentru planul ei. Nu sunt niciodată împărtășite sau vândute. Răspunde doar dacă a fost de acord.
+1075|Pentru {0} persoană, trei zile înseamnă
+1076|Mama
+1077|Paracetamol și ibuprofen
+1078|Calculată pentru {0} persoană pentru trei zile. Prețurile sunt estimative. Cumpără de unde vrei: mâncarea și apa sunt de obicei cele mai ieftine la supermarket.
+1079|Verifică întâi persoana în vârstă.
+1080|Ești înscris în Priority Services Register. Compania de apă îți poate aduce apă.
+1081|Mama: plan de urgență
+1082|{0}Mama{1}Rochdale, Greater Manchester
+1083|{0}Această carte e scrisă pentru mama.{1} Se bazează pe casă, pe oamenii din ea și pe ce există deja. Nimic din ea nu e general.
+1084|{0} adult peste {1} ani
+1085|Motorină sau GPL
+1086|Doar balcon
+1087|Calculată pentru {0} persoană pentru trei zile.
+1088|Ai nevoie de {0}{1} litri{2} pentru trei zile: {3} persoană × {4} litri × {5} zile. Adică cam {6} sticle mari de {7} litri. Asta e pentru băut și preparat simplu de mâncare. Spălatul și toaleta au nevoie de mai mult.
+1089|{0}{1}Paracetamol și ibuprofen
+1090|Panourile solare probabil se vor opri la o pană de curent, dacă nu ai o baterie de casă.
+1091|Această carte a fost făcută pentru mama pe baza răspunsurilor tale. Actualizeaz-o în fiecare anotimp și de fiecare dată când se schimbă ceva acasă.
+1092|Gata: Întreabă proprietarul despre detectoare
+1093|Întreabă proprietarul despre detectoare{0}Mai întâi{1}
+1094|Un mesaj sau un telefon
+1095|Proprietarii privați din Anglia trebuie să monteze un detector de fum la fiecare etaj și un detector de monoxid de carbon în orice cameră cu un aparat fix care arde combustibil, cum ar fi o centrală sau o sobă pe lemne (aragazele pe gaz nu se pun). Trebuie să le repare sau să le înlocuiască când raportezi o defecțiune. Proprietarii de locuințe sociale au obligații asemănătoare. Întreabă în scris și păstrează o copie.
+1096|{0}Ipswich Borough Council: regulile pentru detectoare în locuințele închiriate{1}. Un rezumat clar al regulilor.
+1097|{0}GOV.UK: ghid pentru proprietari{1}. Broșura oficială.
+1098|Locuința ta pierde căldura repede. Vârstnicii și copiii mici răcesc cel mai repede.
+1099|Plita ta are nevoie de curent. Un aragaz de camping e în regulă afară în grădină, niciodată în casă. Cartea ta are rețete simple, fără gătit.
+1100|Întreabă proprietarul despre detectoare
+1101|Strânge bani pentru: apă de băut
+1102|Strânge bani pentru: lanternă și baterii de rezervă
+1103|Verifică întâi persoana în vârstă și copiii mici.
+1104|Poți folosi un aragaz de camping sau un grătar în grădină. Niciodată în casă, în garaj sau pe balcon.
+1105|{0} adult, {1} adult peste {2} ani, {3} copil sub {4} ani
+1106|Lemne sau cărbune
+1107|Nu știu
+1108|Soba pe lemne sau cărbune va da în continuare căldură. Asigură-te că ai un detector de monoxid de carbon.
+1109|{0}{1}Întreabă proprietarul despre detectoare
+1110|Un mesaj sau un telefon. Proprietarii privați din Anglia trebuie să monteze un detector de fum la fiecare etaj și un detector de monoxid de carbon în orice cameră cu un aparat fix care arde combustibil, cum ar fi o centrală sau o sobă pe lemne (aragazele pe gaz nu se pun). Trebuie să le repare sau să le înlocuiască când raportezi o defecțiune. Proprietarii de locuințe sociale au obligații asemănătoare. Întreabă în scris și păstrează o copie.
+1111|Laptele praf trebuie preparat cu apă proaspăt fiartă, de cel puțin {0}°C. Dacă se opresc gazul sau apa, nu poți face un biberon sigur. Apa îmbuteliată nu e recomandată pentru laptele praf. Folosește marca obișnuită a bebelușului.
+1112|Aragazul pe gaz poate merge în continuare dacă îl aprinzi cu chibritul, dar planifică de parcă n-ar merge. Nu ai un loc sigur unde să gătești afară. Cartea ta are rețete simple, fără gătit.
+1113|{0} lanternă
+1114|Verifică întâi copiii mici și pe cine folosește echipamente electrice.
+1115|{0} adult, {1} copil sub {2} ani
+1116|Apartament, etajul {0} sau {1}
+1117|{0}{1}Lanternă și baterii de rezervă: {2} lanternă
+1118|{0} persoane × {1} litri × {2} zile = {3} litri. Apartamentul tău e sus. Pompele care urcă apa în clădire au nevoie de curent, așa că robinetele se pot opri chiar dacă pe stradă încă e apă.
+1119|{0}{1} pliculețe cu mâncare pentru bebeluși{2}. Cele care se storc și nu trebuie încălzite.
+1120|{0} adulți, {1} copil sub {2} ani
+1121|Apartament, etajele {0}-{1}
+1122|{0} pliculețe cu mâncare pentru bebeluși
+1123|Planul tău e gata.
+1124|Creează un cont ca să-l salvezi, să revii la el și să vezi ce se întâmplă și ar putea afecta gospodăria ta.
+1125|Creează-ți contul
+1126|Prenume
+1127|Adresă de e-mail
+1128|Parolă {0}Cel puțin {1} caractere{2}
+1129|Trimite-mi pe e-mail câte un pas mic pe săptămână. {0}Opțional. Te poți opri oricând.{1}
+1130|Creează contul și vezi planul
+1131|Ai deja cont? {0}Conectează-te{1}
+1132|Prototip: conturile durează doar până închizi pagina.
+1133|Parolă
+1134|Ești nou aici? {0}Creează un cont{1}
+1135|Introdu o adresă de e-mail, de exemplu nume@example.com.
+1136|Introdu prenumele.
+1137|Folosește cel puțin {0} caractere pentru parolă.
+1138|Deconectare
+1139|Bună, {0}.
+1140|Gospodăria {0} este {1}pregătită {2}%{3} pentru {4} de ore. Mai sunt {5} lucruri de rezolvat.
+1141|Se întâmplă acum
+1142|Pană de curent, fără apă, inundație, trebuie să plecăm, cineva e rănit
+1143|Planul meu
+1145|Deschide, tipărește sau salvează ca PDF
+1146|Plan pentru mama
+1147|Sau pentru altă rudă
+1148|Oferă Cartea Fettle
+1149|Cuiva pentru care îți faci griji
+1150|Ține-ți planul activ tot anul:
+1151|Mesaje „Sunt bine” de la mama și familie în timpul furtunilor
+1152|Alerte locale pentru codul tău poștal, cu planul tău atașat
+1153|Mementouri înainte să expire apa, mâncarea și bateriile
+1154|Împarte planul și sarcinile cu toți cei din casă
+1155|Încearcă Fettle Plus gratuit {0} de zile
+1156|Apoi £{0} pe lună, sau inclus un an cu cartea tipărită. Prototip: nu se ia nicio plată.
+1157|De ce contează chiar acum
+1158|Ce s-a întâmplat și ce înseamnă pentru gospodăria ta. Actualizat pe {0} {1} {2}.
+1159|Cibernetic
+1160|Agenția britanică de securitate cibernetică avertizează asupra atacurilor cu AI asupra aprovizionării cu energie, apă și alimente
+1161|Raportul anual al National Cyber Security Centre spune că e „foarte probabil” ca ransomware bazat pe AI să fie folosit împotriva infrastructurii critice a Marii Britanii până în {0}. Menționează electricitatea, apa și distribuția alimentelor ca fiind în pericol.
+1162|{0}Ce înseamnă pentru tine{1}Perturbările nu vin doar de la vreme. Dacă nu mai merg plățile cu cardul, telefoanele sau internetul, lucrurile de bază din planul tău tot merg: numerar, un radio cu baterii și numere scrise pe hârtie.
+1163|Sursa: {0}National Security News{1}
+1164|Provizii
+1165|Radiourile, lanternele și bateriile externe se vând repede după apelul guvernului
+1166|După anunțul Be Ready, BBC Newsnight a relatat că vânzările de lanterne la Maplin au crescut cu {0}%, iar cele de radiouri la Robert Dyas cu {1}% față de săptămâna anterioară. Un magazin de echipamente de urgență a raportat o creștere de {2}%.
+1167|{0}Ce înseamnă pentru tine{1}Nu trebuie să te grăbești sau să faci stocuri. Cumpărând câte puțin în fiecare lună, prețurile rămân normale pentru toată lumea și ajungi unde trebuie. Planul tău lunar face exact asta.
+1168|Vezi planul meu lunar
+1169|Sursa: {0}WION, citând BBC Newsnight{1}
+1170|Vreme
+1171|Furtuna lasă peste {0} de locuințe fără curent, inclusiv în Greater Manchester
+1172|Furtunile de weekend au lăsat fără curent peste {0} de locuințe; au fost afectate zonele din nord, inclusiv Greater Manchester, Cumbria și Lancashire, cu avertizări de vânt în tot nordul.
+1175|Sursa: {0}{1}news, citând Sky News{2}
+1176|Guvern
+1177|Guvernul cere fiecărei gospodării să fie pregătită să se descurce trei zile
+1178|Cabinet Office a lansat Be Ready, prima etapă a unei campanii de trei ani. Cere gospodăriilor să păstreze mâncare și apă pentru trei zile și să se înscrie în Priority Services Register dacă au nevoie de ajutor în plus.
+1179|{0}Ce înseamnă pentru tine{1}Acesta e standardul pe care e construit planul tău. Studiul guvernului a arătat că doar {2}% dintre oameni au un plan pentru gospodărie.
+1180|Sursa: {0}GOV.UK{1}
+1181|O conductă spartă lasă fără apă mii de locuințe din sudul Londrei și Surrey
+1182|Thames Water a spus că au fost afectate până la {0} de proprietăți, cifră revizuită ulterior la {1}, fără un termen pentru reparație. Clienții Priority Services au primit apă acasă. Ceilalți au stat la coadă la punctele cu apă îmbuteliată.
+1183|{0}Ce înseamnă pentru tine{1}Întreruperile de apă vin cu puțin avertisment. Dacă locuiești sus, poți rămâne fără apă și la o pană de curent, pentru că pompele clădirii au nevoie de electricitate. Apa pusă deoparte înseamnă că nu stai la coadă, iar Priority Services Register înseamnă că apa poate veni la tine.
+1184|Sursa: {0}Newswav{1}
+1185|O mică centrală electrică din Regatul Unit, oprită patru zile de un atac cibernetic
+1186|Oficialii au legat atacul asupra unui mic generator de energie de hackeri asociați cu Iranul. Nu a existat un impact mai larg asupra rețelei naționale.
+1187|{0}Ce înseamnă pentru tine{1}Nu s-a raportat că vreo locuință a rămas fără curent, dar arată de ce sfaturile acoperă acum și atacurile cibernetice, nu doar furtunile.
+1188|Sursa: {0}Cybersecurity Dive{1}
+1189|Inundații
+1190|Incident major în Greater Manchester: inundațiile obligă peste {0} de persoane să-și părăsească locuințele
+1191|După inundațiile de Anul Nou, inclusiv în Stockport, s-a declarat incident major. Peste {0} de persoane au trebuit să-și părăsească locuințele, iar apoi a urmat o alertă de frig.
+1192|{0}Ce înseamnă pentru tine{1}Inundațiile și frigul vin adesea împreună. Ține bagajul de urgență și actele deasupra nivelului solului și abonează-te la avertizările de inundații la {2} {3} {4}.
+1193|Sursa: {0}Hits Radio Manchester{1}
+1194|Rezumăm știri din surse publice și punem link la fiecare. Verificate săptămânal de [nume, rol]. În caz de urgență, urmează alertele oficiale.
+1195|Fettle Plus {0}Perioadă de probă{1}
+1196|Verificări
+1197|Tu
+1198|Încă nicio verificare
+1199|Sunt bine
+1200|Întreabă
+1201|Alerte pentru Rochdale
+1202|Nicio avertizare pentru zona ta acum.
+1203|Arată o avertizare de exemplu
+1204|În aplicația reală: avertizări meteo Met Office, avertizări de inundații Environment Agency și pene de curent Electricity North West.
+1205|Urmează
+1206|Verificarea de anotimp: {0} minute cu cartea
+1207|Reîncarcă bateria externă
+1208|Adaugă date de expirare când bifezi lucruri în plan.
+1209|Împărtășit cu cei din casă
+1210|Invită-ți partenerul sau copiii mai mari să vadă planul și să împartă sarcinile.
+1211|Nume
+1212|E-mail (opțional)
+1213|Invită
+1214|Cine: Are grijă de rezerva de apă
+1215|Cine?
+1216|Cine: Verifică trusa de prim ajutor
+1217|Cine: Încarcă bateria externă
+1218|Cine: Verifică vecinii
+1219|Actualizează cartea în fiecare anotimp
+1220|Cine: Actualizează cartea în fiecare anotimp
+1221|Exemplu: avertizare galbenă de vânt
+1222|Vântul puternic ar putea provoca pene de curent de la ora {0} pm în seara asta.
+1223|Deschide pașii mei pentru pană de curent
+1224|Roag-o pe mama să confirme că e bine
+1225|Șterge avertizarea de exemplu
+1226|Ai confirmat: ești bine.
+1228|Adaugă întâi gospodăria mamei, apoi o poți ruga să confirme că e bine.
+1229|Adaugă un nume.
+1230|Invitație pregătită pentru {0} (prototip, nimic trimis).
+1231|Ultima confirmare: azi la {0}
+1233|Invitat
+1234|Apa de băut expiră
+1235|Pentru mama, tata sau oricine pentru care îți faci griji la furtună. Ei răspund la întrebări (sau le răspunzi împreună) și primesc propria carte.
+1236|Trimite-le verificarea gratuită, cu cartea digitală plătită
+1237|Trimite-le prin poștă cartea tipărită, cu un an de Fettle Plus
+1238|Numele lor
+1239|De exemplu, Mama
+1240|Un mesaj de la tine
+1241|Îmi fac griji pentru tine când e vreme rea. Asta ne va ajuta pe amândoi să fim liniștiți.
+1242|Continuă la plată
+1243|Adaugă numele.
+1244|Cadou pregătit pentru mama
+1245|În aplicația reală ai plăti aici, iar noi l-am trimite cu mesajul tău. Prototip: nimic nu se plătește sau trimite.
+1246|Adresa de e-mail și parola nu se potrivesc cu niciun cont.
+1247|Ești nou aici? {0}Verifică-ți mai întâi gospodăria{1}
+1248|Continuă verificarea (întrebarea {0})
+1249|Litere normale
+1250|Faceți planuri cu locuitorii pe care îi sprijiniți, urmăriți progresul, comandați cărți tipărite și vedeți totaluri anonime pe circumscripții.
+1251|Prenumele tău
+1252|E-mail de serviciu
+1253|Organizație
+1254|De exemplu, Rochdale Borough Council
+1255|Rolul tău
+1256|Asistent social
+1257|Responsabil de locuințe
+1258|Lucrător de sprijin sau îngrijitor
+1259|Voluntar
+1260|Planificator pentru situații de urgență
+1261|Altul
+1262|Creează cont profesional
+1263|Doar te uiți?
+1264|Deschide o listă de cazuri model cu {0} de gospodării inventate din Rochdale, cu vizite, scoruri și un raport pe circumscripții.
+1265|Deschide lista de cazuri model
+1266|Introdu organizația.
+1267|Lista de cazuri
+1268|Raport
+1269|{0}{1}{2} Responsabil de locuințe
+1270|{0} de gospodării în lista ta. Aceasta e o listă model, cu gospodării inventate.
+1271|Gospodării
+1272|Pregătirea medie, de la prima vizită la ultima
+1273|Înscrieri în Priority Services Register făcute de tine
+1274|Gospodării cu vizită de control
+1275|+ Adaugă un locuitor
+1276|Întâi consimțământul, apoi întrebările împreună
+1277|Raport pe circumscripții
+1278|Totaluri anonime pentru echipa ta și pentru planificatorii de urgență
+1279|Comenzi de cărți
+1280|Tipărește sau comandă cărți în volum
+1281|Lista de verificare pentru vizite
+1282|O pagină de tipărit și de luat cu tine
+1283|Locuitorii apar doar după numărul de referință. Numele rămân în sistemul vostru de cazuri.
+1284|{0}{1}{2}engleză{3}
+1285|La zi
+1286|Urmează vizita de control
+1287|Instruire pentru echipa ta
+1288|O sesiune de {0} de minute pentru personalul de teren: ce să verifici la o vizită, cum vorbești despre urgențe fără să sperii oamenii, Priority Services Register și când să trimiți cazul mai departe. Ținută de Fettle, față în față sau online.
+1289|Întreabă despre instruire
+1290|← Lista de cazuri
+1291|{0}{1}{2} {3} · engleză
+1292|{0}% pregătit
+1293|Mai sunt {0} lucruri de rezolvat. La zi.
+1294|Vizite
+1295|{0} sept
+1296|Prima vizită
+1297|Vizită de control
+1298|Deschide planul și bifează ce au
+1299|Salvează vizita de azi
+1300|Înscris pe {0} sept
+1301|Carte tipărită
+1302|Livrată
+1303|Ce ar face dacă s-ar întâmpla acum
+1304|Consimțământ
+1305|Plan păstrat: da. Inclus în totalurile zonei: da. Contact pentru vizita de control: da.
+1306|Șterge acest plan la cererea lor
+1307|Deja înscris
+1308|Adaugă în coada de tipărire
+1309|Mai sunt {0} lucruri de rezolvat. Urmează vizita de control.
+1310|Marchează ca înscris
+1311|Arată în {0}
+1312|Planul lor în limba lor
+1313|Plan păstrat: da. Inclus în totalurile zonei: nu. Contact pentru vizita de control: da.
+1314|Înscris pe {0} {1}
+1315|{0} a fost adăugat în coada de tipărire.
+1316|Vizită salvată: {0}%.
+1317|Fiecare carte e făcută pentru o singură gospodărie, în limba ei. Cei peste {0} de ani primesc litere mari dacă nu schimbi.
+1318|Previzualizare
+1319|Rezumatul comenzii
+1320|{0} cărți. Engleză: {1}. Trimise la biroul tău într-un singur colet sau la fiecare locuință.
+1321|Trimite comanda la tipar
+1322|Descarcă fișierele de tipar
+1323|Totaluri anonime de la {0} gospodării care au fost de acord să fie numărate. Orice grup mai mic de {1} e ascuns, ca nimeni să nu poată fi identificat. Circumscripțiile cu mai puțin de {2} gospodării sunt ascunse.
+1324|În Priority Services Register
+1325|Au apă pentru {0} zile
+1326|Au un radio care merge fără priză
+1327|Cine ar putea avea nevoie primul de ajutor
+1328|Pentru planificatorii de urgență. Cifre din toate circumscripțiile.
+1329|Depind de echipamente care au nevoie de curent
+1330|Țin un medicament la frigider
+1331|Au {0} de ani sau mai mult și locuiesc singuri
+1332|Locuiesc la etajul {0} sau mai sus
+1333|Pe circumscripții
+1334|Circumscripție
+1335|Pregătire
+1336|Radio
+1337|Registru
+1338|Mai puțin de {0}
+1339|Ascuns: prea puține gospodării
+1340|Descarcă ca foaie de calcul (CSV)
+1341|Tipărește
+1342|Pregătirea este scorul Fettle pentru {0} de ore acasă. Gospodăriile au răspuns ele însele, cu un lucrător. Cifrele descriu oamenii vizitați, nu pe toată lumea din circumscripție.
+1343|Lista Fettle de verificare pentru vizite la domiciliu
+1344|Fettle for Communities. Referință: ________ Data: ________
+1345|Detector de fum la fiecare etaj, testat
+1346|Detector de monoxid de carbon lângă centrală, sobă sau orice aparat pe combustibil
+1347|În Priority Services Register la companiile de energie și apă
+1348|Medicamente: rezervă pentru o săptămână și cum se păstrează fără frigider
+1349|Echipamente care au nevoie de curent: durata bateriei și numărul furnizorului disponibil {0} de ore
+1350|{0} litri de apă de persoană pe zi, pentru {1} zile
+1351|O lanternă și un radio care merge fără priză
+1352|Niște numerar acasă
+1353|Cineva care va trece pe la ei și un cartonaș „verifică dacă sunt bine”
+1354|Pot ieși? Scări, lifturi, chei, o cale liberă
+1355|Haine groase și pături pentru o casă rece
+1356|Contor cu preplată sau economisesc la încălzire? Trimite-i la consiliere financiară
+1357|Note
+1358|Dacă ai o îngrijorare legată de protecția persoanei (safeguarding), urmează procedura organizației tale. Pentru siguranța la incendiu, cere de la Greater Manchester Fire and Rescue Service o vizită gratuită. În caz de urgență, sună la {0}.
+1359|Comanda pentru {0} cărți e gata de trimis. (Prototip: nimic trimis sau plătit.)
+1360|Nimic în coadă. Deschide un locuitor și alege {0}Carte tipărită{1}.
+1361|Înainte să începi: consimțământul
+1362|Citește-i asta locuitorului, în limba lui dacă poți. Folosește un interpret dacă e nevoie.
+1363|„Am vrea să facem împreună un plan de urgență pentru casa dumneavoastră. Durează cam {0} minute. Vă vom întreba despre casă, cine locuiește aici și eventualele nevoi de sănătate, ca planul să vi se potrivească. Veți primi propria copie și o carte tipărită, dacă doriți. Răspunsurile rămân la {1} și la Fettle. Nu sunt vândute niciodată. Puteți refuza orice întrebare și ne puteți cere oricând să vă ștergem planul.”
+1364|{0}Sunt de acord să le facem și să le păstrăm planul.{1} Obligatoriu.
+1365|{0}Răspunsurile lor pot fi incluse în totaluri anonime pentru zona lor.{1} Nimeni nu poate fi identificat. Numerele mici sunt ascunse. Opțional.
+1366|{0}Îi putem contacta pentru o vizită de control peste aproximativ o lună.{1} Opțional.
+1367|{0}Altcineva răspunde în numele lor{1}, de exemplu un îngrijitor sau o rudă, pentru că nu pot răspunde singuri. Urmează procedura organizației tale privind capacitatea de decizie.
+1368|Limba planului și a cărții
+1369|English (engleză)
+1370|{0} (poloneză)
+1371|{0} (română)
+1372|{0} (punjabi)
+1373|{0} (urdu)
+1374|Numele de pe copertă {0}Opțional. Apare doar în cartea lor, de exemplu „Ahmed”.{1}
+1375|Referință: {0}R-{1}{2}
+1376|Anulează
+1377|Începe întrebările
+1378|Ai nevoie de acordul lor ca să faci și să păstrezi un plan. Dacă refuză, e în regulă: dă-le pliantul gratuit.
+1379|Gata: Detector de monoxid de carbon
+1380|Detector de monoxid de carbon{0}Mai întâi{1}
+1381|{0} lângă orice aparat pe gaz sau combustibil
+1382|Monoxidul de carbon nu are miros și poate ucide.
+1383|Detector de monoxid de carbon FireAngel, baterie de {0} ani
+1384|Baterie sigilată, deci nu e nimic de înlocuit timp de {0} ani.
+1385|Detector de monoxid de carbon Kidde, {0} ani
+1386|Tot cu baterie sigilată de {0} ani.
+1387|Strânge bani pentru: detector de monoxid de carbon
+1388|Detector de monoxid de carbon
+1389|Cartea ta e gata: {0} pagini, A{1}.
+1390|Deschide cartea mea
+1391|Schimbă detaliile
+1392|Planul R-{0} a fost șters.

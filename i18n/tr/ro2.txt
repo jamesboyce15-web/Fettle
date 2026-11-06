@@ -1,0 +1,3 @@
+0|Ei se ocupă de liniile electrice din Greater Manchester. Roagă-i să trimită datele tale și companiilor de gaz și apă.
+1|Sarcini, lista de cumpărături și planul lunar
+2|{0}Ce înseamnă pentru tine{1}Aceasta e cea mai probabilă urgență prin care vei trece. Încălzirea se va opri când se ia curentul, chiar și cea pe gaz, așa că hainele groase și păturile contează. Anunță pana de curent la {2}. Înscrierea în Priority Services Register înseamnă informații la zi și ajutor în plus.

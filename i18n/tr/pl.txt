@@ -1,0 +1,1376 @@
+1|Większy tekst
+2|A{0}A{1}
+3|Prototyp
+4|Zaloguj się
+5|{0}fettle{1} {2}(czasownik, Lancashire, ok. {3}){4}: przygotować, doprowadzić do porządku.
+6|Przygotuj swój dom.
+7|Gdyby dziś wieczorem zabrakło prądu, wody lub telefonu, czy Twoje gospodarstwo domowe poradziłoby sobie przez trzy dni? Odpowiedz na kilka prostych pytań, a powiemy Ci dokładnie, czego potrzebujesz, ile tego i od czego zacząć.
+8|Sprawdź moje gospodarstwo domowe
+9|Bezpłatnie. Około {0} minut. Rejestracja dopiero po zobaczeniu planu.
+10|Oparte na oficjalnych wytycznych z Wielkiej Brytanii: Cabinet Office, NHS, Food Standards Agency i straży pożarnej.
+11|To już się dzieje.
+12|Nie odległa katastrofa. Zwykłe zakłócenia, które trwają na tyle długo, że mają znaczenie.
+13|Ponad {0} domów traci prąd podczas burzy
+14|W tym domy w Greater Manchester, Cumbrii i Lancashire. {0}{1}news, za Sky News{2}
+15|Pęknięta magistrala odcina wodę w {0} budynkach
+16|Nie podano terminu naprawy. Ludzie stali w kolejkach po wodę butelkowaną. {0}Newswav{1}
+17|Powodzie zmuszają ponad {0} osób do opuszczenia domów w Greater Manchester
+18|Poważny incydent, a po nim ostrzeżenie przed zimnem. {0}Hits Radio{1}
+19|Brytyjska agencja ds. cyberbezpieczeństwa ostrzega, że systemy energetyczne i wodne będą celem ataków
+20|Według niej ataki z użyciem AI na infrastrukturę krytyczną są „wysoce prawdopodobne” do {0} r. {1}National Security News{2}
+21|Rząd prosi teraz każdy dom, by poradził sobie przez trzy dni.
+22|Cabinet Office uruchomił ({0} {1} r.) kampanię {2}Be Ready{3}, prosząc gospodarstwa domowe o zapas wody i jedzenia na trzy dni. {4}GOV.UK{5}
+23|Ale lista kontrolna jest taka sama dla wszystkich. Rodzina na dziewiątym piętrze z niemowlęciem i kuchenką elektryczną potrzebuje zupełnie innego planu niż para w domu z kuchenką gazową i ogrodem.
+24|Mieszkanie, {0}. piętro
+25|{0} dorosłych, niemowlę na mleku modyfikowanym, kuchenka elektryczna, brak ogrodu
+26|{0}Gotowe mleko modyfikowane.{1} Bez prądu nie da się zagotować wody do mleka w proszku.
+27|{0}{1} litrów wody, zgromadzonej już teraz.{2} Pompy w budynku potrzebują prądu.
+28|{0}Tylko jedzenie bez gotowania.{1} Nie ma bezpiecznego miejsca na kuchenkę turystyczną.
+29|Dom z ogrodem
+30|{0} dorosłych, kuchenka gazowa, centralne ogrzewanie gazowe
+31|{0}Czujnik tlenku węgla.{1} Urządzenia gazowe i pokusa gotowania w środku.
+32|{0}Koce i ciepły pokój.{1} Piec gazowy nie działa bez prądu.
+33|{0}Zapałki przy kuchence.{1} Gaz może nadal działać, ale zapalnik nie.
+34|Dlatego Fettle zaczyna od Twojego domu, a nie od ogólnej listy.
+35|Większość z nas jeszcze nie jest gotowa.
+36|Rządowe badanie z {0} r., w którym wzięło udział ponad {1} osób, wykazało:
+37|{0}{1}%{2} ma w domu wodę butelkowaną na mniej niż jeden dzień.
+38|{0}{1}%{2} ma domowy plan na wypadek sytuacji kryzysowej.
+39|{0}{1}%{2} nie ma żadnej z podstawowych rzeczy z rządowej listy.
+40|{0}{1}%{2} osób w Anglii i Walii nigdy nie słyszało o swoim Local Resilience Forum.
+41|Źródło: {0}Cabinet Office, UK Public Survey of Risk Perception, Resilience and Preparedness {1}{2}
+42|Dlaczego ludzie to odkładają i jak to ułatwiamy.
+43|Takie powody podali ludzie w tym samym badaniu.
+44|„To za drogie.” {0}{1}%{2}
+45|Najpierw bezpłatne zadania, potem trochę co miesiąc, w budżecie, który wybierzesz. Zobaczysz datę, kiedy będziesz gotowy.
+46|„To się tylko przeterminuje.” {0}{1}%{2}
+47|Twoja lista jedzenia to rzeczy, które już jesz, zużywane w zwykłych posiłkach i uzupełniane. Przypominamy co sezon.
+48|„Nie wiem, co robić.” {0}{1}%{2}
+49|Proste pytania, proste odpowiedzi. Konkretne ilości, a nie „jedzenie na trzy dni”.
+50|„Myślenie o tym jest stresujące.” {0}{1}%{2}
+51|Małe, spokojne kroki. Bez strachu, bez zestawów na koniec świata. Większość zadań zajmuje mniej niż godzinę.
+52|„Nie mamy miejsca.” {0}{1}%{2}
+53|Krótka lista dopasowana do Twojego gospodarstwa. Nic zbędnego.
+54|Jak to działa
+55|Odpowiedz na kilka prostych pytań
+56|O Twoim domu, kto w nim mieszka i co już masz. Około {0} minut.
+57|Otrzymaj bezpłatny plan
+58|Twój wynik gotowości, bezpłatne zadania na początek, lista zakupów z konkretnymi ilościami i plan miesiąc po miesiącu.
+59|Zamów Książkę Fettle
+60|Twój pełny plan na {0} godziny w formie prawdziwej książki, z Twoimi numerami, przepisami, pierwszą pomocą i scenariuszem rozmowy rodzinnej.
+61|Książka{0}Fettle
+62|Gospodarstwo domowe Boyce{0}{1}Rochdale{2}
+63|Książka do szuflady w kuchni.
+64|Gdy nie ma prądu, aplikacja w telefonie na nic się nie zda. Książka Fettle to Twój plan, wydrukowany i napisany dla Twojego domu.
+65|Numery alarmowe na wewnętrznej stronie okładki
+66|Pierwsze {0} godziny, godzina po godzinie
+67|Poradniki o wodzie, jedzeniu, cieple, lekach i pierwszej pomocy
+68|Przepisy bez gotowania z tego, co masz w szafce
+69|{0}-minutowy scenariusz rozmowy rodzinnej
+70|Co spakować i dokąd iść, jeśli trzeba opuścić dom
+71|Strony do sprawdzania i aktualizacji co sezon
+72|Zdjęcie
+73|„Planowałem logistykę ewakuacji tysięcy ludzi z Kabulu w {0} r. Przygotowanie gospodarstwa domowego na trzy dni to ta sama praca, tylko mniejsza: właściwe rzeczy, we właściwym miejscu, i każdy wie, co robić.”
+74|{0}[Imię założyciela]{1}, założyciel, Rochdale. {2}[Cytat zastępczy do napisania przez Ciebie.]{3}
+75|Zacznij za darmo.
+76|Sprawdzenie gotowości
+77|Bezpłatnie
+78|Twój wynik, zadania, lista zakupów, plan miesięczny, tryb awaryjny i plany dla mamy lub innych krewnych.
+79|Książka Fettle, wersja cyfrowa
+80|Twoja pełna książka do wydrukowania lub zapisania jako PDF. Jednorazowo.
+81|Książka Fettle, wersja drukowana
+82|Wydrukowany egzemplarz wysłany pocztą, z rokiem Fettle Plus w cenie.
+83|Fettle Plus
+84|miesięcznie
+85|Kontakt z rodziną, lokalne alerty, przypomnienia o terminach ważności i udostępnianie domownikom.
+86|Ceny testowe dla prototypu. {0}Podaruj Książkę Fettle{1}
+87|{0}Fettle for Communities{1} Dla rad gmin, dostawców mieszkań i zespołów wsparcia
+88|Osoby najbardziej zagrożone najrzadziej pobierają aplikacje.
+89|Starsi ludzie mieszkający sami. Osoby zależne od tlenu lub łóżka elektrycznego. Rodziny z noworodkiem w mieszkaniu tymczasowym. Osoby, które słabo czytają po angielsku. Fettle daje Twoim pracownikom terenowym {0}-minutową wizytę, która kończy się prawdziwym planem i wydrukowaną książką.
+90|{0}Wizyty wspierające.{1} Pracownicy przechodzą przez pytania razem z mieszkańcem, po odczytaniu na głos zgody.
+91|{0}Wydrukowana książka dla każdego domu{1}, po angielsku, polsku, rumuńsku, pendżabsku lub w urdu, dużą czcionką dla starszych mieszkańców.
+92|{0}Zapisy do Priority Services Register{1} podczas wizyty, i to liczone.
+93|{0}Postępy, które można raportować.{1} Gotowość przy pierwszej wizycie i przy wizycie kontrolnej, według gospodarstwa i okręgu.
+94|{0}Anonimowe sumy dla okręgów{1} dla planistów kryzysowych: kto zależy od zasilanego sprzętu, kto mieszka sam, kto mieszka wysoko. Małe liczby są zawsze ukryte.
+95|{0}Szkolenia dla pracowników terenowych{1} i lista kontrolna wizyty domowej.
+96|Zobacz przykładową listę podopiecznych
+97|Konto profesjonalne
+98|Pilotaże od {0} gospodarstw. Domy opieki: przeglądy planów, karty ewakuacyjne mieszkańców, szkolenia personelu i ćwiczenia. Zapytaj nas.
+99|Pytania
+100|Czy to oficjalna porada?
+101|Fettle jest niezależny. Wszystko, co polecamy, pochodzi z oficjalnych źródeł brytyjskich, do których podajemy linki, a my zamieniamy to w plan dla Twojego domu. W sytuacji kryzysowej zawsze stosuj się do oficjalnych komunikatów.
+102|Czy muszę kupić dużo rzeczy?
+103|Nie. Wiele najważniejszych zadań jest bezpłatnych, np. zapis do Priority Services Register. Resztę rozkładamy na miesiące w budżecie, który wybierzesz. Nigdy nie sprzedajemy zestawów na koniec świata.
+104|Wynajmuję lub mieszkam w bloku. Czy to też dla mnie?
+105|Tak. Mieszkania, zwłaszcza wysoko, mają własne zagrożenia, np. pompy wody i windy, które potrzebują prądu. Plan to uwzględnia.
+106|Co robicie z moimi odpowiedziami o zdrowiu?
+107|Są opcjonalne, służą tylko do stworzenia planu i nigdy nie są udostępniane ani sprzedawane. Jeśli pracownik rady gminy lub organizacji charytatywnej pomaga Ci zrobić plan, on też może go zobaczyć. Tylko za Twoją zgodą Twoje odpowiedzi są liczone w anonimowych sumach dla Twojej okolicy, a małe liczby są zawsze ukryte.
+108|Czy Fettle jest w innych językach?
+109|Tak. Fettle i Książka Fettle są dostępne po angielsku, polsku, rumuńsku, pendżabsku i w urdu. Wybierz język u góry strony.
+110|Czy mogę zrobić plan dla mojej mamy?
+111|Tak. Dodaj kolejne gospodarstwo domowe, za jej zgodą, i trzymaj oba plany w jednym miejscu.
+112|Czy zarabiacie na produktach, które polecacie?
+113|Tak, czasami. Niektóre propozycje produktów to linki do Amazon, oznaczone jako „paid link”. Jako partner Amazon Fettle zarabia na kwalifikujących się zakupach, bez dodatkowych kosztów dla Ciebie. Nigdy nie zmienia to naszych zaleceń, a kupować możesz wszędzie. Wydrukowana książka nie zawiera linków do sklepów.
+114|Trzy minuty teraz. Spokój na trzy dni.
+115|Bezpłatnie. Rejestracja dopiero po zobaczeniu planu.
+116|Wstecz
+117|Dalej
+118|Zapisz i dokończ później
+119|Wróć do mojego planu
+120|Książka Twojego gospodarstwa. A{0}, {1}{2} stron.
+121|Duża czcionka
+122|Drukuj lub zapisz jako PDF
+123|Kroki awaryjne
+124|fettle: kroki awaryjne
+125|Zamknij
+126|Jako partner Amazon zarabiam na kwalifikujących się zakupach.
+127|{0}Prototyp.{1} Nic nie jest zapisywane ani pobierane. Ceny są przybliżone, a lokalne zagrożenia to przykładowy tekst. Treści o zdrowiu i bezpieczeństwie muszą jeszcze sprawdzić specjaliści NHS i straż pożarna. W sytuacji kryzysowej stosuj się do oficjalnych komunikatów i dzwoń pod {2}, jeśli zagrożone jest życie.
+128|Źródła: {0}Be Ready{1}, {2}Food Standards Agency{3}, {4}Chief Medical Officers{5}, {6}NCT{7}, {8}NHS{9}, {10}GOSH{11}, {12}Ofgem{13}, {14}Electricity North West{15}, {16}United Utilities{17}, {18}British Red Cross{19}.
+129|Twój dom
+130|{0} z {1}
+131|W jakim domu mieszkasz?
+132|Dom
+133|Dom parterowy
+134|Mieszkanie lub mieszkanie dwupoziomowe
+135|Coś innego
+136|Przyczepa, dom mobilny lub łódź mieszkalna
+137|Wybierz jedną odpowiedź, aby kontynuować.
+138|Na którym piętrze są drzwi wejściowe?
+139|Wyższe piętra zależą od elektrycznych pomp wody i wind, by wejść i wyjść.
+140|Parter
+141|{0}. lub {1}. piętro
+142|Od {0}. do {1}. piętra
+143|{0}. piętro lub wyżej
+144|Gdyby winda przestała działać, czy wszyscy daliby radę zejść schodami?
+145|Tak
+146|Komuś byłoby trudno
+147|Nie, ktoś by nie dał rady
+148|Czy na poziomie gruntu jest miejsce na zewnątrz, np. ogród lub podwórko?
+149|Kuchenki turystyczne i grille wydzielają śmiertelny gaz zwany tlenkiem węgla. Wolno ich używać tylko na zewnątrz, na otwartym powietrzu. Balkon się nie liczy.
+150|Tak, ogród lub podwórko
+151|Tylko balkon
+152|Nie
+153|Jesteś właścicielem czy wynajmujesz?
+154|Jeśli wynajmujesz, część sprzętu bezpieczeństwa to obowiązek właściciela, a nie Twój.
+155|Właściciel
+156|Wynajem prywatny
+157|Wynajem od rady gminy lub stowarzyszenia mieszkaniowego
+158|Wynajem pokoju we wspólnym domu
+159|Kto tu mieszka
+160|Kto mieszka z Tobą?
+161|Policz wszystkich, którzy zwykle tam śpią, łącznie z Tobą.
+162|Dorośli
+163|{0} do {1} lat
+164|O jednego mniej: Dorośli
+165|O jednego więcej: Dorośli
+166|Starsi dorośli
+167|{0} lat lub więcej
+168|O jednego mniej: Starsi dorośli
+169|O jednego więcej: Starsi dorośli
+170|Dzieci
+171|O jedno mniej: Dzieci
+172|O jedno więcej: Dzieci
+173|Małe dzieci
+174|Poniżej {0} lat
+175|O jedno mniej: Małe dzieci
+176|O jedno więcej: Małe dzieci
+177|Psy
+178|O jednego mniej: Psy
+179|O jednego więcej: Psy
+180|Koty
+181|O jednego mniej: Koty
+182|O jednego więcej: Koty
+183|Jak obecnie karmione jest najmłodsze dziecko?
+184|Niemowlęta są najbardziej zagrożone, gdy brakuje czystej wody lub prądu.
+185|Tylko karmienie piersią
+186|Mleko modyfikowane w proszku
+187|Takie, które miesza się z wodą
+188|Karmienie piersią i mleko modyfikowane
+189|Gotowe mleko modyfikowane w płynie
+190|W kartonie lub butelce, bez mieszania
+191|Je już zwykłe jedzenie
+192|Mniej więcej ile butelek dziennie?
+193|Na tej podstawie obliczamy, ile gotowego mleka trzymać. Wystarczy przybliżenie.
+194|Butelki dziennie
+195|Mniej butelek
+196|Więcej butelek
+197|Prąd i ogrzewanie
+198|Jak ogrzewany jest dom?
+199|Jak to sprawdzić
+200|Jeśli na ścianie jest piec, a w domu licznik gazu, to gaz. Piece akumulacyjne to duże grzejniki elektryczne, które nagrzewają się w nocy. Pompa ciepła ma skrzynkę z wentylatorem na zewnątrz domu.
+201|Kaloryfery i piec gazowy
+202|Grzejniki elektryczne lub piece akumulacyjne
+203|Pompa ciepła
+204|Zbiornik oleju lub LPG
+205|Piec na drewno lub kominek na węgiel
+206|Nie jestem pewien
+207|Na czym gotujesz?
+208|Gaz daje niebieski płomień. Kuchenka elektryczna ma pola grzejne lub płaską powierzchnię, która świeci na czerwono. Indukcja to płaskie szkło, które działa tylko z niektórymi garnkami.
+209|Kuchenka gazowa
+210|Kuchenka elektryczna
+211|Płyta indukcyjna
+212|Jak szybko zimą wychładza się dom, gdy ogrzewanie przestaje działać?
+213|Większość ogrzewania, nawet gazowego, nie działa podczas przerwy w dostawie prądu, bo potrzebuje elektryczności.
+214|W ciągu kilku godzin
+215|Przeciągi, stare okna lub pojedyncze szyby
+216|Długo trzyma ciepło
+217|Kto dostarcza Ci gaz i prąd?
+218|Znajdziesz to na rachunku lub w aplikacji. Dzięki temu podamy Ci właściwe dane kontaktowe.
+219|Wybierz dostawcę energii
+228|Inny dostawca
+229|Zdrowie
+230|Czy ktoś ma potrzeby zdrowotne, które powinniśmy uwzględnić?
+231|Odpowiedzi o zdrowiu służą tylko do stworzenia planu. Nigdy nie są udostępniane ani sprzedawane.
+232|To zmienia plan bardziej niż cokolwiek innego.
+233|Wolę nie mówić
+234|Twój plan będzie mniej dokładny
+235|Które z tych rzeczy dotyczą Was?
+236|Zaznacz wszystkie, które pasują.
+237|Codziennie przyjmuje leki
+238|Ma lek, który trzyma się w lodówce
+239|Na przykład insulina
+240|Używa sprzętu, który potrzebuje prądu
+241|Koncentrator tlenu, dializa domowa, aparat CPAP do oddychania, łóżko elektryczne, podnośnik lub krzesełko schodowe
+242|Ma trudności ze schodami lub wychodziłby powoli
+243|Ma ubytek słuchu
+244|Ma ubytek wzroku
+245|Ma problemy z pamięcią lub demencję
+246|Ma alergię pokarmową, celiakię, cukrzycę lub trudności z połykaniem
+247|Ma osobisty alarm
+248|Przycisk lub wisiorek do wzywania pomocy
+249|Czy jesteś w Priority Services Register?
+250|To bezpłatna lista prowadzona przez firmy energetyczne i wodociągowe, obejmująca osoby potrzebujące dodatkowej pomocy, np. informacji podczas przerw w dostawie prądu lub dostawy wody butelkowanej. Większość ludzi nigdy o niej nie słyszała.
+251|Co masz
+252|Ile wody butelkowanej jest teraz w domu?
+253|Dla {0} osób trzy dni to
+254|{0} litrów
+255|To około {0}{1} dużych butelek {2}-litrowych{3}. Oficjalne zalecenie to {4} litry na osobę dziennie, do picia i prostego gotowania.
+256|Nic
+257|Kilka butelek
+258|Mniej więcej połowa tego
+259|Całość lub więcej
+260|Czy dałbyś radę wyżywić wszystkich przez trzy dni bez kuchenki i lodówki?
+261|To oznacza
+262|{0} posiłków i {1} przekąsek
+263|Jedzenie, które można jeść na zimno, prosto z puszki lub opakowania. Na przykład: puszki z zawleczką, krakersy, batony zbożowe, mleko UHT.
+264|Tak, bez problemu
+265|Przez dzień lub coś koło tego
+266|Które z tych rzeczy masz teraz w domu?
+267|Zaznacz tylko rzeczy, które znalazłbyś po ciemku i które działają.
+268|Nie mam żadnej z tych rzeczy
+269|Działająca latarka
+270|Z zapasowymi bateriami
+271|Radio, które działa bez prądu z sieci
+272|Na baterie lub na korbkę
+273|Naładowany powerbank
+274|Do ładowania telefonów
+275|Apteczka
+276|Gotówka, około £{0}
+277|£{0} na osobę w banknotach i monetach
+278|Otwieracz do puszek, który nie jest elektryczny
+279|Wystarczająco dużo koców i ciepłych ubrań dla wszystkich
+280|Ważne numery zapisane na papierze
+281|Pomiń
+282|Czy ktoś w domu przeszedł szkolenie z pierwszej pomocy w ciągu ostatnich trzech lat?
+283|Podczas dużej sytuacji kryzysowej karetka może jechać znacznie dłużej niż zwykle.
+284|Budżet
+285|Ile możesz wydać co miesiąc na uzupełnienie braków?
+286|Zaczniemy od bezpłatnych rzeczy, a resztę rozłożymy tak, by było Cię na to stać.
+287|Na razie nic
+288|£{0} lub więcej
+289|Zobacz mój plan
+290|Twoja książka
+291|Jakie nazwisko umieścić na okładce?
+292|Na przykład Boyce. Będzie napisane „Gospodarstwo domowe Boyce”.
+293|Nazwisko rodziny
+294|Jedzenie
+295|Czy ktoś musi unikać jakichś produktów?
+296|Aby lista jedzenia i przepisy zawierały tylko to, co każdy może jeść.
+297|Nie, jemy wszystko
+298|Wegetariańskie lub wegańskie
+299|Halal
+300|Koszerne
+301|Bezglutenowe
+302|Alergia na orzechy
+303|Bez nabiału
+304|Cukrzyca
+305|Jedzenie miękkie lub zmiksowane
+306|Pieniądze
+307|Czy doładowujesz gaz lub prąd, zanim go zużyjesz?
+308|Kluczem, kartą lub w aplikacji. To tak zwany licznik przedpłatowy.
+309|Nie, płacimy rachunki
+310|Prąd
+311|Czy masz panele słoneczne?
+312|Tak, same panele
+313|Tak, z domowym akumulatorem
+314|Transport
+315|Czy masz samochód?
+316|Benzyna lub diesel
+317|Elektryczny
+318|Woda
+319|Kto dostarcza Ci wodę?
+320|Znajdziesz to na rachunku za wodę.
+321|Wybierz firmę wodociągową
+322|United Utilities (większość Greater Manchester)
+323|Inna firma wodociągowa (numer jest na rachunku za wodę)
+324|Kontakty
+325|Do kogo zadzwoniłbyś najpierw w sytuacji kryzysowej?
+326|Zostanie to wydrukowane w Twojej książce. Telefony mogą się rozładować, więc papier ma znaczenie.
+327|Imię i numer
+328|Z kim spoza Twojej okolicy wszyscy mogliby się kontaktować?
+329|Gdy lokalne linie są zajęte, połączenie z kimś dalej często się udaje.
+330|Gdzie spotkalibyście się, gdybyście nie mogli wrócić do domu?
+331|Wybierz miejsce, które wszyscy znają i do którego mogą dojść pieszo.
+332|Na przykład biblioteka przy głównej ulicy
+333|Gdybyś musiał opuścić dom, gdzie mógłbyś się zatrzymać?
+334|U przyjaciela lub krewnego w pobliżu. Jeśli nie ma gdzie, rady gmin otwierają ośrodki tymczasowe podczas dużych sytuacji kryzysowych.
+335|Imię i adres
+336|Twoja przychodnia lekarza rodzinnego (GP) i jej numer
+337|Zostaw puste, aby wpisać ręcznie w książce.
+338|Nazwa przychodni i numer
+339|Twoja apteka i jej numer
+340|Nazwa apteki i numer
+341|Numer do weterynarza
+342|Nazwa weterynarza i numer
+343|Czy dzieci chodzą do szkoły lub żłobka/przedszkola?
+344|Stwórz moją książkę
+345|Moje gospodarstwo domowe
+346|+ Plan dla mamy lub krewnego
+347|gotowości na {0} godziny
+348|Wskazówki ostatnio sprawdzone {0} {1} {2}. Weryfikacja kliniczna: w toku.
+349|{0} rzeczy do zrobienia: {1} bezpłatnych, {2} do kupienia za około £{3} łącznie. Przy £{4} miesięcznie będziesz gotowy do: {5}{6} {7}{8}.
+350|Zrób to najpierw. To nic nie kosztuje.
+351|Zrobione: Zapisz się do Priority Services Register
+352|Zapisz się do Priority Services Register{0}Najpierw{1}
+353|Bezpłatnie, około {0} minut każde
+354|Zapisujesz się u dostawcy energii, operatora sieci elektrycznej i w firmie wodociągowej. Kontakty poniżej.
+355|{0}. Twój dostawca energii
+356|Dostawca energii
+357|Octopus Energy: zapisz się do Priority Services Register
+358|{0}. Twoja sieć elektryczna: Electricity North West
+359|Telefon
+360|{0} {1} {2} lub {3}
+361|Online
+363|Zajmują się liniami energetycznymi w Greater Manchester. Poproś ich, by przekazali Twoje dane także firmom gazowej i wodociągowej.
+364|{0}. Twoja firma wodociągowa
+365|Firma wodociągowa
+366|Numer jest na rachunku za wodę.
+367|Zrobione: Sprawdź, czy osobisty alarm działa podczas przerwy w dostawie prądu
+368|Sprawdź, czy osobisty alarm działa podczas przerwy w dostawie prądu{0}Najpierw{1}
+369|Jeden telefon do dostawcy alarmu lub telefonu
+370|Ofcom wymaga od operatorów telefonicznych tylko co najmniej godziny zasilania awaryjnego dla cyfrowych telefonów stacjonarnych.
+371|Zrobione: Przygotuj plan awaryjny dla sprzętu
+372|Przygotuj plan awaryjny dla sprzętu{0}Najpierw{1}
+373|Czas pracy baterii, {0}-godzinny numer dostawcy, dokąd się udać
+374|Zapytaj dostawcę lub zespół opieki, co robić, jeśli prądu nie ma przez wiele godzin.
+375|Zrobione: Zdobądź tygodniowy zapas leków i zapisz, jak je przechowywać
+376|Zdobądź tygodniowy zapas leków i zapisz, jak je przechowywać{0}Najpierw{1}
+377|Zapytaj lekarza rodzinnego lub farmaceutę
+378|Dodaj każdy lek poniżej. Zeskanuj ulotkę, a my wyłowimy instrukcje przechowywania.
+379|+ Dodaj lek
+380|Zawsze stosuj się do ulotki i zaleceń farmaceuty. Kopiujemy tylko to, co jest w ulotce, nie doradzamy.
+381|Zrobione: Naucz się podstaw pierwszej pomocy
+382|Naucz się podstaw pierwszej pomocy{0}Następnie{1}
+383|Godzina lub dwie, za darmo
+384|Bezpłatne możliwości:
+385|{0}British Red Cross: bezpłatne poradniki pierwszej pomocy{1}. Pomoc krok po kroku przy krwawieniu, oparzeniach, zadławieniu, zawale, udarze i nie tylko.
+386|{0}British Red Cross: pierwsza pomoc dla niemowląt i dzieci{1}. Bezpłatnie, online, we własnym tempie.
+387|{0}British Red Cross: bezpłatna aplikacja pierwszej pomocy{1}. Działa w telefonie, także poradniki offline.
+388|{0}British Red Cross: bezpłatne warsztaty pierwszej pomocy ({1}+){2}. Online lub na miejscu. Bez certyfikatu.
+389|Zrobione: Ustal, kto będzie do Was zaglądał
+390|Ustal, kto będzie do Was zaglądał{0}Następnie{1}
+391|Sąsiad lub krewny
+392|Ustalcie stałe pory pukania do drzwi, jeśli telefony nie działają.
+393|Zrobione: Poproś straż pożarną o bezpłatną wizytę bezpieczeństwa w domu
+394|Poproś straż pożarną o bezpłatną wizytę bezpieczeństwa w domu{0}Następnie{1}
+395|Jeden telefon
+396|Mogą zamontować czujniki dymu, które migają lub wibrują.
+397|Zrobione: Odłóż trochę gotówki
+398|Odłóż trochę gotówki{0}Następnie{1}
+399|Około £{0} w banknotach i monetach
+400|Terminale płatnicze i bankomaty potrzebują prądu.
+401|Zrobione: Omówcie plan w domu
+402|Omówcie plan w domu{0}Później{1}
+403|{0} minut przy kuchennym stole
+404|Twoja książka zawiera wydrukowany plan tej rozmowy.
+405|Zrobione: Daj sąsiadowi kartkę „zajrzyj do mnie”
+406|Daj sąsiadowi kartkę „zajrzyj do mnie”{0}Później{1}
+407|Wydrukuj, wypełnij, wrzuć przez drzwi
+408|Wymień się numerami z sąsiadem, zwłaszcza z kimś, kto mieszka sam.
+409|Wydrukuj {0} kartki
+410|Grupy lokalne: Communities Prepared
+411|Zrobione: Sfotografuj dom i cenne rzeczy
+412|Sfotografuj dom i cenne rzeczy{0}Później{1}
+413|{0} minut z telefonem
+414|Przejdź przez każdy pokój, nagrywając powoli. Zapisz w książce numer polisy i numer do zgłaszania szkód. To bardzo ułatwia zgłoszenie po powodzi lub pożarze.
+415|Zrobione: Zapisz ważne numery na papierze
+416|Zapisz ważne numery na papierze{0}Później{1}
+417|Rodzina, lekarz, szkoła, sąsiedzi
+418|W Twojej książce jest na to strona.
+419|Twoja lista zakupów
+420|Obliczone dla {0} osób na trzy dni. Ceny są szacunkowe. Kupuj, gdzie chcesz: jedzenie i woda są zwykle najtańsze w supermarkecie.
+421|Zrobione: Woda pitna
+422|Woda pitna{0}Najpierw{1}
+423|{0} dużych butelek {1}-litrowych
+424|{0} osób × {1} litry × {2} dni = {3} litrów. Twoje mieszkanie jest wysoko. Pompy, które tłoczą wodę w górę budynku, potrzebują prądu, więc krany mogą przestać działać, nawet jeśli na ulicy woda wciąż jest. Zwierzęta też potrzebują wody.
+425|Propozycje
+426|(linki oznaczone „paid link” dają nam niewielką prowizję)
+427|Składany pojemnik na wodę Highlander {0} l
+428|Składa się na płasko. Napełnij go z kranu, gdy pojawi się ostrzeżenie o możliwym braku wody.
+429|Zobacz w Amazon {0}(paid link){1}
+430|Zrobione: Gotowe mleko modyfikowane w płynie
+431|Gotowe mleko modyfikowane w płynie{0}Najpierw{1}
+432|Na {0} karmień, plus {1} czystych butelek i smoczków
+433|Mleko w proszku trzeba przygotować ze świeżo przegotowanej wody o temperaturze co najmniej {0}°C. Bez prądu nie zagotujesz wody. Woda butelkowana nie jest zalecana do mleka w proszku. Używaj marki, którą zwykle pije dziecko.
+434|Zrobione: Koce i ciepłe ubrania
+435|Koce i ciepłe ubrania{0}Najpierw{1}
+436|{0} koców lub śpiworów, czapki i grube skarpety
+437|Ogrzewanie prawdopodobnie przestanie działać podczas przerwy w dostawie prądu, nawet gazowe. Twój dom szybko traci ciepło. Starsze osoby i małe dzieci najszybciej marzną.
+438|Folie ratunkowe
+439|Lekkie i tanie. Używaj jako dodatkowej warstwy na zwykły koc.
+440|Termofor w dzierganym pokrowcu
+441|Napełnij, póki masz ciepłą wodę. Nigdy nie używaj wrzątku.
+442|Zrobione: Rzeczy dla niemowlęcia
+443|Rzeczy dla niemowlęcia{0}Następnie{1}
+444|Pieluchy i chusteczki na {0} dni, plus ubranie na zmianę
+445|I coś znajomego dla otuchy.
+446|Zrobione: Jedzenie, które można jeść na zimno
+447|Jedzenie, które można jeść na zimno{0}Następnie{1}
+448|{0}{1} puszek fasoli lub ciecierzycy{2}. Fasola maślana, cannellini, ciecierzyca, sałatka z trzech fasoli.
+449|{0} puszek soczewicy lub mieszanych warzyw
+450|{0}{1} puszek kukurydzy i {2} puszek owoców{3}. Owoce w soku, nie w syropie, także nawadniają.
+451|{0}{1} opakowań bezglutenowych krakersów lub wafli ryżowych{2}. Zamiast chleba, który czerstwieje.
+452|{0}{1} opakowanie bezglutenowych płatków owsianych i {2} litry mleka owsianego lub sojowego UHT{3}. Na owsiankę na zimno: bez gotowania.
+453|{0}{1} gotowych deserów ryżowych bez nabiału lub owoców w kubeczkach{2}. Takich, które mogą stać w temperaturze pokojowej.
+454|{0}{1} słoik masła z nasion słonecznika{2}. Białko, które wytrzyma miesiące.
+455|{0}{1} przekąsek{2}. Batony zbożowe, suszone owoce, herbatniki (bez orzechów). Coś, co lubicie: to poprawia nastrój.
+456|Twoja kuchenka potrzebuje prądu. Nie masz bezpiecznego miejsca do gotowania na zewnątrz. W Twojej książce są proste przepisy bez gotowania.
+457|Zrobione: Otwieracz do puszek, który nie jest elektryczny
+458|Otwieracz do puszek, który nie jest elektryczny{0}Następnie{1}
+459|Nie każda puszka ma zawleczkę.
+460|Otwieracz do puszek OXO Good Grips
+461|Łatwy do uchwycenia, gdy dłonie są zimne lub sztywne.
+462|Zrobione: Apteczka
+463|Apteczka{0}Następnie{1}
+464|{0} apteczka, plus kilka leków
+465|Plastry w różnych rozmiarach
+466|Jałowe opatrunki na większe rany
+467|Bandaże elastyczne i chusta trójkątna (na temblak)
+468|Przylepiec medyczny
+469|Chusteczki i krem antyseptyczny
+470|Pęseta i nożyczki z zaokrąglonymi końcami
+471|Termometr elektroniczny
+472|Płyn do przemywania oczu
+473|Paracetamol i ibuprofen, w tym wersje dla dzieci odpowiednie do ich wieku
+474|Saszetki nawadniające, na biegunkę
+475|Leki przeciwhistaminowe, na reakcje alergiczne
+476|Według wytycznych NHS. Trzymaj ją tam, gdzie dorośli znajdą ją po ciemku, a dzieci nie dosięgną.
+477|Apteczka Steroplast, {0} elementów
+478|Obejmuje większość listy NHS. Leki dokup osobno.
+479|Domowa apteczka St John Ambulance
+480|Kupowana bezpośrednio w sklepie organizacji charytatywnej, więc pieniądze wspierają szkolenia z pierwszej pomocy. To nie jest link partnerski.
+481|Zobacz w sklepie organizacji
+482|Zrobione: Latarka i zapasowe baterie
+483|Latarka i zapasowe baterie{0}Następnie{1}
+484|{0} latarki
+485|Świeczki powodują pożary.
+486|Latarka czołowa Petzl Tikkina
+487|Obie ręce są wolne, by nieść wodę lub dziecko. Na {0} baterie AAA.
+488|Baterie Duracell Plus AAA, opakowanie {0} szt.
+489|Zapas do latarki czołowej. Sprawdź, jakich baterii używa Twoja latarka.
+490|Zrobione: Radio na baterie lub na korbkę
+491|Radio na baterie lub na korbkę{0}Następnie{1}
+492|{0}, z FM
+493|Jeśli telefony i internet przestaną działać, komunikaty alarmowe nadaje BBC Radio {0} i Radio {1}.
+494|Radio awaryjne Nedis na korbkę
+495|Radio FM z korbką i panelem słonecznym, więc nie potrzebuje baterii. Ma też latarkę i ładowarkę do telefonu.
+496|Radio Esky na korbkę z panelem słonecznym
+497|Tańsza opcja z FM, korbką, latarką i małym powerbankiem.
+498|Zrobione: Torba ewakuacyjna na szybkie wyjście
+499|Torba ewakuacyjna na szybkie wyjście{0}Następnie{1}
+500|{0} torba, spakowana i przy drzwiach
+501|Latarka i zapasowe baterie lub latarka na korbkę
+502|Ładowarka do telefonu i naładowany powerbank
+503|Kopie dokumentów tożsamości, polis i recept w plastikowej koszulce
+504|Zapasowe klucze do domu i samochodu
+505|Kilka dni każdego leku i kopia recepty
+506|Okulary, soczewki, baterie do aparatu słuchowego
+507|Mała apteczka, płyn do dezynfekcji rąk i chusteczki
+508|Woda butelkowana i przekąski o długim terminie
+509|Ciepłe ubrania, czapki, rękawiczki i folia ratunkowa
+510|Notes, długopis i gwizdek
+511|Pieluchy, chusteczki, gotowe mleko modyfikowane i ubranie na zmianę dla dziecka
+512|Karma, smycz lub transporter i leki dla zwierząt
+513|Ładowarki i baterie do sprzętu medycznego oraz numer dostawcy
+514|Na powódź, pożar, wyciek gazu lub polecenie opuszczenia domu. Większość to rzeczy, które już masz. Tylko {0}% ludzi ma taką torbę.
+515|Zrobione: Powerbank
+516|Powerbank{0}Później{1}
+517|{0}, zawsze naładowany
+518|Ładuj go raz w miesiącu.
+519|Powerbank Anker {0} (PowerCore {1}K)
+520|Naładuje typowy telefon mniej więcej dwa razy. Ładuj go raz na sezon.
+521|Zrobione: Rzeczy dla zwierząt
+522|Rzeczy dla zwierząt{0}Później{1}
+523|Jedzenie na {0} dni dla {1} zwierząt
+524|Plus leki dla zwierząt oraz smycz lub transporter przy drzwiach.
+525|Miesiąc po miesiącu
+526|Ten miesiąc: bezpłatne rzeczy{0}{1}
+527|Zapisz się do Priority Services Register
+528|Sprawdź, czy osobisty alarm działa podczas przerwy w dostawie prądu
+529|Przygotuj plan awaryjny dla sprzętu
+530|Zdobądź tygodniowy zapas leków i zapisz, jak je przechowywać
+531|Naucz się podstaw pierwszej pomocy
+532|Ustal, kto będzie do Was zaglądał
+533|Poproś straż pożarną o bezpłatną wizytę bezpieczeństwa w domu
+534|Odłóż trochę gotówki
+535|Omówcie plan w domu
+536|Daj sąsiadowi kartkę „zajrzyj do mnie”
+537|Sfotografuj dom i cenne rzeczy
+538|Zapisz ważne numery na papierze
+539|Woda pitna
+540|Odkładaj na: gotowe mleko modyfikowane w płynie
+541|Odkładaj na: koce i ciepłe ubrania
+542|Koce i ciepłe ubrania
+543|Odkładaj na: rzeczy dla niemowlęcia
+544|Rzeczy dla niemowlęcia
+545|Odkładaj na: jedzenie, które można jeść na zimno
+546|Jedzenie, które można jeść na zimno
+547|Otwieracz do puszek, który nie jest elektryczny
+548|Odkładaj na: apteczkę
+549|Apteczka
+550|Latarka i zapasowe baterie
+551|Odkładaj na: radio na baterie lub na korbkę
+552|Radio na baterie lub na korbkę
+553|Odkładaj na: torbę ewakuacyjną
+554|Torba ewakuacyjna na szybkie wyjście
+555|Odkładaj na: powerbank
+556|Powerbank
+557|Rzeczy dla zwierząt
+558|Książka Fettle
+559|Gospodarstwo domowe {0}
+560|Twój plan jako prawdziwa książka: Twoje numery, Twoje {0} godziny, przepisy bez gotowania, pierwsza pomoc, leki, scenariusz rozmowy rodzinnej i strony do aktualizacji.
+561|Zamów Książkę Fettle: £{0} cyfrowa, £{1} drukowana
+562|Prototyp: żadna płatność nie jest pobierana.
+563|Jeśli trzeba opuścić dom
+564|Jeśli każą Ci wyjść lub grozi Ci niebezpieczeństwo, idź. Nie czekaj, by spakować więcej.
+565|Weź torbę ewakuacyjną. Powinna już stać przy drzwiach.
+566|Najpierw pomóż osobie, która najbardziej tego potrzebuje. Jeśli ktoś nie może wyjść, zadzwoń pod {0} i powiedz, gdzie jest.
+567|Weź torbę dla dziecka: gotowe mleko, pieluchy i ubranie na zmianę.
+568|Zabierz zwierzęta, jeśli to bezpieczne, z jedzeniem i smyczą lub transporterem.
+569|Jeśli jest czas i to bezpieczne, zakręć gaz, prąd i wodę. Nigdy nie dotykaj włącznika, stojąc w wodzie.
+570|Zamknij dom i weź klucze oraz telefon.
+571|Idź do: {0}.
+572|Powiedz swojemu pierwszemu kontaktowi ({0}), dokąd idziesz.
+573|Nie idź, nie jedź rowerem ani samochodem przez wodę powodziową.
+574|Miej to w telefonie
+575|Przerwy w dostawie prądu wyłączają internet domowy, a dane komórkowe mogą słabo działać. Zapisz kopię, która działa bez zasięgu.
+576|Pobierz mój plan awaryjny
+577|Wypróbuj tryb awaryjny
+578|Zmień moje odpowiedzi
+579|Data ważności lub sprawdzenia
+580|Co się dzieje?
+581|Brak prądu
+582|Brak wody
+583|Ostrzeżenie przed powodzią
+584|Kazano nam wyjść
+585|Ktoś jest ranny
+586|Alarm
+587|Gaz
+588|NHS
+589|Brak prądu, krok {0} z {1}
+590|Sprawdź, czy wszyscy są bezpieczni. Jeśli czyjeś życie jest zagrożone, zadzwoń pod {0}.
+591|Następny krok
+592|Najpierw sprawdź osobę starszą, małe dzieci i tego, kto używa sprzętu na prąd.
+593|Sprawdź baterię sprzętu. Jeśli jest słaba, zadzwoń teraz pod {0}-godzinny numer dostawcy.
+594|Znajdź latarkę. Nie chodź ze świeczkami.
+595|Włącz radio. Krajowe komunikaty alarmowe nadaje BBC Radio {0} i Radio {1}.
+596|Telefon stacjonarny i alarm mogą działać tylko około godziny. Połóż naładowaną komórkę obok osoby, która używa alarmu.
+597|Wyślij rodzinie jedną wiadomość, że wszystko w porządku, a potem oszczędzaj baterię telefonu.
+598|Napełnij teraz wannę, zlewy i duże pojemniki, póki woda dociera na Twoje piętro.
+599|Nie otwieraj lodówki i zamrażarki. Lodówka trzyma zimno około {0} godzin. Pełna zamrażarka trzyma mróz około {1} dni.
+600|Wyłącz urządzenia, które były włączone, oprócz jednej lampki, żeby wiedzieć, kiedy wróci prąd.
+601|Pijcie zgromadzoną wodę: około {0} litrów dziennie na wszystkich.
+602|Zgłoś brak prądu pod numerem {0}. To bezpłatne.
+603|Potem postępuj według reszty planu na {0} godziny.
+604|Gotowe
+605|Pierwsze kroki zrobione.
+606|Nie wyłączaj radia i postępuj według planu na {0} godziny. Zajrzyj do sąsiadów, jeśli to bezpieczne.
+607|Czy to pomogło?
+608|Niezbyt
+609|Brak wody, krok {0} z {1}
+610|Do picia najpierw używaj zgromadzonej wody butelkowanej: około {0} litrów dziennie na wszystkich.
+611|Napełnij teraz wannę i garnki, jeśli jest jeszcze ciśnienie.
+612|Jeśli toaleta nie spłukuje, wlej do muszli wiadro wody.
+613|Do mycia rąk używaj płynu do dezynfekcji i chusteczek.
+614|Jeśli ktoś w domu potrzebuje dodatkowej pomocy, zadzwoń do firmy wodociągowej i zapytaj o dostawy.
+615|Sprawdź, jaki to komunikat. „Boil water” oznacza: zagotuj i ostudź przed użyciem. „Do not drink” oznacza: używaj tylko wody butelkowanej, nawet do mycia zębów i karmienia dziecka.
+616|Dla niemowlęcia używaj gotowego mleka modyfikowanego.
+617|Zajrzyj do sąsiadów, zwłaszcza do osób mieszkających samotnie.
+618|Ostrzeżenie przed powodzią, krok {0} z {1}
+619|Poważne ostrzeżenie przed powodzią oznacza zagrożenie życia. Jeśli Ty lub ktoś inny jest w bezpośrednim niebezpieczeństwie, zadzwoń pod {0}.
+620|Przenieś ludzi, zwierzęta i cenne rzeczy na górę lub na wyższy teren.
+621|Połóż torbę ewakuacyjną i dokumenty wysoko.
+622|Zakręć gaz, prąd i wodę, jeśli to bezpieczne. Nigdy nie dotykaj włącznika, stojąc w wodzie.
+623|Słuchaj komunikatów w lokalnym radiu lub zadzwoń do Floodline: {0} {1} {2}.
+624|Jeśli służby ratunkowe każą Ci wyjść, idź.
+625|Kazano nam wyjść, krok {0} z {1}
+626|Ktoś jest ranny, krok {0} z {1}
+627|Jeśli ktoś jest poważnie chory lub ranny, zadzwoń teraz pod {0}.
+628|Zostań z nim. Dyspozytor powie Ci, co robić do przyjazdu pomocy.
+629|Jeśli to pilne, ale nie zagraża życiu, zadzwoń pod {0}.
+630|Użyj apteczki. W Twojej książce są wskazówki pierwszej pomocy.
+631|Dziękujemy. To pomaga nam ulepszać aplikację.
+632|Dziękujemy. Napisz, czego brakowało, na hello@[domain] (prototyp).
+633|Gospodarstwo domowe {0}: plan awaryjny
+634|Zapisano {0}.{1}.{2}. Działa bez internetu.
+635|Numery
+636|Policja, straż pożarna, pogotowie lub straż przybrzeżna, gdy zagrożone jest życie. Działa też {0}.
+637|NHS, gdy sprawa jest pilna, ale nie zagraża życiu.
+638|Brak prądu, w całej Wielkiej Brytanii. Bezpłatnie.
+639|Awaria gazowa, jeśli czujesz gaz. Bezpłatnie, przez {0} godziny.
+640|Floodline, ostrzeżenia przed powodzią.
+641|Policja, gdy to nie jest nagły wypadek.
+642|Samaritans, bezpłatnie, o każdej porze, jeśli wszystkiego jest za dużo.
+643|Pierwszy telefon
+644|Miejsce spotkania
+645|Pierwsza godzina: Sprawdź wszystkich, zdobądź informacje
+646|Godziny {0}–{1}: Zatrzymaj zimno w lodówce i ciepło w domu
+647|Sprawdź na stronie o lekach, jak długo lek z lodówki może być poza nią.
+648|Trzymaj zwierzęta w domu i daj im wodę.
+649|Godziny {0}–{1}: Ciepło i najedzeni
+650|Wybierzcie jeden pokój do przebywania. Zasłońcie zasłony, zatkajcie szparę pod drzwiami ręcznikiem, załóżcie czapki i warstwy ubrań.
+651|Nie możesz bezpiecznie gotować. Korzystaj z przepisów bez gotowania.
+652|Nigdy nie wnoś do środka grilla, kuchenki turystycznej ani grzejnika zewnętrznego. Tlenek węgla może zabić w kilka minut.
+653|Używaj gotowego mleka. Mleko w proszku przygotowuj tylko ze świeżo przegotowanej wody z kranu o temperaturze co najmniej {0}°C. Nie używaj wody butelkowanej do mleka w proszku.
+654|Po {0} godzinach bez prądu małe dzieci, kobiety w ciąży i osoby starsze nie powinny jeść schłodzonego gotowego jedzenia ani resztek.
+655|Przyjmuj leki o zwykłych porach.
+656|Dzień {0}: Rozłóżcie siły
+657|Najpierw jedzcie jedzenie z lodówki, potem to, co się rozmraża, a potem z szafki.
+658|Jeśli toaleta nie spłukuje, wlej do muszli wiadro wody z wanny.
+659|Gdy brakuje wody, używaj płynu do dezynfekcji rąk i chusteczek.
+660|Zapukaj do sąsiadów, zwłaszcza do osób mieszkających samotnie.
+661|Jeśli kończą się środki na liczniku, zapytaj dostawcę energii o kredyt awaryjny.
+662|Płać gotówką, jeśli terminale nie działają.
+663|Dzień {0}: Odpocznij i uzupełnij zapasy
+664|Czekaj na oficjalny komunikat, kiedy woda z kranu znów jest bezpieczna. „Boil your water” i „do not drink” znaczą co innego.
+665|Wyrzuć jedzenie, które zbyt długo było niebezpieczne. W razie wątpliwości wyrzuć.
+666|Zapisz, czego zabrakło, żeby następny plan to uwzględnił.
+667|Torba ewakuacyjna
+668|Kartki „zajrzyj do mnie”
+669|Zajrzyj do mnie
+670|Jeśli zabraknie prądu, będzie burza lub powódź, zapukaj lub zadzwoń.
+671|Imię: ______________________
+672|Numer mieszkania lub domu: ________
+673|Telefon: _____________________
+674|Mogę potrzebować pomocy z: ____________________________
+675|A ja zajrzę do Ciebie. Mój numer jest z tyłu.
+676|Książka Twojego gospodarstwa. A{0}, {1}{2}{3} stron.
+677|Trzy dni bez prądu, wody i telefonu, pod kontrolą. Napisane dla jednego domu.
+678|{0}Gospodarstwo domowe {1}{2}Rochdale, Greater Manchester
+679|Wydanie: {0} {1}
+680|Trzymaj przy latarce
+681|W sytuacji kryzysowej
+682|Nasze miejsce spotkania
+683|Przejdź do rozdziału {0}Pierwsze {1} godziny{2}, strona {3}.
+684|Spis treści
+685|Zacznij tutaj
+686|Wstęp
+687|Jak korzystać z tej książki
+688|Twoje gospodarstwo w skrócie
+689|Przed
+690|Twoja lista zadań
+691|W trakcie
+692|Pierwsze {0} godziny
+693|Opuszczenie domu
+694|Poradniki
+695|Jedzenie i przepisy bez gotowania
+696|Niemowlęta i małe dzieci
+697|Jak utrzymać ciepło
+698|Leki
+699|Pierwsza pomoc
+700|Prąd, światło i wiadomości
+701|Zwierzęta
+702|Wynajem
+703|Ubezpieczenie i dokumenty
+704|Razem
+705|Rozmowa rodzinna
+706|Ważne numery
+707|Zajrzyj do kogoś
+708|Sezonowy dziennik kontroli
+709|Dlaczego powstała ta książka i dlaczego trzy dni.
+710|Większość sytuacji kryzysowych w Wielkiej Brytanii nie jest dramatyczna. Burza zrywa linie energetyczne. Pęknięta rura odcina wodę. Śnieg zamyka drogi. Zwykle światło wraca w ciągu kilku godzin. Czasem trwa to kilka dni.
+711|Cabinet Office uruchomił ({0} {1} r.) kampanię Be Ready, prosząc każde gospodarstwo domowe, by potrafiło poradzić sobie samo przez trzy dni: woda, jedzenie, ciepło, światło, leki i sposób na zdobycie wiadomości. Służby ratunkowe zawsze najpierw zajmą się najpoważniejszymi przypadkami. Dla wszystkich innych pierwsze {2} godziny to dbanie o siebie i sąsiadów.
+712|Rządowe badanie z {0} r. wykazało, że tylko {1}% ludzi ma domowy plan, a tylko {2}% trzyma zapas wody pitnej na trzy dni. Jeśli trzymasz tę książkę, już jesteś krok przed innymi.
+713|{0}Ta książka jest napisana dla gospodarstwa domowego {1}.{2} Opiera się na Twoim domu, jego mieszkańcach i tym, co już macie. Nie ma w niej nic ogólnego.
+714|Skąd pochodzą porady
+715|Każde zalecenie pochodzi z oficjalnych wytycznych brytyjskich: kampanii Be Ready Cabinet Office, NHS, Food Standards Agency, Głównych Lekarzy Wielkiej Brytanii, straży pożarnej, Ofgem, British Red Cross oraz lokalnych firm energetycznych i wodociągowych. Zamieniamy je w plan dla Twojego domu.
+716|Ta książka nie zastępuje oficjalnych ostrzeżeń. W sytuacji kryzysowej słuchaj radia i rób to, co mówią służby ratunkowe. Jeśli czyjeś życie jest zagrożone, zadzwoń pod {0}.
+717|Przeczytaj ją raz teraz. Trzymaj ją tam, gdzie szukałbyś po ciemku.
+718|{0}. Przeczytaj ją w tym tygodniu
+719|Usiądź z herbatą i przeczytaj ją raz w całości. To zajmie około pół godziny.
+720|{0}. Porozmawiajcie przy kuchennym stole
+721|Strona „Rozmowa rodzinna” zawiera {0}-minutowy plan rozmowy. Powinien w niej uczestniczyć każdy, kto z Tobą mieszka.
+722|{0}. Przejdź przez listy kontrolne
+723|Najpierw bezpłatne zadania, potem lista zakupów, po trochu. Odhaczaj na bieżąco.
+724|{0}. Trzymaj ją we właściwym miejscu
+725|Tam, gdzie wszyscy wiedzą i sięgną po ciemku: w kuchennej szufladzie, przy latarce. Nie w telefonie.
+726|{0}. Sprawdzaj ją cztery razy w roku
+727|Na ostatnich stronach jest dziennik kontroli. Co sezon wymień przeterminowane rzeczy, naładuj powerbank i zaktualizuj numery.
+728|Przejdź od razu do kolorowych stron: „Pierwsze {0} godziny”. Postępuj według nich po kolei.
+729|Fakty, na których opiera się ten plan.
+730|{0} dorosły, {1} dorosły po {2}, {3} dziecko w wieku {4}–{5}, {6} dziecko poniżej {7}, {8} pies, {9} kot
+731|Dom
+732|Mieszkanie, {0}. piętro lub wyżej
+733|Ogrzewanie
+734|Gotowanie
+735|Miejsce na zewnątrz
+736|Okolica
+737|Rochdale, Greater Manchester
+738|Co to oznacza dla Ciebie
+739|Twoje ogrzewanie niemal na pewno przestanie działać podczas przerwy w dostawie prądu.
+740|Bez prądu nie ugotujesz w domu.
+741|Nie masz bezpiecznego miejsca do gotowania na zewnątrz, więc planuj jedzenie bez gotowania.
+742|Twoja woda zależy od pomp. Zgromadź wodę, zanim będzie potrzebna.
+743|Twoje dziecko potrzebuje gotowego mleka, jeśli nie możesz zagotować wody.
+744|Ktoś tutaj potrzebuje dodatkowej pomocy. Zapisz się do Priority Services Register.
+745|Zagrożenia w Twojej okolicy
+746|Przykład, dopóki nie dodamy Community Risk Register z Greater Manchester Resilience Forum: silne burze, przerwy w dostawie prądu dłuższe niż doba, powodzie, silne mrozy i brak wody.
+747|Najpierw bezpłatne rzeczy. Większość zajmuje mniej niż godzinę.
+748|{0}{1}Zapisz się do Priority Services Register
+749|Bezpłatnie, około {0} minut każde. Zapisujesz się u dostawcy energii, operatora sieci elektrycznej i w firmie wodociągowej.
+750|{0}{1}Sprawdź, czy osobisty alarm działa podczas przerwy w dostawie prądu
+751|Jeden telefon do dostawcy alarmu lub telefonu. Ofcom wymaga od operatorów tylko co najmniej godziny zasilania awaryjnego dla cyfrowych telefonów stacjonarnych.
+752|{0}{1}Przygotuj plan awaryjny dla sprzętu
+753|Czas pracy baterii, {0}-godzinny numer dostawcy, dokąd się udać. Zapytaj dostawcę lub zespół opieki, co robić, jeśli prądu nie ma przez wiele godzin.
+754|{0}{1}Zdobądź tygodniowy zapas leków i zapisz, jak je przechowywać
+755|Zapytaj lekarza rodzinnego lub farmaceutę.
+756|{0}{1}Naucz się podstaw pierwszej pomocy
+757|Godzina lub dwie, za darmo. Bezpłatne możliwości:
+758|{0}{1}Ustal, kto będzie do Was zaglądał
+759|Sąsiad lub krewny. Ustalcie stałe pory pukania do drzwi, jeśli telefony nie działają.
+760|{0}{1}Poproś straż pożarną o bezpłatną wizytę bezpieczeństwa w domu
+761|Jeden telefon. Mogą zamontować czujniki dymu, które migają lub wibrują.
+762|{0}{1}Odłóż trochę gotówki
+763|Około £{0} w banknotach i monetach. Terminale płatnicze i bankomaty potrzebują prądu.
+764|{0}{1}Omówcie plan w domu
+765|{0} minut przy kuchennym stole. Twoja książka zawiera wydrukowany plan tej rozmowy.
+766|{0}{1}Daj sąsiadowi kartkę „zajrzyj do mnie”
+767|Wydrukuj, wypełnij, wrzuć przez drzwi. Wymień się numerami z sąsiadem, zwłaszcza z kimś, kto mieszka sam.
+768|{0}{1}Sfotografuj dom i cenne rzeczy
+769|{0} minut z telefonem. Przejdź przez każdy pokój, nagrywając powoli. Zapisz w książce numer polisy i numer do zgłaszania szkód. To bardzo ułatwia zgłoszenie po powodzi lub pożarze.
+770|{0}{1}Zapisz ważne numery na papierze
+771|Rodzina, lekarz, szkoła, sąsiedzi. W Twojej książce jest na to strona.
+772|Obliczone dla {0} osób na trzy dni.
+773|{0}{1}Woda pitna: {2} dużych butelek {3}-litrowych
+774|{0}{1}Gotowe mleko modyfikowane w płynie: na {2} karmień, plus {3} czystych butelek i smoczków
+775|{0}{1}Koce i ciepłe ubrania: {2} koców lub śpiworów, czapki i grube skarpety
+776|{0}{1}Rzeczy dla niemowlęcia: pieluchy i chusteczki na {2} dni, plus ubranie na zmianę
+777|{0}{1}Jedzenie, które można jeść na zimno: {2} posiłków i {3} przekąsek
+778|{0} puszek fasoli lub ciecierzycy
+779|{0} puszek kukurydzy i {1} puszek owoców
+780|{0} opakowań bezglutenowych krakersów lub wafli ryżowych
+781|{0} opakowanie bezglutenowych płatków owsianych i {1} litry mleka owsianego lub sojowego UHT
+782|{0} gotowych deserów ryżowych bez nabiału lub owoców w kubeczkach
+783|{0} słoik masła z nasion słonecznika
+784|{0} przekąsek
+785|{0}{1}Otwieracz do puszek, który nie jest elektryczny: {2}
+786|{0}{1}Apteczka: {2} apteczka, plus kilka leków
+787|{0}{1}Latarka i zapasowe baterie: {2} latarki
+788|{0}{1}Radio na baterie lub na korbkę: {2}, z FM
+789|{0}{1}Torba ewakuacyjna na szybkie wyjście: {2} torba, spakowana i przy drzwiach
+790|{0}{1}Powerbank: {2}, zawsze naładowany
+791|{0}{1}Rzeczy dla zwierząt: jedzenie na {2} dni dla {3} zwierząt
+792|Ceny w aplikacji są szacunkowe. Kupuj po trochu co miesiąc: najpierw woda i leki.
+793|Gdy coś się stanie, korzystaj z tych stron po kolei.
+794|Powódź, pożar, wyciek gazu lub polecenie opuszczenia domu.
+795|Jeśli każą Ci wyjść lub grozi Ci niebezpieczeństwo, idź. Rzeczy można odkupić.
+796|Krok po kroku
+797|Twoja torba ewakuacyjna
+798|{0}{1}Latarka i zapasowe baterie lub latarka na korbkę
+799|{0}{1}Ładowarka do telefonu i naładowany powerbank
+800|{0}{1}Kopie dokumentów tożsamości, polis i recept w plastikowej koszulce
+801|{0}{1}Gotówka, około £{2}
+802|{0}{1}Zapasowe klucze do domu i samochodu
+803|{0}{1}Kilka dni każdego leku i kopia recepty
+804|{0}{1}Okulary, soczewki, baterie do aparatu słuchowego
+805|{0}{1}Mała apteczka, płyn do dezynfekcji rąk i chusteczki
+806|{0}{1}Woda butelkowana i przekąski o długim terminie
+807|{0}{1}Ciepłe ubrania, czapki, rękawiczki i folia ratunkowa
+808|{0}{1}Notes, długopis i gwizdek
+809|{0}{1}Pieluchy, chusteczki, gotowe mleko modyfikowane i ubranie na zmianę dla dziecka
+810|{0}{1}Karma, smycz lub transporter i leki dla zwierząt
+811|{0}{1}Ładowarki i baterie do sprzętu medycznego oraz numer dostawcy
+812|Dokąd pójdziemy
+813|Druga możliwość:
+814|Zawory i wyłączniki
+815|Co
+816|Gdzie to jest w naszym domu
+817|Główny zawór wody
+818|Skrzynka z bezpiecznikami
+819|Źródła: porady GOV.UK dotyczące powodzi, lista torby ewakuacyjnej Staffordshire Prepared. Ostatnio sprawdzone {0} {1}.
+820|Ile, jak przechowywać i co robić, gdy kran przestanie działać.
+821|Potrzebujesz {0}{1} litrów{2} na trzy dni: {3} osób × {4} litry × {5} dni. To około {6} dużych butelek {7}-litrowych. To do picia i prostego przygotowania jedzenia. Mycie i spłukiwanie wymagają więcej.
+822|Przechowywanie
+823|Kupuj zamkniętą wodę butelkowaną i trzymaj ją w chłodnym, ciemnym miejscu, nie na podłodze.
+824|Co sezon sprawdzaj daty. Starsze butelki zużywaj na co dzień i odkupuj.
+825|Jeśli dostaniesz ostrzeżenie, że może zabraknąć wody, napełnij wannę i duże garnki do spłukiwania i mycia.
+826|Spłukiwanie toalety bez wody z sieci
+827|Szybko wlej do muszli wiadro wody. Nie używaj do tego wody pitnej.
+828|Komunikaty o gotowaniu wody i zakazie picia
+829|{0}Komunikat „boil water”:{1} woda z kranu jest bezpieczna po zagotowaniu i ostudzeniu.
+830|{0}Komunikat „do not drink”:{1} nie pij wody z kranu, nawet przegotowanej. Używaj wody butelkowanej lub zgromadzonej, nawet do mycia zębów i przygotowania mleka dla dziecka.
+831|Mieszkasz wysoko. Pompy wody w wysokich budynkach potrzebują prądu, więc możesz stracić wodę podczas przerwy w dostawie prądu, nawet gdy na ulicy woda jest.
+832|Wskazówki ostatnio sprawdzone {0} {1}. Weryfikacja kliniczna: w toku.
+833|Dobre jedzenie bez kuchenki i lodówki.
+834|Kolejność jedzenia
+835|Jedzenie z lodówki, póki jest zimne. Lodówka trzyma zimno około {0} godzin.
+836|Jedzenie z zamrażarki, gdy się rozmraża. Pełna zamrażarka trzyma mróz około {0} dni, w połowie pełna około {1} dnia.
+837|Świeże jedzenie, które nie potrzebuje lodówki, np. chleb i owoce.
+838|Puszki i opakowania na koniec.
+839|Po {0} godzinach bez prądu małe dzieci, kobiety w ciąży i osoby starsze nie powinny jeść schłodzonego gotowego jedzenia ani resztek (Główni Lekarze Wielkiej Brytanii).
+840|Nigdy nie wnoś grilla, kuchenki turystycznej ani grzejnika ogrodowego do domu, garażu ani na balkon. Wydzielają tlenek węgla, który może zabić w kilka minut.
+841|Sałatka z fasoli i kukurydzy {0}(Porcje: {1}){2}
+842|{0} puszka fasoli lub ciecierzycy, odsączona
+843|{0} mała puszka kukurydzy, odsączona
+844|{0} puszka soczewicy, odsączona
+845|Trochę soku z cytryny z butelki, sól i pieprz
+846|Wymieszaj wszystko w misce. Jedz od razu. Resztek nie da się schować do lodówki, więc przygotuj tylko tyle, ile zjesz.
+847|Pasta z ciecierzycy na krakersach {0}(Porcje: {1}){2}
+848|{0} puszka ciecierzycy, odsączona
+849|{0} łyżka masła z nasion słonecznika lub trochę oliwy
+850|Sól, pieprz, dowolne suszone zioła
+851|Bezglutenowe krakersy lub wafle ryżowe
+852|Rozgnieć ciecierzycę widelcem. Wmieszaj resztę. Posmaruj krakersy.
+853|Owsianka na zimno {0}(Porcje: {1}){2}
+854|{0} łyżki bezglutenowych płatków owsianych
+855|Około {0} ml mleka owsianego lub sojowego UHT
+856|Kilka łyżek owoców z puszki
+857|Wsyp płatki i wlej mleko do słoika lub kubka, zamieszaj i odstaw na co najmniej {0} godziny albo na noc. Dodaj owoce. Otwarte mleko UHT zużyj tego samego dnia, jeśli nie ma lodówki.
+858|Zawijańce {0}(Porcje: {1}){2}
+859|Bezglutenowa tortilla lub wafle ryżowe
+860|Rozgnieciona fasola
+861|Kukurydza
+862|Posmaruj, dodaj kukurydzę, zwiń.
+863|Owoce z budyniem {0}(Porcje: {1}){2}
+864|{0} puszka owoców, odsączona
+865|{0} gotowe desery bez nabiału w kubeczkach
+866|Nałóż owoce na deser. Dobre pocieszenie dla dzieci.
+867|Krakersy z masłem z nasion {0}(Przekąska){1}
+868|Bezglutenowe krakersy
+869|Masło z nasion słonecznika
+870|Suszone owoce
+871|Posmaruj i dodaj suszone owoce.
+872|Karmienie, ciepło i poczucie bezpieczeństwa.
+873|Karmienie
+874|Mleko w proszku nie jest jałowe, więc trzeba je przygotować ze świeżo przegotowanej wody z kranu o temperaturze co najmniej {0}°C. Jeśli nie możesz zagotować wody, używaj gotowego mleka w płynie. Woda butelkowana nie jest zalecana do mleka w proszku. Trzymaj w zapasie {1} gotowych porcji i czyste butelki.
+875|Jeśli możesz zagotować wodę na krótko, termos najpierw ogrzany wrzątkiem, a potem napełniony świeżo przegotowaną wodą, utrzyma ją gorącą przez kilka godzin. Im więcej wody w termosie, tym dłużej jest gorąca.
+876|Ciepło
+877|Niemowlęta szybko tracą ciepło. Trzymaj je w najcieplejszym pokoju, w warstwach ubrań, w czapce. Nie dopuść do przegrzania.
+878|W sprawie karmienia: infolinia NCT o karmieniu niemowląt to {0} {1} {2}, możesz też porozmawiać z położną środowiskową (health visitor).
+879|Gdy ogrzewanie przestaje działać.
+880|Wybierzcie jeden pokój do przebywania, najlepiej z najmniejszą liczbą ścian zewnętrznych.
+881|O zmroku zasłoń zasłony i połóż zwinięty ręcznik pod drzwiami.
+882|Warstwy zatrzymują ciepło: bielizna termiczna, swetry, czapki i grube skarpety.
+883|Napełnij termofory, póki masz ciepłą wodę. Nigdy nie używaj wrzątku.
+884|Co godzinę trochę się poruszaj.
+885|Osoby starsze i małe dzieci najszybciej marzną. Często je sprawdzaj.
+886|Nigdy nie ogrzewaj pokoju kuchenką gazową ani piekarnikiem. Nigdy nie używaj w domu grzejników przeznaczonych na zewnątrz.
+887|Zapasy i przechowywanie.
+888|Postaraj się mieć co najmniej tygodniowy zapas każdego stale przyjmowanego leku. Zamawiaj recepty z wyprzedzeniem i zapytaj farmaceutę o wszystko, co trzyma się w lodówce.
+889|Lek
+890|Kto
+891|Jak przechowywać
+892|Skopiowane z ulotki. Zawsze sprawdź u farmaceuty.
+893|Co mieć i gdzie się uczyć.
+894|Twoja apteczka
+895|{0}{1}Plastry w różnych rozmiarach
+896|{0}{1}Jałowe opatrunki na większe rany
+897|{0}{1}Bandaże elastyczne i chusta trójkątna (na temblak)
+898|{0}{1}Przylepiec medyczny
+899|{0}{1}Chusteczki i krem antyseptyczny
+900|{0}{1}Pęseta i nożyczki z zaokrąglonymi końcami
+901|{0}{1}Termometr elektroniczny
+902|{0}{1}Płyn do przemywania oczu
+903|{0}{1}Paracetamol i ibuprofen, w tym wersje dla dzieci odpowiednie do ich wieku
+904|{0}{1}Saszetki nawadniające, na biegunkę
+905|{0}{1}Leki przeciwhistaminowe, na reakcje alergiczne
+906|Według wytycznych NHS i Great Ormond Street Hospital. Trzymaj leki poza zasięgiem dzieci. Nigdy nie podawaj aspiryny dzieciom poniżej {0} lat, chyba że zalecił to lekarz.
+907|Naucz się pierwszej pomocy
+908|{0}British Red Cross: bezpłatne poradniki pierwszej pomocy{1}: Pomoc krok po kroku przy krwawieniu, oparzeniach, zadławieniu, zawale, udarze i nie tylko. www.redcross.org.uk/first-aid/learn-first-aid
+909|{0}British Red Cross: pierwsza pomoc dla niemowląt i dzieci{1}: Bezpłatnie, online, we własnym tempie. www.redcross.org.uk/first-aid/learn-first-aid-for-babies-and-children
+910|{0}British Red Cross: bezpłatna aplikacja pierwszej pomocy{1}: Działa w telefonie, także poradniki offline. www.redcross.org.uk/first-aid/first-aid-apps
+911|{0}British Red Cross: bezpłatne warsztaty pierwszej pomocy ({1}+){2}: Online lub na miejscu. Bez certyfikatu. www.redcross.org.uk/get-involved/teaching-resources/community-education-workshops/first-aid-workshop-for-adults
+912|{0}British Red Cross: zapisz się na kurs{1}: Płatne kursy z certyfikatem. www.redcross.org.uk/first-aid/book-a-first-aid-course
+913|{0}St John Ambulance: kursy dla społeczności{1}: Kursy dla osób i rodzin. shop.sja.org.uk/collections/community-courses
+914|Jeśli ktoś jest poważnie chory lub ranny, zadzwoń pod {0}. Dyspozytor powie Ci, co robić do przyjazdu pomocy.
+915|Jak być na bieżąco, gdy gaśnie światło.
+916|Zgłoś brak prądu pod numerem {0}. To bezpłatne.
+917|Krajowe komunikaty alarmowe nadaje BBC Radio {0} i Radio {1}. Miej radio na baterie lub na korbkę.
+918|Używaj latarek, nie świeczek.
+919|Trzymaj powerbank naładowany. Ładuj go co sezon.
+920|Zimą trzymaj samochód naładowany lub zatankowany powyżej połowy.
+921|Już teraz dowiedz się, jak uzyskać kredyt awaryjny na liczniku przedpłatowym.
+922|Priority Services Register
+923|Bezpłatna lista prowadzona przez firmy energetyczne i wodociągowe. Osoby na liście dostają informacje o przerwach w dostawie prądu i dodatkową pomoc. Zapisz się u dostawcy energii, w Electricity North West ({0} {1} {2} lub {3}, enwl.co.uk/priority) i w firmie wodociągowej.
+924|One też potrzebują planu.
+925|Jedzenie i woda na trzy dni.
+926|Leki i numer do weterynarza.
+927|Smycz lub transporter przy drzwiach.
+928|Podczas burz i powodzi trzymaj zwierzęta w domu.
+929|Co musi zrobić właściciel mieszkania i o co zapytać.
+930|Prywatni właściciele w Anglii muszą zamontować czujnik dymu na każdym piętrze oraz czujnik tlenku węgla w każdym pomieszczeniu ze stałym urządzeniem spalającym paliwo, np. piecem lub kominkiem. Kuchenki gazowe się nie liczą. Muszą naprawić lub wymienić czujniki, gdy zgłosisz usterkę. Właściciele mieszkań socjalnych mają podobne obowiązki.
+931|Zapytaj właściciela, na piśmie
+932|{0}{1}Czy czujniki dymu i tlenku węgla są zamontowane i działają?
+933|{0}{1}Gdzie jest główny zawór wody i czy da się go zakręcić?
+934|{0}{1}Do kogo dzwonić po godzinach, jeśli zawiedzie ogrzewanie lub woda?
+935|{0}{1}Czy budynek ma plan awaryjny? (bloki)
+936|Źródła: wytyczne GOV.UK dla właścicieli; podsumowanie Ipswich Borough Council. Ostatnio sprawdzone {0} {1}.
+937|Łatwiejszy powrót do normalności.
+938|Raz w roku powoli nagraj telefonem każdy pokój, także wnętrza szafek.
+939|Sfotografuj paragony za drogie rzeczy.
+940|Kopie dokumentów tożsamości, polis i recept trzymaj w torbie ewakuacyjnej.
+941|Ubezpieczyciel domu
+942|Numer polisy
+943|Numer do zgłaszania szkód
+944|{0}-minutowy plan rozmowy. Powinni w niej uczestniczyć wszyscy domownicy.
+945|Czas
+946|Co zrobić
+947|{0}–{1} min
+948|{0}Po co to robimy.{1} Przeczytajcie na głos wstęp. Spokojnie: chodzi o gotowość, nie o strach.
+949|{0}Obejdźcie razem dom.{1} Znajdźcie główny zawór wody, skrzynkę z bezpiecznikami, latarkę, apteczkę i tę książkę.
+950|{0}Kto opiekuje się kim.{1} Ustalcie, kto sprawdza osoby potrzebujące pomocy, kto zajmuje się zwierzętami, a kto zagląda do sąsiadów.
+951|{0}Kontakty i miejsce spotkania.{1} Przeczytajcie stronę z numerami. Ustalcie, gdzie się spotkać, jeśli nie da się wrócić do domu.
+952|{0}Podzielcie zadania.{1} Wybierzcie osoby do listy zadań i zakupów. Wpiszcie imiona.
+953|{0}Ustalcie dwie daty.{1} Wieczór próbny i pierwszą kontrolę sezonową.
+954|Zadania
+955|Zadanie
+956|Pilnuje zapasu wody
+957|Sprawdza apteczkę
+958|Ładuje powerbank
+959|Zagląda do sąsiadów
+960|Aktualizuje tę książkę
+961|Wieczór próbny
+962|Wybierzcie wieczór. Po zmroku wyłączcie główne światła na godzinę i używajcie tylko latarek i radia. Zjedzcie posiłek bez gotowania. Zauważcie, czego brakuje.
+963|Data: {0}{1}
+964|Aktualizuj tę stronę. Skopiuj ją też do telefonów wszystkich.
+965|Jeśli jesteś osobą głuchą lub nie możesz rozmawiać przez telefon, zarejestruj się w emergencySMS zawczasu, wysyłając SMS „register” pod numer {0}.
+966|Twoje numery
+967|Kontakt spoza okolicy
+968|Lekarz rodzinny (GP)
+969|Apteka
+970|Weterynarz
+971|Octopus Energy (numer na rachunku)
+972|Sieć elektryczna
+973|Electricity North West: {0} lub {1} {2} {3}
+974|Numer na rachunku za wodę
+975|Szkoła lub żłobek/przedszkole
+976|Właściciel mieszkania lub biuro mieszkaniowe
+977|Ubezpieczenie domu
+978|Rada gminy po godzinach
+979|Sąsiad
+980|Wytnij i wrzuć sąsiadowi przez drzwi.
+981|Imię:
+982|Telefon:
+983|Mogę potrzebować pomocy z:
+984|Chcesz zrobić więcej? Communities Prepared wspiera lokalne grupy wolontariuszy (groundwork.org.uk).
+985|Cztery razy w roku. Zajmuje {0} minut.
+986|Co sezon przejdź tę listę i odhacz.
+987|{0}{1}Woda wciąż ważna? Zużyj starsze butelki i odkup.
+988|{0}{1}Jedzenie wciąż ważne? Zjedz starsze puszki w zwykłych posiłkach i odkup.
+989|{0}{1}Powerbank naładowany. Baterie w latarce i radiu działają.
+990|{0}{1}Apteczka uzupełniona. Przeterminowane leki oddane do apteki.
+991|{0}{1}Leki: tygodniowy zapas na miejscu.
+992|{0}{1}Numery na stronie kontaktów nadal aktualne.
+993|{0}{1}Dane w Priority Services Register nadal aktualne.
+994|Sezon
+995|Data sprawdzenia
+996|Kto
+997|Wiosna
+998|Lato
+999|Jesień
+1000|Zima
+1001|fettle (czasownik, Lancashire, ok. {0}): przygotować, doprowadzić do porządku.
+1002|Ta książka powstała dla gospodarstwa domowego {0} na podstawie Twoich odpowiedzi. Aktualizuj ją co sezon i za każdym razem, gdy coś zmieni się w domu.
+1003|Na podstawie wytycznych Cabinet Office, NHS, Food Standards Agency, Głównych Lekarzy Wielkiej Brytanii, straży pożarnej, Ofgem, British Red Cross, Electricity North West i United Utilities. Ta książka nie zastępuje oficjalnych porad. W sytuacji kryzysowej dzwoń pod {0}.
+1004|Czujnik tlenku węgla
+1005|Mały czujnik, oddzielny od czujnika dymu, zwykle oznaczony CO
+1006|Na przykład {0}. Będzie napisane „Gospodarstwo domowe {1}”.
+1007|{0} rzeczy do zrobienia: {1} bezpłatnych, {2} do kupienia za około £{3} łącznie.
+1008|Zadzwoń pod numer z rachunku lub aplikacji British Gas i poproś o zapis do Priority Services Register albo zacznij tutaj:
+1011|Zrobione: Sprawdź apteczkę
+1012|Sprawdź apteczkę{0}Później{1}
+1013|Zajmuje {0} minut
+1014|Uzupełnij to, co zużyte lub przeterminowane. Stare leki oddaj do apteki.
+1015|{0} osób × {1} litry × {2} dni = {3} litrów.
+1016|Trzymaj zapas na trzy dni.
+1017|Ogrzewanie prawdopodobnie przestanie działać podczas przerwy w dostawie prądu, nawet gazowe. Starsze osoby i małe dzieci najszybciej marzną.
+1018|{0}{1} puszek tuńczyka, makreli lub kurczaka{2}. Puszki z zawleczką. Gotowe do jedzenia na zimno.
+1019|{0}{1} opakowań krakersów, ciastek owsianych lub tortilli{2}. Zamiast chleba, który czerstwieje.
+1020|{0}{1} opakowanie płatków owsianych i {2} litry mleka UHT{3}. Na owsiankę na zimno: bez gotowania.
+1021|{0}{1} gotowych budyni lub deserów ryżowych w kubeczkach{2}. Takich, które mogą stać w temperaturze pokojowej.
+1022|{0}{1} słoik masła orzechowego{2}. Białko, które wytrzyma miesiące.
+1023|{0}{1} przekąsek{2}. Batony zbożowe, suszone owoce, herbatniki, orzechy. Coś, co lubicie: to poprawia nastrój.
+1024|Kuchenka gazowa może nadal działać, jeśli zapalisz ją zapałką, ale planuj tak, jakby nie działała. Kuchenka turystyczna jest w porządku na zewnątrz, w ogrodzie, nigdy w domu. W Twojej książce są proste przepisy bez gotowania.
+1025|Leki, które przyjmujesz
+1026|Sprawdź apteczkę
+1027|Kiedy będziesz mógł{0}{1}
+1028|około £{0}
+1029|Twoje gospodarstwo domowe
+1030|Idź do przyjaciela lub krewnego. Jeśli nie ma gdzie, rada gminy otwiera ośrodki tymczasowe: słuchaj lokalnego radia.
+1031|Powiedz swojemu pierwszemu kontaktowi, dokąd idziesz.
+1032|Najpierw sprawdź małe dzieci.
+1033|Jeśli woda może zniknąć, napełnij teraz wannę do spłukiwania i mycia.
+1034|Twój piec prawdopodobnie nie zadziała bez prądu, mimo że jest gazowy.
+1035|Twoje gospodarstwo domowe: plan awaryjny
+1036|Kuchenka gazowa może nadal działać. Zapal ją zapałką, bo elektryczny zapalnik nie zadziała.
+1037|{0}Twoje gospodarstwo domowe{1}Rochdale, Greater Manchester
+1038|{0}Ta książka jest napisana dla Twojego gospodarstwa domowego.{1} Opiera się na Twoim domu, jego mieszkańcach i tym, co już macie. Nie ma w niej nic ogólnego.
+1039|{0} dorosłych, {1} dzieci w wieku {2}–{3}, {4} dziecko poniżej {5}
+1040|Piec gazowy
+1041|Ogród lub podwórko
+1042|Możesz nadal gotować na kuchence gazowej, zapalonej zapałką.
+1043|Możesz używać kuchenki turystycznej na zewnątrz, w ogrodzie.
+1044|{0}{1}Sprawdź apteczkę
+1045|Zajmuje {0} minut. Uzupełnij to, co zużyte lub przeterminowane. Stare leki oddaj do apteki.
+1046|{0} puszek tuńczyka, makreli lub kurczaka
+1047|{0} opakowań krakersów, ciastek owsianych lub tortilli
+1048|{0} opakowanie płatków owsianych i {1} litry mleka UHT
+1049|{0} gotowych budyni lub deserów ryżowych w kubeczkach
+1050|{0} słoik masła orzechowego
+1051|{0}{1}Leki, które przyjmujesz
+1052|Licznik gazu i dźwignia
+1053|{0} puszka tuńczyka lub makreli
+1054|{0} łyżka masła orzechowego lub trochę oliwy
+1055|Krakersy, ciastka owsiane lub tortille
+1056|{0} łyżki płatków owsianych
+1057|Około {0} ml mleka UHT
+1058|{0} tortilla
+1059|Pół puszki kurczaka lub tuńczyka
+1060|Krakersy z masłem orzechowym {0}(Przekąska){1}
+1061|Krakersy lub ciastka owsiane
+1062|Masło orzechowe
+1063|Trzymaj w baku co najmniej ćwierć paliwa. Nigdy nie uruchamiaj silnika w zamkniętym garażu.
+1064|Bezpłatna lista prowadzona przez firmy energetyczne i wodociągowe. Osoby na liście dostają informacje o przerwach w dostawie prądu i dodatkową pomoc. Zapisz się u dostawcy energii, w Electricity North West ({0} {1} {2} lub {3}, enwl.co.uk/priority) i w firmie wodociągowej (United Utilities, {4} {5} {6}).
+1065|{0}Obejdźcie razem dom.{1} Znajdźcie główny zawór wody, skrzynkę z bezpiecznikami, licznik gazu i jego dźwignię, latarkę, apteczkę i tę książkę.
+1066|{0}Kto opiekuje się kim.{1} Ustalcie, kto sprawdza osoby potrzebujące pomocy, a kto zagląda do sąsiadów.
+1067|British Gas (numer na rachunku)
+1068|United Utilities: {0} {1} {2} (Priority Services)
+1069|Ta książka powstała dla Twojego gospodarstwa domowego na podstawie Twoich odpowiedzi. Aktualizuj ją co sezon i za każdym razem, gdy coś zmieni się w domu.
+1070|W jakim domu mieszka ta osoba?
+1071|Czy ta osoba jest właścicielem, czy wynajmuje?
+1072|Kto tam mieszka?
+1073|Czy ta osoba ma potrzeby zdrowotne, które powinniśmy uwzględnić?
+1074|Odpowiedzi o zdrowiu służą tylko do stworzenia jej planu. Nigdy nie są udostępniane ani sprzedawane. Odpowiadaj tylko, jeśli ta osoba się zgodziła.
+1075|Dla {0} osoby trzy dni to
+1076|Mama
+1077|Paracetamol i ibuprofen
+1078|Obliczone dla {0} osoby na trzy dni. Ceny są szacunkowe. Kupuj, gdzie chcesz: jedzenie i woda są zwykle najtańsze w supermarkecie.
+1079|Najpierw sprawdź osobę starszą.
+1080|Jesteś w Priority Services Register. Firma wodociągowa może dostarczyć Ci wodę.
+1081|Mama: plan awaryjny
+1082|{0}Mama{1}Rochdale, Greater Manchester
+1083|{0}Ta książka jest napisana dla mamy.{1} Opiera się na domu, jego mieszkańcach i tym, co już jest. Nie ma w niej nic ogólnego.
+1084|{0} dorosły po {1}
+1085|Olej lub LPG
+1086|Tylko balkon
+1087|Obliczone dla {0} osoby na trzy dni.
+1088|Potrzebujesz {0}{1} litrów{2} na trzy dni: {3} osoba × {4} litry × {5} dni. To około {6} dużych butelek {7}-litrowych. To do picia i prostego przygotowania jedzenia. Mycie i spłukiwanie wymagają więcej.
+1089|{0}{1}Paracetamol i ibuprofen
+1090|Panele słoneczne prawdopodobnie wyłączą się podczas przerwy w dostawie prądu, chyba że masz domowy akumulator.
+1091|Ta książka powstała dla mamy na podstawie Twoich odpowiedzi. Aktualizuj ją co sezon i za każdym razem, gdy coś zmieni się w domu.
+1092|Zrobione: Zapytaj właściciela o czujniki
+1093|Zapytaj właściciela o czujniki{0}Najpierw{1}
+1094|Jedna wiadomość lub telefon
+1095|Prywatni właściciele w Anglii muszą zamontować czujnik dymu na każdym piętrze i czujnik tlenku węgla w każdym pomieszczeniu ze stałym urządzeniem spalającym paliwo, np. piecem lub kominkiem (kuchenki gazowe się nie liczą). Muszą je naprawić lub wymienić, gdy zgłosisz usterkę. Właściciele mieszkań socjalnych mają podobne obowiązki. Zapytaj na piśmie i zachowaj kopię.
+1096|{0}Ipswich Borough Council: zasady dotyczące czujników w wynajmowanych domach{1}. Jasne podsumowanie przepisów.
+1097|{0}GOV.UK: wytyczne dla właścicieli{1}. Oficjalna broszura.
+1098|Twój dom szybko traci ciepło. Starsze osoby i małe dzieci najszybciej marzną.
+1099|Twoja kuchenka potrzebuje prądu. Kuchenka turystyczna jest w porządku na zewnątrz, w ogrodzie, nigdy w domu. W Twojej książce są proste przepisy bez gotowania.
+1100|Zapytaj właściciela o czujniki
+1101|Odkładaj na: wodę pitną
+1102|Odkładaj na: latarkę i zapasowe baterie
+1103|Najpierw sprawdź osobę starszą i małe dzieci.
+1104|Możesz używać kuchenki turystycznej lub grilla w ogrodzie. Nigdy w domu, w garażu ani na balkonie.
+1105|{0} dorosły, {1} dorosły po {2}, {3} dziecko poniżej {4}
+1106|Drewno lub węgiel
+1107|Nie wiem
+1108|Kominek na drewno lub węgiel nadal będzie grzał. Upewnij się, że masz czujnik tlenku węgla.
+1109|{0}{1}Zapytaj właściciela o czujniki
+1110|Jedna wiadomość lub telefon. Prywatni właściciele w Anglii muszą zamontować czujnik dymu na każdym piętrze i czujnik tlenku węgla w każdym pomieszczeniu ze stałym urządzeniem spalającym paliwo, np. piecem lub kominkiem (kuchenki gazowe się nie liczą). Muszą je naprawić lub wymienić, gdy zgłosisz usterkę. Właściciele mieszkań socjalnych mają podobne obowiązki. Zapytaj na piśmie i zachowaj kopię.
+1111|Mleko w proszku trzeba przygotować ze świeżo przegotowanej wody o temperaturze co najmniej {0}°C. Jeśli zabraknie gazu lub wody, nie przygotujesz bezpiecznej butelki. Woda butelkowana nie jest zalecana do mleka w proszku. Używaj marki, którą zwykle pije dziecko.
+1112|Kuchenka gazowa może nadal działać, jeśli zapalisz ją zapałką, ale planuj tak, jakby nie działała. Nie masz bezpiecznego miejsca do gotowania na zewnątrz. W Twojej książce są proste przepisy bez gotowania.
+1113|{0} latarka
+1114|Najpierw sprawdź małe dzieci i tego, kto używa sprzętu na prąd.
+1115|{0} dorosły, {1} dziecko poniżej {2}
+1116|Mieszkanie, {0}. lub {1}. piętro
+1117|{0}{1}Latarka i zapasowe baterie: {2} latarka
+1118|{0} osób × {1} litry × {2} dni = {3} litrów. Twoje mieszkanie jest wysoko. Pompy, które tłoczą wodę w górę budynku, potrzebują prądu, więc krany mogą przestać działać, nawet jeśli na ulicy woda wciąż jest.
+1119|{0}{1} tubek z jedzeniem dla niemowląt{2}. Takich do wyciskania, których nie trzeba podgrzewać.
+1120|{0} dorosłych, {1} dziecko poniżej {2}
+1121|Mieszkanie, od {0}. do {1}. piętra
+1122|{0} tubek z jedzeniem dla niemowląt
+1123|Twój plan jest gotowy.
+1124|Załóż konto, by go zapisać, wracać do niego i widzieć, co dzieje się w okolicy i może dotyczyć Twojego gospodarstwa.
+1125|Załóż konto
+1126|Imię
+1127|Adres e-mail
+1128|Hasło {0}Co najmniej {1} znaków{2}
+1129|Przysyłaj mi e-mailem jeden mały krok tygodniowo. {0}Opcjonalnie. Możesz zrezygnować w każdej chwili.{1}
+1130|Załóż konto i zobacz mój plan
+1131|Masz już konto? {0}Zaloguj się{1}
+1132|Prototyp: konta istnieją tylko do zamknięcia tej strony.
+1133|Hasło
+1134|Jesteś tu pierwszy raz? {0}Załóż konto{1}
+1135|Wpisz adres e-mail, np. imie@example.com.
+1136|Wpisz swoje imię.
+1137|Hasło musi mieć co najmniej {0} znaków.
+1138|Wyloguj się
+1139|Cześć, {0}.
+1140|Gospodarstwo domowe {0} jest {1}gotowe w {2}%{3} na {4} godziny. Zostało {5} rzeczy do zrobienia.
+1141|To się dzieje teraz
+1142|Brak prądu, brak wody, powódź, polecenie opuszczenia domu, ktoś ranny
+1143|Mój plan
+1145|Otwórz, wydrukuj lub zapisz jako PDF
+1146|Plan dla mamy
+1147|Lub innego krewnego
+1148|Podaruj Książkę Fettle
+1149|Komuś, o kogo się martwisz
+1150|Niech Twój plan działa przez cały rok:
+1151|Wiadomości „Wszystko OK” od mamy i rodziny podczas burz
+1152|Lokalne alerty dla Twojego kodu pocztowego, razem z Twoim planem
+1153|Przypomnienia, zanim przeterminują się woda, jedzenie i baterie
+1154|Udostępnij plan i zadania wszystkim domownikom
+1155|Wypróbuj Fettle Plus za darmo przez {0} dni
+1156|Potem £{0} miesięcznie albo rok gratis z wydrukowaną książką. Prototyp: żadna płatność nie jest pobierana.
+1157|Dlaczego to ważne właśnie teraz
+1158|Co się działo i co to oznacza dla Twojego gospodarstwa. Aktualizacja: {0} {1} {2}.
+1159|Cyberbezpieczeństwo
+1160|Brytyjska agencja ds. cyberbezpieczeństwa ostrzega przed atakami z użyciem AI na dostawy energii, wody i żywności
+1161|Coroczny raport National Cyber Security Centre mówi, że „wysoce prawdopodobne” jest użycie ransomware opartego na AI przeciwko infrastrukturze krytycznej Wielkiej Brytanii do {0} r. Wymienia energetykę, wodę i dystrybucję żywności jako zagrożone.
+1162|{0}Co to oznacza dla Ciebie{1}Zakłócenia nie biorą się tylko z pogody. Jeśli przestaną działać płatności kartą, telefony lub internet, podstawy z Twojego planu nadal działają: gotówka, radio na baterie i numery zapisane na papierze.
+1163|Źródło: {0}National Security News{1}
+1164|Zapasy
+1165|Radia, latarki i powerbanki szybko znikają ze sklepów po apelu rządu
+1166|Po ogłoszeniu Be Ready BBC Newsnight podało, że sprzedaż latarek w Maplin wzrosła o {0}%, a radia w Robert Dyas o {1}% w porównaniu z poprzednim tygodniem. Jeden sklep z artykułami do przygotowań zgłosił wzrost o {2}%.
+1167|{0}Co to oznacza dla Ciebie{1}Nie musisz się spieszyć ani robić zapasów na zapas. Kupowanie po trochu co miesiąc utrzymuje normalne ceny dla wszystkich i pozwala Ci osiągnąć cel. Twój plan miesięczny robi dokładnie to.
+1168|Zobacz mój plan miesięczny
+1169|Źródło: {0}WION, za BBC Newsnight{1}
+1170|Pogoda
+1171|Burza pozbawia prądu ponad {0} domów, także w Greater Manchester
+1172|Weekendowe burze odcięły prąd w ponad {0} domach; dotknięte były północne regiony, w tym Greater Manchester, Cumbria i Lancashire, a na północy obowiązywały ostrzeżenia przed wiatrem.
+1175|Źródło: {0}{1}news, za Sky News{2}
+1176|Rząd
+1177|Rząd prosi każde gospodarstwo domowe, by było gotowe poradzić sobie przez trzy dni
+1178|Cabinet Office uruchomił Be Ready, pierwszy etap trzyletniej kampanii. Prosi gospodarstwa o zapas jedzenia i wody na trzy dni oraz o zapis do Priority Services Register, jeśli potrzebują dodatkowej pomocy.
+1179|{0}Co to oznacza dla Ciebie{1}To standard, na którym opiera się Twój plan. Rządowe badanie wykazało, że tylko {2}% ludzi ma domowy plan.
+1180|Źródło: {0}GOV.UK{1}
+1181|Pęknięta magistrala odcina wodę tysiącom domów w południowym Londynie i Surrey
+1182|Thames Water podało, że dotkniętych było do {0} budynków, później skorygowano to do {1}, bez terminu naprawy. Klienci z Priority Services dostali wodę do domu. Inni stali w kolejkach po wodę butelkowaną.
+1183|{0}Co to oznacza dla Ciebie{1}Przerwy w dostawie wody zdarzają się bez ostrzeżenia. Mieszkając wysoko, możesz stracić wodę także podczas przerwy w dostawie prądu, bo pompy w budynku potrzebują elektryczności. Zgromadzona woda oznacza, że nie musisz stać w kolejce, a Priority Services Register oznacza, że woda może przyjść do Ciebie.
+1184|Źródło: {0}Newswav{1}
+1185|Mała brytyjska elektrownia wyłączona na cztery dni przez cyberatak
+1186|Urzędnicy powiązali atak na mały generator energii z hakerami powiązanymi z Iranem. Nie było szerszego wpływu na krajową sieć.
+1187|{0}Co to oznacza dla Ciebie{1}Nie odnotowano, by jakiekolwiek domy straciły prąd, ale to pokazuje, dlaczego porady obejmują teraz cyberataki, a nie tylko burze.
+1188|Źródło: {0}Cybersecurity Dive{1}
+1189|Powodzie
+1190|Poważny incydent w Greater Manchester: powodzie zmuszają ponad {0} osób do opuszczenia domów
+1191|Po noworocznych powodziach, m.in. w Stockport, ogłoszono poważny incydent. Ponad {0} osób musiało opuścić domy, a potem wydano ostrzeżenie przed zimnem.
+1192|{0}Co to oznacza dla Ciebie{1}Powodzie i zimno często przychodzą razem. Trzymaj torbę ewakuacyjną i dokumenty powyżej poziomu gruntu i zapisz się na ostrzeżenia powodziowe pod numerem {2} {3} {4}.
+1193|Źródło: {0}Hits Radio Manchester{1}
+1194|Streszczamy wiadomości z publicznych źródeł i podajemy linki do każdego z nich. Co tydzień przegląda je [imię, funkcja]. W sytuacji kryzysowej stosuj się do oficjalnych komunikatów.
+1195|Fettle Plus {0}Okres próbny{1}
+1196|Kontakty kontrolne
+1197|Ty
+1198|Jeszcze bez potwierdzenia
+1199|Wszystko OK
+1200|Zapytaj
+1201|Alerty dla Rochdale
+1202|Obecnie brak ostrzeżeń dla Twojej okolicy.
+1203|Pokaż przykładowe ostrzeżenie
+1204|W prawdziwej aplikacji: ostrzeżenia pogodowe Met Office, ostrzeżenia powodziowe Environment Agency i przerwy w dostawie prądu z Electricity North West.
+1205|Wkrótce
+1206|Kontrola sezonowa: {0} minut z książką
+1207|Naładuj powerbank
+1208|Dodawaj daty ważności, gdy odhaczasz rzeczy w planie.
+1209|Udostępnione domownikom
+1210|Zaproś partnera lub starsze dzieci, by widzieli plan i dzielili się zadaniami.
+1211|Imię
+1212|E-mail (opcjonalnie)
+1213|Zaproś
+1214|Kto: Pilnuje zapasu wody
+1215|Kto?
+1216|Kto: Sprawdza apteczkę
+1217|Kto: Ładuje powerbank
+1218|Kto: Zagląda do sąsiadów
+1219|Co sezon aktualizuje książkę
+1220|Kto: Co sezon aktualizuje książkę
+1221|Przykład: żółte ostrzeżenie przed wiatrem
+1222|Silny wiatr może spowodować przerwy w dostawie prądu od {0}:00 dziś wieczorem.
+1223|Otwórz moje kroki na brak prądu
+1224|Poproś mamę o potwierdzenie
+1225|Usuń przykładowe ostrzeżenie
+1226|Potwierdziłeś: wszystko OK.
+1228|Najpierw dodaj gospodarstwo mamy, a potem będziesz mógł poprosić ją o potwierdzenie.
+1229|Dodaj imię.
+1230|Zaproszenie dla {0} gotowe (prototyp, nic nie wysłano).
+1231|Ostatnie OK: dziś o {0}
+1233|Zaproszono
+1234|Woda pitna traci ważność
+1235|Dla mamy, taty lub kogokolwiek, o kogo martwisz się podczas burzy. Odpowiadają na pytania (albo robisz to razem z nimi) i dostają własną książkę.
+1236|Wyślij im bezpłatne sprawdzenie z opłaconą książką cyfrową
+1237|Wyślij im pocztą wydrukowaną książkę z rokiem Fettle Plus
+1238|Ich imię
+1239|Na przykład Mama
+1240|Wiadomość od Ciebie
+1241|Martwię się o Ciebie, gdy jest zła pogoda. To pomoże nam obojgu czuć się spokojniej.
+1242|Przejdź do płatności
+1243|Dodaj imię.
+1244|Prezent dla mamy gotowy
+1245|W prawdziwej aplikacji tu byś zapłacił, a my wysłalibyśmy to z Twoją wiadomością. Prototyp: nic nie jest pobierane ani wysyłane.
+1246|Ten e-mail i hasło nie pasują do żadnego konta.
+1247|Jesteś tu pierwszy raz? {0}Najpierw sprawdź swoje gospodarstwo{1}
+1248|Kontynuuj sprawdzanie (pytanie {0})
+1249|Standardowa czcionka
+1250|Twórz plany z mieszkańcami, którym pomagasz, śledź postępy, zamawiaj wydrukowane książki i oglądaj anonimowe sumy według okręgów.
+1251|Twoje imię
+1252|Służbowy e-mail
+1253|Organizacja
+1254|Na przykład Rochdale Borough Council
+1255|Twoja funkcja
+1256|Pracownik socjalny
+1257|Pracownik ds. mieszkaniowych
+1258|Opiekun lub pracownik wsparcia
+1259|Wolontariusz
+1260|Planista kryzysowy
+1261|Inne
+1262|Załóż konto profesjonalne
+1263|Tylko się rozglądasz?
+1264|Otwórz przykładową listę {0} fikcyjnych gospodarstw w Rochdale, z wizytami, wynikami i raportem okręgowym.
+1265|Otwórz przykładową listę
+1266|Wpisz nazwę organizacji.
+1267|Lista podopiecznych
+1268|Raport
+1269|{0}{1}{2} Pracownik ds. mieszkaniowych
+1270|{0} gospodarstw na Twojej liście. To przykładowa lista z fikcyjnymi gospodarstwami.
+1271|Gospodarstwa
+1272|Średnia gotowość, od pierwszej do ostatniej wizyty
+1273|Twoje zapisy do Priority Services Register
+1274|Gospodarstwa po wizycie kontrolnej
+1275|+ Dodaj mieszkańca
+1276|Najpierw zgoda, potem wspólnie pytania
+1277|Raport okręgowy
+1278|Anonimowe sumy dla Twojego zespołu i planistów kryzysowych
+1279|Zamówienia książek
+1280|Drukuj lub zamawiaj książki hurtowo
+1281|Lista kontrolna wizyty domowej
+1282|Jedna strona do wydrukowania i zabrania ze sobą
+1283|Mieszkańcy są widoczni tylko jako numery referencyjne. Nazwiska zostają w Waszym systemie.
+1284|{0}{1}{2}angielski{3}
+1285|Aktualne
+1286|Czas na wizytę kontrolną
+1287|Szkolenie dla Twojego zespołu
+1288|{0}-minutowe szkolenie dla pracowników terenowych: co sprawdzić podczas wizyty, jak rozmawiać o sytuacjach kryzysowych bez straszenia, Priority Services Register i kiedy przekazać sprawę dalej. Prowadzi Fettle, na miejscu lub online.
+1289|Zapytaj o szkolenie
+1290|← Lista podopiecznych
+1291|{0}{1}{2} {3} · angielski
+1292|Gotowość: {0}%
+1293|Zostało {0} rzeczy do zrobienia. Aktualne.
+1294|Wizyty
+1295|{0} wrz
+1296|Pierwsza wizyta
+1297|Wizyta kontrolna
+1298|Otwórz ich plan i odhacz, co mają
+1299|Zapisz dzisiejszą wizytę
+1300|Zapisano {0} wrz
+1301|Wydrukowana książka
+1302|Dostarczona
+1303|Co zrobiliby, gdyby to działo się teraz
+1304|Zgoda
+1305|Plan przechowywany: tak. Liczony w sumach dla okolicy: tak. Kontakt w sprawie wizyty kontrolnej: tak.
+1306|Usuń ten plan na prośbę mieszkańca
+1307|Już zapisani
+1308|Dodaj do kolejki druku
+1309|Zostało {0} rzeczy do zrobienia. Czas na wizytę kontrolną.
+1310|Oznacz jako zapisanych
+1311|Pokaż: {0}
+1312|Ich plan w ich języku
+1313|Plan przechowywany: tak. Liczony w sumach dla okolicy: nie. Kontakt w sprawie wizyty kontrolnej: tak.
+1314|Zapisano {0} {1}
+1315|{0} dodano do kolejki druku.
+1316|Wizyta zapisana: {0}%.
+1317|Każda książka jest tworzona dla jednego gospodarstwa, w jego języku. Osoby powyżej {0} lat dostają dużą czcionkę, chyba że to zmienisz.
+1318|Podgląd
+1319|Podsumowanie zamówienia
+1320|Książki: {0}. Angielski: {1}. Wysyłka do biura w jednej paczce lub do każdego domu.
+1321|Wyślij zamówienie do druku
+1322|Pobierz pliki do druku
+1323|Anonimowe sumy z {0} gospodarstw, które zgodziły się na liczenie. Każda grupa mniejsza niż {1} jest ukryta, by nikogo nie dało się zidentyfikować. Okręgi z mniej niż {2} gospodarstwami są ukryte.
+1324|W Priority Services Register
+1325|Mają wodę na {0} dni
+1326|Mają radio działające bez prądu z sieci
+1327|Kto może najpierw potrzebować pomocy
+1328|Dla planistów kryzysowych. Liczby ze wszystkich okręgów.
+1329|Zależą od sprzętu, który potrzebuje prądu
+1330|Trzymają lek w lodówce
+1331|W wieku {0}+ i mieszkają sami
+1332|Mieszkają na {0}. piętrze lub wyżej
+1333|Według okręgów
+1334|Okręg
+1335|Gotowość
+1336|Radio
+1337|Rejestr
+1338|Mniej niż {0}
+1339|Ukryte: za mało gospodarstw
+1340|Pobierz jako arkusz (CSV)
+1341|Drukuj
+1342|Gotowość to wynik Fettle dla {0} godzin w domu. Gospodarstwa odpowiadały same, z pracownikiem. Liczby opisują odwiedzone osoby, a nie wszystkich w okręgu.
+1343|Lista kontrolna wizyty domowej Fettle
+1344|Fettle for Communities. Numer: ________ Data: ________
+1345|Czujnik dymu na każdym piętrze, przetestowany
+1346|Czujnik tlenku węgla przy piecu, kominku lub innym urządzeniu na paliwo
+1347|W Priority Services Register u firm energetycznych i wodociągowych
+1348|Leki: tygodniowy zapas i jak je przechowywać bez lodówki
+1349|Sprzęt na prąd: czas pracy baterii i {0}-godzinny numer dostawcy
+1350|{0} litry wody na osobę dziennie, na {1} dni
+1351|Latarka i radio działające bez prądu z sieci
+1352|Trochę gotówki w domu
+1353|Ktoś, kto będzie zaglądał, i kartka „zajrzyj do mnie”
+1354|Czy dadzą radę wyjść? Schody, windy, klucze, wolna droga
+1355|Ciepłe ubrania i koce na zimny dom
+1356|Licznik przedpłatowy albo oszczędzanie na ogrzewaniu? Skieruj po poradę finansową
+1357|Notatki
+1358|Jeśli masz obawy dotyczące bezpieczeństwa (safeguarding), postępuj zgodnie z procedurą swojej organizacji. W sprawie bezpieczeństwa pożarowego poproś Greater Manchester Fire and Rescue Service o bezpłatną wizytę. W sytuacji kryzysowej dzwoń pod {0}.
+1359|Zamówienie na {0} książki gotowe do wysłania. (Prototyp: nic nie wysłano ani nie pobrano.)
+1360|Kolejka jest pusta. Otwórz mieszkańca i wybierz {0}Wydrukowana książka{1}.
+1361|Zanim zaczniesz: zgoda
+1362|Przeczytaj to mieszkańcowi, w jego języku, jeśli możesz. W razie potrzeby skorzystaj z tłumacza.
+1363|„Chcielibyśmy razem przygotować plan awaryjny dla Pana/Pani domu. Zajmie to około {0} minut. Zapytamy o dom, kto w nim mieszka i o potrzeby zdrowotne, żeby plan pasował. Dostanie Pan/Pani własną kopię i wydrukowaną książkę, jeśli zechce. Odpowiedzi zostają w {1} i w Fettle. Nigdy nie są sprzedawane. Może Pan/Pani nie odpowiadać na każde pytanie i w każdej chwili poprosić o usunięcie planu.”
+1364|{0}Zgadzają się, byśmy przygotowali i przechowywali ich plan.{1} Wymagane.
+1365|{0}Ich odpowiedzi mogą być liczone w anonimowych sumach dla okolicy.{1} Nikogo nie da się zidentyfikować. Małe liczby są ukryte. Opcjonalnie.
+1366|{0}Możemy skontaktować się w sprawie wizyty kontrolnej za około miesiąc.{1} Opcjonalnie.
+1367|{0}Ktoś inny odpowiada w ich imieniu{1}, np. opiekun lub krewny, bo sami nie mogą. Postępuj zgodnie z procedurą swojej organizacji dotyczącą zdolności do decyzji.
+1368|Język planu i książki
+1369|English (angielski)
+1370|{0} (polski)
+1371|{0} (rumuński)
+1372|{0} (pendżabski)
+1373|{0} (urdu)
+1374|Nazwisko na okładkę {0}Opcjonalnie. Drukowane tylko w ich książce, np. „Ahmed”.{1}
+1375|Numer: {0}R-{1}{2}
+1376|Anuluj
+1377|Rozpocznij pytania
+1378|Potrzebujesz zgody, by przygotować i przechowywać plan. Jeśli odmówią, nic się nie stało: daj im bezpłatną ulotkę.
+1379|Zrobione: Czujnik tlenku węgla
+1380|Czujnik tlenku węgla{0}Najpierw{1}
+1381|{0} przy każdym urządzeniu gazowym lub na paliwo
+1382|Tlenek węgla nie ma zapachu i może zabić.
+1383|Czujnik tlenku węgla FireAngel, bateria na {0} lat
+1384|Wbudowana bateria, więc przez {0} lat nie trzeba nic wymieniać.
+1385|Czujnik tlenku węgla Kidde, bateria na {0} lat
+1386|Także wbudowana bateria na {0} lat.
+1387|Odkładaj na: czujnik tlenku węgla
+1388|Czujnik tlenku węgla
+1389|Twoja książka jest gotowa: {0} stron, A{1}.
+1390|Otwórz moją książkę
+1391|Zmień dane
+1392|Plan R-{0} usunięty.

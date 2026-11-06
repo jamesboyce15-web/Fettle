@@ -1,0 +1,3 @@
+0|Zajmują się liniami energetycznymi w Greater Manchester. Poproś ich, by przekazali Twoje dane także firmom gazowej i wodociągowej.
+1|Zadania, lista zakupów i plan miesięczny
+2|{0}Co to oznacza dla Ciebie{1}To najbardziej prawdopodobna sytuacja kryzysowa, z jaką się spotkasz. Twoje ogrzewanie przestanie działać podczas przerwy w dostawie prądu, nawet gazowe, więc ciepłe ubrania i koce mają znaczenie. Zgłoś brak prądu pod numerem {2}. Zapis do Priority Services Register oznacza informacje na bieżąco i dodatkową pomoc.
