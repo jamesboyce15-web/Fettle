@@ -1,0 +1,24 @@
+0|Plată securizată prin Stripe. Cartea tipărită și Fettle Plus vin în curând.
+1|Fettle oferă îndrumări generale bazate pe surse oficiale din Regatul Unit. Nu este un sfat medical și nu înlocuiește avertizările oficiale. În caz de urgență, urmează alertele oficiale și sună la {0} dacă e în pericol o viață. {1}Confidențialitate{2} · {3}Termeni{4}
+2|Ușa principală a clădirii tale se deschide cu interfon, cartelă sau cod?
+3|Ușile cu sistem electric pot să nu mai funcționeze la o pană de curent. Unele se încuie, altele se deschid. Contează ca să poți ieși și ca îngrijitorii sau familia să poată intra.
+4|Nu, e o cheie obișnuită sau nu există ușă comună
+5|Gata: Află ce face ușa clădirii la o pană de curent
+6|Află ce face ușa clădirii la o pană de curent{0}Apoi{1}
+7|Întreabă proprietarul sau administratorul clădirii dacă ușa principală se încuie sau se deschide când se ia curentul și cum intri și ieși dacă se încuie. Notează în carte numărul lor disponibil {0} de ore și asigură-te că cine vine să te ajute știe cum să intre.
+8|Laptele praf trebuie preparat cu apă proaspăt fiartă, de cel puțin {0}°C. Fără curent nu poți fierbe apa. Dacă apa de la robinet e oprită sau nesigură, urmează ghidul Food Standards Agency despre ce apă îmbuteliată e potrivită pentru laptele praf. Folosește marca obișnuită a bebelușului.
+9|Află ce face ușa clădirii la o pană de curent
+10|Folosește laptele gata preparat. Laptele praf se face doar cu apă de la robinet proaspăt fiartă, de cel puțin {0}°C. Dacă apa de la robinet e oprită sau nesigură, urmează ghidul Food Standards Agency despre ce apă îmbuteliată e potrivită pentru laptele praf.
+11|{0}{1}Află ce face ușa clădirii la o pană de curent
+12|Un mesaj sau un telefon. Întreabă proprietarul sau administratorul clădirii dacă ușa principală se încuie sau se deschide când se ia curentul și cum intri și ieși dacă se încuie. Notează în carte numărul lor disponibil {0} de ore și asigură-te că cine vine să te ajute știe cum să intre.
+13|Laptele praf nu e steril, așa că trebuie preparat cu apă de la robinet proaspăt fiartă, de cel puțin {0}°C. Dacă nu poți fierbe apa, folosește lapte gata preparat lichid. Dacă apa de la robinet e oprită sau nesigură, urmează ghidul Food Standards Agency despre ce apă îmbuteliată e potrivită pentru laptele praf. Ține în trusă {1} porții gata preparate și biberoane curate.
+14|Dacă apa e oprită sau nesigură, Food Standards Agency are un ghid despre prepararea laptelui praf în timpul întreruperilor de apă, inclusiv ce apă îmbuteliată e potrivită: caută pe GOV.UK „preparing infant formula safely during water supply disruptions”.
+15|Apa ta depinde de o pompă electrică?
+16|De exemplu, o fântână sau un foraj privat, ori o pompă care mărește presiunea scăzută a apei. Când se ia curentul, robinetele se opresc.
+17|Nu, e apă normală de la rețea
+18|{0} persoane × {1} litri × {2} zile = {3} litri. Apa ta depinde de o pompă electrică, așa că robinetele se opresc când se ia curentul.
+19|Pompa s-a oprit. Folosește apa pusă deoparte și păstrează apa din cadă pentru toaletă.
+20|Apa lor depinde de o pompă electrică?
+21|Laptele praf trebuie preparat cu apă proaspăt fiartă, de cel puțin {0}°C. Dacă se opresc gazul sau apa, nu poți face un biberon sigur. Dacă apa de la robinet e oprită sau nesigură, urmează ghidul Food Standards Agency despre ce apă îmbuteliată e potrivită pentru laptele praf. Folosește marca obișnuită a bebelușului.
+22|Ușa principală a clădirii lor se deschide cu interfon, cartelă sau cod?
+23|Întreabă administratorul clădirii sau firma de administrare dacă ușa principală se încuie sau se deschide când se ia curentul și cum intri și ieși dacă se încuie. Notează în carte numărul lor disponibil {0} de ore și asigură-te că cine vine să te ajute știe cum să intre.

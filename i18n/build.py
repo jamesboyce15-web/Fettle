@@ -2,7 +2,7 @@ import json,re,sys,os
 D=os.path.dirname(os.path.abspath(__file__))
 keys=json.load(open(D+'/keys_v1.json'))
 out={};bad=[]
-SETS=[('keys_v1.json',''),('keys_n1.json','2'),('keys_n2.json','3')]
+SETS=[('keys_v1.json',''),('keys_n1.json','2'),('keys_n2.json','3'),('keys_n3.json','4')]
 for L in ['pl','ro','pa','ur']:
  out[L]={}
  for kf,suf in SETS:

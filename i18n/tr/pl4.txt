@@ -1,0 +1,24 @@
+0|Bezpieczna płatność przez Stripe. Wydrukowana książka i Fettle Plus już wkrótce.
+1|Fettle daje ogólne wskazówki oparte na oficjalnych źródłach brytyjskich. To nie jest porada medyczna i nie zastępuje oficjalnych ostrzeżeń. W sytuacji kryzysowej stosuj się do oficjalnych komunikatów i dzwoń pod {0}, jeśli zagrożone jest życie. {1}Prywatność{2} · {3}Regulamin{4}
+2|Czy główne drzwi do Twojego budynku otwiera się domofonem, brelokiem lub kodem?
+3|Elektryczne drzwi mogą przestać działać podczas przerwy w dostawie prądu. Jedne się zamykają, inne otwierają. To ważne, by móc wyjść i by opiekunowie lub rodzina mogli wejść.
+4|Nie, zwykły klucz albo nie ma wspólnych drzwi
+5|Zrobione: Dowiedz się, co robią drzwi budynku przy braku prądu
+6|Dowiedz się, co robią drzwi budynku przy braku prądu{0}Następnie{1}
+7|Zapytaj właściciela lub zarządcę budynku, czy główne drzwi przy braku prądu się zamykają, czy otwierają, i jak wejść i wyjść, jeśli się zamkną. Zapisz w książce ich {0}-godzinny numer i upewnij się, że każdy, kto przychodzi Ci pomóc, wie, jak wejść.
+8|Mleko w proszku trzeba przygotować ze świeżo przegotowanej wody o temperaturze co najmniej {0}°C. Bez prądu nie zagotujesz wody. Jeśli woda z kranu nie płynie lub nie nadaje się do picia, postępuj zgodnie z wytycznymi Food Standards Agency, które wyjaśniają, jaka woda butelkowana nadaje się do mleka modyfikowanego. Używaj marki, którą zwykle pije dziecko.
+9|Dowiedz się, co robią drzwi budynku przy braku prądu
+10|Używaj gotowego mleka. Mleko w proszku przygotowuj tylko ze świeżo przegotowanej wody z kranu o temperaturze co najmniej {0}°C. Jeśli woda z kranu nie płynie lub nie nadaje się do picia, postępuj zgodnie z wytycznymi Food Standards Agency, które wyjaśniają, jaka woda butelkowana nadaje się do mleka modyfikowanego.
+11|{0}{1}Dowiedz się, co robią drzwi budynku przy braku prądu
+12|Jedna wiadomość lub telefon. Zapytaj właściciela lub zarządcę budynku, czy główne drzwi przy braku prądu się zamykają, czy otwierają, i jak wejść i wyjść, jeśli się zamkną. Zapisz w książce ich {0}-godzinny numer i upewnij się, że każdy, kto przychodzi Ci pomóc, wie, jak wejść.
+13|Mleko w proszku nie jest jałowe, więc trzeba je przygotować ze świeżo przegotowanej wody z kranu o temperaturze co najmniej {0}°C. Jeśli nie możesz zagotować wody, używaj gotowego mleka w płynie. Jeśli woda z kranu nie płynie lub nie nadaje się do picia, postępuj zgodnie z wytycznymi Food Standards Agency, które wyjaśniają, jaka woda butelkowana nadaje się do mleka modyfikowanego. Trzymaj w zapasie {1} gotowych porcji i czyste butelki.
+14|Jeśli woda nie płynie lub nie nadaje się do picia, Food Standards Agency ma wytyczne dotyczące przygotowania mleka modyfikowanego podczas przerw w dostawie wody, w tym jaka woda butelkowana się nadaje: wyszukaj na GOV.UK „preparing infant formula safely during water supply disruptions”.
+15|Czy Twoja woda zależy od pompy elektrycznej?
+16|Na przykład prywatna studnia lub odwiert albo pompa zwiększająca niskie ciśnienie wody. Gdy zabraknie prądu, krany przestają działać.
+17|Nie, to zwykła woda z sieci
+18|{0} osób × {1} litry × {2} dni = {3} litrów. Twoja woda zależy od pompy elektrycznej, więc krany przestają działać, gdy zabraknie prądu.
+19|Pompa przestała działać. Używaj zgromadzonej wody, a wodę z wanny zostaw do spłukiwania.
+20|Czy woda tej osoby zależy od pompy elektrycznej?
+21|Mleko w proszku trzeba przygotować ze świeżo przegotowanej wody o temperaturze co najmniej {0}°C. Jeśli zabraknie gazu lub wody, nie przygotujesz bezpiecznej butelki. Jeśli woda z kranu nie płynie lub nie nadaje się do picia, postępuj zgodnie z wytycznymi Food Standards Agency, które wyjaśniają, jaka woda butelkowana nadaje się do mleka modyfikowanego. Używaj marki, którą zwykle pije dziecko.
+22|Czy główne drzwi do budynku tej osoby otwiera się domofonem, brelokiem lub kodem?
+23|Zapytaj zarządcę budynku lub firmę zarządzającą, czy główne drzwi przy braku prądu się zamykają, czy otwierają, i jak wejść i wyjść, jeśli się zamkną. Zapisz w książce ich {0}-godzinny numer i upewnij się, że każdy, kto przychodzi Ci pomóc, wie, jak wejść.
