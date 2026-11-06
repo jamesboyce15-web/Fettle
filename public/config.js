@@ -3,5 +3,6 @@
 // Leave supabaseUrl empty to run the old prototype (everything in memory, nothing charged).
 window.FETTLE_CONFIG = {
   supabaseUrl: "",      // e.g. https://abcdefgh.supabase.co
-  supabaseAnonKey: ""   // Supabase > Project settings > API > anon public key
+  supabaseAnonKey: "",  // Supabase > Project settings > API > anon public key
+  siteUrl: ""           // your domain, e.g. https://fettle.co.uk (used in shared score links)
 };

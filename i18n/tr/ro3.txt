@@ -1,0 +1,14 @@
+0|Distribuie scorul
+1|Se distribuie doar scorul. Fără nume sau răspunsuri.
+2|Distribuie
+3|Salvează imaginea
+4|Acum verifică și casa mamei tale.
+5|Sau a tatălui, a bunicilor ori a unui vecin. Vârstnicii care locuiesc singuri sunt printre cei mai expuși. Durează {0} minute, la telefon cu ei.
+6|Verifică locuința altcuiva
+7|Casa noastră este
+8|pregătită pentru {0} zile fără curent, apă sau telefon.
+9|Cât de pregătită e a ta?
+10|Verificare gratuită de {0} minute pe
+11|Casa noastră este pregătită {0}% pentru {1} zile fără curent, apă sau telefon. Cât de pregătită e a ta?
+12|Copiat. Lipește-l oriunde ca să-l distribui.
+13|Cineva ți-a trimis scorul său Fettle. Cât de pregătită e casa ta? Află gratuit în {0} minute.

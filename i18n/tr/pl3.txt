@@ -1,0 +1,14 @@
+0|Udostępnij swój wynik
+1|Udostępniany jest tylko wynik. Bez imion i odpowiedzi.
+2|Udostępnij
+3|Zapisz obraz
+4|A teraz sprawdź dom swojej mamy.
+5|Albo taty, dziadków czy sąsiada. Starsze osoby mieszkające same są wśród najbardziej zagrożonych. To zajmuje {0} minuty, przez telefon razem z nimi.
+6|Sprawdź czyjś dom
+7|Nasz dom jest
+8|gotowy na {0} dni bez prądu, wody i telefonu.
+9|A jak gotowy jest Twój?
+10|Bezpłatne {0}-minutowe sprawdzenie na
+11|Nasz dom jest w {0}% gotowy na {1} dni bez prądu, wody i telefonu. A jak gotowy jest Twój?
+12|Skopiowano. Wklej to gdziekolwiek, by udostępnić.
+13|Ktoś udostępnił Ci swój wynik Fettle. Jak gotowy jest Twój dom? Sprawdź za darmo w {0} minuty.
