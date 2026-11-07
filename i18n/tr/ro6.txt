@@ -1,0 +1,19 @@
+0|Lancaster rămâne fără curent patru zile
+1|Apa inundațiilor a ajuns la o substație și peste {0} de locuințe și firme au rămas în întuneric. Bancomatele, benzinăriile, telefoanele mobile și internetul s-au oprit. Radioul FM a mers în continuare. {1}Ce ne învață Lancaster{2}
+2|De ce trei zile? BBC relatează că, potrivit celor mai recente estimări ale operatorului național de energie (NESO), după o cădere la nivel național curentul ar putea fi probabil repus în două-trei zile.
+3|Ofcom le cere operatorilor doar cel puțin o oră de alimentare de rezervă pentru telefoanele fixe digitale. Vechea rețea telefonică pe cupru, care funcționa în pana de curent, urmează să fie oprită pe {0} {1} {2}.
+4|Terminalele de plată și bancomatele au nevoie de curent. Când Lancaster a rămas fără curent patru zile în {0}, majoritatea bancomatelor nu au mai funcționat.
+5|Gata: Țineți lanterna, radioul și bateriile împreună
+6|Țineți lanterna, radioul și bateriile împreună{0}Apoi{1}
+7|O cutie sau un sertar pe care îl știe toată lumea
+8|Lanterne, cu bateriile de rezervă în ambalaj lângă ele, nu în interior
+9|Radioul, fixat pe Radio {0}, Radio {1} și postul local
+10|Un pix și un carnețel
+11|Cartea dumneavoastră Fettle
+12|Într-o pană de curent veți căuta pe întuneric. Bateriile lăsate luni întregi în lanternă pot curge și o pot strica. Un reporter BBC a pățit exact asta când a rămas fără curent pe strada lui și nici nu și-a mai găsit radioul cu manivelă.
+13|Țineți lanterna, radioul și bateriile împreună
+14|Un telefon către furnizorul alarmei sau al telefonului. Ofcom le cere operatorilor doar cel puțin o oră de alimentare de rezervă pentru telefoanele fixe digitale. Vechea rețea telefonică pe cupru, care funcționa în pana de curent, urmează să fie oprită pe {0} {1} {2}.
+15|Aproximativ £{0} în bancnote și monede. Terminalele de plată și bancomatele au nevoie de curent. Când Lancaster a rămas fără curent patru zile în {1}, majoritatea bancomatelor nu au mai funcționat.
+16|{0}{1}Țineți lanterna, radioul și bateriile împreună
+17|O cutie sau un sertar pe care îl știe toată lumea. Într-o pană de curent veți căuta pe întuneric. Bateriile lăsate luni întregi în lanternă pot curge și o pot strica. Un reporter BBC a pățit exact asta când a rămas fără curent pe strada lui și nici nu și-a mai găsit radioul cu manivelă.
+18|{0}{1}Power bank-ul reîncărcat. Bateriile lanternei și ale radioului merg și niciuna nu a curs. Bateriile de rezervă stau în ambalaj, nu în lanternă.

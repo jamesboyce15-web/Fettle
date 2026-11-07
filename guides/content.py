@@ -23,6 +23,9 @@ S = {  # shared sources
     "cmo_warm": ("UK Chief Medical Officers: keeping warm or cool scripts for a national power outage", "https://www.gov.uk/government/publications/public-health-advice-from-uk-cmos-during-a-national-power-outage/keeping-warm-or-cool-in-extreme-weather-scripts-for-broadcast-media"),
     "cmo_all": ("UK Chief Medical Officers: public health advice during a national power outage (all scripts)", "https://www.gov.uk/government/publications/public-health-advice-from-uk-cmos-during-a-national-power-outage"),
     "lw": ("RadioToday: BBC sets June date for Radio 4 long wave closedown", "https://radiotoday.co.uk/2026/05/bbc-sets-june-date-for-radio-4-long-wave-closedown/"),
+    "bbc_black": ("BBC News: Black Sky events, Lancaster and the BBC's emergency radio plan (November 2026)", "https://www.bbc.co.uk/news/articles/ck5ynnj05z8no"),
+    "lancs": ("Lancaster University: learning from Lancaster's power cuts (May 2016)", "https://www.lancaster.ac.uk/sci-tech/about-us/news/archive/2016/may/learning-from-lancasters-power-cuts/"),
+    "rae": ("Royal Academy of Engineering: Living without electricity, one city's experience of coping with loss of power (Kemp, 2016)", "https://eprints.lancs.ac.uk/id/eprint/83870"),
     "survey": ("Cabinet Office: UK public survey of risk perception, resilience and preparedness 2026", "https://www.gov.uk/government/statistics/uk-public-survey-of-risk-perception-resilience-and-preparedness-2026/uk-public-survey-of-risk-perception-resilience-and-preparedness-2026-headline-findings-html"),
 }
 
@@ -43,6 +46,55 @@ NUMBERS = """<div class="numbers"><h2>Numbers to keep on paper</h2><dl>
 </dl></div>"""
 
 GUIDES = [
+
+# ---------------------------------------------------------------- LANCASTER
+dict(
+slug="lessons-from-lancaster", cat="start", mins=6, flag=None,
+title="When a city lost power for four days: lessons from Lancaster",
+summary="In December 2015, floodwater cut power to more than 61,000 homes and businesses in Lancaster. What stopped, what kept working, and what it means for your home now.",
+body="""
+<p class="lede">At 22:45 on Saturday 5 December 2015, Storm Desmond pushed the River Lune into an electricity substation, and Lancaster went dark. Power didn't fully return until 9 December. It's the closest the UK has come to a real test of the government's three-day advice.</p>
+
+<h2>What stopped</h2>
+<ul>
+<li><b>Light and heat,</b> in homes and in care homes.</li>
+<li><b>Water, in some places,</b> where supplies relied on electric pumps.</li>
+<li><b>Mobile phones, the internet and TV.</b> People walked the streets looking for signal, and there was a long queue at the one working phone box.</li>
+<li><b>Money.</b> Card payments stopped, and most cash machines didn't work.</li>
+<li><b>Fuel and shops.</b> Petrol pumps need electricity. Food shops threw away stock from their fridges and freezers.</li>
+<li><b>Travel.</b> The railway station closed and the traffic lights failed.</li>
+<li><b>Schools and the university</b> closed.</li>
+</ul>
+<p>Professor Roger Kemp of Lancaster University later described the next morning as "almost like a zombie movie".</p>
+
+<h2>What kept working</h2>
+<p>Two things: old copper-wire landlines, and <b>FM radio</b>. The local station, The Bay, had a generator and one landline, and sent a reporter outside the blackout to phone in news. Professor Kemp's report for the Royal Academy of Engineering concluded that the most reliable source of news was a radio station using 1960s technology.</p>
+
+<h2>What's changed since</h2>
+<ul>
+<li><b>Copper landlines are going.</b> The old phone network, which worked in a power cut, is due to be switched off on 31 January 2027. Home phones will then run through your broadband router, which needs mains power. Ask your provider about a battery backup, especially if anyone uses a care alarm.</li>
+<li><b>Radio 4 has left long wave.</b> FM is now the way to hear national advice. The BBC has its own plan to keep FM broadcasting for at least three days in a national blackout, carrying the government's prepared health advice.</li>
+<li><b>Three days is the official aim.</b> The BBC reports that the National Energy System Operator's latest advice is that, after a national failure, power could probably be restored in two to three days.</li>
+<li><b>Sewers need power too.</b> Lord Harris, chair of the National Preparedness Commission, warned the BBC that without water moving through it, sewage can block and back up. That's why official advice in a national power cut is <a href="national-power-cut.html">not to flush</a>.</li>
+</ul>
+
+<h2>The lesson in one cupboard</h2>
+<p>While writing about all this in November 2026, a BBC reporter lost power on his own street. His torch batteries had leaked, his candles were at the back of a cupboard, and he couldn't find his wind-up radio. Most of us are the same.</p>
+
+<h2>What Lancaster means for your home</h2>
+<ol class="todo">
+<li><b>An FM radio</b> with batteries or a wind-up handle, in a place everyone knows. Write your stations' frequencies on it. See <a href="emergency-radio.html">which radio to keep</a>.</li>
+<li><b>Torch batteries kept outside the torch,</b> in their packet beside it, so they can't leak. Check them every season.</li>
+<li><b>Some cash at home,</b> about £10 per person, in notes and coins.</li>
+<li><b>3 days of water,</b> especially if your water relies on a pump or you live high up.</li>
+<li><b>Food that needs no cooking or fridge,</b> because the shops may be shut too.</li>
+<li><b>A plan for keeping in touch without phones.</b> Agree now who will check on whom, and where you'll meet.</li>
+<li><b>A quarter of a tank of fuel,</b> if you drive. Petrol pumps stop too.</li>
+<li><b>Ask about your landline,</b> before the copper network is switched off on 31 January 2027.</li>
+</ol>
+""",
+sources=["bbc_black", "lancs", "rae", "beready"],
+),
 
 # ---------------------------------------------------------------- NATIONAL POWER CUT
 dict(
@@ -211,6 +263,9 @@ body="""
 <li>A car radio works too, but never run the engine in a closed garage.</li>
 </ul>
 
+<h2>Why FM</h2>
+<p>When Lancaster lost power for four days in 2015, FM radio was one of only two things that kept working, along with old copper landlines. The BBC's emergency plan keeps its FM transmitters running on diesel generators for at least three days. <a href="lessons-from-lancaster.html">What Lancaster teaches us</a></p>
+
 <h2>Write these down now</h2>
 <p>In a power cut, you can't look up the frequencies. Tune in now and write on a label stuck to the radio:</p>
 <ul class="check">
@@ -223,9 +278,9 @@ body="""
 <p>The broadcast scripts begin by suggesting you write the advice down. Keep a notepad and pen with the radio. Fettle's book has a page for these notes.</p>
 
 <h2>Test it each season</h2>
-<p>Turn it on, check the batteries, and check it still finds your stations.</p>
+<p>Turn it on, check the batteries haven't leaked, and check it still finds your stations. Keep spare batteries in their packet next to the radio, not inside it.</p>
 """,
-sources=["cmo_all", "lw", "beready"],
+sources=["cmo_all", "lw", "bbc_black", "beready"],
 ),
 
 # ---------------------------------------------------------------- HIGH RISE
@@ -424,7 +479,7 @@ body="""
 <h2>The first few hours</h2>
 <ul>
 <li><b>Save your phone battery.</b> Turn on low-power mode, close apps and lower the screen brightness. Use a power bank if you have one.</li>
-<li><b>Your landline may not work.</b> Most home phones now run through the broadband router, which needs mains power. Providers must offer a backup solution that keeps emergency calls working for at least an hour to customers who rely on their landline, such as people with no mobile signal or with telecare alarms. If that's you or someone you look after, ask your provider about it now.</li>
+<li><b>Your landline may not work.</b> Most home phones now run through the broadband router, which needs mains power. Providers must offer a backup solution that keeps emergency calls working for at least an hour to customers who rely on their landline, such as people with no mobile signal or with telecare alarms. If that's you or someone you look after, ask your provider about it now. The old copper phone network, which kept working in power cuts, is due to be switched off on 31 January 2027.</li>
 <li><b>Mobile signal can drop</b> in a long power cut, as masts run out of battery. Agree with your household where you'll meet and who checks on whom, in case you can't call.</li>
 <li><b>Turn on a battery or wind-up radio.</b> In a big power cut, official health advice goes out on BBC Radio 2 and Radio 4, and local news on BBC local radio. Use FM: Radio 4 stopped broadcasting on long wave in June 2026. Keep a pen and paper by the radio to write the advice down. See <a href="emergency-radio.html">which radio to keep</a>.</li>
 <li><b>Check on neighbours</b> who live alone, are older, or rely on medical equipment.</li>
@@ -454,7 +509,7 @@ body="""
 </ul>
 
 """ + NUMBERS,
-sources=["beready", "fsa_power", "ofcom_power", "cmo_all", "psr"],
+sources=["beready", "fsa_power", "ofcom_power", "cmo_all", "bbc_black", "psr"],
 ),
 
 # ---------------------------------------------------------------- NO WATER

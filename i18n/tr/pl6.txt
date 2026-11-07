@@ -1,0 +1,19 @@
+0|Lancaster bez prądu przez cztery dni
+1|Woda powodziowa zalała podstację i ponad {0} domów i firm straciło prąd. Przestały działać bankomaty, stacje benzynowe, telefony komórkowe i internet. Radio FM działało dalej. {1}Czego uczy nas Lancaster{2}
+2|Dlaczego trzy dni? BBC podaje, że według najnowszych ocen operatora krajowego systemu energetycznego (NESO) po awarii w całym kraju prąd prawdopodobnie udałoby się przywrócić w ciągu dwóch do trzech dni.
+3|Ofcom wymaga od operatorów tylko co najmniej godziny zasilania awaryjnego dla cyfrowych telefonów stacjonarnych. Stara miedziana sieć telefoniczna, która działała podczas braku prądu, ma zostać wyłączona {0} {1} {2}.
+4|Terminale płatnicze i bankomaty potrzebują prądu. Gdy Lancaster był bez prądu przez cztery dni w {0} roku, większość bankomatów przestała działać.
+5|Zrobione: Trzymaj latarkę, radio i baterie razem
+6|Trzymaj latarkę, radio i baterie razem{0}Następnie{1}
+7|Jedno pudełko lub szuflada, które wszyscy znają
+8|Latarki, z zapasowymi bateriami w opakowaniu obok, nie w środku
+9|Radio nastawione na Radio {0}, Radio {1} i lokalną stację
+10|Długopis i notes
+11|Twoja Książka Fettle
+12|Przy braku prądu będziesz szukać po ciemku. Baterie zostawione w latarce na wiele miesięcy mogą wyciec i ją zniszczyć. Pewien reporter BBC przekonał się o tym, gdy na jego ulicy zabrakło prądu, i nie mógł też znaleźć radia na korbkę.
+13|Trzymaj latarkę, radio i baterie razem
+14|Jeden telefon do dostawcy alarmu lub telefonu. Ofcom wymaga od operatorów tylko co najmniej godziny zasilania awaryjnego dla cyfrowych telefonów stacjonarnych. Stara miedziana sieć telefoniczna, która działała podczas braku prądu, ma zostać wyłączona {0} {1} {2}.
+15|Około {0} £ w banknotach i monetach. Terminale płatnicze i bankomaty potrzebują prądu. Gdy Lancaster był bez prądu przez cztery dni w {1} roku, większość bankomatów przestała działać.
+16|{0}{1}Trzymaj latarkę, radio i baterie razem
+17|Jedno pudełko lub szuflada, które wszyscy znają. Przy braku prądu będziesz szukać po ciemku. Baterie zostawione w latarce na wiele miesięcy mogą wyciec i ją zniszczyć. Pewien reporter BBC przekonał się o tym, gdy na jego ulicy zabrakło prądu, i nie mógł też znaleźć radia na korbkę.
+18|{0}{1}Power bank naładowany. Baterie w latarce i radiu działają i żadna nie wyciekła. Zapasowe baterie w opakowaniu, nie w latarce.
