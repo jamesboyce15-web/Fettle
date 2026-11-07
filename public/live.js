@@ -24,6 +24,10 @@
     const { data } = await sb.auth.getSession();
     if (data.session) await loadUser(data.session.user);
     await handleReturn();
+    if (new URLSearchParams(location.search).get("recheck")) { // link from a reminder email
+      history.replaceState(null, "", location.pathname);
+      if (user) { const i = H.findIndex(h => checkDue(h)); if (i >= 0) recheck(i); else homeView(); } else authView("signin");
+    }
     setInterval(saveAll, 4000);
     addEventListener("pagehide", saveAll);
   }
@@ -37,7 +41,7 @@
     const fromDb = (rows || []).map(r => { const h = Object.assign(fresh(r.data.other), r.data); h._id = r.id; h.paid = paid.has(r.id); saved.set(r.id, JSON.stringify(strip(h))); return h; });
     const pending = H.filter(h => !h._id); // a check finished before signing in
     H = fromDb.concat(pending);
-    user = { id: u.id, email: u.email, name: meta.first_name || u.email.split("@")[0], households: H };
+    user = { id: u.id, email: u.email, name: meta.first_name || u.email.split("@")[0], households: H, remind: !!meta.remind_emails };
     setAcct();
     await saveAll();
   }
@@ -70,8 +74,8 @@
         const name = document.getElementById("a-name").value.trim();
         if (!name) return errBox("Enter your first name.");
         if (pw.length < 8) return errBox("Use at least 8 characters for your password.");
-        const news = document.getElementById("a-news").checked;
-        const { data, error } = await sb.auth.signUp({ email, password: pw, options: { data: { first_name: name, weekly_emails: news } } });
+        const news = document.getElementById("a-news").checked, remind = document.getElementById("a-remind").checked;
+        const { data, error } = await sb.auth.signUp({ email, password: pw, options: { data: { first_name: name, weekly_emails: news, remind_emails: remind } } });
         if (error) return errBox(/registered|exists/i.test(error.message) ? "There's already an account with that email. Sign in instead." : error.message);
         if (!data.session) return errBox("Check your email and click the link to confirm your account, then sign in.");
         await loadUser(data.user);
@@ -124,8 +128,14 @@
     baseHome();
     const box = document.getElementById("homebox");
     if (user && !user.pro && box && !document.getElementById("del-acct")) {
+      box.insertAdjacentHTML("beforeend", `<div class="pcard"><label style="display:flex;gap:10px;align-items:flex-start;font-weight:400;margin:0"><input type="checkbox" id="remind-t" ${user.remind ? "checked" : ""} onchange="liveRemind(this.checked)" style="width:20px;height:20px;margin-top:3px;accent-color:var(--brand)"><span><b>Check-in reminders</b><br><span class="sm mute">An email when your 30-day and 90-day checks are due, then one a season.</span></span></label></div>`);
       box.insertAdjacentHTML("beforeend", `<p class="sm mute" style="margin-top:34px;text-align:center"><button class="linkbtn" id="del-acct" onclick="liveDelete()">Delete my account and plans</button></p>`);
     }
+  };
+  window.liveRemind = async function (on) {
+    const { error } = await sb.auth.updateUser({ data: { remind_emails: on } });
+    if (error) { say("Sorry, that didn't save. Please try again."); return; }
+    user.remind = on; say(on ? "Reminders on." : "Reminders off.");
   };
   window.liveDelete = async function () {
     go("auth");

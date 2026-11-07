@@ -1,0 +1,37 @@
+0|Przypomnij mi e-mailem, gdy nadejdzie czas na sprawdzenie po {0} i po {1} dniach. {2}Opcjonalnie. Dwa e-maile, potem jeden na sezon.{3}
+1|Pomóż swojej radzie planować
+2|Uwzględnij gospodarstwo {0} w anonimowych zestawieniach dla Rochdale, np. „ile domów ma wodę na {1} dni”. Nigdy nie udostępniamy Twoich odpowiedzi, informacji o zdrowiu ani danych kontaktowych i nigdy nie pokazujemy grupy mniejszej niż {2}. Opcjonalnie.
+3|Przed i po
+4|{0} gospodarstw domowych z pierwszym i kolejnym sprawdzeniem. {1} z nich się poprawiło, a razem załatwiły {2} z tych rzeczy. Kolumna krajowa pochodzi z {3}badania Cabinet Office z {4} r.{5}, w którym wzięło udział {6} dorosłych w Wielkiej Brytanii.
+5|Wskaźnik
+6|Wielka Brytania w {0}
+7|Przy pierwszym sprawdzeniu
+8|Ostatnio
+9|Woda butelkowana na {0} dni{1}{2}{3} litry na osobę dziennie{4}
+10|Jedzenie na {0} dni, którego nie trzeba gotować
+11|Domowy plan awaryjny
+12|Torba ewakuacyjna
+13|Latarka działająca bez prądu z sieci
+14|Gotówka, co najmniej {0} £ na osobę
+15|Czujnik tlenku węgla{0}{1}Domy z urządzeniem spalającym paliwo{2}
+16|Uzgodnione miejsce spotkania
+17|Ktoś przeszkolony w pierwszej pomocy{0}{1}W ciągu ostatnich {2} lat{3}
+18|Nieporównywalne
+19|Jednostronicowy raport o efektach (PDF)
+20|{0}Od pierwszego sprawdzenia:{1} {2}% → {3}%. Załatwiono {4} z rzeczy, których nie ma większość domów w Wielkiej Brytanii.
+21|{0} osoba × {1} litry × {2} dni = {3} litrów.
+22|Ogrzewanie prawdopodobnie przestanie działać przy braku prądu, nawet gazowe. Twój dom szybko traci ciepło.
+23|Czas na sprawdzenie po {0} dniach
+24|Czas na sezonowe sprawdzenie
+25|Dwie minuty. Powiedz nam, co masz teraz, i zobacz, jak daleko zaszłaś/zaszedłeś od pierwszego sprawdzenia ({0}%).
+26|Rozpocznij sprawdzenie
+27|Zapisz sprawdzenie
+28|Sprawdzenie zapisane. Wzrost z {0}% do {1}%.
+29|Przypomnienia o sprawdzeniu
+30|E-mail, gdy nadejdzie czas na sprawdzenie po {0} i po {1} dniach, potem jeden na sezon.
+31|Przypomnienia włączone.
+32|Przypomnienia wyłączone.
+33|Dziękujemy. Udostępniamy tylko zestawienia obejmujące co najmniej {0} domów.
+34|Twoje gospodarstwo domowe nie jest już uwzględniane.
+35|Pokazywane, gdy co najmniej {0} gospodarstw domowych będzie miało wizytę kontrolną.
+36|Ukryte: mniej niż {0} gospodarstw domowych

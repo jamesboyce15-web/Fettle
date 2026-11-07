@@ -1,0 +1,37 @@
+0|Amintiți-mi prin e-mail când e timpul verificărilor de la {0} și de la {1} de zile. {2}Opțional. Două e-mailuri, apoi unul pe sezon.{3}
+1|Ajutați consiliul local să planifice
+2|Includeți gospodăria {0} în totalurile anonime pentru Rochdale, de exemplu „câte locuințe au apă pentru {1} zile”. Nu vă dăm niciodată răspunsurile, datele despre sănătate sau datele de contact și nu arătăm niciodată un grup mai mic de {2}. Opțional.
+3|Înainte și după
+4|{0} gospodării cu o primă verificare și o verificare ulterioară. {1} dintre ele s-au îmbunătățit și, împreună, au rezolvat {2} dintre aceste lucruri. Coloana națională provine din {3}sondajul Cabinet Office din {4}{5}, cu {6} de adulți din Regatul Unit.
+5|Indicator
+6|Regatul Unit în {0}
+7|La prima verificare
+8|Cel mai recent
+9|Apă îmbuteliată pentru {0} zile{1}{2}{3} litri de persoană pe zi{4}
+10|Mâncare pentru {0} zile care nu trebuie gătită
+11|Un plan de urgență al gospodăriei
+12|Un rucsac de urgență
+13|O lanternă care merge fără curent de la rețea
+14|Numerar, cel puțin £{0} de persoană
+15|Un detector de monoxid de carbon{0}{1}Locuințe cu un aparat care arde combustibil{2}
+16|Un loc de întâlnire stabilit
+17|Cineva instruit în prim ajutor{0}{1}În ultimii {2} ani{3}
+18|Nu se poate compara
+19|Raport de impact pe o pagină (PDF)
+20|{0}De la prima verificare:{1} {2}% → {3}%. Ați rezolvat {4} dintre lucrurile pe care majoritatea locuințelor din Regatul Unit nu le au.
+21|{0} persoană × {1} litri × {2} zile = {3} litri.
+22|Încălzirea se va opri probabil într-o pană de curent, chiar și cea pe gaz. Locuința pierde repede căldura.
+23|E timpul verificării de la {0} de zile
+24|E timpul verificării de sezon
+25|Două minute. Spuneți-ne ce aveți acum și vedeți cât ați progresat de la prima verificare ({0}%).
+26|Încep verificarea
+27|Salvez verificarea
+28|Verificare salvată. Ați urcat de la {0}% la {1}%.
+29|Mementouri pentru verificări
+30|Un e-mail când e timpul verificărilor de la {0} și de la {1} de zile, apoi unul pe sezon.
+31|Mementouri pornite.
+32|Mementouri oprite.
+33|Vă mulțumim. Se împărtășesc doar totaluri de cel puțin {0} locuințe.
+34|Gospodăria dumneavoastră nu mai este inclusă.
+35|Se afișează când cel puțin {0} gospodării au avut o vizită ulterioară.
+36|Ascuns: mai puțin de {0} gospodării

@@ -1,0 +1,16 @@
+# Fettle check-in reminders: a small scheduled Worker, separate from the Pages site.
+# Deploy with: cd workers/reminders && npx wrangler deploy
+# It stays in DRY_RUN (logs only, sends nothing) until DRY_RUN is set to "false" in Cloudflare.
+name = "fettle-reminders"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+
+[triggers]
+crons = ["17 10 * * *"]   # every day at 10:17 UTC
+
+[vars]
+DRY_RUN = "true"
+SITE_URL = "https://fettle.example"
+FROM_EMAIL = "Fettle <hello@fettle.example>"
+# Secrets (add with `npx wrangler secret put NAME`, never in this file):
+#   SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, RESEND_API_KEY, UNSUBSCRIBE_SECRET (same value as the Pages site)

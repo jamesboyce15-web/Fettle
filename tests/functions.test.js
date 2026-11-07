@@ -1,6 +1,8 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { verifyStripe } from "../lib/server.js";
+import { verifyStripe, unsubToken, checkUnsubToken } from "../lib/server.js";
+import { onRequestGet as unsubscribe } from "../functions/api/unsubscribe.js";
+import { run as runReminders, buildEmail } from "../workers/reminders/src/index.js";
 import { onRequestPost as checkout } from "../functions/api/checkout.js";
 import { onRequestPost as webhook } from "../functions/api/stripe-webhook.js";
 
@@ -84,4 +86,49 @@ test("webhook: unpaid or other events are ignored", async () => {
     assert.equal(r.status, 200);
   }
   assert.equal(calls.length, 0);
+});
+
+test("unsubscribe: token only works for its own user", async () => {
+  const t = await unsubToken("sec", UID);
+  assert.equal(await checkUnsubToken("sec", UID, t), true);
+  assert.equal(await checkUnsubToken("sec", HID, t), false);
+  assert.equal(await checkUnsubToken("other", UID, t), false);
+  assert.equal(await checkUnsubToken("", UID, t), false);
+});
+
+test("unsubscribe: bad token changes nothing; good token turns reminders off and keeps other settings", async () => {
+  const e = { ...env, UNSUBSCRIBE_SECRET: "sec" };
+  let calls = mockFetch(() => res({}));
+  let r = await unsubscribe({ request: new Request(`https://x/api/unsubscribe?u=${UID}&t=nope`), env: e });
+  assert.equal(r.status, 400); assert.equal(calls.length, 0);
+  calls = mockFetch((url, init) => init.method === "PUT" ? res({}) : res({ id: UID, user_metadata: { first_name: "Ann", weekly_emails: true, remind_emails: true } }));
+  r = await unsubscribe({ request: new Request(`https://x/api/unsubscribe?u=${UID}&t=${await unsubToken("sec", UID)}`), env: e });
+  assert.equal(r.status, 200);
+  const put = calls.find(c => c.init.method === "PUT");
+  assert.deepEqual(JSON.parse(put.init.body).user_metadata, { first_name: "Ann", weekly_emails: true, remind_emails: false });
+});
+
+test("reminders: dry run sends and records nothing", async () => {
+  const e = { ...env, UNSUBSCRIBE_SECRET: "sec", DRY_RUN: "true", SITE_URL: "https://f.test", FROM_EMAIL: "F <a@f.test>", RESEND_API_KEY: "re_x" };
+  const calls = mockFetch(url => url.includes("/rpc/") ? res([{ household_id: HID, user_id: UID, email: "a@b.c", first_name: "Ann", household_name: "My household", kind: "day30", first_score: 34, last_score: 34 }]) : res({}));
+  const out = await runReminders(e);
+  assert.equal(out.dry, true); assert.equal(calls.length, 1);
+});
+
+test("reminders: live run sends once per row with an unsubscribe link, then records it", async () => {
+  const e = { ...env, UNSUBSCRIBE_SECRET: "sec", DRY_RUN: "false", SITE_URL: "https://f.test", FROM_EMAIL: "F <a@f.test>", RESEND_API_KEY: "re_x" };
+  const calls = mockFetch(url => url.includes("/rpc/") ? res([{ household_id: HID, user_id: UID, email: "a@b.c", first_name: "Ann", household_name: "Mum", kind: "day90", first_score: 20, last_score: 55 }]) : res({ id: "m1" }));
+  const out = await runReminders(e);
+  assert.equal(out.sent, 1);
+  const send = calls.find(c => c.url.includes("resend.com"));
+  const body = JSON.parse(send.init.body);
+  assert.equal(body.to[0], "a@b.c"); assert.match(body.subject, /90-day/); assert.match(body.text, /Mum/);
+  assert.match(body.headers["List-Unsubscribe"], /api\/unsubscribe\?u=/);
+  const rec = calls.find(c => c.url.includes("/reminders_sent"));
+  assert.deepEqual(JSON.parse(rec.init.body), { household_id: HID, kind: "day90" });
+});
+
+test("reminders: email escapes names", () => {
+  const m = buildEmail({ first_name: "<b>x</b>", household_name: "My household", kind: "day30", first_score: 10 }, { SITE_URL: "https://f.test" }, "https://u");
+  assert.doesNotMatch(m.html, /<b>x<\/b>/);
 });

@@ -41,6 +41,7 @@ Do these in order. Everything stays in **test mode** until step 6.
    - `STRIPE_SECRET_KEY`
    - `STRIPE_PRICE_BOOK_DIGITAL`
    - `STRIPE_WEBHOOK_SECRET` (from step 4)
+   - `UNSUBSCRIBE_SECRET` (any long random string; the reminders Worker uses the same one)
 4. Custom domains → add your domain.
 
 ### 4. Stripe webhook
@@ -61,6 +62,21 @@ Only after the checks in "Before you charge anyone" are done:
 1. Switch Stripe to live mode and make the £5 product again in live mode.
 2. Replace `STRIPE_SECRET_KEY`, `STRIPE_PRICE_BOOK_DIGITAL` and `STRIPE_WEBHOOK_SECRET` in Cloudflare with the **live** values. Live mode needs its own webhook endpoint.
 3. Redeploy.
+
+### 7. Check-in reminders (optional, after launch)
+People can tick "Remind me when my 30-day and 90-day checks are due". The emails come from a small scheduled Worker in `workers/reminders/`.
+1. Make an account with an email sender. The code uses Resend (resend.com). Verify your domain there.
+2. `cd workers/reminders`, set `SITE_URL` and `FROM_EMAIL` in `wrangler.toml`, then add the secrets: `npx wrangler secret put SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `RESEND_API_KEY`, `UNSUBSCRIBE_SECRET`.
+3. `npx wrangler deploy`. It runs daily but stays in **dry run** (logs who is due, sends nothing) until you set `DRY_RUN` to `false` in Cloudflare.
+4. Every email has a one-click unsubscribe link (`/api/unsubscribe`).
+
+## Measuring impact (for councils)
+- Every check saves a snapshot: date, readiness score, and 14 measures that match the Cabinet Office's 2026 preparedness survey (3 days of water, a plan, a grab bag, a radio, the Priority Services Register and so on).
+- People re-check at 30 days, 90 days, then each season. That gives a before and after for each household.
+- In Communities mode, the ward report shows before and after against the UK figures, and makes a one-page impact report.
+- For households using the public site who ticked "Help your council plan", run this in the Supabase SQL editor:
+  `select * from fettle_impact('Rochdale');`
+  It returns each measure's first-check and latest percentages, and hides any measure with fewer than 5 households.
 
 ## Before you charge anyone
 - Register with the ICO (data protection fee).

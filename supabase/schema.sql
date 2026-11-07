@@ -34,3 +34,76 @@ create index if not exists purchases_household_idx on public.purchases(household
 alter table public.purchases enable row level security;
 create policy "read own purchases" on public.purchases for select using (auth.uid() = user_id);
 -- No insert/update/delete policies: only the service role key (server-side) can write.
+
+-- =====================================================================
+-- Impact measurement and check-in reminders (added November 2026)
+-- Each household's data.scores is a list of check snapshots:
+--   {d: ISO date, s: readiness %, m: {water3:1, radio:0, co:null, ...}, note}
+-- =====================================================================
+
+-- Which reminder emails have been sent, so nobody gets the same one twice.
+create table if not exists public.reminders_sent (
+  household_id uuid not null references public.households(id) on delete cascade,
+  kind text not null,
+  sent_at timestamptz not null default now(),
+  primary key (household_id, kind)
+);
+alter table public.reminders_sent enable row level security; -- no policies: server only
+
+-- Households due a 30-day, 90-day or seasonal check, for users who opted in to reminders.
+create or replace function public.fettle_recheck_due()
+returns table (household_id uuid, user_id uuid, email text, first_name text, household_name text,
+               kind text, first_score int, last_score int)
+language sql security definer set search_path = public as $$
+  with h as (
+    select hh.id, hh.user_id, hh.data,
+           jsonb_array_length(hh.data->'scores') as n,
+           (hh.data->'scores'->0->>'d')::timestamptz as first_at,
+           (hh.data->'scores'->(jsonb_array_length(hh.data->'scores')-1)->>'d')::timestamptz as last_at
+    from public.households hh
+    where jsonb_typeof(hh.data->'scores') = 'array' and jsonb_array_length(hh.data->'scores') > 0
+  ), k as (
+    select h.*, case
+      when h.n = 1 and h.first_at <= now() - interval '30 days' then 'day30'
+      when h.n = 2 and h.first_at <= now() - interval '90 days' then 'day90'
+      when h.n >= 3 and h.last_at <= now() - interval '90 days'
+        then 'season-' || to_char(now(), 'YYYY-"Q"Q')
+    end as kind
+    from h
+  )
+  select k.id, k.user_id, u.email::text, u.raw_user_meta_data->>'first_name', k.data->>'name', k.kind,
+         (k.data->'scores'->0->>'s')::int, (k.data->'scores'->(k.n-1)->>'s')::int
+  from k join auth.users u on u.id = k.user_id
+  where k.kind is not null
+    and coalesce((u.raw_user_meta_data->>'remind_emails')::boolean, false)
+    and not exists (select 1 from public.reminders_sent r where r.household_id = k.id and r.kind = k.kind)
+  limit 500;
+$$;
+revoke all on function public.fettle_recheck_due() from public, anon, authenticated;
+grant execute on function public.fettle_recheck_due() to service_role;
+
+-- Anonymous before-and-after totals for one area, for council reports.
+-- Counts only households that ticked "Help your council plan" (data.countMe) and have 2 or more checks.
+-- Any measure with fewer than 5 households is returned without percentages.
+create or replace function public.fettle_impact(p_area text)
+returns table (measure text, households int, first_pct int, latest_pct int)
+language sql security definer set search_path = public as $$
+  with f as (
+    select hh.data->'scores'->0->'m' as m0,
+           hh.data->'scores'->(jsonb_array_length(hh.data->'scores')-1)->'m' as m1
+    from public.households hh
+    where coalesce((hh.data->>'countMe')::boolean, false)
+      and lower(coalesce(hh.data->>'area','')) = lower(p_area)
+      and jsonb_typeof(hh.data->'scores') = 'array' and jsonb_array_length(hh.data->'scores') > 1
+  ), x as (
+    select key as measure, (f.m0->>key)::int as a, (f.m1->>key)::int as b
+    from f, jsonb_object_keys(f.m0) as key
+    where f.m0->>key is not null and f.m1->>key is not null
+  )
+  select measure, count(*)::int,
+         case when count(*) >= 5 then round(100.0 * sum(a) / count(*))::int end,
+         case when count(*) >= 5 then round(100.0 * sum(b) / count(*))::int end
+  from x group by measure order by measure;
+$$;
+revoke all on function public.fettle_impact(text) from public, anon, authenticated;
+grant execute on function public.fettle_impact(text) to service_role;
