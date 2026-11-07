@@ -8,6 +8,7 @@ Household resilience plans: a free readiness check, a £5 digital book, and (lat
 - `functions/api/` holds the server code (Cloudflare Pages Functions): `checkout`, `stripe-webhook`, `delete-account`.
 - `supabase/schema.sql` is the database.
 - `i18n/` holds the translations (Polish, Romanian, Panjabi, Urdu).
+- `guides/content.py` holds the free guides. `public/guides/` is generated from it by `python3 tools/build_guides.py`, so edit the content file, not the HTML.
 
 With `config.js` empty the site runs as the old prototype: nothing saved, nothing charged.
 
@@ -70,6 +71,7 @@ Only after the checks in "Before you charge anyone" are done:
   - the founder quote
   - the Amazon tag `YOURTAG-21`
   - "[name, role]" in the news section
+- The guides on feeding a baby and on medicines are marked as drafts until an NHS professional has reviewed them. Remove `flag="clinical"` in `guides/content.py` once they have.
 - Translations need professional checking before the language menu is promoted. Launch in English first.
 
 ## Not built yet

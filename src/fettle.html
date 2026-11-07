@@ -148,6 +148,8 @@ input.txt,select.txt{font:inherit;width:100%;padding:14px;border:1.5px solid var
 .auth .switch{margin-top:18px;text-align:center;color:var(--mute)}
 .saved{display:flex;gap:12px;align-items:flex-start;background:var(--tint);border-radius:12px;padding:14px 16px;margin:0 0 18px}
 .acct{display:flex;gap:10px;align-items:center;font-size:.92rem}
+.hdrlink{margin-inline-start:auto;font-weight:700;font-size:.92rem;color:var(--ink);text-decoration:none}.hdrlink:hover{text-decoration:underline}.hdrlink+.langsel{margin-inline-start:0}
+.guidegrid{display:grid;gap:10px;list-style:none;padding:0;margin:0 0 16px}.guidegrid a{display:block;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;text-decoration:none;color:var(--ink)}.guidegrid a:hover{border-color:var(--brand)}.guidegrid b{display:block;color:var(--link);margin-bottom:2px}.guidegrid span{font-size:.92rem;color:var(--mute)}
 .linkbtn{background:none;border:0;padding:4px 0;font:inherit;font-weight:700;color:var(--link);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
 /* home */
 .hello h1{margin-bottom:6px}
@@ -391,6 +393,7 @@ div.case label{grid-area:lp}div.case .linkbtn{grid-area:pv;justify-self:end}
     <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#173f35"/><path d="M8 15.5 16 9l8 6.5V24a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1z" fill="none" stroke="#f6f7f4" stroke-width="2" stroke-linejoin="round"/><path d="M16 14.5c1.9 1.7 2.8 3.2 2.8 4.6a2.8 2.8 0 0 1-5.6 0c0-1.4.9-2.9 2.8-4.6z" fill="#f2a900"/></svg>
     <span style="font-size:1.25rem;letter-spacing:-.01em">fettle</span>
   </a>
+  <a class="hdrlink" href="guides/">Guides</a>
   <select id="langsel" class="langsel notr" aria-label="Language" onchange="setLang(this.value)"><option value="en">English</option><option value="pl">Polski</option><option value="ro">Română</option><option value="pa">ਪੰਜਾਬੀ</option><option value="ur">اردو</option></select>
   <button class="aa" onclick="toggleLarge()" aria-label="Larger text" title="Larger text">A<span>A</span></button><span class="acct" id="acct"><span class="tag" data-live="hide">Prototype</span><button class="linkbtn" onclick="authView('signin')">Sign in</button></span>
 </header>
@@ -468,6 +471,18 @@ div.case label{grid-area:lp}div.case .linkbtn{grid-area:pv;justify-self:end}
       <li><b>Get The Fettle Book</b><span>Your full 72-hour plan as a proper book, with your numbers, recipes, first aid and a script for the family talk.</span></li>
     </ol>
     <button class="btn full" onclick="start(false)" style="margin-top:18px">Check my household</button>
+  </div></section>
+
+  <section class="lsec" id="guides"><div class="pagewrap">
+    <h2 class="lh">Free guides, no sign-up.</h2>
+    <p class="lsub">Plain answers for when things go off, checked against official UK guidance.</p>
+    <ul class="guidegrid">
+      <li><a href="guides/high-rise-flats.html"><b>Living in a high-rise flat</b><span>Lifts, water pumps, door entry and the fire strategy.</span></a></li>
+      <li><a href="guides/no-cook-meals.html"><b>No-cook meals from your cupboard</b><span>Six simple recipes and a 3-day shopping list.</span></a></li>
+      <li><a href="guides/eating-safely-without-power.html"><b>Eating safely when the fridge is off</b><span>What to keep, what to throw away, and who should be careful.</span></a></li>
+      <li><a href="guides/power-cut.html"><b>What to do in a power cut</b><span>The first 10 minutes, the first few hours and the first day.</span></a></li>
+    </ul>
+    <a class="btn quiet" href="guides/">See all 12 guides</a>
   </div></section>
 
   <section class="lsec tinted"><div class="pagewrap">
@@ -1357,6 +1372,7 @@ async function downloadScoreCard(){
   a.href=URL.createObjectURL(blob);a.download="fettle-score.png";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),5000);
 }
 // Arriving from someone's shared score: a short welcome line above the hero.
+addEventListener("load",()=>{try{if(location.hash==="#check"){history.replaceState(null,"",location.pathname+location.search);start(false);}}catch(e){}});
 (()=>{try{if(new URLSearchParams(location.search).get("ref")==="share"){const hero=document.querySelector("#v-landing .hero, #v-landing section");if(hero)hero.insertAdjacentHTML("afterbegin",`<p class="refnote">Someone shared their Fettle score with you. How ready is your home? Find out free in 3 minutes.</p>`);}}catch(e){}})();
 
 /* ================= PROFESSIONAL ================= */
