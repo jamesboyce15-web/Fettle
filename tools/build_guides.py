@@ -60,6 +60,7 @@ ul.cols{columns:2 240px;column-gap:28px}
 .sources{font-size:.9rem;color:var(--mute);border-top:1px solid var(--line);padding-top:18px;margin-top:30px}
 .sources h2{font-size:1rem;margin:0 0 8px;color:var(--ink)} .sources li{margin-bottom:5px}
 .more{display:grid;gap:10px;margin:10px 0 0;padding:0;list-style:none}
+.sm{font-size:.9rem;color:var(--mute)}
 .disc{font-size:.85rem;color:var(--mute);margin-top:22px}
 footer{border-top:1px solid var(--line);padding:20px 16px;font-size:.85rem;color:var(--mute);text-align:center}
 /* hub */
@@ -155,6 +156,7 @@ hub = f"""<p class="kick">Free guides</p>
 <p class="lede">Power cuts, water cuts, cold snaps. What to do, written for real homes: flats, families with babies, and people looking after someone. Free, no sign-up, and checked against official UK guidance.</p>
 <div class="start"><h2>New to this? Start with three things.</h2>
 <ol><li>Store 3 days of water: 3 litres per person per day.</li><li>Keep 3 days of food that needs no cooking. <a href="no-cook-meals.html">Here are six meals</a>.</li><li>Join the <a href="priority-services-register.html">Priority Services Register</a> if anyone at home might need extra help.</li></ol>
+<p>Then read <a href="national-power-cut.html">what the UK's Chief Medical Officers will say on the radio</a> if the whole country loses power.</p>
 <p style="margin:0">Or <a href="../#check">take the free check</a> and get a plan for your home.</p></div>
 <div class="chips noprint" role="group" aria-label="Filter guides">{chips}</div>
 <ul class="cards" id="cards">{cards}</ul>

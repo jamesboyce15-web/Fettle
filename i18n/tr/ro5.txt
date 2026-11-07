@@ -1,0 +1,66 @@
+1|Medicii-șefi ai Regatului Unit au scris și mesajele radio pe care le-ar citi dacă toată țara ar rămâne fără curent: nu trageți apa la toaletă, beți cel puțin {0} litri pe zi, mâncați întâi alimentele refrigerate. {1}Citiți ce ar spune{2}.
+2|Ghiduri gratuite, fără înregistrare.
+3|Răspunsuri simple pentru când se opresc utilitățile, verificate după ghidurile oficiale din Regatul Unit.
+4|Viața într-un bloc înalt
+5|Lifturi, pompe de apă, interfon și planul în caz de incendiu.
+6|Mese fără gătit din cămară
+7|Șase rețete simple și o listă de cumpărături pentru {0} zile.
+8|Mâncatul în siguranță când frigiderul nu merge
+9|Ce păstrați, ce aruncați și cine trebuie să fie atent.
+10|Dacă toată țara rămâne fără curent
+11|Ce vor spune medicii-șefi la radio, în cuvinte simple.
+12|Vedeți toate cele {0} ghiduri
+22|Dacă telefoanele și internetul nu mai merg, medicii-șefi ai Regatului Unit vor transmite sfaturi de sănătate la BBC Radio {0} și Radio {1}. Radio {2} nu mai emite pe unde lungi, deci aparatul trebuie să aibă FM. Țineți lângă el un pix și un carnețel.
+23|Gata: Trusă pentru toaletă și spălatul mâinilor
+24|Trusă pentru toaletă și spălatul mâinilor{0}Apoi{1}
+25|{0} trusă
+26|O rolă de saci de gunoi rezistenți, pentru toaletă dacă nu se poate trage apa
+27|Un lighean și un săpun, pentru spălatul mâinilor
+28|Tablete de purificare a apei
+29|O sticlă mică de înălbitor de uz casnic fără parfum, departe de copii
+30|O găleată curată cu capac, folosită doar pentru apă
+31|La o pană de curent la nivel național, canalizarea se oprește, așa că medicii-șefi recomandă să nu trageți deloc apa: puneți un sac de gunoi în toaletă, legați-l și duceți-l în tomberonul de afară. Apa cu săpun dintr-un lighean comun e mai eficientă decât dezinfectantul de mâini. Tabletele și înălbitorul sunt pentru a face apa sigură dacă vi se termină sticlele.
+32|Strânge bani pentru: trusă pentru toaletă și spălatul mâinilor
+33|Trusă pentru toaletă și spălatul mâinilor
+34|Totul s-a oprit
+35|Porniți radioul. Mesajele de urgență naționale se transmit la BBC Radio {0} și Radio {1} pe FM. Țineți lângă el un pix și hârtie ca să notați sfaturile.
+36|Beți din apa de rezervă: fiecare are nevoie de cel puțin {0} litri pe zi, cam {1} căni. Ați planificat {2} litri pe zi pentru toți.
+37|Totul s-a oprit, pasul {0} din {1}
+38|Porniți un radio cu baterii sau cu manivelă: BBC Radio {0} sau Radio {1} pe FM. Sfaturile de sănătate ale medicilor-șefi ai Regatului Unit vor fi citite și repetate. Notați-le.
+39|Numărați băuturile. Fiecare are nevoie de cel puțin {0} litri pe zi, cam {1} căni: adică {2} litri pe zi pentru toți. Țineți socoteala în fiecare zi.
+40|Copiii sub {0} ani care nu sunt alăptați au nevoie de cel puțin {1} litru de lichide pe zi. Laptele praf se pune la socoteală. Alăptați ori de câte ori cere copilul.
+41|Nu beți alcool. Vă deshidratează.
+42|Nu trageți apa la toaletă: canalizarea nu va funcționa. Puneți în ea un sac de gunoi, apoi legați-l și duceți-l în tomberonul de afară.
+43|Umpleți un lighean cu apă și săpun pentru spălatul mâinilor și folosiți-l împreună tot timpul. Cine are diaree folosește un lighean separat.
+44|Țineți frigiderul și congelatorul închise. Mâncați întâi alimentele refrigerate, apoi pe cele care se dezgheață, apoi pe cele proaspete, apoi conservele și pachetele.
+45|După {0} ore, copiii mici, femeile însărcinate și persoanele în vârstă nu ar trebui să mănânce alimente refrigerate gata de consum sau resturi.
+46|Nu folosiți niciodată în casă un aragaz de camping, un grătar sau un generator. Monoxidul de carbon poate ucide.
+47|Dacă e frig, adunați-vă într-o singură cameră, îmbrăcați-vă în straturi, țineți picioarele ridicate și mișcați-vă în fiecare oră.
+48|Aveți grijă de vecinii, prietenii și rudele care s-ar putea descurca greu.
+49|Dacă nu se poate trage apa, turnați o găleată cu apă în vas. Dacă vi se spune că nu funcționează canalizarea, nu trageți apa: puneți un sac de gunoi în toaletă, legați-l și duceți-l în tomberonul de afară.
+50|Umpleți un lighean cu apă și săpun pentru spălatul mâinilor. Îl folosesc toți. Apa cu săpun e mai eficientă decât dezinfectantul de mâini.
+51|Alegeți o singură cameră în care să stați. Trageți draperiile, puneți un prosop sub ușă împotriva curentului, puneți-vă căciuli și mai multe straturi. Țineți picioarele ridicate de pe podea și mișcați-vă în fiecare oră.
+52|Mâncați întâi ce e în frigider, apoi ce se dezgheață, apoi alimentele proaspete, apoi ce e în cămară. Alimentele din cămară sunt sigure și după data „a se consuma de preferință înainte de”.
+53|Dacă nu se poate trage apa, turnați în vas o găleată cu apă din cadă. Dacă vi se spune că nu funcționează canalizarea, nu trageți deloc apa: puneți un sac de gunoi în toaletă, apoi legați-l și duceți-l în tomberonul de afară.
+54|Umpleți un lighean cu apă și săpun pentru spălatul mâinilor și folosiți-l împreună tot timpul. Apa cu săpun e mai eficientă decât dezinfectantul de mâini. Cine are diaree folosește un lighean separat.
+55|Dacă cineva are diaree, aveți grijă să bea și folosiți plicuri de rehidratare.
+56|Notițe de la radio
+57|{0}{1}Trusă pentru toaletă și spălatul mâinilor: {2} trusă
+58|La o pană de curent la nivel național canalizarea nu mai funcționează, deci nu trageți deloc apa. Puneți în toaletă un sac de gunoi rezistent, apoi legați-l și duceți-l în tomberonul de afară (medicii-șefi ai Regatului Unit).
+59|Spălatul mâinilor
+60|Umpleți un lighean cu apă și săpun și folosiți-l împreună tot timpul. Apa cu săpun e mai eficientă decât dezinfectantul de mâini. Cine are diaree folosește un lighean separat. Nu folosiți apa pentru duș sau baie.
+61|Dacă se termină apa îmbuteliată
+62|Doar dacă nu a mai rămas nimic sigur: strângeți apă de ploaie sau apă dintr-un butoi într-un recipient curat. Filtrați-o printr-un filtru de cafea, o față de pernă sau un cearșaf până devine limpede. Apoi fierbeți-o sau folosiți tablete de purificare. Dacă nu puteți face niciuna, adăugați un sfert de linguriță de înălbitor de uz casnic fără parfum la fiecare {0} litri și lăsați-o {1} minute. Folosiți această apă doar pentru băut. Nu beți niciodată apă de la inundații.
+63|Conservele și pachetele la final. Sunt sigure și după data „a se consuma de preferință înainte de”.
+64|Fructele și legumele întregi, brânza tare, iaurtul, untul și laptele UHT sunt sigure până la {0} zile dacă arată și miros normal. Pe vreme rece, alimentele pot fi ținute afară într-un recipient curat și închis ermetic.
+65|Mișcați-vă puțin în fiecare oră și, când stați jos, țineți picioarele ridicate de pe podea.
+66|Semnele hipotermiei
+67|Tremurat, piele rece și uscată, piele sau buze albăstrui sau cenușii (la pielea mai închisă, uitați-vă la palme și tălpi), vorbire neclară, respirație lentă, oboseală sau confuzie. Un bebeluș poate fi rece la atingere, moale, neobișnuit de liniștit și somnoros și poate refuza să mănânce.
+68|{0}Ce faceți:{1} duceți persoana la adăpost, scoateți-i hainele ude, înveliți-o, inclusiv capul, dați-i ceva dulce și o băutură caldă fără alcool dacă e trează, rămâneți cu ea și chemați ajutor medical.
+69|Mesajele de urgență naționale se transmit la BBC Radio {0} și Radio {1}. Păstrați un radio cu baterii sau cu manivelă cu FM: Radio {2} nu mai emite pe unde lungi.
+70|La o pană de curent la nivel național, notați ce se transmite.
+71|Medicii-șefi ai Regatului Unit vor citi sfaturi de sănătate la BBC Radio {0} și Radio {1} și le vor repeta. Notați-le aici.
+72|Posturile noastre pe FM
+73|Radio {0}: {1}{2} Radio {3}: {4}{5} Local: {6}{7}
+74|Ziua și ora
+75|Ce au spus

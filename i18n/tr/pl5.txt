@@ -1,0 +1,66 @@
+1|Główni lekarze Wielkiej Brytanii przygotowali też komunikaty radiowe na wypadek, gdyby cały kraj stracił prąd: nie spuszczaj wody w toalecie, pij co najmniej {0} litry dziennie, najpierw jedz żywność z lodówki. {1}Przeczytaj, co powiedzą{2}.
+2|Darmowe poradniki, bez rejestracji.
+3|Proste odpowiedzi na czas awarii, sprawdzone z oficjalnymi wytycznymi w Wielkiej Brytanii.
+4|Życie w wysokim bloku
+5|Windy, pompy wody, domofon i plan na wypadek pożaru.
+6|Posiłki bez gotowania z twojej szafki
+7|Sześć prostych przepisów i lista zakupów na {0} dni.
+8|Bezpieczne jedzenie, gdy lodówka nie działa
+9|Co zatrzymać, co wyrzucić i kto powinien uważać.
+10|Jeśli cały kraj straci prąd
+11|Co główni lekarze powiedzą w radiu, prostymi słowami.
+12|Zobacz wszystkie poradniki ({0})
+22|Jeśli przestaną działać telefony i internet, główni lekarze Wielkiej Brytanii będą nadawać porady zdrowotne w BBC Radio {0} i Radio {1}. Radio {2} nie nadaje już na falach długich, więc radio musi mieć FM. Trzymaj przy nim długopis i notes.
+23|Zrobione: Zestaw do toalety i mycia rąk
+24|Zestaw do toalety i mycia rąk{0}Następnie{1}
+25|{0} zestaw
+26|Rolka mocnych worków na śmieci, do toalety, jeśli nie da się spuścić wody
+27|Miska i kostka mydła do mycia rąk
+28|Tabletki do uzdatniania wody
+29|Mała butelka bezzapachowego wybielacza domowego, poza zasięgiem dzieci
+30|Czyste wiadro z pokrywką, używane tylko do wody
+31|Przy ogólnokrajowej awarii prądu kanalizacja przestaje działać, więc główni lekarze radzą w ogóle nie spuszczać wody: włóż worek do toalety, zawiąż go i wyrzuć do pojemnika na zewnątrz. Mydło i woda we wspólnej misce działają lepiej niż żel do rąk. Tabletki i wybielacz służą do uzdatniania wody, jeśli skończą się butelki.
+32|Odkładaj na: zestaw do toalety i mycia rąk
+33|Zestaw do toalety i mycia rąk
+34|Wszystko przestało działać
+35|Włącz radio. Komunikaty alarmowe dla całego kraju nadaje BBC Radio {0} i Radio {1} na FM. Trzymaj przy nim długopis i kartkę, żeby zapisać porady.
+36|Pij zapasową wodę: każdy potrzebuje co najmniej {0} litrów dziennie, czyli około {1} kubków. Zaplanowaliście {2} litrów dziennie na wszystkich.
+37|Wszystko przestało działać, krok {0} z {1}
+38|Włącz radio na baterie lub na korbkę: BBC Radio {0} lub Radio {1} na FM. Porady zdrowotne od głównych lekarzy Wielkiej Brytanii będą odczytywane i powtarzane. Zapisz je.
+39|Policz napoje. Każdy potrzebuje co najmniej {0} litrów dziennie, czyli około {1} kubków: to {2} litrów dziennie na wszystkich. Notuj zużycie każdego dnia.
+40|Dzieci poniżej {0} lat, które nie są karmione piersią, potrzebują co najmniej {1} litra płynów dziennie. Mleko modyfikowane się wlicza. Karm piersią zawsze, gdy dziecko chce.
+41|Nie pij alkoholu. Odwadnia.
+42|Nie spuszczaj wody w toalecie: kanalizacja nie będzie działać. Włóż do niej worek na śmieci, potem zawiąż go i wyrzuć do pojemnika na zewnątrz.
+43|Napełnij miskę wodą z mydłem do mycia rąk i używajcie jej wspólnie przez cały czas. Osoba z biegunką używa własnej miski.
+44|Nie otwieraj lodówki i zamrażarki. Najpierw jedz żywność z lodówki, potem rozmrażającą się, potem świeżą, a na końcu konserwy i produkty w opakowaniach.
+45|Po {0} godzinach małe dzieci, kobiety w ciąży i osoby starsze nie powinny jeść schłodzonej żywności gotowej do spożycia ani resztek.
+46|Nigdy nie używaj kuchenki turystycznej, grilla ani agregatu w środku. Tlenek węgla może zabić.
+47|Jeśli jest zimno, zbierzcie się w jednym pokoju, ubierzcie się warstwowo, trzymajcie nogi w górze i ruszajcie się co godzinę.
+48|Zwracaj uwagę na sąsiadów, przyjaciół i rodzinę, którzy mogą sobie nie radzić.
+49|Jeśli nie da się spuścić wody, wlej do muszli wiadro wody. Jeśli usłyszysz, że kanalizacja nie działa, nie spuszczaj wody: włóż do toalety worek, zawiąż go i wyrzuć do pojemnika na zewnątrz.
+50|Napełnij miskę wodą z mydłem do mycia rąk. Wszyscy używają jej wspólnie. Mydło i woda działają lepiej niż żel do rąk.
+51|Wybierzcie jeden pokój do przebywania. Zasłońcie zasłony, zatkajcie szparę pod drzwiami ręcznikiem, załóżcie czapki i kilka warstw ubrań. Trzymajcie nogi nad podłogą i ruszajcie się co godzinę.
+52|Najpierw jedz żywność z lodówki, potem to, co się rozmraża, potem świeże produkty, a na końcu zapasy z szafki. Zapasy z szafki są nadal bezpieczne po upływie daty minimalnej trwałości.
+53|Jeśli nie da się spuścić wody, wlej do muszli wiadro wody z wanny. Jeśli usłyszysz, że kanalizacja nie działa, w ogóle nie spuszczaj wody: włóż do toalety worek na śmieci, potem zawiąż go i wyrzuć do pojemnika na zewnątrz.
+54|Napełnij miskę wodą z mydłem do mycia rąk i używajcie jej wspólnie przez cały czas. Mydło i woda działają lepiej niż żel do rąk. Osoba z biegunką używa własnej miski.
+55|Jeśli ktoś ma biegunkę, dbaj, żeby pił, i używaj saszetek nawadniających.
+56|Notatki z radia
+57|{0}{1}Zestaw do toalety i mycia rąk: {2} zestaw
+58|Przy ogólnokrajowej awarii prądu kanalizacja przestaje działać, więc w ogóle nie spuszczaj wody. Włóż do toalety mocny worek na śmieci, potem zawiąż go i wyrzuć do pojemnika na zewnątrz (główni lekarze Wielkiej Brytanii).
+59|Mycie rąk
+60|Napełnij miskę wodą z mydłem i używajcie jej wspólnie przez cały czas. Mydło i woda działają lepiej niż żel do rąk. Osoba z biegunką używa własnej miski. Nie używaj wody do prysznica ani kąpieli.
+61|Jeśli skończy się woda butelkowana
+62|Tylko jeśli nie zostało nic bezpiecznego: zbierz deszczówkę lub wodę z beczki w czystym pojemniku. Przecedź ją przez filtr do kawy, poszewkę lub prześcieradło, aż będzie czysta. Potem ją zagotuj albo użyj tabletek do uzdatniania wody. Jeśli nie możesz zrobić ani jednego, ani drugiego, dodaj ćwierć łyżeczki bezzapachowego wybielacza domowego na każde {0} litrów i odstaw na {1} minut. Używaj tej wody tylko do picia. Nigdy nie pij wody powodziowej.
+63|Konserwy i produkty w opakowaniach na końcu. Są nadal bezpieczne po upływie daty minimalnej trwałości.
+64|Całe owoce i warzywa, twardy ser, jogurt, masło i mleko UHT są bezpieczne do {0} dni, jeśli wyglądają i pachną normalnie. Przy zimnej pogodzie żywność można trzymać na zewnątrz w czystym, szczelnym pojemniku.
+65|Ruszaj się trochę co godzinę, a siedząc, trzymaj nogi nad podłogą.
+66|Objawy hipotermii
+67|Dreszcze, zimna i sucha skóra, sina lub szara skóra albo usta (przy ciemniejszej skórze sprawdź dłonie i podeszwy stóp), bełkotliwa mowa, wolny oddech, zmęczenie lub dezorientacja. Niemowlę może być zimne w dotyku, wiotkie, nienaturalnie ciche i senne oraz odmawiać jedzenia.
+68|{0}Co robić:{1} zabierz osobę w osłonięte miejsce, zdejmij mokre ubrania, owiń ją, łącznie z głową, daj coś słodkiego i ciepły napój bez alkoholu, jeśli jest przytomna, zostań z nią i wezwij pomoc medyczną.
+69|Komunikaty alarmowe dla całego kraju nadaje BBC Radio {0} i Radio {1}. Trzymaj radio na baterie lub na korbkę z FM: Radio {2} nie nadaje już na falach długich.
+70|Przy ogólnokrajowej awarii prądu zapisuj to, co nadają.
+71|Główni lekarze Wielkiej Brytanii będą odczytywać porady zdrowotne w BBC Radio {0} i Radio {1} i je powtarzać. Zapisz je tutaj.
+72|Nasze stacje na FM
+73|Radio {0}: {1}{2} Radio {3}: {4}{5} Lokalna: {6}{7}
+74|Dzień i godzina
+75|Co powiedzieli

@@ -19,6 +19,10 @@ S = {  # shared sources
     "ofcom_power": ("Ofcom: guidance on access to emergency calls during a power cut", "https://www.ofcom.org.uk/__data/assets/pdf_file/0016/123118/guidance-emergency-access-power-cut.pdf"),
     "alarms": ("GOV.UK: smoke and carbon monoxide alarms, booklet for landlords", "https://www.gov.uk/government/publications/smoke-and-carbon-monoxide-alarms-explanatory-booklet-for-landlords"),
     "redcross": ("British Red Cross: learn first aid (free)", "https://www.redcross.org.uk/first-aid/learn-first-aid"),
+    "cmo_water": ("UK Chief Medical Officers: water and sanitation scripts for a national power outage", "https://www.gov.uk/government/publications/public-health-advice-from-uk-cmos-during-a-national-power-outage/water-and-sanitation-scripts-for-broadcast-media"),
+    "cmo_warm": ("UK Chief Medical Officers: keeping warm or cool scripts for a national power outage", "https://www.gov.uk/government/publications/public-health-advice-from-uk-cmos-during-a-national-power-outage/keeping-warm-or-cool-in-extreme-weather-scripts-for-broadcast-media"),
+    "cmo_all": ("UK Chief Medical Officers: public health advice during a national power outage (all scripts)", "https://www.gov.uk/government/publications/public-health-advice-from-uk-cmos-during-a-national-power-outage"),
+    "lw": ("RadioToday: BBC sets June date for Radio 4 long wave closedown", "https://radiotoday.co.uk/2026/05/bbc-sets-june-date-for-radio-4-long-wave-closedown/"),
     "survey": ("Cabinet Office: UK public survey of risk perception, resilience and preparedness 2026", "https://www.gov.uk/government/statistics/uk-public-survey-of-risk-perception-resilience-and-preparedness-2026/uk-public-survey-of-risk-perception-resilience-and-preparedness-2026-headline-findings-html"),
 }
 
@@ -39,6 +43,190 @@ NUMBERS = """<div class="numbers"><h2>Numbers to keep on paper</h2><dl>
 </dl></div>"""
 
 GUIDES = [
+
+# ---------------------------------------------------------------- NATIONAL POWER CUT
+dict(
+slug="national-power-cut", cat="start", mins=7, flag=None,
+title="If the whole country loses power: what the doctors will tell you",
+summary="The UK's Chief Medical Officers have already written the radio scripts they'd read out in a national blackout. Here's what they say, in plain words, and what to get ready now.",
+body="""
+<p class="lede">A UK-wide power cut is very unlikely. But the government has planned for one, and in December 2025 it published the exact advice the UK's four Chief Medical Officers would read out on the radio. Knowing it now means you'll have what you need, and you won't have to work it out in the dark.</p>
+
+<div class="tip"><b>Where you'll hear it.</b> Phones, internet and TV may not work. The advice would go out on <b>BBC Radio 2 and Radio 4</b>, repeated regularly. You'll need a battery or wind-up radio with FM, and a pen and paper: the scripts start by telling you to write the advice down. See <a href="emergency-radio.html">which radio to keep</a>.</div>
+
+<h2>Water: drink, but save it</h2>
+<ul>
+<li>Drink <b>at least 2 litres a day</b>, about 8 cups. Water, bottled water, soft and fizzy drinks, and the juice from tinned fruit all count.</li>
+<li>Cold tap water is safe while it's still flowing normally.</li>
+<li>Count what drinks you have at home, and work out how long they'll last at 8 cups each a day. Keep track each day.</li>
+<li>Babies, children, pregnant and breastfeeding women and older people need fluids most. Children under 2 who aren't breastfed need at least 1 litre a day, and formula counts towards it.</li>
+<li><b>Don't drink alcohol.</b> It dehydrates you. Low-alcohol drinks under 1.2% are fine if water runs out.</li>
+<li>Don't drink milk or fresh fruit juice that smells off.</li>
+</ul>
+
+<h2>Toilets: don't flush</h2>
+<p>Without power, the sewers stop working. The advice is <b>not to flush at all</b>. Line the toilet with a strong bin bag, then seal it and put it in your normal household waste, ideally an outside bin. Wash your hands afterwards.</p>
+
+<h2>Washing hands: one shared bowl</h2>
+<ul>
+<li>Fill a washing-up bowl with water and add soap or household disinfectant. Everyone uses it for the whole power cut, without changing the water.</li>
+<li>Anyone with diarrhoea uses their own separate bowl.</li>
+<li>Soap and water works better than hand sanitiser. Use sanitiser only if there's nothing else.</li>
+<li>Don't use water for showers or baths.</li>
+</ul>
+
+<h2>Food: perishables first</h2>
+<ul>
+<li>Check how much food you have for the next few days.</li>
+<li>Eat chilled food first, then frozen food as it defrosts, then fresh food, then tins and packets. Our guide to <a href="eating-safely-without-power.html">eating safely without power</a> has the details.</li>
+<li>After 4 hours without power, babies, young children, pregnant and breastfeeding women, older people and anyone with a weakened immune system shouldn't eat chilled ready-to-eat food or leftovers.</li>
+<li>Throw away rotting food straight away, in an outside bin.</li>
+<li>Cook only outdoors, on a camping stove, barbecue or safe campfire. Food may take longer to cook, so make sure it's steaming hot all the way through.</li>
+</ul>
+
+<h2>If the water runs out</h2>
+<p>From the second day, the scripts explain how to make rainwater or water from a water butt, lake or stream safer to drink, by filtering it and then boiling it, using purification tablets, or using a small amount of household bleach. Follow <a href="making-water-safe.html">our step-by-step guide</a> exactly.</p>
+
+<h2>If someone has diarrhoea</h2>
+<p>Keep them drinking. Use rehydration sachets if you have them. If you don't, the scripts give a homemade recipe: add <b>6 level teaspoons of sugar, 1 level teaspoon of salt and 1 heaped teaspoon of bicarbonate of soda to 1 litre of fluid</b>. They should use their own bowl for handwashing, and shouldn't prepare food for others.</p>
+
+<h2>In very cold or very hot weather</h2>
+<ul>
+<li><b>Cold</b> (the advice starts at minus 2°C): stay in, gather in one room, wear thin layers, keep your feet up and move every hour. Never use camping stoves, barbecues or generators indoors. See <a href="keeping-warm.html">keeping warm</a>.</li>
+<li><b>Heat</b> (the advice starts at 38°C): keep sunny windows and curtains closed, open windows only when it's cooler outside, and drink plenty. See <a href="keeping-cool.html">keeping cool</a>.</li>
+<li>In both: look out for neighbours, friends and family who may be struggling.</li>
+</ul>
+
+<h2>Get these ready now</h2>
+<ol class="todo">
+<li>A battery or wind-up radio with FM, spare batteries, and a pen and notepad kept beside it.</li>
+<li>Bottled water: 3 litres per person per day for 3 days.</li>
+<li>Strong bin bags for the toilet, a washing-up bowl, and soap.</li>
+<li>Rehydration sachets in your first aid kit.</li>
+<li>Water purification tablets and a small bottle of unscented household bleach, kept away from children.</li>
+<li>Food that doesn't need cooking or a fridge.</li>
+<li>Agree who in your household checks on which neighbours.</li>
+</ol>
+<p class="sm">These scripts are written by the Chief Medical Officers as independent advisers, not as government policy. If a real emergency happens, follow what is broadcast at the time.</p>
+""",
+sources=["cmo_all", "cmo_water", "cmo_food", "cmo_warm"],
+),
+
+# ---------------------------------------------------------------- MAKING WATER SAFE
+dict(
+slug="making-water-safe", cat="water", mins=4, flag=None,
+title="Making water safe to drink when the bottles run out",
+summary="The official method for rainwater, water butts and lakes: collect, filter, then boil, use tablets, or use a measured drop of bleach. Only if safe drinks have run out.",
+body="""
+<p class="lede">Only do this if your bottled water and other safe drinks have run out. These steps come from the UK Chief Medical Officers' advice for a national power cut. Follow them exactly.</p>
+
+<div class="flag"><b>Only if nothing else is left.</b> Stored bottled water is always better. If your water company or the radio gives different advice at the time, follow that.</div>
+
+<h2>Where to get water, best first</h2>
+<ol>
+<li>Water from the hot water tank or tap</li>
+<li>Rainwater, or melted snow or ice in winter</li>
+<li>A water butt</li>
+<li>A reservoir, freshwater lake or free-flowing stream, only if it's very close and you can get there safely</li>
+<li>River water is much less safe. Use it only as a last resort.</li>
+</ol>
+<p>Never drink flood water.</p>
+
+<h2>Step by step</h2>
+<ol class="todo">
+<li><b>Collect it in a clean container.</b> Never use one that has held chemicals, fuel or paint.</li>
+<li><b>Look at it.</b> If there's an oily film on top, don't drink it.</li>
+<li><b>Filter it</b> through a coffee filter, a pillowcase or a bed sheet. Throw away what's caught, and repeat until the water runs clear.</li>
+<li><b>Disinfect it.</b> Either boil it, or use in-date water purification tablets.</li>
+<li><b>If you can't boil it and have no tablets,</b> use ordinary household bleach, ideally unscented: <b>a quarter of a teaspoon for every 10 litres</b> (about a bucketful). Stir and leave it for <b>15 minutes</b>. Don't use more.</li>
+<li><b>Smell it.</b> Treated water should smell slightly of chlorine. If the smell is very strong, leave it uncovered for 2 hours before drinking.</li>
+<li><b>Store it</b> somewhere cool and dark, covered.</li>
+</ol>
+<p>Water treated this way is for <b>drinking only</b>. Use other water for handwashing and cooking.</p>
+
+<h2>Keep these in the cupboard</h2>
+<ul class="check">
+<li>Water purification tablets, checked for their date each season</li>
+<li>A small bottle of unscented household bleach and a measuring teaspoon, out of children's reach</li>
+<li>A clean bucket with a lid, used only for water</li>
+<li>Coffee filters, or a spare pillowcase</li>
+</ul>
+""",
+sources=["cmo_water", "cmo_all"],
+),
+
+# ---------------------------------------------------------------- KEEPING COOL
+dict(
+slug="keeping-cool", cat="power", mins=4, flag=None,
+title="Keeping cool in a heatwave when the power is off",
+summary="No fans, no fridge, and water may be short. How to keep a home cool, and the signs of heat exhaustion and heatstroke.",
+body="""
+<p class="lede">Summers are getting hotter. A power cut in a heatwave means no fans and no cold drinks from the fridge, and heat is dangerous for babies, young children, pregnant women, older people and anyone who needs care.</p>
+
+<h2>Keep the home cool</h2>
+<ul>
+<li>During the day, close windows, blinds and curtains that face the sun. Close outside shutters if you have them.</li>
+<li>Open windows only when it's cooler outside than in, usually in the evening and at night.</li>
+<li>Sit and sleep in the coolest room.</li>
+<li>If you have to go out for water, food or to check on someone, go at the coolest time of day.</li>
+</ul>
+
+<h2>Drink more</h2>
+<p>Drink at least 2 litres a day, about 8 cups, and more in the heat. Store 3 litres per person per day so there's enough.</p>
+
+<h2>Signs of heat exhaustion</h2>
+<p>Tiredness, weakness, feeling faint, a headache, muscle cramps, feeling or being sick, heavy sweating and intense thirst.</p>
+
+<h2>Signs of heatstroke</h2>
+<p>Heat exhaustion can turn into heatstroke, which is an emergency. Look for confusion, clumsiness, a fast heartbeat, fast or shallow breathing, hot skin, and fits (seizures).</p>
+
+<h2>What to do</h2>
+<ol>
+<li>Move them indoors or into the shade.</li>
+<li>Take off extra clothing, such as jackets and socks.</li>
+<li>Give them water, a fizzy drink or another drink.</li>
+<li>Spray or sponge them with cool water. It doesn't need to be drinking water, so don't use the water you've made safe to drink.</li>
+<li>They should start to cool down and feel better within 30 minutes. If they don't, or they get worse, get medical help. For heatstroke, call 999.</li>
+</ol>
+
+<h2>Check on others</h2>
+<p>Look out for neighbours, friends and family who may be struggling, especially older people living alone. See <a href="checking-on-someone.html">checking on someone</a>.</p>
+""",
+sources=["cmo_warm", "cmo_all"],
+),
+
+# ---------------------------------------------------------------- RADIO
+dict(
+slug="emergency-radio", cat="power", mins=3, flag=None,
+title="Which radio to keep for a power cut",
+summary="In a national blackout, health advice goes out on BBC Radio 2 and Radio 4. Long wave has gone, so you need FM. What to buy and what to write down.",
+body="""
+<p class="lede">If the power, phones and internet all go down, radio is how official advice would reach you. The government's plan is for the UK's Chief Medical Officers to broadcast health advice on <b>BBC Radio 2 and Radio 4</b>, repeated regularly.</p>
+
+<h2>Get a radio with FM</h2>
+<ul>
+<li>BBC Radio 4 stopped broadcasting on long wave in June 2026. An old long wave set won't pick it up.</li>
+<li>Choose a radio with <b>FM</b>. FM carries Radio 2, Radio 4 and your BBC local station, which has local news.</li>
+<li>Pick one that runs on ordinary AA or AAA batteries, and keep spares. A wind-up or solar radio is a good backup, because it never runs out.</li>
+<li>A car radio works too, but never run the engine in a closed garage.</li>
+</ul>
+
+<h2>Write these down now</h2>
+<p>In a power cut, you can't look up the frequencies. Tune in now and write on a label stuck to the radio:</p>
+<ul class="check">
+<li>BBC Radio 2 on FM: ______</li>
+<li>BBC Radio 4 on FM: ______</li>
+<li>Your BBC local radio station on FM: ______</li>
+</ul>
+
+<h2>Keep a pen and paper with it</h2>
+<p>The broadcast scripts begin by suggesting you write the advice down. Keep a notepad and pen with the radio. Fettle's book has a page for these notes.</p>
+
+<h2>Test it each season</h2>
+<p>Turn it on, check the batteries, and check it still finds your stations.</p>
+""",
+sources=["cmo_all", "lw", "beready"],
+),
 
 # ---------------------------------------------------------------- HIGH RISE
 dict(
@@ -170,6 +358,17 @@ body="""
 <li>If frozen food has thawed, treat it as chilled food. Don't refreeze raw food that has thawed.</li>
 </ul>
 
+<h2>Eat things in this order</h2>
+<p>The UK Chief Medical Officers advise eating the food that spoils fastest first:</p>
+<ol>
+<li><b>Chilled food,</b> and frozen food as it defrosts.</li>
+<li><b>Short-life food</b> such as sandwiches, salads and cooked meats. These are safe for a day or two if they look and smell normal. Raw meat and fish are fine if you can cook them and they look and smell normal.</li>
+<li><b>Fresh food that doesn't need a fridge,</b> like bread, cake, whole fruit and vegetables, and eggs.</li>
+<li><b>Tins and packets last.</b> Food normally kept at room temperature is still safe after its best before date.</li>
+</ol>
+<p>Whole fruit and vegetables, hard cheese, yoghurt, butter, pasteurised milk, and long-life milk or juice (even once opened) are safe for <b>up to 7 days</b> if they look and smell normal. Pre-cut fruit and vegetables last 3 to 4 days, and are safe after that if cooked.</p>
+<p><b>In cold weather,</b> you can keep food outside in a clean, dry, sealed plastic or metal container, out of direct sunlight and away from animals.</p>
+
 <h2>Who should be extra careful</h2>
 <p>After 4 hours without power, these people should <b>not</b> eat chilled ready-to-eat food (things like cooked meats, smoked fish, soft cheese, pâté, prepared salads and sandwiches) or leftovers:</p>
 <ul>
@@ -178,7 +377,8 @@ body="""
 <li>older people</li>
 <li>anyone with a weakened immune system, for example from cancer treatment</li>
 </ul>
-<p>Eat food from tins and packets instead. If there's no clean water for washing, peel fruit and vegetables.</p>
+<p>Eat food from tins and packets instead. If there's no clean water for washing, peel fruit and vegetables. People with a severely weakened immune system shouldn't eat raw eggs.</p>
+<p>Anyone being sick or with diarrhoea shouldn't prepare food for others. Wipe surfaces and utensils with antibacterial wipes if you can.</p>
 
 <h2>If you can cook</h2>
 <ul>
@@ -191,7 +391,7 @@ body="""
 <p>You don't need hot food to stay well for a few days. Tins, crackers, oats, long-life milk, fruit and peanut butter will do. See <a href="no-cook-meals.html">six no-cook meals from your cupboard</a>.</p>
 
 <h2>Drink enough</h2>
-<p>Keep drinking, especially children and older people. Plan on <b>3 litres of water per person per day</b>. Children under 2 who aren't breastfed need at least a litre of fluid a day. For babies, see <a href="feeding-a-baby.html">feeding a baby when the power or water fails</a>.</p>
+<p>Everyone needs to drink <b>at least 2 litres a day</b>, about 8 cups. Store <b>3 litres per person per day</b>, so there's some for food and washing hands. Children under 2 who aren't breastfed need at least 1 litre a day, about 4 cups, and formula counts towards it. Avoid alcohol, because it dehydrates you. For babies, see <a href="feeding-a-baby.html">feeding a baby when the power or water fails</a>.</p>
 
 <h2>Before it happens</h2>
 <ol class="todo">
@@ -226,7 +426,7 @@ body="""
 <li><b>Save your phone battery.</b> Turn on low-power mode, close apps and lower the screen brightness. Use a power bank if you have one.</li>
 <li><b>Your landline may not work.</b> Most home phones now run through the broadband router, which needs mains power. Providers must offer a backup solution that keeps emergency calls working for at least an hour to customers who rely on their landline, such as people with no mobile signal or with telecare alarms. If that's you or someone you look after, ask your provider about it now.</li>
 <li><b>Mobile signal can drop</b> in a long power cut, as masts run out of battery. Agree with your household where you'll meet and who checks on whom, in case you can't call.</li>
-<li><b>Listen to local radio</b> on a battery or wind-up radio for updates.</li>
+<li><b>Turn on a battery or wind-up radio.</b> In a big power cut, official health advice goes out on BBC Radio 2 and Radio 4, and local news on BBC local radio. Use FM: Radio 4 stopped broadcasting on long wave in June 2026. Keep a pen and paper by the radio to write the advice down. See <a href="emergency-radio.html">which radio to keep</a>.</li>
 <li><b>Check on neighbours</b> who live alone, are older, or rely on medical equipment.</li>
 </ul>
 
@@ -254,7 +454,7 @@ body="""
 </ul>
 
 """ + NUMBERS,
-sources=["beready", "fsa_power", "ofcom_power", "psr"],
+sources=["beready", "fsa_power", "ofcom_power", "cmo_all", "psr"],
 ),
 
 # ---------------------------------------------------------------- NO WATER
@@ -279,18 +479,25 @@ body="""
 <p>Babies need special care. See <a href="feeding-a-baby.html">feeding a baby when the water fails</a>.</p>
 
 <h2>Toilets</h2>
+<p>What to do depends on whether the sewers are still working.</p>
 <ul>
-<li>If you have water that isn't safe to drink, you can usually use it to flush. Pour a bucket into the bowl.</li>
-<li>Don't use your stored drinking water for flushing.</li>
-<li>If there's no water at all, line the toilet bowl with a bin bag, use it, tie it up and put it in your outside bin. Keep a roll of strong bin bags for this.</li>
+<li><b>If only your water is off</b>, as in a burst main, the sewers usually still work. Flush by pouring a bucket of water quickly into the bowl. Use bath water or water that isn't safe to drink, never your stored drinking water.</li>
+<li><b>If there's a national power cut</b>, or you're told the sewers aren't working, <b>don't flush at all</b>. Line the toilet bowl with a strong bin bag, use it, seal it and put it in your normal household waste, ideally an outside bin. Then wash your hands. This is the UK Chief Medical Officers' advice.</li>
 </ul>
+<p>Keep a roll of strong bin bags for this.</p>
 
-<h2>Washing</h2>
+<h2>Washing hands</h2>
+<p>Save most of your water for drinking, but keep some for washing hands after the toilet and before preparing food. The Chief Medical Officers advise this:</p>
 <ul>
-<li>Use hand sanitiser, especially before preparing food and after the toilet.</li>
-<li>Keep a pack of wet wipes for washing.</li>
+<li>Fill a washing-up bowl with water and add soap or household disinfectant. The whole household shares it for the whole time the water is off, even when it stops looking clean.</li>
+<li>Anyone with diarrhoea uses a separate bowl.</li>
+<li>Soap and water kills germs better than hand sanitiser. Use sanitiser only if there's nothing else.</li>
+<li>Don't use water for showers or baths.</li>
 <li>Use paper plates and cups to save washing up.</li>
 </ul>
+
+<h2>If the bottled water runs out</h2>
+<p>Water from rain, a water butt or a lake can be made safe to drink, but it takes care. See <a href="making-water-safe.html">making water safe to drink</a>.</p>
 
 <h2>Bottled water stations</h2>
 <p>In a long outage, water companies often set up bottled water stations. Queues can be long, and carrying water is hard for older and disabled people. If you're on your water company's <a href="priority-services-register.html">Priority Services Register</a>, they may deliver water to you instead. You have to join your water company's register separately from the energy one.</p>
@@ -299,11 +506,11 @@ body="""
 <ol class="todo">
 <li>Buy 3 days of bottled water for everyone at home.</li>
 <li>Find your stopcock, so you can turn off the water if a pipe bursts.</li>
-<li>Keep bin bags, hand sanitiser and wet wipes.</li>
+<li>Keep strong bin bags, a washing-up bowl and soap.</li>
 <li>If you'd struggle to collect water, join your water company's Priority Services Register.</li>
 </ol>
 """,
-sources=["beready", "uu_psr", "fsa_formula"],
+sources=["beready", "cmo_water", "uu_psr", "fsa_formula"],
 ),
 
 # ---------------------------------------------------------------- KEEPING WARM
@@ -318,7 +525,8 @@ body="""
 <ul>
 <li>Choose one room for everyone to spend time in. A smaller room, away from outside walls, holds heat best.</li>
 <li>Close the door and curtains, and block draughts under the door with a rolled-up towel.</li>
-<li>Close doors to the rooms you're not using.</li>
+<li>Close doors and windows in the rooms you're not using.</li>
+<li>No curtains? Hang a blanket or sheet over the window.</li>
 </ul>
 
 <h2>Keep bodies warm</h2>
@@ -326,7 +534,8 @@ body="""
 <li>Wear several thin layers rather than one thick one. Add hats, gloves, thick socks and slippers.</li>
 <li>Use blankets, sleeping bags and duvets, even during the day.</li>
 <li>Eat regularly and have warm drinks if you can heat water safely.</li>
-<li>Move around a little each hour if you're able.</li>
+<li>Get up, move around and stretch at least once an hour if you're able.</li>
+<li>When sitting, keep your feet up off the floor, where the air is coldest.</li>
 <li>Babies need to be warm, but don't overwrap them or use hats and extra blankets in bed. Dress them in layers you can adjust.</li>
 </ul>
 
@@ -335,12 +544,30 @@ body="""
 <ul>
 <li><b>Never</b> use barbecues, camping stoves, outdoor heaters or generators indoors, in a garage, or on a balcony.</li>
 <li>Never use a gas oven or hob to heat the room.</li>
+<li>Only light a fire indoors in a proper fireplace with a working chimney, or a stove made for it. Burn only the right fuel: never old furniture, pallets, fence panels, rubbish, petrol or lighter fluid.</li>
+<li>A generator goes outside, at least 6 metres (20 feet) from the house, with the exhaust pointing away from windows and doors.</li>
+<li>Never leave a fire, heater or generator unattended, and keep a fire extinguisher nearby.</li>
 <li>Fit a carbon monoxide alarm in any room with a gas, oil, coal or wood appliance.</li>
 <li>Signs of carbon monoxide poisoning include a headache, dizziness, feeling sick, tiredness and confusion, often in more than one person at once. If you suspect it, get into fresh air, call 0800 111 999 for a gas appliance, and call 999 if someone is seriously unwell.</li>
 </ul>
 
-<h2>When cold becomes an emergency</h2>
-<p>Shivering is normal. Get help if someone is confused, very drowsy, has slurred speech, or stops shivering while still very cold. Call 999 if they're seriously unwell, or 111 for advice.</p>
+<h2>Signs of hypothermia</h2>
+<p>The Chief Medical Officers list these signs:</p>
+<ul>
+<li>shivering</li>
+<li>cold, dry skin</li>
+<li>blue or grey skin or lips (on black or brown skin, look at the palms and soles)</li>
+<li>slurred speech, slow breathing, and tiredness or confusion</li>
+</ul>
+<p><b>A baby</b> with hypothermia may be cold to touch, floppy, unusually quiet and sleepy, and may refuse to feed.</p>
+<h2>What to do</h2>
+<ol>
+<li>Get them indoors or somewhere sheltered.</li>
+<li>Take off any wet clothes. Wrap them in a blanket, sleeping bag or dry towel, covering their head.</li>
+<li>If they're awake, give them something sugary, like chocolate, and a warm drink that isn't alcohol.</li>
+<li>Stay with them and keep them talking.</li>
+<li>Get medical help: call 999 if they're seriously unwell, or 111 for advice.</li>
+</ol>
 
 <h2>Sort these out before winter</h2>
 <ol class="todo">
@@ -351,7 +578,7 @@ body="""
 <li>Check on older neighbours and relatives when a cold spell is forecast. See <a href="checking-on-someone.html">checking on someone</a>.</li>
 </ol>
 """,
-sources=["beready", "alarms", "cmo_food"],
+sources=["cmo_warm", "beready", "alarms"],
 ),
 
 # ---------------------------------------------------------------- BABY
@@ -363,7 +590,7 @@ body="""
 <p class="lede">Babies can't wait, and powder formula needs water at a temperature you may not be able to reach in a power cut. A small stock of the right things removes most of the worry.</p>
 
 <h2>If you're breastfeeding</h2>
-<p>Breastfeeding needs no power, water or equipment. Keep going, and drink plenty yourself. Breastfeeding women should also avoid chilled ready-to-eat food and leftovers after 4 hours without power.</p>
+<p>Breastfeeding needs no power, water or equipment. Keep feeding whenever your baby asks, as usual, and drink plenty yourself. Breastfeeding women should also avoid chilled ready-to-eat food and leftovers after 4 hours without power.</p>
 
 <h2>Ready-made formula is the easiest backup</h2>
 <p>Ready-to-feed liquid formula comes sterile in a carton or bottle and needs no water or heating. Keep 3 days' worth at home, plus a supply of single-use pre-sterilised bottles or teats, and rotate it before it goes out of date.</p>
@@ -383,6 +610,9 @@ body="""
 
 <h2>If the tap water is off or not safe</h2>
 <p>Bottled water isn't usually recommended for formula, because some contains too much salt (sodium) or sulphate. The Food Standards Agency published guidance in November 2026 on preparing formula when the water supply is disrupted, including how to choose a suitable bottled water. <a href="https://www.gov.uk/government/publications/preparing-infant-formula-safely-during-water-supply-disruptions-and-when-travelling" target="_blank" rel="noopener">Read the FSA guidance</a> and follow it. During a boil water or do not drink notice, your water company will also give advice for babies.</p>
+
+<h2>In a national power cut</h2>
+<p>The UK Chief Medical Officers' radio advice for a national power cut says that children under 2 who aren't breastfed need at least 1 litre of fluid a day (about 4 cups), and formula counts towards this. Keep to the usual feeding schedule. Wash bottles, give them a final rinse with a little of your cleanest water, and make up formula with more of that cleanest water. Listen to the radio for updated advice.</p>
 
 <h2>Sterilising</h2>
 <ul>
@@ -407,7 +637,7 @@ body="""
 <li>Join the Priority Services Register. Families with children under 5 can usually join.</li>
 </ol>
 """,
-sources=["nhs_feed", "fsa_formula", "cmo_food", "ofgem_psr"],
+sources=["nhs_feed", "fsa_formula", "cmo_water", "cmo_food", "ofgem_psr"],
 ),
 
 # ---------------------------------------------------------------- MEDICINES
