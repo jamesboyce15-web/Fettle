@@ -107,3 +107,31 @@ language sql security definer set search_path = public as $$
 $$;
 revoke all on function public.fettle_impact(text) from public, anon, authenticated;
 grant execute on function public.fettle_impact(text) to service_role;
+
+-- Outcome counts for one area (households that ticked "Help your council plan").
+-- Critical risks found at the first check, how many were gone by the latest check, and how many a worker verified.
+-- Returns nothing if fewer than 5 households.
+create or replace function public.fettle_outcomes(p_area text)
+returns table (households int, critical_found int, critical_sorted int, critical_verified int)
+language sql security definer set search_path = public as $$
+  with h as (
+    select hh.data->'scores'->0->'c' as c0,
+           hh.data->'scores'->(jsonb_array_length(hh.data->'scores')-1)->'c' as c1,
+           coalesce(hh.data->'verified', '{}'::jsonb) as v
+    from public.households hh
+    where coalesce((hh.data->>'countMe')::boolean, false)
+      and lower(coalesce(hh.data->>'area','')) = lower(p_area)
+      and jsonb_typeof(hh.data->'scores') = 'array' and jsonb_array_length(hh.data->'scores') > 0
+      and jsonb_typeof(hh.data->'scores'->0->'c') = 'array'
+  ), x as (
+    select h.v, r.id, not (h.c1 ? r.id) as sorted
+    from h, jsonb_array_elements_text(h.c0) as r(id)
+  )
+  select (select count(*) from h)::int,
+         (select count(*) from x)::int,
+         (select count(*) from x where sorted)::int,
+         (select count(*) from x where sorted and x.v ? x.id)::int
+  where (select count(*) from h) >= 5;
+$$;
+revoke all on function public.fettle_outcomes(text) from public, anon, authenticated;
+grant execute on function public.fettle_outcomes(text) to service_role;

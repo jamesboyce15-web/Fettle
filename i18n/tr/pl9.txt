@@ -1,0 +1,17 @@
+0|Efekty
+1|Ocenione gospodarstwa domowe
+2|Znalezione krytyczne zagrożenia
+3|Rozwiązane do ostatniego sprawdzenia
+4|Sprawdzone podczas wizyty
+5|Krytyczne zagrożenia to najważniejsze braki, na przykład sprzęt medyczny na prąd bez zasilania awaryjnego albo brak działającego czujnika dymu. „Rozwiązane” to informacja od gospodarstwa przy ostatnim sprawdzeniu. „Sprawdzone podczas wizyty” oznacza, że pracownik zobaczył to na miejscu.
+6|Zrobione, według mieszkańca
+7|Otwarte
+8|{0}Brak sprawdzonego czujnika dymu.{1}
+9|{0}Lek z lodówki bez planu na brak prądu.{1}
+10|{0}Brak działającego czujnika tlenku węgla.{1}
+11|{0}Sprzęt na prąd bez potwierdzonego zasilania awaryjnego.{1}
+12|{0}Ktoś może nie dać rady zejść po schodach.{1}
+13|{0}Niemowlę na mleku w proszku bez zapasu gotowego mleka.{1}
+14|{0}Osobisty alarm, który może przestać działać bez prądu.{1}
+15|Gotowość
+16|„Rozwiązane” to informacja od gospodarstwa; „sprawdzone podczas wizyty” oznacza, że pracownik potwierdził to osobiście.

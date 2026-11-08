@@ -77,6 +77,9 @@ People can tick "Remind me when my 30-day and 90-day checks are due". The emails
 - For households using the public site who ticked "Help your council plan", run this in the Supabase SQL editor:
   `select * from fettle_impact('Rochdale');`
   It returns each measure's first-check and latest percentages, and hides any measure with fewer than 5 households.
+  `select * from fettle_outcomes('Rochdale');` gives the outcome counts: households assessed, critical risks found, sorted, and verified.
+- Critical risks (like powered medical equipment with no backup, or no working smoke alarm) are saved with every check, so reports can say "X found, Y sorted, Z checked on a visit".
+- In Communities mode, workers tick "Checked on a visit" on any job the household has done. Households on their own can only report "done", never "verified".
 
 ## Before you charge anyone
 - Register with the ICO (data protection fee).

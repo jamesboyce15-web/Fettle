@@ -1,0 +1,17 @@
+0|Rezultate
+1|Gospodării evaluate
+2|Riscuri critice găsite
+3|Rezolvate până la ultima verificare
+4|Verificat la o vizită
+5|Riscurile critice sunt lipsurile care contează cel mai mult, de exemplu echipament medical pe curent fără rezervă sau niciun detector de fum funcțional. „Rezolvat” e ce ne-a spus gospodăria la ultima verificare. „Verificat la o vizită” înseamnă că un lucrător a văzut că s-a făcut.
+6|Făcut, spune locatarul
+7|Deschis
+8|{0}Niciun detector de fum testat.{1}
+9|{0}Un medicament din frigider fără un plan pentru pana de curent.{1}
+10|{0}Niciun detector de monoxid de carbon care funcționează.{1}
+11|{0}Echipament care are nevoie de curent, fără o rezervă confirmată.{1}
+12|{0}Cineva s-ar putea să nu poată coborî scările.{1}
+13|{0}Un bebeluș cu lapte praf fără rezervă de lapte gata preparat.{1}
+14|{0}O alarmă personală care s-ar putea opri într-o pană de curent.{1}
+15|Pregătire
+16|„Rezolvat” e ce a raportat gospodăria; „verificat la o vizită” înseamnă că un lucrător a confirmat personal.

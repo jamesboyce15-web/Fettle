@@ -1,0 +1,19 @@
+[
+"Outcomes",
+"Households assessed",
+"Critical risks found",
+"Sorted by the latest check",
+"Checked on a visit",
+"Critical risks are the gaps that matter most, like powered medical equipment with no backup or no working smoke alarm. \"Sorted\" is what the household told us at their latest check. \"Checked on a visit\" means a worker saw it was done.",
+"Done, resident says",
+"Open",
+"{0}No tested smoke alarm.{1}",
+"{0}A fridge medicine with no plan for a power cut.{1}",
+"{0}No working carbon monoxide alarm.{1}",
+"{0}Equipment that needs electricity, with no confirmed backup.{1}",
+"{0}Someone may not be able to get down the stairs.{1}",
+"{0}A baby on powder formula with no ready-made backup.{1}",
+"{0}A personal alarm that may stop in a power cut.{1}",
+"Readiness",
+"Sorted is what the household reported; checked on a visit means a worker confirmed it in person."
+]
