@@ -1,0 +1,62 @@
+0|Twoje następne {0} kroki
+1|Nie próbuj robić wszystkiego naraz. Zacznij od tych: najpierw krytyczne zagrożenia.
+2|Krytyczne zagrożenie
+3|{0} minut
+4|Załatwione
+5|Kiedy to zrobisz?
+6|Dzisiaj
+7|W ten weekend
+8|Przy następnych zakupach
+9|Potrzebuję pomocy
+10|Coś stoi na przeszkodzie?
+11|Zapisz swój plan, a za {0} tygodnie sprawdzimy, jak Ci idzie.
+12|Twój pełny plan
+13|{0} rzeczy do załatwienia, z listą zakupów i kosztami
+14|Załatwiono wszystko z Twojego planu.
+15|Tak trzymaj: sprawdzaj zapasy co sezon. Przypomnimy Ci.
+16|Około {0} £
+17|Przy następnych zakupach
+18|{0}{1}%{2} gospodarstw załatwiło co najmniej jeden priorytetowy brak w ciągu {3} dni od pierwszego sprawdzenia ({4} z {5} gospodarstw, których pierwsze sprawdzenie było {6} lub więcej dni temu).
+19|Twój następny krok
+20|Nie próbuj robić wszystkiego naraz. Zacznij od tych.
+21|Nie próbuj robić wszystkiego naraz. Zacznij od tego.
+22|Co stoi na przeszkodzie?
+23|To za drogo
+24|Nie miałem/miałam czasu
+25|Nie wiem, co kupić
+26|To obowiązek wynajmującego
+27|Nie dam rady zrobić tego sam(a)
+28|Nie jestem pewien/pewna, czy to ważne
+29|{0} do {1} godzin
+30|Dodaj do kalendarza
+31|Zmień
+32|Kto to zrobi?
+33|Zaplanowano
+34|Za {0} tygodnie sprawdzimy, jak Ci idzie.
+35|{0}Do tej pory załatwiono {1} rzeczy.{2} Twój dom jest bezpieczniejszy niż na początku.
+36|{0}Do tej pory załatwiono {1} rzecz.{2} Twój dom jest bezpieczniejszy niż na początku.
+37|Tak, zrobione
+38|Jeszcze nie
+39|Coś stanęło na przeszkodzie
+40|Załatwione. Twój dom jest bezpieczniejszy niż dziś rano.
+41|Załatwione. Brawo.
+42|Połącz to z czymś, co już robisz. Wybierz termin i dodaj go do kalendarza.
+43|Oto kilka, które się sprawdzą. Coś podobnego też będzie dobre.
+44|Poproś wynajmującego na piśmie i zachowaj kopię. Jeśli nic się nie stanie, skontaktuj się z działem mieszkalnictwa prywatnego w swojej radzie.
+45|Poproś kogoś, żeby zrobił to z Tobą: rodzinę, przyjaciela lub sąsiada. Wyślij mu ten krok.
+46|Wyślij ten krok komuś
+47|Jeśli potrzebujesz dodatkowej pomocy, Priority Services Register jest bezpłatny. Jest w Twoim planie.
+48|{0}To jedno z Twoich krytycznych zagrożeń.{1} Dopóki tego nie załatwisz, Twój dom nie jest gotowy, niezależnie od wyniku.
+49|Albo powiedz nam, ile możesz wydać miesięcznie, a rozłożymy koszt:
+50|{0} £ miesięcznie
+51|Marki własne supermarketów w zupełności wystarczą na wodę, jedzenie i baterie.
+52|Zacznij od czegoś darmowego, a w tym czasie odkładaj na to.
+53|Skopiowano. Wklej to do wiadomości.
+54|Gospodarstwa, które wyznaczyły termin kroku
+55|Gospodarstwa, które dotrzymały terminu
+56|Zapisano. Dodaj to do kalendarza, żeby nie zapomnieć.
+57|Załatwiony priorytetowy brak w ciągu {0} dni %
+58|{0}{1}% gospodarstw załatwiło co najmniej jeden priorytetowy brak w ciągu {2} dni od pierwszego sprawdzenia{3} ({4} z {5}).
+59|Udało się to załatwić?
+60|Jak Ci idzie?
+61|Twój pierwszy krok to:

@@ -53,7 +53,7 @@ const { chromium } = require('playwright'); const path = require('path');
   await p.waitForTimeout(300);
   ok(await p.isVisible('#res .crit') && await p.isVisible('text=Save my plan'), 'plan shows with critical box and save prompt, no sign-up wall');
   ok((await p.textContent('#res')).includes('72-hour essentials') && (await p.textContent('#res')).includes('Household plan'), 'three sections shown');
-  ok(await p.isVisible('.pill.mine'), 'personalised items marked');
+  await p.click('.fullplan > summary'); ok(await p.isVisible('.pill.mine'), 'personalised items marked');
   await p.screenshot({ path: require('os').tmpdir() + '/p1-results.png', fullPage: true });
 
   // medicine photo reading hidden by default

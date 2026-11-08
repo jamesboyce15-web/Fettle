@@ -1,0 +1,62 @@
+0|Următorii {0} pași
+1|Nu încercați să faceți totul deodată. Începeți cu aceștia: riscurile critice sunt primele.
+2|Risc critic
+3|{0} minute
+4|Am rezolvat
+5|Când o să faceți asta?
+6|Azi
+7|În weekendul acesta
+8|La următoarele cumpărături
+9|Am nevoie de ajutor
+10|Vă împiedică ceva?
+11|Salvați planul și vă întrebăm peste {0} săptămâni cum vă descurcați.
+12|Planul complet
+13|{0} lucruri de rezolvat, cu lista de cumpărături și costurile
+14|Ați rezolvat tot ce era în plan.
+15|Continuați așa: verificați proviziile în fiecare sezon. Vă reamintim noi.
+16|Aproximativ £{0}
+17|La următoarele cumpărături
+18|{0}{1}%{2} dintre gospodării au rezolvat cel puțin o lipsă prioritară în {3} de zile de la prima verificare ({4} din {5} gospodării a căror primă verificare a fost acum {6} de zile sau mai mult).
+19|Următorul pas
+20|Nu încercați să faceți totul deodată. Începeți cu aceștia.
+21|Nu încercați să faceți totul deodată. Începeți cu acesta.
+22|Ce vă împiedică?
+23|Costă prea mult
+24|Nu am avut timp
+25|Nu știu ce să iau
+26|E treaba proprietarului
+27|Nu pot face asta singur
+28|Nu sunt sigur că e important
+29|{0}-{1} ore
+30|Adaug în calendar
+31|Schimb
+32|Cine se ocupă?
+33|Ați ales
+34|Vă întrebăm peste {0} săptămâni cum vă descurcați.
+35|{0}Până acum ați rezolvat {1} lucruri.{2} Locuința e mai sigură decât la început.
+36|{0}Până acum ați rezolvat {1} lucru.{2} Locuința e mai sigură decât la început.
+37|Da, e gata
+38|Încă nu
+39|M-a împiedicat ceva
+40|Rezolvat. Locuința e mai sigură decât azi-dimineață.
+41|Rezolvat. Bravo.
+42|Legați-l de ceva ce faceți deja. Alegeți un moment și adăugați-l în calendar.
+43|Iată câteva care ar fi potrivite. Orice asemănător e în regulă.
+44|Cereți proprietarului în scris și păstrați o copie. Dacă nu se întâmplă nimic, contactați echipa de locuințe private a consiliului local.
+45|Cereți cuiva să facă asta împreună cu dumneavoastră: familie, un prieten sau un vecin. Trimiteți-le acest pas.
+46|Trimit acest pas cuiva
+47|Dacă aveți nevoie de ajutor suplimentar, Priority Services Register e gratuit. E în planul dumneavoastră.
+48|{0}Acesta e unul dintre riscurile critice.{1} Până nu e rezolvat, locuința nu e pregătită, indiferent de scor.
+49|Sau spuneți-ne cât puteți cheltui pe lună și împărțim costul:
+50|£{0} pe lună
+51|Marca proprie a supermarketului e bună pentru apă, mâncare și baterii.
+52|Începeți cu ceva gratuit cât timp strângeți bani pentru asta.
+53|Copiat. Lipiți-l într-un mesaj.
+54|Gospodării care și-au stabilit o dată pentru un pas
+55|Gospodării care au respectat data
+56|Salvat. Adăugați-l în calendar ca să nu uitați.
+57|Lipsă prioritară rezolvată în {0} de zile %
+58|{0}{1}% dintre gospodării au rezolvat cel puțin o lipsă prioritară în {2} de zile de la prima verificare{3} ({4} din {5}).
+59|Ați rezolvat asta?
+60|Cum vă descurcați?
+61|Primul pas era:

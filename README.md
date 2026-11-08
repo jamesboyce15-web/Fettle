@@ -70,6 +70,11 @@ People can tick "Remind me when my 30-day and 90-day checks are due". The emails
 3. `npx wrangler deploy`. It runs daily but stays in **dry run** (logs who is due, sends nothing) until you set `DRY_RUN` to `false` in Cloudflare.
 4. Every email has a one-click unsubscribe link (`/api/unsubscribe`).
 
+## Getting people to act
+After the check, people see **their next 3 steps**, not a long list: critical risks first, then quick wins, then the cheapest. For each step they choose **when** they'll do it (today, this weekend, next shop, or "I need help"), can add it to their phone calendar, and can say who's doing it. If the date passes, Fettle asks "Did you sort this?" and, if not, what got in the way (cost, time, not knowing what to buy, landlord, can't do it alone, not sure it matters), with help for each. Two weeks after a first check with nothing done, it checks in. The full plan is still there, folded underneath.
+
+**North star metric:** the share of households that sort at least one priority gap (a "do first" job or a critical risk) within 30 days of their first check. It's in the Communities report, PDF and CSV, alongside how many set a date and how many kept it.
+
 ## Measuring impact (for councils)
 - Every check saves a snapshot: date, readiness score, and 14 measures that match the Cabinet Office's 2026 preparedness survey (3 days of water, a plan, a grab bag, a radio, the Priority Services Register and so on).
 - People re-check at 30 days, 90 days, then each season. That gives a before and after for each household.
