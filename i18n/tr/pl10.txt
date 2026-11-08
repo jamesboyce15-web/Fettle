@@ -1,0 +1,12 @@
+0|Znajdź braki, przez które Twój dom mógłby utknąć, gdyby zabrakło prądu, wody lub telefonu, i usuń je. Odpowiedz na kilka prostych pytań, a powiemy Ci dokładnie, czego potrzebujesz, ile i co zrobić najpierw.
+1|Sprawdzenie domu
+2|Wydrukowany egzemplarz wysłany pocztą.
+3|Bezpieczna płatność przez Stripe. Wydrukowana książka będzie dostępna wkrótce.
+4|Wyślij im wydrukowaną książkę
+5|{0}Przykładowe dane.{1} To wymyślona lista gospodarstw, żeby pokazać, jak działa Fettle for Communities. Żadne z nich nie są prawdziwymi gospodarstwami ani prawdziwymi wynikami.
+6|Średni wynik gotowości Fettle, od pierwszej do ostatniej wizyty
+7|{0}Przykładowe dane.{1} To wymyślone gospodarstwa, żeby pokazać, jak działa raport. To nie są wyniki Fettle.
+8|{0}Gospodarstwa przy każdym sprawdzeniu:{1} {2} przy pierwszym sprawdzeniu, {3} przy sprawdzeniu po {4} dniach, {5} przy sprawdzeniu po {6} dniach. {7}Z {8} popraw {9} ({10}%) sprawdzono podczas wizyty.{11} Pozostałe to informacje od gospodarstw.
+9|Wynik Fettle
+10|Brak sprawdzonego czujnika dymu.
+11|Wynik gotowości Fettle

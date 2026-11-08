@@ -1,6 +1,6 @@
 # Fettle
 
-Household resilience plans: a free readiness check, a £5 digital book, and (later) a printed book and Fettle Plus.
+Fettle helps households find the gaps that could leave them vulnerable in an emergency, fix them, and measure what changed. A free household check, a £5 digital book, and (later) a printed book.
 
 - `public/` is the website. `index.html` is generated, so don't edit it by hand.
 - `src/fettle.html` is the app source.
@@ -94,7 +94,8 @@ People can tick "Remind me when my 30-day and 90-day checks are due". The emails
 - Translations need professional checking before the language menu is promoted. Launch in English first.
 
 ## Not built yet
-- Printed book ordering and Fettle Plus (shown as "coming soon").
+- Printed book ordering (shown as "coming soon").
+- Fettle Plus (a subscription) is parked and hidden. Only revisit it if people ask what they'd get from Fettle every month.
 - Live alerts, check-in texts and household invites. These are hidden in live mode.
 - Professional accounts. The sample caseload stays as a demo, and pilots are set up by hand.
 - Server-generated PDF. The book prints or saves as PDF from the browser.

@@ -1,0 +1,14 @@
+[
+"Find the gaps that could leave your household stuck if the power, water or phones went off, and fix them. Answer a few plain questions and we'll tell you exactly what you need, how much of it, and what to do first.",
+"Household check",
+"A printed copy posted to you.",
+"Secure payment by Stripe. The printed book is coming soon.",
+"Post them the printed book",
+"{0}Sample data.{1} This is a made-up caseload, to show how Fettle for Communities works. None of these are real households or real results.",
+"Average Fettle preparedness score, first visit to latest",
+"{0}Sample data.{1} These are made-up households, to show how the report works. They are not Fettle results.",
+"{0}Households at each check:{1} {2} at the first check, {3} at a {4}-day follow-up, {5} at a {6}-day follow-up. {7}Of the {8} improvements, {9} ({10}%) were checked on a visit.{11} The rest are what households reported.",
+"Fettle score",
+"No tested smoke alarm.",
+"Fettle preparedness score"
+]

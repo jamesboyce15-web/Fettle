@@ -1,0 +1,12 @@
+0|Găsiți lipsurile care v-ar putea lăsa gospodăria în impas dacă se opresc curentul, apa sau telefoanele, și rezolvați-le. Răspundeți la câteva întrebări simple și vă spunem exact de ce aveți nevoie, cât și ce să faceți mai întâi.
+1|Verificarea gospodăriei
+2|Un exemplar tipărit trimis prin poștă.
+3|Plată sigură prin Stripe. Cartea tipărită vine în curând.
+4|Trimiteți-le cartea tipărită
+5|{0}Date de exemplu.{1} Este o listă inventată, ca să arate cum funcționează Fettle for Communities. Niciuna nu este o gospodărie reală sau un rezultat real.
+6|Scorul mediu de pregătire Fettle, de la prima vizită la ultima
+7|{0}Date de exemplu.{1} Sunt gospodării inventate, ca să arate cum funcționează raportul. Nu sunt rezultate Fettle.
+8|{0}Gospodării la fiecare verificare:{1} {2} la prima verificare, {3} la o verificare după {4} de zile, {5} la o verificare după {6} de zile. {7}Din cele {8} îmbunătățiri, {9} ({10}%) au fost verificate la o vizită.{11} Restul sunt ce au raportat gospodăriile.
+9|Scor Fettle
+10|Niciun detector de fum testat.
+11|Scorul de pregătire Fettle
