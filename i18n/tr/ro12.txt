@@ -1,0 +1,35 @@
+0|Încă nu sunteți pregătit pentru niciuna dintre acestea
+1|O pană de curent
+2|Oprirea apei
+3|Plecarea în grabă de acasă
+4|Cineva care se rănește
+5|Aleg o dată
+6|Sunteți pregătit pentru
+7|Pregătit
+8|Încă de rezolvat
+9|Nu ni se aplică
+10|În ziua aleasă
+11|Ce zi?
+12|Salvez
+13|Scos din plan. Îl puteți readuce din planul complet.
+14|Oricum o să expire
+15|Mă îngrijorează să mă gândesc la asta
+16|Nu am loc
+17|Cumpărați lucruri pe care le mâncați și le beți oricum. Folosiți-le la mesele obișnuite, întâi pe cele mai vechi, și înlocuiți-le când faceți cumpărături. Așa nu se risipește nimic.
+18|Apa îmbuteliată și conservele țin mult. Ajunge un memento în fiecare sezon.
+19|Adaug o verificare de sezon în calendar
+20|E normal. Aproape {0} din {1} oameni spun la fel. Nu trebuie să vă gândiți la urgențe ca să faceți asta. Sunt doar câteva treburi obișnuite, ca o lanternă ținută unde o găsiți.
+21|Fac asta azi
+22|Nu vă trebuie mult loc. Pentru majoritatea locuințelor, {0} zile încap într-o cutie de pantofi și câteva baxuri de sticle.
+23|Apa sub pat, în fundul dulapului sau după canapea
+24|O cutie de pantofi pentru lanternă, radio, baterii și numerar
+25|Conserve în fundul dulapului pe care îl folosiți oricum
+26|Fettle: verificați proviziile
+27|Mâncați sau folosiți ce e aproape de expirare și înlocuiți. Verificați bateriile lanternei și ale radioului.
+28|{0} lucru e ascuns pentru că ați spus că nu vi se aplică. {1}Arată-l din nou{2}
+29|{0} lucruri sunt ascunse pentru că ați spus că nu vi se aplică. {1}Arată-le din nou{2}
+30|Lipsește:
+31|Lanternă
+32|Numere pe hârtie
+33|Loc de întâlnire
+34|Cunoștințe de prim ajutor

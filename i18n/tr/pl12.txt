@@ -1,0 +1,35 @@
+0|Na razie nie jesteś gotowy/gotowa na żadną z tych sytuacji
+1|Brak prądu
+2|Brak wody
+3|Szybkie wyjście z domu
+4|Ktoś zostaje ranny
+5|Wybierz dzień
+6|Jesteś gotowy/gotowa na
+7|Gotowe
+8|Jeszcze do załatwienia
+9|To nas nie dotyczy
+10|W wybranym dniu
+11|Który dzień?
+12|Zapisz
+13|Usunięto z Twojego planu. Możesz to przywrócić w pełnym planie.
+14|I tak się przeterminuje
+15|Myślenie o tym mnie martwi
+16|Nie mam miejsca
+17|Kupuj to, co i tak jesz i pijesz. Używaj tego w zwykłych posiłkach, najpierw najstarszych rzeczy, i uzupełniaj przy zakupach. Wtedy nic się nie marnuje.
+18|Woda butelkowana i konserwy są trwałe przez długi czas. Wystarczy przypomnienie raz na sezon.
+19|Dodaj sezonowe sprawdzenie do kalendarza
+20|To normalne. Prawie {0} na {1} osób mówi to samo. Nie musisz myśleć o sytuacjach awaryjnych, żeby to zrobić. To tylko kilka zwykłych czynności, jak trzymanie latarki tam, gdzie ją znajdziesz.
+21|Zrobię to dzisiaj
+22|Nie potrzebujesz dużo miejsca. W większości domów zapas na {0} dni zmieści się w pudełku po butach i kilku zgrzewkach butelek.
+23|Woda pod łóżkiem, w głębi szafy lub za kanapą
+24|Pudełko po butach na latarkę, radio, baterie i gotówkę
+25|Konserwy w głębi szafki, której i tak używasz
+26|Fettle: sprawdź zapasy
+27|Zjedz lub zużyj wszystko, czemu kończy się termin, i uzupełnij. Sprawdź baterie w latarce i radiu.
+28|{0} rzecz jest ukryta, bo napisano, że Was nie dotyczy. {1}Pokaż ją ponownie{2}
+29|{0} rzeczy jest ukrytych, bo napisano, że Was nie dotyczą. {1}Pokaż je ponownie{2}
+30|Brakuje:
+31|Latarka
+32|Numery na papierze
+33|Miejsce spotkania
+34|Umiejętności pierwszej pomocy
