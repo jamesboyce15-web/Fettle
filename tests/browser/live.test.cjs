@@ -62,9 +62,9 @@ const srv = http.createServer((req, res) => { let f = path.join(PUB, decodeURICo
   // delete
   await p.click('#del-acct'); await p.click('text=Delete everything'); await p.waitForTimeout(500);
   ok(await p.evaluate(() => user === null), 'account deleted and signed out');
-  // pro signup blocked in live
-  await p.evaluate(() => proAuth()); await p.fill('#p-name', 'A'); await p.click('text=Create professional account'); 
-  ok((await p.textContent('#p-err')).includes('pilots'), 'pro signup redirects to pilot contact');
+  // professional accounts in live need an invite code (full flow in pro-live.test.cjs)
+  await p.evaluate(() => proAuth());
+  ok(await p.isVisible('#j-code') && await p.isVisible('text=Join your team'), 'professional account asks for an invite code');
   console.log('page errors:', errs.filter(e => !/favicon|404/.test(e)));
   await b.close(); srv.close();
 })();

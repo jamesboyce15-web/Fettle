@@ -135,3 +135,5 @@ language sql security definer set search_path = public as $$
 $$;
 revoke all on function public.fettle_outcomes(text) from public, anon, authenticated;
 grant execute on function public.fettle_outcomes(text) to service_role;
+
+-- Next: run communities.sql for Fettle for Communities (organisations, worker accounts, shared caseloads).

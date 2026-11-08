@@ -1,0 +1,60 @@
+0|Pregătit {0}% pentru {1} de ore. Planul tău are {2} lucruri. Începe cu pașii de mai jos.
+1|Nu încerca să faci totul deodată. Începe cu acestea.
+2|Am nevoie de ajutor sau ceva mă împiedică
+3|Progresul tău
+4|Scorul, pentru ce ești pregătit și riscurile critice
+5|Ajută pe altcineva să se pregătească
+6|Persoanele în vârstă care locuiesc singure sunt printre cele mai expuse. Verifică locuința mamei, a bunicilor sau a unui vecin. Durează {0} minute, cu ei la telefon.
+7|Dacă se întâmplă
+8|Pașii de urgență, plecarea de acasă și o copie care merge fără semnal
+9|Casa ta este pregătită pentru {0} de ore
+10|Cartier sau zonă
+11|Alătură-te echipei tale
+12|Coordonatorul echipei ți-a trimis un cod de invitație. Folosește adresa de e-mail de la serviciu.
+13|Cod de invitație {0}De la coordonatorul echipei{1}
+14|Mă alătur echipei
+15|Te-ai alăturat deja? {0}Conectează-te{1}
+16|Încă nu sunteți configurați?
+17|În perioada pilot configurăm fiecare organizație împreună cu voi. Scrie-ne la hello@fettle.example. Sau deschide un exemplu cu {0} gospodării inventate.
+18|Introdu codul de invitație de {0} caractere primit de la coordonatorul echipei.
+19|Introdu o adresă de e-mail, de exemplu nume@example.org.
+20|Bine ai venit la {0}.
+21|Încă nu există locatari. Adaugă primul locatar.
+22|Invită un coleg
+23|Creează câte un cod pentru fiecare persoană. Funcționează o singură dată și este valabil {0} de zile. Adaugă e-mailul de serviciu al persoanei ca să meargă doar pentru ea.
+24|E-mailul de serviciu al persoanei {0}Opțional{1}
+25|Poate invita și alte persoane (administrator de echipă)
+26|Creează un cod de invitație
+27|Planurile locatarilor aparțin {0}, nu contului tău. Dacă pleci, rămân la echipa ta.
+28|Trimite acest cod colegului:
+29|Sau trimite-i acest link, care completează codul singur:
+30|Referință: {0}{1}{2}
+31|Introdu cartierul sau zona, ca persoana să fie numărată la locul potrivit.
+32|Scrie-ne la hello@fettle.example ca să rezervi o sesiune pentru echipa ta.
+33|În perioada pilot, Fettle tipărește cărțile pentru voi. Folosește Trimite comanda la tipar.
+34|Comanda este pregătită în aplicația ta de e-mail. Trimite-o și îți confirmăm.
+35|Planul nu a putut fi șters. Te rugăm să încerci din nou.
+36|Nu am putut încărca lista de cazuri. Te rugăm să reîncarci pagina.
+37|Comandată
+38|Administrator de echipă
+39|Membru al echipei
+40|Organizația ta
+41|Contul tău face deja parte dintr-o organizație. Folosește alt e-mail pentru o altă organizație.
+42|Codul nu este valid. Poate a fost deja folosit sau a expirat. Cere unul nou.
+43|Codul a fost creat pentru o altă adresă de e-mail.
+44|Codul tocmai a fost folosit. Cere unul nou.
+45|Codul nu pare corect. Are {0} litere și cifre, de exemplu ABCD-{1}.
+46|Doar un administrator al organizației tale poate invita colegi.
+47|Introdu o adresă de e-mail, de exemplu nume@example.org, sau las-o goală.
+48|Ceva nu a mers. Te rugăm să încerci din nou.
+49|Te rugăm să te conectezi din nou.
+50|Există deja un cont cu acest e-mail, iar parola nu se potrivește.
+51|Verifică e-mailul și apasă pe link ca să confirmi contul, apoi conectează-te. Atunci te vei alătura echipei.
+52|{0}{1}{2} Asistent social
+53|{0}{1}{2} Responsabil de locuințe
+54|{0}{1}{2} Lucrător de sprijin sau îngrijitor
+55|{0}{1}{2} Voluntar
+56|{0}{1}{2} Planificator pentru situații de urgență
+57|{0}{1}{2} Alt rol
+58|{0}{1}{2} Administrator de echipă
+59|{0}{1}{2} Membru al echipei

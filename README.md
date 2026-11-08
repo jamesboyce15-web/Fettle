@@ -18,7 +18,7 @@ Do these in order. Everything stays in **test mode** until step 6.
 
 ### 1. Supabase (accounts and database)
 1. Create a project at supabase.com. **Region: West EU (London)**. Save the database password somewhere safe.
-2. SQL Editor → New query → paste `supabase/schema.sql` → Run.
+2. SQL Editor → New query → paste `supabase/schema.sql` → Run. Then do the same with `supabase/communities.sql` (organisations and worker accounts).
 3. Authentication → Sign In / Providers → Email: turn **Confirm email off** for launch (people go straight from their check to their plan). Turn it back on later once the confirm flow is built.
 4. Authentication → URL Configuration: set Site URL to your domain (e.g. `https://fettle.example`).
 5. Project settings → API: copy the **Project URL**, the **anon public** key and the **service_role** key. The service_role key is secret: it only ever goes in Cloudflare (step 3), never in the code.
@@ -70,6 +70,19 @@ People can tick "Remind me when my 30-day and 90-day checks are due". The emails
 3. `npx wrangler deploy`. It runs daily but stays in **dry run** (logs who is due, sends nothing) until you set `DRY_RUN` to `false` in Cloudflare.
 4. Every email has a one-click unsubscribe link (`/api/unsubscribe`).
 
+### 8. Set up a pilot organisation (Fettle for Communities)
+Workers can only join with an invite code. Nobody can make themselves a member.
+1. In the Supabase SQL editor, run (with your own name and wards):
+   `select * from fettle_create_org('Rochdale Borough Council', array['Kingsway','Central Rochdale','Spotland and Falinge']);`
+   It returns the organisation's id and a first **admin code**, like `K7QM-4XPA`. Leave the wards list empty (`'{}'`) if workers should type their own area.
+2. Send the pilot lead the link `https://your-domain/?join=K7QM-4XPA`. They choose a password and land on an empty caseload.
+3. The pilot lead invites their team from the app ("Invite a colleague"). Each code works once and lasts 14 days. To make more codes yourself: `select fettle_invite('<organisation id>', 'worker', 'name@council.gov.uk');`
+4. Residents' plans belong to the organisation, not the worker. Every member of that organisation can see and update them; nobody else can, including Fettle's public users. If a worker deletes their account, the plans stay.
+5. Each case records who created it, each visit, each "checked on a visit" tick and each deletion (`case_events`). Deletions keep only the case reference.
+6. Book orders: "Send order to print" opens an email to Fettle with the case references and languages. Nothing is charged automatically.
+
+Before a pilot starts: a data sharing agreement with the organisation (they are the controller for their residents' plans), and a DPIA covering health data collected on visits.
+
 ## Getting people to act
 After the check, people see **their next 3 steps**, not a long list: critical risks first, then quick wins, then the cheapest. For each step they choose **when** they'll do it (today, this weekend, next shop, or "I need help"), can add it to their phone calendar, and can say who's doing it. If the date passes, Fettle asks "Did you sort this?" and, if not, what got in the way (cost, time, not knowing what to buy, landlord, can't do it alone, not sure it matters), with help for each. The barriers follow the Cabinet Office's 2026 survey (cost 29%, things going out of date 25%, not knowing what to do 23%, stress 19%, no storage space 18%). People can also pick their own date, or say a step doesn't apply to them (never for critical risks; recorded with each check). The results show which situations the household is ready for (power cut, water going off, leaving in a hurry, someone getting hurt) and what's missing for the rest. Two weeks after a first check with nothing done, it checks in. The full plan is still there, folded underneath.
 
@@ -102,7 +115,7 @@ After the check, people see **their next 3 steps**, not a long list: critical ri
 - Printed book ordering (shown as "coming soon").
 - Fettle Plus (a subscription) is parked and hidden. Only revisit it if people ask what they'd get from Fettle every month.
 - Live alerts, check-in texts and household invites. These are hidden in live mode.
-- Professional accounts. The sample caseload stays as a demo, and pilots are set up by hand.
+- Removing a worker from an organisation from inside the app. For now, delete their row in `org_members` in Supabase.
 - Server-generated PDF. The book prints or saves as PDF from the browser.
 
 ## Updating the site

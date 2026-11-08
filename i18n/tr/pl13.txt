@@ -1,0 +1,60 @@
+0|Gotowość na {1} godzin: {0}%. W Twoim planie jest {2} rzeczy. Zacznij od kroków poniżej.
+1|Nie próbuj robić wszystkiego naraz. Zacznij od tych.
+2|Potrzebuję pomocy albo coś mi przeszkadza
+3|Twoje postępy
+4|Wynik, na co jesteś gotowy i najważniejsze zagrożenia
+5|Pomóż komuś innemu się przygotować
+6|Starsze osoby mieszkające samotnie są w największym niebezpieczeństwie. Sprawdź dom mamy, babci, dziadka albo sąsiada. To zajmuje {0} minuty, przez telefon.
+7|Jeśli to się stanie
+8|Kroki awaryjne, opuszczenie domu i kopia, która działa bez zasięgu
+9|Twój dom jest gotowy na {0} godziny
+10|Dzielnica lub okolica
+11|Dołącz do swojego zespołu
+12|Kierownik zespołu powinien przesłać Ci kod zaproszenia. Użyj służbowego adresu e-mail.
+13|Kod zaproszenia {0}Od kierownika zespołu{1}
+14|Dołącz do zespołu
+15|Masz już konto w zespole? {0}Zaloguj się{1}
+16|Jeszcze nie macie konta?
+17|W czasie pilotażu zakładamy konto każdej organizacji razem z Wami. Napisz na hello@fettle.example. Możesz też otworzyć przykładową listę {0} zmyślonych gospodarstw domowych.
+18|Wpisz {0}-znakowy kod zaproszenia od kierownika zespołu.
+19|Wpisz adres e-mail, np. imie@example.org.
+20|Witamy w {0}.
+21|Nie ma jeszcze mieszkańców. Dodaj pierwszego.
+22|Zaproś współpracownika
+23|Utwórz kod dla każdej osoby. Działa jeden raz i jest ważny {0} dni. Dodaj jej służbowy e-mail, aby kod działał tylko dla niej.
+24|Służbowy e-mail tej osoby {0}Opcjonalnie{1}
+25|Ta osoba też może zapraszać innych (administrator zespołu)
+26|Utwórz kod zaproszenia
+27|Plany mieszkańców należą do {0}, a nie do Twojego konta. Jeśli odejdziesz, zostaną w Twoim zespole.
+28|Wyślij ten kod współpracownikowi:
+29|Albo wyślij ten link, który sam wpisze kod:
+30|Numer: {0}{1}{2}
+31|Wpisz dzielnicę lub okolicę mieszkańca, aby został policzony we właściwym miejscu.
+32|Napisz na hello@fettle.example, aby zarezerwować szkolenie dla zespołu.
+33|W czasie pilotażu Fettle drukuje książki za Was. Użyj przycisku Wyślij zamówienie do druku.
+34|Zamówienie czeka w Twojej aplikacji pocztowej. Wyślij je, a my potwierdzimy.
+35|Nie udało się usunąć tego planu. Spróbuj ponownie.
+36|Nie udało się wczytać listy mieszkańców. Odśwież stronę.
+37|Zamówiona
+38|Administrator zespołu
+39|Członek zespołu
+40|Twoja organizacja
+41|Twoje konto należy już do organizacji. Do innej użyj innego adresu e-mail.
+42|Ten kod jest nieważny. Mógł zostać już użyty albo wygasł. Poproś o nowy.
+43|Ten kod został utworzony dla innego adresu e-mail.
+44|Ten kod został właśnie użyty. Poproś o nowy.
+45|Ten kod wygląda na niepoprawny. Ma {0} liter i cyfr, np. ABCD-{1}.
+46|Tylko administrator Twojej organizacji może zapraszać współpracowników.
+47|Wpisz adres e-mail, np. imie@example.org, albo zostaw puste.
+48|Coś poszło nie tak. Spróbuj ponownie.
+49|Zaloguj się ponownie.
+50|Istnieje już konto z tym adresem e-mail, a hasło do niego nie pasuje.
+51|Sprawdź pocztę i kliknij link, aby potwierdzić konto, a potem się zaloguj. Wtedy dołączysz do zespołu.
+52|{0}{1}{2} Pracownik socjalny
+53|{0}{1}{2} Pracownik ds. mieszkaniowych
+54|{0}{1}{2} Pracownik wsparcia lub opiekun
+55|{0}{1}{2} Wolontariusz
+56|{0}{1}{2} Planista ds. sytuacji kryzysowych
+57|{0}{1}{2} Inna rola
+58|{0}{1}{2} Administrator zespołu
+59|{0}{1}{2} Członek zespołu

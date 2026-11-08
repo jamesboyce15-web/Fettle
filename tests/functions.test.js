@@ -132,3 +132,51 @@ test("reminders: email escapes names", () => {
   const m = buildEmail({ first_name: "<b>x</b>", household_name: "My household", kind: "day30", first_score: 10 }, { SITE_URL: "https://f.test" }, "https://u");
   assert.doesNotMatch(m.html, /<b>x<\/b>/);
 });
+
+import { onRequestPost as joinOrg } from "../functions/api/join-org.js";
+import { onRequestPost as orgInvite } from "../functions/api/org-invite.js";
+const OID = "33333333-3333-4333-8333-333333333333";
+const joinReq = (code, auth = true) => new Request("https://f.test/api/join-org", { method: "POST", headers: auth ? { Authorization: "Bearer tok" } : {}, body: JSON.stringify({ code, jobTitle: "Housing officer" }) });
+const future = new Date(Date.now() + 864e5).toISOString(), past = new Date(Date.now() - 864e5).toISOString();
+function orgFetch({ invite, already = false, claimed = true, user = { id: UID, email: "sam@council.gov.uk" } }) {
+  return mockFetch((url, init) => {
+    if (url.includes("/auth/v1/user")) return res(user);
+    if (url.includes("/org_members?user_id")) return res(already ? [{ org_id: OID }] : []);
+    if (url.includes("/org_invites?code") && (!init.method || init.method === "GET")) return res(invite ? [invite] : []);
+    if (url.includes("/org_invites") && init.method === "PATCH") return res(claimed ? [invite] : []);
+    if (url.endsWith("/org_members") && init.method === "POST") return res({}, 201);
+    if (url.includes("/organisations")) return res([{ name: "Rochdale Borough Council" }]);
+    return res({}, 500);
+  });
+}
+
+test("join-org: signed out, bad format, unknown, expired, used, wrong email", async () => {
+  orgFetch({}); assert.equal((await joinOrg({ request: joinReq("ABCD-2345", false), env })).status, 401);
+  mockFetch(url => res({ id: UID, email: "a@b.c" })); assert.equal((await joinOrg({ request: joinReq("nope"), env })).status, 400);
+  orgFetch({ invite: null }); assert.equal((await joinOrg({ request: joinReq("ABCD-2345"), env })).status, 400);
+  orgFetch({ invite: { code: "ABCD-2345", org_id: OID, role: "worker", expires_at: past } }); assert.equal((await joinOrg({ request: joinReq("ABCD-2345"), env })).status, 400);
+  orgFetch({ invite: { code: "ABCD-2345", org_id: OID, role: "worker", expires_at: future, used_at: past } }); assert.equal((await joinOrg({ request: joinReq("ABCD-2345"), env })).status, 400);
+  orgFetch({ invite: { code: "ABCD-2345", org_id: OID, role: "worker", expires_at: future, email: "other@x.org" } }); assert.equal((await joinOrg({ request: joinReq("ABCD-2345"), env })).status, 403);
+  orgFetch({ already: true, invite: { code: "ABCD-2345", org_id: OID, role: "worker", expires_at: future } }); assert.equal((await joinOrg({ request: joinReq("ABCD-2345"), env })).status, 409);
+});
+
+test("join-org: claims the code before adding membership; lost race is refused", async () => {
+  const inv = { code: "ABCD-2345", org_id: OID, role: "worker", expires_at: future, email: "sam@council.gov.uk" };
+  orgFetch({ invite: inv, claimed: false }); assert.equal((await joinOrg({ request: joinReq("abcd2345"), env })).status, 409);
+  const calls = orgFetch({ invite: inv });
+  const r = await joinOrg({ request: joinReq("abcd 2345"), env });
+  assert.equal(r.status, 200); const j = await r.json(); assert.equal(j.orgId, OID); assert.equal(j.role, "worker");
+  const iPatch = calls.findIndex(c => c.url.includes("/org_invites") && c.init.method === "PATCH"), iAdd = calls.findIndex(c => c.url.endsWith("/org_members") && c.init.method === "POST");
+  assert.ok(iPatch >= 0 && iAdd > iPatch, "claim first, then add");
+  assert.deepEqual(JSON.parse(calls[iAdd].init.body), { org_id: OID, user_id: UID, role: "worker", job_title: "Housing officer" });
+});
+
+test("org-invite: only admins; makes a code", async () => {
+  mockFetch(url => url.includes("/auth/v1/user") ? res({ id: UID }) : res([]));
+  assert.equal((await orgInvite({ request: new Request("https://f.test/api/org-invite", { method: "POST", headers: { Authorization: "Bearer t" }, body: "{}" }), env })).status, 403);
+  const calls = mockFetch((url, init) => url.includes("/auth/v1/user") ? res({ id: UID }) : url.includes("org_members") ? res([{ org_id: OID }]) : res({}, 201));
+  const r = await orgInvite({ request: new Request("https://f.test/api/org-invite", { method: "POST", headers: { Authorization: "Bearer t" }, body: JSON.stringify({ email: "New@Council.gov.uk" }) }), env });
+  assert.equal(r.status, 200); const j = await r.json(); assert.match(j.code, /^[A-Z2-9]{4}-[A-Z2-9]{4}$/);
+  const ins = JSON.parse(calls.find(c => c.url.endsWith("/org_invites")).init.body);
+  assert.equal(ins.org_id, OID); assert.equal(ins.email, "new@council.gov.uk"); assert.equal(ins.role, "worker");
+});

@@ -51,7 +51,7 @@ const { chromium } = require('playwright'); const path = require('path');
   // full flow: no sign-up wall, sections and critical box shown, personalised pill
   await p.evaluate(() => { cur = fresh(false); Object.assign(cur, { pc: 'M14', home: 'house', tenure: 'own', adults: 1, heat: 'gas', hob: 'gas', healthGate: 'yes', health: ['device'], water: 'none', food: 'no', kit: [], fa: 'no', budget: 0 }); tier = 'core'; qi = list().length - 1; go('q'); drawQ(); next(); });
   await p.waitForTimeout(300);
-  ok(await p.isVisible('#res .crit') && await p.isVisible('text=Save my plan'), 'plan shows with critical box and save prompt, no sign-up wall');
+  ok(/critical risk/.test(await p.textContent('#res h1')) && await p.evaluate(() => !!document.querySelector('#res details.fold .crit')) && await p.isVisible('text=Save my plan'), 'plan shows with critical box and save prompt, no sign-up wall');
   ok((await p.textContent('#res')).includes('72-hour essentials') && (await p.textContent('#res')).includes('Household plan'), 'three sections shown');
   await p.click('.fullplan > summary'); ok(await p.isVisible('.pill.mine'), 'personalised items marked');
   await p.screenshot({ path: require('os').tmpdir() + '/p1-results.png', fullPage: true });
