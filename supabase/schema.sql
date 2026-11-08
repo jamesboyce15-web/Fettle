@@ -136,4 +136,30 @@ $$;
 revoke all on function public.fettle_outcomes(text) from public, anon, authenticated;
 grant execute on function public.fettle_outcomes(text) to service_role;
 
+-- What's getting in the way: the latest reason households gave for each step they hadn't done,
+-- and how many of those steps they went on to do. Rows with fewer than 5 households are left out.
+-- Usage: select * from fettle_barriers('Rochdale');
+create or replace function public.fettle_barriers(p_area text)
+returns table (reason text, households int, steps int, sorted_since int)
+language sql security definer set search_path = public as $$
+  with h as (
+    select hh.id, hh.data
+    from public.households hh
+    where coalesce((hh.data->>'countMe')::boolean, false)
+      and lower(coalesce(hh.data->>'area','')) = lower(p_area)
+      and jsonb_typeof(hh.data->'commit') = 'object'
+  ), x as (
+    select h.id, c.key as step, c.value->>'reason' as reason,
+           coalesce((h.data->'bought'->>c.key)::boolean, false) as sorted
+    from h, jsonb_each(h.data->'commit') as c
+    where jsonb_typeof(c.value) = 'object' and c.value->>'reason' is not null
+  )
+  select reason, count(distinct id)::int, count(*)::int, count(*) filter (where sorted)::int
+  from x group by reason
+  having count(distinct id) >= 5
+  order by 2 desc;
+$$;
+revoke all on function public.fettle_barriers(text) from public, anon, authenticated;
+grant execute on function public.fettle_barriers(text) to service_role;
+
 -- Next: run communities.sql for Fettle for Communities (organisations, worker accounts, shared caseloads).

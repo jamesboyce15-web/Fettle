@@ -1,0 +1,80 @@
+0|Gotowość na {1} godzin: {0}%. W Twoim planie jest {2} rzeczy.
+1|{0}Nie musisz kupować tego dzisiaj.{1} Tańsze sposoby, żeby załatwić to samo:
+2|Trzymaj {0} lub {1} puste, umyte butelki po napojach. Jeśli pojawi się ostrzeżenie, że może zabraknąć wody, od razu napełnij je i inne czyste pojemniki z pokrywką wodą z kranu.
+3|Potem, kiedy możesz, dorzucaj do zwykłych zakupów zgrzewkę butelek marki sklepowej. Nie trzeba kupować wszystkiego naraz.
+4|Zrobię to przy następnych zakupach
+5|To zwykle Twoje zadanie, nie właściciela mieszkania. Właściciel dba o budynek i sprzęt bezpieczeństwa, taki jak czujniki. Zapasy to sprawa każdego gospodarstwa domowego.
+6|Jeśli problemem jest koszt, są tańsze sposoby:
+7|Nie potrzebujesz specjalnej żywności awaryjnej. Przy każdych zakupach dokup {0} lub {1} puszki tego, co i tak jecie: fasolę, zupę, rybę, owoce.
+8|Puszki marki sklepowej są w porządku. Za kilka tygodni będziesz mieć zapas na {0} dni.
+9|Prosta latarka z supermarketu lub sklepu „wszystko za grosze” kosztuje kilka funtów i wystarczy.
+10|Latarka w telefonie wystarczy na krótką przerwę w dostawie prądu, ale rozładowuje baterię. Unikaj świec: podczas przerw w dostawie prądu często powodują pożary.
+11|Jeśli masz samochód, jego radio działa podczas przerwy w dostawie prądu. Uruchamiaj silnik tylko na zewnątrz, nigdy w garażu.
+12|Najtańsze jest proste radio na baterie. Radia na korbkę kosztują więcej.
+13|Gdy zapowiadają złą pogodę, trzymaj telefon naładowany powyżej połowy. To nic nie kosztuje.
+14|Jeśli masz samochód, ładowarka samochodowa też się sprawdzi. Najtańsze są małe powerbanki.
+15|Użyj tego, co już masz: kołder, kurtek, czapek i grubych skarpet. Połóż je tam, gdzie znajdziesz je po ciemku.
+16|W sklepach charytatywnych koce i kurtki kosztują bardzo mało.
+17|Zacznij od tego, co już masz w szafce: plastrów, paracetamolu, bandaży. Włóż je do jednego pudełka.
+18|Apteczki marki sklepowej kosztują dużo mniej niż markowe.
+19|Większość z tego pewnie już masz: worki na śmieci, wiadro, żel do rąk i chusteczki nawilżane. Trzymaj je razem.
+20|Chusteczki nawilżane i żel do rąk marki sklepowej są w porządku.
+21|Wystarczy dowolna torba: stary plecak albo mocna torba przy drzwiach. Liczy się zawartość, nie torba.
+22|W supermarketach proste otwieracze do puszek kosztują funta lub dwa.
+23|Albo przy zakupach wybieraj puszki z kółkiem do otwierania.
+24|Przy zwykłych zakupach kup jedną dodatkową puszkę lub torbę ich zwykłej karmy.
+25|Wiele straży pożarnych montuje czujniki dymu za darmo podczas bezpłatnej wizyty w domu dotyczącej bezpieczeństwa pożarowego. Zapytaj w swojej.
+26|W Anglii prywatni i socjalni właściciele mieszkań muszą to zrobić i muszą naprawić czujniki, gdy zgłosisz usterkę.
+27|Możesz wysłać:
+28|„Dzień dobry. Czy może Pan/Pani sprawdzić czujniki dymu w moim mieszkaniu? Chyba nie ma działającego czujnika na każdym piętrze. Proszę dać znać, kiedy można je zamontować lub naprawić. Dziękuję.”
+29|Poproś na piśmie, e-mailem lub SMS-em, i zachowaj kopię. Jeśli nic się nie stanie, skontaktuj się z działem prywatnych mieszkań w urzędzie gminy (council).
+30|Zanim zostanie zamontowany, tani czujnik na baterie wystarczy na jakiś czas.
+31|Zapytaj straż pożarną o bezpłatną wizytę w domu dotyczącą bezpieczeństwa pożarowego. Niektóre dają czujniki tlenku węgla osobom, które ich potrzebują.
+32|W przeciwnym razie wystarczy prosty czujnik oznaczony EN {0}. Nie rezygnuj z tego.
+33|„Dzień dobry. Czy może Pan/Pani zamontować czujnik tlenku węgla w pomieszczeniu z kotłem (lub innym urządzeniem spalającym paliwo)? Proszę dać znać, kiedy będzie to możliwe. Dziękuję.”
+34|Zapytaj swoją położną środowiskową (health visitor). Jeśli dostajesz Healthy Start, kartą można zapłacić za mleko modyfikowane. W Szkocji można z Best Start Foods.
+35|Zapytaj położną środowiskową (health visitor) o lokalny bank dla niemowląt (baby bank). Dają za darmo pieluchy i inne potrzebne rzeczy.
+36|„Dzień dobry. Czy może Pan/Pani sprawdzić, czy na każdym piętrze jest działający czujnik dymu, a w pomieszczeniu z kotłem czujnik tlenku węgla? Proszę dać znać, kiedy można je zamontować lub naprawić. Dziękuję.”
+37|„Dzień dobry. Czy może mi Pan/Pani powiedzieć, co dzieje się z drzwiami wejściowymi, gdy nie ma prądu, i jak wejść i wyjść, jeśli się zablokują? Proszę też o numer czynny {0} godziny na dobę. Dziękuję.”
+38|„Dzień dobry. Ktoś w moim domu może potrzebować pomocy przy wyjściu z budynku w nagłym wypadku. Czy może Pan/Pani to zapisać i powiedzieć mi, jaki jest plan pomocy przy ewakuacji? Dziękuję.”
+39|To zwykle Twoje zadanie, nie właściciela mieszkania. Właściciel dba o budynek i sprzęt bezpieczeństwa, taki jak czujniki. Takie rzeczy to sprawa każdego gospodarstwa domowego.
+40|Załatwione
+41|Jedno najważniejsze zagrożenie usunięte. Zostało: {0}.
+42|W planie zostało rzeczy do załatwienia: {0} (wcześniej {1}).
+43|Gotowość na {1} godzin: {0}%, wcześniej {2}%.
+44|To było Twoje ostatnie najważniejsze zagrożenie.
+45|Teraz jesteś gotowy na:
+46|W planie została {0} rzecz do załatwienia (wcześniej {1}).
+47|Wszystko w Twoim planie jest załatwione.
+48|Poproś na piśmie, e-mailem lub SMS-em, i zachowaj kopię. Jeśli nic się nie stanie, skontaktuj się z działem prywatnych mieszkań w urzędzie gminy (council) lub z działem skarg swojego zarządcy mieszkań.
+49|„Dzień dobry. Czy może mi Pan/Pani powiedzieć, czy przy kuchence gazowej jest czujnik tlenku węgla, i czy może Pan/Pani go zamontować? Dziękuję.”
+50|„Dzień dobry. Czy może Pan/Pani sprawdzić, czy na każdym piętrze jest działający czujnik dymu? Proszę dać znać, kiedy można je zamontować lub naprawić. Dziękuję.”
+51|Tlenek węgla nie ma zapachu i może zabić. To rada dla każdego domu, w którym coś spala paliwo, w tym kuchenka gazowa.
+52|Co przeszkadza
+53|Gospodarstwa, które powiedziały, dlaczego jakiś krok nie został jeszcze zrobiony: {0}. Każde może podać więcej niż jeden powód. „Załatwione później” liczy kroki, które potem wykonano.
+54|Co przeszkodziło
+55|Kroki
+56|Załatwione później
+57|Najczęściej dotyczy
+58|Brak czasu
+59|Koszt
+60|Myślenie o tym budzi niepokój
+61|Uważają, że to zadanie właściciela
+62|Nie są pewni, czy to ważne
+63|Nie wiedzieli, co kupić
+64|Obawa, że się przeterminuje
+65|Nie dadzą rady sami
+66|Co ich powstrzymuje?
+67|Zapytaj o ich następne kroki. Odpowiedź jest liczona, bez nazwisk, w raporcie dla dzielnicy.
+68|Jeszcze nie pytano
+69|Brak miejsca na przechowywanie
+70|Zapisano.
+71|Wyczyszczono.
+72|Gospodarstwa, które powiedziały, dlaczego krok nie został zrobiony: {0}. Grupy mniejsze niż {1} są ukryte.
+73|Powód
+74|Pokażemy to, gdy co najmniej {0} gospodarstw powie nam, co ich powstrzymuje.
+75|To część najważniejszego zagrożenia. Załatw resztę, żeby je usunąć.
+76|Gotowość na {1} godzin: {0}%.
+77|Gotowość na {1} godzin: {0}%. W Twoim planie jest {2} rzecz.
+78|Na przykład:
+79|Zrób dziś jedną małą rzecz, a resztę zostaw na inny dzień:

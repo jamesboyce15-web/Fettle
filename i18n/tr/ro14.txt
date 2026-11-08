@@ -1,0 +1,80 @@
+0|Pregătit {0}% pentru {1} de ore. Planul tău are {2} lucruri.
+1|{0}Nu trebuie să cumperi asta azi.{1} Moduri mai ieftine de a rezolva același lucru:
+2|Păstrează {0} sau {1} sticle goale de băutură, spălate. Dacă ești avertizat că apa s-ar putea opri, umple-le imediat de la robinet, împreună cu orice recipient curat cu capac.
+3|Apoi adaugă la cumpărăturile obișnuite un bax de sticle marca magazinului, când poți. Nu trebuie cumpărat totul deodată.
+4|O fac la următoarele cumpărături
+5|De obicei asta e treaba ta, nu a proprietarului. Proprietarul se ocupă de clădire și de echipamentele de siguranță, cum ar fi detectoarele. Proviziile țin de fiecare gospodărie.
+6|Dacă problema e costul, există variante mai ieftine:
+7|Nu ai nevoie de mâncare specială de urgență. La fiecare cumpărătură, ia {0} sau {1} conserve în plus din ce mâncați oricum: fasole, supă, pește, fructe.
+8|Conservele marca magazinului sunt în regulă. În câteva săptămâni vei avea pentru {0} zile.
+9|O lanternă simplă de la supermarket sau de la un magazin cu prețuri mici costă câteva lire și își face treaba.
+10|Lanterna telefonului ajunge pentru o pană de curent scurtă, dar consumă bateria. Evită lumânările: provoacă incendii în timpul penelor de curent.
+11|Dacă ai mașină, radioul ei merge în timpul unei pene de curent. Pornește motorul doar afară, niciodată într-un garaj.
+12|Un radio simplu cu baterii e cel mai ieftin. Cele cu manivelă costă mai mult.
+13|Ține telefonul încărcat peste jumătate când se anunță vreme rea. Nu costă nimic.
+14|Dacă ai mașină, merge și un încărcător auto. Powerbank-urile mici sunt cele mai ieftine.
+15|Folosește ce ai deja: plapume, haine groase, căciuli și șosete groase. Pune-le unde le găsești pe întuneric.
+16|Magazinele caritabile vând pături și haine foarte ieftin.
+17|Începe cu ce ai deja în dulap: plasturi, paracetamol, bandaje. Pune-le într-o singură cutie.
+18|Trusele marca magazinului costă mult mai puțin decât cele de firmă.
+19|Probabil ai deja cea mai mare parte: saci de gunoi, o găleată, gel de mâini și șervețele umede. Pune-le la un loc.
+20|Șervețelele umede și gelul de mâini marca magazinului sunt în regulă.
+21|Orice geantă e bună: un rucsac vechi sau o sacoșă rezistentă lângă ușă. Contează ce e înăuntru, nu geanta.
+22|Supermarketurile vând deschizătoare de conserve simple cu o liră sau două.
+23|Sau alege conserve cu inel de deschidere când faci cumpărături.
+24|La cumpărăturile obișnuite, ia o conservă sau un sac în plus din hrana lor obișnuită.
+25|Multe servicii de pompieri montează gratuit detectoare de fum în timpul unei vizite gratuite de siguranță la incendiu. Întreabă la serviciul tău.
+26|În Anglia, proprietarii privați și cei de locuințe sociale sunt obligați să facă asta și să repare detectoarele când raportezi o defecțiune.
+27|Ai putea trimite:
+28|„Bună ziua. Ați putea verifica detectoarele de fum din locuința mea? Nu cred că există un detector funcțional pe fiecare etaj. Vă rog să-mi spuneți când le puteți monta sau repara. Mulțumesc.”
+29|Cere în scris, pe e-mail sau prin mesaj, și păstrează o copie. Dacă nu se întâmplă nimic, contactează echipa pentru locuințe private a primăriei (council).
+30|Până se montează, un detector cu baterii e o soluție ieftină temporară.
+31|Întreabă serviciul de pompieri despre o vizită gratuită de siguranță la incendiu. Unele dau detectoare de monoxid de carbon celor care au nevoie.
+32|Altfel, un detector simplu marcat EN {0} e suficient. Te rugăm să nu renunți la acesta.
+33|„Bună ziua. Ați putea monta un detector de monoxid de carbon în camera cu centrala (sau alt aparat care arde combustibil)? Vă rog să-mi spuneți când puteți face asta. Mulțumesc.”
+34|Întreabă asistenta medicală comunitară (health visitor). Dacă primești Healthy Start, cardul poate fi folosit pentru lapte praf pentru sugari. În Scoția, se poate cu Best Start Foods.
+35|Întreabă asistenta medicală comunitară (health visitor) despre banca locală pentru bebeluși (baby bank). Acestea dau gratuit scutece și alte lucruri necesare.
+36|„Bună ziua. Ați putea verifica dacă există un detector de fum funcțional pe fiecare etaj și un detector de monoxid de carbon în camera cu centrala? Vă rog să-mi spuneți când le puteți monta sau repara. Mulțumesc.”
+37|„Bună ziua. Îmi puteți spune ce se întâmplă cu ușa principală când se oprește curentul și cum intru și ies dacă se blochează? Vă rog să-mi dați și un număr disponibil {0} de ore din 24. Mulțumesc.”
+38|„Bună ziua. Cineva din locuința mea ar putea avea nevoie de ajutor să iasă din clădire în caz de urgență. Ați putea nota acest lucru și să-mi spuneți care e planul pentru a-l ajuta să iasă? Mulțumesc.”
+39|De obicei asta e treaba ta, nu a proprietarului. Proprietarul se ocupă de clădire și de echipamentele de siguranță, cum ar fi detectoarele. Astfel de lucruri țin de fiecare gospodărie.
+40|Rezolvat
+41|Un risc critic eliminat. Au mai rămas {0}.
+42|Au mai rămas {0} lucruri în plan, de la {1}.
+43|Pregătit {0}% pentru {1} de ore, de la {2}%.
+44|Acesta a fost ultimul tău risc critic.
+45|Acum ești pregătit pentru:
+46|A mai rămas {0} lucru în plan, de la {1}.
+47|Tot ce e în planul tău este rezolvat.
+48|Cere în scris, pe e-mail sau prin mesaj, și păstrează o copie. Dacă nu se întâmplă nimic, contactează echipa pentru locuințe private a primăriei (council) sau echipa de reclamații a furnizorului tău de locuințe.
+49|„Bună ziua. Îmi puteți spune dacă există un detector de monoxid de carbon lângă aragazul pe gaz și dacă puteți monta unul? Mulțumesc.”
+50|„Bună ziua. Ați putea verifica dacă există un detector de fum funcțional pe fiecare etaj? Vă rog să-mi spuneți când le puteți monta sau repara. Mulțumesc.”
+51|Monoxidul de carbon nu are miros și poate ucide. Acesta e un sfat de siguranță pentru orice locuință cu ceva care arde combustibil, inclusiv un aragaz pe gaz.
+52|Ce îi împiedică
+53|{0} gospodării ne-au spus de ce un pas nu a fost încă făcut. Fiecare gospodărie poate da mai multe motive. „Rezolvat ulterior” numără pașii pe care i-au făcut apoi.
+54|Ce i-a împiedicat
+55|Pași
+56|Rezolvat ulterior
+57|Cel mai des pentru
+58|Lipsă de timp
+59|Costul
+60|Îi îngrijorează să se gândească la asta
+61|Spun că e treaba proprietarului
+62|Nu sunt siguri că e important
+63|Nu știau ce să cumpere
+64|Teama că va expira
+65|Nu se descurcă singuri
+66|Ce îi oprește?
+67|Întreabă despre următorii lor pași. Răspunsul e numărat, fără nume, în raportul pe cartier.
+68|Încă neîntrebat
+69|Nu au loc de depozitare
+70|Notat.
+71|Șters.
+72|{0} gospodării ne-au spus de ce un pas nu a fost făcut. Grupurile mai mici de {1} sunt ascunse.
+73|Motiv
+74|Se afișează când cel puțin {0} gospodării ne-au spus ce îi oprește.
+75|Face parte dintr-un risc critic. Rezolvă și restul ca să-l închizi.
+76|Pregătit {0}% pentru {1} de ore.
+77|Pregătit {0}% pentru {1} de ore. Planul tău are {2} lucru.
+78|De exemplu:
+79|Fă azi un singur lucru mic și lasă restul pentru altă zi:
