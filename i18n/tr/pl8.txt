@@ -1,0 +1,110 @@
+0|Jaka jest pierwsza część Twojego kodu pocztowego?
+1|Na przykład OL{0} lub M{1}. Dzięki temu podamy właściwe lokalne kontakty i zasady. Nigdy nie pytamy o pełny kod pocztowy.
+2|Na przykład OL{0}
+3|Czy małe dziecko pije jeszcze głównie mleko matki lub mleko modyfikowane?
+4|Niemowlęta są najbardziej zagrożone, gdy nie ma czystej wody ani prądu. Starsze dzieci jedzą to samo co wszyscy.
+5|Nie, je już normalne jedzenie
+6|Jak teraz karmione jest niemowlę?
+7|Jeśli są karmione różnie, wybierz opcję z mlekiem modyfikowanym.
+8|Tak, na {0} dni lub dłużej
+9|Na około {0} dni
+10|Na około {0} dzień
+11|Na mniej niż dzień
+12|Działająca latarka, którą znajdziesz po ciemku
+13|Z zapasowymi bateriami, które nie wyciekły
+14|Radio z FM, które działa bez prądu z sieci
+15|Naładowany power bank z odpowiednim kablem do telefonu
+16|Naładowany w ostatnim miesiącu
+17|Czujnik dymu na każdym piętrze, sprawdzony w tym miesiącu
+18|Naciśnij przycisk testu
+19|United Utilities (północno-zachodnia Anglia)
+20|Inne przedsiębiorstwo wodociągowe (Numer jest na rachunku za wodę. Nie wiesz, które to? Water UK ma wyszukiwarkę po kodzie pocztowym)
+21|Zapisz go na później
+22|Załóż darmowe konto, żeby wracać do planu, odhaczać zadania, widzieć postępy i dostać przypomnienie, gdy nadejdzie czas na sprawdzenie po {0} dniach.
+23|Zapisz mój plan
+24|gotowości na {0} godziny, {1} krytyczne zagrożenia nierozwiązane
+25|Krytyczne zagrożenia
+26|{0} z {1} rozwiązane
+27|Najważniejsze rzeczy na {0} godziny
+28|Plan domowy
+29|{0} krytyczne zagrożenia do rozwiązania najpierw
+30|Dopóki ich nie rozwiążesz, Twój dom nie jest gotowy, niezależnie od wyniku.
+31|{0}Sprzęt na prąd bez potwierdzonego zasilania awaryjnego.{1} Sprawdź, jak długo działa bateria i co robić, jeśli prądu nie będzie dłużej.
+32|{0}Lek z lodówki bez planu na brak prądu.{1} Zapytaj farmaceutę, jak długo może być poza lodówką, i zapisz to.
+33|{0}Ktoś może nie dać rady zejść po schodach.{1} Powiedz właścicielowi lub zarządcy budynku, a także straży pożarnej, gdy dzwonisz pod {2}.
+34|{0}Brak sprawdzonego czujnika dymu.{1} Naciśnij przycisk testu na każdym czujniku dymu. Jeśli nie ma go na każdym piętrze, kup go.
+35|{0}Niemowlę na mleku w proszku bez zapasu gotowego mleka.{1} Mleko w proszku wymaga wody o temperaturze {2}°C. Trzymaj zapas gotowego mleka w płynie na {3} dni.
+36|{0}Osobisty alarm, który może przestać działać bez prądu.{1} Zapytaj dostawcę alarmu lub telefonu, jak długo działa bez zasilania z sieci.
+37|Pozycje oznaczone {0}Dla Twojego domu{1} są tu z powodu Twoich odpowiedzi. Pozostałe powinien mieć każdy dom.
+38|Dla Twojego domu
+39|{0}. Twoja sieć elektroenergetyczna
+40|{0} (Anglia, Szkocja i Walia)
+41|Znajdź swojego operatora sieci
+42|Zajmują się liniami energetycznymi w Twojej okolicy. Poproś, żeby przekazali Twoje dane także dostawcom gazu i wody. Możesz też zacząć od {0}thepsr.co.uk{1}.
+43|Numer jest na rachunku za wodę. Nie wiesz, które to przedsiębiorstwo? Water UK ma wyszukiwarkę po kodzie pocztowym: {0}water.org.uk{1}.
+44|Zrobione: Powiedz zarządcy budynku, kto może potrzebować pomocy przy wyjściu
+45|Powiedz zarządcy budynku, kto może potrzebować pomocy przy wyjściu{0}Najpierw{1}
+46|Jedna wiadomość do właściciela lub zarządcy budynku
+47|Ktoś w domu może mieć trudność ze schodami podczas pożaru lub gdy winda stanie. Poproś właściciela lub zarządcę budynku, żeby to zapisał i czy przygotuje indywidualny plan ewakuacji. Powiedz też straży pożarnej, gdy dzwonisz pod {0}.
+48|Zrobione: Sprawdź, jak długo działa zasilanie awaryjne sprzętu
+49|Sprawdź, jak długo działa zasilanie awaryjne sprzętu{0}Najpierw{1}
+50|Jeden telefon do dostawcy lub zespołu opieki
+51|Czy ma baterię awaryjną i ile godzin działa?
+52|Czy bateria jest naładowana i kiedy ją ostatnio sprawdzono?
+53|Co robić, jeśli prądu nie ma dłużej, na przykład czy są zapasowe butle z tlenem?
+54|Jaki jest Wasz numer czynny {0} godziny na dobę?
+55|Odhacz to dopiero, gdy dostaniesz odpowiedzi i zapiszesz je w książce. Jeśli sprzęt przestanie działać, a oddech lub życie kogoś jest zagrożone, dzwoń pod {0}.
+56|Dodaj poniżej każdy lek i sposób jego przechowywania. Przepisz to z ulotki lub etykiety, a jeśli nie masz pewności, zapytaj farmaceutę.
+57|W Anglii prywatni i socjalni wynajmujący muszą zamontować czujnik dymu na każdym piętrze z salonem lub sypialnią. Kuchenki gazowe nie są objęte tym przepisem. Wynajmujący muszą naprawić lub wymienić czujniki, gdy zgłosisz usterkę. Poproś na piśmie i zachowaj kopię.
+58|{0}GOV.UK: czujniki dymu i tlenku węgla, wytyczne dla wynajmujących (Anglia){1}. Oficjalna broszura.
+59|{0} osoby × {1} litry × {2} dni = {3} litrów. Twoje mieszkanie jest wysoko. Pompy, które tłoczą wodę w budynku, potrzebują prądu, więc woda w kranie może przestać lecieć, nawet jeśli na ulicy nadal jest. To ilość tylko dla ludzi. Zwierzęta też potrzebują wody, a ile, zależy od ich wielkości, więc zapytaj weterynarza i zrób dodatkowy zapas.
+60|Jedzenie i woda na {0} dni dla {1} zwierząt
+61|Zapytaj weterynarza, ile wody Twoje zwierzęta piją dziennie, i trzymaj zapas na {0} dni ponad wodę dla ludzi. Do tego leki dla zwierząt oraz smycz lub transporter przy drzwiach.
+62|Powiedz zarządcy budynku, kto może potrzebować pomocy przy wyjściu
+63|Sprawdź, jak długo działa zasilanie awaryjne sprzętu
+64|Twoja okolica
+65|Przykład, dopóki nie dodamy rejestru ryzyk Twojego lokalnego forum ds. odporności (Local Resilience Forum): silne burze, przerwy w dostawie prądu dłuższe niż doba, powodzie, mrozy i brak wody.
+66|{0}{1}Powiedz zarządcy budynku, kto może potrzebować pomocy przy wyjściu
+67|Jedna wiadomość do właściciela lub zarządcy budynku. Ktoś w domu może mieć trudność ze schodami podczas pożaru lub gdy winda stanie. Poproś właściciela lub zarządcę budynku, żeby to zapisał i czy przygotuje indywidualny plan ewakuacji. Powiedz też straży pożarnej, gdy dzwonisz pod {0}.
+68|{0}{1}Sprawdź, jak długo działa zasilanie awaryjne sprzętu
+69|Jeden telefon do dostawcy lub zespołu opieki. Odhacz to dopiero, gdy dostaniesz odpowiedzi i zapiszesz je w książce. Jeśli sprzęt przestanie działać, a oddech lub życie kogoś jest zagrożone, dzwoń pod {0}.
+70|Zapytaj lekarza rodzinnego lub farmaceutę. Dodaj poniżej każdy lek i sposób jego przechowywania. Przepisz to z ulotki lub etykiety, a jeśli nie masz pewności, zapytaj farmaceutę.
+71|Jedna wiadomość lub telefon. W Anglii prywatni i socjalni wynajmujący muszą zamontować czujnik dymu na każdym piętrze z salonem lub sypialnią. Kuchenki gazowe nie są objęte tym przepisem. Wynajmujący muszą naprawić lub wymienić czujniki, gdy zgłosisz usterkę. Poproś na piśmie i zachowaj kopię.
+72|{0}{1}Artykuły dla zwierząt: jedzenie i woda na {2} dni dla {3} zwierząt
+73|Bezpłatna lista prowadzona przez dostawców energii i wody. Osoby na liście dostają informacje o przerwach w dostawie prądu i dodatkową pomoc. Zapisz się u dostawcy energii, w swojej sieci elektroenergetycznej (znajdziesz ją na energynetworks.org albo zacznij od thepsr.co.uk) i u dostawcy wody.
+74|{0}, bezpłatnie z każdego telefonu
+75|Działający czujnik tlenku węgla
+76|Mały czujnik, oddzielny od czujnika dymu, zwykle oznaczony CO. Sprawdzony w tym miesiącu
+77|gotowości na {0} godziny, {1} krytyczne zagrożenie nierozwiązane
+78|{0} krytyczne zagrożenie do rozwiązania najpierw
+79|Nie wiesz, kto dostarcza Ci wodę? {0}Znajdź swoje przedsiębiorstwo wodociągowe{1}.
+80|Zrobione: Czujniki dymu
+81|Czujniki dymu{0}Najpierw{1}
+82|Co najmniej {0} na każdym piętrze, sprawdzane co miesiąc
+83|Większość ofiar pożarów ginie w domu. Raz w miesiącu naciśnij przycisk testu. Lokalna straż pożarna może zamontować czujniki bezpłatnie podczas wizyty w domu.
+84|{0} posiłków i {1} przekąsek, żeby uzupełnić to, co masz, do {2} dni
+85|Czujniki dymu
+86|{0}{1}Czujniki dymu: co najmniej {2} na każdym piętrze, sprawdzane co miesiąc
+87|{0}{1}Jedzenie, które można jeść na zimno: {2} posiłków i {3} przekąsek, żeby uzupełnić to, co masz, do {4} dni
+88|Jaka jest pierwsza część ich kodu pocztowego?
+89|W Anglii prywatni i socjalni wynajmujący muszą zamontować czujnik dymu na każdym piętrze z salonem lub sypialnią oraz czujnik tlenku węgla w każdym pomieszczeniu ze stałym urządzeniem spalającym paliwo, takim jak Twój kocioł lub piecyk na drewno. Kuchenki gazowe nie są objęte tym przepisem. Wynajmujący muszą naprawić lub wymienić czujniki, gdy zgłosisz usterkę. Poproś na piśmie i zachowaj kopię.
+90|Jedna wiadomość lub telefon. W Anglii prywatni i socjalni wynajmujący muszą zamontować czujnik dymu na każdym piętrze z salonem lub sypialnią oraz czujnik tlenku węgla w każdym pomieszczeniu ze stałym urządzeniem spalającym paliwo, takim jak Twój kocioł lub piecyk na drewno. Kuchenki gazowe nie są objęte tym przepisem. Wynajmujący muszą naprawić lub wymienić czujniki, gdy zgłosisz usterkę. Poproś na piśmie i zachowaj kopię.
+91|{0}Brak działającego czujnika tlenku węgla.{1} Tlenek węgla może zabić bez ostrzeżenia. Potrzebujesz działającego czujnika przy wszystkim, co spala paliwo.
+92|{0} w każdym pomieszczeniu z urządzeniem na gaz, olej, węgiel lub drewno
+93|Tlenek węgla nie ma zapachu i może zabić. To rada dla każdego domu z czymś, co spala paliwo, także z kuchenką gazową. Wynajmujący może mieć obowiązek go zamontować (patrz wyżej). Jeśli tego nie zrobi, czujnik na baterie kosztuje około {0} £ i możesz go zamontować sam(a).
+94|{0}{1}Czujnik tlenku węgla: {2} w każdym pomieszczeniu z urządzeniem na gaz, olej, węgiel lub drewno
+95|Tlenek węgla nie ma zapachu i może zabić. To rada dla każdego domu z czymś, co spala paliwo, także z kuchenką gazową. Przepisy dla wynajmujących nie obejmują kuchenek gazowych, więc być może trzeba samemu kupić czujnik na baterie. Montaż zajmuje minutę.
+96|Uwzględnij gospodarstwo {0} w anonimowych zestawieniach dla Twojej okolicy, np. „ile domów ma wodę na {1} dni”. Nigdy nie udostępniamy Twoich odpowiedzi, informacji o zdrowiu ani danych kontaktowych i nigdy nie pokazujemy grupy mniejszej niż {2}. Opcjonalnie.
+97|Alerty dla Twojej okolicy
+98|Jeśli masz obawy dotyczące ochrony osób narażonych, postępuj zgodnie z procedurą swojej organizacji. W sprawie bezpieczeństwa pożarowego poproś lokalną straż pożarną o bezpłatną wizytę w domu. W nagłym wypadku dzwoń pod {0}.
+99|Zajmują się liniami energetycznymi w Greater Manchester, Lancashire i Cumbrii. Poproś, żeby przekazali Twoje dane także dostawcom gazu i wody. Możesz też zacząć od {0}thepsr.co.uk{1}.
+100|Prywatni i socjalni wynajmujący muszą zamontować czujnik dymu na każdym piętrze z salonem lub sypialnią oraz czujnik tlenku węgla w każdym pomieszczeniu ze stałym urządzeniem spalającym paliwo, takim jak Twój kocioł lub piecyk na drewno. Kuchenki gazowe nie są objęte tym przepisem. Wynajmujący muszą naprawić lub wymienić czujniki, gdy zgłosisz usterkę. Poproś na piśmie i zachowaj kopię.
+101|Ile małych dzieci pije jeszcze głównie mleko matki lub mleko modyfikowane?
+102|Żadne, wszystkie jedzą normalne jedzenie
+103|Jak teraz karmione są niemowlęta?
+104|Mniej więcej ile butelek dziennie, łącznie dla wszystkich niemowląt?
+105|Twój plan jest gotowy. Zapisz go na później
+106|Wpisz tylko pierwszą część kodu pocztowego, np. OL{0} lub M{1}.
+107|Przepisy dla wynajmujących są inne w Szkocji. Zapytaj wynajmującego na piśmie, jakie czujniki dymu i tlenku węgla są zamontowane i kto je sprawdza.
+108|Przepisy dla wynajmujących są inne w Walii. Zapytaj wynajmującego na piśmie, jakie czujniki dymu i tlenku węgla są zamontowane i kto je sprawdza.
+109|Przepisy dla wynajmujących są inne w Irlandii Północnej. Zapytaj wynajmującego na piśmie, jakie czujniki dymu i tlenku węgla są zamontowane i kto je sprawdza.

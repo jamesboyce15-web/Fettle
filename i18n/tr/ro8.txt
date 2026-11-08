@@ -1,0 +1,110 @@
+0|Care este prima parte a codului dumneavoastră poștal?
+1|De exemplu OL{0} sau M{1}. Îl folosim ca să vă dăm contactele și regulile locale potrivite. Nu cerem niciodată codul poștal complet.
+2|De exemplu, OL{0}
+3|Copilul mic bea încă în principal lapte matern sau lapte praf?
+4|Bebelușii sunt cei mai expuși când nu există apă curată sau curent. Copiii mai mari mănâncă la fel ca toată lumea.
+5|Nu, mănâncă mâncare obișnuită acum
+6|Cum este hrănit bebelușul acum?
+7|Dacă sunt hrăniți diferit, alegeți varianta cu lapte praf.
+8|Da, pentru {0} zile sau mai mult
+9|Pentru aproximativ {0} zile
+10|Pentru aproximativ {0} zi
+11|Pentru mai puțin de o zi
+12|O lanternă care merge și pe care o găsiți pe întuneric
+13|Cu baterii de rezervă care nu au curs
+14|Un radio cu FM care merge fără curent de la rețea
+15|Un power bank încărcat, cu cablul potrivit pentru telefon
+16|Încărcat în ultima lună
+17|Un detector de fum pe fiecare etaj, testat luna aceasta
+18|Apăsați butonul de test
+19|United Utilities (nord-vestul Angliei)
+20|Altă companie de apă (Numărul e pe factura de apă. Nu știți care e? Water UK are un căutător după codul poștal)
+21|Salvați-l pentru mai târziu
+22|Creați un cont gratuit ca să reveniți la plan, să bifați ce ați făcut, să vedeți cât ați progresat și să primiți un memento când e timpul verificării de la {0} de zile.
+23|Salvez planul
+24|pregătit pentru {0} de ore, cu {1} riscuri critice nerezolvate
+25|Riscuri critice
+26|{0} din {1} rezolvate
+27|Esențiale pentru {0} de ore
+28|Planul gospodăriei
+29|{0} riscuri critice de rezolvat mai întâi
+30|Până nu le rezolvați, locuința nu e pregătită, indiferent de scor.
+31|{0}Echipament care are nevoie de curent, fără o rezervă confirmată.{1} Aflați cât ține bateria și ce faceți dacă nu revine curentul.
+32|{0}Un medicament din frigider fără un plan pentru pana de curent.{1} Întrebați farmacistul cât timp poate sta în afara frigiderului și notați.
+33|{0}Cineva s-ar putea să nu poată coborî scările.{1} Spuneți proprietarului sau administratorului clădirii și pompierilor când sunați la {2}.
+34|{0}Niciun detector de fum testat.{1} Apăsați butonul de test la fiecare detector de fum. Dacă nu există unul pe fiecare etaj, cumpărați.
+35|{0}Un bebeluș cu lapte praf fără rezervă de lapte gata preparat.{1} Laptele praf are nevoie de apă la {2}°C. Păstrați lapte lichid gata preparat pentru {3} zile.
+36|{0}O alarmă personală care s-ar putea opri într-o pană de curent.{1} Întrebați furnizorul alarmei sau al telefonului cât timp merge fără curent de la rețea.
+37|Elementele marcate {0}Pentru locuința dvs.{1} apar din cauza răspunsurilor dumneavoastră. Restul ar trebui să le aibă orice locuință.
+38|Pentru locuința dvs.
+39|{0}. Rețeaua dumneavoastră de electricitate
+40|{0} (Anglia, Scoția și Țara Galilor)
+41|Găsiți operatorul rețelei
+42|Ei se ocupă de liniile electrice din zona dumneavoastră. Cereți-le să vă transmită datele și la gaz și apă. Sau începeți de la {0}thepsr.co.uk{1}.
+43|Numărul e pe factura de apă. Nu știți care e compania? Water UK are un căutător după codul poștal: {0}water.org.uk{1}.
+44|Gata: Spuneți clădirii cine ar putea avea nevoie de ajutor să iasă
+45|Spuneți clădirii cine ar putea avea nevoie de ajutor să iasă{0}Mai întâi{1}
+46|Un mesaj către proprietar sau administratorul clădirii
+47|Cineva din casă s-ar putea descurca greu pe scări la un incendiu sau dacă liftul se oprește. Cereți proprietarului sau administratorului să noteze asta și întrebați dacă face un plan personal de evacuare. Spuneți și pompierilor când sunați la {0}.
+48|Gata: Confirmați cât ține rezerva echipamentului
+49|Confirmați cât ține rezerva echipamentului{0}Mai întâi{1}
+50|Un telefon către furnizor sau echipa de îngrijire
+51|Are o baterie de rezervă și câte ore ține?
+52|Bateria e încărcată și când a fost testată ultima dată?
+53|Ce facem dacă nu e curent mai mult timp, de exemplu există butelii de oxigen de rezervă?
+54|Care e numărul dumneavoastră disponibil {0} de ore?
+55|Bifați doar după ce ați primit răspunsurile și le-ați notat în carte. Dacă echipamentul se oprește și respirația sau viața cuiva e în pericol, sunați la {0}.
+56|Adăugați mai jos fiecare medicament și cum trebuie păstrat. Copiați de pe prospect sau etichetă, iar dacă nu sunteți sigur, întrebați farmacistul.
+57|În Anglia, proprietarii privați și sociali trebuie să monteze un detector de fum pe fiecare etaj cu cameră de zi sau dormitor. Aragazurile pe gaz nu intră sub această regulă. Proprietarii trebuie să repare sau să înlocuiască detectoarele când raportați o defecțiune. Cereți în scris și păstrați o copie.
+58|{0}GOV.UK: detectoare de fum și monoxid de carbon, ghid pentru proprietari (Anglia){1}. Broșura oficială.
+59|{0} persoane × {1} litri × {2} zile = {3} litri. Apartamentul e la etaj înalt. Pompele care urcă apa în clădire au nevoie de curent, deci robinetele se pot opri chiar dacă strada are apă. Cantitatea e doar pentru oameni. Și animalele au nevoie de apă, iar cât depinde de mărimea lor, deci întrebați veterinarul și păstrați în plus.
+60|Mâncare și apă pentru {0} zile pentru {1} animale
+61|Întrebați veterinarul câtă apă beau animalele pe zi și păstrați pentru {0} zile, pe lângă apa pentru oameni. Plus medicamentele animalelor și o lesă sau o cușcă de transport lângă ușă.
+62|Spuneți clădirii cine ar putea avea nevoie de ajutor să iasă
+63|Confirmați cât ține rezerva echipamentului
+64|zona dumneavoastră
+65|Exemplu până adăugăm registrul de riscuri al forumului local de reziliență (Local Resilience Forum): furtuni puternice, pene de curent mai lungi de o zi, inundații, ger și lipsa apei.
+66|{0}{1}Spuneți clădirii cine ar putea avea nevoie de ajutor să iasă
+67|Un mesaj către proprietar sau administratorul clădirii. Cineva din casă s-ar putea descurca greu pe scări la un incendiu sau dacă liftul se oprește. Cereți proprietarului sau administratorului să noteze asta și întrebați dacă face un plan personal de evacuare. Spuneți și pompierilor când sunați la {0}.
+68|{0}{1}Confirmați cât ține rezerva echipamentului
+69|Un telefon către furnizor sau echipa de îngrijire. Bifați doar după ce ați primit răspunsurile și le-ați notat în carte. Dacă echipamentul se oprește și respirația sau viața cuiva e în pericol, sunați la {0}.
+70|Întrebați medicul de familie sau farmacistul. Adăugați mai jos fiecare medicament și cum trebuie păstrat. Copiați de pe prospect sau etichetă, iar dacă nu sunteți sigur, întrebați farmacistul.
+71|Un mesaj sau un telefon. În Anglia, proprietarii privați și sociali trebuie să monteze un detector de fum pe fiecare etaj cu cameră de zi sau dormitor. Aragazurile pe gaz nu intră sub această regulă. Proprietarii trebuie să repare sau să înlocuiască detectoarele când raportați o defecțiune. Cereți în scris și păstrați o copie.
+72|{0}{1}Lucruri pentru animale: mâncare și apă pentru {2} zile pentru {3} animale
+73|O listă gratuită ținută de companiile de energie și apă. Membrii primesc noutăți în pene de curent și ajutor suplimentar. Înscrieți-vă la furnizorul de energie, la rețeaua de electricitate (o găsiți pe energynetworks.org sau începeți de la thepsr.co.uk) și la compania de apă.
+74|{0}, gratuit de pe orice telefon
+75|Un detector de monoxid de carbon care funcționează
+76|O alarmă mică, separată de detectorul de fum, de obicei marcată CO. Testată luna aceasta
+77|pregătit pentru {0} de ore, cu {1} risc critic nerezolvat
+78|{0} risc critic de rezolvat mai întâi
+79|Nu știți cine vă furnizează apa? {0}Găsiți compania de apă{1}.
+80|Gata: Detectoare de fum
+81|Detectoare de fum{0}Mai întâi{1}
+82|Cel puțin {0} pe fiecare etaj, testate lunar
+83|Cele mai multe decese în incendii au loc acasă. Apăsați butonul de test o dată pe lună. Pompierii locali le pot monta gratuit la o vizită de siguranță acasă.
+84|{0} mese și {1} gustări, ca să completați ce aveți până la {2} zile
+85|Detectoare de fum
+86|{0}{1}Detectoare de fum: cel puțin {2} pe fiecare etaj, testate lunar
+87|{0}{1}Mâncare care se mănâncă rece: {2} mese și {3} gustări, ca să completați ce aveți până la {4} zile
+88|Care este prima parte a codului lor poștal?
+89|În Anglia, proprietarii privați și sociali trebuie să monteze un detector de fum pe fiecare etaj cu cameră de zi sau dormitor și un detector de monoxid de carbon în orice cameră cu un aparat fix care arde combustibil, cum ar fi centrala sau o sobă pe lemne. Aragazurile pe gaz nu intră sub această regulă. Proprietarii trebuie să repare sau să înlocuiască detectoarele când raportați o defecțiune. Cereți în scris și păstrați o copie.
+90|Un mesaj sau un telefon. În Anglia, proprietarii privați și sociali trebuie să monteze un detector de fum pe fiecare etaj cu cameră de zi sau dormitor și un detector de monoxid de carbon în orice cameră cu un aparat fix care arde combustibil, cum ar fi centrala sau o sobă pe lemne. Aragazurile pe gaz nu intră sub această regulă. Proprietarii trebuie să repare sau să înlocuiască detectoarele când raportați o defecțiune. Cereți în scris și păstrați o copie.
+91|{0}Niciun detector de monoxid de carbon care funcționează.{1} Monoxidul de carbon poate ucide fără avertisment. Aveți nevoie de un detector care funcționează lângă tot ce arde combustibil.
+92|{0} în fiecare cameră cu un aparat pe gaz, petrol, cărbune sau lemne
+93|Monoxidul de carbon nu are miros și poate ucide. Acesta e un sfat de siguranță pentru orice locuință cu ceva care arde combustibil, inclusiv un aragaz pe gaz. Proprietarul poate fi obligat să monteze unul (vezi mai sus). Dacă nu o face, un detector cu baterii costă cam £{0} și îl puteți monta singur.
+94|{0}{1}Detector de monoxid de carbon: {2} în fiecare cameră cu un aparat pe gaz, petrol, cărbune sau lemne
+95|Monoxidul de carbon nu are miros și poate ucide. Acesta e un sfat de siguranță pentru orice locuință cu ceva care arde combustibil, inclusiv un aragaz pe gaz. Regulile pentru proprietari nu includ aragazurile pe gaz, deci s-ar putea să trebuiască să cumpărați singur un detector cu baterii. Se montează într-un minut.
+96|Includeți gospodăria {0} în totalurile anonime pentru zona dumneavoastră, de exemplu „câte locuințe au apă pentru {1} zile”. Nu vă dăm niciodată răspunsurile, datele despre sănătate sau datele de contact și nu arătăm niciodată un grup mai mic de {2}. Opțional.
+97|Alerte pentru zona dumneavoastră
+98|Dacă aveți o îngrijorare legată de protecția persoanelor vulnerabile, urmați procedura organizației. Pentru siguranța la incendiu, cereți pompierilor locali o vizită gratuită de siguranță acasă. În caz de urgență, sunați la {0}.
+99|Ei se ocupă de liniile electrice din Greater Manchester, Lancashire și Cumbria. Cereți-le să vă transmită datele și la gaz și apă. Sau începeți de la {0}thepsr.co.uk{1}.
+100|Proprietarii privați și sociali trebuie să monteze un detector de fum pe fiecare etaj cu cameră de zi sau dormitor și un detector de monoxid de carbon în orice cameră cu un aparat fix care arde combustibil, cum ar fi centrala sau o sobă pe lemne. Aragazurile pe gaz nu intră sub această regulă. Proprietarii trebuie să repare sau să înlocuiască detectoarele când raportați o defecțiune. Cereți în scris și păstrați o copie.
+101|Câți dintre copiii mici beau încă în principal lapte matern sau lapte praf?
+102|Niciunul, toți mănâncă mâncare obișnuită
+103|Cum sunt hrăniți bebelușii acum?
+104|Cam câte biberoane pe zi, pentru toți bebelușii la un loc?
+105|Planul e gata. Salvați-l pentru mai târziu
+106|Introduceți doar prima parte a codului poștal, de exemplu OL{0} sau M{1}.
+107|Regulile pentru proprietari sunt diferite în Scoția. Întrebați proprietarul în scris ce detectoare de fum și de monoxid de carbon sunt montate și cine le testează.
+108|Regulile pentru proprietari sunt diferite în Țara Galilor. Întrebați proprietarul în scris ce detectoare de fum și de monoxid de carbon sunt montate și cine le testează.
+109|Regulile pentru proprietari sunt diferite în Irlanda de Nord. Întrebați proprietarul în scris ce detectoare de fum și de monoxid de carbon sunt montate și cine le testează.

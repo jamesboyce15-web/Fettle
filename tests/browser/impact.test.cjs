@@ -6,6 +6,8 @@ const { chromium } = require('playwright');const path=require('path');
  await p.evaluate(()=>{start(false);Object.assign(cur,{home:"house",adults:2,water:"none",food:"no",kit:[],fa:"no",budget:0,heat:"gas",hob:"gas"});qi=list().length-1;drawQ();next();});
  await p.waitForTimeout(300);
  ok(await p.evaluate(()=>H[0].scores.length===1&&H[0].scores[0].m.water3===0&&H[0].scores[0].m.co===0),'first check saved with measures');
+ ok(await p.isVisible('#res'),'plan shown before sign-up');
+ await p.click('text=Save my plan'); await p.waitForTimeout(200);
  // sign up with reminders
  await p.evaluate(()=>{document.getElementById('a-name').value='Ann';document.getElementById('a-email').value='ann@x.test';document.getElementById('a-pw').value='password1';document.getElementById('a-remind').checked=true;});
  await p.click('#authbox button[type=submit]'); await p.waitForTimeout(500);

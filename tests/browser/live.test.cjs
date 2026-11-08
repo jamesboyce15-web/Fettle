@@ -20,7 +20,9 @@ const srv = http.createServer((req, res) => { let f = path.join(PUB, decodeURICo
   ok(await p.isVisible('text=Secure payment by Stripe. The printed book'), 'live pricing note shown');
   // finish a check, then sign up
   await p.evaluate(() => { cur = fresh(false); Object.assign(cur, { home: "house", outdoor: "garden", tenure: "own", adults: 2, heat: "gas", hob: "gas", cold: "slow", healthGate: "yes", health: ["meds"], water: "half", food: "some", kit: ["torch"], fa: "no", budget: 5 }); tier = "core"; qi = list().length - 1; go("q"); drawQ(); next(); });
-  ok(await p.isVisible('#a-name'), 'signup shown after check');
+  ok(await p.isVisible('#res') && !(await p.isVisible('#a-name')), 'plan shown straight after check, no sign-up wall');
+  await p.click('text=Save my plan'); await p.waitForTimeout(200);
+  ok(await p.isVisible('#a-name'), 'save button opens sign-up');
   ok(await p.isVisible('text=By creating an account you agree'), 'terms line shown');
   await p.fill('#a-name', 'Jo'); await p.fill('#a-email', 'jo@example.com'); await p.fill('#a-pw', 'password123');
   await p.click('button[type=submit]'); await p.waitForTimeout(800);
