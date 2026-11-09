@@ -1,0 +1,59 @@
+0|Te-ai descurca?
+1|Curentul se oprește într-o seară rece de iarnă și nu revine {0} zile. Ar putea gospodăria ta să stea la căldură, să mănânce și să rămână în legătură cu ceilalți?
+2|Cam așa
+3|Grozav. Iată ce înseamnă asta
+4|Pentru {0} persoane, asta înseamnă {1}{2} mese{3} care nu trebuie gătite. Dacă aragazul e electric, nu va merge.
+5|O lanternă pentru fiecare. Lumânările provoacă incendii în timpul penelor de curent.
+6|Un mod de a încărca telefoanele, cum ar fi un powerbank, ca să poți afla știrile și să chemi ajutor.
+7|Haine groase și pături pentru toți. Majoritatea sistemelor de încălzire se opresc fără curent, chiar și o centrală pe gaz, pentru că are nevoie de electricitate.
+8|Liftul se va opri. Ar putea toți să urce și să coboare scările?
+9|Ești la fel de sigur?
+10|Da, la fel
+11|Acum mai puțin sigur
+12|Iată ce înseamnă
+13|Mulțumim pentru sinceritate. Iată ce ar fi nevoie
+14|Curentul și apa curată de la robinet sunt oprite {0} zile. Ai putea hrăni bebelușul?
+15|Pentru {0} zile asta înseamnă {1}{2} mese de lapte praf gata preparat{3}, plus {4} biberoane și tetine curate, pentru că s-ar putea să nu le poți spăla.
+16|Laptele praf trebuie preparat cu apă fiartă care are încă cel puțin {0}°C. Fără curent sau fără apă curată, nu poți prepara un biberon sigur.
+17|Apa se oprește {0} zile. Ar putea toți cei de acasă să bea, să se spele și să folosească toaleta?
+18|Pentru {0} persoane, {1} zile înseamnă {2}{3} litri{4} de apă de băut: cam {5} sticle mari de {6} litri.
+19|Doar {0} din {1} adulți din Marea Britanie au atât de multă apă acasă.
+20|Toaletele nu se vor mai umple. Ai avea nevoie de saci de gunoi rezistenți, o găleată și gel de mâini.
+21|Pompele clădirii au nevoie de curent, așa că la un etaj înalt robinetele se pot opri chiar dacă pe stradă încă e apă.
+22|E un incendiu sau o inundație în apropiere și vi se spune să plecați în {0} minute. Ai ști unde să mergi și ce să iei?
+23|Unde ați merge? Stabiliți un loc și o persoană din afara zonei pe care o poate suna oricine.
+24|Medicamente, încărcătoare, chei, acte: ți-ai aminti de ele în grabă? Un rucsac pregătit lângă ușă își amintește în locul tău.
+25|Dacă ți s-ar descărca telefonul, știi pe de rost numărul cuiva?
+26|Dacă cineva nu poate urca scări sau merge mult, cine l-ar ajuta să iasă?
+27|Animalele: o cușcă de transport sau o lesă și puțină hrană.
+28|Ce ne-ai spus, alături de ce arată răspunsurile tale.
+29|O pană de curent de {0} zile
+30|Răspunsurile tale arată
+31|{0} din {1} lucruri
+32|Ce ai și ce lipsește
+33|Ai
+34|Lipsește
+35|Hrănirea unui bebeluș timp de {0} zile
+36|Încă nu
+37|Lapte praf gata preparat și biberoane curate
+38|{0} zile fără apă la robinet
+39|Plecarea de acasă în {0} minute
+40|Ai spus:
+41|Cum ți se pare acum?
+42|Mulțumim. Am notat.
+43|Folosești deja lapte gata preparat, așa că trebuie doar să ai rezervă pentru {0} zile.
+44|Pentru {0} persoană, asta înseamnă {1}{2} mese{3} care nu trebuie gătite. Dacă aragazul e electric, nu va merge.
+45|Pentru {0} persoană, {1} zile înseamnă {2}{3} litri{4} de apă de băut: cam {5} sticle mari de {6} litri.
+46|Curentul se oprește într-o seară rece de iarnă și nu revine {0} zile. Ar putea gospodăria lor să stea la căldură, să mănânce și să rămână în legătură cu ceilalți?
+47|Curentul și apa curată de la robinet sunt oprite {0} zile. Ar putea ei să hrănească bebelușul?
+48|Apa se oprește {0} zile. Ar putea toți cei de acolo să bea, să se spele și să folosească toaleta?
+49|E un incendiu sau o inundație în apropiere și li se spune să plece în {0} minute. Ar ști unde să meargă și ce să ia?
+50|S-ar descurca locuitorii?
+51|„Spun că s-ar descurca” e ce ne-au spus locuitorii (Da, ușor sau Cam așa). „Răspunsurile arată că sunt pregătiți” e calculat din verificarea lor. Prima verificare, apoi cea mai recentă. Ultima coloană numără persoanele care au spus întâi că s-ar descurca, apoi au fost mai puțin sigure după ce au văzut ce presupune.
+52|Scenariu
+53|Spun că s-ar descurca
+54|Răspunsurile arată că sunt pregătiți
+55|Mai puțin siguri după ce au văzut ce presupune
+56|Curentul și apa curată de la robinet sunt oprite {0} zile. Ai putea hrăni bebelușii?
+57|Curentul și apa curată de la robinet sunt oprite {0} zile. Ar putea ei să hrănească bebelușii?
+58|Ce spun locuitorii (propria evaluare) alături de ce arată răspunsurile lor. Prima verificare, apoi cea mai recentă.

@@ -83,6 +83,13 @@ Workers can only join with an invite code. Nobody can make themselves a member.
 
 Before a pilot starts: a data sharing agreement with the organisation (they are the controller for their residents' plans), and a DPIA covering health data collected on visits.
 
+## Could you cope? (scenarios)
+Straight after who lives here, the check asks three everyday scenarios: a 3-day power cut in January, 3 days without tap water, and leaving home in 15 minutes. Homes with a baby on formula also get feeding the baby for 3 days. Each answer (Yes, easily / Just about / Not really / No) is followed by what it actually takes for that household (meals, litres, feeds), then "Still feel the same?".
+- Results show each scenario as "You said" beside "Your answers show", with what's had and missing.
+- When a step completes a scenario, Fettle asks how it feels now. The 30 and 90 day re-checks ask the scenarios again.
+- Councils see confidence (self-reported) beside capability (worked out from the check), first and latest, plus how many felt less sure after seeing what it takes. Keep the wording and scale fixed, or the trend means nothing.
+- The baby reveal needs the same clinical review as the rest of the feeding advice.
+
 ## Launch area: Greater Manchester and Cheshire
 The postcode a household enters is looked up to find its council. That sets their local contacts:
 - **Greater Manchester (10 boroughs):** Electricity North West and United Utilities, filled in automatically.
@@ -106,6 +113,7 @@ After the check, people see **their next 3 steps**, not a long list: critical ri
   `select * from fettle_impact('Rochdale');`
   It returns each measure's first-check and latest percentages, and hides any measure with fewer than 5 households.
   `select * from fettle_outcomes('Rochdale');` gives the outcome counts: households assessed, critical risks found, sorted, and verified.
+  `select * from fettle_confidence('Rochdale');` shows, for each scenario, how many said they'd cope and how many their answers show are ready, at the first check and the latest, and how many felt less sure after seeing what it takes.
   `select * from fettle_barriers('Rochdale');` shows what's getting in the way: for each reason (cost, no time, landlord and so on), how many households gave it, for how many steps, and how many of those steps they then sorted.
 - Critical risks (like powered medical equipment with no backup, or no working smoke alarm) are saved with every check, so reports can say "X found, Y sorted, Z checked on a visit".
 - Barriers: when people say why a step isn't done, the reason is saved. Workers can record it on a visit too ("What's stopping them?" on each case). The ward report, PDF and CSV show the totals, so a council sees *why* residents aren't ready, not just that they aren't.

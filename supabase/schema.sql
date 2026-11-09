@@ -162,4 +162,31 @@ $$;
 revoke all on function public.fettle_barriers(text) from public, anon, authenticated;
 grant execute on function public.fettle_barriers(text) to service_role;
 
+-- Could you cope? What households said (self-reported confidence: 2 = "Just about", 3 = "Yes, easily") beside what their
+-- answers show (capability), at the first check and the latest, per scenario. Rows with fewer than 5 households are left out.
+-- Usage: select * from fettle_confidence('Rochdale');
+create or replace function public.fettle_confidence(p_area text)
+returns table (scenario text, households int, said_cope_first_pct int, said_cope_latest_pct int, ready_first_pct int, ready_latest_pct int, less_sure int, asked int)
+language sql security definer set search_path = public as $$
+  with h as (
+    select hh.data, hh.data->'scores'->0 as f, hh.data->'scores'->(jsonb_array_length(hh.data->'scores')-1) as l
+    from public.households hh
+    where coalesce((hh.data->>'countMe')::boolean, false)
+      and lower(coalesce(hh.data->>'area','')) = lower(p_area)
+      and jsonb_typeof(hh.data->'scores') = 'array' and jsonb_array_length(hh.data->'scores') > 0
+  ), x as (
+    select k.key as scenario, (h.f->'sc'->>k.key)::int as sf, (h.l->'sc'->>k.key)::int as sl,
+           coalesce((h.f->'cp'->>k.key)::int,0) as cf, coalesce((h.l->'cp'->>k.key)::int,0) as cl,
+           (h.data->'scen'->k.key->>'a')::int as a, h.data->'scen'->k.key->>'b' as b
+    from h, jsonb_each(h.f->'sc') as k
+  )
+  select scenario, count(*)::int,
+         round(100.0*count(*) filter (where sf>=2)/count(*))::int, round(100.0*count(*) filter (where sl>=2)/count(*))::int,
+         round(100.0*count(*) filter (where cf=1)/count(*))::int, round(100.0*count(*) filter (where cl=1)/count(*))::int,
+         count(*) filter (where a>=2 and b='less')::int, count(*) filter (where a>=2 and b is not null)::int
+  from x group by scenario having count(*) >= 5 order by scenario;
+$$;
+revoke all on function public.fettle_confidence(text) from public, anon, authenticated;
+grant execute on function public.fettle_confidence(text) to service_role;
+
 -- Next: run communities.sql for Fettle for Communities (organisations, worker accounts, shared caseloads).

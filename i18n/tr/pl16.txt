@@ -1,0 +1,59 @@
+0|Czy dałbyś radę?
+1|Prąd znika w zimny zimowy wieczór i nie wraca przez {0} dni. Czy Twoje gospodarstwo domowe da radę utrzymać ciepło, jeść i mieć kontakt ze światem?
+2|Raczej tak
+3|Świetnie. Oto, czego to wymaga
+4|Dla {0} osób to {1}{2} posiłków{3}, których nie trzeba gotować. Jeśli kuchenka jest elektryczna, nie zadziała.
+5|Latarka dla każdego. Świece powodują pożary podczas przerw w dostawie prądu.
+6|Sposób na ładowanie telefonów, np. powerbank, żeby nadal mieć wiadomości i móc wezwać pomoc.
+7|Ciepłe ubrania i koce dla każdego. Większość ogrzewania przestaje działać bez prądu, nawet kocioł gazowy, bo jego sterowanie potrzebuje elektryczności.
+8|Winda stanie. Czy wszyscy dadzą radę chodzić po schodach?
+9|Nadal tak uważasz?
+10|Tak, bez zmian
+11|Teraz mniej pewnie
+12|Oto, czego to wymaga
+13|Dziękujemy za szczerość. Oto, czego by to wymagało
+14|Prąd i czysta woda z kranu są odcięte przez {0} dni. Czy dasz radę nakarmić dziecko?
+15|Na {0} dni to {1}{2} porcji gotowego mleka modyfikowanego{3} oraz {4} czystych butelek i smoczków, bo możesz nie mieć jak ich umyć.
+16|Mleko w proszku trzeba przygotować z wody przegotowanej, która ma wciąż co najmniej {0}°C. Bez prądu albo bez czystej wody nie da się przygotować bezpiecznej butelki.
+17|Woda przestaje płynąć na {0} dni. Czy wszyscy w domu będą mogli pić, myć się i korzystać z toalety?
+18|Dla {0} osób na {1} dni potrzeba {2}{3} litrów{4} wody pitnej: około {5} dużych butelek {6}-litrowych.
+19|Tylko {0} na {1} dorosłych w Wielkiej Brytanii ma tyle w domu.
+20|Toalety nie napełnią się wodą. Potrzebne będą mocne worki na śmieci, wiadro i żel do rąk.
+21|Pompy w budynku potrzebują prądu, więc na wysokim piętrze kran może przestać działać, nawet gdy na ulicy nadal jest woda.
+22|W pobliżu jest pożar lub powódź i każą wam opuścić dom w {0} minut. Czy wiesz, dokąd iść i co zabrać?
+23|Dokąd byście poszli? Ustalcie miejsce i osobę spoza okolicy, do której każdy może zadzwonić.
+24|Leki, ładowarki, klucze, dokumenty: czy w pośpiechu o nich pamiętasz? Spakowana torba przy drzwiach pamięta za ciebie.
+25|Gdyby telefon się rozładował, czy znasz czyjś numer na pamięć?
+26|Jeśli ktoś nie da rady chodzić po schodach albo daleko iść, kto pomoże mu wyjść?
+27|Zwierzęta: transporter lub smycz i trochę karmy.
+28|To, co nam powiedziałeś, obok tego, co wynika z Twoich odpowiedzi.
+29|{0}-dniowa przerwa w dostawie prądu
+30|Z Twoich odpowiedzi wynika
+31|{0} z {1} rzeczy
+32|Co masz, a czego brakuje
+33|Masz
+34|Brakuje
+35|Karmienie dziecka przez {0} dni
+36|Jeszcze nie
+37|Gotowe mleko modyfikowane i czyste butelki
+38|{0} dni bez wody z kranu
+39|Opuszczenie domu w {0} minut
+40|Twoja odpowiedź:
+41|Jak oceniasz to teraz?
+42|Dziękujemy. Zapisane.
+43|Już używasz gotowego mleka, więc chodzi o to, żeby mieć zapas na {0} dni.
+44|Dla {0} osoby to {1}{2} posiłków{3}, których nie trzeba gotować. Jeśli kuchenka jest elektryczna, nie zadziała.
+45|Dla {0} osoby na {1} dni potrzeba {2}{3} litrów{4} wody pitnej: około {5} dużych butelek {6}-litrowych.
+46|Prąd znika w zimny zimowy wieczór i nie wraca przez {0} dni. Czy ich gospodarstwo domowe da radę utrzymać ciepło, jeść i mieć kontakt ze światem?
+47|Prąd i czysta woda z kranu są odcięte przez {0} dni. Czy dadzą radę nakarmić dziecko?
+48|Woda przestaje płynąć na {0} dni. Czy wszyscy tam będą mogli pić, myć się i korzystać z toalety?
+49|W pobliżu jest pożar lub powódź i każą im opuścić dom w {0} minut. Czy wiedzą, dokąd iść i co zabrać?
+50|Czy mieszkańcy daliby radę?
+51|„Mówią, że dadzą radę” to odpowiedzi mieszkańców (Tak, bez problemu lub Raczej tak). „Z odpowiedzi wynika gotowość” obliczamy na podstawie ich sprawdzenia. Pierwsze sprawdzenie, potem najnowsze. Ostatnia kolumna liczy osoby, które najpierw mówiły, że dadzą radę, a po zobaczeniu, czego to wymaga, były mniej pewne.
+52|Scenariusz
+53|Mówią, że dadzą radę
+54|Z odpowiedzi wynika gotowość
+55|Mniej pewni po zobaczeniu, czego to wymaga
+56|Prąd i czysta woda z kranu są odcięte przez {0} dni. Czy dasz radę nakarmić dzieci?
+57|Prąd i czysta woda z kranu są odcięte przez {0} dni. Czy dadzą radę nakarmić dzieci?
+58|Co mówią mieszkańcy (ich własna ocena) obok tego, co wynika z ich odpowiedzi. Pierwsze sprawdzenie, potem najnowsze.

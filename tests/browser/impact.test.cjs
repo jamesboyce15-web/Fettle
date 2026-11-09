@@ -17,7 +17,7 @@ const { chromium } = require('playwright');const path=require('path');
  ok(await p.isVisible('text=Your 30-day check is due'),'30-day card shows');
  await p.screenshot({path:out+'/due-card.png'});
  await p.click('text=Start my check'); await p.waitForTimeout(200);
- ok(await p.evaluate(()=>tier==='recheck'&&list().every(q=>q.sec==='What you have'||q.id==='psr')),'recheck asks only what-you-have');
+ ok(await p.evaluate(()=>tier==='recheck'&&list().every(q=>q.type==='scen'||q.sec==='What you have'||q.id==='psr')&&list()[0].type==='scen'),'recheck asks the scenarios, then what-you-have');
  await p.evaluate(()=>{cur.water="all";cur.kit=["torch","radio","cash"];qi=list().length-1;drawQ();});
  ok((await p.textContent('#q-next')).includes('Save my check'),'button says save');
  await p.click('#q-next'); await p.waitForTimeout(400);
