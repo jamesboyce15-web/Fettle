@@ -83,6 +83,16 @@ Workers can only join with an invite code. Nobody can make themselves a member.
 
 Before a pilot starts: a data sharing agreement with the organisation (they are the controller for their residents' plans), and a DPIA covering health data collected on visits.
 
+## Launch area: Greater Manchester and Cheshire
+The postcode a household enters is looked up to find its council. That sets their local contacts:
+- **Greater Manchester (10 boroughs):** Electricity North West and United Utilities, filled in automatically.
+- **Warrington and Halton (Widnes, Runcorn):** SP Energy Networks and United Utilities, filled in automatically.
+- **Cheshire East:** United Utilities. The electricity network is split (mostly SP Energy Networks; Macclesfield and Wilmslow are Electricity North West), so people choose, with a hint and the postcode finder.
+- **Cheshire West and Chester:** people choose both. Around Chester the water is Severn Trent.
+- **Everywhere else:** national routes (105, the network finder, the number on the water bill).
+
+Before launch, check these against each company's own postcode checker, and check the phone numbers: SP Energy Networks register 0330 10 10 167, power cuts 105 or 0800 001 5400; Severn Trent stwater.co.uk/priority, emergencies 0800 783 4444.
+
 ## Getting people to act
 After the check, people see **their next 3 steps**, not a long list: critical risks first, then quick wins, then the cheapest. For each step they choose **when** they'll do it (today, this weekend, next shop, or "I need help"), can add it to their phone calendar, and can say who's doing it. If the date passes, Fettle asks "Did you sort this?" and, if not, what got in the way (cost, time, not knowing what to buy, landlord, can't do it alone, not sure it matters), with help for each. The barriers follow the Cabinet Office's 2026 survey (cost 29%, things going out of date 25%, not knowing what to do 23%, stress 19%, no storage space 18%). People can also pick their own date, or say a step doesn't apply to them (never for critical risks; recorded with each check). The results show which situations the household is ready for (power cut, water going off, leaving in a hurry, someone getting hurt) and what's missing for the rest. When someone ticks a step, Fettle says what changed: a critical risk removed, a situation they're now ready for, things left going down. If cost is the problem, it offers cheaper ways to fix the same thing (never a shop link). If they say it's the landlord's job, it says whether it really is and gives them the exact words to send. Two weeks after a first check with nothing done, it checks in. The full plan is still there, folded underneath.
 

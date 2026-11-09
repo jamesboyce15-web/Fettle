@@ -1,0 +1,15 @@
+0|Alege operatorul rețelei de electricitate
+1|Alt operator
+2|Înscrie-te în registru
+3|Ei se ocupă de liniile electrice din Greater Manchester, Lancashire, Cumbria și o parte din Cheshire. Cere-le să-ți transmită datele și companiilor de gaz și apă. Sau începe de la {0}thepsr.co.uk{1}.
+4|Ei se ocupă de liniile electrice din cea mai mare parte a Cheshire, din Merseyside și din nordul Țării Galilor. Cere-le să-ți transmită datele și companiilor de gaz și apă. Sau începe de la {0}thepsr.co.uk{1}.
+5|Severn Trent (Midlands și zona Chester)
+6|Urgențe
+7|O listă gratuită ținută de companiile de energie și apă. Cei înscriși primesc informații despre penele de curent și ajutor suplimentar. Înscrie-te la furnizorul de energie, la operatorul rețelei de electricitate și la compania de apă.
+8|Electricity North West: {0} {1} {2} sau {3}
+9|{0} sau {1} {2} {3}
+10|SP Energy Networks: {0} sau {1} {2} {3}
+11|Severn Trent: {0} {1} {2} (urgențe)
+12|Cea mai mare parte din Cheshire este deservită de SP Energy Networks. În zona Macclesfield și Wilmslow este Electricity North West. Nu ești sigur? Folosește {0}căutarea după cod poștal{1}.
+13|În zona Chester apa este furnizată de Severn Trent. În cea mai mare parte a restului Cheshire este United Utilities. Scrie pe factura de apă.
+14|Pană de curent

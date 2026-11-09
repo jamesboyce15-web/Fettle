@@ -20,7 +20,7 @@ const { chromium } = require('playwright'); const path = require('path');
   // contacts by area
   ok(await ev({ pc: 'OL11' }, 'h=>network(h).name') === 'Electricity North West', 'North West gets Electricity North West');
   ok(await ev({ pc: 'SW1A' }, 'h=>network(h).name') === 'your local electricity network', 'London gets national network routes');
-  ok(!(await ev({ pc: 'SW1A', health: ['meds'], healthGate: 'yes', over70: 1 }, 'h=>psrPanel(h)')).includes('enwl'), 'PSR panel outside North West has no ENWL link');
+  ok(!(await ev({ pc: 'SW1A', health: ['meds'], healthGate: 'yes', over70: 1 }, 'h=>psrPanel(h)')).includes('enwl.co.uk'), 'PSR panel outside North West has no ENWL link');
   ok(await ev({ pc: 'EH1' }, 'h=>local(h).nation') === 'scotland' && await ev({ pc: 'CH1' }, 'h=>local(h).nation') === null, 'nation from postcode, mixed areas left unknown');
 
   // feeding per child

@@ -1,0 +1,15 @@
+0|Wybierz operatora sieci energetycznej
+1|Inny operator
+2|Zapisz się do rejestru
+3|Odpowiadają za linie energetyczne w Greater Manchester, Lancashire, Cumbrii i części Cheshire. Poproś, żeby przekazali Twoje dane także dostawcom gazu i wody. Możesz też zacząć od {0}thepsr.co.uk{1}.
+4|Odpowiadają za linie energetyczne w większości Cheshire, w Merseyside i w północnej Walii. Poproś, żeby przekazali Twoje dane także dostawcom gazu i wody. Możesz też zacząć od {0}thepsr.co.uk{1}.
+5|Severn Trent (Midlands i okolice Chesteru)
+6|Awarie
+7|Bezpłatna lista prowadzona przez firmy energetyczne i wodociągowe. Osoby z listy dostają informacje o przerwach w dostawie prądu i dodatkową pomoc. Zapisz się u dostawcy energii, operatora sieci energetycznej i w firmie wodociągowej.
+8|Electricity North West: {0} {1} {2} lub {3}
+9|{0} lub {1} {2} {3}
+10|SP Energy Networks: {0} lub {1} {2} {3}
+11|Severn Trent: {0} {1} {2} (awarie)
+12|Większość Cheshire obsługuje SP Energy Networks. W okolicach Macclesfield i Wilmslow jest to Electricity North West. Nie masz pewności? Użyj {0}wyszukiwarki po kodzie pocztowym{1}.
+13|W okolicach Chesteru wodę dostarcza Severn Trent. W większości pozostałej części Cheshire to United Utilities. Znajdziesz to na rachunku za wodę.
+14|Przerwa w dostawie prądu
