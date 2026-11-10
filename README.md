@@ -84,7 +84,7 @@ Workers can only join with an invite code. Nobody can make themselves a member.
 Before a pilot starts: a data sharing agreement with the organisation (they are the controller for their residents' plans), and a DPIA covering health data collected on visits.
 
 ## Could you cope? (scenarios)
-Straight after who lives here, the check asks three everyday scenarios: a 3-day power cut in January, 3 days without tap water, and leaving home in 15 minutes. Homes with a baby on formula also get feeding the baby for 3 days. Each answer (Yes, easily / Just about / Not really / No) is followed by what it actually takes for that household (meals, litres, feeds), then "Still feel the same?".
+Straight after who lives here, the check asks three everyday scenarios: a 3-day power cut on a winter evening, 3 days without tap water, and leaving home in 15 minutes. Homes with a baby on formula also get feeding the baby for 3 days. Each answer (Yes, easily / Just about / Not really / No) is followed by what it actually takes for that household (meals, litres, feeds), then "Still feel the same?".
 - Results show each scenario as "You said" beside "Your answers show", with what's had and missing.
 - When a step completes a scenario, Fettle asks how it feels now. The 30 and 90 day re-checks ask the scenarios again.
 - Councils see confidence (self-reported) beside capability (worked out from the check), first and latest, plus how many felt less sure after seeing what it takes. Keep the wording and scale fixed, or the trend means nothing.
