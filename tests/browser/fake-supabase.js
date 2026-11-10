@@ -3,7 +3,7 @@
 // functions (/api/join-org, /api/org-invite), so the browser tests exercise the same rules.
 (function () {
   const L = k => JSON.parse(localStorage.getItem("fake_" + k) || "null"), S = (k, v) => localStorage.setItem("fake_" + k, JSON.stringify(v));
-  const blank = () => ({ users: [], households: [], purchases: [], organisations: [], org_members: [], org_invites: [], case_events: [] });
+  const blank = () => ({ users: [], households: [], purchases: [], organisations: [], org_members: [], org_invites: [], case_events: [], anon_checks: [], fettle_events: [] });
   const db = () => Object.assign(blank(), L("db") || {}), save = d => S("db", d);
   const uid = () => crypto.randomUUID();
   const me = () => { const s = L("session"); return s && s.user.id; };
@@ -18,11 +18,13 @@
     org_members: (d, r) => r.user_id === me() || member(d, r.org_id),
     case_events: (d, r) => member(d, r.org_id),
     org_invites: () => false,
+    anon_checks: () => false, fettle_events: () => false, // insert-only
   };
   const CAN_ADD = {
     households: (d, r) => r.org_id ? (r.user_id == null && r.created_by === me() && member(d, r.org_id)) : r.user_id === me(),
     purchases: () => false, organisations: () => false, org_members: () => false, org_invites: () => false,
     case_events: (d, r) => member(d, r.org_id) && r.user_id === me(),
+    anon_checks: (d, r) => !!r.area && !r.user_id, fettle_events: (d, r) => ["check_started", "check_finished"].includes(r.kind),
   };
   function builder(table) {
     const st = { filters: [], op: "select", row: null, single: false };

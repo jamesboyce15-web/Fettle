@@ -189,4 +189,68 @@ $$;
 revoke all on function public.fettle_confidence(text) from public, anon, authenticated;
 grant execute on function public.fettle_confidence(text) to service_role;
 
+-- ============ Winter test: anonymous area counts and start/finish counts ============
+-- Both tables are insert-only through the public key: anyone can add a row, nobody can read rows back
+-- (no select policy). Totals come only from the functions below, run as service_role in the SQL editor.
+
+-- Anonymous area count: no name, email, postcode or free text. Just the council area and the answers.
+create table if not exists public.anon_checks (
+  id         uuid primary key default gen_random_uuid(),
+  created_at timestamptz not null default now(),
+  area       text not null check (char_length(area) between 1 and 80),
+  nation     text check (nation in ('england','scotland','wales','ni')),
+  data       jsonb not null check (jsonb_typeof(data) = 'object' and octet_length(data::text) < 4000)
+);
+alter table public.anon_checks enable row level security;
+drop policy if exists "anyone can add to the anonymous count" on public.anon_checks;
+create policy "anyone can add to the anonymous count" on public.anon_checks for insert to anon, authenticated with check (true);
+grant insert on public.anon_checks to anon, authenticated;
+
+-- Start/finish counts: the date, what happened, and (for a finished check) the area. No ids, no cookies.
+create table if not exists public.fettle_events (
+  id   bigint generated always as identity primary key,
+  at   date not null default current_date,
+  kind text not null check (kind in ('check_started','check_finished')),
+  area text check (char_length(area) <= 80)
+);
+alter table public.fettle_events enable row level security;
+drop policy if exists "anyone can add a count" on public.fettle_events;
+create policy "anyone can add a count" on public.fettle_events for insert to anon, authenticated with check (true);
+grant insert on public.fettle_events to anon, authenticated;
+
+-- How many started and finished the check, overall and per area. Usage: select * from fettle_funnel();
+create or replace function public.fettle_funnel()
+returns table (area text, started int, finished int)
+language sql security definer set search_path = public as $$
+  select 'All areas', count(*) filter (where kind='check_started')::int, count(*) filter (where kind='check_finished')::int from public.fettle_events
+  union all
+  select area, 0, count(*)::int from public.fettle_events where kind='check_finished' and area is not null group by area having count(*) >= 5;
+$$;
+revoke all on function public.fettle_funnel() from public, anon, authenticated;
+grant execute on function public.fettle_funnel() to service_role;
+
+-- First-check picture for an area from the anonymous count, leaving out anyone also counted through a saved plan.
+-- Usage: select * from fettle_anon('Rochdale');  Rows with fewer than 5 households are left out.
+create or replace function public.fettle_anon(p_area text)
+returns table (measure text, households int, yes int, pct int)
+language sql security definer set search_path = public as $$
+  with a as (
+    select ac.data from public.anon_checks ac
+    where lower(ac.area) = lower(p_area)
+      and not exists (select 1 from public.households hh
+                      where hh.data->>'anonId' = ac.data->>'aid' and coalesce((hh.data->>'countMe')::boolean, false))
+  ), m as (
+    select 'Has: ' || k.key as measure, (k.value::text = 'true') as y from a, jsonb_each(a.data->'m') k
+    union all select 'At least one critical risk', jsonb_array_length(coalesce(a.data->'c','[]'::jsonb)) > 0 from a
+    union all select 'Said they''d cope: ' || k.key, (k.value::text)::int >= 2 from a, jsonb_each(a.data->'sc') k
+    union all select 'Answers show ready: ' || k.key, (k.value::text)::int = 1 from a, jsonb_each(a.data->'cp') k
+    union all select 'Less sure after seeing what it takes: ' || k.key, k.value::text = '"less"'
+      from a, jsonb_each(a.data->'scb') k
+  )
+  select measure, count(*)::int, count(*) filter (where y)::int, round(100.0 * count(*) filter (where y) / count(*))::int
+  from m group by measure having count(*) >= 5 order by measure;
+$$;
+revoke all on function public.fettle_anon(text) from public, anon, authenticated;
+grant execute on function public.fettle_anon(text) to service_role;
+
 -- Next: run communities.sql for Fettle for Communities (organisations, worker accounts, shared caseloads).

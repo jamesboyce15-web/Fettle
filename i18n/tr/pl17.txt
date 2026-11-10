@@ -1,0 +1,13 @@
+0|Za darmo tej zimy
+1|Pomóż swojej okolicy się przygotować
+2|Dodaj swoje odpowiedzi do anonimowego zestawienia dla swojej okolicy:
+3|Liczymy, ile domów ma każdą z tych rzeczy, żeby pokazać urzędowi gminy, czego potrzeba. Bez imienia, e-maila i kodu pocztowego. Grupy mniejsze niż {0} domów nigdy nie są pokazywane.
+4|Dodaj moje odpowiedzi
+5|Pobierz Książkę Fettle: za darmo
+6|Za darmo, póki testujemy ją tej zimy. Jeszcze kilka pytań i dostaniesz swoją książkę.
+7|Dziękujemy. Zostałeś policzony.
+8|{0}Dziękujemy.{1} Twoje odpowiedzi są w anonimowym zestawieniu dla Twojej okolicy.
+9|Załóż darmowe konto, a Twoja książka otworzy się zaraz potem.
+10|Zakładając konto, akceptujesz nasz {0}regulamin{1} i {2}informację o prywatności{3}.
+11|Prototyp: nic nie zostało wysłane.
+12|Jak to działa

@@ -83,6 +83,13 @@ Workers can only join with an invite code. Nobody can make themselves a member.
 
 Before a pilot starts: a data sharing agreement with the organisation (they are the controller for their residents' plans), and a DPIA covering health data collected on visits.
 
+## Winter test mode (now)
+The first goal is evidence for a council pilot, not book sales. So for the winter test:
+- **Free book:** `freeBook: true` in `public/config.js` makes the digital book free with a free account. Stripe isn't needed: skip setup steps 2, 4 and 6 until you want to charge. The free account is what makes the 30-day re-check and its reminder possible.
+- **Anonymous area count:** on the results page, people without an account can "Add my answers" to their area's anonymous count. Stored: the council area, the 14 measures, open critical risks, the scenario answers and a few yes/no household flags. Never a name, email, postcode or free text. The table is insert-only from the website; nobody can read rows back. `select * from fettle_anon('Rochdale');` gives the area's first-check picture, leaving out anyone also counted through a saved plan, and hides anything under 5 households.
+- **Start and finish counts:** the site records that a check was started or finished (with the area for finished ones). No ids, no cookies. `select * from fettle_funnel();` shows how many started and finished.
+- **Focus on one council** (Rochdale first): reports hide anything under 5 households, so concentrated numbers matter more than total numbers.
+
 ## Could you cope? (scenarios)
 Straight after who lives here, the check asks three everyday scenarios: a 3-day power cut on a winter evening, 3 days without tap water, and leaving home in 15 minutes. Homes with a baby on formula also get feeding the baby for 3 days. Each answer (Yes, easily / Just about / Not really / No) is followed by what it actually takes for that household (meals, litres, feeds), then "Still feel the same?".
 - Results show each scenario as "You said" beside "Your answers show", with what's had and missing.

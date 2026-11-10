@@ -1,0 +1,13 @@
+0|Gratuit în această iarnă
+1|Ajută-ți zona să se pregătească
+2|Adaugă răspunsurile tale la numărătoarea anonimă pentru zona ta:
+3|Numărăm câte locuințe au fiecare lucru, ca să arătăm primăriei de ce este nevoie. Fără nume, e-mail sau cod poștal. Grupurile mai mici de {0} locuințe nu sunt afișate niciodată.
+4|Adaugă răspunsurile mele
+5|Ia Cartea Fettle: gratuit
+6|Gratuit cât timp o testăm în această iarnă. Încă câteva întrebări, apoi cartea ta.
+7|Mulțumim. Ai fost numărat.
+8|{0}Mulțumim.{1} Răspunsurile tale sunt în numărătoarea anonimă pentru zona ta.
+9|Creează un cont gratuit și cartea ta se deschide imediat după.
+10|Creând un cont, ești de acord cu {0}termenii{1} și {2}nota de confidențialitate{3}.
+11|Prototip: nu s-a trimis nimic.
+12|Cum funcționează

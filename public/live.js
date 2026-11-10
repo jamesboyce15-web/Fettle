@@ -6,7 +6,7 @@
 (function () {
   if (!window.FETTLE_CONFIG || !window.FETTLE_CONFIG.supabaseUrl) return; // prototype mode
   const CFG = window.FETTLE_CONFIG;
-  let sb = null, saved = new Map(), saving = false, events = [];
+  let sb = null, saved = new Map(), saving = false, events = [], wantBook = null;
 
   const strip = h => { const o = Object.assign({}, h); delete o._id; delete o.paid; return o; };
   const errBox = t => { const e = document.getElementById("a-err"); if (e) e.textContent = t; return false; };
@@ -30,6 +30,7 @@
     }
     const join = new URLSearchParams(location.search).get("join"); // invite link: /?join=ABCD-2345
     if (join) { history.replaceState(null, "", location.pathname); if (!(user && user.pro)) { proAuth(); const c = document.getElementById("j-code"); if (c && join !== "1") c.value = join; } }
+    if (FREEBOOK) { const p = document.getElementById("book-price"); if (p) p.textContent = "Free this winter"; }
     setInterval(saveAll, 4000);
     addEventListener("pagehide", saveAll);
   }
@@ -75,7 +76,7 @@
     if (error) { console.error(error); say("We couldn't load your plans. Please refresh."); return; }
     const { data: buys } = await sb.from("purchases").select("household_id,product");
     const paid = new Set((buys || []).filter(b => b.product === "book_digital").map(b => b.household_id));
-    const fromDb = (rows || []).map(r => { const h = Object.assign(fresh(r.data.other), r.data); h._id = r.id; h.paid = paid.has(r.id); saved.set(r.id, JSON.stringify(strip(h))); return h; });
+    const fromDb = (rows || []).map(r => { const h = Object.assign(fresh(r.data.other), r.data); h._id = r.id; h.paid = paid.has(r.id) || FREEBOOK; saved.set(r.id, JSON.stringify(strip(h))); return h; });
     const pending = H.filter(h => !h._id); // a check finished before signing in
     H = fromDb.concat(pending);
     user = { id: u.id, email: u.email, name: meta.first_name || u.email.split("@")[0], households: H, remind: !!meta.remind_emails };
@@ -144,6 +145,7 @@
         if (error) return errBox("That email and password don't match an account.");
         await loadUser(data.user);
       }
+      if (wantBook && H.includes(wantBook)) { const h = wantBook; wantBook = null; view = H.indexOf(h); h.paid = true; openBook(); return false; }
       view = 0; homeView(); return false;
     } finally { if (btn) btn.disabled = false; }
   };
@@ -277,6 +279,23 @@
     const r = await fetch("/api/delete-account", { method: "POST", headers: { Authorization: "Bearer " + data.session.access_token } });
     if (!r.ok) return errBox("Sorry, that didn't work. Email us and we'll delete it for you.");
     await sb.auth.signOut(); saved.clear(); baseSignOut(); say("Your account and plans have been deleted.");
+  };
+
+  // ---------- winter test: free book, anonymous area count, start/finish counts ----------
+  // The free book still needs a free account: that's what makes the 30-day re-check and reminder possible.
+  window.liveFreeBook = function (h) {
+    if (!user) { wantBook = h; authView("signup", true); say("Create a free account and your book opens straight after."); return; }
+    h.paid = true; view = H.indexOf(h); openBook();
+  };
+  // Insert-only tables: the public key can add rows but never read them back (see schema.sql).
+  window.liveAnon = async function (h, data) {
+    const { error } = await sb.from("anon_checks").insert({ area: String(h.area).slice(0, 80), nation: h.nation || null, data });
+    if (error) console.error(error);
+    return !error;
+  };
+  window.countEvent = function (kind, area) {
+    if (!sb || (user && (user.pro || user.sample))) return;
+    sb.from("fettle_events").insert({ kind, area: area ? String(area).slice(0, 80) : null }).then(({ error }) => { if (error) console.error(error); });
   };
 
   // ---------- payment ----------
