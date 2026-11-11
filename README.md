@@ -1,6 +1,6 @@
 # Fettle
 
-Fettle helps households find the gaps that could leave them vulnerable in an emergency, fix them, and measure what changed. A free household check, a £5 digital book, and (later) a printed book.
+Fettle helps households find the gaps that could leave them vulnerable in an emergency, fix them, and measure what changed. A free household check, a free digital book, and (later) a paid printed book.
 
 - `public/` is the website. `index.html` is generated, so don't edit it by hand.
 - `src/fettle.html` is the app source.
@@ -175,3 +175,7 @@ Fettle must work for people who can't spend anything. What's in place:
 - **Reports.** "Who it reached" and `fettle_groups()` now split out temporary or supported accommodation, prepayment meters and households who can't spend anything. The anonymous count carries the same three flags. Groups under 5 stay hidden.
 
 **Before launch:** the five guides and the three new steps need review by a welfare rights adviser (Citizens Advice or the council's welfare rights team). Scheme names, amounts and dates were checked on 11 November 2026 and will change. The Awaab's Law phase 2 date (30 November 2026) comes from one law-firm article and should be confirmed on GOV.UK. Translations of the new strings are not professionally checked.
+
+## Landing page (November 2026)
+
+Rewritten to convert: one question as the headline, one button, and a link for councils in the hero. About half the old length. The digital book is free everywhere (`freeBook` defaults to on; set `freeBook: false` in `config.js` to bring back the £5 Stripe checkout). Only the printed book is paid, and it is marked "coming soon" until Stripe and printing are set up. No screen says "prototype". The file opened without `config.js` is a preview copy: it says so only where nothing is really saved or sent.

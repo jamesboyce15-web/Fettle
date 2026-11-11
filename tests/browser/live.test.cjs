@@ -8,7 +8,7 @@ const srv = http.createServer((req, res) => { let f = path.join(PUB, decodeURICo
   const errs = []; p.on('pageerror', e => errs.push(e.message)); p.on('console', m => { if (m.type() === 'error') errs.push(m.text()); });
   await p.route('**/cdn.jsdelivr.net/npm/@supabase/**', r => r.fulfill({ contentType: 'text/javascript', body: fs.readFileSync(path.join(__dirname, 'fake-supabase.js'), 'utf8') }));
   await p.route('**fonts.googleapis.com**', r => r.fulfill({ contentType: 'text/css', body: '' }));
-  await p.route('**/config.js', r => r.fulfill({ contentType: 'text/javascript', body: 'window.FETTLE_CONFIG={supabaseUrl:"https://fake.supabase.co",supabaseAnonKey:"anon"};' }));
+  await p.route('**/config.js', r => r.fulfill({ contentType: 'text/javascript', body: 'window.FETTLE_CONFIG={supabaseUrl:"https://fake.supabase.co",supabaseAnonKey:"anon",freeBook:false};' }));
   let checkoutBody = null;
   await p.route('**/api/checkout', async r => { checkoutBody = JSON.parse(r.request().postData()); const ok = r.request().headers()['authorization']?.startsWith('Bearer tok_'); r.fulfill({ status: ok ? 200 : 401, contentType: 'application/json', body: JSON.stringify({ url: `http://localhost:8765/?checkout=success&hh=${checkoutBody.householdId}&fake_pay=1` }) }); });
   await p.route('**/api/delete-account', r => r.fulfill({ status: 200, contentType: 'application/json', body: '{"deleted":true}' }));
@@ -17,7 +17,7 @@ const srv = http.createServer((req, res) => { let f = path.join(PUB, decodeURICo
   await p.goto('http://localhost:8765/'); await p.waitForTimeout(500);
   ok(await p.evaluate(() => document.body.classList.contains('live')), 'live mode on');
   ok(!(await p.isVisible('text=Test prices for the prototype')), 'prototype pricing note hidden');
-  ok(await p.isVisible('text=Secure payment by Stripe. The printed book'), 'live pricing note shown');
+  ok(!(await p.isVisible('text=Prototype')), 'no prototype wording');
   // finish a check, then sign up
   await p.evaluate(() => { cur = fresh(false); Object.assign(cur, { home: "house", outdoor: "garden", tenure: "own", adults: 2, heat: "gas", hob: "gas", cold: "slow", healthGate: "yes", health: ["meds"], water: "half", food: "some", kit: ["torch"], fa: "no", budget: 5 }); tier = "core"; qi = list().length - 1; go("q"); drawQ(); next(); });
   ok(await p.isVisible('#res') && !(await p.isVisible('#a-name')), 'plan shown straight after check, no sign-up wall');

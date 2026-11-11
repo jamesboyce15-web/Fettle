@@ -1,0 +1,21 @@
+0|Czy Twój dom poradziłby sobie przez {0} dni bez prądu lub wody?
+1|Odpowiedz na kilka prostych pytań. Otrzymaj bezpłatny plan dla swojego domu: czego potrzebujesz, ile tego i co zrobić najpierw.
+2|Pracujesz w urzędzie (council) lub u dostawcy mieszkań? {0}Zobacz Fettle for Communities{1}
+3|Plan dla Twojego domu, a nie ogólna lista.
+4|Twoje {0} następne kroki, zaczynając od bezpłatnych.
+5|Odbierz Książkę Fettle, bezpłatnie
+6|Twój pełny plan jako książka do wydrukowania lub zapisania.
+7|Większość z nas jeszcze nie jest gotowa. Rządowe badanie z {0} roku, obejmujące ponad {1} osób, wykazało:
+8|Gdy nie ma prądu, aplikacja w telefonie na nic się nie zda. Książka Fettle to Twój plan, napisany dla Twojego domu.
+9|Bezpłatna do pobrania i wydrukowania.
+10|Drukowany egzemplarz wysyłany pocztą kosztuje £{0}, już wkrótce.
+11|Twoi pracownicy terenowi robią sprawdzenie z mieszkańcem w {0} minut. Mieszkaniec dostaje plan i drukowaną książkę. Ty dostajesz dowody na to, co się zmieniło.
+12|Czy to naprawdę jest bezpłatne?
+13|Tak. Sprawdzenie, Twój plan i książka cyfrowa są bezpłatne. Płatny jest tylko drukowany egzemplarz książki.
+14|Szukasz czegoś konkretnego? {0}Przeczytaj bezpłatne poradniki{1}.
+15|W tej wersji podglądowej konta działają tylko do zamknięcia strony.
+16|W tej wersji podglądowej nic nie jest pobierane ani wysyłane.
+17|W tej wersji podglądowej nic nie zostało wysłane.
+18|Zapisano. Możesz wrócić do tego miejsca w dowolnej chwili dzisiaj.
+19|Dziękujemy. Napisz, czego brakowało, na hello@[domain].
+20|Wyślij im bezpłatne sprawdzenie i książkę cyfrową

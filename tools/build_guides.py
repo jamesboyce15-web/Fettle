@@ -116,7 +116,7 @@ def page(title, desc, body, current, canon):
 
 CTA = """<div class="cta">
   <h2>Get a plan for your home, free</h2>
-  <p>Answer a few plain questions about your home and who lives there. We'll tell you exactly what you need, how much of it, and what to do first. About 3 minutes.</p>
+  <p>Answer a few plain questions about your home and who lives there. We'll tell you exactly what you need, how much of it, and what to do first. Free. About 4 minutes.</p>
   <a class="btn" href="../#check">Check my household</a>
 </div>"""
 

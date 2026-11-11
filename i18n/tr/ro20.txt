@@ -1,0 +1,21 @@
+0|S-ar descurca locuința ta {0} zile fără curent sau apă?
+1|Răspunde la câteva întrebări simple. Primești un plan gratuit pentru locuința ta: ce îți trebuie, cât și ce să faci mai întâi.
+2|Lucrezi la un consiliu local (council) sau la un furnizor de locuințe? {0}Vezi Fettle for Communities{1}
+3|Un plan pentru locuința ta, nu o listă generală.
+4|Următorii tăi {0} pași, începând cu cei gratuiți.
+5|Primește Cartea Fettle, gratuit
+6|Planul tău complet, ca o carte de tipărit sau de salvat.
+7|Cei mai mulți dintre noi nu suntem încă pregătiți. Sondajul guvernului din {0}, cu peste {1} de persoane, a arătat:
+8|Când nu e curent, o aplicație pe telefon nu ajută. Cartea Fettle este planul tău, scris pentru locuința ta.
+9|Gratuită de descărcat și tipărit.
+10|Un exemplar tipărit, trimis prin poștă, costă £{0}, în curând.
+11|Personalul tău de teren face verificarea cu un locatar în {0} minute. Locatarul primește un plan și o carte tipărită. Tu primești dovezi despre ce s-a schimbat.
+12|Chiar este gratuit?
+13|Da. Verificarea, planul tău și cartea digitală sunt gratuite. Doar exemplarul tipărit al cărții costă bani.
+14|Cauți ceva anume? {0}Citește ghidurile gratuite{1}.
+15|În această versiune de previzualizare, conturile durează doar până închizi pagina.
+16|În această versiune de previzualizare, nu se taxează și nu se trimite nimic.
+17|În această versiune de previzualizare, nu s-a trimis nimic.
+18|Salvat. Poți continua de unde ai rămas oricând astăzi.
+19|Mulțumim. Spune-ne ce a lipsit la hello@[domain].
+20|Trimite-le verificarea gratuită și cartea digitală

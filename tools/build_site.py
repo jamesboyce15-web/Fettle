@@ -9,7 +9,7 @@ import os
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 src = open(os.path.join(ROOT, "src", "fettle.html"), encoding="utf8").read()
 
-src = src.replace("<title>Fettle Prototype</title>", "<title>Fettle</title>", 1)
+src = src  # title is set in the source
 
 # config.js must load before the main script so LIVE is set on start-up.
 i = src.index("\n<script>\n")

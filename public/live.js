@@ -30,7 +30,7 @@
     }
     const join = new URLSearchParams(location.search).get("join"); // invite link: /?join=ABCD-2345
     if (join) { history.replaceState(null, "", location.pathname); if (!(user && user.pro)) { proAuth(); const c = document.getElementById("j-code"); if (c && join !== "1") c.value = join; } }
-    if (FREEBOOK) { const p = document.getElementById("book-price"); if (p) p.textContent = "Free this winter"; }
+    
     setInterval(saveAll, 4000);
     addEventListener("pagehide", saveAll);
   }
