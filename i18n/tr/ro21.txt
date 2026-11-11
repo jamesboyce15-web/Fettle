@@ -1,0 +1,142 @@
+0|Cum se face
+1|Alege mai jos furnizorul tău de energie și urmează linkul.
+2|Spune-le cine din casă are nevoie de ajutor suplimentar.
+3|Roagă-i să transmită informația operatorului de rețea electrică și companiei de apă.
+4|Parcurge azi ambele căi de ieșire.
+5|Întreabă personalul pe cine să suni noaptea și salvează numărul.
+6|Pregătește o geantă mică și ține-o lângă pat.
+7|Găsește acum butonul de credit de urgență, înainte să ai nevoie de el.
+8|Salvează în telefon numărul furnizorului tău.
+9|Verifică avertizările meteo
+10|Sună furnizorul alarmei. Numărul este pe aparat sau în documente.
+11|Întreabă: funcționează la o pană de curent și cât timp?
+12|Ține un telefon mobil încărcat lângă persoana care folosește alarma.
+13|Trimite acest mesaj proprietarului sau administratorului clădirii.
+14|Păstrează o copie a răspunsului.
+15|Spune-le și pompierilor dacă suni vreodată la {0}.
+16|Bună ziua. Cineva din locuința mea ar putea avea nevoie de ajutor ca să iasă din clădire într-o urgență. Vă rog să notați acest lucru și să-mi spuneți care este planul pentru a-l ajuta să iasă. Mulțumesc.
+17|Trimite mesajul
+18|Găsește numărul furnizorului. De obicei este pe o etichetă de pe echipament.
+19|Sună și întreabă: cât ține bateria de rezervă și ce fac când se termină?
+20|Notează răspunsul și ține-l lângă echipament.
+21|Cere farmacistului sau medicului de familie (GP) o rezervă de o săptămână din medicamentele obișnuite.
+22|Notează fiecare medicament și cum se păstrează.
+23|Trimite acest mesaj proprietarului.
+24|Păstrează o copie.
+25|Niciun răspuns în {0} săptămâni? Apasă „Am nevoie de ajutor” mai jos.
+26|Bună ziua. Vă rog să verificați dacă există un detector de fum funcțional la fiecare etaj și un detector de monoxid de carbon în camera cu centrala. Vă rog să-mi spuneți când le puteți monta sau repara. Mulțumesc.
+27|Adaugă sticlele la următoarele cumpărături. Marca proprie a supermarketului este bună.
+28|Nu le poți cumpăra încă? Spală {0} sau {1} sticle goale de băuturi și păstrează-le, gata de umplut de la robinet.
+29|Păstrează-le într-un loc răcoros și întunecat, de exemplu sub pat.
+30|Tipărește lista mea de cumpărături
+31|Cumpără cutii sau sticle de formulă gata preparată, cea pe care o bea deja bebelușul.
+32|Verifică data de expirare.
+33|Ține-le împreună cu biberoane și tetine curate.
+34|Numără păturile, căciulile și șosetele groase. Fiecare are nevoie de un set.
+35|Completează ce lipsește de la un magazin caritabil sau supermarket.
+36|Ține-le într-un singur loc.
+37|Cumpără un detector marcat EN {0}.
+38|Pune-l în camera cu centrala, șemineul sau aragazul. Urmează instrucțiunile din cutie.
+39|Apasă butonul de test.
+40|Urmărește un videoclip gratuit de prim ajutor de la British Red Cross. Fiecare durează câteva minute.
+41|Sau instalează pe telefon aplicația gratuită de prim ajutor Red Cross.
+42|Urmărește videoclipuri de prim ajutor
+43|Ia aplicația de prim ajutor
+44|Gândește-te la un vecin sau o rudă în care ai încredere.
+45|Trimite-le acest mesaj sau întreabă-i personal.
+46|Schimbați numerele de telefon și scrieți-le pe hârtie.
+47|Bună. Poți fi persoana care verifică dacă sunt bine? Dacă e pană de curent sau vreme rea, poți să bați la ușă sau să suni ca să vezi dacă sunt bine? Voi face și eu la fel pentru tine. Mulțumesc.
+48|Începe verificarea online gratuită a siguranței la incendiu a locuinței.
+49|Spune că cineva din casă este surd sau aude greu.
+50|Cere detectoare care clipesc sau vibrează.
+51|Începe verificarea gratuită a siguranței la incendiu
+52|Găsește site-ul consiliului tău local și caută „crisis support”. Sau sună-i.
+53|Întreabă Citizens Advice pentru ce altceva mai poți face cerere.
+54|Găsește consiliul meu local
+55|Scoate niște bani data viitoare când treci pe lângă un bancomat sau magazin.
+56|Cere bancnote mici și câteva monede.
+57|Pune-i într-un plic, lângă lanternă.
+58|Adaugă un memento în calendar
+59|Notează răspunsul și ține-l lângă ușă.
+60|Bună ziua. Vă rog să-mi spuneți ce face ușa principală când se oprește curentul și cum intru și ies dacă se blochează. Vă rog să-mi dați și un număr disponibil {0} de ore din 24. Mulțumesc.
+61|Alege o cutie sau un sertar.
+62|Pune în el lanterna, radioul și bateriile.
+63|Arată tuturor celor din casă unde este.
+64|Adaugă un pachet în plus de scutece și șervețele la următoarele cumpărături.
+65|Pune-le într-o geantă cu haine de schimb.
+66|Alege mâncare pe care o mănânci deja și care nu trebuie gătită: conserve, biscuiți sărați, batoane de cereale.
+67|Adaugă {0} sau {1} în plus la fiecare cumpărături.
+68|Ține-le împreună în spatele unui dulap.
+69|Vezi idei de mese fără gătit
+70|Adaugă un deschizător manual de conserve la următoarele cumpărături. Costă câteva lire.
+71|Ține-l lângă conserve.
+72|Cumpără o trusă simplă de la un supermarket sau o farmacie.
+73|Adaugă medicamentele pe care le folosește familia ta.
+74|Ține-o unde o poate găsi orice adult.
+75|Cumpără o lanternă simplă și un pachet de baterii de rezervă.
+76|Ține bateriile lângă lanternă, nu în ea.
+77|Pune-o unde o poți găsi pe întuneric.
+78|Cumpără un radio mic cu baterii sau cu manivelă, cu FM.
+79|Găsește BBC Radio {0} pe FM, ca să știi unde este.
+80|Ține-l lângă lanternă.
+81|Pune într-o geantă saci de gunoi rezistenți, un lighean și săpun.
+82|Adaugă gel de mâini și hârtie igienică.
+83|Ține-o lângă apă.
+84|Alege o geantă pe care o ai deja.
+85|Tipărește lista și pune în geantă ce scrie pe ea.
+86|Ține geanta lângă ușă.
+87|Tipărește lista mea de bagaj
+88|Tipărește foaia.
+89|Alege un moment când toată lumea e acasă.
+90|Parcurgeți întrebările împreună și notați răspunsurile.
+91|Tipărește foaia pentru discuția în familie
+92|Tipărește cartonașele.
+93|Completează numele și numărul tău.
+94|Pune unul în cutia poștală a unui vecin sau dă-i-l personal și salută-l.
+95|Deschide camera telefonului.
+96|Filmează încet fiecare cameră și numerele de serie ale lucrurilor scumpe.
+97|Trimite-ți filmarea pe e-mail, ca să fie salvată în afara casei.
+98|Completeaz-o de mână.
+99|Lipește-o pe interiorul ușii unui dulap de bucătărie.
+100|Tipărește foaia mea cu numere
+101|Cumpără o baterie externă.
+102|Încarc-o complet azi.
+103|Încarc-o din nou în fiecare anotimp.
+104|Amintește-mi în fiecare anotimp
+105|Adaugă {0} zile din hrana lor obișnuită la următoarele cumpărături.
+106|Ține-o lângă un bol și o lesă sau o cușcă de transport.
+107|Cere pompierilor o vizită gratuită acasă. Mulți montează detectoare gratuit.
+108|Sau cumpără câte unul pentru fiecare etaj și montează-l pe tavan.
+109|Apasă butonul de test în fiecare lună.
+110|Deschide trusa și verifică datele.
+111|Pune-o înapoi unde o poate găsi orice adult.
+112|Bună ziua. Vă rog să verificați dacă există un detector de fum funcțional la fiecare etaj. Vă rog să-mi spuneți când le puteți monta sau repara. Mulțumesc.
+113|Completeaz-o de mână. Lipește-o pe interiorul ușii unui dulap de bucătărie.
+114|Viață în pericol
+115|Miros de gaz
+116|Ajutor medical, fără urgență
+117|Persoane
+118|Familie
+119|Cineva care locuiește departe
+120|Servicii
+121|Cabinetul GP
+122|Școală sau grădiniță
+123|Proprietar sau administratorul clădirii
+124|Listă de cumpărături
+125|Nu trebuie să cumperi totul odată. Marca proprie a supermarketului este bună.
+126|Lista pentru geanta de urgență
+127|Pregătește-o o singură dată. Ține-o lângă ușă.
+128|Planul casei noastre
+129|{0} de minute la masa din bucătărie. Puneți fiecare întrebare și notați ce ați stabilit.
+130|{0}. Dacă nu putem ajunge acasă, unde ne întâlnim?
+131|{0}. Cine ia copiii și cine este rezerva?
+132|{0}. Unde sunt lanterna, radioul și apa?
+133|{0}. Pe cine verificăm: care vecin sau rudă?
+134|{0}. Cum oprim gazul, apa și curentul?
+135|{0}. Cine este persoana noastră de contact din afara zonei, dacă telefoanele locale sunt ocupate?
+136|{0}. Dacă trebuie să plecăm, ce luăm și unde mergem?
+137|Copiat. Lipește-l într-un SMS sau e-mail.
+138|Ține apăsat pe mesaj ca să-l copiezi.
+139|Permite ferestrele pop-up ca să tipărești.
+140|Foaia pentru discuția în familie
+141|Mesajul va fi trimis în engleză.

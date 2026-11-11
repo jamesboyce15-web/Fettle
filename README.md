@@ -179,3 +179,7 @@ Fettle must work for people who can't spend anything. What's in place:
 ## Landing page (November 2026)
 
 Rewritten to convert: one question as the headline, one button, and a link for councils in the hero. About half the old length. The digital book is free everywhere (`freeBook` defaults to on; set `freeBook: false` in `config.js` to bring back the £5 Stripe checkout). Only the printed book is paid, and it is marked "coming soon" until Stripe and printing are set up. No screen says "prototype". The file opened without `config.js` is a preview copy: it says so only where nothing is really saved or sent.
+
+## How to do each step
+
+Every plan step carries up to three short instructions and one thing to tap (`HOW_STEPS`, `howActs`, `howHTML` in `src/fettle.html`): an official link, a printable sheet (`numbersSheet`, `shoppingList`, `packList`, `talkSheet`, `neighbourCard`), or a message ready to send (`msgText`, `sendMsg`). Messages to landlords and building managers are always sent in English. The instructions are open on the three next steps and folded in the full plan. `tests/browser/howto.test.cjs` checks every step has them. Check the outside links (fire safety check, Red Cross, GOV.UK council finder, Citizens Advice, Met Office) still work before launch.

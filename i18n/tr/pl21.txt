@@ -1,0 +1,142 @@
+0|Jak to zrobić
+1|Wybierz poniżej swojego dostawcę energii i kliknij link.
+2|Powiedz im, kto w domu potrzebuje dodatkowej pomocy.
+3|Poproś, żeby przekazali to operatorowi sieci energetycznej i firmie wodociągowej.
+4|Przejdź dziś obie drogi wyjścia.
+5|Zapytaj personel, do kogo dzwonić w nocy, i zapisz numer.
+6|Spakuj jedną małą torbę i trzymaj ją przy łóżku.
+7|Znajdź przycisk kredytu awaryjnego teraz, zanim będzie potrzebny.
+8|Zapisz numer swojego dostawcy w telefonie.
+9|Sprawdź ostrzeżenia pogodowe
+10|Zadzwoń do dostawcy alarmu. Numer jest na urządzeniu lub w dokumentach.
+11|Zapytaj: czy działa podczas przerwy w dostawie prądu i jak długo?
+12|Trzymaj naładowany telefon komórkowy obok osoby, która korzysta z alarmu.
+13|Wyślij tę wiadomość do wynajmującego lub zarządcy budynku.
+14|Zachowaj kopię odpowiedzi.
+15|Powiedz o tym także straży pożarnej, jeśli kiedykolwiek zadzwonisz pod {0}.
+16|Dzień dobry. Ktoś w moim domu może potrzebować pomocy, żeby wydostać się z budynku w nagłym wypadku. Czy mogą Państwo to odnotować i powiedzieć mi, jaki jest plan pomocy tej osobie? Dziękuję.
+17|Wyślij wiadomość
+18|Znajdź numer dostawcy. Zwykle jest na naklejce na urządzeniu.
+19|Zadzwoń i zapytaj: jak długo działa zasilanie awaryjne i co mam zrobić, gdy się skończy?
+20|Zapisz odpowiedź i trzymaj ją przy urządzeniu.
+21|Poproś farmaceutę lub lekarza rodzinnego (GP) o zapas stałych leków na tydzień.
+22|Zapisz każdy lek i sposób jego przechowywania.
+23|Wyślij tę wiadomość do wynajmującego.
+24|Zachowaj kopię.
+25|Brak odpowiedzi po {0} tygodniach? Kliknij poniżej „Potrzebuję pomocy”.
+26|Dzień dobry. Czy mogą Państwo sprawdzić, czy na każdym piętrze jest działający czujnik dymu, a w pomieszczeniu z kotłem czujnik tlenku węgla? Proszę o informację, kiedy mogą Państwo je zamontować lub naprawić. Dziękuję.
+27|Dodaj butelki do następnych zakupów. Marka własna supermarketu wystarczy.
+28|Nie możesz ich jeszcze kupić? Umyj {0} lub {1} puste butelki po napojach i trzymaj je, gotowe do napełnienia z kranu.
+29|Przechowuj je w chłodnym i ciemnym miejscu, na przykład pod łóżkiem.
+30|Wydrukuj moją listę zakupów
+31|Kup gotowe mleko w kartonikach lub butelkach, takie samo, jakie dziecko już pije.
+32|Sprawdź termin przydatności.
+33|Trzymaj je razem z czystymi butelkami i smoczkami.
+34|Policz koce, czapki i grube skarpety. Każdy potrzebuje jednego kompletu.
+35|Uzupełnij braki w sklepie charytatywnym lub supermarkecie.
+36|Trzymaj je w jednym miejscu.
+37|Kup czujnik z oznaczeniem EN {0}.
+38|Umieść go w pomieszczeniu z kotłem, kominkiem lub kuchenką gazową. Postępuj zgodnie z instrukcją w pudełku.
+39|Naciśnij przycisk testu.
+40|Obejrzyj bezpłatny film o pierwszej pomocy od British Red Cross. Każdy trwa kilka minut.
+41|Albo zainstaluj w telefonie bezpłatną aplikację pierwszej pomocy Red Cross.
+42|Obejrzyj filmy o pierwszej pomocy
+43|Pobierz aplikację pierwszej pomocy
+44|Pomyśl o jednym sąsiedzie lub krewnym, któremu ufasz.
+45|Wyślij im tę wiadomość albo zapytaj osobiście.
+46|Wymieńcie się numerami telefonów i zapiszcie je na papierze.
+47|Cześć. Czy możesz być osobą, która sprawdzi, co u mnie? Gdyby nie było prądu albo była zła pogoda, czy możesz zapukać lub zadzwonić i sprawdzić, czy wszystko w porządku? Ja zrobię to samo dla Ciebie. Dziękuję.
+48|Rozpocznij bezpłatne internetowe sprawdzenie bezpieczeństwa pożarowego domu.
+49|Powiedz, że ktoś w domu jest niesłyszący lub słabosłyszący.
+50|Poproś o czujniki, które migają lub wibrują.
+51|Rozpocznij bezpłatne sprawdzenie bezpieczeństwa pożarowego
+52|Znajdź stronę internetową swojego council i wyszukaj na niej „crisis support”. Albo zadzwoń.
+53|Zapytaj Citizens Advice, o co jeszcze możesz się ubiegać.
+54|Znajdź mój council
+55|Wypłać trochę gotówki, gdy następnym razem będziesz przy bankomacie lub w sklepie.
+56|Poproś o drobne banknoty i trochę monet.
+57|Włóż ją do koperty i trzymaj razem z latarką.
+58|Dodaj przypomnienie do kalendarza
+59|Zapisz odpowiedź i trzymaj ją przy drzwiach.
+60|Dzień dobry. Czy mogą mi Państwo powiedzieć, co dzieje się z głównymi drzwiami, gdy nie ma prądu, i jak wejść i wyjść, jeśli się zablokują? Proszę też o numer czynny {0} godziny na dobę. Dziękuję.
+61|Wybierz jedno pudełko lub szufladę.
+62|Włóż do niego latarkę, radio i baterie.
+63|Pokaż wszystkim w domu, gdzie to jest.
+64|Dodaj jedną dodatkową paczkę pieluch i chusteczek do następnych zakupów.
+65|Włóż je do torby razem z ubraniem na zmianę.
+66|Wybierz jedzenie, które już jesz i którego nie trzeba gotować: puszki, krakersy, batony zbożowe.
+67|Dodawaj {0} lub {1} dodatkowe do każdych zakupów.
+68|Trzymaj je razem z tyłu szafki.
+69|Zobacz pomysły na posiłki bez gotowania
+70|Dodaj ręczny otwieracz do puszek do następnych zakupów. Kosztuje kilka funtów.
+71|Trzymaj go razem z puszkami.
+72|Kup podstawową apteczkę w supermarkecie lub aptece.
+73|Dodaj leki, których używają domownicy.
+74|Trzymaj ją tam, gdzie znajdzie ją każdy dorosły.
+75|Kup zwykłą latarkę i paczkę zapasowych baterii.
+76|Trzymaj baterie obok latarki, a nie w środku.
+77|Połóż ją tam, gdzie znajdziesz ją po ciemku.
+78|Kup małe radio na baterie lub na korbkę, z FM.
+79|Znajdź BBC Radio {0} na FM, żeby wiedzieć, gdzie jest.
+80|Trzymaj je razem z latarką.
+81|Włóż do jednej torby mocne worki na śmieci, miskę i mydło.
+82|Dodaj żel do rąk i papier toaletowy.
+83|Trzymaj to razem z wodą.
+84|Wybierz torbę, którą już masz.
+85|Wydrukuj listę i spakuj to, co na niej jest.
+86|Trzymaj torbę przy drzwiach.
+87|Wydrukuj moją listę do spakowania
+88|Wydrukuj kartkę.
+89|Wybierz czas, kiedy wszyscy są w domu.
+90|Przejdźcie razem przez pytania i zapiszcie odpowiedzi.
+91|Wydrukuj kartkę do rozmowy rodzinnej
+92|Wydrukuj karty.
+93|Wpisz swoje imię i numer.
+94|Wrzuć jedną sąsiadowi do skrzynki albo wręcz ją i przywitaj się.
+95|Włącz aparat w telefonie.
+96|Sfilmuj powoli każdy pokój oraz numery seryjne drogich rzeczy.
+97|Wyślij film e-mailem do siebie, żeby był zapisany poza domem.
+98|Wypełnij ją ręcznie.
+99|Przyklej ją od środka na drzwiach szafki kuchennej.
+100|Wydrukuj moją kartkę z numerami
+101|Kup powerbank.
+102|Naładuj go dziś do pełna.
+103|Ładuj go ponownie w każdej porze roku.
+104|Przypominaj mi w każdej porze roku
+105|Dodaj {0} dni ich zwykłej karmy do następnych zakupów.
+106|Trzymaj ją razem z miską i smyczą lub transporterem.
+107|Poproś straż pożarną o bezpłatną wizytę w domu. Wiele z nich montuje czujniki za darmo.
+108|Albo kup po jednym na każde piętro i zamontuj na suficie.
+109|Naciskaj przycisk testu co miesiąc.
+110|Otwórz apteczkę i sprawdź daty.
+111|Odłóż ją tam, gdzie znajdzie ją każdy dorosły.
+112|Dzień dobry. Czy mogą Państwo sprawdzić, czy na każdym piętrze jest działający czujnik dymu? Proszę o informację, kiedy mogą Państwo je zamontować lub naprawić. Dziękuję.
+113|Wypełnij ją ręcznie. Przyklej ją od środka na drzwiach szafki kuchennej.
+114|Zagrożenie życia
+115|Zapach gazu
+116|Pomoc medyczna, nie nagły wypadek
+117|Ludzie
+118|Rodzina
+119|Ktoś, kto mieszka daleko
+120|Usługi
+121|Przychodnia GP
+122|Szkoła lub przedszkole
+123|Wynajmujący lub zarządca budynku
+124|Lista zakupów
+125|Nie musisz kupować wszystkiego naraz. Marka własna supermarketu wystarczy.
+126|Lista do spakowania torby ewakuacyjnej
+127|Spakuj ją raz. Trzymaj ją przy drzwiach.
+128|Plan naszego domu
+129|{0} minut przy kuchennym stole. Zadajcie każde pytanie i zapiszcie, co ustaliliście.
+130|{0}. Jeśli nie możemy wrócić do domu, gdzie się spotykamy?
+131|{0}. Kto odbiera dzieci i kto jest w zastępstwie?
+132|{0}. Gdzie są latarka, radio i woda?
+133|{0}. Do kogo zaglądamy: do którego sąsiada lub krewnego?
+134|{0}. Jak wyłączyć gaz, wodę i prąd?
+135|{0}. Kto jest naszym kontaktem spoza okolicy, jeśli lokalne telefony są zajęte?
+136|{0}. Jeśli musimy wyjść, co zabieramy i dokąd idziemy?
+137|Skopiowano. Wklej to do SMS-a lub e-maila.
+138|Naciśnij i przytrzymaj wiadomość, żeby ją skopiować.
+139|Zezwól na wyskakujące okna, żeby to wydrukować.
+140|Kartka do rozmowy rodzinnej
+141|Wiadomość zostanie wysłana po angielsku.
