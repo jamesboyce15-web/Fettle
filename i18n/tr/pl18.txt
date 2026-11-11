@@ -1,0 +1,18 @@
+0|Do kogo dotarliśmy
+1|Te same wyniki dla rodzajów gospodarstw domowych, którym najtrudniej się przygotować. Gospodarstwo może być w więcej niż jednym wierszu. Forma zamieszkania zastępuje dochód, o który Fettle nie pyta.
+2|Liczba
+3|Wynik przygotowania Fettle, pierwszy → najnowszy
+4|Załatwili ważną lukę w ciągu {0} dni
+5|Najczęstsza przeszkoda
+6|Wszystkie gospodarstwa
+7|({0} z {1})
+8|Najemcy mieszkań socjalnych
+9|Najemcy prywatni
+10|Na razie za mało ponownych sprawdzeń
+11|Na razie za mało
+12|Za mało, by ocenić
+13|Właściciele domów
+14|Mieszkający samotnie
+15|Ktoś powyżej {0} lat
+16|Niepełnosprawność lub choroba przewlekła
+17|Małe dzieci

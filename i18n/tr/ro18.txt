@@ -1,0 +1,18 @@
+0|Pe cine a ajuns
+1|Aceleași rezultate pentru tipurile de gospodării cărora le este cel mai greu să se pregătească. O gospodărie poate apărea pe mai multe rânduri. Tipul locuinței ține locul venitului, despre care Fettle nu întreabă.
+2|Număr
+3|Scorul de pregătire Fettle, primul → cel mai recent
+4|Au rezolvat o lipsă prioritară în {0} zile
+5|Cel mai frecvent obstacol
+6|Toate gospodăriile
+7|({0} din {1})
+8|Chiriași în locuințe sociale
+9|Chiriași în locuințe private
+10|Încă prea puține verificări ulterioare
+11|Încă prea puține
+12|Prea puține ca să spunem
+13|Proprietari de locuințe
+14|Persoane care locuiesc singure
+15|Cineva peste {0} ani
+16|Dizabilitate sau afecțiune de lungă durată
+17|Copii mici

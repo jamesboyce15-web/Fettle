@@ -18,7 +18,7 @@ Do these in order. Everything stays in **test mode** until step 6.
 
 ### 1. Supabase (accounts and database)
 1. Create a project at supabase.com. **Region: West EU (London)**. Save the database password somewhere safe.
-2. SQL Editor → New query → paste `supabase/schema.sql` → Run. Then do the same with `supabase/communities.sql` (organisations and worker accounts).
+2. SQL Editor → New query → paste `supabase/schema.sql` → Run. Then do the same with `supabase/communities.sql` (organisations and worker accounts), then `supabase/reports.sql` (the anonymous count, start/finish counts and area reports). `reports.sql` is safe to run again whenever it's updated.
 3. Authentication → Sign In / Providers → Email: turn **Confirm email off** for launch (people go straight from their check to their plan). Turn it back on later once the confirm flow is built.
 4. Authentication → URL Configuration: set Site URL to your domain (e.g. `https://fettle.example`).
 5. Project settings → API: copy the **Project URL**, the **anon public** key and the **service_role** key. The service_role key is secret: it only ever goes in Cloudflare (step 3), never in the code.
@@ -120,6 +120,8 @@ After the check, people see **their next 3 steps**, not a long list: critical ri
   `select * from fettle_impact('Rochdale');`
   It returns each measure's first-check and latest percentages, and hides any measure with fewer than 5 households.
   `select * from fettle_outcomes('Rochdale');` gives the outcome counts: households assessed, critical risks found, sorted, and verified.
+  `select * from fettle_groups('Rochdale');` splits the results by kind of household: social renters, private renters, homeowners, living alone, someone over 70, disability or long-term condition, young children. Tenure stands in for income. It also gives the headline: households that sorted a priority gap within 30 days.
+  **The whole area in one go:** `select fettle_area_report('Rochdale');` returns everything above as one block of text. Open `tools/area-report.html` in a browser on your computer, paste it in, and choose Make report, then Print or save as PDF. "Show with sample data" shows what it looks like.
   `select * from fettle_confidence('Rochdale');` shows, for each scenario, how many said they'd cope and how many their answers show are ready, at the first check and the latest, and how many felt less sure after seeing what it takes.
   `select * from fettle_barriers('Rochdale');` shows what's getting in the way: for each reason (cost, no time, landlord and so on), how many households gave it, for how many steps, and how many of those steps they then sorted.
 - Critical risks (like powered medical equipment with no backup, or no working smoke alarm) are saved with every check, so reports can say "X found, Y sorted, Z checked on a visit".
