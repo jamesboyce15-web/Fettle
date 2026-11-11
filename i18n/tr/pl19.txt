@@ -1,0 +1,40 @@
+0|Zapytaj personel, co się dzieje w razie pożaru lub przerwy w dostawie prądu
+1|Jedna rozmowa
+2|Znajdź dwie drogi wyjścia i przycisk alarmu pożarowego. Zapytaj, do kogo dzwonić w nocy. Miej gotową jedną małą torbę z lekami, ładowarką, dowodem tożsamości, pismami w sprawie mieszkania i kilkoma numerami telefonów na papierze.
+3|Zaplanuj, co zrobisz, gdy skończą się środki na liczniku
+4|Jeśli teraz jest bardzo ciężko z pieniędzmi, pomóc może council i lokalny bank żywności. {0}Zobacz, jaką pomoc możesz dostać{1}.
+5|Bezpłatnie, {0} minut
+6|Burza może zostawić Cię bez środków na liczniku, a nie tylko bez prądu. Dowiedz się, jak włączyć kredyt awaryjny (zwykle około £{0}). Doładuj licznik, gdy pojawi się ostrzeżenie pogodowe, jeśli możesz. Jeśli nie możesz doładować, zadzwoń do dostawcy i poproś o dodatkowy kredyt wspierający albo poproś council lub bank żywności o voucher na energię.
+7|Prywatni i socjalni wynajmujący muszą zamontować czujnik dymu na każdym piętrze, na którym jest pokój dzienny lub sypialnia. Kuchenek gazowych ten przepis nie obejmuje. Wynajmujący musi naprawić lub wymienić czujniki, gdy zgłosisz usterkę. Poproś na piśmie i zachowaj kopię.
+8|Poproś na piśmie, e-mailem lub SMS-em, i zachowaj kopię. Jeśli nic się nie stanie, powiedz o tym swojemu pracownikowi wsparcia albo zespołowi w council, który Cię tam umieścił.
+9|{0} osoba × {1} litry × {2} dni = {3} litrów. Twoje mieszkanie jest wysoko. Pompy, które tłoczą wodę w górę budynku, potrzebują prądu, więc woda w kranach może przestać płynąć, nawet jeśli na ulicy nadal jest.
+10|Sprawdź, jaką pomoc możesz dostać
+11|Crisis and Resilience Fund w Twoim council może pomóc w kryzysie z żywnością, energią i podstawowymi rzeczami. Wiele straży pożarnych montuje czujniki dymu za darmo. Po długiej przerwie w dostawie prądu może Ci się należeć wypłata. Citizens Advice powie Ci, o co możesz się ubiegać.
+12|Poproś na piśmie, e-mailem lub SMS-em, i zachowaj kopię. Jeśli nic się nie stanie, skorzystaj z procedury skarg u wynajmującego. Jeśli to nie pomoże, Housing Ombudsman działa bezpłatnie.
+13|Zasiłek kryzysowy (crisis grant) ze Scottish Welfare Fund, przyznawany przez council, może pomóc z podstawowymi rzeczami. Wiele straży pożarnych montuje czujniki dymu za darmo. Po długiej przerwie w dostawie prądu może Ci się należeć wypłata. Citizens Advice powie Ci, o co możesz się ubiegać.
+14|Poproś na piśmie, e-mailem lub SMS-em, i zachowaj kopię. Jeśli nic się nie stanie, skorzystaj z procedury skarg u wynajmującego.
+15|Wypłata pomocy doraźnej (emergency assistance payment) z Discretionary Assistance Fund może pomóc z podstawowymi rzeczami. Wiele straży pożarnych montuje czujniki dymu za darmo. Po długiej przerwie w dostawie prądu może Ci się należeć wypłata. Citizens Advice powie Ci, o co możesz się ubiegać.
+16|Wsparcie uznaniowe (discretionary support) z Finance Support Service może pomóc z podstawowymi rzeczami. Wiele straży pożarnych montuje czujniki dymu za darmo. Po długiej przerwie w dostawie prądu może Ci się należeć wypłata. Citizens Advice powie Ci, o co możesz się ubiegać.
+17|Twój council ma pomoc doraźną na żywność, energię i podstawowe rzeczy. Wiele straży pożarnych montuje czujniki dymu za darmo. Po długiej przerwie w dostawie prądu może Ci się należeć wypłata. Citizens Advice powie Ci, o co możesz się ubiegać.
+18|Zakwaterowanie tymczasowe lub wspierane
+19|Hostel, B&amp;B, schronisko lub mieszkanie wspierane
+20|Jak płacisz za gaz i prąd?
+21|Jeśli doładowujesz licznik, burza może zostawić Cię bez środków, a nie tylko bez prądu. Pomożemy Ci się na to przygotować.
+22|Rachunkiem lub poleceniem zapłaty
+23|Doładowuję licznik
+24|Kluczem, kartą lub w aplikacji
+25|Jest wliczone w czynsz
+26|Znajdź dwie drogi wyjścia i przycisk alarmu pożarowego.
+27|Przeczytaj poradnik
+28|Burza może zostawić Cię bez środków na liczniku, a nie tylko bez prądu.
+29|Zrobione: Zapytaj personel, co się dzieje w razie pożaru lub przerwy w dostawie prądu
+30|Zapytaj personel, co się dzieje w razie pożaru lub przerwy w dostawie prądu{0}Najpierw{1}
+31|Zrobione: Zaplanuj, co zrobisz, gdy skończą się środki na liczniku
+32|Zaplanuj, co zrobisz, gdy skończą się środki na liczniku{0}Najpierw{1}
+33|Zrobione: Sprawdź, jaką pomoc możesz dostać
+34|Sprawdź, jaką pomoc możesz dostać{0}Następnie{1}
+35|Koce i ciepłe ubrania{0}Następnie{1}
+36|Z licznikiem przedpłatowym
+37|Nie mogą teraz nic wydać
+38|W Anglii, w blokach mających {0} lub więcej kondygnacji, zarządca budynku musi zaproponować ocenę bezpieczeństwa pożarowego i uzgodnić pisemny plan, jeśli o to poprosisz.
+39|Jak płacą za gaz i prąd?

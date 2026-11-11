@@ -1,0 +1,40 @@
+0|Întreabă personalul ce se întâmplă în caz de incendiu sau pană de curent
+1|O singură discuție
+2|Găsește două căi de ieșire și butonul de alarmă de incendiu. Întreabă pe cine să suni noaptea. Ține pregătită o geantă mică cu medicamentele, încărcătorul, actul de identitate, scrisorile despre locuință și câteva numere de telefon pe hârtie.
+3|Fă un plan pentru când se termină creditul de pe contor
+4|Dacă banii sunt foarte puțini acum, te pot ajuta consiliul local (council) și banca de alimente din zonă. {0}Vezi ce ajutor poți primi{1}.
+5|Gratuit, {0} minute
+6|O furtună te poate lăsa fără credit pe contor, nu doar fără curent. Află cum pornești creditul de urgență (de obicei în jur de £{0}). Încarcă contorul când vine o avertizare meteo, dacă poți. Dacă nu poți încărca, sună furnizorul și cere credit suplimentar de sprijin sau cere consiliului local ori băncii de alimente un voucher pentru energie.
+7|Proprietarii privați și cei de locuințe sociale trebuie să monteze un detector de fum la fiecare etaj unde există o cameră de zi sau un dormitor. Aragazurile pe gaz nu intră sub această regulă. Proprietarii trebuie să repare sau să înlocuiască detectoarele când anunți o defecțiune. Cere în scris și păstrează o copie.
+8|Cere în scris, prin e-mail sau SMS, și păstrează o copie. Dacă nu se întâmplă nimic, spune-i lucrătorului tău de sprijin sau echipei din council care te-a cazat acolo.
+9|{0} persoană × {1} litri × {2} zile = {3} litri. Apartamentul tău este la înălțime. Pompele care urcă apa în clădire au nevoie de curent, așa că robinetele se pot opri chiar dacă pe stradă mai este apă.
+10|Verifică ce ajutor poți primi
+11|Crisis and Resilience Fund al consiliului tău local te poate ajuta cu alimente, energie și lucruri esențiale într-o criză. Multe servicii de pompieri montează gratuit detectoare de fum. După o pană lungă de curent s-ar putea să ți se cuvină o plată. Citizens Advice îți poate spune pentru ce poți face cerere.
+12|Cere în scris, prin e-mail sau SMS, și păstrează o copie. Dacă nu se întâmplă nimic, folosește procedura de reclamații a proprietarului. Dacă nici așa nu se rezolvă, Housing Ombudsman este gratuit.
+13|Un ajutor de criză (crisis grant) din Scottish Welfare Fund, prin consiliul local, te poate ajuta cu lucrurile esențiale. Multe servicii de pompieri montează gratuit detectoare de fum. După o pană lungă de curent s-ar putea să ți se cuvină o plată. Citizens Advice îți poate spune pentru ce poți face cerere.
+14|Cere în scris, prin e-mail sau SMS, și păstrează o copie. Dacă nu se întâmplă nimic, folosește procedura de reclamații a proprietarului.
+15|O plată de asistență de urgență (emergency assistance payment) din Discretionary Assistance Fund te poate ajuta cu lucrurile esențiale. Multe servicii de pompieri montează gratuit detectoare de fum. După o pană lungă de curent s-ar putea să ți se cuvină o plată. Citizens Advice îți poate spune pentru ce poți face cerere.
+16|Sprijinul discreționar (discretionary support) de la Finance Support Service te poate ajuta cu lucrurile esențiale. Multe servicii de pompieri montează gratuit detectoare de fum. După o pană lungă de curent s-ar putea să ți se cuvină o plată. Citizens Advice îți poate spune pentru ce poți face cerere.
+17|Consiliul tău local are ajutor de urgență pentru alimente, energie și lucruri esențiale. Multe servicii de pompieri montează gratuit detectoare de fum. După o pană lungă de curent s-ar putea să ți se cuvină o plată. Citizens Advice îți poate spune pentru ce poți face cerere.
+18|Cazare temporară sau cu sprijin
+19|Hostel, B&amp;B, adăpost sau locuință cu sprijin
+20|Cum plătești gazul și curentul?
+21|Dacă încarci un contor, o furtună te poate lăsa fără credit, nu doar fără curent. Te ajutăm să te pregătești pentru asta.
+22|Cu factură sau debit direct
+23|Încarc un contor
+24|Cu cheie, card sau aplicație
+25|Este inclus în chirie
+26|Găsește două căi de ieșire și butonul de alarmă de incendiu.
+27|Citește ghidul
+28|O furtună te poate lăsa fără credit pe contor, nu doar fără curent.
+29|Gata: Întreabă personalul ce se întâmplă în caz de incendiu sau pană de curent
+30|Întreabă personalul ce se întâmplă în caz de incendiu sau pană de curent{0}Mai întâi{1}
+31|Gata: Fă un plan pentru când se termină creditul de pe contor
+32|Fă un plan pentru când se termină creditul de pe contor{0}Mai întâi{1}
+33|Gata: Verifică ce ajutor poți primi
+34|Verifică ce ajutor poți primi{0}Apoi{1}
+35|Pături și haine groase{0}Apoi{1}
+36|Cu contor cu preplată
+37|Nu pot cheltui nimic acum
+38|În Anglia, în blocurile cu {0} sau mai multe niveluri, administratorul clădirii trebuie să ofere o evaluare a siguranței la incendiu și să stabilească un plan scris, dacă ceri.
+39|Cum plătesc gazul și curentul?

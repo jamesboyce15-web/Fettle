@@ -2,7 +2,7 @@
 # Each guide is plain HTML for the article body. Keep sentences short and plain.
 # Every fact should come from a source in "sources". Update CHECKED when you re-check them.
 
-CHECKED = "7 November 2026"
+CHECKED = "11 November 2026"
 
 S = {  # shared sources
     "fsa_power": ("Food Standards Agency: food safety in a power cut", "https://www.gov.uk/government/publications/food-safety-in-a-power-cut-advice-for-consumers/food-safety-in-a-power-cut-advice-for-consumers"),
@@ -26,6 +26,15 @@ S = {  # shared sources
     "bbc_black": ("BBC News: Black Sky events, Lancaster and the BBC's emergency radio plan (November 2026)", "https://www.bbc.co.uk/news/articles/ck5ynnj05z8no"),
     "lancs": ("Lancaster University: learning from Lancaster's power cuts (May 2016)", "https://www.lancaster.ac.uk/sci-tech/about-us/news/archive/2016/may/learning-from-lancasters-power-cuts/"),
     "rae": ("Royal Academy of Engineering: Living without electricity, one city's experience of coping with loss of power (Kemp, 2016)", "https://eprints.lancs.ac.uk/id/eprint/83870"),
+    "ofgem_cut": ("Ofgem: check if you can get a payment for a power cut", "https://www.ofgem.gov.uk/information-consumers/check-if-you-can-get-payment-power-cut"),
+    "ca_prepay": ("Citizens Advice: you can't afford to top up your prepayment meter", "https://www.citizensadvice.org.uk/consumer/energy/energy-supply/get-help-paying-your-bills/you-cant-afford-to-top-up-your-prepayment-meter/"),
+    "crf": ("Sustain: DWP launches the Crisis and Resilience Fund (April 2026)", "https://www.sustainweb.org/news/apr26-dwp-launches-crisis-and-resilience-fund/"),
+    "nations": ("Money Wellness: cost-of-living help in Wales, Scotland and Northern Ireland", "https://moneywellness.com/money-booster/cost-of-living-help/government-cost-of-living-help-in-wales-scotland-and-northern-ireland"),
+    "awaab2": ("Clyde & Co: Awaab's Law Phase 2 (August 2026)", "https://www.clydeco.com/en/insights/2026/08/awaab-s-law-phase-2-the-next-compliance-challenge"),
+    "awaab": ("Shelter England: how Awaab's Law changes the rules on hazards in social housing", "https://england.shelter.org.uk/professional_resources/news_and_updates/how_awaabs_law_changes_the_rules_on_hazards_in_social_housing"),
+    "rpeeps": ("GOV.UK: Residential PEEPs factsheet", "https://www.gov.uk/government/publications/residential-personal-emergency-evacuation-plans-residential-peeps/residential-peeps-factsheet"),
+    "swep": ("West Northamptonshire Council: help for people sleeping rough in very cold or extreme weather", "https://www.westnorthants.gov.uk/housing-advice-and-support/help-people-sleeping-rough-very-cold-or-extreme-weather"),
+    "survey_sd": ("Cabinet Office: 2025 preparedness survey, supplementary sociodemographic analyses", "https://www.gov.uk/government/statistics/uk-public-survey-of-risk-perception-resilience-and-preparedness-2025/uk-public-survey-of-risk-perception-resilience-and-preparedness-2025-supplementary-sociodemographic-analyses"),
     "survey": ("Cabinet Office: UK public survey of risk perception, resilience and preparedness 2026", "https://www.gov.uk/government/statistics/uk-public-survey-of-risk-perception-resilience-and-preparedness-2026/uk-public-survey-of-risk-perception-resilience-and-preparedness-2026-headline-findings-html"),
 }
 
@@ -36,6 +45,7 @@ CATS = [
     ("food", "Food"),
     ("home", "Your home"),
     ("people", "People you look after"),
+    ("help", "Money and support"),
 ]
 
 NUMBERS = """<div class="numbers"><h2>Numbers to keep on paper</h2><dl>
@@ -911,5 +921,210 @@ body="""
 <p>Re-check every couple of years, or when things change, like a new baby or new equipment.</p>
 """,
 sources=["ofgem_psr", "psr", "enwl_psr", "uu_psr"],
+),
+# ---------------------------------------------------------------- TIGHT BUDGET
+dict(
+slug="tight-budget", cat="help", mins=5, flag="advice",
+title="Getting ready when money is tight",
+summary="You don't need to spend much, or anything, to be safer. What to do for free, what to do for a pound or two, and where to get help.",
+body="""
+<p class="lede">Most advice about emergencies assumes you can go out and buy things. Lots of people can't. Being ready is mostly about knowing what to do, not what you own. Start with the free things. They matter most.</p>
+
+<h2>Free, and worth the most</h2>
+<ol class="todo">
+<li><b>Join the <a href="priority-services-register.html">Priority Services Register</a></b> if you're older, disabled, have a health condition or have young children. It's free, and you get extra help in a power or water cut.</li>
+<li><b>Write five phone numbers on paper.</b> If your phone dies or you have no credit, you can still borrow a phone.</li>
+<li><b>Agree where you'd go</b> if you had to leave home, and who you'd tell.</li>
+<li><b>Test your smoke alarm.</b> No alarm, or it doesn't work? Many fire and rescue services fit them free on a home visit. If you rent, your landlord must fit one.</li>
+<li><b>Wash 2 or 3 empty drinks bottles and keep them.</b> If you're warned the water may go off, fill them from the tap straight away.</li>
+<li><b>Know your neighbours' names.</b> In every real emergency, neighbours help first.</li>
+</ol>
+
+<h2>For a pound or two at a time</h2>
+<ul>
+<li><b>Food:</b> add one extra tin of something you already eat to each shop. Beans, soup, fish, fruit. Choose ring-pull tins if you don't have a tin opener.</li>
+<li><b>Light:</b> a basic torch from a supermarket or pound shop. Don't use candles: they cause fires in power cuts.</li>
+<li><b>Warmth:</b> you already have it. Duvets, coats, hats and thick socks. Charity shops sell blankets cheaply.</li>
+</ul>
+<p>You don't have to do it all at once. One small thing a week adds up.</p>
+
+<h2>If you use a food bank</h2>
+<ul>
+<li>Ask if they have food that needs no cooking, and say if you have no tin opener or no way to heat food.</li>
+<li>If your parcel has a few tins you can eat cold, try to keep one or two back when you can. Don't go hungry to do it.</li>
+<li>Ask what else they can help with. Many give fuel vouchers for prepayment meters, toiletries and baby items.</li>
+</ul>
+
+<h2>You may be owed help</h2>
+<p>Read <a href="help-you-can-get.html">help you can get</a>: emergency money from your council, credit for a prepayment meter, payments after a long power cut, and free alarms.</p>
+
+<div class="tip"><b>You are not less safe because you have less money.</b> A neighbour who'll knock on your door is worth more than a cupboard full of kit.</div>
+""",
+sources=["beready", "survey_sd", "ofgem_psr", "ca_prepay"],
+),
+
+# ---------------------------------------------------------------- PREPAYMENT
+dict(
+slug="prepayment-meters", cat="help", mins=4, flag="advice",
+title="Prepayment meters: staying on when the weather turns",
+summary="Emergency credit, friendly hours, what to do if you can't top up, and why to top up before a storm.",
+body="""
+<p class="lede">If you top up a meter, a storm can cut you off twice: once when the power goes, and again if you can't get to a shop or your credit runs out. A little planning stops the second one.</p>
+
+<h2>Before bad weather</h2>
+<ul>
+<li><b>Top up when a weather warning comes,</b> if you can. Shops may shut, card machines may be down, and you may not be able to get out.</li>
+<li><b>Know how to turn on your emergency credit.</b> It's usually about £10. On a smart meter it's on the in-home display. You pay it back on your next top-up.</li>
+<li><b>Keep your key or card somewhere you'll find it in the dark.</b></li>
+</ul>
+
+<h2>If you can't top up</h2>
+<ol class="todo">
+<li><b>Use your emergency credit.</b></li>
+<li><b>Check for friendly hours.</b> Many meters won't cut off at night, at weekends or on bank holidays, even at zero. Ask your supplier which hours yours covers.</li>
+<li><b>Phone your supplier and say you can't top up.</b> If you're disabled, have a health condition, are over State Pension age, are pregnant, have a child under 5, or are struggling with living costs, they may give you <b>additional support credit</b>. Ask for it by name.</li>
+<li><b>Ask for a fuel voucher.</b> Your council, your supplier and many food banks give them. You use the code at a PayPoint or Payzone shop or a Post Office. Check the expiry date: it can be as short as 15 days.</li>
+</ol>
+<p>If a prepayment meter isn't safe for you, for example you're 75 or over and live alone, have a child under 2, or are disabled, ask your supplier to move you off prepayment.</p>
+
+<h2>After a power cut</h2>
+<p>When the power comes back, check your meter has come back on too. If it hasn't, phone your supplier. If you're owed a <a href="help-you-can-get.html">payment for a long power cut</a>, ask your supplier how it will reach you.</p>
+
+<h2>If you owe money on the meter</h2>
+<p>Part of every top-up goes to the debt. If that leaves you without heating, ask your supplier to lower the repayments. They must consider what you can afford.</p>
+""",
+sources=["ca_prepay", "ofgem_cut"],
+),
+
+# ---------------------------------------------------------------- HELP YOU CAN GET
+dict(
+slug="help-you-can-get", cat="help", mins=6, flag="advice",
+title="Help you can get: money, credit and free safety equipment",
+summary="Emergency money from your council, help with a prepayment meter, payments after a long power cut, free alarms and the Priority Services Register.",
+body="""
+<p class="lede">There is more help than most people know about. None of it means you've failed. It's there to be used.</p>
+
+<h2>Emergency money for essentials</h2>
+<ul>
+<li><b>England:</b> your council runs the <b>Crisis and Resilience Fund</b>. It started on 1 April 2026 and replaced the Household Support Fund. It can help with food, energy and essentials in a crisis, often as cash. Each council runs it its own way: search for your council's name and "Crisis and Resilience Fund", or phone them.</li>
+<li><b>Scotland:</b> a <b>crisis grant</b> from the Scottish Welfare Fund. Apply through your council.</li>
+<li><b>Wales:</b> an <b>emergency assistance payment</b> from the Discretionary Assistance Fund. Apply through the Welsh Government.</li>
+<li><b>Northern Ireland:</b> <b>discretionary support</b> from the Finance Support Service.</li>
+</ul>
+<p>Not sure where to start? Citizens Advice can tell you what you can apply for.</p>
+
+<h2>Gas and electricity</h2>
+<ul>
+<li><b>On a prepayment meter:</b> emergency credit, friendly hours, additional support credit and fuel vouchers. See <a href="prepayment-meters.html">prepayment meters</a>.</li>
+<li><b>Behind on bills:</b> tell your supplier. They must work out a payment plan you can afford.</li>
+</ul>
+
+<h2>Payments after a long power cut</h2>
+<p>You can get a payment from your electricity network if your power is off for a long time. Most are paid automatically.</p>
+<ul>
+<li><b>In normal weather:</b> £100 if you're off for more than 12 hours (more than 24 hours for a big power cut affecting 5,000 homes or more), then £45 for each extra 12 hours.</li>
+<li><b>After a storm:</b> £90 once you've been off for 24 hours, or 48 hours for the worst storms, then £45 for every 6 hours after that.</li>
+<li><b>If you're cut off a lot:</b> £100 if your power goes off more than 4 times in a year for 3 hours or more each time. You have to claim this one from your network.</li>
+</ul>
+<p>If you think you're owed a payment and nothing has come, contact your network operator. Being on the Priority Services Register doesn't give you a bigger payment, but it does get you extra help during the cut.</p>
+
+<h2>Free safety equipment and help</h2>
+<ul>
+<li><b>Smoke alarms:</b> many fire and rescue services fit them free on a home fire safety visit. Ask yours.</li>
+<li><b>If you rent:</b> your landlord must fit and repair alarms. See <a href="renting.html">renting</a> and <a href="social-housing.html">social housing and temporary accommodation</a>.</li>
+<li><b>The <a href="priority-services-register.html">Priority Services Register</a>:</b> free, and it gets you updates and practical help in a power or water cut.</li>
+</ul>
+
+<h2>Babies and young children</h2>
+<ul>
+<li><b>Healthy Start</b> (England, Wales and Northern Ireland) and <b>Best Start Foods</b> (Scotland) help pay for milk, infant formula, fruit and vegetables if you're pregnant or have a young child and get certain benefits. Ask your midwife or health visitor.</li>
+<li><b>Baby banks</b> give nappies and essentials free. Your health visitor can refer you.</li>
+</ul>
+
+<h2>Water</h2>
+<p>If you struggle to pay your water bill, ask your water company about its cheaper tariff for people on a low income. In England and Wales, every company has one.</p>
+""",
+sources=["crf", "nations", "ca_prepay", "ofgem_cut", "ofgem_psr"],
+),
+
+# ---------------------------------------------------------------- SOCIAL HOUSING
+dict(
+slug="social-housing", cat="help", mins=6, flag="advice",
+title="Social housing and temporary accommodation",
+summary="What your council or housing association must fix and how fast, getting out of a tall building if you're disabled, and staying safe in a hostel, B&B or shared house.",
+body="""
+<p class="lede">If your home belongs to a council, a housing association or someone else, a lot of your safety depends on them. Here's what you can ask for. The law described here is for England.</p>
+
+<h2>If you rent from a council or housing association</h2>
+<p>Since 27 October 2025, Awaab's Law sets time limits for social landlords in England.</p>
+<ul>
+<li><b>Emergencies: 24 hours.</b> If something is an immediate danger, such as a gas leak, a broken boiler, no water at all, dangerous electrics or a serious leak, your landlord must look into it and make it safe within 24 hours.</li>
+<li><b>Serious damp and mould:</b> they must investigate within 10 working days, and make it safe within 5 working days of finding the problem.</li>
+<li><b>If they can't make it safe in time,</b> they must offer you somewhere suitable to stay, at their cost, until the work is done.</li>
+</ul>
+<p>Report problems in writing if you can, by email or text, and keep a copy. Say clearly if someone at home is ill, very young or elderly. </p>
+<p>From 30 November 2026, the same time limits are due to cover more hazards, including homes that are too cold or too hot, fire and electrical safety.</p>
+<p>These time limits don't cover temporary or supported accommodation, or shared ownership.</p>
+
+<h2>Alarms</h2>
+<p>Your landlord must fit a smoke alarm on every floor, and a carbon monoxide alarm in any room with a boiler or other fixed fuel-burning appliance, and repair them when you report a fault. See <a href="renting.html">renting</a>.</p>
+
+<h2>If you'd find it hard to get out of a tall building</h2>
+<p>Since 6 April 2026, in blocks of flats in England that are 18 metres or 7 storeys high or more, the person responsible for the building must offer a fire safety assessment to any resident who would struggle to get out without help, for example because of a disability or memory problems.</p>
+<ul>
+<li>You have to ask for it, or someone can ask for you. It's your choice.</li>
+<li>They must talk through what would help, agree a written plan with you, and review it every year.</li>
+<li>With your permission, they tell the fire service where you are.</li>
+</ul>
+<p>Ask your landlord or building manager for a "Residential PEEP". Also read <a href="high-rise-flats.html">living in a high-rise flat</a>.</p>
+
+<h2>In a hostel, B&B, refuge or shared house</h2>
+<ul>
+<li><b>On your first day, find two ways out,</b> and where the fire alarm call point is.</li>
+<li><b>Ask staff or the manager:</b> what happens in a power cut or a fire, and who do I phone at night?</li>
+<li><b>Keep one small bag ready</b> with your medicines, phone charger, ID, any letters about your housing or benefits, and a few phone numbers on paper. If you have to leave quickly, that bag is what matters.</li>
+<li><b>No kitchen of your own?</b> Keep a little food that needs no cooking or fridge: cereal bars, crackers, tinned fish with a ring pull, long-life milk.</li>
+<li><b>Tell your council's housing team</b> if the place is unsafe: no working alarms, blocked exits, no heating. Keep a note of when you told them.</li>
+<li><b>Join the <a href="priority-services-register.html">Priority Services Register</a></b> if you pay the energy or water bill. If you don't, ask the manager whether the building is registered.</li>
+</ul>
+""",
+sources=["awaab", "awaab2", "alarms", "rpeeps", "gmfrs_faq"],
+),
+
+# ---------------------------------------------------------------- SUPPORT SERVICES
+dict(
+slug="for-support-services", cat="help", mins=6, flag="advice",
+title="For food banks, kitchens and community groups",
+summary="How to help the people you support get ready, in a few minutes, without asking them to buy anything. Plus what to do when severe weather is forecast.",
+body="""
+<p class="lede">People on the lowest incomes are the least likely to be prepared, and the most likely to say cost is why. You already have their trust. A few small things from you can make a real difference.</p>
+
+<h2>Five things you can do, most of them free</h2>
+<ol class="todo">
+<li><b>Do the Fettle check with someone.</b> It takes a few minutes on your phone or theirs. They don't need an account or an email address. Read the questions out if that's easier.</li>
+<li><b>Help people join the <a href="priority-services-register.html">Priority Services Register</a>.</b> It's the single most useful free thing. You can do it with them in a few minutes.</li>
+<li><b>Add no-cook food to parcels when storms are forecast:</b> ring-pull tins, cereal bars, crackers, long-life milk. Ask "can you heat food at home at the moment?" as a routine question.</li>
+<li><b>Keep fuel voucher and crisis fund details to hand.</b> See <a href="help-you-can-get.html">help you can get</a> and <a href="prepayment-meters.html">prepayment meters</a>.</li>
+<li><b>Hand out one sheet of paper</b> with the numbers below, and space to write in a neighbour's or family member's number.</li>
+</ol>
+
+<h2>If the people you support have nowhere stable to live</h2>
+<ul>
+<li><b>In severe cold,</b> councils open emergency beds for people sleeping rough. This is called SWEP, the Severe Weather Emergency Protocol. Each council decides when to open it, usually when it's forecast to freeze. Find out now who to phone at your council.</li>
+<li><b>If you're worried about someone sleeping rough</b> in England or Wales, you can tell StreetLink, which passes it to the local outreach team. If someone is in danger, call 999.</li>
+<li><b>For people in hostels, B&Bs or sofa-surfing,</b> see <a href="social-housing.html">social housing and temporary accommodation</a>.</li>
+</ul>
+
+<h2>Is your own building ready?</h2>
+<ul>
+<li>Could you open in a power cut? Think about light, a way to boil water, and a phone that works.</li>
+<li>Do you know which of your regulars live alone, and who would check on them?</li>
+<li>Could you be a warm, lit place for a few hours? Tell your council's emergency planning team: they may want to know.</li>
+</ul>
+
+<h2>If you want to do more</h2>
+<p>Fettle for Communities lets staff and volunteers do checks with people, keep their plans with consent, and see, without names, what the people you support are missing and what gets in their way. Ask us about it.</p>
+""" + NUMBERS,
+sources=["survey_sd", "swep", "ofgem_psr", "crf"],
 ),
 ]

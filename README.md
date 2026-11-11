@@ -163,3 +163,15 @@ Commit and push. Cloudflare deploys automatically.
 cp .dev.vars.example .dev.vars   # fill in test keys
 npx wrangler pages dev public
 ```
+
+## Low income, social housing and support services
+
+Fettle must work for people who can't spend anything. What's in place:
+
+- **Check questions.** Tenure includes "Temporary or supported accommodation" (hostel, B&B, refuge, supported housing). "How do you pay for gas and electricity?" picks up prepayment meters. The budget question already allows £0.
+- **Plan steps.** `prepay` (plan for the meter running out: emergency credit, top up before a storm, additional support credit, fuel vouchers), `moneyhelp` (crisis support by nation: Crisis and Resilience Fund in England, Scottish Welfare Fund, Discretionary Assistance Fund in Wales, Finance Support Service in Northern Ireland), `tempacc` (ask staff what happens in a fire or power cut, keep one bag ready). The evacuation step mentions Residential PEEPs in England. Steps with a `guide` slug link to the guide.
+- **Barrier help.** "It costs too much" always points to council crisis support and the food bank. "It's my landlord's job" sends social tenants to the complaints process and the Housing Ombudsman (England), and people in temporary accommodation to their support worker or the placing council.
+- **Guides** (category "Money and support", marked Draft): `tight-budget`, `prepayment-meters`, `help-you-can-get`, `social-housing`, `for-support-services`.
+- **Reports.** "Who it reached" and `fettle_groups()` now split out temporary or supported accommodation, prepayment meters and households who can't spend anything. The anonymous count carries the same three flags. Groups under 5 stay hidden.
+
+**Before launch:** the five guides and the three new steps need review by a welfare rights adviser (Citizens Advice or the council's welfare rights team). Scheme names, amounts and dates were checked on 11 November 2026 and will change. The Awaab's Law phase 2 date (30 November 2026) comes from one law-firm article and should be confirmed on GOV.UK. Translations of the new strings are not professionally checked.

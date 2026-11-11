@@ -60,9 +60,10 @@ language sql security definer set search_path = public as $$
       from a, jsonb_each(a.data->'scb') k
     union all select 'At least one critical risk, ' || case g.key when 'social' then 'social renters' when 'rent' then 'private renters'
         when 'own' then 'homeowners' when 'alone' then 'living alone' when 'o70' then 'someone over 70'
-        when 'health' then 'disability or long-term condition' else 'young children' end,
+        when 'health' then 'disability or long-term condition' when 'temp' then 'temporary or supported accommodation'
+        when 'prepay' then 'prepayment meter' when 'nospend' then 'can''t spend anything right now' else 'young children' end,
       jsonb_array_length(coalesce(a.data->'c','[]'::jsonb)) > 0
-      from a, jsonb_each(a.data->'f') g where g.value::text = 'true' and g.key in ('social','rent','own','alone','o70','health','u5')
+      from a, jsonb_each(a.data->'f') g where g.value::text = 'true' and g.key in ('social','rent','own','alone','o70','health','u5','temp','prepay','nospend')
   )
   select measure, count(*)::int, count(*) filter (where y)::int, round(100.0 * count(*) filter (where y) / count(*))::int
   from m group by measure having count(*) >= 5 order by measure;
@@ -102,7 +103,10 @@ language sql security definer set search_path = public as $$
       (4, 'Living alone', k.people = 1),
       (5, 'Someone over 70', coalesce((k.d->>'over70')::int,0) > 0),
       (6, 'Disability or long-term condition', k.d->>'healthGate' = 'yes' and jsonb_array_length(coalesce(k.d->'health','[]'::jsonb)) > 0),
-      (7, 'Young children', coalesce((k.d->>'under5')::int,0) + coalesce((k.d->>'babies')::int,0) > 0)
+      (7, 'Young children', coalesce((k.d->>'under5')::int,0) + coalesce((k.d->>'babies')::int,0) > 0),
+      (8, 'Temporary or supported accommodation', k.d->>'tenure' = 'temp'),
+      (9, 'On a prepayment meter', k.d->>'pay' = 'prepay'),
+      (10, 'Can''t spend anything right now', k.d->>'budget' = '0')
     ) as x(ord, grp, inside) where x.inside
   )
   -- Scores need 5+ households with a follow-up; the 30-day figures need 5+ households 30 days on. Otherwise null.
