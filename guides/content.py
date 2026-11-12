@@ -10,6 +10,7 @@ S = {  # shared sources
     "beready": ("Cabinet Office: Be Ready, households encouraged to take small, simple steps", "https://www.gov.uk/government/news/households-encouraged-to-take-small-simple-steps-to-stay-prepared-in-an-emergency"),
     "gmfrs_stay": ("Greater Manchester Fire and Rescue Service: flats with a stay safe policy", "https://manchesterfire.gov.uk/your-safety/home-fire-safety/flat-safety/what-is-your-building-s-evacuation-strategy/fire-safety-information-for-residents-living-in-flats-operating-a-stay-safe-policy/"),
     "gmfrs_faq": ("Greater Manchester Fire and Rescue Service: high-rise residents' FAQs", "https://www.manchesterfire.gov.uk/your-safety/high-rise-and-building-safety-taskforce/support-for-high-rise-residents/residents-faqs"),
+    "nhs_flask": ("NHS: formula milk, common questions (making up a feed away from home)", "https://www.nhs.uk/conditions/baby/breastfeeding-and-bottle-feeding/bottle-feeding/formula-milk-questions/"),
     "nhs_feed": ("NHS Start for Life: how to make up a formula feed", "https://www.nhs.uk/start-for-life/baby/feeding-your-baby/bottle-feeding/how-to-make-up-a-feed"),
     "fsa_formula": ("Food Standards Agency: preparing infant formula safely during water supply disruptions (2 November 2026)", "https://www.gov.uk/government/publications/preparing-infant-formula-safely-during-water-supply-disruptions-and-when-travelling"),
     "ofgem_psr": ("Ofgem: join your supplier's Priority Services Register", "https://www.ofgem.gov.uk/your-energy-supply/how-manage-your-energy-supply/join-your-suppliers-priority-services-register"),
@@ -670,7 +671,7 @@ body="""
 <ul>
 <li>A <b>gas hob</b> may still work in a power cut. Light it with a match.</li>
 <li>A camping stove is fine <b>outside only</b>, never indoors or on a balcony.</li>
-<li>A flask of boiled water does <b>not</b> stay hot enough to make powder formula safely.</li>
+<li>If you get warning of a power cut, fill a clean vacuum flask with just-boiled water and seal it. The NHS says a full, sealed flask keeps water above 70°C for several hours. Keep the flask only for your baby.</li>
 </ul>
 
 <h2>If the tap water is off or not safe</h2>
@@ -702,7 +703,7 @@ body="""
 <li>Join the Priority Services Register. Families with children under 5 can usually join.</li>
 </ol>
 """,
-sources=["nhs_feed", "fsa_formula", "cmo_water", "cmo_food", "ofgem_psr"],
+sources=["nhs_feed", "nhs_flask", "fsa_formula", "cmo_water", "cmo_food", "ofgem_psr"],
 ),
 
 # ---------------------------------------------------------------- MEDICINES
