@@ -10,7 +10,7 @@ crons = ["17 10 * * *"]   # every day at 10:17 UTC
 
 [vars]
 DRY_RUN = "true"
-SITE_URL = "https://fettle.example"
-FROM_EMAIL = "Fettle <hello@fettle.example>"
+SITE_URL = "https://getfettle.co.uk"
+FROM_EMAIL = "Fettle <hello@getfettle.co.uk>"
 # Secrets (add with `npx wrangler secret put NAME`, never in this file):
 #   SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, RESEND_API_KEY, UNSUBSCRIBE_SECRET (same value as the Pages site)
