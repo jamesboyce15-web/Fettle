@@ -15,11 +15,12 @@ let fails = 0; const ok = (c, m) => { if (!c) fails++; console.log((c ? 'PASS ' 
     await ctx.route('**fonts.googleapis.com**', r => r.fulfill({ contentType: 'text/css', body: '' }));
     await ctx.route('**/api.postcodes.io/outcodes/**', r => r.fulfill({ contentType: 'application/json', body: JSON.stringify({ result: { admin_district: ['Rochdale'], country: ['England'] } }) }));
     await ctx.route('**/config.js', r => r.fulfill({ contentType: 'text/javascript', body: 'window.FETTLE_CONFIG={supabaseUrl:"https://fake.supabase.co",supabaseAnonKey:"anon",freeBook:true};' }));
-    await p.goto('http://localhost:8769/'); await p.waitForTimeout(600);
+    await p.goto('http://localhost:8769/?src=workbook'); await p.waitForTimeout(600);
     ok(await p.isVisible('text=Free to download and print.'), 'landing shows the book as free');
     await p.evaluate(() => start(false)); await p.waitForTimeout(100);
     let d = await p.evaluate(() => JSON.parse(localStorage.getItem('fake_db')));
     ok(d.fettle_events.length === 1 && d.fettle_events[0].kind === 'check_started' && !d.fettle_events[0].area, 'check started counted, no area or id');
+    ok(d.fettle_events[0].src === 'workbook', 'a visit from the workbook is counted as such');
     await p.evaluate(async () => { Object.assign(cur, { pc: 'OL11', home: 'house', outdoor: 'garden', tenure: 'social', adults: 1, over70: 1, heat: 'gas', hob: 'gas', cold: 'slow', healthGate: 'no', water: 'few', food: 'some', kit: ['torch'], fa: 'no', budget: 0, psr: 'no' }); await lookupPc(cur); scenIds(cur).forEach(id => { cur.scen[id] = { a: 3, b: 'less' }; cur.conf[id] = 2; }); qi = list().length - 1; drawQ(); next(); });
     await p.waitForTimeout(300);
     d = await p.evaluate(() => JSON.parse(localStorage.getItem('fake_db')));

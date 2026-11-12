@@ -293,9 +293,11 @@
     if (error) console.error(error);
     return !error;
   };
+  // Where the visitor came from, if the link said so (the workbook's QR codes add ?src=workbook). Kept only for this visit.
+  const SRC = (() => { try { const q = new URLSearchParams(location.search).get("src"); if (q && /^[a-z0-9-]{1,20}$/.test(q)) sessionStorage.setItem("fettle-src", q); return sessionStorage.getItem("fettle-src"); } catch (e) { return null; } })();
   window.countEvent = function (kind, area) {
     if (!sb || (user && (user.pro || user.sample))) return;
-    sb.from("fettle_events").insert({ kind, area: area ? String(area).slice(0, 80) : null }).then(({ error }) => { if (error) console.error(error); });
+    sb.from("fettle_events").insert({ kind, area: area ? String(area).slice(0, 80) : null, ...(SRC ? { src: SRC } : {}) }).then(({ error }) => { if (error) console.error(error); });
   };
 
   // ---------- payment ----------

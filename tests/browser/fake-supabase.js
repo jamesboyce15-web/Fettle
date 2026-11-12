@@ -24,7 +24,7 @@
     households: (d, r) => r.org_id ? (r.user_id == null && r.created_by === me() && member(d, r.org_id)) : r.user_id === me(),
     purchases: () => false, organisations: () => false, org_members: () => false, org_invites: () => false,
     case_events: (d, r) => member(d, r.org_id) && r.user_id === me(),
-    anon_checks: (d, r) => !!r.area && !r.user_id, fettle_events: (d, r) => ["check_started", "check_finished"].includes(r.kind),
+    anon_checks: (d, r) => !!r.area && !r.user_id, fettle_events: (d, r) => ["check_started", "check_finished"].includes(r.kind) && (r.src === undefined || /^[a-z0-9-]{1,20}$/.test(r.src)),
   };
   function builder(table) {
     const st = { filters: [], op: "select", row: null, single: false };

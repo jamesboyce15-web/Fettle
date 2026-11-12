@@ -25,6 +25,7 @@ create table if not exists public.fettle_events (
   kind text not null check (kind in ('check_started','check_finished')),
   area text check (char_length(area) <= 80)
 );
+alter table public.fettle_events add column if not exists src text check (src ~ '^[a-z0-9-]{1,20}$');   -- e.g. 'workbook', from a QR code
 alter table public.fettle_events enable row level security;
 drop policy if exists "anyone can add a count" on public.fettle_events;
 create policy "anyone can add a count" on public.fettle_events for insert to anon, authenticated with check (true);
@@ -36,7 +37,9 @@ returns table (area text, started int, finished int)
 language sql security definer set search_path = public as $$
   select 'All areas', count(*) filter (where kind='check_started')::int, count(*) filter (where kind='check_finished')::int from public.fettle_events
   union all
-  select area, 0, count(*)::int from public.fettle_events where kind='check_finished' and area is not null group by area having count(*) >= 5;
+  select area, 0, count(*)::int from public.fettle_events where kind='check_finished' and area is not null group by area having count(*) >= 5
+  union all
+  select 'Came from: ' || src, count(*) filter (where kind='check_started')::int, count(*) filter (where kind='check_finished')::int from public.fettle_events where src is not null group by src;
 $$;
 revoke all on function public.fettle_funnel() from public, anon, authenticated;
 grant execute on function public.fettle_funnel() to service_role;
