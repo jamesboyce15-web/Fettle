@@ -4,6 +4,6 @@
 window.FETTLE_CONFIG = {
   supabaseUrl: "",      // e.g. https://abcdefgh.supabase.co
   supabaseAnonKey: "",  // Supabase > Project settings > API > anon public key
-  siteUrl: "",          // your domain, e.g. https://fettle.co.uk (used in shared score links)
+  siteUrl: "https://getfettle.co.uk",  // used in shared score links
   freeBook: true        // winter test: the digital book is free (with a free account), so Stripe isn't needed yet
 };

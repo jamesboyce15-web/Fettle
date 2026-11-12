@@ -75,7 +75,7 @@ Workers can only join with an invite code. Nobody can make themselves a member.
 1. In the Supabase SQL editor, run (with your own name and wards):
    `select * from fettle_create_org('Rochdale Borough Council', array['Kingsway','Central Rochdale','Spotland and Falinge']);`
    It returns the organisation's id and a first **admin code**, like `K7QM-4XPA`. Leave the wards list empty (`'{}'`) if workers should type their own area.
-2. Send the pilot lead the link `https://your-domain/?join=K7QM-4XPA`. They choose a password and land on an empty caseload.
+2. Send the pilot lead the link `https://getfettle.co.uk/?join=K7QM-4XPA`. They choose a password and land on an empty caseload.
 3. The pilot lead invites their team from the app ("Invite a colleague"). Each code works once and lasts 14 days. To make more codes yourself: `select fettle_invite('<organisation id>', 'worker', 'name@council.gov.uk');`
 4. Residents' plans belong to the organisation, not the worker. Every member of that organisation can see and update them; nobody else can, including Fettle's public users. If a worker deletes their account, the plans stay.
 5. Each case records who created it, each visit, each "checked on a visit" tick and each deletion (`case_events`). Deletions keep only the case reference.

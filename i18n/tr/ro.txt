@@ -620,7 +620,7 @@
 629|Dacă e urgent, dar nu pune viața în pericol, sună la {0}.
 630|Folosește trusa de prim ajutor. Cartea ta are îndrumări de prim ajutor.
 631|Mulțumim. Ne ajută să-l îmbunătățim.
-632|Mulțumim. Spune-ne ce a lipsit la hello@[domain] (prototip).
+632|Mulțumim. Spune-ne ce a lipsit la hello@getfettle.co.uk (prototip).
 633|Gospodăria {0}: plan de urgență
 634|Salvat pe {0}.{1}.{2}. Merge fără internet.
 635|Numere

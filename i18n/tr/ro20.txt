@@ -17,5 +17,5 @@
 16|În această versiune de previzualizare, nu se taxează și nu se trimite nimic.
 17|În această versiune de previzualizare, nu s-a trimis nimic.
 18|Salvat. Poți continua de unde ai rămas oricând astăzi.
-19|Mulțumim. Spune-ne ce a lipsit la hello@[domain].
+19|Mulțumim. Spune-ne ce a lipsit la hello@getfettle.co.uk.
 20|Trimite-le verificarea gratuită și cartea digitală

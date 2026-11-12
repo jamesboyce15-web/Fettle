@@ -620,7 +620,7 @@
 629|Jeśli to pilne, ale nie zagraża życiu, zadzwoń pod {0}.
 630|Użyj apteczki. W Twojej książce są wskazówki pierwszej pomocy.
 631|Dziękujemy. To pomaga nam ulepszać aplikację.
-632|Dziękujemy. Napisz, czego brakowało, na hello@[domain] (prototyp).
+632|Dziękujemy. Napisz, czego brakowało, na hello@getfettle.co.uk (prototyp).
 633|Gospodarstwo domowe {0}: plan awaryjny
 634|Zapisano {0}.{1}.{2}. Działa bez internetu.
 635|Numery
