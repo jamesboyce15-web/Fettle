@@ -135,6 +135,7 @@ getfettle.co.uk is live. No screen says "draft", "pilot", "preview" or "prototyp
 - The health, fire safety and money content has not had its professional reviews yet (see below). The guides now carry plain safety notes instead of "Draft" banners.
 
 ## Reviews still to do
+- **Source check done 12 November 2026:** every health, fire and money line in the guides, app and workbook was checked against official sources. 82 lines checked, 32 changed. The record is in `docs/evidence-review.md`, with what a professional should still look at. It does not replace the professional reviews below.
 - The cheaper options shown when someone says "It costs too much" (`CHEAPER` in `src/fettle.html`) need the same review as the other safety content, especially filling water from the tap, carbon monoxide alarms and baby formula.
 - Clinical (GP or nurse) and fire service review of the health and safety content.
 - The guides on feeding a baby and on medicines carry a "General information, not medical advice" note (`flag="clinical"`). Keep it after review too.

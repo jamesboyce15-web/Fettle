@@ -1,0 +1,19 @@
+0|Medicamentele tale obișnuite și o listă cu ele și cu dozele
+1|Mănuși de unică folosință și ace de siguranță
+2|Un detector de fum care funcționează vă dă timp să ieșiți. Apăsați butonul de test o dată pe lună. Pompierii locali le pot monta gratuit la o vizită de siguranță acasă. Stabiliți două căi de ieșire și țineți cheile de la ușă unde le poate găsi oricine.
+3|Nu rămâne fără medicamente și notează cum se păstrează
+4|Nu aduce niciodată în casă un grătar, un aragaz de camping sau un încălzitor de exterior. Monoxidul de carbon poate ucide repede, fără avertisment.
+5|Cere rețeta pentru medicamentele obișnuite cu aproximativ o săptămână înainte să se termine, ca să ai mereu o rezervă.
+6|Fructele și legumele întregi, brânza tare, iaurtul, untul și laptele UHT sunt sigure până la {0} zile dacă arată și miros normal. Pe vreme rece (sub {1}°C), alimentele pot fi ținute afară într-un recipient curat și închis ermetic.
+7|Nu aduce niciodată un grătar, un aragaz de camping sau un încălzitor de terasă în casă, în garaj sau pe balcon. Acestea degajă monoxid de carbon, care poate ucide repede și fără avertisment.
+8|Dacă ești anunțat din timp despre o pană de curent, umple un termos curat cu apă abia fiartă și închide-l bine. NHS spune că un termos plin și închis ține apa peste {0}°C câteva ore. Folosește termosul doar pentru bebeluș.
+9|Ține-i în camera cea mai caldă, îmbrăcați în straturi pe care le poți ajusta. Scoate-le căciula în casă și la somn. Pune mâna pe pieptul sau pe ceafa lor ca să verifici că nu le e prea cald sau prea frig. Nu pune niciodată o buiotă în pătuț.
+10|{0}Ce faceți:{1} duceți persoana la adăpost, scoateți-i hainele ude, înveliți-o, inclusiv capul, dați-i ceva dulce și o băutură caldă fără alcool dacă e trează și rămâneți cu ea. Sunați la {2}: hipotermia este o urgență. Nu o încălziți cu o baie fierbinte sau cu o buiotă.
+11|Nu lăsa medicamentele obișnuite să se termine. Cere rețetele cu aproximativ o săptămână înainte să se termine și întreabă farmacistul despre orice se ține la frigider.
+12|Medicamente: rețeta cerută din timp.
+13|Gata: Nu rămâne fără medicamente și notează cum se păstrează
+14|Nu rămâne fără medicamente și notează cum se păstrează{0}Mai întâi{1}
+15|{0}{1}Nu rămâne fără medicamente și notează cum se păstrează
+16|{0}{1}Medicamentele tale obișnuite și o listă cu ele și cu dozele
+17|{0}{1}Mănuși de unică folosință și ace de siguranță
+18|{0}{1}Medicamente: rețeta cerută din timp.

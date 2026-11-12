@@ -1,0 +1,21 @@
+[
+"Your regular medicines, and a list of them with the doses",
+"Disposable gloves and safety pins",
+"A working smoke alarm gives you time to get out. Press the test button once a month. Your local fire service may fit them free during a home safety visit. Plan two ways out, and keep door keys where everyone can find them.",
+"Don't run low on medicine, and note how to store it",
+"Never bring a barbecue, camping stove or outdoor heater inside. Carbon monoxide can kill quickly, without warning.",
+"Order your repeat prescription about a week before it runs out, so you always have some in hand.",
+"Whole fruit and vegetables, hard cheese, yoghurt, butter and long-life milk are safe for up to {0} days if they look and smell normal. In cold weather (below {1}°C), food can be kept outside in a clean, sealed container.",
+"Never bring a barbecue, camping stove or patio heater indoors, into a garage or onto a balcony. They give off carbon monoxide, which can kill quickly and without warning.",
+"If you get warning of a power cut, fill a clean vacuum flask with just-boiled water and seal it. The NHS says a full, sealed flask keeps water above {0}°C for several hours. Keep the flask only for your baby.",
+"Keep them in the warmest room, in layers you can adjust. Take hats off indoors and for sleep. Feel their chest or the back of their neck to check they're not too hot or too cold. Never put a hot water bottle in a cot.",
+"{0}What to do:{1} get them somewhere sheltered, remove wet clothes, wrap them up including their head, give something sugary and a warm drink that isn't alcohol if they're awake, and stay with them. Call {2}: hypothermia is an emergency. Don't use a hot bath or a hot water bottle to warm them.",
+"Don't let regular medicines run low. Order repeat prescriptions about a week before they run out, and ask your pharmacist about anything that's kept in the fridge.",
+"Medicines: repeat prescription ordered in good time.",
+"Done: Don't run low on medicine, and note how to store it",
+"Don't run low on medicine, and note how to store it{0}Do first{1}",
+"{0}{1}Don't run low on medicine, and note how to store it",
+"{0}{1}Your regular medicines, and a list of them with the doses",
+"{0}{1}Disposable gloves and safety pins",
+"{0}{1}Medicines: repeat prescription ordered in good time."
+]

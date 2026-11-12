@@ -1,0 +1,19 @@
+0|Twoje stałe leki i lista leków z dawkami
+1|Rękawiczki jednorazowe i agrafki
+2|Sprawny czujnik dymu daje czas na ucieczkę. Raz w miesiącu naciśnij przycisk testu. Lokalna straż pożarna może zamontować czujniki bezpłatnie podczas wizyty w domu. Zaplanuj dwie drogi wyjścia i trzymaj klucze do drzwi tam, gdzie każdy je znajdzie.
+3|Nie dopuść, by leki się skończyły, i zapisz, jak je przechowywać
+4|Nigdy nie wnoś do środka grilla, kuchenki turystycznej ani grzejnika zewnętrznego. Tlenek węgla może zabić szybko i bez ostrzeżenia.
+5|Zamawiaj receptę na stałe leki około tydzień przed ich końcem, żeby zawsze mieć zapas.
+6|Całe owoce i warzywa, twardy ser, jogurt, masło i mleko UHT są bezpieczne do {0} dni, jeśli wyglądają i pachną normalnie. Przy zimnej pogodzie (poniżej {1}°C) żywność można trzymać na zewnątrz w czystym, szczelnym pojemniku.
+7|Nigdy nie wnoś grilla, kuchenki turystycznej ani grzejnika ogrodowego do domu, garażu ani na balkon. Wydzielają tlenek węgla, który może zabić szybko i bez ostrzeżenia.
+8|Jeśli wiesz wcześniej o przerwie w dostawie prądu, napełnij czysty termos świeżo przegotowaną wodą i szczelnie go zamknij. NHS podaje, że pełny, zamknięty termos utrzymuje wodę powyżej {0}°C przez kilka godzin. Używaj tego termosu tylko dla dziecka.
+9|Trzymaj dziecko w najcieplejszym pokoju, ubrane w warstwy, które można zdejmować i dokładać. W domu i do snu zdejmuj czapkę. Dotknij klatki piersiowej lub karku dziecka, żeby sprawdzić, czy nie jest mu za gorąco ani za zimno. Nigdy nie wkładaj termoforu do łóżeczka.
+10|{0}Co robić:{1} zabierz osobę w osłonięte miejsce, zdejmij mokre ubrania, owiń ją, łącznie z głową, daj coś słodkiego i ciepły napój bez alkoholu, jeśli jest przytomna, i zostań z nią. Zadzwoń pod {2}: hipotermia to stan nagły. Nie ogrzewaj jej gorącą kąpielą ani termoforem.
+11|Nie dopuść, by stałe leki się kończyły. Zamawiaj recepty około tydzień przed końcem leków i zapytaj farmaceutę o wszystko, co trzyma się w lodówce.
+12|Leki: recepta zamówiona z wyprzedzeniem.
+13|Zrobione: Nie dopuść, by leki się skończyły, i zapisz, jak je przechowywać
+14|Nie dopuść, by leki się skończyły, i zapisz, jak je przechowywać{0}Najpierw{1}
+15|{0}{1}Nie dopuść, by leki się skończyły, i zapisz, jak je przechowywać
+16|{0}{1}Twoje stałe leki i lista leków z dawkami
+17|{0}{1}Rękawiczki jednorazowe i agrafki
+18|{0}{1}Leki: recepta zamówiona z wyprzedzeniem.

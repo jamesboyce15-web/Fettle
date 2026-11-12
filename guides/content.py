@@ -2,7 +2,7 @@
 # Each guide is plain HTML for the article body. Keep sentences short and plain.
 # Every fact should come from a source in "sources". Update CHECKED when you re-check them.
 
-CHECKED = "11 November 2026"
+CHECKED = "12 November 2026"
 
 S = {  # shared sources
     "fsa_power": ("Food Standards Agency: food safety in a power cut", "https://www.gov.uk/government/publications/food-safety-in-a-power-cut-advice-for-consumers/food-safety-in-a-power-cut-advice-for-consumers"),
@@ -10,7 +10,7 @@ S = {  # shared sources
     "beready": ("Cabinet Office: Be Ready, households encouraged to take small, simple steps", "https://www.gov.uk/government/news/households-encouraged-to-take-small-simple-steps-to-stay-prepared-in-an-emergency"),
     "gmfrs_stay": ("Greater Manchester Fire and Rescue Service: flats with a stay safe policy", "https://manchesterfire.gov.uk/your-safety/home-fire-safety/flat-safety/what-is-your-building-s-evacuation-strategy/fire-safety-information-for-residents-living-in-flats-operating-a-stay-safe-policy/"),
     "gmfrs_faq": ("Greater Manchester Fire and Rescue Service: high-rise residents' FAQs", "https://www.manchesterfire.gov.uk/your-safety/high-rise-and-building-safety-taskforce/support-for-high-rise-residents/residents-faqs"),
-    "nhs_flask": ("NHS: formula milk, common questions (making up a feed away from home)", "https://www.nhs.uk/conditions/baby/breastfeeding-and-bottle-feeding/bottle-feeding/formula-milk-questions/"),
+    "nhs_flask": ("NHS: formula milk, common questions (making up a feed away from home)", "https://www.nhs.uk/baby/breastfeeding-and-bottle-feeding/bottle-feeding/formula-milk-questions/"),
     "nhs_feed": ("NHS Start for Life: how to make up a formula feed", "https://www.nhs.uk/start-for-life/baby/feeding-your-baby/bottle-feeding/how-to-make-up-a-feed"),
     "fsa_formula": ("Food Standards Agency: preparing infant formula safely during water supply disruptions (2 November 2026)", "https://www.gov.uk/government/publications/preparing-infant-formula-safely-during-water-supply-disruptions-and-when-travelling"),
     "ofgem_psr": ("Ofgem: join your supplier's Priority Services Register", "https://www.ofgem.gov.uk/your-energy-supply/how-manage-your-energy-supply/join-your-suppliers-priority-services-register"),
@@ -36,6 +36,30 @@ S = {  # shared sources
     "rpeeps": ("GOV.UK: Residential PEEPs factsheet", "https://www.gov.uk/government/publications/residential-personal-emergency-evacuation-plans-residential-peeps/residential-peeps-factsheet"),
     "swep": ("West Northamptonshire Council: help for people sleeping rough in very cold or extreme weather", "https://www.westnorthants.gov.uk/housing-advice-and-support/help-people-sleeping-rough-very-cold-or-extreme-weather"),
     "survey_sd": ("Cabinet Office: 2025 preparedness survey, supplementary sociodemographic analyses", "https://www.gov.uk/government/statistics/uk-public-survey-of-risk-perception-resilience-and-preparedness-2025/uk-public-survey-of-risk-perception-resilience-and-preparedness-2025-supplementary-sociodemographic-analyses"),
+    "nhs_hypo": ("NHS: hypothermia", "https://www.nhs.uk/conditions/hypothermia/"),
+    "nhs_heat": ("NHS: heat exhaustion and heatstroke", "https://www.nhs.uk/conditions/heat-exhaustion-heatstroke/"),
+    "nhs_co": ("NHS: carbon monoxide poisoning", "https://www.nhs.uk/conditions/carbon-monoxide-poisoning/"),
+    "nhs_use": ("NHS Best Start in Life: how to use formula (ready-to-feed, leftovers)", "https://www.nhs.uk/best-start-in-life/baby/feeding-your-baby/bottle-feeding/how-to-make-up-a-feed/how-to-use-formula/"),
+    "lullaby": ("The Lullaby Trust: safer sleep in cold weather", "https://www.lullabytrust.org.uk/baby-safety/travel-and-weather/cold-weather/"),
+    "lullaby_em": ("The Lullaby Trust: safer sleep advice for emergency situations", "https://www.lullabytrust.org.uk/wp-content/uploads/2025/01/Safer-sleep-in-emergency-situations.pdf"),
+    "cadent_co": ("Cadent: gas safety factsheet for carers (carbon monoxide, smelling gas)", "https://cadentgas.com/getmedia/930d74bb-c981-4044-8a67-60b4dc4befe5/Gas-safety-factsheet-for-carers.pdf"),
+    "cadent_valve": ("Cadent: how to find your gas meter and turn off the gas supply", "https://cadentgas.com/locating-your-meter-and-turning-off-the-gas"),
+    "lfb_balcony": ("London Fire Brigade: don't barbecue on your balcony", "https://www.london-fire.gov.uk/news/2019-news/august/enjoy-the-warm-weather-but-don-t-barbeque-on-your-balcony/"),
+    "fire_home": ("GOV.UK: Fire safety in the home (Fire Kills)", "https://www.gov.uk/government/publications/make-your-home-safe-from-fire/fire-safety-in-the-home-accessible-version"),
+    "dwfire": ("Dorset and Wiltshire Fire and Rescue Service: power cuts", "https://www.dwfire.org.uk/safety/storms-and-power-cuts/power-cuts/"),
+    "beready_kit": ("Cabinet Office: Be Ready for emergencies (what to keep at home)", "https://beready.campaign.gov.uk/be-ready-for-emergencies/"),
+    "beready_power": ("Cabinet Office: Be Ready, power cuts", "https://beready.campaign.gov.uk/be-informed-about-hazards/power-cuts/"),
+    "beready_water": ("Cabinet Office: Be Ready, water supply interruptions", "https://beready.campaign.gov.uk/be-informed-about-hazards/water-supply-interruptions-or-outages/"),
+    "ca_powercut": ("Citizens Advice: prepare for a power cut", "https://www.citizensadvice.org.uk/consumer/energy/energy-supply/problems-with-your-energy-supply/prepare-for-a-power-cut/"),
+    "dwi_boil": ("Drinking Water Inspectorate: receiving a boil water notice", "https://www.dwi.gov.uk/receiving-a-boil-water-notice/"),
+    "fsa_dates": ("Food Standards Agency: best before and use-by dates", "https://www.food.gov.uk/safety-hygiene/best-before-and-use-by-dates"),
+    "flood": ("GOV.UK: what to do before or during a flood", "https://www.gov.uk/help-during-flood"),
+    "iddt": ("InDependent Diabetes Trust: storing insulin", "https://iddt.org/about/living-with-diabetes/storing-insulin"),
+    "elec": ("GOV.UK: electrical safety standards in the private and social rented sectors", "https://www.gov.uk/government/publications/electrical-safety-standards-in-the-private-and-social-rented-sectors-guidance/electrical-safety-standards-in-the-private-and-social-rented-sectors-guidance"),
+    "awaab_gov": ("GOV.UK: Awaab's Law in the social rented sector (phases and dates)", "https://www.gov.uk/government/collections/awaabs-law-in-the-social-rented-sector"),
+    "awaab_tenants": ("GOV.UK: Awaab's Law, guidance for tenants in social housing", "https://www.gov.uk/government/publications/awaabs-law-guidance-for-tenants-in-social-housing/awaabs-law-guidance-for-tenants-in-social-housing"),
+    "rpeeps_guide": ("GOV.UK: Residential PEEPs, guidance for responsible persons", "https://assets.publishing.service.gov.uk/media/692838312a37784b16ecf629/Residential_PEEPs_Guidance_for_Responsible_Persons.pdf"),
+    "crf_gov": ("GOV.UK: Crisis and Resilience Fund, guidance for local authorities in England (1 April 2026 to 31 March 2029)", "https://www.gov.uk/government/publications/crisis-and-resilience-fund-guidance-for-local-authorities-in-england-1-april-2026-to-31-march-2029/the-crisis-and-resilience-fund-guidance-for-local-authorities-in-england-1-april-2026-to-31-march-2029"),
     "survey": ("Cabinet Office: UK public survey of risk perception, resilience and preparedness 2026", "https://www.gov.uk/government/statistics/uk-public-survey-of-risk-perception-resilience-and-preparedness-2026/uk-public-survey-of-risk-perception-resilience-and-preparedness-2026-headline-findings-html"),
 }
 
@@ -193,7 +217,7 @@ body="""
 <li>A reservoir, freshwater lake or free-flowing stream, only if it's very close and you can get there safely</li>
 <li>River water is much less safe. Use it only as a last resort.</li>
 </ol>
-<p>Never drink flood water.</p>
+<p>Never drink flood water. It can contain sewage.</p>
 
 <h2>Step by step</h2>
 <ol class="todo">
@@ -215,7 +239,7 @@ body="""
 <li>Coffee filters, or a spare pillowcase</li>
 </ul>
 """,
-sources=["cmo_water", "cmo_all"],
+sources=["cmo_water", "cmo_all", "flood", "beready_water"],
 ),
 
 # ---------------------------------------------------------------- KEEPING COOL
@@ -249,13 +273,14 @@ body="""
 <li>Take off extra clothing, such as jackets and socks.</li>
 <li>Give them water, a fizzy drink or another drink.</li>
 <li>Spray or sponge them with cool water. It doesn't need to be drinking water, so don't use the water you've made safe to drink.</li>
-<li>They should start to cool down and feel better within 30 minutes. If they don't, or they get worse, get medical help. For heatstroke, call 999.</li>
+<li>They should start to cool down and feel better within 30 minutes.</li>
+<li><b>Call 999</b> if they're still unwell after 30 minutes, or if they show any sign of heatstroke. While you wait, keep cooling them.</li>
 </ol>
 
 <h2>Check on others</h2>
 <p>Look out for neighbours, friends and family who may be struggling, especially older people living alone. See <a href="checking-on-someone.html">checking on someone</a>.</p>
 """,
-sources=["cmo_warm", "cmo_all"],
+sources=["cmo_warm", "cmo_all", "nhs_heat"],
 ),
 
 # ---------------------------------------------------------------- RADIO
@@ -312,7 +337,7 @@ body="""
 </ul>
 
 <h2>Never cook or heat with flames indoors or on a balcony</h2>
-<p>A barbecue, camping stove or outdoor heater gives off carbon monoxide, which can kill in minutes. Balconies count as indoors for this: fumes come back in, and a fire on a balcony can spread up the building. If you have no gas hob, plan for <a href="no-cook-meals.html">no-cook meals</a>.</p>
+<p>A barbecue, camping stove or outdoor heater gives off carbon monoxide, which can kill quickly and without warning. Balconies count as indoors for this: fumes come back in, and a fire on a balcony can spread up the building. Fire services say never to barbecue on a balcony. If you have no gas hob, plan for <a href="no-cook-meals.html">no-cook meals</a>.</p>
 
 <h2>If there's a fire</h2>
 <p>Find out your building's fire strategy now. Your landlord, managing agent or housing provider must be able to tell you. Many high-rise blocks have a <b>stay safe</b> (or "stay put") policy. In Greater Manchester, the fire service says that for those buildings:</p>
@@ -325,7 +350,7 @@ body="""
 <p>Some buildings have a different strategy, such as everyone leaving when the alarm sounds. Follow the one for your building, and the instructions of firefighters on the day.</p>
 
 <h2>If someone can't use the stairs</h2>
-<p>Tell your landlord or building manager if anyone in your home would struggle to get down the stairs in an emergency, because of age, disability, illness or a baby and other small children. Ask them to record it and whether they'll make a personal evacuation plan. Tell the fire service when you call 999, too.</p>
+<p>Tell your landlord or building manager if anyone in your home would struggle to get down the stairs in an emergency, because of age, disability, illness or a baby and other small children. Ask them to record it and whether they'll make a personal evacuation plan. Tell the fire service when you call 999, too. In England, taller blocks must now offer this if you ask: see <a href="social-housing.html">Residential PEEPs</a>.</p>
 <p>Also join the <a href="priority-services-register.html">Priority Services Register</a>. It's free, and it means the power and water companies know about you.</p>
 
 <h2>Sort these out this week</h2>
@@ -339,7 +364,7 @@ body="""
 <li>If anyone can't manage the stairs, tell your landlord and join the Priority Services Register.</li>
 </ol>
 """,
-sources=["gmfrs_stay", "gmfrs_faq", "beready", "fsa_power", "psr"],
+sources=["gmfrs_stay", "gmfrs_faq", "fire_home", "lfb_balcony", "nhs_co", "rpeeps", "beready", "fsa_power", "psr"],
 ),
 
 # ---------------------------------------------------------------- NO-COOK
@@ -395,14 +420,14 @@ body="""
 
 <h2>Keeping it clean without running water</h2>
 <ul>
-<li>Use hand sanitiser before preparing food and after the toilet.</li>
+<li>Wash your hands with soap and water before preparing food and after the toilet. If you can't, use hand gel.</li>
 <li>Wipe the tin lid before opening it.</li>
 <li>Use paper plates, or one bowl each that you wipe out.</li>
 <li>If you can't wash fruit, peel it.</li>
 </ul>
 <p>Food safety when the fridge is off is in <a href="eating-safely-without-power.html">our guide to eating safely without power</a>.</p>
 """,
-sources=["beready", "cmo_food", "fsa_power"],
+sources=["beready", "beready_kit", "cmo_food", "cmo_water", "fsa_power"],
 ),
 
 # ---------------------------------------------------------------- COLD FOOD SAFETY
@@ -420,20 +445,20 @@ body="""
 <ul>
 <li>Chilled food should stay below <b>8°C</b>. If it's been above 8°C for <b>more than 4 hours</b>, throw it away.</li>
 <li>A cheap fridge thermometer tells you for certain. Without one, if you can't be sure, throw it out.</li>
-<li>Don't taste food to check it. Food that would make you ill can look and smell fine.</li>
-<li>If frozen food has thawed, treat it as chilled food. Don't refreeze raw food that has thawed.</li>
+<li>Don't taste or sniff chilled food with a use-by date to check it. You can't see, smell or taste the bacteria that cause food poisoning.</li>
+<li>If frozen food has thawed, treat it as chilled food and use it next.</li>
 </ul>
 
 <h2>Eat things in this order</h2>
 <p>The UK Chief Medical Officers advise eating the food that spoils fastest first:</p>
 <ol>
 <li><b>Chilled food,</b> and frozen food as it defrosts.</li>
-<li><b>Short-life food</b> such as sandwiches, salads and cooked meats. These are safe for a day or two if they look and smell normal. Raw meat and fish are fine if you can cook them and they look and smell normal.</li>
+<li><b>Short-life food</b> such as pre-packed sandwiches and salads. These are safe for a day or two if they look and smell normal. Raw meat and fish are fine if you can cook them and they look and smell normal.</li>
 <li><b>Fresh food that doesn't need a fridge,</b> like bread, cake, whole fruit and vegetables, and eggs.</li>
 <li><b>Tins and packets last.</b> Food normally kept at room temperature is still safe after its best before date.</li>
 </ol>
 <p>Whole fruit and vegetables, hard cheese, yoghurt, butter, pasteurised milk, and long-life milk or juice (even once opened) are safe for <b>up to 7 days</b> if they look and smell normal. Pre-cut fruit and vegetables last 3 to 4 days, and are safe after that if cooked.</p>
-<p><b>In cold weather,</b> you can keep food outside in a clean, dry, sealed plastic or metal container, out of direct sunlight and away from animals.</p>
+<p><b>In cold weather (below 8°C),</b> you can keep food outside in a clean, dry, sealed plastic or metal container, out of direct sunlight and away from animals.</p>
 
 <h2>Who should be extra careful</h2>
 <p>After 4 hours without power, these people should <b>not</b> eat chilled ready-to-eat food (things like cooked meats, smoked fish, soft cheese, pâté, prepared salads and sandwiches) or leftovers:</p>
@@ -448,7 +473,7 @@ body="""
 
 <h2>If you can cook</h2>
 <ul>
-<li><b>A gas hob may still work</b> in a power cut, but the electric spark won't. Light it carefully with a long match. If you smell gas, turn it off and call 0800 111 999.</li>
+<li><b>A gas hob may still work</b> in a power cut, but the electric spark won't. Light it carefully with a long match or a gas lighter. A gas oven probably won't work. Check your cooker's instructions now, so you know. If you smell gas, turn it off and call 0800 111 999.</li>
 <li><b>Camping stoves and barbecues are for outside only,</b> in a garden or open space. Never use them indoors, in a garage, a tent, or on a balcony. They give off carbon monoxide, which you can't see or smell and which can kill.</li>
 <li>Cook food until it's <b>steaming hot</b> all the way through.</li>
 </ul>
@@ -467,7 +492,7 @@ body="""
 <li>If you have a gas hob, keep long matches next to it.</li>
 </ol>
 """,
-sources=["fsa_power", "cmo_food", "beready"],
+sources=["fsa_power", "cmo_food", "fsa_dates", "ca_powercut", "nhs_co", "beready"],
 ),
 
 # ---------------------------------------------------------------- POWER CUT
@@ -482,7 +507,7 @@ body="""
 <ol class="todo">
 <li><b>Is it just you?</b> Look at your neighbours' lights and the street lights. If theirs are on, check your fuse box: a tripped switch may be the cause.</li>
 <li><b>Call 105.</b> It's free from any phone and puts you through to your local network operator. You can also check their website or social media for updates on your area.</li>
-<li><b>Get your torch.</b> Use torches, not candles, because candles start fires.</li>
+<li><b>Get your torch.</b> Use torches, not candles, because candles start fires. If a candle is all you have, put it in a proper holder, well away from curtains, never leave it, and blow it out before you sleep.</li>
 <li><b>Unplug</b> things that could come on unexpectedly when the power returns, like a cooker, heater or iron, and sensitive things like the TV and computer. Leave one light switched on so you know when it's back.</li>
 <li><b>Keep the fridge and freezer shut.</b></li>
 </ol>
@@ -520,7 +545,7 @@ body="""
 </ul>
 
 """ + NUMBERS,
-sources=["beready", "fsa_power", "ofcom_power", "cmo_all", "bbc_black", "psr"],
+sources=["beready", "beready_power", "ca_powercut", "fire_home", "dwfire", "fsa_power", "ofcom_power", "cmo_all", "bbc_black", "psr"],
 ),
 
 # ---------------------------------------------------------------- NO WATER
@@ -538,9 +563,9 @@ body="""
 <h2>What the notices mean</h2>
 <p>Your water company will tell you which notice applies. Always follow the notice they give you. Broadly:</p>
 <ul>
-<li><b>Boil water notice:</b> the water is safe once boiled. Boil it and let it cool before drinking, brushing teeth, preparing food or making ice.</li>
-<li><b>Do not drink notice:</b> don't drink it even if you boil it. You can usually still use it to flush the toilet, and sometimes for washing. Check what your notice says.</li>
-<li><b>Do not use notice:</b> don't use the water for anything except flushing the toilet.</li>
+<li><b>Boil water notice:</b> the water is safe once boiled. Boil it and let it cool before drinking, brushing teeth, preparing food, making ice, cleaning a baby's feeding equipment or giving it to pets. You can still wash and flush the toilet as normal.</li>
+<li><b>Do not drink notice:</b> don't drink it, cook with it or brush your teeth with it, even if you boil it. Use bottled water. Your notice will say what else you can still use it for.</li>
+<li><b>Do not use notice:</b> don't use tap water at all, unless your notice says you can flush the toilet with it.</li>
 </ul>
 <p>Babies need special care. See <a href="feeding-a-baby.html">feeding a baby when the water fails</a>.</p>
 
@@ -576,7 +601,7 @@ body="""
 <li>If you'd struggle to collect water, join your water company's Priority Services Register.</li>
 </ol>
 """,
-sources=["beready", "cmo_water", "uu_psr", "fsa_formula"],
+sources=["beready", "beready_water", "dwi_boil", "cmo_water", "uu_psr", "fsa_formula"],
 ),
 
 # ---------------------------------------------------------------- KEEPING WARM
@@ -602,11 +627,11 @@ body="""
 <li>Eat regularly and have warm drinks if you can heat water safely.</li>
 <li>Get up, move around and stretch at least once an hour if you're able.</li>
 <li>When sitting, keep your feet up off the floor, where the air is coldest.</li>
-<li>Babies need to be warm, but don't overwrap them or use hats and extra blankets in bed. Dress them in layers you can adjust.</li>
+<li>Babies need to be warm, but not hot. Dress them in layers you can adjust. Take hats off indoors and for sleep. If they feel cold, add a layer of clothing or a lightweight blanket, not a duvet or thick blanket. Feel their chest or the back of their neck to check: hands and feet are often cool. Never put a hot water bottle in a cot.</li>
 </ul>
 
 <h2>The carbon monoxide danger</h2>
-<p>When people are cold, they bring in things to heat the house: a barbecue, a camping stove, a patio heater, or a generator. All of these give off <b>carbon monoxide</b>. You can't see, smell or taste it, and it can kill in minutes.</p>
+<p>When people are cold, they bring in things to heat the house: a barbecue, a camping stove, a patio heater, or a generator. All of these give off <b>carbon monoxide</b>. You can't see, smell or taste it, and it can kill quickly and without warning.</p>
 <ul>
 <li><b>Never</b> use barbecues, camping stoves, outdoor heaters or generators indoors, in a garage, or on a balcony.</li>
 <li>Never use a gas oven or hob to heat the room.</li>
@@ -614,7 +639,7 @@ body="""
 <li>A generator goes outside, at least 6 metres (20 feet) from the house, with the exhaust pointing away from windows and doors.</li>
 <li>Never leave a fire, heater or generator unattended, and keep a fire extinguisher nearby.</li>
 <li>Fit a carbon monoxide alarm in any room with a gas, oil, coal or wood appliance.</li>
-<li>Signs of carbon monoxide poisoning include a headache, dizziness, feeling sick, tiredness and confusion, often in more than one person at once. If you suspect it, get into fresh air, call 0800 111 999 for a gas appliance, and call 999 if someone is seriously unwell.</li>
+<li>Signs of carbon monoxide poisoning include a headache, dizziness, feeling sick, tiredness and confusion, often in more than one person at once. If you suspect it, stop using the appliance, get into fresh air, and call 0800 111 999 for a gas appliance. Call 999 if someone is struggling to breathe, confused or collapses. Otherwise call 111 for advice, even if you feel better outside.</li>
 </ul>
 
 <h2>Signs of hypothermia</h2>
@@ -632,7 +657,8 @@ body="""
 <li>Take off any wet clothes. Wrap them in a blanket, sleeping bag or dry towel, covering their head.</li>
 <li>If they're awake, give them something sugary, like chocolate, and a warm drink that isn't alcohol.</li>
 <li>Stay with them and keep them talking.</li>
-<li>Get medical help: call 999 if they're seriously unwell, or 111 for advice.</li>
+<li><b>Call 999.</b> Hypothermia is an emergency.</li>
+<li>Don't use a hot bath, hot water bottle or heat lamp to warm them, and don't rub their arms, legs, hands or feet.</li>
 </ol>
 
 <h2>Sort these out before winter</h2>
@@ -644,7 +670,7 @@ body="""
 <li>Check on older neighbours and relatives when a cold spell is forecast. See <a href="checking-on-someone.html">checking on someone</a>.</li>
 </ol>
 """,
-sources=["cmo_warm", "beready", "alarms"],
+sources=["cmo_warm", "nhs_hypo", "nhs_co", "cadent_co", "lullaby", "lullaby_em", "beready", "alarms"],
 ),
 
 # ---------------------------------------------------------------- BABY
@@ -663,19 +689,26 @@ body="""
 <ul>
 <li>Work out 3 days: the number of feeds your baby has a day, times the amount per feed, times 3.</li>
 <li>Once opened, follow the storage instructions on the pack. Without a fridge, use an opened carton straight away.</li>
-<li>Throw away any milk left in the bottle after a feed.</li>
+<li>Throw away any milk left in the bottle at the end of a feed.</li>
 </ul>
 
 <h2>If you use powder formula</h2>
 <p>The NHS says to make up powder formula with <b>freshly boiled tap water that's still at least 70°C</b>, which means using it within 30 minutes of boiling. Hot water kills bacteria that can be in the powder.</p>
 <ul>
-<li>A <b>gas hob</b> may still work in a power cut. Light it with a match.</li>
+<li>A <b>gas hob</b> may still work in a power cut. Light it with a long match, following the cooker's instructions.</li>
 <li>A camping stove is fine <b>outside only</b>, never indoors or on a balcony.</li>
 <li>If you get warning of a power cut, fill a clean vacuum flask with just-boiled water and seal it. The NHS says a full, sealed flask keeps water above 70°C for several hours. Keep the flask only for your baby.</li>
 </ul>
 
 <h2>If the tap water is off or not safe</h2>
-<p>Bottled water isn't usually recommended for formula, because some contains too much salt (sodium) or sulphate. The Food Standards Agency published guidance in November 2026 on preparing formula when the water supply is disrupted, including how to choose a suitable bottled water. <a href="https://www.gov.uk/government/publications/preparing-infant-formula-safely-during-water-supply-disruptions-and-when-travelling" target="_blank" rel="noopener">Read the FSA guidance</a> and follow it. During a boil water or do not drink notice, your water company will also give advice for babies.</p>
+<p>Bottled water isn't usually recommended for formula, because some contains too much salt (sodium) or sulphate. If your tap water is off or unsafe, the Food Standards Agency's guidance (November 2026) says:</p>
+<ul>
+<li><b>Ready-made formula is the safest choice.</b></li>
+<li>If you must use powder, use <b>still</b> bottled water with the lowest sodium you can find. On the label, sodium (Na) should be under 200mg a litre and sulphate (SO4) under 250mg a litre. Don't use water labelled as not suitable for infants.</li>
+<li>Bottled water isn't sterile. <b>Boil it first,</b> and use it within 30 minutes, the same as tap water.</li>
+<li>Don't wash or rinse bottles and teats in tap water that isn't safe. Use bottled water.</li>
+</ul>
+<p><a href="https://www.gov.uk/government/publications/preparing-infant-formula-safely-during-water-supply-disruptions-and-when-travelling" target="_blank" rel="noopener">Read the full FSA guidance</a>. During a boil water or do not drink notice, your water company will also give advice for babies.</p>
 
 <h2>In a national power cut</h2>
 <p>The UK Chief Medical Officers' radio advice for a national power cut says that children under 2 who aren't breastfed need at least 1 litre of fluid a day (about 4 cups), and formula counts towards this. Keep to the usual feeding schedule. Wash bottles, give them a final rinse with a little of your cleanest water, and make up formula with more of that cleanest water. Listen to the radio for updated advice.</p>
@@ -690,7 +723,7 @@ body="""
 <h2>Keep baby warm, fed and changed</h2>
 <ul>
 <li>Keep 3 days of nappies and wipes.</li>
-<li>Dress your baby in layers you can add or remove. Don't overwrap them in bed.</li>
+<li>Dress your baby in layers you can add or remove. Take hats off indoors and for sleep, and use a lightweight blanket, not a duvet.</li>
 <li>If your baby is feeding less, is very sleepy, has fewer wet nappies or seems unwell, call 111. Call 999 in an emergency.</li>
 </ul>
 
@@ -703,7 +736,7 @@ body="""
 <li>Join the Priority Services Register. Families with children under 5 can usually join.</li>
 </ol>
 """,
-sources=["nhs_feed", "nhs_flask", "fsa_formula", "cmo_water", "cmo_food", "ofgem_psr"],
+sources=["nhs_feed", "nhs_flask", "nhs_use", "fsa_formula", "cmo_water", "cmo_food", "lullaby", "ofgem_psr"],
 ),
 
 # ---------------------------------------------------------------- MEDICINES
@@ -725,7 +758,7 @@ body="""
 <p>Write the answers down and keep them with the medicine. The leaflet in the box often says too.</p>
 <ul>
 <li>In a power cut, keep the fridge shut, and take the medicine out only when you need it.</li>
-<li>Don't let medicines freeze. If you use ice packs, wrap them so they don't touch the medicine.</li>
+<li>Most fridge medicines must not freeze: check the leaflet. If you use ice packs, wrap them so they don't touch the medicine.</li>
 <li>Keep taking medicines at the usual times. If a dose is missed or a medicine may have spoiled, ask a pharmacist or call 111.</li>
 </ul>
 
@@ -750,12 +783,12 @@ body="""
 <ol class="todo">
 <li>Ask the pharmacist how long each fridge medicine can be out of the fridge. Write it down.</li>
 <li>Ask each equipment supplier the questions above, and save their 24-hour number on paper.</li>
-<li>Keep a few days of every medicine, and a copy of the prescription.</li>
+<li>Don't run low. Order repeat prescriptions in good time, about a week before they run out, so there are always a few days in hand. Keep a written list of each medicine and its dose.</li>
 <li>Charge any backup batteries and power banks.</li>
 <li>Join the Priority Services Register.</li>
 </ol>
 """,
-sources=["ofgem_psr", "psr", "enwl_psr"],
+sources=["beready_kit", "beready_power", "iddt", "ca_powercut", "ofgem_psr", "psr", "enwl_psr"],
 ),
 
 # ---------------------------------------------------------------- CHECKING ON SOMEONE
@@ -818,7 +851,7 @@ body="""
 <h2>Gas and electrical safety</h2>
 <ul>
 <li>If you have gas, your landlord must have the appliances checked every year by a Gas Safe registered engineer and give you a copy of the record.</li>
-<li>Private landlords must have the electrics inspected at least every 5 years and give you a copy of the report.</li>
+<li>Private and social landlords must have the electrics inspected and tested at least every 5 years, and give you a copy of the report. For council and housing association tenancies that began before 1 December 2025, the first check is due by 1 November 2026.</li>
 </ul>
 
 <h2>Ask your landlord</h2>
@@ -833,11 +866,12 @@ body="""
 <li>Keep 3 days of water and food that needs no cooking. It's yours and takes little space.</li>
 <li>Get contents insurance. Your landlord's insurance doesn't cover your belongings.</li>
 <li>Keep a torch, a power bank and a battery radio.</li>
+<li>Plan two ways out in a fire, and keep door keys where everyone can find them. In a fire: get out, stay out and call 999.</li>
 <li>Join the <a href="priority-services-register.html">Priority Services Register</a> if you're eligible. You don't need your landlord's permission.</li>
 <li>If you live in a flat, read <a href="high-rise-flats.html">living in a high-rise flat</a>.</li>
 </ul>
 """,
-sources=["alarms", "gmfrs_stay", "beready"],
+sources=["alarms", "elec", "fire_home", "gmfrs_stay", "beready"],
 ),
 
 # ---------------------------------------------------------------- GRAB BAG
@@ -855,7 +889,7 @@ body="""
 <li>Copies of ID, insurance documents and prescriptions, in a plastic wallet</li>
 <li>Some cash, about £10 per person</li>
 <li>Spare house and car keys</li>
-<li>A few days of every medicine, and a copy of the prescription</li>
+<li>Your regular medicines, and a list of them with the doses</li>
 <li>Glasses, contact lenses and hearing aid batteries</li>
 <li>A small first aid kit, hand sanitiser and wipes</li>
 <li>Bottled water and long-life snacks</li>
@@ -879,7 +913,7 @@ body="""
 <h2>Where would you go?</h2>
 <p>Agree two places with your household: one nearby, like a neighbour's, and one further away, like a relative's in another town. Write down the addresses.</p>
 """,
-sources=["beready", "survey", "redcross"],
+sources=["beready", "beready_kit", "survey", "redcross"],
 ),
 
 # ---------------------------------------------------------------- PSR
@@ -994,7 +1028,7 @@ body="""
 <h2>If you owe money on the meter</h2>
 <p>Part of every top-up goes to the debt. If that leaves you without heating, ask your supplier to lower the repayments. They must consider what you can afford.</p>
 """,
-sources=["ca_prepay", "ofgem_cut"],
+sources=["ca_prepay", "ofgem_cut", "beready_power"],
 ),
 
 # ---------------------------------------------------------------- HELP YOU CAN GET
@@ -1007,7 +1041,7 @@ body="""
 
 <h2>Emergency money for essentials</h2>
 <ul>
-<li><b>England:</b> your council runs the <b>Crisis and Resilience Fund</b>. It started on 1 April 2026 and replaced the Household Support Fund. It can help with food, energy and essentials in a crisis, often as cash. Each council runs it its own way: search for your council's name and "Crisis and Resilience Fund", or phone them.</li>
+<li><b>England:</b> your council runs the <b>Crisis and Resilience Fund</b>. It started on 1 April 2026 and took over from the Household Support Fund. Where there is a county council, the county runs it. It can help with food, energy and essentials in a crisis, often as cash. Each council runs it its own way: search for your council's name and "Crisis and Resilience Fund", or phone them.</li>
 <li><b>Scotland:</b> a <b>crisis grant</b> from the Scottish Welfare Fund. Apply through your council.</li>
 <li><b>Wales:</b> an <b>emergency assistance payment</b> from the Discretionary Assistance Fund. Apply through the Welsh Government.</li>
 <li><b>Northern Ireland:</b> <b>discretionary support</b> from the Finance Support Service.</li>
@@ -1045,7 +1079,7 @@ body="""
 <h2>Water</h2>
 <p>If you struggle to pay your water bill, ask your water company about its cheaper tariff for people on a low income. In England and Wales, every company has one.</p>
 """,
-sources=["crf", "nations", "ca_prepay", "ofgem_cut", "ofgem_psr"],
+sources=["crf_gov", "crf", "nations", "ca_prepay", "ofgem_cut", "ofgem_psr", "fire_home"],
 ),
 
 # ---------------------------------------------------------------- SOCIAL HOUSING
@@ -1060,18 +1094,19 @@ body="""
 <p>Since 27 October 2025, Awaab's Law sets time limits for social landlords in England.</p>
 <ul>
 <li><b>Emergencies: 24 hours.</b> If something is an immediate danger, such as a gas leak, a broken boiler, no water at all, dangerous electrics or a serious leak, your landlord must look into it and make it safe within 24 hours.</li>
-<li><b>Serious damp and mould:</b> they must investigate within 10 working days, and make it safe within 5 working days of finding the problem.</li>
+<li><b>Serious damp and mould:</b> they must investigate within 10 working days, tell you in writing what they found within 3 working days, and make it safe within 5 working days of finishing the investigation.</li>
 <li><b>If they can't make it safe in time,</b> they must offer you somewhere suitable to stay, at their cost, until the work is done.</li>
 </ul>
 <p>Report problems in writing if you can, by email or text, and keep a copy. Say clearly if someone at home is ill, very young or elderly. </p>
-<p>From 30 November 2026, the same time limits are due to cover more hazards, including homes that are too cold or too hot, fire and electrical safety.</p>
-<p>These time limits don't cover temporary or supported accommodation, or shared ownership.</p>
+<p>From 30 November 2026, the same time limits cover more hazards, including homes that are too cold or too hot, fire and electrical safety, falls, and problems that make it hard to keep clean or prepare food safely.</p>
+<p>If nothing happens, use your landlord's complaints process. If that doesn't fix it, the Housing Ombudsman is free: 0300 111 3000.</p>
+<p><b>In temporary or supported accommodation?</b> Check your paperwork. The time limits apply if you have a social housing tenancy agreement. They may not apply if you have a licence. Either way, your landlord still has to keep you safe, so report the problem.</p>
 
 <h2>Alarms</h2>
 <p>Your landlord must fit a smoke alarm on every floor, and a carbon monoxide alarm in any room with a boiler or other fixed fuel-burning appliance, and repair them when you report a fault. See <a href="renting.html">renting</a>.</p>
 
 <h2>If you'd find it hard to get out of a tall building</h2>
-<p>Since 6 April 2026, in blocks of flats in England that are 18 metres or 7 storeys high or more, the person responsible for the building must offer a fire safety assessment to any resident who would struggle to get out without help, for example because of a disability or memory problems.</p>
+<p>Since 6 April 2026, in blocks of flats in England that are 18 metres or 7 storeys high or more, and in blocks over 11 metres where everyone is meant to leave when the alarm sounds, the person responsible for the building must offer a fire safety assessment to any resident who would struggle to get out without help, for example because of a disability or memory problems.</p>
 <ul>
 <li>You have to ask for it, or someone can ask for you. It's your choice.</li>
 <li>They must talk through what would help, agree a written plan with you, and review it every year.</li>
@@ -1089,7 +1124,7 @@ body="""
 <li><b>Join the <a href="priority-services-register.html">Priority Services Register</a></b> if you pay the energy or water bill. If you don't, ask the manager whether the building is registered.</li>
 </ul>
 """,
-sources=["awaab", "awaab2", "alarms", "rpeeps", "gmfrs_faq"],
+sources=["awaab_gov", "awaab_tenants", "awaab", "alarms", "rpeeps", "rpeeps_guide", "gmfrs_faq"],
 ),
 
 # ---------------------------------------------------------------- SUPPORT SERVICES
@@ -1126,6 +1161,6 @@ body="""
 <h2>If you want to do more</h2>
 <p>Fettle for Communities lets staff and volunteers do checks with people, keep their plans with consent, and see, without names, what the people you support are missing and what gets in their way. Ask us about it.</p>
 """ + NUMBERS,
-sources=["survey_sd", "swep", "ofgem_psr", "crf"],
+sources=["survey_sd", "swep", "ofgem_psr", "crf_gov"],
 ),
 ]
