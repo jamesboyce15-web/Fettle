@@ -121,8 +121,8 @@ CTA = """<div class="cta">
 </div>"""
 
 FLAGS = {
-    "advice": '<div class="flag"><b>Draft.</b> Rules and amounts change, and this guide is waiting for review by a welfare rights adviser. Check with Citizens Advice or the official pages linked below before you rely on it.</div>',
-    "clinical": '<div class="flag"><b>Draft.</b> This guide is waiting for review by an NHS professional. Always follow advice from your midwife, health visitor, GP or pharmacist, and the official guidance linked below.</div>',
+    "advice": '<div class="flag"><b>Rules and amounts change.</b> Check with Citizens Advice or the official pages linked below before you rely on a figure.</div>',
+    "clinical": '<div class="flag"><b>General information, not medical advice.</b> Always follow advice from your midwife, health visitor, GP or pharmacist, and the official guidance linked below. If you are worried, call NHS 111.</div>',
 }
 
 by_slug = {g["slug"]: g for g in GUIDES}

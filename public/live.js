@@ -167,7 +167,7 @@
       <button class="btn full" type="submit">Join my team</button>
      </form>
      <p class="switch">Already joined? <button class="linkbtn" onclick="authView('signin')">Sign in</button></p>
-     <div class="pcard" style="margin-top:20px"><h3>Not set up yet?</h3><p class="sm mute">During pilots we set up each organisation with you. Email hello@fettle.example. Or open a sample caseload of 34 made-up households.</p><button class="btn quiet full" onclick="proSample()">Open the sample caseload</button></div>`;
+     <div class="pcard" style="margin-top:20px"><h3>Not set up yet?</h3><p class="sm mute">We set up each organisation with you. Email hello@getfettle.co.uk. Or open a sample caseload of 34 made-up households.</p><button class="btn quiet full" onclick="proSample()">Open the sample caseload</button></div>`;
   };
   window.liveJoin = async function (e) {
     e.preventDefault();

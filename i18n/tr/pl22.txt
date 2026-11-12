@@ -1,0 +1,4 @@
+0|Zakładamy konto każdej organizacji razem z Wami. Napisz na hello@getfettle.co.uk. Możesz też otworzyć przykładową listę {0} zmyślonych gospodarstw domowych.
+1|Zakładamy konta dla pracowników każdej organizacji. Napisz na hello@getfettle.co.uk, żeby z nami porozmawiać, albo otwórz przykładową listę poniżej.
+2|Napisz na hello@getfettle.co.uk, aby zarezerwować szkolenie dla zespołu.
+3|Fettle drukuje książki za Was. Użyj przycisku Wyślij zamówienie do druku.

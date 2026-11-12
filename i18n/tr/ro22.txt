@@ -1,0 +1,4 @@
+0|Configurăm fiecare organizație împreună cu voi. Scrie-ne la hello@getfettle.co.uk. Sau deschide un exemplu cu {0} gospodării inventate.
+1|Configurăm conturile profesionale pentru fiecare organizație. Scrie-ne la hello@getfettle.co.uk ca să vorbim, sau deschide exemplul de mai jos.
+2|Scrie-ne la hello@getfettle.co.uk ca să rezervi o sesiune pentru echipa ta.
+3|Fettle tipărește cărțile pentru voi. Folosește Trimite comanda la tipar.

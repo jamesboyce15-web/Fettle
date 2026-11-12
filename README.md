@@ -20,7 +20,7 @@ Do these in order. Everything stays in **test mode** until step 6.
 1. Create a project at supabase.com. **Region: West EU (London)**. Save the database password somewhere safe.
 2. SQL Editor → New query → paste `supabase/schema.sql` → Run. Then do the same with `supabase/communities.sql` (organisations and worker accounts), then `supabase/reports.sql` (the anonymous count, start/finish counts and area reports). `reports.sql` is safe to run again whenever it's updated.
 3. Authentication → Sign In / Providers → Email: turn **Confirm email off** for launch (people go straight from their check to their plan). Turn it back on later once the confirm flow is built.
-4. Authentication → URL Configuration: set Site URL to your domain (e.g. `https://fettle.example`).
+4. Authentication → URL Configuration: set Site URL to `https://getfettle.co.uk`.
 5. Project settings → API: copy the **Project URL**, the **anon public** key and the **service_role** key. The service_role key is secret: it only ever goes in Cloudflare (step 3), never in the code.
 6. Put the Project URL and anon key in `public/config.js`.
 
@@ -128,17 +128,16 @@ After the check, people see **their next 3 steps**, not a long list: critical ri
 - Barriers: when people say why a step isn't done, the reason is saved. Workers can record it on a visit too ("What's stopping them?" on each case). The ward report, PDF and CSV show the totals, so a council sees *why* residents aren't ready, not just that they aren't.
 - In Communities mode, workers tick "Checked on a visit" on any job the household has done. Households on their own can only report "done", never "verified".
 
-## Before you charge anyone
+## Live since 12 November 2026
+getfettle.co.uk is live. No screen says "draft", "pilot", "preview" or "prototype" in live mode. Still to do:
+- **Pay the ICO data protection fee** (ico.org.uk). It is required now the site collects personal data. Add the registration number to `public/privacy.html` once paid.
+- The privacy notice and terms are filled in (James Boyce, trading as Fettle) but have not been checked by a lawyer.
+- The health, fire safety and money content has not had its professional reviews yet (see below). The guides now carry plain safety notes instead of "Draft" banners.
+
+## Reviews still to do
 - The cheaper options shown when someone says "It costs too much" (`CHEAPER` in `src/fettle.html`) need the same review as the other safety content, especially filling water from the tap, carbon monoxide alarms and baby formula.
-- Register with the ICO (data protection fee).
-- Finish and check `public/privacy.html` and `public/terms.html`. They are drafts.
 - Clinical (GP or nurse) and fire service review of the health and safety content.
-- Replace placeholders:
-  - `hello@fettle.example`
-  - the founder quote
-  - the Amazon tag `YOURTAG-21`
-  - "[name, role]" in the news section
-- The guides on feeding a baby and on medicines are marked as drafts until an NHS professional has reviewed them. Remove `flag="clinical"` in `guides/content.py` once they have.
+- The guides on feeding a baby and on medicines carry a "General information, not medical advice" note (`flag="clinical"`). Keep it after review too.
 - Translations need professional checking before the language menu is promoted. Launch in English first.
 
 ## Not built yet
@@ -171,10 +170,10 @@ Fettle must work for people who can't spend anything. What's in place:
 - **Check questions.** Tenure includes "Temporary or supported accommodation" (hostel, B&B, refuge, supported housing). "How do you pay for gas and electricity?" picks up prepayment meters. The budget question already allows £0.
 - **Plan steps.** `prepay` (plan for the meter running out: emergency credit, top up before a storm, additional support credit, fuel vouchers), `moneyhelp` (crisis support by nation: Crisis and Resilience Fund in England, Scottish Welfare Fund, Discretionary Assistance Fund in Wales, Finance Support Service in Northern Ireland), `tempacc` (ask staff what happens in a fire or power cut, keep one bag ready). The evacuation step mentions Residential PEEPs in England. Steps with a `guide` slug link to the guide.
 - **Barrier help.** "It costs too much" always points to council crisis support and the food bank. "It's my landlord's job" sends social tenants to the complaints process and the Housing Ombudsman (England), and people in temporary accommodation to their support worker or the placing council.
-- **Guides** (category "Money and support", marked Draft): `tight-budget`, `prepayment-meters`, `help-you-can-get`, `social-housing`, `for-support-services`.
+- **Guides** (category "Money and support", with a "Rules and amounts change" note): `tight-budget`, `prepayment-meters`, `help-you-can-get`, `social-housing`, `for-support-services`.
 - **Reports.** "Who it reached" and `fettle_groups()` now split out temporary or supported accommodation, prepayment meters and households who can't spend anything. The anonymous count carries the same three flags. Groups under 5 stay hidden.
 
-**Before launch:** the five guides and the three new steps need review by a welfare rights adviser (Citizens Advice or the council's welfare rights team). Scheme names, amounts and dates were checked on 11 November 2026 and will change. The Awaab's Law phase 2 date (30 November 2026) comes from one law-firm article and should be confirmed on GOV.UK. Translations of the new strings are not professionally checked.
+**Still to review:** the five guides and the three new steps need review by a welfare rights adviser (Citizens Advice or the council's welfare rights team). Scheme names, amounts and dates were checked on 11 November 2026 and will change. The Awaab's Law phase 2 date (30 November 2026) comes from one law-firm article and should be confirmed on GOV.UK. Translations of the new strings are not professionally checked.
 
 ## Landing page (November 2026)
 
