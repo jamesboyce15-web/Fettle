@@ -3,7 +3,7 @@ const { chromium } = require('playwright'); const path = require('path');
 (async () => {
   const b = await chromium.launch(); let fail = 0; const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) fail++; };
   const ctx = await b.newContext({ viewport: { width: 900, height: 1000 } }); const p = await ctx.newPage(); const errs = []; p.on('pageerror', e => errs.push(e.message));
-  await p.goto('file://' + path.resolve('public/index.html')); await p.waitForTimeout(300);
+  await p.goto('file://' + require('path').join(require('./proto-site.cjs'), 'index.html')); await p.waitForTimeout(300);
   await p.evaluate(() => proSample()); await p.waitForTimeout(300);
   const O = await p.evaluate(() => outcomeStats(H.filter(h => h.consent && h.consent.share)));
   ok(O.assessed >= 5 && O.identified > 0 && O.sorted <= O.identified && O.verified <= O.sorted, `outcome counts add up (${JSON.stringify(O)})`);
@@ -27,7 +27,7 @@ const { chromium } = require('playwright'); const path = require('path');
   ok((await pop.textContent('body')).includes('Checked on a visit'), 'PDF report includes outcomes');
   if (process.argv[2]) await pop.pdf({ path: process.argv[2] + '/impact-report.pdf', format: 'A4', printBackground: true });
   // households on their own can't verify
-  const q = await ctx.newPage(); await q.goto('file://' + path.resolve('public/index.html')); await q.waitForTimeout(200);
+  const q = await ctx.newPage(); await q.goto('file://' + require('path').join(require('./proto-site.cjs'), 'index.html')); await q.waitForTimeout(200);
   await q.evaluate(() => { cur = fresh(false); Object.assign(cur, { pc: 'M14', adults: 1, home: 'house', tenure: 'own', heat: 'electric', hob: 'electric', water: 'none', food: 'no', kit: [], fa: 'no', budget: 0 }); tier = 'core'; qi = list().length - 1; go('q'); drawQ(); next(); });
   await q.evaluate(() => tick('cash', true)); await q.waitForTimeout(100);
   ok(!(await q.isVisible('.verify')), 'no verify option outside Communities mode');

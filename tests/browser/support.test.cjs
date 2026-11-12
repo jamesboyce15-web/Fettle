@@ -4,7 +4,7 @@ let fails = 0; const ok = (c, m) => { if (!c) fails++; console.log((c ? 'PASS ' 
 (async () => { const b = await chromium.launch(); try {
   const p = await b.newPage({ viewport: { width: 390, height: 844 } }); const errs = []; p.on('pageerror', e => errs.push(e.message));
   await p.route('**fonts.googleapis.com**', r => r.fulfill({ contentType: 'text/css', body: '' })); await p.route('**/api.postcodes.io/**', r => r.fulfill({ status: 404, body: '' }));
-  await p.goto('file://' + path.resolve(__dirname, '../../public/index.html')); await p.waitForTimeout(300);
+  await p.goto('file://' + require('path').join(require('./proto-site.cjs'), 'index.html')); await p.waitForTimeout(300);
   const mk = a => p.evaluate(a => { cur = fresh(false); Object.assign(cur, { home: "house", outdoor: "garden", tenure: "own", adults: 2, heat: "gas", hob: "gas", cold: "slow", healthGate: "no", water: "few", food: "some", kit: ["smoke", "co"], fa: "no", budget: 10, pay: "bill" }, a); const h = cur; const N = needs(h); const g = id => N.find(n => n.id === id);
     return { ids: N.map(n => n.id), money: g("moneyhelp") && g("moneyhelp").why, evac: g("evac") && g("evac").why, cost: barrierHelp(h, N.find(n => n.cat === "buy") || N[0], "cost"), ll: barrierHelp(h, { id: "smoke", title: "Smoke alarms", cat: "buy" }, "landlord"), renting: renting(h), tight: tight(h), flags: anonData ? anonData(h).f : null }; }, a);
   ok(await p.evaluate(() => { cur = fresh(false); tier = 'core'; return list().some(q => q.id === 'pay'); }), 'check asks how energy is paid for');

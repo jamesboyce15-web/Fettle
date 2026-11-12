@@ -1,5 +1,5 @@
 const {chromium}=require('playwright');const path=require('path');
-(async()=>{const b=await chromium.launch();const base='file://'+path.resolve('public')+'/';const out=process.argv[2]||require("os").tmpdir();let fail=0;
+(async()=>{const b=await chromium.launch();const base='file://'+require('path').join(require('./proto-site.cjs'))+'/';const out=process.argv[2]||require("os").tmpdir();let fail=0;
 const ctx=await b.newContext({viewport:{width:390,height:844}});
 const pages=['guides/index.html',...require('fs').readdirSync('public/guides').filter(f=>f!=='index.html').map(f=>'guides/'+f)];
 for(const u of pages){const p=await ctx.newPage();const errs=[];p.on('pageerror',e=>errs.push(e.message));p.on('console',m=>{if(m.type()==='error'&&!/fonts|ERR_/.test(m.text()))errs.push(m.text())});

@@ -5,7 +5,7 @@ const { chromium } = require('playwright'); const path = require('path');
   const b = await chromium.launch(); let fail = 0; const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) fail++; };
   const p = await b.newPage({ viewport: { width: 390, height: 844 } }); const errs = []; p.on('pageerror', e => errs.push(e.message));
   await p.route('https://api.postcodes.io/**', r => r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ result: { admin_district: ['Rochdale'], country: ['England'] } }) }));
-  await p.goto('file://' + path.resolve(process.argv[2] || 'public/index.html')); await p.waitForTimeout(300);
+  await p.goto('file://' + (process.argv[2] ? path.resolve(process.argv[2]) : require('path').join(require('./proto-site.cjs'), 'index.html'))); await p.waitForTimeout(300);
   const H0 = o => p.evaluate(o => { const h = fresh(false); Object.assign(h, { adults: 1, home: 'house', tenure: 'own', heat: 'electric', hob: 'electric', water: 'none', food: 'no', kit: [], fa: 'no' }, o); return h; }, o);
   const ev = (o, fn) => p.evaluate(([o, fn]) => { const h = fresh(false); Object.assign(h, { adults: 1, home: 'house', tenure: 'own', heat: 'electric', hob: 'electric', water: 'none', food: 'no', kit: [], fa: 'no' }, o); return eval(fn)(h); }, [o, fn]);
 

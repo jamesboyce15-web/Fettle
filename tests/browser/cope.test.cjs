@@ -4,7 +4,7 @@ let fails = 0; const ok = (c, m) => { if (!c) fails++; console.log((c ? 'PASS ' 
 (async () => { const b = await chromium.launch(); try {
   const p = await b.newPage({ viewport: { width: 390, height: 844 }, acceptDownloads: true }); const errs = []; p.on('pageerror', e => errs.push(e.message));
   await p.route('**fonts.googleapis.com**', r => r.fulfill({ contentType: 'text/css', body: '' })); await p.route('**/api.postcodes.io/**', r => r.fulfill({ status: 404, body: '' }));
-  await p.goto('file://' + path.resolve(__dirname, '../../public/index.html')); await p.waitForTimeout(300);
+  await p.goto('file://' + require('path').join(require('./proto-site.cjs'), 'index.html')); await p.waitForTimeout(300);
   // a family of 4 with a formula-fed baby, on the 6th floor
   await p.evaluate(() => { start(false); Object.assign(cur, { pc: "", home: "flat", floor: 6, lift: "yes", doorEntry: "no", outdoor: "none", tenure: "social", adults: 2, kids: 1, under5: 1, babies: 1, feed: "formula", bottles: 6 }); qi = list().findIndex(q => q.type === "scen"); drawQ(); });
   ok(await p.textContent('#q-sec') === 'Could you cope?', 'scenarios come straight after who lives here');

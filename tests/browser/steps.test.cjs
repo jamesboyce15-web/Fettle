@@ -3,7 +3,7 @@ const { chromium } = require('playwright'); const path = require('path');
 (async () => {
   const b = await chromium.launch(); let fail = 0; const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) fail++; };
   const ctx = await b.newContext({ viewport: { width: 390, height: 900 }, acceptDownloads: true }); const p = await ctx.newPage(); const errs = []; p.on('pageerror', e => errs.push(e.message));
-  await p.goto('file://' + path.resolve('public/index.html')); await p.waitForTimeout(300);
+  await p.goto('file://' + require('path').join(require('./proto-site.cjs'), 'index.html')); await p.waitForTimeout(300);
   await p.evaluate(() => { cur = fresh(false); Object.assign(cur, { pc: 'M14', home: 'flat', floor: 3, lift: 'yes', tenure: 'rent', adults: 2, heat: 'gas', hob: 'gas', water: 'none', food: 'no', kit: ['torch'], fa: 'no', budget: 0 }); tier = 'core'; qi = list().length - 1; go('q'); drawQ(); next(); });
   await p.waitForTimeout(300);
   const ids = await p.evaluate(() => nextSteps(H[0]).map(x => x.id));
@@ -33,7 +33,7 @@ const { chromium } = require('playwright'); const path = require('path');
   await p.evaluate(() => { const h = H[0]; h.done = {}; h.bought = {}; h.commit = {}; h.nudged14 = null; h.scores[0].d = new Date(Date.now() - 15 * 864e5).toISOString(); render(); });
   ok((await p.textContent('.followup')).includes('How are you getting on?'), '2-week check-in when nothing is done');
   // north star in report
-  const q = await ctx.newPage(); await q.setViewportSize({ width: 900, height: 1000 }); await q.goto('file://' + path.resolve('public/index.html')); await q.waitForTimeout(300);
+  const q = await ctx.newPage(); await q.setViewportSize({ width: 900, height: 1000 }); await q.goto('file://' + require('path').join(require('./proto-site.cjs'), 'index.html')); await q.waitForTimeout(300);
   await q.evaluate(() => proSample()); await q.evaluate(() => reportView()); await q.waitForTimeout(300);
   ok((await q.textContent('#homebox')).includes('sorted at least one priority gap within 30 days'), 'north star shown in the report');
   ok(errs.length === 0, 'no page errors ' + errs.join(' | '));

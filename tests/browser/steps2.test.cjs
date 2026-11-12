@@ -3,7 +3,7 @@ const { chromium } = require('playwright'); const path = require('path');
 (async () => {
   const b = await chromium.launch(); let fail = 0; const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); if (!c) fail++; };
   const ctx = await b.newContext({ viewport: { width: 390, height: 900 }, acceptDownloads: true }); const p = await ctx.newPage(); const errs = []; p.on('pageerror', e => errs.push(e.message));
-  await p.goto('file://' + path.resolve('public/index.html')); await p.waitForTimeout(300);
+  await p.goto('file://' + require('path').join(require('./proto-site.cjs'), 'index.html')); await p.waitForTimeout(300);
   await p.evaluate(() => { cur = fresh(false); Object.assign(cur, { pc: 'M14', home: 'house', tenure: 'own', adults: 2, heat: 'gas', hob: 'gas', water: 'none', food: 'no', kit: ['torch', 'smoke', 'co', 'radio'], fa: 'no', budget: 0 }); tier = 'core'; qi = list().length - 1; go('q'); drawQ(); next(); });
   await p.waitForTimeout(300);
   // situations

@@ -3,7 +3,7 @@ const { chromium } = require('playwright'); const path=require('path');
  for (const L of ['en','pl']) {
   const p = await b.newPage(); const errs=[]; p.on('pageerror',e=>errs.push(e.message));
   await p.route('**fonts.googleapis.com**', r => r.fulfill({ contentType: 'text/css', body: '' }));
-  await p.goto('file://' + path.resolve('public/index.html') + '?lang='+L); await p.waitForTimeout(200);
+  await p.goto('file://' + require('path').join(require('./proto-site.cjs'), 'index.html') + '?lang='+L); await p.waitForTimeout(200);
   const r = await p.evaluate(() => {
     const flat = Object.assign(fresh(false), { home: "flat", floor: 5, lift: "yes", outdoor: "none", tenure: "social", adults: 2, under5: 1, feed: "formula", heat: "electric", hob: "electric", cold: "fast", healthGate: "no", water: "none", food: "no", kit: [], budget: 5, doorEntry: "yes" });
     const house = Object.assign(fresh(false), { home: "house", outdoor: "garden", tenure: "own", adults: 2, heat: "gas", hob: "gas", cold: "slow", healthGate: "no", water: "none", food: "no", kit: [], budget: 5, pump: "yes" });

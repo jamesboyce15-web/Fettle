@@ -4,7 +4,7 @@ let fails = 0; const ok = (c, m) => { if (!c) fails++; console.log((c ? 'PASS ' 
 (async () => { const b = await chromium.launch(); try {
   const p = await b.newPage({ viewport: { width: 390, height: 844 } }); const errs = []; p.on('pageerror', e => errs.push(e.message));
   await p.route('**fonts.googleapis.com**', r => r.fulfill({ contentType: 'text/css', body: '' })); await p.route('**/api.postcodes.io/**', r => r.fulfill({ status: 404, body: '' }));
-  await p.goto('file://' + path.resolve(__dirname, '../../public/index.html')); await p.waitForTimeout(300);
+  await p.goto('file://' + require('path').join(require('./proto-site.cjs'), 'index.html')); await p.waitForTimeout(300);
   const r = await p.evaluate(() => { const all = {}; const mk = a => { const h = fresh(false); Object.assign(h, { home: 'flat', floor: 9, lift: 'hard', doorEntry: 'yes', outdoor: 'none', tenure: 'temp', adults: 1, over70: 1, under5: 1, babies: 1, feed: 'formula', bottles: 6, dogs: 1, heat: 'gas', hob: 'gas', cold: 'fast', healthGate: 'yes', health: ['meds', 'fridge', 'device', 'stairs', 'memory', 'hearing', 'alarm'], water: 'none', food: 'no', kit: [], fa: 'no', budget: 0, pay: 'prepay', psr: 'no' }, a); H = [h]; view = 0;
       needs(h).forEach(x => { all[x.id] = { n: (HOW_STEPS[x.id] || []).length, acts: howActs(h, x), msg: msgText(h, x.id), panel: !!(x.psrpanel || x.medpanel) }; }); };
     mk({}); mk({ tenure: 'own', kit: ['firstaid'] }); mk({ tenure: 'rent' }); return all; });

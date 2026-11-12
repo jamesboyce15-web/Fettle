@@ -6,7 +6,7 @@ const OUT = { M1: ['Manchester'], WA14: ['Trafford'], WA1: ['Warrington'], WA8: 
   const p = await b.newPage({ viewport: { width: 390, height: 844 } }); const errs = []; p.on('pageerror', e => errs.push(e.message));
   await p.route('**fonts.googleapis.com**', r => r.fulfill({ contentType: 'text/css', body: '' }));
   await p.route('**/api.postcodes.io/outcodes/**', r => { const k = decodeURIComponent(r.request().url().split('/').pop()); const d = OUT[k]; r.fulfill(d ? { contentType: 'application/json', body: JSON.stringify({ result: { admin_district: d, country: ['England'] } }) } : { status: 404, body: '' }); });
-  await p.goto('file://' + path.resolve(__dirname, '../../public/index.html')); await p.waitForTimeout(300);
+  await p.goto('file://' + require('path').join(require('./proto-site.cjs'), 'index.html')); await p.waitForTimeout(300);
   const at = async pc => p.evaluate(async pc => { const h = fresh(false); h.pc = pc; await lookupPc(h); H = [h]; view = 0; const d = document.createElement('div'); d.innerHTML = psrPanel(h); return { net: network(h).name, netCo: h.netCo, water: h.waterCo, text: d.textContent.replace(/\s+/g, ' ') }; }, pc);
   let r = await at('M1'); ok(r.net === 'Electricity North West' && r.water === 'uu', 'Manchester: ENWL and United Utilities');
   r = await at('WA14'); ok(r.net === 'Electricity North West' && r.water === 'uu', 'Altrincham (WA postcode, Trafford): ENWL, not SP');

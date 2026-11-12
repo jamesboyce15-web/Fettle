@@ -145,3 +145,9 @@ revoke all on function public.fettle_new_code() from public, anon, authenticated
 grant execute on function public.fettle_create_org(text, text[]) to service_role;
 grant execute on function public.fettle_invite(uuid, text, text) to service_role;
 grant execute on function public.fettle_new_code() to service_role;
+-- From Supabase's security check: give the code generator a fixed search path.
+alter function public.fettle_new_code() set search_path = public, extensions;
+-- The row-level policies call the membership checks for every role, signed-out visitors included, so all three need them.
+-- They only answer "is the caller a member", which is always false for a signed-out visitor. Supabase's checker flags them; that's expected.
+grant execute on function public.is_org_member(uuid) to anon, authenticated, service_role;
+grant execute on function public.is_org_admin(uuid) to anon, authenticated, service_role;

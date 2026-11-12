@@ -1,7 +1,7 @@
 const { chromium } = require('playwright');const path=require('path');
 (async () => { const b = await chromium.launch(); const out=process.argv[2]||require("os").tmpdir(); let fail=0; const ok=(c,m)=>{console.log(c?'ok ':'FAIL',m); if(!c)fail++;};
  const ctx=await b.newContext({viewport:{width:390,height:844}}); const p=await ctx.newPage(); const errs=[]; p.on('pageerror',e=>errs.push(e.message));
- await p.goto('file://'+path.resolve('public/index.html')); await p.waitForTimeout(300);
+ await p.goto('file://'+require('path').join(require('./proto-site.cjs'), 'index.html')); await p.waitForTimeout(300);
  // consumer: finish core check
  await p.evaluate(()=>{start(false);Object.assign(cur,{home:"house",adults:2,water:"none",food:"no",kit:[],fa:"no",budget:0,heat:"gas",hob:"gas"});qi=list().length-1;drawQ();next();});
  await p.waitForTimeout(300);
@@ -32,7 +32,7 @@ const { chromium } = require('playwright');const path=require('path');
  ok(await p.evaluate(()=>H[0].countMe===true),'count-me consent');
  // pro report
  const q=await ctx.newPage(); q.on('pageerror',e=>errs.push(e.message));
- await q.goto('file://'+path.resolve('public/index.html')); await q.waitForTimeout(300);
+ await q.goto('file://'+require('path').join(require('./proto-site.cjs'), 'index.html')); await q.waitForTimeout(300);
  await q.evaluate(()=>{proSample();});
  await q.waitForTimeout(300);
  await q.evaluate(()=>reportView()); await q.waitForTimeout(300);

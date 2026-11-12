@@ -4,7 +4,7 @@ let fails = 0; const ok = (c, m) => { if (!c) fails++; console.log((c ? 'PASS ' 
 (async () => { const b = await chromium.launch(); try {
   const p = await b.newPage({ viewport: { width: 390, height: 844 }, acceptDownloads: true }); const errs = []; p.on('pageerror', e => errs.push(e.message));
   await p.route('**fonts.googleapis.com**', r => r.fulfill({ contentType: 'text/css', body: '' })); await p.route('**/api.postcodes.io/**', r => r.fulfill({ status: 404, body: '' }));
-  await p.goto('file://' + path.resolve(__dirname, '../../public/index.html')); await p.waitForTimeout(300);
+  await p.goto('file://' + require('path').join(require('./proto-site.cjs'), 'index.html')); await p.waitForTimeout(300);
   const run = a => p.evaluate(a => { cur = fresh(false); Object.assign(cur, a); tier = "core"; qi = list().length - 1; go("q"); drawQ(); next(); }, a);
   // no critical risk: headline is the steps, score is secondary
   await run({ home: "house", outdoor: "garden", tenure: "own", adults: 2, heat: "electric", hob: "electric", cold: "slow", healthGate: "no", water: "few", food: "some", kit: ["torch", "smoke", "radio", "power", "warm"], fa: "no", budget: 5 });
