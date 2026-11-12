@@ -161,3 +161,5 @@ Checked on 12 November 2026. Covers the 23 website guides, the plan and digital 
 - Citizens Advice: power cuts; prepayment meters
 
 Full links are at the foot of each guide on getfettle.co.uk/guides.
+
+One source is cited but was not opened in this pass: the Food Standards Agency page on use-by dates. Its wording ("you can't see, smell or taste the bacteria that cause food poisoning") is quoted from memory and should be checked.
