@@ -175,7 +175,7 @@ body="""
 <p>From the second day, the scripts explain how to make rainwater or water from a water butt, lake or stream safer to drink, by filtering it and then boiling it, using purification tablets, or using a small amount of household bleach. Follow <a href="making-water-safe.html">our step-by-step guide</a> exactly.</p>
 
 <h2>If someone has diarrhoea</h2>
-<p>Keep them drinking. Use rehydration sachets if you have them. If you don't, the scripts give a homemade recipe: add <b>6 level teaspoons of sugar, 1 level teaspoon of salt and 1 heaped teaspoon of bicarbonate of soda to 1 litre of fluid</b>. They should use their own bowl for handwashing, and shouldn't prepare food for others.</p>
+<p>Keep them drinking. Use rehydration sachets if you have them. If you don't, the scripts give a homemade recipe: add <b>6 level teaspoons of sugar, 1 level teaspoon of salt and 1 heaped teaspoon of bicarbonate of soda to 1 litre of fluid</b>. Measure exactly: too much salt is dangerous. For a baby or young child, use sachets, or ask a pharmacist or call 111 first. They should use their own bowl for handwashing, and shouldn't prepare food for others.</p>
 
 <h2>In very cold or very hot weather</h2>
 <ul>
@@ -225,7 +225,7 @@ body="""
 <li><b>Look at it.</b> If there's an oily film on top, don't drink it.</li>
 <li><b>Filter it</b> through a coffee filter, a pillowcase or a bed sheet. Throw away what's caught, and repeat until the water runs clear.</li>
 <li><b>Disinfect it.</b> Either boil it, or use in-date water purification tablets.</li>
-<li><b>If you can't boil it and have no tablets,</b> use ordinary household bleach, ideally unscented: <b>a quarter of a teaspoon for every 10 litres</b> (about a bucketful). Stir and leave it for <b>15 minutes</b>. Don't use more.</li>
+<li><b>If you can't boil it and have no tablets,</b> use ordinary household bleach, ideally unscented: <b>a quarter of a teaspoon for every 10 litres</b> (about a bucketful). Stir and leave it for <b>15 minutes</b>. Don't use more. Use plain bleach: not thick bleach, and not a cleaner with bleach in it.</li>
 <li><b>Smell it.</b> Treated water should smell slightly of chlorine. If the smell is very strong, leave it uncovered for 2 hours before drinking.</li>
 <li><b>Store it</b> somewhere cool and dark, covered.</li>
 </ol>
@@ -539,6 +539,7 @@ body="""
 <h2>When the power comes back</h2>
 <ul>
 <li>Plug things back in one at a time.</li>
+<li>Don't leave e-bike, e-scooter or other big batteries charging while you sleep or go out, and use the charger that came with them.</li>
 <li>Check the fridge and freezer before eating anything from them.</li>
 <li>Reset clocks, timers and the boiler if it needs it.</li>
 <li>Recharge torches, power banks and phones, and replace anything you used.</li>
@@ -711,7 +712,7 @@ body="""
 <p><a href="https://www.gov.uk/government/publications/preparing-infant-formula-safely-during-water-supply-disruptions-and-when-travelling" target="_blank" rel="noopener">Read the full FSA guidance</a>. During a boil water or do not drink notice, your water company will also give advice for babies.</p>
 
 <h2>In a national power cut</h2>
-<p>The UK Chief Medical Officers' radio advice for a national power cut says that children under 2 who aren't breastfed need at least 1 litre of fluid a day (about 4 cups), and formula counts towards this. Keep to the usual feeding schedule. Wash bottles, give them a final rinse with a little of your cleanest water, and make up formula with more of that cleanest water. Listen to the radio for updated advice.</p>
+<p>The UK Chief Medical Officers' radio advice for a national power cut says that children under 2 who aren't breastfed need at least 1 litre of fluid a day (about 4 cups), and formula counts towards this. Keep to the usual feeding schedule. Wash bottles, give them a final rinse with a little of your cleanest water, and make up formula with more of that cleanest water. This is a last resort: ready-made formula and single-use pre-sterilised bottles are safer. Listen to the radio for updated advice.</p>
 
 <h2>Sterilising</h2>
 <ul>
