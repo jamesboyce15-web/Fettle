@@ -2505,9 +2505,8 @@ function render(keep){
     <p class="sm mute">${s}% ready for 72 hours${left?`. ${left===1?"1 thing":`${left} things`} in your plan.`:"."}</p>
     <div class="meter thin"><i style="width:${Math.max(3,s)}%"></i></div>
     ${progressLine(h)}</div>`;
-  document.getElementById("res").innerHTML=`${followUpHTML(h,view)}${headline}
+  document.getElementById("res").innerHTML=`${saveBox}${followUpHTML(h,view)}${headline}
   ${isPro()?"":nextStepsHTML(h,!oc)}
-  ${saveBox}
   ${anonCard(h)}
   ${copeHTML(h)}
   <details class="fold"${isPro()?" open":""}><summary><span>Your progress</span><span class="mute sm">Score, what you're ready for, and critical risks</span></summary>

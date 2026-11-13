@@ -78,11 +78,20 @@
     const { data: buys } = await sb.from("purchases").select("household_id,product");
     const paid = new Set((buys || []).filter(b => b.product === "book_digital").map(b => b.household_id));
     const fromDb = (rows || []).map(r => { const h = Object.assign(fresh(r.data.other), r.data); h._id = r.id; h.paid = paid.has(r.id) || FREEBOOK; saved.set(r.id, JSON.stringify(strip(h))); return h; });
-    const pending = H.filter(h => !h._id); // a check finished before signing in
+    let pending = H.filter(h => !h._id); // a check finished before signing in
+    let restored = false;
+    if (!pending.length) { // or finished before confirming the email, on an earlier page
+      let kept = null; try { kept = JSON.parse(localStorage.getItem("fettle_pending") || "null"); } catch (x) {}
+      if (!kept && Array.isArray(meta.pending_plans)) kept = meta.pending_plans;
+      if (kept && kept.length && !fromDb.length) { pending = kept.map(d => Object.assign(fresh(d.other), d)); restored = true; }
+    }
+    try { localStorage.removeItem("fettle_pending"); } catch (x) {}
+    if (meta.pending_plans) sb.auth.updateUser({ data: { pending_plans: null } }).catch(console.error);
     H = fromDb.concat(pending);
     user = { id: u.id, email: u.email, name: meta.first_name || u.email.split("@")[0], households: H, remind: !!meta.remind_emails };
     setAcct();
     await saveAll();
+    if (restored) { view = H.length - 1; go("r"); render(); say(H[view]._id ? "Your email is confirmed and your plan is saved." : "Your email is confirmed."); }
   }
 
   async function saveAll() {
@@ -137,9 +146,15 @@
         if (!name) return errBox("Enter your first name.");
         if (pw.length < 8) return errBox("Use at least 8 characters for your password.");
         const news = document.getElementById("a-news").checked, remind = document.getElementById("a-remind").checked;
-        const { data, error } = await sb.auth.signUp({ email, password: pw, options: { data: { first_name: name, weekly_emails: news, remind_emails: remind } } });
+        // The check lives only in this page until it's saved. Email confirmation opens a new page, so keep a copy:
+        // in this browser, and (if small) on the account, for when the link opens in a different browser or the mail app.
+        const pend = H.filter(h => !h._id).map(strip), pj = JSON.stringify(pend);
+        try { if (pend.length) localStorage.setItem("fettle_pending", pj); } catch (x) {}
+        const meta = { first_name: name, weekly_emails: news, remind_emails: remind };
+        if (pend.length && pj.length < 6000) meta.pending_plans = pend;
+        const { data, error } = await sb.auth.signUp({ email, password: pw, options: { data: meta } });
         if (error) return errBox(/registered|exists/i.test(error.message) ? "There's already an account with that email. Sign in instead." : error.message);
-        if (!data.session) return errBox("Check your email and click the link to confirm your account, then sign in.");
+        if (!data.session) return errBox("Nearly done. Check your email and click the link we've sent you. Your plan will be waiting.");
         await loadUser(data.user);
       } else {
         const { data, error } = await sb.auth.signInWithPassword({ email, password: pw });

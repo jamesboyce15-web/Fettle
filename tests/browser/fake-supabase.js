@@ -84,7 +84,9 @@
       auth: {
         async getSession() { return { data: { session: sess() } }; },
         onAuthStateChange() {},
-        async signUp({ email, password, options }) { const d = db(); if (d.users.find(u => u.email === email)) return { data: {}, error: { message: "User already registered" } }; const u = { id: uid(), email, user_metadata: options.data, pw: password }; d.users.push(u); save(d); const s = { access_token: "tok_" + u.id, user: u }; S("session", s); return { data: { user: u, session: s }, error: null }; },
+        async signUp({ email, password, options }) { const d = db(); if (d.users.find(u => u.email === email)) return { data: {}, error: { message: "User already registered" } }; const u = { id: uid(), email, user_metadata: options.data, pw: password }; d.users.push(u); save(d);
+          if (localStorage.getItem("fake_confirm")) { S("otp", { email, to: "/" }); return { data: { user: u, session: null }, error: null }; } // "Confirm email" switched on, as live
+          const s = { access_token: "tok_" + u.id, user: u }; S("session", s); return { data: { user: u, session: s }, error: null }; },
         async signInWithPassword({ email, password }) { const u = db().users.find(u => u.email === email && u.pw === password); if (!u) return { data: {}, error: { message: "Invalid login credentials" } }; const s = { access_token: "tok_" + u.id, user: u }; S("session", s); return { data: { user: u, session: s }, error: null }; },
         async signOut() { localStorage.removeItem("fake_session"); return {}; },
         async resetPasswordForEmail() { return {}; },
