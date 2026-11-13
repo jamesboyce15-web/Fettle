@@ -57,6 +57,14 @@ const OUTCODES = {
   const d = await p.evaluate(() => [ '2026-11-13', '2027-01-05', '2027-03-28', '2027-03-29', '2027-07-20', '2027-10-31' ].map(x => nextSeason(new Date(x + 'T12:00:00Z')).toISOString().slice(0, 10)));
   ok(JSON.stringify(d) === JSON.stringify(['2027-01-05', '2027-03-29', '2027-03-29', '2027-07-20', '2027-11-01', '2027-11-01']), 'season dates: 5 Jan, Monday after clocks forward, 20 Jul, Monday after clocks back');
 
+  // guide pages keep the QR code's source on the way to the check and reminders
+  await p.goto(site.replace('index.html', 'guides/power-cut.html') + '?src=workbook'); await p.waitForTimeout(100);
+  ok((await p.$$eval('a[data-app]', a => a.map(x => x.getAttribute('href')))).join() === '../?src=workbook#check,../?src=workbook#check,../remind?src=workbook', 'guide links carry ?src=workbook to the check and to reminders');
+  await p.goto(site.replace('index.html', 'guides/no-water.html')); await p.waitForTimeout(100);
+  ok((await p.getAttribute('.cta a.btn', 'href')) === '../?src=workbook#check', 'and on the next guide in the same visit');
+  ok(/Get a free reminder each season/.test(await p.textContent('.cta')), 'every guide offers seasonal reminders');
+  await p.evaluate(() => sessionStorage.clear());
+
   // footer links and the landing page still work
   await p.goto(site); await p.waitForTimeout(200);
   ok(await p.isVisible('#v-landing') && !(await p.isVisible('#v-tool')), 'no ?go: landing page as before');

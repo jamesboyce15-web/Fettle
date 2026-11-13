@@ -54,7 +54,7 @@ ul.cols{columns:2 240px;column-gap:28px}
 .numbers h2{margin-top:0} .numbers dl{margin:0} .numbers div{display:flex;flex-wrap:wrap;gap:4px 12px;padding:8px 0;border-top:1px solid var(--line)}
 .numbers dt{font-weight:700;min-width:170px} .numbers dd{margin:0}
 .cta{background:var(--brand);color:var(--brand-ink);border-radius:14px;padding:22px 20px;margin:36px 0}
-.cta h2{margin:0 0 8px;color:inherit} .cta p{margin:0 0 14px}
+.cta h2{margin:0 0 8px;color:inherit} .cta p{margin:0 0 14px}.cta p.remind{margin:16px 0 0;font-size:.95rem}.cta p.remind a{color:inherit;font-weight:700}
 .btn{display:inline-block;background:var(--hivis);color:#1c2522;font-weight:700;text-decoration:none;padding:13px 20px;border-radius:10px;font-size:1.05rem}
 .btn2{font:inherit;font-size:.95rem;font-weight:700;background:none;border:1.5px solid var(--line2);color:var(--ink);border-radius:10px;padding:9px 14px;cursor:pointer}
 .sources{font-size:.9rem;color:var(--mute);border-top:1px solid var(--line);padding-top:18px;margin-top:30px}
@@ -100,7 +100,7 @@ def page(title, desc, body, current, canon):
 <body>
 <header class="top">
   <a class="brand" href="../">{LOGO}<span>fettle</span></a>
-  <nav><a href="./"{' aria-current="page"' if current == 'hub' else ''}>Guides</a><a href="../#check">Free check</a></nav>
+  <nav><a href="./"{' aria-current="page"' if current == 'hub' else ''}>Guides</a><a href="../#check" data-app>Free check</a></nav>
 </header>
 <main class="wrap">
 {body}
@@ -109,6 +109,12 @@ def page(title, desc, body, current, canon):
   <p>Fettle gives general guidance based on official UK sources. It isn't medical advice and doesn't replace official warnings. In an emergency, follow official alerts and call 999 if life is at risk.</p>
   <p><a href="../">Fettle</a> · <a href="./">Guides</a> · <a href="../privacy.html">Privacy</a> · <a href="../terms.html">Terms</a></p>
 </footer>
+<script>
+// Keep track of where a visitor came from (a workbook QR code adds ?src=...) when they go on to the check or reminders.
+(function(){{try{{var q=new URLSearchParams(location.search).get("src");if(q&&/^[a-z0-9-]{{1,20}}$/.test(q))sessionStorage.setItem("fettle-src",q);
+var s=sessionStorage.getItem("fettle-src");if(!s)return;
+document.querySelectorAll("a[data-app]").forEach(function(a){{var h=a.getAttribute("href"),i=h.indexOf("#"),b=i<0?h:h.slice(0,i),f=i<0?"":h.slice(i);a.setAttribute("href",b+(b.indexOf("?")<0?"?":"&")+"src="+encodeURIComponent(s)+f);}});}}catch(e){{}}}})();
+</script>
 </body>
 </html>
 """
@@ -117,7 +123,8 @@ def page(title, desc, body, current, canon):
 CTA = """<div class="cta">
   <h2>Get a plan for your home, free</h2>
   <p>Answer a few plain questions about your home and who lives there. We'll tell you exactly what you need, how much of it, and what to do first. Free. About 4 minutes.</p>
-  <a class="btn" href="../#check">Check my household</a>
+  <a class="btn" href="../#check" data-app>Check my household</a>
+  <p class="remind">Already sorted? <a href="../remind" data-app>Get a free reminder each season</a> to check your supplies: four emails a year, no password.</p>
 </div>"""
 
 FLAGS = {
@@ -158,7 +165,7 @@ hub = f"""<p class="kick">Free guides</p>
 <div class="start"><h2>New to this? Start with three things.</h2>
 <ol><li>Store 3 days of water: 3 litres per person per day.</li><li>Keep 3 days of food that needs no cooking. <a href="no-cook-meals.html">Here are six meals</a>.</li><li>Join the <a href="priority-services-register.html">Priority Services Register</a> if anyone at home might need extra help.</li></ol>
 <p>Then read <a href="national-power-cut.html">what the UK's Chief Medical Officers will say on the radio</a> if the whole country loses power.</p>
-<p style="margin:0">Or <a href="../#check">take the free check</a> and get a plan for your home.</p></div>
+<p style="margin:0">Or <a href="../#check" data-app>take the free check</a> and get a plan for your home.</p></div>
 <div class="chips noprint" role="group" aria-label="Filter guides">{chips}</div>
 <ul class="cards" id="cards">{cards}</ul>
 {CTA}

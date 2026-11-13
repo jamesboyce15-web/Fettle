@@ -47,7 +47,7 @@ ul.cols{columns:2 240px;column-gap:28px}
 .numbers h2{margin-top:0} .numbers dl{margin:0} .numbers div{display:flex;flex-wrap:wrap;gap:4px 12px;padding:8px 0;border-top:1px solid var(--line)}
 .numbers dt{font-weight:700;min-width:170px} .numbers dd{margin:0}
 .cta{background:var(--brand);color:var(--brand-ink);border-radius:14px;padding:22px 20px;margin:36px 0}
-.cta h2{margin:0 0 8px;color:inherit} .cta p{margin:0 0 14px}
+.cta h2{margin:0 0 8px;color:inherit} .cta p{margin:0 0 14px}.cta p.remind{margin:16px 0 0;font-size:.95rem}.cta p.remind a{color:inherit;font-weight:700}
 .btn{display:inline-block;background:var(--hivis);color:#1c2522;font-weight:700;text-decoration:none;padding:13px 20px;border-radius:10px;font-size:1.05rem}
 .btn2{font:inherit;font-size:.95rem;font-weight:700;background:none;border:1.5px solid var(--line2);color:var(--ink);border-radius:10px;padding:9px 14px;cursor:pointer}
 .sources{font-size:.9rem;color:var(--mute);border-top:1px solid var(--line);padding-top:18px;margin-top:30px}
@@ -72,7 +72,7 @@ footer{border-top:1px solid var(--line);padding:20px 16px;font-size:.85rem;color
 <body>
 <header class="top">
   <a class="brand" href="../"><svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#173f35"/><path d="M8 15.5 16 9l8 6.5V24a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1z" fill="none" stroke="#f6f7f4" stroke-width="2" stroke-linejoin="round"/><path d="M16 14.5c1.9 1.7 2.8 3.2 2.8 4.6a2.8 2.8 0 0 1-5.6 0c0-1.4.9-2.9 2.8-4.6z" fill="#f2a900"/></svg><span>fettle</span></a>
-  <nav><a href="./">Guides</a><a href="../#check">Free check</a></nav>
+  <nav><a href="./">Guides</a><a href="../#check" data-app>Free check</a></nav>
 </header>
 <main class="wrap">
 <article>
@@ -120,7 +120,8 @@ footer{border-top:1px solid var(--line);padding:20px 16px;font-size:.85rem;color
 <div class="cta">
   <h2>Get a plan for your home, free</h2>
   <p>Answer a few plain questions about your home and who lives there. We'll tell you exactly what you need, how much of it, and what to do first. Free. About 4 minutes.</p>
-  <a class="btn" href="../#check">Check my household</a>
+  <a class="btn" href="../#check" data-app>Check my household</a>
+  <p class="remind">Already sorted? <a href="../remind" data-app>Get a free reminder each season</a> to check your supplies: four emails a year, no password.</p>
 </div>
 <div class="sources"><h2>Sources</h2><ul><li><a href="https://www.gov.uk/government/collections/awaabs-law-in-the-social-rented-sector" target="_blank" rel="noopener">GOV.UK: Awaab&#x27;s Law in the social rented sector (phases and dates)</a></li><li><a href="https://www.gov.uk/government/publications/awaabs-law-guidance-for-tenants-in-social-housing/awaabs-law-guidance-for-tenants-in-social-housing" target="_blank" rel="noopener">GOV.UK: Awaab&#x27;s Law, guidance for tenants in social housing</a></li><li><a href="https://england.shelter.org.uk/professional_resources/news_and_updates/how_awaabs_law_changes_the_rules_on_hazards_in_social_housing" target="_blank" rel="noopener">Shelter England: how Awaab&#x27;s Law changes the rules on hazards in social housing</a></li><li><a href="https://www.gov.uk/government/publications/smoke-and-carbon-monoxide-alarms-explanatory-booklet-for-landlords" target="_blank" rel="noopener">GOV.UK: smoke and carbon monoxide alarms, booklet for landlords</a></li><li><a href="https://www.gov.uk/government/publications/residential-personal-emergency-evacuation-plans-residential-peeps/residential-peeps-factsheet" target="_blank" rel="noopener">GOV.UK: Residential PEEPs factsheet</a></li><li><a href="https://assets.publishing.service.gov.uk/media/692838312a37784b16ecf629/Residential_PEEPs_Guidance_for_Responsible_Persons.pdf" target="_blank" rel="noopener">GOV.UK: Residential PEEPs, guidance for responsible persons</a></li><li><a href="https://www.manchesterfire.gov.uk/your-safety/high-rise-and-building-safety-taskforce/support-for-high-rise-residents/residents-faqs" target="_blank" rel="noopener">Greater Manchester Fire and Rescue Service: high-rise residents&#x27; FAQs</a></li></ul>
 <p class="disc">Checked against these sources on 12 November 2026. Official advice changes: if anything here differs from what your council, water or power company, or emergency services tell you, follow them.</p></div>
@@ -131,5 +132,11 @@ footer{border-top:1px solid var(--line);padding:20px 16px;font-size:.85rem;color
   <p>Fettle gives general guidance based on official UK sources. It isn't medical advice and doesn't replace official warnings. In an emergency, follow official alerts and call 999 if life is at risk.</p>
   <p><a href="../">Fettle</a> · <a href="./">Guides</a> · <a href="../privacy.html">Privacy</a> · <a href="../terms.html">Terms</a></p>
 </footer>
+<script>
+// Keep track of where a visitor came from (a workbook QR code adds ?src=...) when they go on to the check or reminders.
+(function(){try{var q=new URLSearchParams(location.search).get("src");if(q&&/^[a-z0-9-]{1,20}$/.test(q))sessionStorage.setItem("fettle-src",q);
+var s=sessionStorage.getItem("fettle-src");if(!s)return;
+document.querySelectorAll("a[data-app]").forEach(function(a){var h=a.getAttribute("href"),i=h.indexOf("#"),b=i<0?h:h.slice(0,i),f=i<0?"":h.slice(i);a.setAttribute("href",b+(b.indexOf("?")<0?"?":"&")+"src="+encodeURIComponent(s)+f);});}catch(e){}})();
+</script>
 </body>
 </html>
