@@ -81,17 +81,22 @@
     let pending = H.filter(h => !h._id); // a check finished before signing in
     let restored = false;
     if (!pending.length) { // or finished before confirming the email, on an earlier page
-      let kept = null; try { kept = JSON.parse(localStorage.getItem("fettle_pending") || "null"); } catch (x) {}
-      if (!kept && Array.isArray(meta.pending_plans)) kept = meta.pending_plans;
-      if (kept && kept.length && !fromDb.length) { pending = kept.map(d => Object.assign(fresh(d.other), d)); restored = true; }
+      let kept = null, bi = -1;
+      try { kept = JSON.parse(localStorage.getItem("fettle_pending") || "null"); const v = localStorage.getItem("fettle_pending_book"); if (kept && v !== null) bi = +v; } catch (x) {}
+      if (!kept && Array.isArray(meta.pending_plans)) { kept = meta.pending_plans; bi = Number.isInteger(meta.pending_book) ? meta.pending_book : -1; }
+      if (kept && kept.length && !fromDb.length) {
+        pending = kept.map(d => Object.assign(fresh(d.other), d)); restored = true;
+        if (bi >= 0 && pending[bi] && FREEBOOK) { pending[bi].paid = true; restored = pending[bi]; } // the free book: ready to open
+      }
     }
-    try { localStorage.removeItem("fettle_pending"); } catch (x) {}
-    if (meta.pending_plans) sb.auth.updateUser({ data: { pending_plans: null } }).catch(console.error);
+    try { localStorage.removeItem("fettle_pending"); localStorage.removeItem("fettle_pending_book"); } catch (x) {}
+    if (meta.pending_plans || meta.pending_book !== undefined) sb.auth.updateUser({ data: { pending_plans: null, pending_book: null } }).catch(console.error);
     H = fromDb.concat(pending);
     user = { id: u.id, email: u.email, name: meta.first_name || u.email.split("@")[0], households: H, remind: !!meta.remind_emails };
     setAcct();
     await saveAll();
-    if (restored) { view = H.length - 1; go("r"); render(); say(H[view]._id ? "Your email is confirmed and your plan is saved." : "Your email is confirmed."); }
+    if (restored && restored !== true) { view = H.indexOf(restored); openBook(); say("Your email is confirmed. Here's your book."); }
+    else if (restored) { view = H.length - 1; go("r"); render(); say(H[view]._id ? "Your email is confirmed and your plan is saved." : "Your email is confirmed."); }
   }
 
   async function saveAll() {
@@ -149,9 +154,11 @@
         // The check lives only in this page until it's saved. Email confirmation opens a new page, so keep a copy:
         // in this browser, and (if small) on the account, for when the link opens in a different browser or the mail app.
         const pend = H.filter(h => !h._id).map(strip), pj = JSON.stringify(pend);
-        try { if (pend.length) localStorage.setItem("fettle_pending", pj); } catch (x) {}
+        // If they were on their way to the free book, remember which plan, so the book opens after the link too.
+        const bookIdx = wantBook ? H.filter(h => !h._id).indexOf(wantBook) : -1;
+        try { if (pend.length) localStorage.setItem("fettle_pending", pj); if (bookIdx >= 0) localStorage.setItem("fettle_pending_book", String(bookIdx)); } catch (x) {}
         const meta = { first_name: name, weekly_emails: news, remind_emails: remind };
-        if (pend.length && pj.length < 6000) meta.pending_plans = pend;
+        if (pend.length && pj.length < 6000) { meta.pending_plans = pend; if (bookIdx >= 0) meta.pending_book = bookIdx; }
         const { data, error } = await sb.auth.signUp({ email, password: pw, options: { data: meta } });
         if (error) return errBox(/registered|exists/i.test(error.message) ? "There's already an account with that email. Sign in instead." : error.message);
         if (!data.session) return errBox("Nearly done. Check your email and click the link we've sent you. Your plan will be waiting.");

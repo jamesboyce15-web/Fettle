@@ -44,6 +44,20 @@ let fails = 0; const ok = (c, m) => { if (!c) fails++; console.log((c ? 'PASS ' 
     db = await q.evaluate(() => JSON.parse(localStorage.getItem('fake_db')));
     ok(db.households.filter(h => db.users.find(u => u.email === 'b@example.com').id === h.user_id).length === 1, 'different browser: check restored from the account and saved');
     ok(await q.isVisible('#res'), 'different browser: lands on the plan');
+
+    // ---- on the way to the free book: the book opens after the link, no questions again ----
+    const r = await page();
+    await r.goto('http://localhost:8772/'); await r.evaluate(() => localStorage.setItem('fake_confirm', '1')); await r.reload(); await r.waitForTimeout(400);
+    await finishCheck(r); await r.waitForTimeout(150);
+    await r.evaluate(() => { extra(); cur.surname = 'Boyce'; qi = list().length - 1; drawQ(); next(); }); await r.waitForTimeout(200);
+    ok(await r.isVisible('#v-auth'), 'book: asked to create an account');
+    await r.fill('#a-name', 'James'); await r.fill('#a-email', 'c@example.com'); await r.fill('#a-pw', 'password123'); await r.click('button[type=submit]'); await r.waitForTimeout(400);
+    const to3 = await r.evaluate(() => fakeClickLink()); await r.goto('http://localhost:8772' + to3); await r.waitForTimeout(900);
+    ok(await r.isVisible('#v-book') && /Boyce/.test(await r.textContent('#v-book')), 'book: after the link, the finished book opens with their name on it');
+    ok(!(await r.isVisible('#v-q')), 'book: no questions again');
+    db = await r.evaluate(() => JSON.parse(localStorage.getItem('fake_db')));
+    ok(db.households.some(h => h.data.surname === 'Boyce'), 'book: answers saved');
+    r.errs.length && console.log(r.errs);
     ok(!p.errs.length && !q.errs.length, 'no page errors ' + p.errs.concat(q.errs).join(' | '));
   } finally { await b.close(); srv.close(); }
   console.log(fails ? `${fails} FAILED` : 'ALL PASS'); process.exit(fails ? 1 : 0);
