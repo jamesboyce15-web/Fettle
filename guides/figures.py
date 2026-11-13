@@ -166,3 +166,113 @@ FIGS["warmroom"] = fig(
     + label(315, 232, ["Everyone in one room, in layers and hats, with blankets. Feet up off the floor."], 13, weight=700),
     "Heat and live in one room. Close the curtains at dusk, block draughts, and get up and move about at least once an hour.",
     "A living room with curtains closed, a rolled towel along the bottom of the door, and three people in hats sharing blankets on a sofa.", vb="0 0 600 250")
+
+
+# ---------- how much water to store ----------
+def bottle(x, y, s=1.0):
+    w, h = 14 * s, 40 * s
+    return (f'<g transform="translate({x},{y})"><rect x="{w * .3}" y="0" width="{w * .4}" height="{5 * s}" rx="1" fill="{WATERD}"/>'
+            f'<path d="M{w * .25} {5 * s} H{w * .75} L{w} {11 * s} V{h} H0 V{11 * s} Z" fill="{WATER}" stroke="{INK}" stroke-width="1.6" stroke-linejoin="round"/>'
+            f'<rect x="1" y="{18 * s}" width="{w - 2}" height="{8 * s}" fill="#fff" opacity=".8"/></g>')
+
+
+def bottles(x0, y0, n, per_row):
+    return "".join(bottle(x0 + (i % per_row) * 17, y0 + (i // per_row) * 46) for i in range(n))
+
+
+FIGS["waterstore"] = fig(
+    f'<rect x="20" y="166" width="560" height="6" rx="2" fill="{LINE}"/>'
+    + bottles(52, 120, 5, 5) + label(92, 196, ["1 person", "9 litres: 5 bottles"], 13, weight=700)
+    + bottles(178, 74, 9, 5) + label(220, 196, ["2 people", "18 litres: 9 bottles"], 13, weight=700)
+    + bottles(352, 28, 18, 9) + label(428, 196, ["4 people", "36 litres: 18 bottles"], 13, weight=700)
+    + label(300, 238, ["Large 2-litre bottles. Keep them somewhere cool and dark, like under a bed."], 13, color=BRAND, weight=700),
+    "3 litres per person per day, for 3 days. Add more for pets, babies on powder formula, or hot weather.",
+    "Rows of 2-litre water bottles: 5 for one person, 9 for two people and 18 for a family of four.", vb="0 0 600 255")
+
+
+# ---------- a grab bag ----------
+def item(cx, cy, art, name):
+    return f'<g transform="translate({cx - 30},{cy - 30})">{art}</g>' + label(cx, cy + 44, name, 11)
+
+
+_torch = f'<rect x="8" y="24" width="38" height="14" rx="4" fill="{INK}"/><path d="M46 20 H56 V42 H46 Z" fill="{LINE}" stroke="{INK}" stroke-width="2"/><path d="M58 22 L66 14 M58 31 H68 M58 40 L66 48" stroke="{AMBER}" stroke-width="2.5"/>'
+_bank = f'<rect x="14" y="12" width="30" height="44" rx="5" fill="{BRAND}"/><rect x="20" y="20" width="18" height="6" rx="2" fill="{AMBER}"/><path d="M29 56 Q29 64 44 64 H56" stroke="{INK}" stroke-width="2.5" fill="none"/>'
+_docs = f'<rect x="10" y="10" width="40" height="50" rx="2" fill="#fff" stroke="{INK}" stroke-width="2"/><path d="M16 22 H44 M16 30 H44 M16 38 H36" stroke="{LINE}" stroke-width="2"/><rect x="6" y="6" width="48" height="58" rx="4" fill="{WATER}" opacity=".45" stroke="{WATERD}" stroke-width="2"/>'
+_cash = f'<rect x="4" y="20" width="44" height="26" rx="3" fill="#cfe3cf" stroke="{INK}" stroke-width="2"/><circle cx="26" cy="33" r="7" fill="none" stroke="{BRAND}" stroke-width="2"/><circle cx="50" cy="46" r="10" fill="{AMBER}" stroke="{INK}" stroke-width="2"/>'
+_keys = f'<circle cx="18" cy="24" r="10" fill="none" stroke="{INK}" stroke-width="3"/><path d="M26 30 L50 50 M42 44 L48 38 M47 48 L52 43" stroke="{INK}" stroke-width="3" stroke-linecap="round"/><circle cx="18" cy="24" r="3" fill="{AMBER}"/>'
+_meds = f'<rect x="12" y="14" width="22" height="40" rx="4" fill="#fff" stroke="{INK}" stroke-width="2"/><rect x="10" y="8" width="26" height="9" rx="2" fill="{RED}"/><rect x="38" y="26" width="18" height="28" rx="2" fill="#fff" stroke="{INK}" stroke-width="2"/><path d="M42 34 H52 M42 40 H52 M42 46 H50" stroke="{LINE}" stroke-width="2"/>'
+_glasses = f'<circle cx="16" cy="32" r="11" fill="{SOFT}" stroke="{INK}" stroke-width="3"/><circle cx="44" cy="32" r="11" fill="{SOFT}" stroke="{INK}" stroke-width="3"/><path d="M27 30 Q30 26 33 30 M5 30 L0 24 M55 30 L60 24" stroke="{INK}" stroke-width="3" fill="none"/>'
+_kit = f'<rect x="6" y="16" width="48" height="36" rx="5" fill="#2f8f5b" stroke="{INK}" stroke-width="2"/><rect x="22" y="10" width="16" height="8" rx="2" fill="none" stroke="{INK}" stroke-width="2"/><path d="M30 24 V44 M20 34 H40" stroke="#fff" stroke-width="6"/>'
+_food = bottle(6, 10, 1.2).replace('<g transform="translate(6,10)">', '<g transform="translate(6,8)">') + f'<rect x="30" y="30" width="28" height="22" rx="3" fill="{AMBER}" stroke="{INK}" stroke-width="2"/><path d="M34 38 H54" stroke="{INK}" stroke-width="1.5"/>'
+_warm = f'<path d="M6 40 Q30 4 54 40 Z" fill="{BRAND}"/><rect x="4" y="38" width="52" height="10" rx="4" fill="{AMBER}"/><circle cx="30" cy="8" r="6" fill="{AMBER}"/><path d="M14 54 H46" stroke="#c0c6c4" stroke-width="6" stroke-linecap="round"/>'
+_note = f'<rect x="8" y="8" width="34" height="46" rx="2" fill="#fff" stroke="{INK}" stroke-width="2"/><path d="M14 18 H36 M14 26 H36 M14 34 H30" stroke="{LINE}" stroke-width="2"/><path d="M48 10 L52 50" stroke="{BRAND}" stroke-width="4" stroke-linecap="round"/>'
+_list = f'<rect x="10" y="6" width="40" height="52" rx="2" fill="#fff" stroke="{INK}" stroke-width="2"/>' + "".join(f'<path d="M16 {16 + i * 9} H44" stroke="{LINE}" stroke-width="2"/>' for i in range(5)) + f'<text x="30" y="13" text-anchor="middle" font-size="7" font-weight="700" fill="{BRAND}">NUMBERS</text>'
+
+FIGS["grabbag"] = fig(
+    # the rucksack
+    f'<path d="M48 70 Q48 44 86 44 Q124 44 124 70 V212 Q124 222 114 222 H58 Q48 222 48 212 Z" fill="{BRAND}" stroke="{INK}" stroke-width="2.5"/>'
+    f'<path d="M70 44 Q70 26 86 26 Q102 26 102 44" fill="none" stroke="{INK}" stroke-width="4"/>'
+    f'<rect x="60" y="130" width="52" height="52" rx="8" fill="#245849" stroke="{INK}" stroke-width="2"/><path d="M60 146 H112" stroke="{AMBER}" stroke-width="2.5"/>'
+    + label(86, 246, ["A bag you", "already own"], 13, weight=700)
+    + "".join(item(210 + (i % 6) * 70, 50 + (i // 6) * 112, a, n) for i, (a, n) in enumerate([
+        (_torch, ["Torch and", "batteries"]), (_bank, ["Charged", "power bank"]), (_docs, ["ID copies,", "in a wallet"]),
+        (_cash, ["Cash,", "£10 each"]), (_keys, ["Spare", "keys"]), (_meds, ["Medicines", "and a list"]),
+        (_glasses, ["Glasses,", "hearing aids"]), (_kit, ["Small first", "aid kit"]), (_food, ["Water and", "snacks"]),
+        (_warm, ["Hats and", "warm layers"]), (_note, ["Notepad,", "pen, whistle"]), (_list, ["Numbers", "on paper"])])),
+    "Keep it by the front door, and tell everyone at home where it is. Check it every season.",
+    "A rucksack next to twelve things to pack: torch, power bank, copies of ID, cash, spare keys, medicines and a list, glasses, a small first aid kit, water and snacks, warm clothes, a notepad and whistle, and a paper list of phone numbers.",
+    vb="0 0 600 270")
+
+
+# ---------- a radio for emergencies ----------
+FIGS["radio"] = fig(
+    # radio body
+    f'<rect x="40" y="70" width="290" height="140" rx="16" fill="#fff" stroke="{INK}" stroke-width="2.5"/>'
+    f'<path d="M80 70 Q80 36 185 36 Q290 36 290 70" fill="none" stroke="{INK}" stroke-width="5"/>'
+    + "".join(f'<circle cx="{86 + (i % 6) * 14}" cy="{110 + (i // 6) * 14}" r="4" fill="{LINE}"/>' for i in range(30))
+    # dial window with the FM band
+    + f'<rect x="180" y="92" width="130" height="40" rx="5" fill="{SOFT}" stroke="{INK}" stroke-width="2"/>'
+    + "".join(f'<line x1="{190 + i * 11}" y1="116" x2="{190 + i * 11}" y2="{124 if i % 2 else 128}" stroke="{INK}" stroke-width="1.5"/>' for i in range(11))
+    + f'<text x="192" y="108" font-size="11" fill="{INK}">88</text><text x="282" y="108" font-size="11" fill="{INK}">108</text><line x1="243" y1="96" x2="243" y2="130" stroke="{RED}" stroke-width="2.5"/>'
+    # band switch with FM picked
+    + f'<rect x="180" y="146" width="130" height="24" rx="12" fill="{SOFT}" stroke="{INK}" stroke-width="2"/><rect x="182" y="148" width="62" height="20" rx="10" fill="{BRAND}"/>'
+    + f'<text x="213" y="163" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">FM</text><text x="277" y="163" text-anchor="middle" font-size="13" fill="{LINE}">AM / LW</text>'
+    + f'<circle cx="290" cy="190" r="12" fill="{LINE}" stroke="{INK}" stroke-width="2"/><text x="200" y="196" font-size="11" fill="{INK}">tuning</text>'
+    # wind-up handle
+    + f'<path d="M330 120 H352 V156 H340" fill="none" stroke="{INK}" stroke-width="5" stroke-linejoin="round"/><circle cx="338" cy="156" r="6" fill="{AMBER}" stroke="{INK}" stroke-width="2"/>'
+    + label(362, 108, ["wind-up handle", "(on some radios)"], 11, anchor="start")
+    # label stuck on the front
+    + f'<g transform="rotate(-3 80 178)"><rect x="56" y="168" width="110" height="34" rx="2" fill="#fff8d8" stroke="{INK}" stroke-width="1.5"/>'
+    + f'<text x="62" y="181" font-size="9" fill="{INK}">R2 FM ____  R4 FM ____</text><text x="62" y="195" font-size="9" fill="{INK}">Local FM ________</text></g>'
+    # batteries in their packet, and a notepad
+    + f'<rect x="440" y="150" width="56" height="50" rx="4" fill="{WATER}" opacity=".6" stroke="{WATERD}" stroke-width="2"/>'
+    + "".join(f'<rect x="{448 + i * 12}" y="158" width="9" height="34" rx="2" fill="{INK}"/><rect x="{448 + i * 12}" y="158" width="9" height="6" fill="{AMBER}"/>' for i in range(4))
+    + label(468, 218, ["Spare batteries,", "in the packet"], 12)
+    + f'<rect x="530" y="146" width="48" height="56" rx="2" fill="#fff" stroke="{INK}" stroke-width="2"/><path d="M536 160 H572 M536 170 H572 M536 180 H564" stroke="{LINE}" stroke-width="2"/>'
+    + label(554, 218, ["Pen and", "paper"], 12)
+    + label(300, 258, ["Switch to FM, find each station, and write its number on a label."], 13, color=BRAND, weight=700),
+    "BBC Radio 4 stopped broadcasting on long wave in June 2026. Choose FM, and test the radio each season.",
+    "A battery radio with the band switch set to FM, a dial, a wind-up handle, and a label on the front with spaces for the Radio 2, Radio 4 and local station FM numbers, next to spare batteries in their packet and a notepad.",
+    vb="0 0 600 270")
+
+
+# ---------- fridge and freezer in a power cut ----------
+def appliance(x, w, h, top, fill, title, time, shelves):
+    y = 210 - h
+    g = f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="8" fill="#fff" stroke="{INK}" stroke-width="2.5"/>'
+    g += f'<rect x="{x + w - 16}" y="{y + 16}" width="6" height="40" rx="3" fill="{LINE}"/>'
+    for i in range(shelves):
+        yy = y + 14 + i * ((h - 24) / shelves)
+        g += f'<rect x="{x + 10}" y="{yy}" width="{w - 34}" height="{(h - 24) / shelves - 8}" rx="3" fill="{fill if i >= shelves - top else SOFT}"/>'
+    return g + label(x + w / 2, 28, [title], 13, weight=700) + label(x + w / 2, 230, [time], 15, weight=700, color=BRAND)
+
+
+FIGS["fridge"] = fig(
+    appliance(40, 110, 150, 0, SOFT, "Fridge", "about 4 hours", 4)
+    + appliance(220, 110, 150, 4, WATER, "Freezer, full", "about 48 hours", 4)
+    + appliance(400, 110, 150, 2, WATER, "Freezer, half full", "about 24 hours", 4)
+    + f'<rect x="545" y="84" width="10" height="90" rx="5" fill="#fff" stroke="{INK}" stroke-width="2"/><rect x="547" y="140" width="6" height="32" fill="{RED}"/><circle cx="550" cy="180" r="9" fill="{RED}" stroke="{INK}" stroke-width="2"/>'
+    + f'<line x1="555" y1="134" x2="566" y2="134" stroke="{INK}" stroke-width="2"/>' + label(580, 132, ["8°C"], 12, weight=700) + label(550, 56, ["Keep", "below"], 11),
+    "If the doors stay shut. Each time you open one, the time gets shorter. Chilled food above 8°C for more than 4 hours goes in the bin.",
+    "A fridge that stays cold for about 4 hours, a full freezer that keeps food frozen for about 48 hours, and a half-full freezer that lasts about 24 hours, with a thermometer showing 8°C.",
+    vb="0 0 600 245")

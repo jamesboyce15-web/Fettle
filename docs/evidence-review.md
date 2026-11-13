@@ -167,7 +167,7 @@ One source is cited but was not opened in this pass: the Food Standards Agency p
 
 ## Added 13 November 2026: illustrated guides
 
-Two new guides with drawings, and drawings added to two existing ones. Every step is from the sources listed.
+Two new guides with drawings, and drawings added to six existing ones. First aid has no drawings on purpose: the book and app send people to the British Red Cross's free guides, videos and app instead. Every step is from the sources listed.
 
 | Guide | What it shows | Sources |
 |---|---|---|
@@ -175,5 +175,10 @@ Two new guides with drawings, and drawings added to two existing ones. Every ste
 | Find and turn off your water, gas and electricity (new) | Stop tap (clockwise to close, never force it); gas emergency control valve (quarter turn, across the pipe is off); consumer unit main switch (usually red, at one end) and tripped switches | United Utilities; WaterSafe; Cadent; Stevenage and Wandsworth councils; GOV.UK flood advice |
 | Making water safe to drink (drawing added) | Filter through cloth, boil or tablets, ¼ teaspoon of plain bleach per 10 litres and wait 15 minutes | UK Chief Medical Officers' water script |
 | Keeping warm without heating (drawing added) | One room, curtains shut, draughts blocked, layers, feet up | UK Chief Medical Officers' warm and cool script |
+| When the water goes off (drawing added) | 2-litre bottles for 1, 2 and 4 people (9, 18 and 36 litres), kept cool and dark | GOV.UK Prepare / Be Ready: 3 litres per person per day for 3 days |
+| Pack a grab bag (drawing added) | The twelve items on the guide's list next to a rucksack | Be Ready kit list; British Red Cross |
+| An emergency radio (drawing added) | Radio set to FM, label with the Radio 2, Radio 4 and local FM numbers, spare batteries in the packet, pen and paper | UK Chief Medical Officers' broadcast plan; BBC long wave closure |
+| Eating safely without power (drawing added) | Fridge about 4 hours, full freezer about 48, half-full about 24; keep below 8°C | Food Standards Agency |
+| Prepayment meters (no drawing) | Meters differ, so a picture could mislead. The guide now says to look up the steps for your meter on your supplier's website, practise now, and keep the steps by the meter | Citizens Advice |
 
 Not sourced, so left out: adding cat litter or sawdust to toilet bags, and double-bagging. A professional could say whether to add them.

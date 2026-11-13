@@ -314,6 +314,7 @@ body="""
 <li>BBC Radio 4 on FM: ______</li>
 <li>Your BBC local radio station on FM: ______</li>
 </ul>
+<!--FIG:radio-->
 
 <h2>Keep a pen and paper with it</h2>
 <p>The broadcast scripts begin by suggesting you write the advice down. Keep a notepad and pen with the radio. Fettle's book has a page for these notes.</p>
@@ -445,6 +446,7 @@ body="""
 
 <h2>Keep the doors shut</h2>
 <p>A closed fridge stays cold for <b>up to about 4 hours</b>. A full freezer keeps food frozen for <b>about 48 hours</b>, or <b>about 24 hours</b> if it's half full. Every time you open the door, that time gets shorter. Decide what you want before you open it, and be quick.</p>
+<!--FIG:fridge-->
 
 <h2>What to throw away</h2>
 <ul>
@@ -565,6 +567,7 @@ body="""
 <h2>How much to store</h2>
 <p>The government asks every home to keep enough water for 3 days. Plan on <b>3 litres per person per day</b> for drinking and basic food preparation. That's 9 litres for one person, 18 for two, 36 for a family of four. More for pets, babies on powder formula, or hot weather.</p>
 <p>Bottled water is easiest. Keep it somewhere cool and dark, and check the dates once a season.</p>
+<!--FIG:waterstore-->
 
 <h2>What the notices mean</h2>
 <p>Your water company will tell you which notice applies. Always follow the notice they give you. Broadly:</p>
@@ -890,6 +893,7 @@ body="""
 <p class="lede">Only about 1 in 5 people have a bag ready to grab if they had to leave in a hurry. You don't need a special kit. A rucksack and things from around the house will do.</p>
 
 <h2>The list</h2>
+<!--FIG:grabbag-->
 <ul class="check">
 <li>Torch and spare batteries, or a wind-up torch</li>
 <li>Phone charger and a charged power bank</li>
@@ -1017,6 +1021,7 @@ body="""
 <ul>
 <li><b>Top up when a weather warning comes,</b> if you can. Shops may shut, card machines may be down, and you may not be able to get out.</li>
 <li><b>Know how to turn on your emergency credit.</b> It's usually about £10. On a smart meter it's on the in-home display. You pay it back on your next top-up.</li>
+<li><b>Practise it now, while the lights are on.</b> Every meter is different, so look up the steps for yours on your supplier's website, or phone them and ask. Write the steps on a card and keep it by the meter with a torch.</li>
 <li><b>Keep your key or card somewhere you'll find it in the dark.</b></li>
 </ul>
 
