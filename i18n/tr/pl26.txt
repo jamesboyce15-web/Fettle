@@ -1,0 +1,3 @@
+0|Ile jedzenia jest w domu, które nie wymaga gotowania ani lodówki?
+1|Wystarczy na {0} dni lub dłużej
+2|Najpierw: na ile czujesz się gotowy. Odpowiedz od razu, bez zastanawiania się. Później zapytamy, co faktycznie masz w domu.

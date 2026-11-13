@@ -1,0 +1,3 @@
+0|Câtă mâncare aveți acasă care nu trebuie gătită și nu are nevoie de frigider?
+1|Destulă pentru {0} zile sau mai mult
+2|Mai întâi: cât de pregătit vă simțiți. Răspundeți după instinct. Mai târziu vă întrebăm ce aveți de fapt acasă.
