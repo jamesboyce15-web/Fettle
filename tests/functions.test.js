@@ -128,6 +128,19 @@ test("reminders: live run sends once per row with an unsubscribe link, then reco
   assert.deepEqual(JSON.parse(rec.init.body), { household_id: HID, kind: "day90" });
 });
 
+test("reminders: a seasonal email to a reminder-only account lists the checks, links to the check and is recorded per person", async () => {
+  const e = { ...env, UNSUBSCRIBE_SECRET: "sec", DRY_RUN: "false", SITE_URL: "https://f.test", FROM_EMAIL: "F <a@f.test>", RESEND_API_KEY: "re_x" };
+  const calls = mockFetch(url => url.includes("/rpc/") ? res([{ household_id: null, user_id: UID, email: "a@b.c", first_name: null, household_name: null, kind: "season-2027-03", first_score: null, last_score: null }]) : res({ id: "m1" }));
+  const out = await runReminders(e);
+  assert.equal(out.sent, 1);
+  const body = JSON.parse(calls.find(c => c.url.includes("resend.com")).init.body);
+  assert.match(body.subject, /^Spring check/); assert.match(body.text, /smoke and carbon monoxide alarms/);
+  assert.match(body.text, /https:\/\/f\.test\/\?src=reminder#check/); assert.doesNotMatch(body.text, /null|undefined/);
+  const rec = calls.find(c => c.url.includes("/reminders_sent_user"));
+  assert.deepEqual(JSON.parse(rec.init.body), { user_id: UID, kind: "season-2027-03" });
+  assert.ok(!calls.some(c => /\/reminders_sent(\?|$)/.test(c.url)));
+});
+
 test("reminders: email escapes names", () => {
   const m = buildEmail({ first_name: "<b>x</b>", household_name: "My household", kind: "day30", first_score: 10 }, { SITE_URL: "https://f.test" }, "https://u");
   assert.doesNotMatch(m.html, /<b>x<\/b>/);

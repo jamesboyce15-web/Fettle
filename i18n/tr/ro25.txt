@@ -1,0 +1,93 @@
+0|{0}Caiet de lucru{1} Calculează-ți necesarul
+1|De ce are nevoie gospodăria ta pentru {0} zile?
+2|Două întrebări. Copiază răspunsurile în caietul de lucru sau folosește-le ca listă de cumpărături.
+3|Câte persoane locuiesc în casa ta?
+4|Cu una mai puțin
+5|Cu una mai mult
+6|Dacă un bebeluș primește lapte praf, câte mese pe zi? {0}{1} dacă nu aveți bebeluș sau este alăptat{2}
+7|Pentru {0} persoane, pentru {1} zile
+8|{0} litri {1}({2} sticle mari de {3} litri){4}
+9|Mese care nu trebuie gătite și nu au nevoie de frigider
+10|Gustări
+11|Bani cash, în bancnote mici și monede
+12|Lanterne
+13|Pături sau saci de dormit
+14|Apă: {0} litri pentru fiecare persoană, pe zi, conform sfaturilor guvernamentale Be Ready. Adaugă mai multă pentru animale, pe căldură și pentru bebelușii hrăniți cu lapte praf. Bani: sugestia Fettle este £{1} de persoană.
+15|Ține proviziile la zi
+16|Apa îmbuteliată, mâncarea și laptele praf expiră, iar bateriile se pot scurge. Primește în fiecare anotimp un e-mail care îți amintește ce să verifici.
+17|Primește mementouri de sezon
+18|Mai departe
+19|Găsește informațiile pentru zona ta
+20|Primește un memento în fiecare anotimp
+21|Fă verificarea gratuită de {0} minute și primește planul tău
+22|Pentru {0} persoană, pentru {1} zile
+23|Mese de lapte praf gata preparat
+24|{0}Caiet de lucru{1} Găsește informațiile pentru zona ta
+25|Pe cine să suni acolo unde locuiești
+26|Rețeaua de electricitate, compania de apă, consiliul local și pompierii. În timpul unei pene de curent sunt greu de găsit, așa că scrie-le acum în caietul de lucru.
+27|Prima parte a codului tău poștal {0}De exemplu OL{1} sau M{2}. Nu avem nevoie de adresa completă.{3}
+28|Arată informațiile pentru zona mea
+29|Pene de curent
+30|{0}Electricity North West{1}{2}Pană de curent: sună la {3}, gratuit. Registrul Serviciilor Prioritare: {4} {5} {6}.{7}{8}enwl.co.uk/priority{9}
+31|Consiliul tău local
+32|Dacă rămâi fără bani
+33|{0}Crisis Payments{1}: ajutor pentru mâncare, reîncărcarea contorului de energie și lucruri esențiale, dacă ceva neprevăzut te lasă fără bani. Nu trebuie să primești ajutoare sociale.
+34|Sună la {0} {1} {2}, de luni până vineri, între {3} dimineața și {4} după-amiaza, sau {5}aplică online{6}.
+35|Siguranța la incendiu
+36|{0}Greater Manchester Fire and Rescue Service{1} oferă vizite gratuite de siguranță la incendiu persoanelor cu risc mai mare. Verifică online sau sună la {2} {3} {4}.
+37|Verifică dacă poți primi o vizită
+38|Inundații
+39|Verifică riscul de inundații pentru adresa ta
+40|Abonează-te gratuit la avertizările de inundații
+41|Numere valabile oriunde
+42|Scrie-le pe pagina „Găsește informațiile pentru zona ta” din caietul de lucru. Verificat: {0} {1}.
+43|Calculează necesarul gospodăriei tale
+44|{0}SP Energy Networks{1}{2}Pană de curent: sună la {3}, gratuit. Registrul Serviciilor Prioritare: {4} {5} {6} {7}.{8}{9}spenergynetworks.co.uk{10}
+45|Zona ta este acoperită de una dintre acestea. Sună la {0} și vei fi pus în legătură cu cea potrivită.
+46|{0}Severn Trent{1}{2}Urgențe: {3} {4} {5}{6}{7}stwater.co.uk/priority{8}
+47|În jurul orașului Chester poate fi oricare dintre ele. Scrie pe factura de apă.
+48|Ajutorul pe care îl poți primi
+49|{0}Cheshire Fire and Rescue Service{1} oferă vizite gratuite Safe and Well persoanelor cu risc mai mare.
+50|{0}rețeaua locală de electricitate{1}{2}Pană de curent: sună la {3}, gratuit.{4}{5}Găsește operatorul rețelei tale{6}
+51|Altă companie de apă
+52|Găsește compania ta de apă
+53|Numărul este pe factura de apă. Nu știi care e compania? Water UK are un căutător după codul poștal
+54|Găsește-ți consiliul local pe GOV.UK
+55|Pompierii din zona ta oferă vizite gratuite de siguranță la incendiu persoanelor cu risc mai mare. Caută numele serviciului de pompieri și „home fire safety visit”.
+56|Caută „flood warnings” și Scotland.
+57|Caută „flood warnings” și Wales.
+58|Caută „flood warnings” și Northern Ireland.
+59|Acest cod poștal acoperă mai multe consilii locale. Al tău este trecut pe factura de council tax.
+60|Nu am găsit acest cod poștal. Verifică-l și încearcă din nou.
+61|Introdu prima parte a codului poștal, de exemplu OL{0}.
+62|{0}Mementouri gratuite{1} Patru e-mailuri pe an
+63|Ține-ți gospodăria pregătită tot anul
+64|Apa și mâncarea expiră, bateriile se scurg, iar copiii cresc și nu le mai vin hainele. Îți trimitem un e-mail de patru ori pe an cu o verificare de {0} minute:
+65|imediat după Anul Nou
+66|când se dau ceasurile înainte, primăvara
+67|la începutul vacanței de vară
+68|când se dau ceasurile înapoi, toamna
+69|Următorul ar veni pe {0} {1} {2}.
+70|Prenume {0}Opțional{1}
+71|Prima parte a codului tău poștal {0}Opțional, de exemplu OL{1}{2}
+72|Numără-mă, fără nume sau date de contact, printre gospodăriile din zona mea care se pregătesc. Se transmit doar totaluri de cel puțin {0}.
+73|Trimite-mi un link de conectare
+74|Nicio parolă de ținut minte. Ai deja cont? {0}Conectează-te{1} și pornește mementourile din planul tău. {2}Nota de confidențialitate{3}
+75|{0}Mementouri gratuite{1} Aproape gata
+76|Verifică-ți e-mailul
+77|Am trimis un link de conectare la:
+78|Apasă pe el ca să pornești mementourile.
+79|Poate dura un minut. Dacă nu îl găsești, verifică dosarul de spam.
+80|În această versiune de previzualizare nu se trimite nimic.
+81|{0}Mementouri gratuite{1} Gata
+82|Mementourile tale sunt pornite
+83|Următorul tău e-mail: {0}{1} {2} {3}{4}. Conține ce să verifici în acel anotimp și un link ca să vezi cât de pregătit ești acum.
+84|Fiecare e-mail are un link pentru oprirea lor.
+85|Oprește mementourile
+86|Pornește mementourile
+87|Introdu prima parte a codului poștal, de exemplu OL{0}, sau lasă gol.
+88|Calculează-ți necesarul
+89|Informațiile pentru zona ta
+90|Mementouri de sezon
+91|Te rugăm să aștepți un minut și să încerci din nou.
+92|Ne pare rău, nu a mers. Te rugăm să încerci din nou.

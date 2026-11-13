@@ -24,6 +24,7 @@
     const { data } = await sb.auth.getSession();
     if (data.session) await loadUser(data.session.user);
     await handleReturn();
+    await remindArrive();
     if (new URLSearchParams(location.search).get("recheck")) { // link from a reminder email
       history.replaceState(null, "", location.pathname);
       if (user) { const i = H.findIndex(h => checkDue(h)); if (i >= 0) recheck(i); else homeView(); } else authView("signin");
@@ -280,6 +281,39 @@
     if (!r.ok) return errBox("Sorry, that didn't work. Email us and we'll delete it for you.");
     await sb.auth.signOut(); saved.clear(); baseSignOut(); say("Your account and plans have been deleted.");
   };
+
+  // ---------- seasonal reminders at /remind (the workbook's QR code): email only, no password ----------
+  window.remindSend = async function (e) {
+    e.preventDefault();
+    const r = remindRead(); if (!r) return false;
+    const btn = e.target.querySelector("button[type=submit]"); if (btn) btn.disabled = true;
+    try {
+      let area = null, nation = null;
+      if (r.pc) { const t = fresh(false); t.pc = r.pc; await lookupPc(t); area = t.area || null; nation = t.nation || null; }
+      const meta = { remind_emails: true, weekly_emails: false, remind_count: r.count, remind_area: area, remind_nation: nation, remind_src: SRC || null };
+      if (r.name) meta.first_name = r.name;
+      try { localStorage.setItem("fettle_remind", JSON.stringify(meta)); } catch (x) {}
+      const { error } = await sb.auth.signInWithOtp({ email: r.email, options: { emailRedirectTo: location.origin + "/remind?on=1", data: meta, shouldCreateUser: true } });
+      if (error) return errBox(/rate|seconds|security purposes/i.test(error.message) ? "Please wait a minute, then try again." : "Sorry, that didn't work. Please try again.");
+      REM_EMAIL = r.email; remindView("sent");
+    } finally { if (btn) btn.disabled = false; }
+    return false;
+  };
+  window.remindOn = async function () { await window.liveRemind(true); if (user.remind) remindView("on"); };
+  window.remindOff = async function () { await window.liveRemind(false); remindView(); };
+  // Back from the sign-in link: turn reminders on (and keep the area, if they gave one), then say so.
+  async function remindArrive() {
+    if (toolRoute() !== "remind" || !user || user.pro) return;
+    let pend = null; try { pend = JSON.parse(localStorage.getItem("fettle_remind") || "null"); localStorage.removeItem("fettle_remind"); } catch (x) {}
+    if (new URLSearchParams(location.search).get("on") || pend) {
+      const data = Object.assign({}, pend || {}, { remind_emails: true });
+      if (user.name && data.first_name) delete data.first_name;
+      const { error } = await sb.auth.updateUser({ data });
+      if (!error) { user.remind = true; countEvent("remind_signup", data.remind_count ? data.remind_area : null); }
+      history.replaceState(null, "", location.pathname);
+    }
+    go("tool"); remindView(user.remind ? "on" : undefined);
+  }
 
   // ---------- winter test: free book, anonymous area count, start/finish counts ----------
   // The free book still needs a free account: that's what makes the 30-day re-check and reminder possible.

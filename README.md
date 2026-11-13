@@ -18,7 +18,7 @@ Do these in order. Everything stays in **test mode** until step 6.
 
 ### 1. Supabase (accounts and database)
 1. Create a project at supabase.com. **Region: West EU (London)**. Save the database password somewhere safe.
-2. SQL Editor → New query → paste `supabase/schema.sql` → Run. Then do the same with `supabase/communities.sql` (organisations and worker accounts), then `supabase/reports.sql` (the anonymous count, start/finish counts and area reports). `reports.sql` is safe to run again whenever it's updated.
+2. SQL Editor → New query → paste `supabase/schema.sql` → Run. Then do the same with `supabase/communities.sql` (organisations and worker accounts), then `supabase/reports.sql` (the anonymous count, start/finish counts and area reports). `reports.sql` is safe to run again whenever it's updated. Then `supabase/reminders.sql` (seasonal reminders, the workbook tools' counts, `fettle_reminder_signups()`), also safe to run again.
 3. Authentication → Sign In / Providers → Email: turn **Confirm email off** for launch (people go straight from their check to their plan). Turn it back on later once the confirm flow is built.
 4. Authentication → URL Configuration: set Site URL to `https://getfettle.co.uk`.
 5. Project settings → API: copy the **Project URL**, the **anon public** key and the **service_role** key. The service_role key is secret: it only ever goes in Cloudflare (step 3), never in the code.
@@ -183,3 +183,11 @@ Rewritten to convert: one question as the headline, one button, and a link for c
 ## How to do each step
 
 Every plan step carries up to three short instructions and one thing to tap (`HOW_STEPS`, `howActs`, `howHTML` in `src/fettle.html`): an official link, a printable sheet (`numbersSheet`, `shoppingList`, `packList`, `talkSheet`, `neighbourCard`), or a message ready to send (`msgText`, `sendMsg`). Messages to landlords and building managers are always sent in English. The instructions are open on the three next steps and folded in the full plan. `tests/browser/howto.test.cjs` checks every step has them. Check the outside links (fire safety check, Red Cross, GOV.UK council finder, Citizens Advice, Met Office) still work before launch.
+
+## Workbook tools: /calc, /local, /remind
+Each workbook QR code opens one quick job. Cloudflare Pages serves `index.html` for these paths (there is no 404.html), and the app picks the tool from the path, or from `?go=calc` when opened from disk.
+- **/calc**: two questions (people, formula feeds a day) give the workbook's numbers: water, bottles, meals, snacks, feeds, cash, torches, blankets.
+- **/local**: the first half of a postcode gives the power network, water company, council, crisis help (Rochdale's Crisis Payments by name), fire safety visits (GMFRS or Cheshire) and flood links.
+- **/remind**: email only, no password. Sends a Supabase sign-in link; coming back turns reminders on. The area (never the postcode) and the "Help your council plan" tick are kept in the account's metadata.
+- QR codes say which page they came from: `?src=wb-calc`, `wb-local`, `wb-remind`. `select * from fettle_funnel()` shows opens per tool and per QR code; `select * from fettle_reminder_signups()` shows reminder sign-ups per area (5 or more).
+- Reminder emails (workers/reminders): day 30 and day 90 after a first check, then one each season (5 January, the day after the clocks go forward, 20 July, the day after the clocks go back) with the workbook's seasonal checklist. People with no saved check get the seasonal emails only, linking to the check.

@@ -1,0 +1,93 @@
+0|{0}Zeszyt ćwiczeń{1} Policz, czego potrzebujesz
+1|Czego Twoje gospodarstwo domowe potrzebuje na {0} dni?
+2|Dwa pytania. Przepisz odpowiedzi do zeszytu ćwiczeń albo użyj ich jako listy zakupów.
+3|Ile osób mieszka w Twoim domu?
+4|Jedna mniej
+5|Jedna więcej
+6|Jeśli dziecko pije mleko modyfikowane, ile karmień dziennie? {0}{1}, jeśli nie ma dziecka albo jest karmione piersią{2}
+7|Dla {0} osób, na {1} dni
+8|{0} litrów {1}({2} dużych butelek po {3} litry){4}
+9|Posiłki, które nie wymagają gotowania ani lodówki
+10|Przekąski
+11|Gotówka, w drobnych banknotach i monetach
+12|Latarki
+13|Koce lub śpiwory
+14|Woda: {0} litry na osobę dziennie, według rządowych porad Be Ready. Dolicz więcej dla zwierząt, w upały i dla niemowląt karmionych mlekiem w proszku. Gotówka: propozycja Fettle to £{1} na osobę.
+15|Dbaj o świeżość zapasów
+16|Woda butelkowana, jedzenie i mleko modyfikowane mają datę ważności, a baterie mogą wyciec. Raz na sezon dostaniesz e-mail z przypomnieniem, co sprawdzić.
+17|Zapisz się na przypomnienia sezonowe
+18|Dalej
+19|Znajdź informacje dla swojej okolicy
+20|Otrzymuj przypomnienie co sezon
+21|Zrób bezpłatny {0}-minutowy test i otrzymaj swój plan
+22|Dla {0} osoby, na {1} dni
+23|Gotowe mleko modyfikowane (porcje)
+24|{0}Zeszyt ćwiczeń{1} Znajdź informacje dla swojej okolicy
+25|Do kogo dzwonić tam, gdzie mieszkasz
+26|Twój operator sieci energetycznej, firma wodociągowa, urząd gminy (council) i straż pożarna. W czasie przerwy w dostawie prądu trudno je znaleźć, więc zapisz je teraz w zeszycie ćwiczeń.
+27|Pierwsza część Twojego kodu pocztowego {0}Na przykład OL{1} albo M{2}. Nie potrzebujemy pełnego adresu.{3}
+28|Pokaż informacje dla mojej okolicy
+29|Przerwy w dostawie prądu
+30|{0}Electricity North West{1}{2}Przerwa w dostawie prądu: zadzwoń pod {3}, bezpłatnie. Rejestr Usług Priorytetowych: {4} {5} {6}.{7}{8}enwl.co.uk/priority{9}
+31|Twój urząd (council)
+32|Jeśli zabraknie pieniędzy
+33|{0}Crisis Payments{1}: pomoc na jedzenie, doładowanie licznika energii i rzeczy niezbędne, jeśli coś nieoczekiwanego zostawi Cię bez pieniędzy. Nie musisz pobierać zasiłków.
+34|Zadzwoń pod {0} {1} {2}, od poniedziałku do piątku, od {3} rano do {4} po południu, albo {5}złóż wniosek online{6}.
+35|Bezpieczeństwo pożarowe
+36|{0}Greater Manchester Fire and Rescue Service{1} oferuje bezpłatne wizyty w sprawie bezpieczeństwa pożarowego osobom bardziej zagrożonym. Sprawdź online albo zadzwoń pod {2} {3} {4}.
+37|Sprawdź, czy możesz otrzymać wizytę
+38|Powodzie
+39|Sprawdź ryzyko powodzi dla swojego adresu
+40|Zapisz się na bezpłatne ostrzeżenia przed powodzią
+41|Numery ważne wszędzie
+42|Zapisz je na stronie „Znajdź informacje dla swojej okolicy” w zeszycie ćwiczeń. Sprawdzone: {0} {1}.
+43|Policz, czego potrzebuje Twoje gospodarstwo domowe
+44|{0}SP Energy Networks{1}{2}Przerwa w dostawie prądu: zadzwoń pod {3}, bezpłatnie. Rejestr Usług Priorytetowych: {4} {5} {6} {7}.{8}{9}spenergynetworks.co.uk{10}
+45|Twoją okolicę obsługuje jeden z nich. Zadzwoń pod {0}, a połączą Cię z właściwym.
+46|{0}Severn Trent{1}{2}Awarie: {3} {4} {5}{6}{7}stwater.co.uk/priority{8}
+47|W okolicach Chester może to być jedna albo druga firma. Jest to podane na rachunku za wodę.
+48|Pomoc, jaką możesz dostać
+49|{0}Cheshire Fire and Rescue Service{1} oferuje bezpłatne wizyty Safe and Well osobom bardziej zagrożonym.
+50|{0}Twój lokalny operator sieci energetycznej{1}{2}Przerwa w dostawie prądu: zadzwoń pod {3}, bezpłatnie.{4}{5}Znajdź swojego operatora sieci{6}
+51|Inna firma wodociągowa
+52|Znajdź swoją firmę wodociągową
+53|Numer jest na rachunku za wodę. Nie wiesz, która to firma? Water UK ma wyszukiwarkę według kodu pocztowego
+54|Znajdź swój urząd na GOV.UK
+55|Twoja lokalna straż pożarna oferuje bezpłatne wizyty w sprawie bezpieczeństwa pożarowego osobom bardziej zagrożonym. Wyszukaj nazwę swojej straży pożarnej i „home fire safety visit”.
+56|Wyszukaj „flood warnings” i Scotland.
+57|Wyszukaj „flood warnings” i Wales.
+58|Wyszukaj „flood warnings” i Northern Ireland.
+59|Ten kod pocztowy obejmuje więcej niż jeden urząd. Twój jest podany na rachunku za podatek lokalny (council tax).
+60|Nie znaleźliśmy tego kodu pocztowego. Sprawdź go i spróbuj ponownie.
+61|Wpisz pierwszą część kodu pocztowego, na przykład OL{0}.
+62|{0}Bezpłatne przypomnienia{1} Cztery e-maile w roku
+63|Dbaj o gotowość domu przez cały rok
+64|Woda i jedzenie tracą ważność, baterie wyciekają, a dzieci wyrastają z ubrań. Cztery razy w roku wyślemy Ci e-mail z {0}-minutowym sprawdzeniem:
+65|tuż po Nowym Roku
+66|gdy wiosną przestawia się zegarki do przodu
+67|na początku wakacji letnich
+68|gdy jesienią przestawia się zegarki do tyłu
+69|Następny przyszedłby {0} {1} {2}.
+70|Imię {0}Opcjonalnie{1}
+71|Pierwsza część Twojego kodu pocztowego {0}Opcjonalnie, na przykład OL{1}{2}
+72|Policz mnie, bez imienia i danych kontaktowych, wśród gospodarstw domowych w mojej okolicy, które dbają o gotowość. Udostępniamy tylko sumy wynoszące co najmniej {0}.
+73|Wyślij mi link do logowania
+74|Bez hasła do zapamiętania. Masz już konto? {0}Zaloguj się{1} i włącz przypomnienia w swoim planie. {2}Informacja o prywatności{3}
+75|{0}Bezpłatne przypomnienia{1} Prawie gotowe
+76|Sprawdź pocztę e-mail
+77|Wysłaliśmy link do logowania na adres:
+78|Kliknij go, aby włączyć przypomnienia.
+79|Może to potrwać minutę. Jeśli go nie ma, sprawdź folder ze spamem.
+80|W tej wersji podglądowej nic nie jest wysyłane.
+81|{0}Bezpłatne przypomnienia{1} Wszystko gotowe
+82|Twoje przypomnienia są włączone
+83|Twój następny e-mail: {0}{1} {2} {3}{4}. Znajdziesz w nim, co sprawdzić w danym sezonie, i link, żeby zobaczyć, jak dobrze jesteś teraz przygotowany.
+84|Każdy e-mail zawiera link do wyłączenia przypomnień.
+85|Wyłącz przypomnienia
+86|Włącz przypomnienia
+87|Wpisz pierwszą część kodu pocztowego, na przykład OL{0}, albo zostaw puste.
+88|Policz, czego potrzebujesz
+89|Informacje dla Twojej okolicy
+90|Przypomnienia sezonowe
+91|Poczekaj minutę i spróbuj ponownie.
+92|Przepraszamy, nie udało się. Spróbuj ponownie.

@@ -24,7 +24,7 @@
     households: (d, r) => r.org_id ? (r.user_id == null && r.created_by === me() && member(d, r.org_id)) : r.user_id === me(),
     purchases: () => false, organisations: () => false, org_members: () => false, org_invites: () => false,
     case_events: (d, r) => member(d, r.org_id) && r.user_id === me(),
-    anon_checks: (d, r) => !!r.area && !r.user_id, fettle_events: (d, r) => ["check_started", "check_finished"].includes(r.kind) && (r.src === undefined || /^[a-z0-9-]{1,20}$/.test(r.src)),
+    anon_checks: (d, r) => !!r.area && !r.user_id, fettle_events: (d, r) => ["check_started", "check_finished", "tool_calc", "tool_local", "tool_local_found", "tool_remind", "remind_signup"].includes(r.kind) && (r.src === undefined || /^[a-z0-9-]{1,20}$/.test(r.src)),
   };
   function builder(table) {
     const st = { filters: [], op: "select", row: null, single: false };
@@ -76,6 +76,8 @@
     return reply(200, { code, role: "worker", expiresInDays: 14 });
   };
 
+  window.fakeClickLink = () => { const o = L("otp"), u = db().users.find(x => x.email === o.email); S("session", { access_token: "tok_" + u.id, user: u }); return o.to; };
+  window.fakeUser = email => db().users.find(x => x.email === email);
   window.supabase = { createClient() {
     const sess = () => L("session");
     return {
@@ -85,7 +87,10 @@
         async signUp({ email, password, options }) { const d = db(); if (d.users.find(u => u.email === email)) return { data: {}, error: { message: "User already registered" } }; const u = { id: uid(), email, user_metadata: options.data, pw: password }; d.users.push(u); save(d); const s = { access_token: "tok_" + u.id, user: u }; S("session", s); return { data: { user: u, session: s }, error: null }; },
         async signInWithPassword({ email, password }) { const u = db().users.find(u => u.email === email && u.pw === password); if (!u) return { data: {}, error: { message: "Invalid login credentials" } }; const s = { access_token: "tok_" + u.id, user: u }; S("session", s); return { data: { user: u, session: s }, error: null }; },
         async signOut() { localStorage.removeItem("fake_session"); return {}; },
-        async resetPasswordForEmail() { return {}; }, async updateUser() { return { data: { user: sess().user } }; },
+        async resetPasswordForEmail() { return {}; },
+        // Sign-in link: creates the account if new (with options.data as metadata) and remembers the link. The test "clicks" it with window.fakeClickLink().
+        async signInWithOtp({ email, options }) { const d = db(); let u = d.users.find(x => x.email === email); if (!u) { u = { id: uid(), email, user_metadata: options.data || {}, pw: null }; d.users.push(u); save(d); } S("otp", { email, to: options.emailRedirectTo }); return { data: {}, error: null }; },
+        async updateUser({ data } = {}) { const s = sess(); if (data) { const d = db(), u = d.users.find(x => x.id === s.user.id); if (u) { u.user_metadata = Object.assign({}, u.user_metadata, data); save(d); s.user = u; S("session", s); } } return { data: { user: s.user }, error: null }; },
       },
       from: builder,
     };
