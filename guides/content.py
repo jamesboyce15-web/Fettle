@@ -60,6 +60,10 @@ S = {  # shared sources
     "awaab_tenants": ("GOV.UK: Awaab's Law, guidance for tenants in social housing", "https://www.gov.uk/government/publications/awaabs-law-guidance-for-tenants-in-social-housing/awaabs-law-guidance-for-tenants-in-social-housing"),
     "rpeeps_guide": ("GOV.UK: Residential PEEPs, guidance for responsible persons", "https://assets.publishing.service.gov.uk/media/692838312a37784b16ecf629/Residential_PEEPs_Guidance_for_Responsible_Persons.pdf"),
     "crf_gov": ("GOV.UK: Crisis and Resilience Fund, guidance for local authorities in England (1 April 2026 to 31 March 2029)", "https://www.gov.uk/government/publications/crisis-and-resilience-fund-guidance-for-local-authorities-in-england-1-april-2026-to-31-march-2029/the-crisis-and-resilience-fund-guidance-for-local-authorities-in-england-1-april-2026-to-31-march-2029"),
+    "uu_stoptap": ("United Utilities: where is my stop tap?", "https://corporate.unitedutilities.com/your-questions-answered/water-sewer-issues/where-is-my-stop-tap/"),
+    "watersafe": ("WaterSafe: how to find your internal stop tap", "https://watersafe.org.uk/advice/general_plumbing_advice/winter_advice/locate-internal-stop-tap"),
+    "stevenage_elec": ("Stevenage Borough Council: electrical faults in your home (the main switch)", "https://www.stevenage.gov.uk/housing/council-housing/safety-in-your-council-home/electrical-faults"),
+    "wandsworth_elec": ("Wandsworth Council: electrical safety in your home (resetting a tripped switch)", "https://www.wandsworth.gov.uk/housing/council-tenants-and-leaseholders/safety-in-the-home/safety-in-your-council-home-electrical-safety"),
     "survey": ("Cabinet Office: UK public survey of risk perception, resilience and preparedness 2026", "https://www.gov.uk/government/statistics/uk-public-survey-of-risk-perception-resilience-and-preparedness-2026/uk-public-survey-of-risk-perception-resilience-and-preparedness-2026-headline-findings-html"),
 }
 
@@ -220,6 +224,7 @@ body="""
 <p>Never drink flood water. It can contain sewage.</p>
 
 <h2>Step by step</h2>
+<!--FIG:watersafe-->
 <ol class="todo">
 <li><b>Collect it in a clean container.</b> Never use one that has held chemicals, fuel or paint.</li>
 <li><b>Look at it.</b> If there's an oily film on top, don't drink it.</li>
@@ -614,6 +619,7 @@ body="""
 <p class="lede">Even a gas boiler needs electricity to run. In a winter power cut, the house cools quickly. Cold is dangerous for older people, babies and anyone with a heart or lung condition, so start keeping warm before anyone feels cold.</p>
 
 <h2>Make one warm room</h2>
+<!--FIG:warmroom-->
 <ul>
 <li>Choose one room for everyone to spend time in. A smaller room, away from outside walls, holds heat best.</li>
 <li>Close the door and curtains, and block draughts under the door with a rolled-up towel.</li>
@@ -1163,5 +1169,105 @@ body="""
 <p>Fettle for Communities lets staff and volunteers do checks with people, keep their plans with consent, and see, without names, what the people you support are missing and what gets in their way. Ask us about it.</p>
 """ + NUMBERS,
 sources=["survey_sd", "swep", "ofgem_psr", "crf_gov"],
+),
+dict(
+slug="emergency-toilet", cat="water", mins=4, flag=None,
+title="Using the toilet and washing hands when the water is off",
+summary="With pictures. How to flush with a bucket when only the water is off, how to use a bin bag in the toilet when you're told not to flush, and the shared hand-washing bowl.",
+body="""
+<p class="lede">It sounds strange, and nobody wants to think about it. But it's one of the first problems in any long water cut, and a few minutes now means you'll know exactly what to do.</p>
+
+<h2>First: are the sewers still working?</h2>
+<p>What you do depends on this. Your water company or the radio will tell you.</p>
+<ul>
+<li><b>Only your water is off</b>, as in a burst main. The sewers usually still work, so you can flush by hand (below).</li>
+<li><b>A national power cut</b>, or you're told the sewers aren't working. <b>Don't flush at all.</b> Use a bin bag in the toilet (below).</li>
+</ul>
+
+<h2>If only the water is off: flush with a bucket</h2>
+<p>Pour a bucket of water quickly into the bowl. Use bath water or water that isn't safe to drink, never your stored drinking water.</p>
+
+<h2>If you're told not to flush: a bin bag in the toilet</h2>
+<p>The UK Chief Medical Officers' advice for a national power cut is not to flush, and to collect waste in plastic bags, seal them and put them in your normal household waste, ideally an outside bin.</p>
+<!--FIG:toilet-->
+<ol class="todo">
+<li><b>Lift the seat.</b> Put a strong bin bag in the bowl, with the edges over the rim.</li>
+<li><b>Put the seat back down.</b> It holds the bag in place. Use the toilet as normal.</li>
+<li><b>Lift the bag out and tie it tightly.</b> Put it in an outside bin if you have one.</li>
+<li><b>Wash your hands</b> in the shared bowl (below). Put a new bag in.</li>
+</ol>
+<p>Don't try to flush, even with a bucket. Without power, the sewers can't take it.</p>
+
+<h2>Washing hands: one shared bowl</h2>
+<!--FIG:handwash-->
+<ul>
+<li>Fill a washing-up bowl with water and add soap or household disinfectant.</li>
+<li>Everyone shares it for the whole time the water is off, even when it stops looking clean. The Chief Medical Officers say it stays safe for hand-washing.</li>
+<li>Anyone with diarrhoea or sickness uses their own separate bowl.</li>
+<li>Wash your hands after the toilet and before preparing or eating food.</li>
+<li>Soap and water works better than hand sanitiser. Use sanitiser only if you have nothing else.</li>
+</ul>
+
+<h2>Keep these together, now</h2>
+<ul class="todo">
+<li>A roll of strong bin bags, kept by the toilet</li>
+<li>Two washing-up bowls, one marked for anyone who's ill</li>
+<li>Soap or household disinfectant, and hand sanitiser as a backup</li>
+<li>Toilet roll and kitchen roll</li>
+</ul>
+""",
+sources=["cmo_water", "cmo_all", "beready_water", "beready"],
+),
+
+dict(
+slug="turn-off-water-gas-electricity", cat="home", mins=4, flag=None,
+title="Find and turn off your water, gas and electricity",
+summary="With pictures. Where the stop tap, gas valve and main switch usually are, what each looks like, and how to turn it off. Find them now, not in the dark.",
+body="""
+<p class="lede">A burst pipe, a gas smell or a flood warning gives you minutes, not hours. Find these three things now, while the lights are on, and show everyone at home.</p>
+
+<h2>Water: the stop tap</h2>
+<!--FIG:stoptap-->
+<ul>
+<li><b>Where:</b> most inside stop taps are under the kitchen sink. Otherwise look under the stairs, in an airing cupboard, a downstairs toilet, a utility room or the garage.</li>
+<li><b>Off:</b> turn it <b>clockwise</b>. It may take a few minutes for the water to stop.</li>
+<li><b>On:</b> turn it anticlockwise.</li>
+<li><b>Try it now,</b> slowly. Never force it. If it's stiff or won't turn, ask a plumber to look at it before you need it.</li>
+<li><b>When:</b> a burst or leaking pipe.</li>
+</ul>
+
+<h2>Gas: the emergency control valve</h2>
+<!--FIG:gasvalve-->
+<ul>
+<li><b>Where:</b> next to the gas meter. That can be under the stairs, in the kitchen or garage, in a box outside the front, side or back of the house, or in a shared cupboard in a block of flats. An outside box needs its key: find it now.</li>
+<li><b>Off:</b> the lever is normally in line with the pipe. Turn it a quarter turn, so it sits across the pipe.</li>
+<li><b>Don't turn it back on</b> until you're told it's safe.</li>
+<li><b>When:</b> you smell gas, or you're told to. Open doors and windows. Don't use light switches or anything that could spark, and don't light anything. Call <b>0800 111 999</b>, free, any time.</li>
+</ul>
+
+<h2>Electricity: the main switch</h2>
+<!--FIG:fusebox-->
+<ul>
+<li><b>Where:</b> the consumer unit, or fuse box. Often in a hall cupboard, under the stairs, by the front door or in the garage.</li>
+<li><b>Off:</b> the main switch is at one end, usually red and labelled "main switch". Switch it down to turn off all the electricity.</li>
+<li><b>One switch has clicked down on its own?</b> That circuit has tripped. Push it back up. If it trips again, unplug everything on that circuit and plug them back in one at a time to find the one causing it.</li>
+<li><b>Never touch it with wet hands, or if you're standing in water.</b></li>
+<li>Older fuse boxes may have only a main switch, or none. If yours looks nothing like this, ask your landlord or an electrician to show you.</li>
+<li><b>When:</b> a flood is coming into the house and you can reach it safely, or you think there's an electrical fault.</li>
+</ul>
+
+<h2>In a flood</h2>
+<p>If you get a flood warning, the government advises turning off your gas, electricity and water if it's safe to do so. Don't touch an electrical switch if you're standing in water.</p>
+
+<h2>Do this now</h2>
+<ul class="todo">
+<li>Find all three. Take a photo of each on your phone.</li>
+<li>Show everyone at home who's old enough.</li>
+<li>Gently try the stop tap.</li>
+<li>Find the key for an outside meter box, and keep a torch nearby.</li>
+<li>Write where they are in your workbook, or on your <a href="../#check">Fettle plan</a>.</li>
+</ul>
+""",
+sources=["uu_stoptap", "watersafe", "cadent_valve", "cadent_co", "stevenage_elec", "wandsworth_elec", "flood"],
 ),
 ]

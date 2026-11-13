@@ -163,3 +163,17 @@ Checked on 12 November 2026. Covers the 23 website guides, the plan and digital 
 Full links are at the foot of each guide on getfettle.co.uk/guides.
 
 One source is cited but was not opened in this pass: the Food Standards Agency page on use-by dates. Its wording ("you can't see, smell or taste the bacteria that cause food poisoning") is quoted from memory and should be checked.
+
+
+## Added 13 November 2026: illustrated guides
+
+Two new guides with drawings, and drawings added to two existing ones. Every step is from the sources listed.
+
+| Guide | What it shows | Sources |
+|---|---|---|
+| Using the toilet and washing hands when the water is off (new) | Bucket flush if only the water is off; bin bag in the toilet if told not to flush; the shared hand-washing bowl and a separate bowl for illness | UK Chief Medical Officers' water and sanitation script; Be Ready |
+| Find and turn off your water, gas and electricity (new) | Stop tap (clockwise to close, never force it); gas emergency control valve (quarter turn, across the pipe is off); consumer unit main switch (usually red, at one end) and tripped switches | United Utilities; WaterSafe; Cadent; Stevenage and Wandsworth councils; GOV.UK flood advice |
+| Making water safe to drink (drawing added) | Filter through cloth, boil or tablets, ¼ teaspoon of plain bleach per 10 litres and wait 15 minutes | UK Chief Medical Officers' water script |
+| Keeping warm without heating (drawing added) | One room, curtains shut, draughts blocked, layers, feet up | UK Chief Medical Officers' warm and cool script |
+
+Not sourced, so left out: adding cat litter or sawdust to toilet bags, and double-bagging. A professional could say whether to add them.

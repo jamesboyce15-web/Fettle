@@ -53,6 +53,7 @@ ul.cols{columns:2 240px;column-gap:28px}
 .numbers{background:var(--surface);border:2px solid var(--brand);border-radius:12px;padding:16px;margin:30px 0}
 .numbers h2{margin-top:0} .numbers dl{margin:0} .numbers div{display:flex;flex-wrap:wrap;gap:4px 12px;padding:8px 0;border-top:1px solid var(--line)}
 .numbers dt{font-weight:700;min-width:170px} .numbers dd{margin:0}
+.fig{margin:22px 0;padding:14px;background:#fff;border:1px solid var(--line,#d6ddd9);border-radius:14px;break-inside:avoid}.fig svg{display:block;width:100%;height:auto}.fig figcaption{font-size:.95rem;color:var(--mute,#5a6670);margin-top:8px}
 .cta{background:var(--brand);color:var(--brand-ink);border-radius:14px;padding:22px 20px;margin:36px 0}
 .cta h2{margin:0 0 8px;color:inherit} .cta p{margin:0 0 14px}.cta p.remind{margin:16px 0 0;font-size:.95rem}.cta p.remind a{color:inherit;font-weight:700}
 .btn{display:inline-block;background:var(--hivis);color:#1c2522;font-weight:700;text-decoration:none;padding:13px 20px;border-radius:10px;font-size:1.05rem}
@@ -134,7 +135,10 @@ FLAGS = {
 
 by_slug = {g["slug"]: g for g in GUIDES}
 
+from figures import FIGS
 for g in GUIDES:
+    for k, v in FIGS.items(): g["body"] = g["body"].replace(f"<!--FIG:{k}-->", v)
+    assert "<!--FIG:" not in g["body"], g["slug"]
     srcs = "".join(f'<li><a href="{e(S[k][1])}" target="_blank" rel="noopener">{e(S[k][0])}</a></li>' for k in g["sources"])
     related = [x for x in GUIDES if x["slug"] != g["slug"] and x["cat"] == g["cat"]][:2]
     related += [x for x in GUIDES if x not in related and x["slug"] != g["slug"]][: 3 - len(related)]
