@@ -6,3 +6,4 @@ node_modules/
 
 # The workbook is a product for sale: keep it out of the public repository
 book/
+__pycache__/
