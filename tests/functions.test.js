@@ -193,3 +193,32 @@ test("org-invite: only admins; makes a code", async () => {
   const ins = JSON.parse(calls.find(c => c.url.endsWith("/org_invites")).init.body);
   assert.equal(ins.org_id, OID); assert.equal(ins.email, "new@council.gov.uk"); assert.equal(ins.role, "worker");
 });
+
+// ---------- NHS surgery and pharmacy search ----------
+import { find as nhsFind, title as nhsTitle } from "../functions/api/nhs.js";
+const ORG = (id, name, town, pc, roles, tel) => ({ Organisation: { Name: name, Status: "Active", OrgId: { extension: id }, GeoLoc: { Location: { AddrLn1: "1 HIGH STREET", Town: town, PostCode: pc } }, Roles: { Role: roles.map(r => ({ id: r })) }, ...(tel ? { Contacts: { Contact: [{ type: "tel", value: tel }] } } : {}) } });
+function fakeOrd(byName, byPc, orgs) {
+  const calls = [];
+  const f = async url => { calls.push(url); const u = new URL(url);
+    if (u.pathname.endsWith("/organisations")) { const n = u.searchParams.get("Name"), p = u.searchParams.get("PostCode"); const ids = n ? byName[n.toLowerCase()] || [] : byPc[p] || []; return { ok: true, json: async () => ({ Organisations: ids.map(i => ({ OrgId: i })) }) }; }
+    const id = decodeURIComponent(u.pathname.split("/").pop()); return orgs[id] ? { ok: true, json: async () => orgs[id] } : { ok: false }; };
+  f.calls = calls; return f;
+}
+test("NHS search: by name, by town near their postcode, and GP practices only", async () => {
+  const orgs = { A1: ORG("A1", "CHELFORD SURGERY", "MACCLESFIELD", "SK11 9AH", ["RO177", "RO76"], "01625 861316"), A2: ORG("A2", "HMP SOMEWHERE HEALTHCARE", "CHELFORD", "SK11 9ZZ", ["RO177", "RO72"]), A3: ORG("A3", "THE VILLAGE PRACTICE", "CHELFORD", "SK11 9BB", ["RO177", "RO76"]) };
+  const f = fakeOrd({ chelford: ["A1", "A2"] }, { SK11: ["A1", "A2", "A3"] }, orgs);
+  let r = await nhsFind({ type: "gp", q: "Chelford", pc: "SK11" }, f);
+  assert.deepEqual(r.results, [{ name: "Chelford Surgery", tel: "01625 861316", addr: "1 High Street, Macclesfield, SK11 9AH" }]);
+  assert.ok(f.calls[0].includes("PrimaryRoleId=RO177") && f.calls[0].includes("Name=Chelford"));
+  r = await nhsFind({ type: "gp", q: "", pc: "sk11" }, f);
+  assert.equal(r.results.length, 2, "nearby: the two GP practices, not the prison");
+  const g = fakeOrd({}, { SK11: ["A1", "A3"] }, orgs);
+  r = await nhsFind({ type: "gp", q: "village", pc: "SK11" }, g);
+  assert.deepEqual(r.results.map(x => x.name), ["The Village Practice"], "a word that isn't in any name: searched near their postcode");
+  assert.equal(r.results[0].tel, "", "no phone number on file: left blank for them to fill in");
+  r = await nhsFind({ type: "gp", q: "SK11 9AH" }, fakeOrd({}, { SK119AH: ["A1"] }, orgs));
+  assert.equal(r.results[0].name, "Chelford Surgery", "full postcode");
+  assert.deepEqual(await nhsFind({ type: "dentist", q: "x" }, f), { error: "type" });
+  assert.deepEqual((await nhsFind({ type: "gp", q: "<script>" }, f)).results, []);
+  assert.equal(nhsTitle("ST MARY'S PHARMACY AND CLINIC"), "St Mary's Pharmacy and Clinic");
+});

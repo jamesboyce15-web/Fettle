@@ -1,0 +1,25 @@
+0|Numele persoanei
+1|Numărul de telefon al persoanei
+2|La cine ați sta
+3|Adresa persoanei
+4|Cabinetul medicului de familie (GP)
+5|Numele cabinetului
+6|Număr de telefon
+7|Adresă
+8|Căutați-l sau scrieți-l. Lăsați gol ca să-l scrieți de mână în carte.
+9|Farmacia obișnuită
+10|Numele farmaciei
+11|Numele veterinarului
+12|Veterinarul dumneavoastră
+13|Găsiți cabinetul medicului de familie
+14|Găsiți farmacia
+15|Nume sau localitate
+16|Căutare
+17|Scrieți un nume, o localitate sau un cod poștal.
+18|Se caută…
+19|Cabinete din apropiere. Atingeți-l pe al dumneavoastră sau căutați mai sus.
+20|Farmacii din apropiere. Atingeți-o pe a dumneavoastră sau căutați mai sus.
+21|Niciun rezultat. Încercați alt cuvânt sau scrieți detaliile mai jos.
+22|Căutarea nu funcționează acum. Scrieți detaliile mai jos.
+23|Adăugat.
+24|Adăugați numărul de telefon mai jos.

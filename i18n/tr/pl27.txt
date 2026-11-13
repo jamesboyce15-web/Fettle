@@ -1,0 +1,25 @@
+0|Imię i nazwisko
+1|Numer telefonu tej osoby
+2|U kogo byś się zatrzymał
+3|Adres tej osoby
+4|Twoja przychodnia (GP)
+5|Nazwa przychodni
+6|Numer telefonu
+7|Adres
+8|Wyszukaj ją albo wpisz sam. Zostaw puste, żeby wpisać ręcznie w książce.
+9|Twoja apteka
+10|Nazwa apteki
+11|Nazwa weterynarza
+12|Twój weterynarz
+13|Znajdź swoją przychodnię
+14|Znajdź swoją aptekę
+15|Nazwa lub miejscowość
+16|Szukaj
+17|Wpisz nazwę, miejscowość lub kod pocztowy.
+18|Szukam…
+19|Przychodnie w pobliżu. Wybierz swoją albo wyszukaj powyżej.
+20|Apteki w pobliżu. Wybierz swoją albo wyszukaj powyżej.
+21|Brak wyników. Spróbuj innego słowa albo wpisz dane poniżej.
+22|Wyszukiwanie teraz nie działa. Wpisz dane poniżej.
+23|Dodano.
+24|Dopisz poniżej numer telefonu.
