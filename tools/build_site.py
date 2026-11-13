@@ -22,3 +22,8 @@ src = src[:j] + '<script src="live.js"></script>\n' + src[j:]
 out = os.path.join(ROOT, "public", "index.html")
 open(out, "w", encoding="utf8").write(src)
 print("wrote", out, len(src), "bytes")
+
+# The area report page: opened from /admin, or on its own by pasting a result from the SQL editor.
+rep = open(os.path.join(ROOT, "tools", "area-report.html"), encoding="utf8").read().replace("<title>", '<meta name="robots" content="noindex">\n<title>', 1)
+open(os.path.join(ROOT, "public", "area-report.html"), "w", encoding="utf8").write(rep)
+print("wrote public/area-report.html")

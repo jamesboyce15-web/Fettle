@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Fettle area results</title>
+<!-- Area results report. Opened from /admin (which fills it in), or on its own:
+     1. In the Supabase SQL Editor run:  select fettle_area_report('Rochdale');
+     2. Copy the result (one long line of text) and paste it into the box below.
+     3. Make report, then Print or Save as PDF.
+     Nothing you paste leaves your computer. Measure labels and national figures must match MEASURES in src/fettle.html. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--brand:#173f35;--ink:#1c2522;--mute:#5a6670;--line:#d9dfe3;--tint:#e8eee9;--hivis:#f2a900;--bg:#f6f7f4;--good:#1d6b45}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 "Atkinson Hyperlegible",system-ui,sans-serif}
+main{max-width:900px;margin:0 auto;padding:32px 16px 64px}
+h1{font-size:2rem;line-height:1.15;margin:0 0 4px;color:var(--brand)}
+h2{font-size:1.35rem;margin:36px 0 8px;color:var(--brand)}
+p{margin:0 0 10px}
+.mute{color:var(--mute)}.sm{font-size:.9rem}
+.kicker{font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:0 0 6px}
+textarea{width:100%;min-height:140px;font:14px/1.4 ui-monospace,monospace;padding:10px;border:1px solid var(--line);border-radius:10px}
+button{font:inherit;font-weight:700;background:var(--brand);color:#fff;border:0;border-radius:10px;padding:10px 18px;cursor:pointer;margin:8px 8px 0 0}
+button.quiet{background:#fff;color:var(--brand);border:2px solid var(--brand)}
+.err{color:#b42318;font-weight:700}
+.banner{background:#fff4cc;border:1px solid #e8c547;border-radius:12px;padding:12px 14px;margin:16px 0}
+.headline{background:var(--tint);border-radius:14px;padding:18px 20px;margin:20px 0;font-size:1.2rem}
+.headline b{font-size:1.6rem;color:var(--brand)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:12px 0}
+.kpis div{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px}
+.kpis b{display:block;font-size:1.7rem;line-height:1.1;color:var(--brand)}
+.kpis span{font-size:.9rem;color:var(--mute)}
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:.95rem}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--tint);font-size:.85rem}
+td.n,th.n{text-align:right;white-space:nowrap}
+.up{color:var(--good);font-weight:700}
+.scroll{overflow-x:auto}
+footer{margin-top:40px;font-size:.85rem;color:var(--mute)}
+@media (max-width:640px){.kpis{grid-template-columns:repeat(2,1fr)}}
+@media print{#input,.noprint{display:none}body{background:#fff;font-size:12px}main{padding:0}h2{margin-top:18px;break-after:avoid}table{break-inside:auto}tr{break-inside:avoid}.kpis div,table{border-color:#bbb}}
+</style>
+</head>
+<body>
+<main>
+<section id="input">
+  <p class="kicker">Fettle</p>
+  <h1>Area results report</h1>
+  <p class="mute">In the Supabase SQL Editor, run <code>select fettle_area_report('Rochdale');</code>, copy the result and paste it here. Nothing you paste leaves this computer.</p>
+  <textarea id="json" aria-label="Paste the result here" placeholder='{"area": "Rochdale", ...}'></textarea>
+  <p id="err" class="err" role="alert"></p>
+  <button onclick="make()">Make report</button><button class="quiet" onclick="sample()">Show with sample data</button>
+</section>
+<section id="report" aria-live="polite"></section>
+</main>
+<script>
+const MIN = 5;
+// Must match MEASURES in src/fettle.html (labels and the Cabinet Office 2026 national figures).
+const MEASURES = [
+  ["water3","3 days of bottled water (3 litres per person per day)",4],["food3","3 days of food that needs no cooking",60],
+  ["plan","A household emergency plan",14],["grab","A grab bag",19],["torch","A torch that works without the mains",53],
+  ["radio","A radio that works without the mains",23],["power","A charged power bank",54],["firstaid","A first aid kit",63],
+  ["cash","Cash, £10 or more per person",60],["docs","Important numbers written on paper",29],["psr","On the Priority Services Register",38],
+  ["co","A carbon monoxide alarm (homes with a fuel-burning appliance)",58],["meet","An agreed meeting place",12],["fa","Someone trained in first aid (last 3 years)",null]];
+const SCEN = {power:"A 3-day power cut",baby:"Feeding a baby for 3 days",water:"3 days without tap water",leave:"Leaving home in 15 minutes"};
+const REASONS = {cost:"Cost",expiry:"Worried it'll go out of date",what:"Didn't know what to get",worry:"Thinking about it is worrying",space:"No room to store it",time:"No time",landlord:"Said it's the landlord's job",able:"Can't do it alone",matter:"Not sure it matters"};
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const pct = (a, b) => b ? Math.round(a / b * 100) : 0;
+const arrow = (a, b) => a == null || b == null ? '<span class="mute">Too few yet</span>' : `${a}% → <b>${b}%</b>${b > a ? ` <span class="up">+${b - a}</span>` : ""}`;
+
+function make(data) {
+  const err = document.getElementById("err"); err.textContent = "";
+  let R = data;
+  if (!R) { try { let t = document.getElementById("json").value.trim(); if (t.startsWith('"')) t = JSON.parse(t); R = typeof t === "string" ? JSON.parse(t) : t; } catch (e) { err.textContent = "That doesn't look like the result of fettle_area_report. Copy the whole result and try again."; return; } }
+  if (!R || !R.area) { err.textContent = "That doesn't look like the result of fettle_area_report."; return; }
+  const empty = !R.outcomes && !(R.impact || []).length && !(R.groups || []).length && !(R.anon || []).length && !(R.money || []).length;
+  const o = R.outcomes, G = R.groups || [], all = G.find(g => g.grp === "All households"), C = R.confidence || [], B = R.barriers || [], A = R.anon || [], F = R.funnel || [];
+  const made = new Date(R.made || Date.now()).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+  let h = `${R.sample ? `<div class="banner"><b>Sample data.</b> Made-up households, to show how the report looks. These are not Fettle results.</div>` : ""}
+  <p class="kicker">Fettle area results</p><h1>Household preparedness in ${esc(R.area)}</h1>
+  <p class="mute">From households who agreed to be counted. Anything under ${MIN} households is hidden, so no one can be identified. Produced ${made}.</p>`;
+  if (empty) h += `<div class="banner"><b>Not enough households yet.</b> This report only shows groups of ${MIN} or more households who agreed to be counted. ${esc(R.area)} isn't there yet.</div>`;
+  if (all && all.sorted_30d != null) h += `<div class="headline"><b>${pct(all.sorted_30d, all.eligible_30d)}%</b> of households sorted at least one priority gap within 30 days of their first check (${all.sorted_30d} of ${all.eligible_30d} households whose first check was 30 or more days ago).</div>`;
+  if (o) h += `<h2>Outcomes</h2><div class="kpis"><div><b>${o.households}</b><span>Households assessed</span></div><div><b>${o.critical_found}</b><span>Critical risks found</span></div><div><b>${o.critical_sorted}</b><span>Sorted by the latest check</span></div><div><b>${o.critical_verified}</b><span>Checked on a visit</span></div></div>
+    <p class="sm mute">Critical risks are the gaps that matter most, like powered medical equipment with no backup or no working smoke alarm. "Sorted" is what the household told us at their latest check. "Checked on a visit" means a worker saw it was done.</p>`;
+  if (all) h += `<p class="sm"><b>Average Fettle preparedness score:</b> ${arrow(all.score_first, all.score_latest)} <span class="mute">(${all.followed_up} households with a follow-up check)</span></p>`;
+  const imp = (R.impact || []).filter(r => r.first_pct != null);
+  if (imp.length) {
+    const by = Object.fromEntries(imp.map(r => [r.measure, r]));
+    h += `<h2>Before and after</h2><p class="sm mute">Households with a first and a follow-up check, against the Cabinet Office's 2026 survey of 10,791 UK adults. Both are self-reported.</p>
+    <div class="scroll"><table><tr><th>Measure</th><th class="n">UK in 2026</th><th class="n">At first check</th><th class="n">Latest</th><th class="n">Households</th></tr>
+    ${MEASURES.filter(([id]) => by[id]).map(([id, label, nat]) => `<tr><td>${esc(label)}</td><td class="n">${nat == null ? '<span class="mute">Not comparable</span>' : nat + "%"}</td><td class="n">${by[id].first_pct}%</td><td class="n"><b>${by[id].latest_pct}%</b>${by[id].latest_pct > by[id].first_pct ? ` <span class="up">+${by[id].latest_pct - by[id].first_pct}</span>` : ""}</td><td class="n">${by[id].households}</td></tr>`).join("")}</table></div>`;
+  }
+  const M = R.money || [];
+  if (M.length) h += `<h2>Money and resilience</h2><p class="sm mute">Optional questions, self-reported. First check, then latest. Households who chose not to answer are left out.</p>
+    <div class="scroll"><table><tr><th>Measure</th><th class="n">At first check</th><th class="n">Latest</th><th class="n">Households</th><th class="n">With a follow-up</th></tr>
+    ${M.map(m => `<tr><td>${esc(m.measure)}</td><td class="n">${m.first_pct}%</td><td class="n"><b>${m.latest_pct}%</b></td><td class="n">${m.households}</td><td class="n">${m.followed_up}</td></tr>`).join("")}</table></div>`;
+  if (G.length) h += `<h2>Who it reached</h2><p class="sm mute">The same results for the kinds of household that find it hardest to prepare. A household can be in more than one row. Tenure stands in for income, which Fettle doesn't ask about.</p>
+    <div class="scroll"><table><tr><th>Households</th><th class="n">Number</th><th>Fettle preparedness score, first → latest</th><th>Sorted a priority gap within 30 days</th></tr>
+    ${G.map(g => `<tr><td>${g.grp === "All households" ? `<b>${esc(g.grp)}</b>` : esc(g.grp)}</td><td class="n">${g.households}</td><td>${arrow(g.score_first, g.score_latest)}</td><td>${g.sorted_30d == null ? '<span class="mute">Too few yet</span>' : `<b>${pct(g.sorted_30d, g.eligible_30d)}%</b> <span class="mute sm">(${g.sorted_30d} of ${g.eligible_30d})</span>`}</td></tr>`).join("")}</table></div>`;
+  if (C.length) h += `<h2>Could residents cope?</h2><p class="sm mute">"Said they'd cope" is what residents told us (Yes, easily or Just about): self-reported. "Answers show ready" is worked out from their check. First check, then latest. The last column counts people who first said they'd cope, then felt less sure once they saw what it takes.</p>
+    <div class="scroll"><table><tr><th>Scenario</th><th class="n">Households</th><th>Said they'd cope</th><th>Answers show ready</th><th>Less sure after seeing what it takes</th></tr>
+    ${C.slice().sort((a, b) => Object.keys(SCEN).indexOf(a.scenario) - Object.keys(SCEN).indexOf(b.scenario)).map(c => `<tr><td>${esc(SCEN[c.scenario] || c.scenario)}</td><td class="n">${c.households}</td><td>${arrow(c.said_cope_first_pct, c.said_cope_latest_pct)}</td><td>${arrow(c.ready_first_pct, c.ready_latest_pct)}</td><td>${c.asked >= MIN ? `${c.less_sure} of ${c.asked}` : '<span class="mute">Too few yet</span>'}</td></tr>`).join("")}</table></div>`;
+  if (B.length) { const tot = Math.max(...B.map(b => b.households)); h += `<h2>What's getting in the way</h2><p class="sm mute">Reasons households gave for a step they hadn't done yet. "Sorted since" counts the steps they went on to do.</p>
+    <div class="scroll"><table><tr><th>What got in the way</th><th class="n">Households</th><th class="n">Steps</th><th class="n">Sorted since</th></tr>
+    ${B.map(b => `<tr><td>${esc(REASONS[b.reason] || b.reason)}</td><td class="n">${b.households}</td><td class="n">${b.steps}</td><td class="n">${b.sorted_since}</td></tr>`).join("")}</table></div>`; }
+  if (A.length) { const crit = A.filter(a => a.measure.startsWith("At least one critical risk")), base = A.find(a => a.measure.startsWith("Has: ")) ;
+    const n = Math.max(...A.map(a => a.households));
+    h += `<h2>Anonymous first checks</h2><p class="sm mute">${n} households who did the check without an account and chose to add their answers to the anonymous count. First check only: there's no follow-up for these.</p>
+    <div class="scroll"><table><tr><th>Measure</th><th class="n">Households</th><th class="n">Yes</th></tr>
+    ${crit.map(a => `<tr><td>${esc(a.measure)}</td><td class="n">${a.households}</td><td class="n"><b>${a.pct}%</b></td></tr>`).join("")}
+    ${MEASURES.map(([id, label]) => A.find(a => a.measure === "Has: " + id)).filter(Boolean).map(a => `<tr><td>Has: ${esc((MEASURES.find(m => "Has: " + m[0] === a.measure) || [])[1])}</td><td class="n">${a.households}</td><td class="n">${a.pct}%</td></tr>`).join("")}
+    ${Object.keys(SCEN).map(id => [A.find(a => a.measure === "Said they'd cope: " + id), A.find(a => a.measure === "Answers show ready: " + id)]).filter(x => x[0] || x[1]).map(([s, r]) => `<tr><td>${esc(SCEN[(s || r).measure.split(": ")[1]])}: said they'd cope / answers show ready</td><td class="n">${(s || r).households}</td><td class="n">${s ? s.pct + "%" : "–"} / ${r ? r.pct + "%" : "–"}</td></tr>`).join("")}</table></div>`; }
+  const fa = F.find(f => f.area === "All areas"), fr = F.find(f => f.area !== "All areas");
+  if (fa) h += `<h2>Reach</h2><p class="sm">${fa.started} checks started and ${fa.finished} finished across all areas${fr ? `; ${fr.finished} finished in ${esc(R.area)}` : ""}.</p>`;
+  h += `<footer>Fettle · Self-reported household answers, except "Checked on a visit". National figures: Cabinet Office, UK Public Survey of Risk Perception, Resilience and Preparedness 2026. <button class="noprint" onclick="print()">Print or save as PDF</button></footer>`;
+  document.getElementById("report").innerHTML = h;
+  document.getElementById("report").scrollIntoView({ behavior: "smooth" });
+}
+function sample() { make(SAMPLE); }
+// Opened from the admin page: the report is waiting in this tab's storage.
+window.addEventListener("load", () => { try { const t = sessionStorage.getItem("fettle-report"); if (t) { sessionStorage.removeItem("fettle-report"); document.getElementById("input").style.display = "none";
+  make(JSON.parse(t)); document.getElementById("report").insertAdjacentHTML("afterbegin", '<p class="noprint sm"><a href="admin">← Back to admin</a></p>'); } } catch (e) {} });
+const SAMPLE = /*SAMPLE*/{"anon": [{"pct": 0, "yes": 0, "measure": "Answers show ready: leave", "households": 12}, {"pct": 0, "yes": 0, "measure": "Answers show ready: power", "households": 12}, {"pct": 8, "yes": 1, "measure": "Answers show ready: water", "households": 12}, {"pct": 42, "yes": 5, "measure": "At least one critical risk", "households": 12}, {"pct": 44, "yes": 4, "measure": "At least one critical risk, disability or long-term condition", "households": 9}, {"pct": 43, "yes": 3, "measure": "At least one critical risk, living alone", "households": 7}, {"pct": 33, "yes": 2, "measure": "At least one critical risk, social renters", "households": 6}, {"pct": 45, "yes": 5, "measure": "At least one critical risk, someone over 70", "households": 11}, {"pct": 67, "yes": 8, "measure": "Has: cash", "households": 12}, {"pct": 56, "yes": 5, "measure": "Has: co", "households": 9}, {"pct": 33, "yes": 4, "measure": "Has: docs", "households": 12}, {"pct": 33, "yes": 4, "measure": "Has: fa", "households": 12}, {"pct": 83, "yes": 10, "measure": "Has: firstaid", "households": 12}, {"pct": 50, "yes": 6, "measure": "Has: food3", "households": 12}, {"pct": 8, "yes": 1, "measure": "Has: grab", "households": 12}, {"pct": 0, "yes": 0, "measure": "Has: meet", "households": 12}, {"pct": 33, "yes": 4, "measure": "Has: plan", "households": 12}, {"pct": 25, "yes": 3, "measure": "Has: power", "households": 12}, {"pct": 75, "yes": 9, "measure": "Has: psr", "households": 12}, {"pct": 33, "yes": 4, "measure": "Has: radio", "households": 12}, {"pct": 50, "yes": 6, "measure": "Has: torch", "households": 12}, {"pct": 33, "yes": 4, "measure": "Has: water3", "households": 12}, {"pct": 25, "yes": 2, "measure": "Less sure after seeing what it takes: leave", "households": 8}, {"pct": 50, "yes": 4, "measure": "Less sure after seeing what it takes: power", "households": 8}, {"pct": 50, "yes": 4, "measure": "Less sure after seeing what it takes: water", "households": 8}, {"pct": 75, "yes": 9, "measure": "Said they'd cope: leave", "households": 12}, {"pct": 67, "yes": 8, "measure": "Said they'd cope: power", "households": 12}, {"pct": 50, "yes": 6, "measure": "Said they'd cope: water", "households": 12}], "area": "Rochdale", "made": "2026-11-11T17:06:28.429815+00:00", "funnel": [{"area": "All areas", "started": 61, "finished": 42}, {"area": "Rochdale", "started": 0, "finished": 42}], "groups": [{"grp": "All households", "households": 30, "sorted_30d": 9, "followed_up": 19, "score_first": 31, "eligible_30d": 20, "score_latest": 52}, {"grp": "Social renters", "households": 13, "sorted_30d": 4, "followed_up": 9, "score_first": 31, "eligible_30d": 11, "score_latest": 51}, {"grp": "Private renters", "households": 7, "sorted_30d": null, "followed_up": 3, "score_first": null, "eligible_30d": 4, "score_latest": null}, {"grp": "Homeowners", "households": 10, "sorted_30d": 4, "followed_up": 7, "score_first": 34, "eligible_30d": 5, "score_latest": 59}, {"grp": "Living alone", "households": 14, "sorted_30d": 4, "followed_up": 7, "score_first": 33, "eligible_30d": 10, "score_latest": 50}, {"grp": "Someone over 70", "households": 24, "sorted_30d": 8, "followed_up": 15, "score_first": 33, "eligible_30d": 17, "score_latest": 58}, {"grp": "Disability or long-term condition", "households": 23, "sorted_30d": 6, "followed_up": 14, "score_first": 30, "eligible_30d": 15, "score_latest": 51}, {"grp": "Young children", "households": 7, "sorted_30d": null, "followed_up": 5, "score_first": 21, "eligible_30d": 3, "score_latest": 37}], "impact": [{"measure": "cash", "first_pct": 53, "households": 19, "latest_pct": 58}, {"measure": "co", "first_pct": 63, "households": 16, "latest_pct": 75}, {"measure": "docs", "first_pct": 32, "households": 19, "latest_pct": 32}, {"measure": "fa", "first_pct": 21, "households": 19, "latest_pct": 47}, {"measure": "firstaid", "first_pct": 42, "households": 19, "latest_pct": 47}, {"measure": "food3", "first_pct": 37, "households": 19, "latest_pct": 53}, {"measure": "grab", "first_pct": 11, "households": 19, "latest_pct": 11}, {"measure": "meet", "first_pct": 5, "households": 19, "latest_pct": 11}, {"measure": "plan", "first_pct": 26, "households": 19, "latest_pct": 26}, {"measure": "power", "first_pct": 16, "households": 19, "latest_pct": 16}, {"measure": "psr", "first_pct": 53, "households": 19, "latest_pct": 84}, {"measure": "radio", "first_pct": 32, "households": 19, "latest_pct": 32}, {"measure": "torch", "first_pct": 47, "households": 19, "latest_pct": 53}, {"measure": "water3", "first_pct": 0, "households": 19, "latest_pct": 47}], "sample": true, "barriers": [{"steps": 11, "reason": "time", "households": 11, "sorted_since": 0}, {"steps": 10, "reason": "cost", "households": 9, "sorted_since": 1}, {"steps": 5, "reason": "landlord", "households": 5, "sorted_since": 0}], "outcomes": {"households": 30, "critical_found": 41, "critical_sorted": 13, "critical_verified": 11}, "confidence": [{"asked": 3, "scenario": "baby", "less_sure": 1, "households": 7, "ready_first_pct": 0, "ready_latest_pct": 14, "said_cope_first_pct": 29, "said_cope_latest_pct": 43}, {"asked": 19, "scenario": "leave", "less_sure": 5, "households": 30, "ready_first_pct": 0, "ready_latest_pct": 0, "said_cope_first_pct": 50, "said_cope_latest_pct": 70}, {"asked": 20, "scenario": "power", "less_sure": 9, "households": 30, "ready_first_pct": 0, "ready_latest_pct": 0, "said_cope_first_pct": 50, "said_cope_latest_pct": 67}, {"asked": 21, "scenario": "water", "less_sure": 8, "households": 30, "ready_first_pct": 0, "ready_latest_pct": 3, "said_cope_first_pct": 53, "said_cope_latest_pct": 60}]}/*SAMPLE*/;
+</script>
+</body>
+</html>

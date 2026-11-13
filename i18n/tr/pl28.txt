@@ -1,0 +1,12 @@
+0|Czy mógłbyś zapłacić niespodziewany rachunek na £{0} bez pożyczania?
+1|Tak, ale byłoby ciężko
+2|Wolę nie mówić
+3|Czy zalegasz z czynszem, podatkiem lokalnym (council tax) albo opłatami za gaz i prąd?
+4|Czy w ostatnim roku było tak ciężko z pieniędzmi, że korzystałeś z banku żywności albo pomijałeś posiłki?
+5|Nieobowiązkowe. Twoja odpowiedź kształtuje plan i nie zmienia wyniku. Udostępniamy tylko łączne dane dla okolicy, nigdy Twoje odpowiedzi.
+6|Wyślij komuś ten test
+7|Właśnie sprawdziłem, na ile nasz dom jest gotowy na {0} dni bez prądu i wody. To nic nie kosztuje i zajmuje około {1} minut. Sprawdź swój:
+8|Skopiowano. Wklej do wiadomości, żeby wysłać.
+9|Ktoś wysłał Ci test Fettle. Na ile gotowy jest Twój dom? Sprawdź za darmo w około {0} minuty.
+10|Wskazówki ostatnio sprawdzone {0} {1} {2}.
+11|Wskazówki ostatnio sprawdzone: {0} {1}.

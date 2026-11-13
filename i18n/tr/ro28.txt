@@ -1,0 +1,12 @@
+0|Ați putea plăti o factură neașteptată de £{0} fără să împrumutați?
+1|Da, dar ar fi greu
+2|Prefer să nu spun
+3|Aveți restanțe la chirie, council tax sau la gaz și curent?
+4|În ultimul an, au fost banii atât de puțini încât ați folosit o bancă de alimente sau ați sărit peste mese?
+5|Opțional. Răspunsul vă modelează planul și nu vă schimbă scorul. Se comunică doar totaluri pe zonă, niciodată răspunsurile dumneavoastră.
+6|Trimiteți verificarea cuiva
+7|Tocmai am verificat cât de pregătită este casa noastră pentru {0} zile fără curent sau apă. Este gratuit și durează cam {1} minute. Încercați și pentru a dumneavoastră:
+8|Copiat. Lipiți într-un mesaj ca să-l trimiteți.
+9|Cineva v-a trimis verificarea Fettle. Cât de pregătită este casa dumneavoastră? Aflați gratuit în aproximativ {0} minute.
+10|Îndrumări verificate ultima dată la {0} {1} {2}.
+11|Îndrumări verificate ultima dată în {0} {1}.

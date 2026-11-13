@@ -67,8 +67,21 @@ Only after the checks in "Before you charge anyone" are done:
 People can tick "Remind me when my 30-day and 90-day checks are due". The emails come from a small scheduled Worker in `workers/reminders/`.
 1. Make an account with an email sender. The code uses Resend (resend.com). Verify your domain there.
 2. `cd workers/reminders`, set `SITE_URL` and `FROM_EMAIL` in `wrangler.toml`, then add the secrets: `npx wrangler secret put SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `RESEND_API_KEY`, `UNSUBSCRIBE_SECRET`.
-3. `npx wrangler deploy`. It runs daily but stays in **dry run** (logs who is due, sends nothing) until you set `DRY_RUN` to `false` in Cloudflare.
+3. `npx wrangler deploy`. It runs daily at 10:17 UTC. `DRY_RUN` is `"false"` in `wrangler.toml` (switched on 13 November 2026), so it sends as soon as it's deployed with its secrets. Set it to `"true"` to log who is due without sending.
 4. Every email has a one-click unsubscribe link (`/api/unsubscribe`).
+
+### 7b. The admin page, partner links and money outcomes
+- Run `supabase/admin.sql` after the other SQL files. Then add yourself once:
+  `insert into public.fettle_admins select id from auth.users where email = 'you@example.com' on conflict do nothing;`
+- Sign in on the site, then open **getfettle.co.uk/admin**. It shows checks started and finished, saved plans, second checks, where people
+  came from, partners, areas and reminders. Anyone not in `fettle_admins` is refused by the database, not just by the page.
+- The admin page shows true totals, for you only. **Report** next to an area opens the area report, which hides groups under 5 and is the
+  one to pass on (Print or save as PDF).
+- **Partner links:** give each organisation its own link, `getfettle.co.uk/?src=rochdale-fire` (lower-case letters, numbers and hyphens, up to
+  20 characters; the admin page makes them). The tag is counted on every event and saved with the plan, so `select * from fettle_partners();`
+  shows each partner's households and scores.
+- **Money questions:** three optional questions (a £200 bill, behind on bills, food bank or skipped meals) sit before the budget question.
+  They never change the score. `select * from fettle_money('Rochdale');` gives first-check and latest figures for the Crisis and Resilience Fund.
 
 ### 8. Set up a pilot organisation (Fettle for Communities)
 Workers can only join with an invite code. Nobody can make themselves a member.

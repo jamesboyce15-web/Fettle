@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Fettle admin</title>
+<!-- The owner's numbers. The page itself holds no data: it asks the database for fettle_admin(), which only answers
+     for accounts listed in the fettle_admins table (supabase/admin.sql). Everyone else sees "not allowed". -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--brand:#173f35;--ink:#1c2522;--mute:#5a6670;--line:#d9dfe3;--tint:#e8eee9;--hivis:#f2a900;--bg:#f6f7f4;--good:#1d6b45}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 "Atkinson Hyperlegible",system-ui,sans-serif}
+main{max-width:960px;margin:0 auto;padding:28px 16px 64px}
+h1{font-size:1.9rem;line-height:1.15;margin:0 0 4px;color:var(--brand)}
+h2{font-size:1.3rem;margin:34px 0 6px;color:var(--brand)}
+p{margin:0 0 10px}a{color:var(--brand)}
+.mute{color:var(--mute)}.sm{font-size:.9rem}
+.kicker{font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:0 0 6px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:12px 0}
+.kpis div{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px}
+.kpis b{display:block;font-size:1.7rem;line-height:1.1;color:var(--brand)}
+.kpis span{font-size:.88rem;color:var(--mute)}
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);font-size:.95rem}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--tint);font-size:.85rem}
+td.n,th.n{text-align:right;white-space:nowrap}
+.scroll{overflow-x:auto}
+button,.btn{font:inherit;font-weight:700;background:var(--brand);color:#fff;border:0;border-radius:10px;padding:9px 16px;cursor:pointer;text-decoration:none;display:inline-block}
+button.quiet{background:#fff;color:var(--brand);border:2px solid var(--brand);padding:5px 12px;font-size:.9rem}
+input{font:inherit;padding:9px 12px;border:1.5px solid var(--line);border-radius:10px;width:100%;max-width:340px}
+.note{background:#fff4cc;border:1px solid #e8c547;border-radius:12px;padding:12px 14px;margin:14px 0}
+.small{color:#9a5b00;font-weight:700}
+.bars{display:flex;align-items:flex-end;gap:3px;height:90px;margin:10px 0 2px;border-bottom:1px solid var(--line)}
+.bars i{flex:1;background:var(--brand);min-height:1px;border-radius:2px 2px 0 0;position:relative}
+.bars i u{position:absolute;left:0;right:0;bottom:0;background:var(--hivis);border-radius:2px 2px 0 0}
+code{background:#fff;border:1px solid var(--line);border-radius:6px;padding:2px 6px;font-size:.9rem;word-break:break-all}
+@media (max-width:640px){.kpis{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<main>
+<p class="kicker">Fettle</p>
+<h1>Admin</h1>
+<div id="box"><p class="mute">Loading…</p></div>
+</main>
+<script src="config.js"></script>
+<script>
+const MIN = 5, box = document.getElementById("box");
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const num = n => n == null ? "–" : Number(n).toLocaleString("en-GB");
+const pct = (a, b) => b ? Math.round(a / b * 100) + "%" : "–";
+const day = d => new Date(d).toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+let sb, D;
+
+function loadScript(src) { return new Promise((ok, bad) => { const s = document.createElement("script"); s.src = src; s.onload = ok; s.onerror = bad; document.head.appendChild(s); }); }
+
+async function boot() {
+  const CFG = window.FETTLE_CONFIG || {};
+  if (!CFG.supabaseUrl) { box.innerHTML = `<p>This copy of the site isn't connected to the database, so there's nothing to show.</p>`; return; }
+  try { await loadScript("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"); }
+  catch (e) { box.innerHTML = `<p>Couldn't load the page. Check your internet connection and try again.</p>`; return; }
+  sb = window.supabase.createClient(CFG.supabaseUrl, CFG.supabaseAnonKey, { auth: { persistSession: true, autoRefreshToken: true } });
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) { box.innerHTML = `<p>Sign in to Fettle first, then come back to this page.</p><p><a class="btn" href="./">Go to sign in</a></p>`; return; }
+  await load();
+}
+
+async function load(area) {
+  const { data, error } = await sb.rpc("fettle_admin", { p_area: area || null });
+  if (error) {
+    box.innerHTML = /not allowed/.test(error.message || "") ? `<p><b>This account can't see the admin page.</b></p><p class="mute">Only accounts added to the admin list in the database can. <a href="./">Back to Fettle</a></p>`
+      : `<p><b>Couldn't load the numbers.</b> ${esc(error.message || "")}</p><p><button onclick="load()">Try again</button></p>`;
+    return;
+  }
+  D = data; draw(area);
+}
+
+function draw(area) {
+  const o = D.overview, days = D.days || [], S = D.sources || [], A = D.areas || [], P = D.partners || [], R = D.reminders || [];
+  const max = Math.max(1, ...days.map(d => d.started));
+  const by = Object.fromEntries(days.map(d => [d.day, d])), span = [];
+  for (let i = 29; i >= 0; i--) { const k = new Date(Date.now() - i * 864e5).toISOString().slice(0, 10); span.push(by[k] || { day: k, started: 0, finished: 0 }); }
+  let h = `<p class="mute sm">As of ${new Date(D.made).toLocaleString("en-GB", { dateStyle: "long", timeStyle: "short" })}. <button class="quiet" onclick="load()">Refresh</button></p>
+  <div class="note sm"><b>This page is for you only.</b> It shows true totals, including small ones. Before you pass any figure on, use the area report: it hides any group under ${MIN} households.</div>
+
+  <h2>Overall</h2>
+  <div class="kpis">
+    <div><b>${num(o.started)}</b><span>Checks started</span></div>
+    <div><b>${num(o.finished)}</b><span>Checks finished (${pct(o.finished, o.started)})</span></div>
+    <div><b>${num(o.plans)}</b><span>Plans saved with an account</span></div>
+    <div><b>${num(o.checked_twice)}</b><span>Came back for a second check</span></div>
+    <div><b>${num(o.accounts)}</b><span>Accounts (${num(o.confirmed)} confirmed)</span></div>
+    <div><b>${num(o.reminders_on)}</b><span>Have seasonal reminders on</span></div>
+    <div><b>${num(o.count_me)}</b><span>Agreed to be counted for their council</span></div>
+    <div><b>${num(o.anon_checks)}</b><span>Anonymous checks counted</span></div>
+  </div>
+  <p class="sm">${o.score_latest_twice == null ? `<span class="mute">No before-and-after scores yet: nobody has done a second check.</span>` : `<b>Average score, first check to latest:</b> ${o.score_first_twice}% → <b>${o.score_latest_twice}%</b> <span class="mute">(${num(o.checked_twice)} households with two or more checks)</span>`}
+  ${o.plans ? ` Average score at first check, all saved plans: <b>${o.score_first}%</b>.` : ""} Reminder emails sent so far: <b>${num(o.reminders_sent)}</b>. Organisations: <b>${num(o.organisations)}</b>.</p>
+
+  <h2>Last 30 days</h2>
+  <div class="bars" role="img" aria-label="Checks started and finished each day for the last 30 days">${span.map(d => `<i style="height:${Math.round(d.started / max * 100)}%" title="${day(d.day)}: ${d.started} started, ${d.finished} finished"><u style="height:${d.started ? Math.round(d.finished / d.started * 100) : 0}%"></u></i>`).join("")}</div>
+  <p class="sm mute">${day(span[0].day)} to ${day(span[29].day)}. Green: started. Amber: finished. Hover over a bar for the numbers.</p>
+
+  <h2>Where people came from</h2>
+  <p class="sm mute">Each QR code in the workbook and each partner link carries a tag. "(no tag)" is everyone who came straight to the site.</p>
+  <div class="scroll"><table><tr><th>Tag</th><th class="n">Started</th><th class="n">Finished</th><th class="n">Calculator</th><th class="n">Local info</th><th class="n">Reminders page</th><th class="n">Reminder sign-ups</th></tr>
+  ${S.map(s => `<tr><td>${esc(s.src)}</td><td class="n">${s.started}</td><td class="n">${s.finished}</td><td class="n">${s.calc}</td><td class="n">${s.local_info}</td><td class="n">${s.remind_page}</td><td class="n">${s.remind_signup}</td></tr>`).join("") || `<tr><td colspan="7" class="mute">Nothing yet.</td></tr>`}</table></div>
+
+  <h2>Partners</h2>
+  <p class="sm mute">Saved plans that arrived through a partner's link, once a partner has ${MIN} or more.</p>
+  ${P.length ? `<div class="scroll"><table><tr><th>Partner tag</th><th class="n">Households</th><th class="n">Second check</th><th class="n">Score at first check</th><th class="n">Latest</th></tr>
+  ${P.map(p => `<tr><td>${esc(p.src)}</td><td class="n">${p.households}</td><td class="n">${p.followed_up}</td><td class="n">${p.score_first}%</td><td class="n">${p.score_latest == null ? "Too few yet" : p.score_latest + "%"}</td></tr>`).join("")}</table></div>` : `<p class="sm mute">None yet.</p>`}
+  <p class="sm"><b>Make a link for a partner.</b> Give each organisation its own, and put it in their emails, leaflets or QR codes.</p>
+  <p><input id="pname" placeholder="For example: Rochdale fire" aria-label="Partner name" oninput="plink()"> <span id="plink" class="sm"></span></p>
+
+  <h2>Areas</h2>
+  <p class="sm mute">Council areas, from the first half of the postcode. Choose one to see its report.</p>
+  <div class="scroll"><table><tr><th>Area</th><th class="n">Finished</th><th class="n">Plans saved</th><th class="n">Agreed to be counted</th><th class="n">Second check</th><th class="n">Anonymous</th><th></th></tr>
+  ${A.map((a, i) => `<tr><td>${esc(a.area)}${Math.max(a.count_me, a.anon) < MIN ? ` <span class="small sm">under ${MIN}</span>` : ""}</td><td class="n">${a.finished}</td><td class="n">${a.plans}</td><td class="n">${a.count_me}</td><td class="n">${a.checked_twice}</td><td class="n">${a.anon}</td><td><button class="quiet" onclick="report(${i})">Report</button></td></tr>`).join("") || `<tr><td colspan="7" class="mute">Nothing yet.</td></tr>`}</table></div>
+  <p class="sm mute">"Under ${MIN}" means the area report will be mostly empty: it only shows groups of ${MIN} or more households who agreed to be counted.</p>
+  <p id="rmsg" class="sm"></p>
+
+  <h2>Seasonal reminders</h2>
+  <div class="scroll"><table><tr><th>Area</th><th class="n">Households</th></tr>${R.map(r => `<tr><td>${esc(r.area)}</td><td class="n">${r.households}</td></tr>`).join("")}</table></div>
+  <p class="sm mute">Areas appear once ${MIN} or more households there have reminders on and agreed to be counted.</p>`;
+  box.innerHTML = h;
+}
+
+function plink() {
+  const v = document.getElementById("pname").value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 20).replace(/-+$/, "");
+  const site = (window.FETTLE_CONFIG && window.FETTLE_CONFIG.siteUrl) || location.origin;
+  document.getElementById("plink").innerHTML = v ? `<code id="pl">${esc(site)}/?src=${esc(v)}</code> <button class="quiet" onclick="navigator.clipboard.writeText(document.getElementById('pl').textContent).then(()=>this.textContent='Copied')">Copy</button>` : "";
+}
+
+async function report(i) {
+  const a = D.areas[i], msg = document.getElementById("rmsg"); msg.textContent = "Getting the report for " + a.area + "…";
+  const { data, error } = await sb.rpc("fettle_admin", { p_area: a.area });
+  if (error || !data || !data.area) { msg.textContent = "Couldn't get that report. Try again."; return; }
+  try { sessionStorage.setItem("fettle-report", JSON.stringify(data.area)); } catch (e) {}
+  location.href = "area-report";
+}
+boot();
+</script>
+</body>
+</html>

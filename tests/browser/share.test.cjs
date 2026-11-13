@@ -10,7 +10,8 @@ const T='/tmp/claude-0/-home-claude/778c13de-ddcf-58b9-aaaa-3ea0073d941f/scratch
   await p.waitForTimeout(300);
   console.log(L, 'help card:', await p.isVisible('.helpcard'), await p.textContent('.helpcard h3'));
   await p.evaluate(() => document.querySelector('.helpcard').scrollIntoView({block:'center'})); await p.screenshot({ path: `${T}/share-${L}.png` });
-  const [dl] = await Promise.all([p.waitForEvent('download'), p.click('.helpcard .btn.quiet')]);
+  const [dl] = await Promise.all([p.waitForEvent('download'), p.click('.helpcard .btn.quiet >> nth=1')]);
+  await p.click('.helpcard .btn.quiet >> nth=0'); await p.waitForTimeout(100); console.log(L, 'send the check: toast shown', /src=share|Copied|Skopiowano|کاپی/.test(await p.textContent('body')));
   await dl.saveAs(`${T}/card-${L}.png`);
   // mum prompt starts a relative's check, and disappears afterwards
   await p.click('.helpcard .btn:not(.quiet)'); console.log(L, 'relative check started:', await p.evaluate(() => cur && cur.other === true));
