@@ -1,0 +1,5 @@
+0|Rządowa kampania Be Ready prosi, by każdy dom był gotów poradzić sobie przez trzy dni.
+1|Nieobowiązkowe. Nie zmienia to Twojego wyniku.
+2|Sprawdź teraz na stronie swojego dostawcy, jak włączyć kredyt awaryjny (emergency credit).
+3|Chcę pomóc mojej radzie (council) w planowaniu. {0}Nieobowiązkowe. Policz moje gospodarstwo domowe w anonimowych danych zbiorczych dla mojej okolicy. Nigdy moje odpowiedzi ani dane kontaktowe i nigdy grupa mniejsza niż {1} domów.{2}
+4|Plan dla Twojego domu: bezpłatny test, {0} minuty

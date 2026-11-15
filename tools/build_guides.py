@@ -83,6 +83,7 @@ FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="
          '<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">')
 
 
+SITE = "https://getfettle.co.uk"
 def page(title, desc, body, current, canon):
     return f"""<!doctype html>
 <html lang="en-GB">
@@ -94,6 +95,14 @@ def page(title, desc, body, current, canon):
 <meta property="og:title" content="{e(title)}">
 <meta property="og:description" content="{e(desc)}">
 <meta property="og:type" content="article">
+<meta property="og:site_name" content="Fettle">
+<meta property="og:url" content="{SITE}/guides/{canon}">
+<meta property="og:image" content="{SITE}/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="{SITE}/guides/{canon}">
+<meta name="theme-color" content="#173f35">
 <link rel="icon" href="data:image/svg+xml,{ICON}">
 {FONTS}
 <style>{CSS}</style>
@@ -182,3 +191,14 @@ document.querySelectorAll('.chips button').forEach(b=>b.addEventListener('click'
 open(os.path.join(OUT, "index.html"), "w", encoding="utf8").write(
     page("Free guides | Fettle", "Free, plain guides to power cuts, water cuts, cold food, high-rise flats, babies and more. Checked against official UK guidance.", hub, "hub", ""))
 print("wrote", len(GUIDES) + 1, "pages to", OUT)
+
+import datetime
+urls = [SITE + "/", SITE + "/guides/"] + [f"{SITE}/guides/{g['slug']}" for g in GUIDES] + [SITE + "/privacy", SITE + "/terms"]
+today = datetime.date.today().isoformat()
+PUB = os.path.dirname(OUT)
+open(os.path.join(PUB, "sitemap.xml"), "w", encoding="utf8").write(
+    '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    + "".join(f"  <url><loc>{u}</loc><lastmod>{today}</lastmod></url>\n" for u in urls) + "</urlset>\n")
+open(os.path.join(PUB, "robots.txt"), "w", encoding="utf8").write(
+    "User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /area-report\nDisallow: /api/\n\nSitemap: " + SITE + "/sitemap.xml\n")
+print("wrote sitemap.xml (", len(urls), "addresses ) and robots.txt")

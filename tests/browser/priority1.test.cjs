@@ -9,9 +9,10 @@ const { chromium } = require('playwright'); const path = require('path');
   const H0 = o => p.evaluate(o => { const h = fresh(false); Object.assign(h, { adults: 1, home: 'house', tenure: 'own', heat: 'electric', hob: 'electric', water: 'none', food: 'no', kit: [], fa: 'no' }, o); return h; }, o);
   const ev = (o, fn) => p.evaluate(([o, fn]) => { const h = fresh(false); Object.assign(h, { adults: 1, home: 'house', tenure: 'own', heat: 'electric', hob: 'electric', water: 'none', food: 'no', kit: [], fa: 'no' }, o); return eval(fn)(h); }, [o, fn]);
 
-  // postcode question first, validation, lookup
+  // the check opens on a one-tap question; the postcode comes at the end of "Your home"; validation, lookup
   await p.evaluate(() => start(false));
-  ok(await p.evaluate(() => list()[0].id === 'pc'), 'postcode is the first question');
+  ok(await p.evaluate(() => { const L = list(); return L[0].id === 'home' && L[0].type === 'one' && L.findIndex(q => q.id === 'pc') === L.findIndex(q => q.id === 'tenure') + 1 && L.find(q => q.id === 'pc').sec === 'Your home'; }), 'first question is a one-tap one; the postcode follows "own or rent"');
+  await p.evaluate(() => { Object.assign(cur, { home: 'house', outdoor: 'garden', tenure: 'own' }); qi = list().findIndex(q => q.id === 'pc'); drawQ(); });
   await p.fill('#t_pc', 'OL11 3AB'); await p.click('#q-next');
   ok((await p.textContent('#q-err')).includes('first part'), 'full postcode rejected with a clear message');
   await p.fill('#t_pc', 'ol11'); await p.click('#q-next'); await p.waitForTimeout(300);

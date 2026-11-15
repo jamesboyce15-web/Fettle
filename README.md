@@ -83,6 +83,12 @@ People can tick "Remind me when my 30-day and 90-day checks are due". The emails
 - **Money questions:** three optional questions (a £200 bill, behind on bills, food bank or skipped meals) sit before the budget question.
   They never change the score. `select * from fettle_money('Rochdale');` gives first-check and latest figures for the Crisis and Resilience Fund.
 
+### 7c. Launch settings
+- **Workbook link:** when the workbook is on Amazon, put its address in `public/config.js` as `workbookUrl` (starts with `https://`). The home page then shows "Prefer pen and paper?" with a link. It's hidden in other languages, because the book is in English.
+- **Sign-up emails:** Supabase limits sign-up and password emails to 30 an hour, even with Resend. Raise it in Supabase → Authentication → Rate limits before any big post or press, or people will sign up and get no email.
+- **Share image:** `public/og.png` is what Facebook, WhatsApp and LinkedIn show for a link. Rebuild it with `node tools/share/make.cjs`.
+- **Search engines:** `python3 tools/build_guides.py` also writes `public/sitemap.xml` and `public/robots.txt`.
+
 ### 8. Set up a pilot organisation (Fettle for Communities)
 Workers can only join with an invite code. Nobody can make themselves a member.
 1. In the Supabase SQL editor, run (with your own name and wards):

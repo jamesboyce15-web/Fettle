@@ -18,11 +18,12 @@
 
   async function boot() {
     try { await loadScript("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"); }
-    catch (e) { console.error("Could not load Supabase", e); return; }
+    catch (e) { console.error("Could not load Supabase", e); keepRestore(); return; }
     sb = window.supabase.createClient(CFG.supabaseUrl, CFG.supabaseAnonKey, { auth: { persistSession: true, autoRefreshToken: true } });
     sb.auth.onAuthStateChange((ev) => { if (ev === "PASSWORD_RECOVERY") newPasswordView(); });
     const { data } = await sb.auth.getSession();
-    if (data.session) await loadUser(data.session.user);
+    // Signed in: plans come from the account. Signed out: bring back a check this tab was part-way through.
+    if (data.session) { keepClear(); await loadUser(data.session.user); } else keepRestore();
     await handleReturn();
     await remindArrive();
     if (new URLSearchParams(location.search).get("recheck")) { // link from a reminder email
@@ -78,7 +79,9 @@
     const { data: buys } = await sb.from("purchases").select("household_id,product");
     const paid = new Set((buys || []).filter(b => b.product === "book_digital").map(b => b.household_id));
     const fromDb = (rows || []).map(r => { const h = Object.assign(fresh(r.data.other), r.data); h._id = r.id; h.paid = paid.has(r.id) || FREEBOOK; saved.set(r.id, JSON.stringify(strip(h))); return h; });
-    let pending = H.filter(h => !h._id); // a check finished before signing in
+    // A check finished before signing in. Not one that's already saved to this account (the same plan open in a second tab).
+    let pending = H.filter(h => !h._id && !(h.hid && fromDb.some(d => d.hid === h.hid)));
+    keepClear();
     let restored = false;
     if (!pending.length) { // or finished before confirming the email, on an earlier page
       let kept = null, bi = -1;
@@ -151,6 +154,7 @@
         if (!name) return errBox("Enter your first name.");
         if (pw.length < 8) return errBox("Use at least 8 characters for your password.");
         const news = document.getElementById("a-news").checked, remind = document.getElementById("a-remind").checked;
+        countTick(); // "Help my council plan"
         // The check lives only in this page until it's saved. Email confirmation opens a new page, so keep a copy:
         // in this browser, and (if small) on the account, for when the link opens in a different browser or the mail app.
         const pend = H.filter(h => !h._id).map(strip), pj = JSON.stringify(pend);
