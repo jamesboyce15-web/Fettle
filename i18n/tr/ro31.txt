@@ -6,3 +6,4 @@
 5|Numerele de telefon din Marea Britanie încep cu {0}. Vă rugăm să-l verificați.
 6|Numerele de telefon din Marea Britanie încep cu {0}. Vă rugăm să-l verificați. Dacă este corect, apăsați din nou Continuă.
 7|Cartea gospodăriei tale. Se tipărește pe A4, {0} pagini.
+8|Ce ar trebui să conțină

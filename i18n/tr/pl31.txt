@@ -6,3 +6,4 @@
 5|Brytyjskie numery telefonów zaczynają się od {0}. Sprawdź go.
 6|Brytyjskie numery telefonów zaczynają się od {0}. Sprawdź go. Jeśli jest poprawny, naciśnij ponownie Dalej.
 7|Książka Twojego gospodarstwa domowego. Drukuje się na A4, {0} stron.
+8|Co powinno się w niej znaleźć
