@@ -1,0 +1,8 @@
+0|Najczęstsze sytuacje awaryjne w brytyjskich domach to silne burze, przerwy w dostawie prądu trwające dłużej niż dzień, powodzie, silne mrozy i brak wody. Lokalne Forum ds. Odporności (Local Resilience Forum) wymienia zagrożenia dla Twojej okolicy w swoim rejestrze (Community Risk Register). Aby go znaleźć, wyszukaj w internecie nazwę swojej rady (council) i „community risk register”.
+1|Godzina lub dwie, za darmo. Bezpłatne kursy i poradniki są wymienione na stronie o pierwszej pomocy.
+2|Jeśli usłyszysz, że kanalizacja nie działa, co może się zdarzyć przy ogólnokrajowej przerwie w dostawie prądu, w ogóle nie spłukuj toalety. Wyłóż toaletę mocnym workiem na śmieci, potem go zawiąż i wyrzuć do pojemnika na zewnątrz (główni lekarze Wielkiej Brytanii).
+3|Ten numer ma {0} cyfr. Brytyjskie numery telefonów mają {1} cyfr. Sprawdź go.
+4|Ten numer ma {0} cyfr. Brytyjskie numery telefonów mają {1} cyfr. Sprawdź go. Jeśli jest poprawny, naciśnij ponownie Dalej.
+5|Brytyjskie numery telefonów zaczynają się od {0}. Sprawdź go.
+6|Brytyjskie numery telefonów zaczynają się od {0}. Sprawdź go. Jeśli jest poprawny, naciśnij ponownie Dalej.
+7|Książka Twojego gospodarstwa domowego. Drukuje się na A4, {0} stron.
