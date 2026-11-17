@@ -33,6 +33,7 @@ let fails = 0; const ok = (c, m) => { if (!c) fails++; console.log((c ? 'PASS ' 
   await p.evaluate(() => { Object.assign(cur, { heat: "gas", hob: "electric", cold: "slow", healthGate: "no", water: "few", food: "some", kit: ["torch"], fa: "no", budget: 0, psr: "no" }); qi = list().length - 1; drawQ(); next(); });
   await p.waitForTimeout(300);
   ok(await p.isVisible('.cope'), 'results show Could you cope?');
+  await p.click('.tile >> nth=0'); await p.waitForTimeout(100);
   const cards = await p.evaluate(() => [...document.querySelectorAll('.copecard')].map(c => c.innerText.replace(/\s+/g, ' ')));
   ok(cards.length === 4 && /You said Just about/.test(cards[0]) && /Your answers show 1 of 5 things/.test(cards[0]), 'power card: you said vs your answers show: ' + cards[0]);
   ok(await p.evaluate(() => H[view].scores[0].sc.power === 2 && H[view].scores[0].cp.power === 0), 'first snapshot stores confidence and capability');

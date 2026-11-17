@@ -1,0 +1,75 @@
+0|Revino la el, bifează lucrurile făcute și primește un memento când e timpul verificării de {0} zile.
+1|pregătit
+2|{0} din {1} lucruri rezolvate
+3|Planul tău
+4|De făcut {0}
+5|Cumpărături {0}
+6|Făcute {0}
+7|Amintește-mi mai târziu
+8|Te împiedică ceva?
+9|Apoi acestea
+10|Vezi toate {0}
+11|Parțial
+12|Hrănirea bebelușului
+13|Fără apă
+14|Ce ai spus și ce lipsește
+15|Cât de pregătit ești
+16|Tot planul tău
+17|{0} lucruri gratuite de făcut și {1} de cumpărat
+18|Lucruri gratuite de făcut
+19|Octopus Energy
+20|OVO Energy
+21|ScottishPower
+22|E.ON Next
+23|British Gas
+24|EDF
+25|Utility Warehouse
+26|So Energy
+27|Electricity North West
+28|SP Energy Networks
+29|{0} lucruri de cumpărat pe lista ta de cumpărături
+30|Cartea casei tale
+31|Planul tău, numerele și cele {0} de ore, gata de tipărit. Gratuit.
+32|Fă-mi cartea
+33|Verifică-o pe mama sau un vecin
+34|Plan
+35|Aș face față?
+36|Carte
+37|Rămas de cumpărat
+38|{0} lucruri
+39|Tipărește lista
+40|Am cumpărat asta
+41|Vezi câteva opțiuni
+42|Le găsești în orice supermarket sau magazin de bricolaj.
+43|Economisești pentru:
+44|Mâncare și apă pentru {0} zile pentru {1} animal
+45|Bani puțini?
+46|Începe cu lucrurile gratuite din lista De făcut. Ele contează cel mai mult. Produsele marca proprie a supermarketului sunt în regulă și poți cumpăra câte puțin în fiecare săptămână.
+47|Prețurile sunt estimative. Cumpără de unde vrei: mâncarea și apa sunt de obicei cele mai ieftine la supermarket. Ca asociat Amazon, câștig din achizițiile eligibile.
+48|Nimic bifat încă
+49|Primul tău pas este în fila De făcut. Majoritatea durează {0} minute.
+50|Vezi următorul meu pas
+51|Verificarea ta de {0} zile
+52|Salvează-ți planul și îți vom aminti.
+53|Cunoști pe cineva căruia i-ar folosi?
+54|Trimite
+55|Nu ni se aplică
+56|{0} lucruri rezolvate
+57|Casa ta e mai în siguranță decât la început.
+58|Rezolvat azi
+59|Anulează
+60|{0} lucruri gratuite de făcut
+61|Totul e gata.
+62|Totul e cumpărat
+63|Totul de pe lista de cumpărături e bifat.
+64|Pentru ce ești pregătit
+65|Citizens Advice
+66|Când poți
+67|Vezi pașii gratuiți
+68|Ascunde ajutorul
+69|Bifat.
+70|Important
+71|{0} lucru rezolvat
+72|{0} lucru gratuit de făcut
+73|{0} lucru de cumpărat pe lista ta de cumpărături
+74|{0} lucru

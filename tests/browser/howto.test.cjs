@@ -24,7 +24,8 @@ let fails = 0; const ok = (c, m) => { if (!c) fails++; console.log((c ? 'PASS ' 
   ok(/Check on me/.test(sheets.neighbourCard), 'neighbour card prints');
   // in the plan
   await p.evaluate(() => { cur = fresh(false); Object.assign(cur, { home: 'house', outdoor: 'garden', tenure: 'rent', adults: 1, over70: 1, heat: 'gas', hob: 'gas', cold: 'slow', healthGate: 'no', water: 'all', food: 'yes', kit: ['torch', 'radio', 'power', 'warm', 'firstaid', 'cash', 'opener', 'co'], fa: 'yes', budget: 5, pay: 'bill', psr: 'yes', nation: 'england' }); tier = 'core'; qi = list().length - 1; go('q'); drawQ(); next(); });
-  ok(await p.locator('#steps details.how[open]').count() === 1 && await p.locator('#steps details.how').count() === 3 && await p.locator('#steps .step >> nth=0').locator('details.how[open]').count() === 1, 'instructions are open on the first next step only, so the page stays short');
+  ok(await p.locator('#steps details.how[open]').count() === 0 && await p.locator('#steps details.how').count() === 3, 'instructions are folded away, so the page stays calm');
+  await p.click('.step.lead details.how > summary');
   ok(await p.isVisible('#steps >> text=Send the message'), 'first step has its action button');
   const sent = await p.evaluate(async () => { let got = ''; Object.defineProperty(navigator, 'share', { value: d => { got = d.text; return Promise.resolve(); }, configurable: true }); setLang && setLang('pl'); await new Promise(r => setTimeout(r, 200)); sendMsg('landlord'); const el = document.querySelector('#steps .notin-en'); const note = !!el && el.offsetParent !== null; setLang('en'); return { got, note }; });
   ok(/^Hello\. Please could you check/.test(sent.got) && sent.note, 'landlord message is sent in English, and the page says so');

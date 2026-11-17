@@ -10,9 +10,11 @@ const { chromium } = require('playwright'); const path = require('path');
   ok(ids.length === 3 && ids[0] === 'landlord', 'three steps, critical risk first: ' + ids.join(','));
   ok(await p.isVisible('#steps') && !(await p.isVisible('.fullplan section')), 'next steps shown, full plan collapsed');
   // commit and calendar
-  await p.click('#steps .step:nth-of-type(2) .chip:has-text("This weekend")'); await p.waitForTimeout(100);
+  // the second step is a one-line row: open it, then ask when
+  await p.click(`#st_${ids[1]} > summary`); await p.click(`#st_${ids[1]} >> text=Remind me later`); await p.waitForTimeout(100);
+  await p.click(`#st_${ids[1]} .chip:has-text("This weekend")`); await p.waitForTimeout(100);
   ok(await p.evaluate(id => !!H[0].commit[id].due, ids[1]), 'commitment saved with a date');
-  const [dl] = await Promise.all([p.waitForEvent('download'), p.click('#steps .step:nth-of-type(2) >> text=Add to my calendar')]);
+  const [dl] = await Promise.all([p.waitForEvent('download'), p.click(`#st_${ids[1]} >> text=Add to my calendar`)]);
   const ics = require('fs').readFileSync(await dl.path(), 'utf8');
   ok(/BEGIN:VEVENT[\s\S]*DTSTART;VALUE=DATE:\d{8}[\s\S]*SUMMARY:Fettle:/.test(ics), 'calendar file is valid');
   ok(await p.isVisible('.who input'), 'who-is-doing-this appears after committing');
@@ -22,7 +24,7 @@ const { chromium } = require('playwright'); const path = require('path');
   await p.evaluate(id => stepWhy(id, 'cost'), ids[1]); await p.waitForTimeout(100);
   ok(await p.isVisible('text=£10 a month'), 'cost barrier offers a monthly budget');
   // done records date and priority
-  await p.click('#steps .step:nth-of-type(1) >> text=I\'ve sorted this'); await p.waitForTimeout(100);
+  await p.click('#steps .step.lead >> text=I\'ve sorted this'); await p.waitForTimeout(100);
   ok(await p.evaluate(id => !!H[0].done[id] && H[0].done[id].crit === true, ids[0]), 'sorting a step records the date and that it was critical');
   // follow-up after promised date passes
   await p.evaluate(id => { H[0].commit[id].due = new Date(Date.now() - 2 * 864e5).toISOString(); render(); }, ids[1]);

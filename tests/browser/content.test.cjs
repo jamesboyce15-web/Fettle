@@ -20,9 +20,9 @@ const { chromium } = require('playwright'); const path=require('path');
     ok(/Your pump has stopped/.test(r.powerStep), 'pump step in power cut steps');
     ok(!r.oldFormula && r.fsa, 'old bottled water wording gone, FSA guidance referenced');
   }
-  await p.evaluate(() => { const h = Object.assign(fresh(false), { home: "flat", floor: 5, lift: "yes", outdoor: "none", tenure: "social", adults: 2, under5: 1, feed: "formula", heat: "electric", hob: "electric", cold: "fast", healthGate: "no", water: "none", food: "no", kit: [], budget: 5, doorEntry: "yes" }); H.push(h); view = 0; go('r'); render(); });
+  await p.evaluate(() => { const h = Object.assign(fresh(false), { home: "flat", floor: 5, lift: "yes", outdoor: "none", tenure: "social", adults: 2, under5: 1, feed: "formula", heat: "electric", hob: "electric", cold: "fast", healthGate: "no", water: "none", food: "no", kit: [], budget: 5, doorEntry: "yes" }); H.push(h); view = 0; go('r'); RTAB = 'todo'; render(); });
   await p.waitForTimeout(200);
-  const txt = await p.textContent('#res');
+  const txt = (await p.textContent('#res')) + (await (async () => { await p.evaluate(() => { RTAB = 'shop'; render(); }); await p.waitForTimeout(200); const t = await p.textContent('#res'); await p.evaluate(() => { RTAB = 'todo'; render(); }); return t; })());
   if (L === 'pl') { ok(/Dowiedz się, co robią drzwi budynku/.test(txt), 'door job translated (pl)'); ok(/Food Standards Agency/.test(txt) && !/If your tap water is off/.test(txt), 'formula note translated (pl)'); }
   ok(errs.length === 0, L + ' no page errors ' + errs.join(';'));
   await p.close(); }

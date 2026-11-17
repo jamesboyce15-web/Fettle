@@ -8,9 +8,13 @@ let fails = 0; const ok = (c, m) => { if (!c) fails++; console.log((c ? 'PASS ' 
   const run = a => p.evaluate(a => { cur = fresh(false); Object.assign(cur, a); tier = "core"; qi = list().length - 1; go("q"); drawQ(); next(); }, a);
   // no critical risk: headline is the steps, score is secondary
   await run({ home: "house", outdoor: "garden", tenure: "own", adults: 2, heat: "electric", hob: "electric", cold: "slow", healthGate: "no", water: "few", food: "some", kit: ["torch", "smoke", "radio", "power", "warm"], fa: "no", budget: 5 });
-  ok(/^Your next 3 steps$/.test(await p.textContent('#res h1')), 'headline leads with the next steps: ' + await p.textContent('#res h1'));
-  ok(/% ready for 72 hours\. \d+ things in your plan\./.test(await p.textContent('#res .headline p.sm')), 'score is a small line underneath');
+  ok(/household$/.test(await p.textContent('#res h1')) && await p.isVisible('.step.lead >> text=Your next step') && await p.locator('#steps .srow').count() === 2, 'one next step leads, the other two folded into rows');
+  ok(/^\d+% ready$/.test((await p.getAttribute('.ring svg', 'aria-label'))) && /\d+ of \d+ things sorted/.test(await p.textContent('.rhead p')), 'ring and "things sorted" line in the header');
   ok(await p.locator('#steps h2').count() === 0, 'no duplicate steps heading');
+  ok(await p.locator('.seg [role=tab]').count() === 3 && await p.isVisible('.bnav'), 'To do, Shopping and Done tabs, and the bottom menu');
+  await p.evaluate(() => setRTab('shop')); ok(await p.isVisible('.tot >> text=Print the list') && await p.locator('.srow.shop').count() > 0, 'shopping tab lists what to buy');
+  await p.evaluate(() => setRTab('done')); ok(await p.isVisible('.donec'), 'done tab shows');
+  await p.evaluate(() => setRTab('todo'));
   // sort a step that completes "A power cut"
   await p.evaluate(() => { const h = H[view]; h.food = "no"; h.bought = {}; render(); });
   const pre = await p.evaluate(() => readyFor(H[view]));
@@ -22,7 +26,7 @@ let fails = 0; const ok = (c, m) => { if (!c) fails++; console.log((c ? 'PASS ' 
   ok(await p.locator('.win').count() === 0, 'message shows once');
   // critical risk removed
   await run({ home: "house", outdoor: "garden", tenure: "own", adults: 1, heat: "gas", hob: "gas", cold: "slow", healthGate: "no", water: "all", food: "yes", kit: ["torch", "radio", "power", "smoke"], fa: "no", budget: 5 });
-  ok(/critical risk/.test(await p.textContent('#res h1')), 'critical risk still leads');
+  ok(/critical risk/.test(await p.textContent('.critline')) && await p.isVisible('.step.lead .imp.crit'), 'critical risk still leads');
   await p.evaluate(() => { const id = nextSteps(H[view])[0].id; stepDone(id); });
   ok(/last critical risk|critical risk removed/i.test(await p.textContent('.win')), 'says the critical risk is gone: ' + (await p.textContent('.win')).replace(/\s+/g, ' '));
   // barrier help
