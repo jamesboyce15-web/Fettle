@@ -1,0 +1,135 @@
+0|Mieszkasz tam, gdzie bywają powodzie?
+1|Sprawdź swój kod pocztowy, a potem zrób plan na wypadek powodzi
+2|{0}Powodzie{1} Sprawdź swoją okolicę
+3|Czy w Twojej okolicy bywają powodzie?
+4|Wpisz pierwszą część kodu pocztowego. Pokażemy miejsca w pobliżu, przed którymi ostrzega Agencja Środowiska (Environment Agency), i ostrzeżenia obowiązujące teraz.
+5|Pierwsza część kodu pocztowego {0}Na przykład LA{1} lub CA{2}. Nie potrzebujemy pełnego adresu.{3}
+6|Sprawdź moją okolicę
+7|Obowiązuje teraz
+8|Poważne ostrzeżenie przed powodzią: zagrożenie życia
+9|Ostrzeżenie przed powodzią: powódź jest spodziewana
+10|Alert powodziowy: powódź jest możliwa
+11|Zobacz najnowsze informacje na GOV.UK
+12|W tej okolicy są miejsca zagrożone powodzią
+13|Agencja Środowiska ma {0}{1} obszarów ostrzeżeń powodziowych{2} blisko środka tego obszaru kodu pocztowego.
+14|Rzeki:
+15|Twoja ulica może, ale nie musi, być w jednym z nich. Sprawdź swój dokładny adres, żeby mieć pewność.
+16|Trzy rzeczy do zrobienia
+17|Sprawdź ryzyko powodzi dla swojego dokładnego adresu
+18|Zapisz się na ostrzeżenia powodziowe na GOV.UK
+19|Albo zadzwoń na Floodline:
+20|Zrób plan na wypadek powodzi dla swojego domu, z bezpłatnym testem poniżej.
+21|Zrób plan na wypadek powodzi
+22|Bezpłatny {0}-minutowy test, z dodanymi krokami na wypadek powodzi: co przenieść, co wyłączyć, dokąd iść, i zapasy na {1} dni.
+23|Zacznij test na wypadek powodzi
+24|Obszary powodziowe: dane Agencji Środowiska, Open Government Licence.
+25|Brak obszarów ostrzeżeń powodziowych blisko środka tej okolicy
+26|To dobra wiadomość, jeśli chodzi o powodzie z rzek i morza. Ulewny deszcz może jednak zalać ulice wszędzie, więc sprawdź swój dokładny adres.
+27|Ostrzeżenia powodziowe poza Anglią pochodzą z innego serwisu.
+28|Ostrzeżenia powodziowe Natural Resources Wales
+29|Nie udało się teraz połączyć z Agencją Środowiska. Możesz sprawdzić swój dokładny adres na GOV.UK.
+30|Czy Twój dom może zostać zalany?
+31|Przez rzekę, morze lub ulewny deszcz, z którym nie radzi sobie kanalizacja. Jeśli zdarzyło się to wcześniej, może się zdarzyć znowu.
+32|Miejsca w pobliżu, przed którymi ostrzega Agencja Środowiska
+33|Dom był już zalany albo jesteśmy w obszarze ostrzeżeń powodziowych
+34|Może, nie jestem pewien
+35|Nie, mieszkamy wysoko nad wodą
+36|Czy jesteś zapisany na bezpłatne ostrzeżenia powodziowe?
+37|Agencja Środowiska dzwoni, wysyła SMS lub e-mail, gdy spodziewana jest powódź, często kilka godzin przed przyjściem wody.
+38|Czy są zapisani na bezpłatne ostrzeżenia powodziowe?
+39|Zrobione: Zrób plan na wypadek powodzi
+40|Zrób plan na wypadek powodzi{0}Najpierw{1}
+41|Co przenieść, co wyłączyć, dokąd iść
+42|Gdy przyjdzie ostrzeżenie, jest mało czasu. Zdecyduj teraz, co przeniesiesz na górę, jak wyłączyć gaz, prąd i wodę, i dokąd pójdziesz.
+43|{0}Przygotuj się na powódź{1}. Oficjalne porady na GOV.UK.
+44|Zapisz, gdzie wyłącza się gaz, prąd i wodę, i sprawdź, czy możesz tam dosięgnąć.
+45|Wypisz, co przeniesiesz na górę najpierw: leki, dokumenty, telefony, ładowarki.
+46|Uzgodnijcie, dokąd pójdziecie, jeśli trzeba będzie wyjść, i jak tam dotrzecie.
+47|Zrobione: Zapisz się na bezpłatne ostrzeżenia powodziowe
+48|Zapisz się na bezpłatne ostrzeżenia powodziowe{0}Najpierw{1}
+49|SMS-em, telefonicznie lub e-mailem
+50|Dostaniesz ostrzeżenie, gdy w Twojej okolicy spodziewana jest powódź, często kilka godzin przed przyjściem wody. Możesz też zapisać krewnego.
+51|{0}Zapisz się na ostrzeżenia powodziowe na GOV.UK{1}. Za darmo. Albo zadzwoń na Floodline, o każdej porze: {2} {3} {4}
+52|Wejdź na stronę zapisów albo zadzwoń na Floodline: {0} {1} {2}
+53|Wpisz swój adres i wybierz SMS, telefon lub e-mail.
+54|Dodaj drugi numer, osoby, która by Cię sprawdziła.
+55|Ktoś w domu może mieć trudności ze schodami podczas pożaru lub gdy stanie winda. Poproś właściciela lub zarządcę budynku, żeby to zapisał, i zapytaj, czy przygotuje osobisty plan ewakuacji. Powiedz też o tym straży pożarnej, gdy dzwonisz pod {0}. W Anglii, w budynkach mających co najmniej {1} kondygnacji, zarządca budynku musi zaproponować ocenę bezpieczeństwa pożarowego i uzgodnić pisemny plan, jeśli o to poprosisz.
+56|Zrobione: Trzymaj dokumenty i leki w wodoodpornej torbie
+57|Trzymaj dokumenty i leki w wodoodpornej torbie{0}Potem{1}
+58|Wystarczy szczelna torebka do zamrażarki
+59|Woda powodziowa niszczy papier i leki. Trzymaj paszporty, dane ubezpieczenia i leki na kilka dni szczelnie zamknięte, na górze albo w torbie ewakuacyjnej.
+60|Włóż kopie dokumentów i leki na kilka dni do szczelnej torebki do zamrażarki.
+61|Trzymaj ją na górze albo w torbie ewakuacyjnej przy drzwiach.
+62|Zrobione: Sprawdź, czy ubezpieczenie obejmuje powódź
+63|Sprawdź, czy ubezpieczenie obejmuje powódź{0}Później{1}
+64|Przejrzyj polisę albo zapytaj ubezpieczyciela
+65|Sprawdź, czy ubezpieczenie budynku i mienia obejmuje szkody powodziowe. Jeśli trudno znaleźć ubezpieczenie z powodu ryzyka powodzi, zapytaj ubezpieczyciela o Flood Re.
+66|Znajdź polisę i sprawdź, czy obejmuje powódź.
+67|Jeśli nie, zapytaj ubezpieczyciela, ile kosztowałoby jej dodanie.
+68|Lista na wypadek sytuacji awaryjnej
+69|Daj znać radzie, jeśli potrzebowałbyś pomocy
+70|Podczas powodzi lub długiej przerwy w dostawie prądu rada decyduje, kogo sprawdzić najpierw. Młoda rodzina z jedzeniem na jeden dzień jest przed kimś, kto ma zapasy na tydzień. Dołączenie pomaga podjąć dobrą decyzję.
+71|Co by zobaczyli:
+72|Dorośli: {0}
+73|Powyżej {1} lat: {0}
+74|Poniżej {1} lat: {0}
+75|Woda i jedzenie
+76|Potrzeby
+77|Lek przechowywany w lodówce
+78|Trudno byłoby szybko wyjść
+79|Problemy z pamięcią lub demencja
+80|Niedosłuch: może nie usłyszeć pukania ani alarmu
+81|Utrata wzroku
+82|Niemowlę na mleku matki lub modyfikowanym
+83|Mieszkanie w wysokim budynku
+84|Brak samochodu
+85|Dodaj nas do listy
+86|Fettle uruchamia to razem z radami. Nic nie jest udostępniane, dopóki Twoja rada nie dołączy, a potem tylko w sytuacji awaryjnej. Możesz zrezygnować w każdej chwili. {0}Jak to działa{1}
+87|Widok awaryjny
+88|Na liście awaryjnej: {0}, najbardziej zagrożeni najpierw
+89|{0}Przykładowe dane.{1} Zmyślone gospodarstwa domowe, aby pokazać, jak działa widok awaryjny.
+90|Gospodarstwa domowe, które zgodziły się być na liście awaryjnej, najbardziej zagrożone najpierw. W prawdziwym użyciu otwiera się to tylko po ogłoszeniu sytuacji awaryjnej, a każde wyświetlenie jest zapisywane.
+91|Dotknięte okręgi
+92|Gospodarstwa na liście
+93|Sprawdź najpierw
+94|Mniej niż dzień wody lub jedzenia
+95|Potrzebują prądu do sprzętu
+96|Priorytet
+97|Gospodarstwo domowe
+98|Mieszka sam, powyżej {0} lat
+99|W wieku {1}–{2} lat: {0}
+100|Sprawdź wkrótce
+101|{0} dni lub więcej
+102|Prawdopodobnie sobie radzi
+103|Nie podano
+104|Adresy i numery telefonów widzą tylko wyznaczeni ratownicy. W tym przykładzie są ukryte.
+105|{0}Chcą być na liście awaryjnej rady{1}, żeby osoby planujące działania w sytuacjach awaryjnych wiedziały, że mogą potrzebować pomocy podczas powodzi lub długiej przerwy w dostawie prądu. Udostępniane tylko w sytuacji awaryjnej. Opcjonalne.
+106|Dorośli: {0}
+107|Jesteś na liście awaryjnej
+108|Od
+109|To zobaczyłyby osoby planujące działania w sytuacjach awaryjnych, i tylko w sytuacji awaryjnej:
+110|Aktualizuje się wraz z Twoim planem. Nic nie jest udostępniane, dopóki Twoja rada nie dołączy do Fettle. Damy Ci znać, kiedy to nastąpi.
+111|Zmień adres lub telefon
+112|Wypisz się z listy
+113|Numer domu i ulica
+114|Pełny kod pocztowy
+115|Numer telefonu na wypadek sytuacji awaryjnej
+116|Zgadzam się, aby w sytuacji awaryjnej Fettle udostępnił te informacje osobom planującym działania awaryjne w mojej radzie, łącznie z powyższymi potrzebami zdrowotnymi, żeby mogły zdecydować, komu pomóc najpierw.
+117|Dołącz do listy
+118|Dodaj numer domu i ulicę, żeby mogli Cię znaleźć.
+119|Wpisz pełny kod pocztowy, na przykład LA{0} {1}AA.
+120|Dodaj numer telefonu, pod który mogą zadzwonić.
+121|Zaznacz pole, aby się zgodzić, albo naciśnij Anuluj.
+122|Jesteś na liście. Dziękujemy.
+123|Wypisałeś się z listy. Twoje dane zostały usunięte.
+124|Najpierw zapisz swój plan, żeby Twoje dane były bezpiecznie przechowywane na koncie.
+125|Nic, o czym nam powiedziałeś
+126|Wpisz pierwszą część kodu pocztowego, na przykład LA{0}.
+127|Sprawdzam...
+128|Ta okolica jest w szerszym obszarze alertu powodziowego
+129|Powódź jest możliwa w niektórych jej częściach, choć blisko środka nie ma obszarów ostrzeżeń. Sprawdź swój dokładny adres, żeby mieć pewność.
+130|Agencja Środowiska ma {0}{1} obszar ostrzeżeń powodziowych{2} blisko środka tego obszaru kodu pocztowego.
+131|I jeszcze {0}.
+132|Floodline Scotland (SEPA)
+133|Porady na wypadek powodzi na nidirect
+134|Właściciel ubezpiecza budynek, ale nie Twoje rzeczy. Chroni je ubezpieczenie mienia obejmujące powódź.

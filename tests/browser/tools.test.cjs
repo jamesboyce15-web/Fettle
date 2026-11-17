@@ -68,6 +68,6 @@ const OUTCODES = {
   // footer links and the landing page still work
   await p.goto(site); await p.waitForTimeout(200);
   ok(await p.isVisible('#v-landing') && !(await p.isVisible('#v-tool')), 'no ?go: landing page as before');
-  ok(await p.$$eval('.tools-row a', a => a.map(x => x.getAttribute('href')).join()) === 'calc,local,remind', 'footer links to the three tools');
+  ok(await p.$$eval('.tools-row a', a => a.map(x => x.getAttribute('href')).join()) === 'calc,local,remind,flood', 'footer links to the four tools');
   ok(!errs.length, 'no page errors' + (errs.length ? ': ' + errs.join(' | ') : ''));
 } finally { await b.close(); } console.log(fails ? `${fails} FAILED` : 'ALL PASS'); process.exit(fails ? 1 : 0); })();
