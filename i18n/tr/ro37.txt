@@ -1,0 +1,79 @@
+0|Vin îngrijitori să-i ajute?
+1|Dacă zăpada, inundațiile sau o pană de curent îi împiedică pe îngrijitori să ajungă, altcineva trebuie să-i înlocuiască.
+2|Da, o dată pe zi
+3|Da, de mai multe ori pe zi
+4|Vin îngrijitori să ajute pe cineva din casă?
+5|Cercul familiei
+6|Cine va avea grijă de ei timp de {0} zile?
+7|Adaugă persoanele care pot ajuta și ce va face fiecare. Fettle face din asta un program.
+8|Adaugă prima persoană
+9|Dacă îngrijitorii nu pot ajunge
+10|Ce sarcini fac îngrijitorii și cine din familie le-ar prelua pe fiecare?
+11|Planifică înlocuirea îngrijitorilor
+12|Depinde de vizitele îngrijitorilor
+13|Cât de departe locuiesc?
+14|La mai puțin de {0} minute
+15|La {0}–{1} minute
+16|La mai mult de o oră
+17|Ce vor face?
+18|Sună în fiecare zi
+19|Are cheie și poate veni
+20|Aduce apă și mâncare
+21|Se ocupă de medicamente și de farmacie
+22|Îi înscrie în Priority Services Register
+23|Șterge
+24|Adaugă pe altcineva
+25|Goluri de acoperit
+26|Nimeni nu e stabilit să sune zilnic.
+27|Nimeni nu are cheie. Dacă nu merg telefoanele, cineva trebuie să poată intra.
+28|Stabilește cine îi înlocuiește pe îngrijitori dacă nu pot ajunge.
+29|Numărul lor de telefon
+30|Ca familia să-i poată suna de pe ecranul de avertizare
+31|Nimeni cu cheie nu locuiește la mai puțin de {0} minute. Pe zăpadă sau la inundații poate fi prea departe.
+32|Dacă nu există curent, apă sau drumuri timp de {0} zile
+33|Ziua
+34|Apel dimineața
+35|Apel seara
+36|Vizită
+37|Trimite programul familiei
+38|Tipărește o foaie pentru frigiderul lor
+39|Agenția de îngrijire {0}Opțional{1}
+40|Telefonul lor
+41|Ce sarcini fac îngrijitorii și cine le-ar prelua?
+42|Cine preia?
+43|Mese
+44|Trezitul și spălatul
+45|Culcatul
+46|Verificarea că sunt bine
+47|Planul familiei pentru acum
+48|Sună primul:
+49|Vine dacă nimeni nu-i poate contacta sau au nevoie de ajutor:
+50|Dacă îngrijitorii nu pot ajunge:
+51|Nu merge și nu conduce niciodată prin apă de inundație ca să ajungi la ei. {0} cm de apă curgătoare pot ridica o mașină.
+52|Sună-i acum
+53|Anunță familia
+54|A vorbit cineva cu ei?
+55|Da, sunt bine
+56|S-ar putea să aibă nevoie de ajutor
+57|Au nevoie de ajutor acum
+58|Pentru câte zile au apă și mâncare?
+59|Unele sarcini ale îngrijitorilor nu au pe nimeni care să le preia.
+60|Agenția de îngrijire
+61|Nimeni încă
+62|Dacă se opresc curentul, apa sau drumurile
+63|Familia ta are un plan. Rămâi acasă, stai la căldură și așteaptă aceste apeluri.
+64|Cine va suna sau va veni
+65|Ajutor medical urgent
+66|Floodline
+67|Cât aștepți
+68|Bea apă și mănâncă ceva la câteva ore.
+69|Stai într-o singură cameră caldă. Îmbracă-te în straturi și pune-ți o căciulă.
+70|Folosește o lanternă, niciodată lumânări.
+71|Ia medicamentele la orele obișnuite.
+72|Va suna
+73|Va veni
+74|A vorbit cineva cu ei? Îi sun acum.
+75|Avertizare de inundație lângă
+76|Copiat. Lipește-l în grupul familiei.
+77|Nu am putut copia. Fă o captură de ecran cu programul.
+78|Alege cel puțin un lucru pe care îl vor face.

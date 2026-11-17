@@ -11,7 +11,7 @@
   // Health answers are special category data: a household's own account only saves them with explicit consent
   // (h.healthOK, from the tick at sign-up or sign-in, on the health question, or on the plan page). Team caseloads
   // are recorded by staff under their organisation's own agreement, so they're saved as they are.
-  const HEALTH = ["healthGate", "health", "meds", "diets"];
+  const HEALTH = ["healthGate", "health", "meds", "diets", "carers", "care"];
   const strip = h => { const o = Object.assign({}, h); delete o._id; delete o.paid;
     if (!o.healthOK && !(user && user.pro)) HEALTH.forEach(k => delete o[k]);
     return o; };

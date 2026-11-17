@@ -3,7 +3,8 @@
 alter table public.fettle_events drop constraint if exists fettle_events_kind_check;
 alter table public.fettle_events add constraint fettle_events_kind_check
   check (kind in ('check_started','check_finished','tool_calc','tool_local','tool_local_found','tool_remind','remind_signup',
-                  'tool_flood','tool_flood_found','reg_join','checkin_fine','checkin_maybe','checkin_now'));
+                  'tool_flood','tool_flood_found','reg_join','checkin_fine','checkin_maybe','checkin_now',
+                  'family_circle','family_checkin'));
 
 -- 2. How many households in a council area have checked in today, for "N households near you have checked in".
 --    Anonymous counts only. Fewer than 5 returns nothing, so no one can be singled out.
