@@ -1,0 +1,64 @@
+0|Despre ei
+1|Pentru cine faci acest plan?
+2|E bine cum le spui, de exemplu Mama sau Bunicul Ion. Apare în planul și cartea lor.
+3|Cum faci această verificare?
+4|E cel mai bine împreună, la telefon sau în vizită. Dacă răspunzi din ce știi, îți facem o listă cu ce să verifici cu ei mai târziu.
+5|Împreună, la telefon
+6|Împreună, cu ei în persoană
+7|Singur, din ce știu
+8|Știu că le faci acest plan?
+9|E casa și informațiile lor. Planurile merg cel mai bine când sunt de acord cu ele.
+10|Da, și sunt de acord
+11|Încă nu. Voi vorbi cu ei
+12|Adaugă un nume, chiar și doar Mama sau Tata.
+13|Mai departe, cu familia
+14|Planul pentru {0} e gata
+15|Împarte sarcinile care lipsesc
+16|Adaugă cine e în cercul familiei
+17|Invită-i în plan
+18|Am înțeles
+19|{0}Vorbește cu ei despre acest plan.{1} E casa și informațiile lor. Înainte să-l împarți cu familia sau să-i adaugi pe lista de urgență, verifică dacă sunt de acord.
+20|Am vorbit, sunt de acord
+21|{0}Ai răspuns din ce știi.{1} Data viitoare când vorbiți, verifică împreună:
+22|Câtă apă îmbuteliată și mâncare fără gătit au cu adevărat
+23|Dacă lanterna și radioul lor funcționează
+24|Medicamentele lor, și cele care trebuie ținute la frigider
+25|Dacă vin îngrijitori și când
+26|Am verificat împreună
+27|Împarte planul cu familia
+28|Invită frați, surori sau pe oricine ajută. Pot vedea și actualiza acest plan de pe telefonul lor, inclusiv răspunsurile despre sănătate.
+29|Vorbește întâi cu ei, apoi invită familia.
+30|Ce lipsește
+31|Împărțiți sarcinile în familie
+32|din
+33|au pe cineva care se ocupă.
+34|Cine se ocupă?
+35|Eu
+36|Lumină și știri
+37|Sănătate și medicamente
+38|Siguranță
+39|Ajutor din afară
+40|Ține documentele și medicamentele într-o pungă impermeabilă
+41|Verifică dacă asigurarea acoperă inundațiile
+42|Spune-i consiliului lor dacă ar avea nevoie de ajutor
+43|Vorbește întâi cu ei. Trebuie să fie de acord înainte să fie adăugați pe lista de urgență.
+44|Nimeni nu aduce apă și mâncare.
+45|Scoate din plan
+46|Invită pe cineva
+47|Trimite fiecăruia sarcinile lui
+48|Ieși din acest plan
+49|Salvează întâi planul, ca familia să aibă la ce să se alăture.
+50|cine de ce se ocupă
+51|Am făcut un plan de urgență pentru
+52|Alătură-te ca să împărțim sarcinile și să verificăm cum sunt dacă vine o inundație, o pană de curent sau vreme rea:
+53|Împărțirea funcționează pe site, după ce planul e salvat în contul tău.
+54|Ai fost invitat în acest plan. Toți cei din el îl pot vedea și actualiza.
+55|Împărțit de:
+56|Invitația nu a funcționat. Cere un link nou.
+57|Creează un cont gratuit sau autentifică-te ca să te alături planului familiei.
+58|Ai ieșit din plan.
+59|Nu a funcționat. Încearcă din nou.
+60|Împărțirea nu e încă activată. Încearcă mai târziu.
+61|Salvează întâi planul în contul tău.
+62|Nu am putut salva planul. Încearcă din nou.
+63|Te-ai alăturat planului. Adaugă-te în cercul familiei ca toți să știe ce vei face.

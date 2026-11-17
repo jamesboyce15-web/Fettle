@@ -12,7 +12,7 @@
   // (h.healthOK, from the tick at sign-up or sign-in, on the health question, or on the plan page). Team caseloads
   // are recorded by staff under their organisation's own agreement, so they're saved as they are.
   const HEALTH = ["healthGate", "health", "meds", "diets", "carers", "care"];
-  const strip = h => { const o = Object.assign({}, h); delete o._id; delete o.paid;
+  const strip = h => { const o = Object.assign({}, h); delete o.paid; Object.keys(o).forEach(k => { if (k[0] === "_") delete o[k]; });
     if (!o.healthOK && !(user && user.pro)) HEALTH.forEach(k => delete o[k]);
     return o; };
   const errBox = t => { const e = document.getElementById("a-err"); if (e) e.textContent = t; return false; };
@@ -35,6 +35,13 @@
     if (new URLSearchParams(location.search).get("recheck")) { // link from a reminder email
       history.replaceState(null, "", location.pathname);
       if (user) { const i = H.findIndex(h => checkDue(h)); if (i >= 0) recheck(i); else homeView(); } else authView("signin");
+    }
+    const fam = new URLSearchParams(location.search).get("family"); // family invite: /?family=<token>
+    if (fam && /^[a-f0-9]{32}$/.test(fam)) {
+      history.replaceState(null, "", location.pathname);
+      try { localStorage.setItem("fettle_family", fam); } catch (e) {}
+      if (user && !user.pro) await acceptFamily();
+      else if (!user) { authView("signup"); say("Create a free account, or sign in, to join your family's plan."); }
     }
     const join = new URLSearchParams(location.search).get("join"); // invite link: /?join=ABCD-2345
     if (join) { history.replaceState(null, "", location.pathname); if (!(user && user.pro)) { proAuth(); const c = document.getElementById("j-code"); if (c && join !== "1") c.value = join; } }
@@ -80,11 +87,11 @@
   async function loadUser(u) {
     if (await loadOrg(u)) return;
     const meta = u.user_metadata || {};
-    const { data: rows, error } = await sb.from("households").select("id,data").is("org_id", null).order("created_at");
+    const { data: rows, error } = await sb.from("households").select("id,data,user_id").is("org_id", null).order("created_at");
     if (error) { console.error(error); say("We couldn't load your plans. Please refresh."); return; }
     const { data: buys } = await sb.from("purchases").select("household_id,product");
     const paid = new Set((buys || []).filter(b => b.product === "book_digital").map(b => b.household_id));
-    const fromDb = (rows || []).map(r => { const h = Object.assign(fresh(r.data.other), r.data); h._id = r.id; h.paid = paid.has(r.id) || FREEBOOK; saved.set(r.id, JSON.stringify(strip(h))); return h; });
+    const fromDb = (rows || []).map(r => { const h = Object.assign(fresh(r.data.other), r.data); h._id = r.id; h._shared = r.user_id !== u.id; h.paid = paid.has(r.id) || FREEBOOK; saved.set(r.id, JSON.stringify(strip(h))); return h; });
     // A check finished before signing in. Not one that's already saved to this account (the same plan open in a second tab).
     let pending = H.filter(h => !h._id && !(h.hid && fromDb.some(d => d.hid === h.hid)));
     keepClear();
@@ -104,6 +111,7 @@
     user = { id: u.id, email: u.email, name: meta.first_name || u.email.split("@")[0], households: H, remind: !!meta.remind_emails };
     setAcct();
     await saveAll();
+    if (await acceptFamily()) return;
     if (restored && restored !== true) { view = H.indexOf(restored); openBook(); say("Your email is confirmed. Here's your book."); }
     else if (restored) { view = H.length - 1; go("r"); render(); say(H[view]._id ? "Your email is confirmed and your plan is saved." : "Your email is confirmed."); }
   }
@@ -373,6 +381,53 @@
     const { data, error } = await sb.rpc("fettle_recent_checkins", { p_area: String(area).slice(0, 80) });
     return error ? null : data;
   };
+
+  // ---------- shared family plans ----------
+  async function acceptFamily() {
+    let tok = null; try { tok = localStorage.getItem("fettle_family"); } catch (e) {}
+    if (!tok || !user || user.pro) return false;
+    try { localStorage.removeItem("fettle_family"); } catch (e) {}
+    const { data: hid, error } = await sb.rpc("accept_household_invite", { p_token: tok });
+    if (error) { say(error.message || "That invite didn't work. Ask for a new link."); return false; }
+    if (!H.some(h => h._id === hid)) {
+      const { data: r } = await sb.from("households").select("id,data,user_id").eq("id", hid).single();
+      if (r) { const h = Object.assign(fresh(r.data.other), r.data); h._id = r.id; h._shared = r.user_id !== user.id; h.paid = FREEBOOK; saved.set(r.id, JSON.stringify(strip(h))); H.push(h); }
+    }
+    const i = H.findIndex(h => h._id === hid);
+    if (i >= 0) { view = i; go("r"); render(); say("You've joined the plan. Add yourself to the family circle so everyone knows what you'll do."); }
+    return true;
+  }
+  window.famInvite = async function (h) {
+    if (!user || user.pro) return { error: "Save the plan to your account first." };
+    if (!h._id) await saveAll();
+    if (!h._id) return { error: "We couldn't save the plan. Please try again." };
+    if (!h.ownerName && !h._shared) h.ownerName = user.name;
+    const { data, error } = await sb.rpc("create_household_invite", { p_household: h._id });
+    if (error) return { error: /function|schema cache/i.test(error.message) ? "Sharing isn't switched on yet. Please try again later." : error.message };
+    return { link: location.origin + "/?family=" + data };
+  };
+  window.famMembers = async function (h) {
+    if (!h._id) return [];
+    const { data, error } = await sb.from("household_members").select("user_id,name,added_at").eq("household_id", h._id).order("added_at");
+    if (error) return [];
+    return (data || []).map(m => ({ id: m.user_id, name: m.name || "", me: m.user_id === user.id }));
+  };
+  window.famRemoveMember = async function (h, uid) {
+    const { error } = await sb.from("household_members").delete().eq("household_id", h._id).eq("user_id", uid);
+    if (error) { say("That didn't work. Please try again."); return false; }
+    if (uid === user.id) { saved.delete(h._id); const i = H.indexOf(h); if (i >= 0) H.splice(i, 1); view = 0; homeView(); say("You've left the plan."); }
+    return true;
+  };
+  // Shared plans: when you come back to the tab, pick up changes the family made, if you haven't changed anything since.
+  document.addEventListener("visibilitychange", async () => {
+    if (document.hidden || !user || user.pro || !sb) return;
+    const S = H.filter(h => h._id && (h._shared || h._hasFamily) && saved.get(h._id) === JSON.stringify(strip(h)));
+    if (!S.length) return;
+    const { data } = await sb.from("households").select("id,data").in("id", S.map(h => h._id));
+    let changed = false;
+    (data || []).forEach(r => { const h = S.find(x => x._id === r.id); const body = JSON.stringify(strip(Object.assign({}, r.data))); if (h && body !== saved.get(r.id)) { Object.keys(h).forEach(k => { if (!k.startsWith("_") && k !== "paid") delete h[k]; }); Object.assign(h, r.data); saved.set(r.id, JSON.stringify(strip(h))); changed = true; } });
+    if (changed && !document.getElementById("v-r").classList.contains("hide")) render(true);
+  });
 
   // ---------- payment ----------
   window.liveCheckout = async function (h) {

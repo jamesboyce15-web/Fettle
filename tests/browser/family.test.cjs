@@ -39,6 +39,48 @@ let fails = 0; const ok = (c, m) => { if (!c) fails++; console.log((c ? 'PASS ' 
   ok(/Has anyone spoken to them\?/.test(card) && /Yes, they're fine/.test(card), 'family check-in asks if anyone has spoken to them');
   ok(/The family plan for now/.test(card) && /Calls them first: ?Sarah/.test(card) && /they need help: ?Tom/.test(card) && /Medicines: Tom/.test(card), 'shows who calls, who visits and who covers the carers');
   ok(await p.getAttribute('#checkin a[href^="tel:"]', 'href') === 'tel:01524000000', 'one tap to call them');
+
+  // guided set-up for a relative's plan
+  await p.evaluate(() => { start(true); });
+  ok(/Who are you making this plan for\?/.test(await p.textContent('#v-q')) && await p.inputValue('#t_name') === 'Mum', 'starts by asking who the plan is for');
+  await p.fill('#t_name', 'Dad'); await p.click('#q-next'); await p.waitForTimeout(60);
+  ok(/How are you doing this check\?/.test(await p.textContent('#v-q')), 'then how they are doing it');
+  await p.click('#q-body .opt >> nth=2'); await p.waitForTimeout(250);
+  if (/How are you doing/.test(await p.textContent('#v-q'))) await p.click('#q-next');
+  await p.waitForTimeout(60);
+  ok(/Do they know you're making this plan\?/.test(await p.textContent('#v-q')), 'then whether they know');
+  await p.evaluate(() => { Object.assign(cur, { relOK: 'later', pc: 'LA1', area: 'Lancaster', home: 'house', outdoor: 'garden', tenure: 'own', adults: 0, over70: 1, heat: 'gas', hob: 'gas', cold: 'fast', healthGate: 'no', carers: 'no', water: 'none', food: 'no', kit: [], fa: 'no', budget: 0 }); qi = list().length - 1; drawQ(); next(); });
+  await p.waitForTimeout(200);
+  ok(await p.evaluate(() => H[view].name === 'Dad' && H[view].relHow === 'alone'), 'answers kept');
+  ok(await p.isVisible('#relstart') && /Dad's plan is ready/.test(await p.textContent('#relstart')), 'finishes with next steps for the family');
+  const notes = await p.textContent('#res');
+  ok(/Talk to them about this plan/.test(notes) && /You answered from what you know/.test(notes), 'reminds them to talk to Dad and check the guesses');
+  ok(/Talk to them first/.test(await p.textContent('#regcard')) && !(await p.isVisible('#regcard >> text=Add us to the list')), 'no emergency list until Dad agrees');
+  ok(/Talk to them first, then invite the family/.test(await p.textContent('#famshare')), 'no inviting until Dad agrees');
+  await p.click('text=We\'ve talked, they\'re happy'); await p.waitForTimeout(80);
+  ok(await p.isVisible('#famshare >> text=Invite someone') && await p.isVisible('#regcard >> text=Add us to the list'), 'once Dad agrees, sharing and the list open up');
+  // what's missing, and who's sorting it
+  const groups = await p.$$eval('#jobscard .jg-n', e => e.map(x => x.textContent));
+  ok(groups[0] === 'Water' && groups[1] === 'Food' && groups.includes('Light and news') && groups[groups.length - 1] === 'Other' && await p.locator('#jobscard details[open]').count() === 1, 'gaps grouped, essentials first, one group open at a time');
+  await p.evaluate(() => { H[view].circle = [{ name: 'Sarah', tel: '07700 900111', mins: 45, roles: ['supplies'] }]; render(); });
+  await p.selectOption('#jobscard li:has-text("Drinking water") select', 'Sarah'); await p.waitForTimeout(60);
+  await p.click('#jobscard summary:has-text("Light and news")'); await p.waitForTimeout(40);
+  await p.selectOption('#jobscard li:has-text("Battery or wind-up radio") select', 'Me'); await p.waitForTimeout(60);
+  ok(/2 of \d+ have someone sorting them/.test((await p.textContent('#jobscard')).replace(/\s+/g, ' ')), 'counts the jobs that have someone');
+  const jobs = await p.evaluate(async () => { let t = ''; Object.defineProperty(navigator, 'share', { value: d => { t = d.text; return Promise.resolve(); }, configurable: true }); user = { id: 'u1', name: 'James' }; jobsShare(view); await new Promise(r => setTimeout(r, 50)); return t; });
+  ok(/Dad: who's sorting what/.test(jobs) && /Sarah\n- Drinking water/.test(jobs) && /James\n- Battery or wind-up radio/.test(jobs), 'sends everyone their jobs');
+  // sharing the plan (live functions stubbed)
+  const sent = await p.evaluate(async () => { let t = ''; Object.defineProperty(navigator, 'share', { value: d => { t = d.text; return Promise.resolve(); }, configurable: true });
+    window.famInvite = async h => ({ link: 'https://getfettle.co.uk/?family=' + 'a'.repeat(32) }); window.famMembers = async h => [{ id: 'u1', name: 'James', me: true }, { id: 'u2', name: 'Sarah', me: false }];
+    window.famRemoveMember = async (h, id) => { window.__removed = id; return true; }; H[view]._id = 'h1'; FAMMEM = {}; render(); await new Promise(r => setTimeout(r, 50));
+    await famInviteClick(view); return t; });
+  ok(/emergency plan for Dad/.test(sent) && /\?family=a{32}/.test(sent), 'invite link shared with a message');
+  await p.waitForTimeout(80);
+  ok(/Sarah/.test(await p.textContent('#famshare .members')) && await p.isVisible('#famshare >> text=Remove from the plan'), 'owner sees who has joined and can remove them');
+  await p.click('#famshare >> text=Remove from the plan'); await p.waitForTimeout(50);
+  ok(await p.evaluate(() => window.__removed === 'u2'), 'removes the right person');
+  await p.evaluate(() => { H[view]._shared = true; H[view].ownerName = 'James'; FAMMEM = {}; render(); }); await p.waitForTimeout(80);
+  ok(/You were invited to this plan.*Shared by: ?James/.test(await p.textContent('#famshare')) && await p.isVisible('#famshare >> text=Leave this plan') && !(await p.isVisible('#famshare >> text=Remove from the plan')), 'invited family see who shared it and can leave');
   ok(!errs.length, 'no page errors ' + errs.join(' | '));
   await p.screenshot({ path: require('os').tmpdir() + '/family.png', fullPage: true });
 } catch (e) { console.log('FAIL', e); fails++; } finally { await b.close(); if (fails) { console.log(fails + ' FAILED'); process.exit(1); } } })();
