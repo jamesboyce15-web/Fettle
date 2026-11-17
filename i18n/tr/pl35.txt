@@ -1,0 +1,50 @@
+0|Ostrzeżenie przed powodzią w pobliżu
+1|Czy wszystko w porządku?
+2|U nas wszystko dobrze
+3|Możemy potrzebować pomocy
+4|Potrzebujemy pomocy teraz
+5|Na ile dni macie wody i jedzenia?
+6|Wyślij
+7|Co robić teraz
+8|Wybierz, czy wszystko w porządku.
+9|{0}Dziękujemy, zgłosiłeś się o {1}{2}{3}.{4} Dołącz do listy awaryjnej, żeby ratownicy mogli to zobaczyć.
+10|Zaktualizuj
+11|{0}Dziękujemy, zgłosiłeś się o {1}{2}{3}.{4} Twoja rada może to zobaczyć, jeśli dołączyła do Fettle.
+12|Adres {0}Numer domu i ulica{1}
+13|Skąd dowiedziałeś się o Fettle?
+14|Wybierz jedną odpowiedź
+15|Położna środowiskowa lub grupa dla rodziców z niemowlętami
+16|Pielęgniarka środowiskowa lub przychodnia
+17|Opiekun lub pracownik opieki
+18|Właściciel mieszkania lub pracownik ds. mieszkań
+19|Biblioteka
+20|Firma energetyczna lub wodociągowa
+21|Grupa przeciwpowodziowa lub strażnik powodziowy
+22|Rada
+23|Znajomi lub rodzina
+24|Internet lub media społecznościowe
+25|Gdzie indziej
+26|Zdobądź książkę swojego domu
+27|Zrobiliście już próbny wieczór?
+28|Godzina przy zgaszonym świetle, z latarkami i posiłkiem bez gotowania. Daj znać, jak poszło.
+29|Poszło dobrze
+30|Znaleźliśmy braki
+31|Wysłano. Jeśli czyjeś życie jest zagrożone, dzwoń pod {0}.
+32|Pokaż przykładowe ostrzeżenie przed powodzią
+33|W prawdziwym użyciu Fettle prosi wszystkich z listy w obszarze ostrzeżenia o zgłoszenie się, gdy tylko Agencja Środowiska wyda ostrzeżenie.
+34|Prosili o pomoc teraz
+35|Ostatnie zgłoszenie
+36|Brak odpowiedzi
+37|Zasięg
+38|Jaka część obszaru zagrożonego powodzią w każdym okręgu jest na liście. Luki pokazują, dokąd iść dalej.
+39|Na liście
+40|Domy zagrożone powodzią
+41|Kto ich przyprowadził
+42|Punkt kontaktu
+43|Partnerzy udostępniają link ze swoim kodem, na przykład getfettle.co.uk/?via=hv dla położnych środowiskowych, żeby każdy widział, co wnosi.
+44|Usuń przykładowe ostrzeżenie przed powodzią
+45|Potrzebuje pomocy teraz
+46|Może potrzebować pomocy
+47|Dobrze
+48|Wysłano. Dziękujemy.
+49|Dziękujemy, zgłosiłeś się o

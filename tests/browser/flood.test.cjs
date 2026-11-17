@@ -67,6 +67,25 @@ let fails = 0; const ok = (c, m) => { if (!c) fails++; console.log((c ? 'PASS ' 
   await p.click('#regcard >> text=Leave the list'); await p.waitForTimeout(100);
   ok(await p.evaluate(() => !H[view].reg), 'leaving removes the details');
 
+  // where they heard about Fettle
+  await p.click('#regcard >> text=Add us to the list'); await p.waitForTimeout(100);
+  ok(await p.isVisible('#r-via') && (await p.$$eval('#r-via option', o => o.length)) === 13, 'joining asks how they heard about Fettle');
+  await p.selectOption('#r-via', 'hv'); await p.fill('#r-addr', '12 Quay Street'); await p.fill('#r-pc', 'LA1 1AA'); await p.fill('#r-tel', '07700 900123'); await p.check('#r-ok');
+  await p.click('#regcard button[type=submit]'); await p.waitForTimeout(100);
+  ok(await p.evaluate(() => H[view].reg.via === 'hv' && H[view].via === 'hv'), 'touch point saved with the household');
+  ok(await p.evaluate(() => { sessionStorage.setItem('fettle-via', 'library'); return viaTag() === 'library'; }) && await p.evaluate(() => { history.replaceState(null, '', location.pathname + '?via=nope'); return viaTag() === 'library'; }), 'partner link codes are checked against the list');
+
+  // flood warning check-in
+  ok(!(await p.isVisible('#checkin')), 'a flood alert alone does not ask for a check-in');
+  await p.evaluate(() => { H[view].flood.now = [{ sev: 2, where: 'River Lune at Lancaster Quay' }]; render(); });
+  ok(await p.isVisible('#checkin') && /River Lune at Lancaster Quay/.test(await p.textContent('#checkin')), 'a flood warning in force asks "Are you OK?"');
+  await p.click('#checkin button.btn.small'); await p.waitForTimeout(80);
+  ok(/Choose whether you're OK/.test(await p.textContent('#chk-err')), 'needs an answer');
+  await p.click('#checkin >> text=We might need help'); await p.click('#checkin >> text=Less than a day'); await p.click('#checkin >> text=Send'); await p.waitForTimeout(150);
+  ok(await p.evaluate(() => { const c = H[view].checkins.slice(-1)[0]; return c.ok === 'maybe' && c.days === 0 && supplyDays(H[view]) === 0; }), 'check-in saved and updates days of supplies');
+  ok(await p.isVisible('.pcard.chk.done') && /you checked in at/.test(await p.textContent('.pcard.chk.done')), 'thanks them and shows when');
+  ok(await p.evaluate(() => { const h = H[view], s0 = regScore(h); h.checkins.push({ d: new Date().toISOString(), ok: 'now', days: 0 }); const r = regScore(h) - s0 >= 16; h.checkins.pop(); return r; }), 'asking for help now puts a household at the top');
+
   // emergency view for council staff
   const q = await b.newPage({ viewport: { width: 1100, height: 900 } }); q.on('pageerror', e => errs.push(e.message));
   await q.route('**fonts.googleapis.com**', r => r.fulfill({ contentType: 'text/css', body: '' }));
@@ -81,6 +100,10 @@ let fails = 0; const ok = (c, m) => { if (!c) fails++; console.log((c ? 'PASS ' 
   const w0 = await q.evaluate(() => document.querySelector('.chips .chip').textContent);
   await q.click('.chips .chip >> nth=0'); await q.waitForTimeout(100);
   ok(await q.evaluate(w => ![...document.querySelectorAll('.emtab tr')].slice(1).some(r => r.textContent.includes(w)), w0), 'wards can be switched off');
+  ok(await q.isVisible('text=Coverage') && await q.isVisible('text=Who brought them in') && /Health visitor or baby group/.test(await q.textContent('#v-home')), 'coverage by ward and by touch point');
+  await q.click('text=Show a sample flood warning'); await q.waitForTimeout(150);
+  const first = await q.evaluate(() => document.querySelector('.emtab tr:nth-child(2)').textContent);
+  ok(/Needs help now/.test(first) && Number(await q.evaluate(() => document.querySelector('.kpis div:nth-child(2) b').textContent)) > 0, 'after a warning, households asking for help come first');
   await q.screenshot({ path: require('os').tmpdir() + '/emergency-view.png', fullPage: true });
   ok(!errs.length, 'no page errors ' + errs.join(' | '));
 } catch (e) { console.log('FAIL', e); fails++; } finally { await b.close(); if (fails) { console.log(fails + ' FAILED'); process.exit(1); } } })();
