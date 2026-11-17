@@ -29,6 +29,7 @@ let fails = 0; const ok = (c, m) => { if (!c) fails++; console.log((c ? 'PASS ' 
   ok(/In force now/.test(out) && /Flood alert: flooding is possible/.test(out), 'shows the warning in force now');
   ok(sent.some(u => /floodAreas\?lat=54\.05&long=-2\.8&dist=3/.test(u)) && !sent.some(u => /LA1/i.test(u)), 'sends only the centre point to the Environment Agency, never the postcode');
   ok(await p.isVisible('#f-out >> text=Sign up for flood warnings on GOV.UK') && /0345 988 1188/.test(out), 'links to flood warning sign-up and Floodline');
+  ok(/30cm can float a car/.test(out), 'flood check carries the floodwater rule');
 
   // a dry area, and Wales
   await p.fill('#f-pc', 'LS29'); await p.click('#v-tool button[type=submit]'); await p.waitForTimeout(300);
@@ -85,6 +86,27 @@ let fails = 0; const ok = (c, m) => { if (!c) fails++; console.log((c ? 'PASS ' 
   ok(await p.evaluate(() => { const c = H[view].checkins.slice(-1)[0]; return c.ok === 'maybe' && c.days === 0 && supplyDays(H[view]) === 0; }), 'check-in saved and updates days of supplies');
   ok(await p.isVisible('.pcard.chk.done') && /you checked in at/.test(await p.textContent('.pcard.chk.done')), 'thanks them and shows when');
   ok(await p.evaluate(() => { const h = H[view], s0 = regScore(h); h.checkins.push({ d: new Date().toISOString(), ok: 'now', days: 0 }); const r = regScore(h) - s0 >= 16; h.checkins.pop(); return r; }), 'asking for help now puts a household at the top');
+
+  // decide now, while it's calm
+  await p.evaluate(() => { H[view].checkins = []; H[view].flood.now = []; render(); });
+  ok(await p.isVisible('#pledge') && /If there's a flood warning, we will/.test(await p.textContent('#pledge')), 'plan asks them to decide in advance what they will do');
+  await p.fill('#pl-go', ''); await p.click('#pledge button[type=submit]'); await p.waitForTimeout(80);
+  ok(/Write where you'd go/.test(await p.textContent('#pl-err')), 'needs somewhere to go');
+  await p.fill('#pl-go', "Sam's house on Aldcliffe Road"); await p.fill('#pl-who', 'Sam'); await p.fill('#pl-tel', '07700 900456');
+  await p.click('#pledge button[type=submit]'); await p.waitForTimeout(100);
+  ok(await p.evaluate(() => H[view].pledge.go === "Sam's house on Aldcliffe Road" && H[view].pledge.take.includes('meds')) && /You've decided what you'll do/.test(await p.textContent('#pledge')), 'decision saved and shown back');
+  ok(await p.evaluate(() => /Sam's house on Aldcliffe Road/.test(flows(H[view]).flood.steps.join(' ')) && /30cm can float a car/.test(flows(H[view]).flood.steps.join(' '))), 'emergency flood steps use their decision and the floodwater rule');
+  ok(await p.evaluate(() => /30cm of flowing water can float a car/.test(needs(H[view]).find(x => x.id === 'floodplan').why) && /Your area has places the Environment Agency warns about/.test(needs(H[view]).find(x => x.id === 'floodplan').why)), 'flood plan step is local and has the floodwater rule');
+
+  // the warning arrives: their own script, how many others have checked in, a text to their person
+  await p.evaluate(() => { window.recentCheckins = async a => a === 'Lancaster' ? 23 : null; NEARBY = {}; H[view].flood.now = [{ sev: 2, where: 'River Lune at Lancaster Quay' }]; render(); });
+  await p.waitForTimeout(150);
+  const card = (await p.textContent('#checkin')).replace(/\s+/g, ' ');
+  ok(/Your plan for now/.test(card) && /go to: ?Sam's house on Aldcliffe Road/.test(card) && /Medicines ?Documents and bank cards ?Phones and chargers/.test(card), 'warning shows their own plan as a short script');
+  ok(/23 households in your area have checked in today/.test(card), 'shows how many others nearby have checked in');
+  await p.click('#checkin >> text=We\'re fine'); await p.click('#checkin >> text=Send'); await p.waitForTimeout(120);
+  const href = await p.getAttribute('.pcard.chk.done a[href^="sms:"]', 'href');
+  ok(/^sms:07700900456\?&body=Flood%20warning%20here\.%20We're%20OK\./.test(href), 'one tap to text their check-on-me person');
 
   // emergency view for council staff
   const q = await b.newPage({ viewport: { width: 1100, height: 900 } }); q.on('pageerror', e => errs.push(e.message));

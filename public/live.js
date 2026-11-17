@@ -367,6 +367,13 @@
     sb.from("fettle_events").insert({ kind, area: area ? String(area).slice(0, 80) : null, ...(SRC ? { src: SRC } : {}) }).then(({ error }) => { if (error) console.error(error); });
   };
 
+  // Households in the same council area who checked in today after a flood warning (5 or more, else null).
+  window.recentCheckins = async function (area) {
+    if (!sb || !area) return null;
+    const { data, error } = await sb.rpc("fettle_recent_checkins", { p_area: String(area).slice(0, 80) });
+    return error ? null : data;
+  };
+
   // ---------- payment ----------
   window.liveCheckout = async function (h) {
     if (!user) { authView("signup", true); return; }
