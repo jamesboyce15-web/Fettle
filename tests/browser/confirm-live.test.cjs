@@ -14,7 +14,7 @@ let fails = 0; const ok = (c, m) => { if (!c) fails++; console.log((c ? 'PASS ' 
     await p.route('**/config.js', r => r.fulfill({ contentType: 'text/javascript', body: 'window.FETTLE_CONFIG={supabaseUrl:"https://fake.supabase.co",supabaseAnonKey:"anon",freeBook:true};' }));
     return p; };
   const finishCheck = p => p.evaluate(() => { start(false); Object.assign(cur, { home: "house", outdoor: "garden", tenure: "own", adults: 3, heat: "gas", hob: "gas", cold: "slow", healthGate: "yes", health: ["meds"], water: "half", food: "some", kit: ["torch"], fa: "no", budget: 5 }); tier = "core"; qi = list().length - 1; go("q"); drawQ(); next(); });
-  const signUp = async (p, email) => { await p.click('text=Save my plan'); await p.waitForTimeout(150); await p.fill('#a-name', 'James'); await p.fill('#a-email', email); await p.fill('#a-pw', 'password123'); await p.click('button[type=submit]'); await p.waitForTimeout(400); };
+  const signUp = async (p, email) => { await p.click('text=Save my plan'); await p.waitForTimeout(150); await p.fill('#a-name', 'James'); await p.fill('#a-email', email); await p.fill('#a-pw', 'password123'); if (await p.isVisible('#a-health')) await p.check('#a-health'); await p.click('button[type=submit]'); await p.waitForTimeout(400); };
   try {
     // ---- same browser ----
     const p = await page();

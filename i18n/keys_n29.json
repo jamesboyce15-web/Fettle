@@ -1,0 +1,9 @@
+[
+"Save the health answers in my plan. {0}Optional. We only use them to fit your plan to your household, and never share them. Leave this unticked and we'll save your plan without them.{1}",
+"Save my health answers with my plan. {0}Optional. If you leave this unticked, your plan uses them now but we don't save them.{1}",
+"Save their health answers with this plan. {0}Only if they've agreed. If you leave this unticked, your plan uses them now but we don't save them.{1}",
+"Save health answers",
+"Keep the health answers in this saved plan, so the health steps are there next time. We never share them. Untick to remove them.",
+"Your health answers will be saved with your plan.",
+"Your health answers have been removed from your saved plan. They'll stay on this screen until you close it."
+]

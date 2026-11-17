@@ -8,7 +8,13 @@
   const CFG = window.FETTLE_CONFIG;
   let sb = null, saved = new Map(), saving = false, events = [], wantBook = null;
 
-  const strip = h => { const o = Object.assign({}, h); delete o._id; delete o.paid; return o; };
+  // Health answers are special category data: a household's own account only saves them with explicit consent
+  // (h.healthOK, from the tick at sign-up or sign-in, on the health question, or on the plan page). Team caseloads
+  // are recorded by staff under their organisation's own agreement, so they're saved as they are.
+  const HEALTH = ["healthGate", "health", "meds", "diets"];
+  const strip = h => { const o = Object.assign({}, h); delete o._id; delete o.paid;
+    if (!o.healthOK && !(user && user.pro)) HEALTH.forEach(k => delete o[k]);
+    return o; };
   const errBox = t => { const e = document.getElementById("a-err"); if (e) e.textContent = t; return false; };
   const say = t => { try { toast(t); } catch (e) {} };
 
@@ -154,7 +160,7 @@
         if (!name) return errBox("Enter your first name.");
         if (pw.length < 8) return errBox("Use at least 8 characters for your password.");
         const news = document.getElementById("a-news").checked, remind = document.getElementById("a-remind").checked;
-        countTick(); // "Help my council plan"
+        countTick(); healthTick(); // "Help my council plan", "Save the health answers"
         // The check lives only in this page until it's saved. Email confirmation opens a new page, so keep a copy:
         // in this browser, and (if small) on the account, for when the link opens in a different browser or the mail app.
         const pend = H.filter(h => !h._id).map(strip), pj = JSON.stringify(pend);
@@ -168,6 +174,7 @@
         if (!data.session) return errBox("Nearly done. Check your email and click the link we've sent you. Your plan will be waiting.");
         await loadUser(data.user);
       } else {
+        healthTick();
         const { data, error } = await sb.auth.signInWithPassword({ email, password: pw });
         if (error) return errBox("That email and password don't match an account.");
         await loadUser(data.user);

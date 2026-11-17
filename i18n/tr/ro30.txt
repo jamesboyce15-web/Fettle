@@ -1,0 +1,7 @@
+0|Salvează răspunsurile despre sănătate în planul meu. {0}Opțional. Le folosim doar pentru a potrivi planul cu gospodăria ta și nu le împărtășim niciodată. Dacă lași căsuța nebifată, salvăm planul fără ele.{1}
+1|Salvează răspunsurile mele despre sănătate în planul meu. {0}Opțional. Dacă lași căsuța nebifată, planul le folosește acum, dar nu le salvăm.{1}
+2|Salvează răspunsurile lor despre sănătate în acest plan. {0}Doar dacă și-au dat acordul. Dacă lași căsuța nebifată, planul le folosește acum, dar nu le salvăm.{1}
+3|Salvează răspunsurile despre sănătate
+4|Păstrează răspunsurile despre sănătate în acest plan salvat, ca pașii legați de sănătate să fie acolo data viitoare. Nu le împărtășim niciodată. Debifează pentru a le șterge.
+5|Răspunsurile tale despre sănătate vor fi salvate în planul tău.
+6|Răspunsurile tale despre sănătate au fost șterse din planul salvat. Rămân pe acest ecran până îl închizi.

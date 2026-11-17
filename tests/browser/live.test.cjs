@@ -24,7 +24,7 @@ const srv = http.createServer((req, res) => { let f = path.join(PUB, decodeURICo
   await p.click('text=Save my plan'); await p.waitForTimeout(200);
   ok(await p.isVisible('#a-name'), 'save button opens sign-up');
   ok(await p.isVisible('text=By creating an account you agree'), 'terms line shown');
-  await p.fill('#a-name', 'Jo'); await p.fill('#a-email', 'jo@example.com'); await p.fill('#a-pw', 'password123');
+  await p.fill('#a-name', 'Jo'); await p.fill('#a-email', 'jo@example.com'); await p.fill('#a-pw', 'password123'); await p.check('#a-health');
   await p.click('button[type=submit]'); await p.waitForTimeout(800);
   const db1 = await p.evaluate(() => JSON.parse(localStorage.getItem('fake_db')));
   ok(db1.households.length === 1 && db1.households[0].data.health[0] === 'meds', 'plan saved to database');
