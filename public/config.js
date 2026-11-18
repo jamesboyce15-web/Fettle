@@ -7,5 +7,7 @@ window.FETTLE_CONFIG = {
   siteUrl: "https://getfettle.co.uk",  // used in shared score links
   freeBook: true,       // winter test: the digital book is free (with a free account), so Stripe isn't needed yet
   workbookUrl: "",      // the workbook's Amazon page, once it's on sale. Starts with https://. Empty hides the link on the home page.
+  plusOn: false,        // true shows Fettle Plus subscribe buttons. Also needs PLUS_ON = "true" and the 4 Stripe prices in Cloudflare.
+  amazonTag: "",        // Amazon Associates tracking ID (UK ones end in -21). Empty: shop links carry no tag and nothing is marked "paid link".
   turnstileSiteKey: ""  // Cloudflare Turnstile site key (public): the robot check when a new home joins a community. Its secret key goes in Cloudflare Pages as TURNSTILE_SECRET, never here.
 };

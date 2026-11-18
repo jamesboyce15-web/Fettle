@@ -4,7 +4,7 @@
 // Two people in one browser: set sessionStorage "fake_tab" before the page loads and each tab keeps its own sign-in.
 (function () {
   const L = k => JSON.parse(localStorage.getItem("fake_" + k) || "null"), S = (k, v) => localStorage.setItem("fake_" + k, JSON.stringify(v));
-  const blank = () => ({ users: [], households: [], purchases: [], organisations: [], org_members: [], org_invites: [], case_events: [], anon_checks: [], fettle_events: [], household_members: [], household_invites: [], communities: [], community_admins: [], community_members: [], community_requests: [] });
+  const blank = () => ({ users: [], households: [], purchases: [], subscriptions: [], organisations: [], org_members: [], org_invites: [], case_events: [], anon_checks: [], fettle_events: [], household_members: [], household_invites: [], communities: [], community_admins: [], community_members: [], community_requests: [] });
   const db = () => Object.assign(blank(), L("db") || {}), save = d => S("db", d);
   const uid = () => crypto.randomUUID();
   const TAB = (() => { try { return !!sessionStorage.getItem("fake_tab"); } catch (e) { return false; } })();
@@ -17,6 +17,7 @@
   if (q.get("fake_pay") && q.get("hh")) setTimeout(() => { const d = db(), h = d.households.find(x => x.id === q.get("hh")); if (h) { d.purchases.push({ id: uid(), user_id: h.user_id, household_id: h.id, product: "book_digital" }); save(d); } }, 1200);
 
   const CAN_SEE = {
+    subscriptions: (d, r) => r.user_id === me(),
     households: (d, r) => r.org_id ? member(d, r.org_id) : (r.user_id === me() || fam(d, r.id)),
     household_members: (d, r) => r.user_id === me() || fam(d, r.household_id) || owns(d, r.household_id),
     household_invites: () => false,
@@ -36,7 +37,7 @@
   function builder(table) {
     const st = { filters: [], op: "select", row: null, single: false };
     const run = () => {
-      const d = db(); let rows = d[table].filter(r => CAN_SEE[table](d, r));
+      const d = db(); d[table] = d[table] || []; let rows = d[table].filter(r => CAN_SEE[table](d, r));
       st.filters.forEach(([k, v]) => rows = rows.filter(r => Array.isArray(v) ? v.map(String).includes(String(r[k])) : v === null ? r[k] == null : String(r[k]) === String(v)));
       if (st.op === "insert") {
         const list = (Array.isArray(st.row) ? st.row : [st.row]).map(x => Object.assign({ id: uid(), created_at: new Date().toISOString() }, x));
@@ -50,13 +51,14 @@
       }
       if (st.op === "delete" && table === "household_members") rows = rows.filter(r => r.user_id === me() || owns(d, r.household_id));
       if (st.op === "delete") { const ids = new Set(rows.map(r => r.id)); d[table] = d[table].filter(r => !ids.has(r.id)); save(d); return { data: null, error: null }; }
+      if (st.maybe) return { data: rows[0] || null, error: null };
       if (st.single) return rows.length ? { data: rows[0], error: null } : { data: null, error: { message: "JSON object requested, multiple (or no) rows returned" } };
       return { data: rows, error: null };
     };
     const b = { select() { return b; }, order() { return b; }, limit() { return b; },
       eq(k, v) { st.filters.push([k, v]); return b; }, is(k, v) { st.filters.push([k, v]); return b; }, in(k, v) { st.filters.push([k, v]); return b; },
       insert(row) { st.op = "insert"; st.row = row; return b; }, update(row) { st.op = "update"; st.row = row; return b; },
-      delete() { st.op = "delete"; return b; }, single() { st.single = true; return b; },
+      delete() { st.op = "delete"; return b; }, single() { st.single = true; return b; }, maybeSingle() { st.maybe = true; return b; },
       then(ok, bad) { return Promise.resolve(run()).then(ok, bad); } };
     return b;
   }

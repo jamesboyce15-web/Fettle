@@ -13,6 +13,7 @@
 //   UKHSA amber and red: everyone. Yellow: only homes with someone over 70, a child under 5, health needs or carer visits.
 // Each person gets each warning once (alerts_sent). With ALERTS_DRY_RUN not "false", nothing is sent or recorded.
 // ALERT_TEST_TO, if set, sends every email to that one address instead, and records nothing: for checking the wording.
+import { plusMembers } from "../../../lib/server.js";
 import { unsubToken } from "../../../lib/server.js";
 
 const EA = "https://environment.data.gov.uk/flood-monitoring";
@@ -204,7 +205,8 @@ export async function runAlerts(env, f = fetch, now = new Date()) {
   const dry = env.ALERTS_DRY_RUN !== "false", test = env.ALERT_TEST_TO || "";
   const r = await sb(env, "/rest/v1/rpc/fettle_alert_targets", { method: "POST", body: "{}" });
   if (!r.ok) { console.error("alert targets failed", await r.text()); return { sent: 0, dry }; }
-  const rows = await r.json();
+  let rows = await r.json();
+  const members = await plusMembers(env, f); if (members) rows = rows.filter(x => members.has(x.user_id));
   // One entry per home (several people can share one), each knowing who to tell.
   const homes = new Map();
   for (const row of rows) {

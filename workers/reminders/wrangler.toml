@@ -16,6 +16,11 @@ DRY_RUN = "false"
 # marked [TEST], and nothing is recorded. Delete that secret when you're done.
 # Set ALERTS_DRY_RUN to "false" only once James has approved the emails.
 ALERTS_DRY_RUN = "true"
+# "Time to refresh" emails (water, food, batteries...) also start as a DRY RUN. ALERT_TEST_TO works for them too.
+# Set REFRESH_DRY_RUN to "false" only once James has approved the email (sample-refresh-email.png).
+REFRESH_DRY_RUN = "true"
+# Once Fettle Plus is on sale: "true" sends warning and refresh emails only to members. "false" (now): free while we test.
+PLUS_REQUIRED = "false"
 SITE_URL = "https://getfettle.co.uk"
 FROM_EMAIL = "Fettle <hello@getfettle.co.uk>"
 # Secrets (add with `npx wrangler secret put NAME`, never in this file):

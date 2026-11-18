@@ -33,7 +33,7 @@
     const { data } = await sb.auth.getSession();
     // Signed in: plans come from the account. Signed out: bring back a check this tab was part-way through.
     if (data.session) { keepClear(); await loadUser(data.session.user); } else keepRestore();
-    await handleReturn(); window.__liveReady = true;
+    await handleReturn(); if (user) await window.plusLoad(); await plusReturn(); window.__liveReady = true;
     await remindArrive();
     if (new URLSearchParams(location.search).get("recheck")) { // link from a reminder email
       history.replaceState(null, "", location.pathname);
@@ -195,6 +195,7 @@
       const after = window.__afterAuth; window.__afterAuth = null; window.__commMine = undefined;
       if (after === "commStart") { commStart(); return false; }
       if (after && after.startsWith("commDash:")) { commDash(after.slice(9)); return false; }
+      if (after && after.startsWith("plus:")) { await window.plusLoad(); if (!window.PLUS) window.plusBuy(after.slice(5)); else plusView(); return false; }
       view = 0; homeView(); return false;
     } finally { if (btn) btn.disabled = false; }
   };
@@ -475,6 +476,34 @@
   }
   document.addEventListener("visibilitychange", pullShared);
   setInterval(() => { if (window.femActive && window.femActive()) pullShared(); }, 30000);
+
+  // ---------- Fettle Plus ----------
+  window.PLUS = null;
+  window.plusLoad = async () => { if (!user) { window.PLUS = null; return null; }
+    const { data } = await sb.from("subscriptions").select("plan,period,status,current_period_end,cancel_at_period_end").maybeSingle();
+    window.PLUS = data && ["active", "trialing", "past_due"].includes(data.status) ? data : null; try { plusRedraw("landing"); } catch (e) {} return window.PLUS; };
+  window.plusBuy = async (product) => {
+    if (!user) { window.__afterAuth = "plus:" + product; authView("signup"); return; }
+    say("Taking you to secure payment…");
+    try { const r = await fetch("/api/checkout", { method: "POST", headers: { "Content-Type": "application/json", Authorization: "Bearer " + await token() }, body: JSON.stringify({ product }) });
+      const j = await r.json(); if (!r.ok || !j.url) throw new Error(j.error || "Payment setup failed"); location.href = j.url;
+    } catch (e) { say(e.message && /free while we test/.test(e.message) ? e.message : "Sorry, payment isn't working right now. Please try again later."); }
+  };
+  window.plusManage = async () => {
+    try { const r = await fetch("/api/billing", { method: "POST", headers: { Authorization: "Bearer " + await token() } }); const j = await r.json();
+      if (!r.ok || !j.url) throw new Error(j.error); location.href = j.url; } catch (e) { say(e.message || "That didn't open. Please try again."); }
+  };
+  async function plusReturn() {
+    const st = new URLSearchParams(location.search).get("plus"); if (!st) return false;
+    history.replaceState(null, "", location.pathname);
+    if (st === "cancelled") { say("No payment taken. You can join Fettle Plus any time."); return false; }
+    if (st === "manage") { await window.plusLoad(); return false; }
+    say("Payment received. Setting up Fettle Plus…");
+    for (let n = 0; n < 12 && !(await window.plusLoad()); n++) await new Promise(r => setTimeout(r, 1500)); // the webhook usually lands within seconds
+    if (typeof plusView === "function") plusView();
+    say(window.PLUS ? "Welcome to Fettle Plus." : "Your payment went through. Fettle Plus will switch on in a minute or two: refresh the page if it hasn't.");
+    return true;
+  }
 
   // ---------- payment ----------
   window.liveCheckout = async function (h) {

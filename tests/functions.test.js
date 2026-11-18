@@ -1,3 +1,4 @@
+import { onRequestPost as billing } from "../functions/api/billing.js";
 import { onRequestPost as commJoin } from "../functions/api/community-join.js";
 import { test } from "node:test";
 import assert from "node:assert/strict";
@@ -258,4 +259,57 @@ test("community-join: limits and bad input come back as plain messages", async (
   for (const bad of [{ ...goodBody, slug: "x" }, { ...goodBody, token: "nope" }, { ...goodBody, data: "x" }, { ...goodBody, data: { big: "a".repeat(3000) } }]) {
     r = await commJoin({ request: cjReq(bad), env }); assert.equal(r.status, 400); }
   assert.equal(calls.length, 0);
+});
+
+// ---------- Fettle Plus ----------
+const PENV = { ...env, PLUS_ON: "true", STRIPE_PRICE_PLUS_MONTH: "price_pm", STRIPE_PRICE_PLUS_YEAR: "price_py", STRIPE_PRICE_POST_MONTH: "price_om", STRIPE_PRICE_POST_YEAR: "price_oy" };
+const plusReq = b => new Request("https://f.test/api/checkout", { method: "POST", headers: { Authorization: "Bearer tok" }, body: JSON.stringify(b) });
+const authed = (more = () => res({ url: "https://checkout.stripe.com/c/s" })) => mockFetch(url => url.includes("/auth/v1/user") ? res({ id: UID, email: "a@b.co" }) : more(url));
+
+test("plus: not on sale while it's switched off", async () => {
+  authed(); const r = await checkout({ request: plusReq({ product: "plus_month" }), env: { ...PENV, PLUS_ON: "false" } });
+  assert.equal(r.status, 400); assert.match((await r.json()).error, /free while we test/);
+});
+test("plus: a monthly subscription, no address collected", async () => {
+  const calls = authed(); const r = await checkout({ request: plusReq({ product: "plus_month" }), env: PENV });
+  assert.equal(r.status, 200);
+  const f = new URLSearchParams(calls.find(c => c.url.includes("checkout/sessions")).init.body);
+  assert.equal(f.get("mode"), "subscription"); assert.equal(f.get("line_items[0][price]"), "price_pm");
+  assert.equal(f.get("subscription_data[metadata][plan]"), "plus"); assert.equal(f.get("subscription_data[metadata][user_id]"), UID);
+  assert.equal(f.get("shipping_address_collection[allowed_countries][0]"), null);
+  assert.match(f.get("custom_text[submit][message]"), /14 days/);
+});
+test("plus with post: yearly, and Stripe collects a UK address", async () => {
+  const calls = authed(); await checkout({ request: plusReq({ product: "post_year" }), env: PENV });
+  const f = new URLSearchParams(calls.find(c => c.url.includes("checkout/sessions")).init.body);
+  assert.equal(f.get("line_items[0][price]"), "price_oy"); assert.equal(f.get("subscription_data[metadata][period]"), "year");
+  assert.equal(f.get("shipping_address_collection[allowed_countries][0]"), "GB");
+});
+test("webhook: subscription events keep the member's row up to date", async () => {
+  const calls = mockFetch(() => new Response(null, { status: 201 }));
+  const sub = (status, extra = {}) => ({ id: "sub_1", customer: "cus_1", status, current_period_end: 1800000000, cancel_at_period_end: false, livemode: false, metadata: { user_id: UID, plan: "post", period: "year" }, ...extra });
+  for (const [type, s] of [["customer.subscription.created", sub("active")], ["customer.subscription.updated", sub("active", { cancel_at_period_end: true })], ["customer.subscription.deleted", sub("active")]]) {
+    const ev = JSON.stringify({ type, data: { object: s } });
+    const r = await webhook({ request: new Request("https://f.test/api/stripe-webhook", { method: "POST", headers: { "Stripe-Signature": await sign(ev, "whsec_test") }, body: ev }), env });
+    assert.equal(r.status, 200);
+  }
+  const rows = calls.filter(c => c.url.includes("/rest/v1/subscriptions")).map(c => JSON.parse(c.init.body));
+  assert.equal(rows.length, 3); assert.equal(rows[0].plan, "post"); assert.equal(rows[0].stripe_customer_id, "cus_1");
+  assert.equal(rows[1].cancel_at_period_end, true); assert.equal(rows[2].status, "canceled");
+  assert.ok(!JSON.stringify(rows).match(/address|line1|postcode/i), "no address is stored");
+});
+test("webhook: a subscription checkout doesn't create a book purchase", async () => {
+  const calls = mockFetch(() => new Response(null, { status: 201 }));
+  const ev = JSON.stringify({ type: "checkout.session.completed", data: { object: { id: "cs_2", mode: "subscription", payment_status: "paid", metadata: { user_id: UID, product: "plus_month" } } } });
+  const r = await webhook({ request: new Request("https://f.test/api/stripe-webhook", { method: "POST", headers: { "Stripe-Signature": await sign(ev, "whsec_test") }, body: ev }), env });
+  assert.equal(r.status, 200); assert.equal(calls.length, 0);
+});
+test("billing: opens Stripe's page for members, not for others", async () => {
+  let calls = authed(url => url.includes("/rest/v1/subscriptions") ? res([{ stripe_customer_id: "cus_1" }]) : res({ url: "https://billing.stripe.com/p/1" }));
+  let r = await billing({ request: new Request("https://f.test/api/billing", { method: "POST", headers: { Authorization: "Bearer tok" } }), env: PENV });
+  assert.equal((await r.json()).url, "https://billing.stripe.com/p/1");
+  assert.equal(new URLSearchParams(calls.find(c => c.url.includes("billing_portal")).init.body).get("customer"), "cus_1");
+  authed(url => url.includes("/rest/v1/subscriptions") ? res([]) : res({}));
+  r = await billing({ request: new Request("https://f.test/api/billing", { method: "POST", headers: { Authorization: "Bearer tok" } }), env: PENV });
+  assert.equal(r.status, 404);
 });

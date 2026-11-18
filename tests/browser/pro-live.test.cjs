@@ -45,7 +45,7 @@ let fails = 0; const ok = (c, m) => { if (!c) fails++; console.log((c ? 'PASS ' 
     // Add a resident: consent, ward from the organisation's list, questions.
     await p.click('text=+ Add a resident'); await p.waitForTimeout(200);
     ok(await p.evaluate(() => [...document.querySelectorAll('#c-ward option')].map(o => o.value).join('|') === 'Kingsway|Central Rochdale'), "ward list is the organisation's own");
-    const ref = await p.evaluate(() => document.querySelector('.sm.mute b').textContent);
+    const ref = await p.locator('.sm.mute b:visible').first().textContent();
     ok(/^R-[A-Z2-9]{5}$/.test(ref), 'random case reference in live mode: ' + ref);
     await p.check('#c-store'); await p.selectOption('#c-ward', 'Kingsway');
     await p.click('text=Start the questions'); await p.waitForTimeout(200);

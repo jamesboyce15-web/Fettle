@@ -5,9 +5,10 @@ let fails = 0; const ok = (c, m) => { if (!c) fails++; console.log((c ? 'PASS ' 
   const p = await b.newPage({ viewport: { width: 390, height: 844 } }); const errs = []; p.on('pageerror', e => errs.push(e.message));
   await p.route('**fonts.googleapis.com**', r => r.fulfill({ contentType: 'text/css', body: '' })); await p.route('**/api.postcodes.io/**', r => r.fulfill({ status: 404, body: '' }));
   await p.goto('file://' + path.join(require('./proto-site.cjs'), 'index.html')); await p.waitForTimeout(300);
-  const land = await p.textContent('#connect');
-  ok(/One plan for the whole family/.test(land) && /£3 a month for up to 5 homes/.test(land) && /Free while we test it/.test(land), 'landing explains Fettle Connect and its price');
-  await p.click('#conn-yes'); ok(/Start with your own home/.test(await p.textContent('#conn-thanks')), 'landing interest button says thanks');
+  const land = await p.textContent('#plus');
+  ok(/Stay ready all year/.test(land) && /£35/.test(land) && /£70/.test(land) && /Free while we test it/.test(land) && /Up to 5 family homes/.test(land), 'landing explains Fettle Plus, both plans and prices, free while testing');
+  await p.click('#plus >> text=Monthly'); ok(/£3.50/.test(await p.textContent('#plus')) && /£7/.test(await p.textContent('#plus')), 'monthly prices: £3.50 and £7');
+  await p.click('#pi-post'); ok(/Thank you/.test(await p.textContent('#pi-thanks')) && await p.isDisabled('#pi-plus'), 'landing interest button says thanks');
   ok(/digital book are free, and they'll stay free/.test(await p.textContent('.lfaq')), 'FAQ: the core stays free');
   await p.evaluate(() => {
     start(false); Object.assign(cur, { pc: 'LA1', area: 'Lancaster', home: 'house', outdoor: 'garden', tenure: 'own', adults: 2, heat: 'gas', hob: 'gas', water: 'half', food: 'yes', kit: ['torch'], budget: 20 }); qi = list().length - 1; drawQ(); next();
@@ -20,7 +21,7 @@ let fails = 0; const ok = (c, m) => { if (!c) fails++; console.log((c ? 'PASS ' 
   ok(!(await p.$('#regcard')), 'emergency list hidden from residents');
   await p.evaluate(() => setRTab('family')); await p.waitForTimeout(60);
   const card = await p.textContent('#conncard');
-  ok(/2 homes linked/.test(card) && /Mum/.test(card) && /Later £3 a month/.test(card), 'plan page shows the Connect card with both homes');
+  ok(/2 homes linked/.test(card) && /Mum/.test(card) && /Part of Fettle Plus. Free while we test it/.test(card), 'plan page shows the family card with both homes, as part of Fettle Plus');
   ok(await p.isVisible('.bnav >> text=Family'), 'bottom nav has Family');
   await p.click('#conncard >> text=Open the family dashboard'); await p.waitForTimeout(150);
   ok(await p.isVisible('#v-connect') && (await p.$$('.ctile')).length === 2, 'dashboard lists both homes');

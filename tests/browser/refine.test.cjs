@@ -11,7 +11,7 @@ let fails = 0; const ok = (c, m) => { if (!c) fails++; console.log((c ? 'PASS ' 
   ok(/household$/.test(await p.textContent('#res h1')) && await p.isVisible('.step.lead >> text=Your next step') && await p.locator('#steps .srow').count() === 2, 'one next step leads, the other two folded into rows');
   ok(/^\d+% ready$/.test((await p.getAttribute('.ring svg', 'aria-label'))) && /\d+ of \d+ things sorted/.test(await p.textContent('.rhead p')), 'ring and "things sorted" line in the header');
   ok(await p.locator('#steps h2').count() === 0, 'no duplicate steps heading');
-  ok(await p.locator('.seg [role=tab]').count() === 4 && await p.isVisible('.bnav'), 'To do, Shopping, Done and Family tabs, and the bottom menu');
+  ok(await p.locator('#rseg [role=tab]').count() === 4 && await p.isVisible('.bnav'), 'To do, Shopping, Done and Family tabs, and the bottom menu');
   await p.evaluate(() => setRTab('shop')); ok(await p.isVisible('.tot >> text=Print the list') && await p.locator('.srow.shop').count() > 0, 'shopping tab lists what to buy');
   await p.evaluate(() => setRTab('done')); ok(await p.isVisible('.donec'), 'done tab shows');
   await p.evaluate(() => setRTab('todo'));

@@ -738,6 +738,20 @@ html[lang^="en"] .notin-en{display:none}
 #commbox .hint,#commcard .hint{display:block;font-weight:400;font-size:.85rem;color:var(--mute)}#commbox textarea,#commcard textarea{min-height:64px;font:inherit}
 .cstats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 0 14px}.cstats div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px;text-align:center}
 .cstats b{display:block;font-size:1.6rem}.cstats span{font-size:.8rem;color:var(--mute)}
+.calm details.srow{display:block}.menu3{min-width:0}.mdays{display:grid;gap:8px;margin:8px 0}.mday{border:1px solid var(--line);border-radius:12px;padding:10px 12px}.mdh{margin:0 0 4px;font-weight:700}.mday dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:0}.mday dt{color:var(--mute)}.mday dd{margin:0}.rbody{min-width:0}.menu3 th,.menu3 td{text-align:left;padding:6px 4px;border-bottom:1px solid var(--line);vertical-align:top}.menu3 thead th{font-weight:600;color:var(--mute)}
+.mealgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:8px 0 12px}.mealgrid .ck{display:flex;gap:8px;align-items:flex-start;border:1px solid var(--line);border-radius:10px;padding:8px}.mealgrid small{display:block;color:var(--mute)}
+@media(max-width:380px){.mealgrid{grid-template-columns:1fr}}
+.shopc .shoph{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}.shopc .shoph .ch{margin:0}.shopc.got{opacity:.85}.pill.ok{background:var(--okbg,#e6f2ec);color:var(--ok,#1f6b4a)}
+.rhead2 h1{margin:4px 0 6px}.refrow{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--line)}.refrow div{display:flex;flex-direction:column;gap:2px}
+.reflist{list-style:none;padding:0;margin:8px 0 0}.reflist li{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-top:1px solid var(--line)}
+@media(max-width:440px){header.top .hdrlink.hg{display:none}header.top{gap:8px;padding-left:16px;padding-right:16px}header.top .langsel{max-width:86px}}
+.plusc .pseg{margin:14px 0 0;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);background:var(--soft);border-radius:14px;padding:4px}
+.plusc .pseg button{height:42px;border:0;border-radius:11px;background:transparent;font:inherit;font-size:.92rem;color:var(--mute);cursor:pointer}
+.plusc .pseg button[aria-selected="true"]{background:var(--surface);font-weight:700;color:var(--brand);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+#plusland .plusc{background:var(--surface);border-radius:24px;padding:22px;box-shadow:0 1px 2px rgba(23,63,53,.06),0 10px 28px rgba(23,63,53,.08)}
+.plusc .tiers{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}.plusc .tier{border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column}.plusc .tier.hi{border-color:var(--brand);border-width:2px}
+.plusc .tier .ticks2{flex:1}.plusc .price{margin:2px 0 8px}.plusc .price b{font-size:1.7rem}.plusc .price span{color:var(--mute);margin-left:4px}.plusc .pseg{margin:10px 0 0}.plusc .pseg small{font-weight:600;color:var(--brand)}
+@media(max-width:560px){.plusc .tiers{grid-template-columns:1fr}}.howlist{padding-left:20px}.howlist li{margin:6px 0}
 .cdays{display:flex;align-items:flex-end;gap:3px;height:56px;margin:14px 0 4px;border-bottom:1px solid var(--line)}.cdays i{flex:1;background:var(--brand);border-radius:2px 2px 0 0;min-height:0}
 .cdays-k{display:flex;justify-content:space-between;margin:0 0 10px}.cflag{border-top:1px solid var(--line);padding-top:12px;margin-top:6px}
 .cbars{list-style:none;margin:8px 0;padding:0}.cbars li{padding:8px 0;border-bottom:1px solid var(--rowline)}.cb-top{display:flex;justify-content:space-between;gap:10px}
@@ -753,7 +767,7 @@ html[lang^="en"] .notin-en{display:none}
     <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#173f35"/><path d="M8 15.5 16 9l8 6.5V24a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1z" fill="none" stroke="#f6f7f4" stroke-width="2" stroke-linejoin="round"/><path d="M16 14.5c1.9 1.7 2.8 3.2 2.8 4.6a2.8 2.8 0 0 1-5.6 0c0-1.4.9-2.9 2.8-4.6z" fill="#f2a900"/></svg>
     <span style="font-size:1.25rem;letter-spacing:-.01em">fettle</span>
   </a>
-  <a class="hdrlink" href="guides/">Guides</a>
+  <a class="hdrlink" href="#shop" onclick="shopView();return false">Shop</a><a class="hdrlink hg" href="guides/">Guides</a>
   <select id="langsel" class="langsel notr" aria-label="Language" onchange="setLang(this.value)"><option value="en">English</option><option value="pl">Polski</option><option value="ro">Română</option><option value="pa">ਪੰਜਾਬੀ</option><option value="ur">اردو</option></select>
   <button class="aa" onclick="toggleLarge()" aria-label="Larger text" title="Larger text">A<span>A</span></button><span class="acct" id="acct"><button class="linkbtn" onclick="authView('signin')">Sign in</button></span>
 </header>
@@ -761,9 +775,9 @@ html[lang^="en"] .notin-en{display:none}
 <main id="v-landing" class="lcalm">
   <div class="pagewrap">
   <section class="lhero" id="hero">
-    <p class="lpill">Free. About 4 minutes.</p>
+    <p class="lpill">Free. About 5 minutes.</p>
     <h1>Could your home cope for 3 days without power or water?</h1>
-    <p class="lede">Answer a few plain questions. Get a free plan for your home: what you need, how much of it, and what to do first.</p>
+    <p class="lede">Tell us about your home and pick the meals you'd normally eat. Get a free plan, a 3-day menu that needs no power, and a shopping list for what's missing.</p>
     <div class="lpreview" aria-hidden="true">
       <div class="lpv-head"><div class="lring"><svg width="56" height="56" viewBox="0 0 56 56"><circle cx="28" cy="28" r="23" fill="none" stroke-width="6" class="t"/><circle cx="28" cy="28" r="23" fill="none" stroke-width="6" stroke-linecap="round" stroke-dasharray="52 145" transform="rotate(-90 28 28)" class="v"/></svg><b>36%</b></div>
         <div><p class="lpv-k">Example plan</p><p class="lpv-t">Your next step</p></div></div>
@@ -775,7 +789,6 @@ html[lang^="en"] .notin-en{display:none}
     <p class="sm mute lcenter">No sign-up until you've seen your plan.</p>
     <p class="trustline"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/></svg><span>Built on official UK guidance from the Cabinet Office, NHS, Food Standards Agency and fire service.</span></p>
     <button class="lflood" onclick="toolGo('flood')"><span class="lic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 15c2 0 2-1.5 4.5-1.5S9.5 15 12 15s2.5-1.5 4.5-1.5S19 15 21 15M3 19c2 0 2-1.5 4.5-1.5S9.5 19 12 19s2.5-1.5 4.5-1.5S19 19 21 19M12 3s4 4.3 4 7a4 4 0 0 1-8 0c0-2.7 4-7 4-7z"/></svg></span><span><b>Live somewhere that floods?</b><span>Check your postcode, then get a flood-ready plan</span></span><i class="chev" aria-hidden="true"></i></button>
-    <p class="orglink"><a href="#orgs">Work for a council or housing provider? <b>See Fettle for support services</b></a></p>
   </section>
 
   <section class="lsec2">
@@ -791,9 +804,12 @@ html[lang^="en"] .notin-en{display:none}
   <section class="lsec2">
     <h2 class="lh2">How it works</h2>
     <div class="lcard lsteps">
-      <div class="lrow"><span class="lnum">1</span><span><b>Answer a few plain questions</b><span>About your home, who lives there and what you already have. About 4 minutes.</span></span></div>
-      <div class="lrow"><span class="lnum">2</span><span><b>Get your plan, free</b><span>Your next 3 steps, with the free jobs first.</span></span></div>
-      <div class="lrow"><span class="lnum">3</span><span><b>Get The Fettle Book, free</b><span>Your full plan as a book to print or save.</span></span></div>
+      <div class="lrow"><span class="lnum">1</span><span><b>Tell us about your home</b><span>Who lives there, including anyone who'd need extra help, and what you already have.</span></span></div>
+      <div class="lrow"><span class="lnum">2</span><span><b>Pick the meals you'd normally eat</b><span>We turn them into a 3-day menu that works with no power and no fridge.</span></span></div>
+      <div class="lrow"><span class="lnum">3</span><span><b>Get your plan and checklist</b><span>Your first 72 hours, step by step, with the free jobs first.</span></span></div>
+      <div class="lrow"><span class="lnum">4</span><span><b>Shop for what's missing</b><span>One list to copy, print or send to your phone, and a shop that only shows what your home needs.</span></span></div>
+      <div class="lrow"><span class="lnum">5</span><span><b>Get your book and recipes</b><span>Free to download and print. With Fettle Plus with Post, we post them to you.</span></span></div>
+      <div class="lrow"><span class="lnum">6</span><span><b>Stay ready</b><span>With Fettle Plus, we warn you when trouble's coming to your postcode and tell you when to refresh your food, water and batteries.</span></span></div>
     </div>
   </section>
 
@@ -818,7 +834,7 @@ html[lang^="en"] .notin-en{display:none}
         <ul class="ticks2">
           <li>Your emergency numbers inside the front cover</li>
           <li>The first 72 hours, hour by hour</li>
-          <li>No-cook recipes from your cupboard</li>
+          <li>Your 3-day menu, with recipes that need no power</li>
           <li>What to pack and where to go if you have to leave</li>
         </ul>
         <p><b>Free to download and print.</b></p>
@@ -828,28 +844,20 @@ html[lang^="en"] .notin-en{display:none}
       <p><a class="btn quiet small" id="wblink" target="_blank" rel="noopener">See the workbook on Amazon</a></p></div>
   </section>
 
-  <section class="lsec2" id="connect">
+  <section class="lsec2" id="shopland">
     <div class="lcard lconn">
-      <p class="lpv-k">Fettle Connect</p>
-      <h2 class="lh2">One plan for the whole family.</h2>
-      <p class="mute">Link up to 5 homes: yours, your mum's, your grandad's. When the power goes or a flood warning comes, everyone knows who's OK and who's doing what.</p>
-      <ul class="ticks2">
-        <li>Every home's weak spots in one place</li>
-        <li>Split the jobs, like who takes Mum her water</li>
-        <li>Flood, weather and health warnings for any of your homes, by email</li>
-        <li>Emergency mode: who's OK, and what happens over the 72 hours</li>
-        <li>Get ready again afterwards, so the next one is easier</li>
-        <li>The Connected Book, with every home in it</li>
-      </ul>
-      <p><b>£3 a month for up to 5 homes.</b> <span class="mute">Free while we test it.</span></p>
-      <div class="row3"><button class="btn small" onclick="start(false)">Start with your home</button><button class="btn quiet small" id="conn-yes" onclick="connInterest()">I'd pay for this</button></div>
-      <p class="sm" id="conn-thanks" role="status"></p>
+      <p class="lpv-k">The Fettle shop</p>
+      <h2 class="lh2">Only what your home is missing.</h2>
+      <p class="mute">Your plan already knows what you have. The shop shows the rest, the cheapest options first, and reminds you to check your cupboards before you buy.</p>
+      <div class="row3"><button class="btn small quiet" onclick="shopView()">Open the shop</button></div>
     </div>
   </section>
 
+  <section class="lsec2" id="plus"><div id="plusland"></div></section>
+
   <section class="lsec2">
     <h2 class="lh2">Questions</h2>
-    <div class="lcard lfaq"><details><summary><span>Is it really free?</span><i class="chev" aria-hidden="true"></i></summary><p>Yes. The check, your plan and your digital book are free, and they'll stay free. Fettle Connect, for linking up to 5 family homes, will be £3 a month. It's free while we test it.</p></details><details><summary><span>Is this official advice?</span><i class="chev" aria-hidden="true"></i></summary><p>Fettle is independent. Everything we recommend comes from official UK sources, which we link to, and we turn it into a plan for your home. In an emergency, always follow official alerts.</p></details><details><summary><span>Do I have to buy lots of stuff?</span><i class="chev" aria-hidden="true"></i></summary><p>No. Many of the most important jobs are free, like joining the Priority Services Register. The rest is spread over months at a budget you choose. We never sell a doomsday kit.</p></details><details><summary><span>I rent, or live in a flat. Is it still for me?</span><i class="chev" aria-hidden="true"></i></summary><p>Yes. Flats, especially high up, have their own risks, like water pumps and lifts that need power. The plan takes that into account.</p></details><details><summary><span>What do you do with my health answers?</span><i class="chev" aria-hidden="true"></i></summary><p>They're optional, only used to build your plan, and never shared or sold. If a council or charity worker helps you make your plan, they can see it too. Only if you agree, your answers are counted in anonymous totals for your area, and small numbers are always hidden.</p></details><details><summary><span>Can I make a plan for my mum?</span><i class="chev" aria-hidden="true"></i></summary><p>Yes. Add her home, with her agreement. With Fettle Connect you can link up to 5 family homes, share the jobs, and follow one plan together when something happens.</p></details><details><summary><span>Do you earn money from products you suggest?</span><i class="chev" aria-hidden="true"></i></summary><p>Yes, sometimes. Some product suggestions are Amazon links, marked "paid link". As an Amazon Associate, Fettle earns from qualifying purchases, at no extra cost to you. It never changes what we recommend, and you can buy anywhere. The printed book has no shopping links.</p></details></div>
+    <div class="lcard lfaq"><details><summary><span>Is it really free?</span><i class="chev" aria-hidden="true"></i></summary><p>Yes. The check, your plan and your digital book are free, and they'll stay free. Fettle Plus, with warnings for your postcode, refresh reminders and up to 5 family homes, will be £3.50 a month. It's free while we test it.</p></details><details><summary><span>Is this official advice?</span><i class="chev" aria-hidden="true"></i></summary><p>Fettle is independent. Everything we recommend comes from official UK sources, which we link to, and we turn it into a plan for your home. In an emergency, always follow official alerts.</p></details><details><summary><span>Do I have to buy lots of stuff?</span><i class="chev" aria-hidden="true"></i></summary><p>No. Many of the most important jobs are free, like joining the Priority Services Register. The rest is spread over months at a budget you choose. We never sell a doomsday kit.</p></details><details><summary><span>I rent, or live in a flat. Is it still for me?</span><i class="chev" aria-hidden="true"></i></summary><p>Yes. Flats, especially high up, have their own risks, like water pumps and lifts that need power. The plan takes that into account.</p></details><details><summary><span>What do you do with my health answers?</span><i class="chev" aria-hidden="true"></i></summary><p>They're optional, only used to build your plan, and never shared or sold. If a council or charity worker helps you make your plan, they can see it too. Only if you agree, your answers are counted in anonymous totals for your area, and small numbers are always hidden.</p></details><details><summary><span>Can I make a plan for my mum?</span><i class="chev" aria-hidden="true"></i></summary><p>Yes. Add her home, with her agreement. With Fettle Plus you can link up to 5 family homes, share the jobs, and follow one plan together when something happens.</p></details><details><summary><span>Do you earn money from products you suggest?</span><i class="chev" aria-hidden="true"></i></summary><p>Only from links marked "paid link". Those are Amazon links: if you buy, Fettle earns a small commission at no extra cost to you. Links without that label earn nothing. It never changes what we recommend, and you can buy anywhere. The printed book has no shopping links.</p></details></div>
     <p id="guides" style="margin-top:16px">Looking for something specific? <a href="guides/">Read the free guides</a>.</p>
   </section>
 
@@ -869,7 +877,7 @@ html[lang^="en"] .notin-en{display:none}
     </div>
   </section>
 
-  <section class="lsec2" id="orgs">
+  <section class="lsec2" id="orgs" hidden>
     <div class="lcard lorg">
       <p class="lpv-k">Fettle for support services</p>
       <h2 class="lh2">The people most at risk are the least likely to download an app.</h2>
@@ -910,6 +918,8 @@ html[lang^="en"] .notin-en{display:none}
 <main class="pagewrap hide" id="v-home"><div id="homebox"></div></main>
 <main class="pagewrap hide calm" id="v-connect"><div id="connectbox"></div></main>
 <main class="pagewrap hide calm" id="v-comm"><div id="commbox"></div></main>
+<main class="pagewrap hide calm" id="v-shop"><div id="shopbox"></div></main>
+<main class="pagewrap hide calm" id="v-plus"><div id="plusbox"></div></main>
 <main class="pagewrap hide" id="v-gift"><div class="auth" id="giftbox"></div></main>
 <main class="pagewrap hide" id="v-tool"><div class="auth tool" id="toolbox"></div></main>
 <main class="pagewrap hide" id="v-r"><div class="tabs" id="tabs" role="tablist"></div><div id="res"></div></main>
@@ -926,8 +936,8 @@ html[lang^="en"] .notin-en{display:none}
 <div id="em" class="em hide" role="dialog" aria-modal="true" aria-label="Emergency steps"><div class="em-top"><span>fettle: emergency steps</span><button onclick="closeEm()">Close</button></div><div id="em-body" class="em-body"></div></div>
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 <footer id="foot">
-  <p>As an Amazon Associate I earn from qualifying purchases.</p>
-  <p class="tools-row"><a href="calc">Work out your numbers</a> · <a href="local">Your local information</a> · <a href="remind">Seasonal reminders</a> · <a href="flood">Does your area flood?</a></p>
+  <p id="amzline" hidden>As an Amazon Associate, Fettle earns from qualifying purchases.</p>
+  <p class="tools-row"><a href="calc">Work out your numbers</a> · <a href="local">Your local information</a> · <a href="remind">Seasonal reminders</a> · <a href="flood">Does your area flood?</a> · <a href="guides/">Guides</a></p>
   <p>Fettle gives general guidance based on official UK sources. It isn't medical advice and doesn't replace official warnings. In an emergency, follow official alerts and call 999 if life is at risk. <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></p>
   <p>Sources: <a href="https://www.gov.uk/government/news/households-encouraged-to-take-small-simple-steps-to-stay-prepared-in-an-emergency" target="_blank" rel="noopener">Be Ready</a>, <a href="https://www.gov.uk/government/publications/food-safety-in-a-power-cut-advice-for-consumers/food-safety-in-a-power-cut-advice-for-consumers" target="_blank" rel="noopener">Food Standards Agency</a>, <a href="https://www.gov.uk/government/publications/public-health-advice-from-uk-cmos-during-a-national-power-outage/food-and-nutrition-scripts-for-broadcast-media" target="_blank" rel="noopener">Chief Medical Officers</a>, <a href="https://www.nct.org.uk/parenting/how-do-i-make-bottle-formula-milk-safely" target="_blank" rel="noopener">NCT</a>, <a href="https://www.healthiertogether.nhs.uk/child-under-12-years/what-to-keep-in-your-medicine-cabinet" target="_blank" rel="noopener">NHS</a>, <a href="https://www.gosh.nhs.uk/documents/5754/medicines_cabinet_families.pdf" target="_blank" rel="noopener">GOSH</a>, <a href="https://www.ofgem.gov.uk/your-energy-supply/how-manage-your-energy-supply/join-your-suppliers-priority-services-register" target="_blank" rel="noopener">Ofgem</a>, <a href="https://www.enwl.co.uk/globalassets/customer/documents/psr/psr-info-booklet_web.pdf" target="_blank" rel="noopener">Electricity North West</a>, <a href="https://corporate.unitedutilities.com/globalassets/documents/pdf/10271-7021-priority-services-booklet-2025.pdf" target="_blank" rel="noopener">United Utilities</a>, <a href="https://www.redcross.org.uk/first-aid/learn-first-aid" target="_blank" rel="noopener">British Red Cross</a>.</p>
 </footer>
@@ -941,6 +951,7 @@ html[lang^="en"] .notin-en{display:none}
  new IntersectionObserver(e=>{heroVis=e[0].isIntersecting;upd();}).observe(hero);
  new IntersectionObserver(e=>{finVis=e[0].isIntersecting;upd();}).observe(fin);
  window._stickyUpd=upd;})();
+addEventListener("load",()=>{try{if(affTag())document.getElementById("amzline").hidden=false;}catch(e){} try{document.getElementById("plusland").innerHTML=plusOffer("landing");}catch(e){}});
 function lhome(i,b){[0,1].forEach(k=>{document.getElementById("lh"+k).hidden=k!==i;});b.parentNode.querySelectorAll("button").forEach(x=>x.setAttribute("aria-selected",x===b));}
 /* ================= ICONS ================= */
 const I={
@@ -1039,7 +1050,7 @@ let H=[], cur=null, qi=0, tier="core", view=0;
 const fresh=other=>({name:other?"Mum":"My household",surname:"",other,paid:false,scen:{},conf:{},doorEntry:null,pump:null,
   home:null,floor:null,lift:null,outdoor:null,adults:other?0:2,over70:other?1:0,under5:0,kids:0,dogs:0,cats:0,
   feed:null,bottles:6,heat:null,hob:null,cold:null,healthGate:null,health:[],psr:null,water:null,food:null,kit:[],fa:null,budget:null,mShock:null,mBills:null,mFood:null,src:null,
-  diets:[],prepay:null,solar:null,car:null,c1:"",c2:"",meet:"",school:null,gp:"",pharmacy:"",vet:"",
+  diets:[],mealPick:[],prepay:null,solar:null,car:null,c1:"",c2:"",meet:"",school:null,gp:"",pharmacy:"",vet:"",
   supplier:"",pay:null,waterCo:"",netCo:"",areas:[],area:"",pc:"",nation:null,babies:null,meds:[],bought:{},
   tenure:null,stayWith:"",expiry:{},verified:{},commit:{},done:{},na:{},checkins:[],members:[],jobs:{},feedback:null,
   lang:typeof LANG==="string"?LANG:"en",pro:false,ref:"",ward:"",consent:null,scores:[],bookStatus:"",large:false,
@@ -1142,6 +1153,8 @@ const Q=[
  {sec:"What you have",id:"food",type:"one",ask:()=>"How much food is there at home that needs no cooking and no fridge?",
   calc:h=>{const m=meals(h);return `<div class="calc"><span class="mute sm">That means</span><div class="big">${m.meals} meals and ${m.snacks} snacks</div><span class="sm">Food you can eat cold, straight from the tin or packet. For example: tins with ring-pull lids, crackers, cereal bars, long-life milk.</span></div>`;},
   opts:[["yes","Enough for 3 days or more"],["two","About 2 days"],["some","About 1 day"],["no","Less than a day"],["unsure","I'm not sure",""]]},
+ {sec:"What you have",id:"mealPick",type:"multi",show:h=>meals(h).eaters>0,ask:()=>"Which of these do you normally eat?",why:"We'll turn them into a 3-day menu that works with no power and no fridge, and a shopping list to match.",none:"None of these. Give me a simple menu",
+  opts:()=>MEALS.map(m=>[m.id,m.l,"Becomes: "+m.to])},
  {sec:"What you have",id:"kit",type:"multi",ask:()=>"Which of these do you have at home right now?",why:"Only tick things you could find in the dark and that work.",none:"I don't have any of these",
   opts:h=>[["torch","A torch that works, and you could find it in the dark","With spare batteries that haven't leaked"],["radio","A radio with FM that works without the mains","Battery or wind-up"],["power","A charged power bank, with the right cable for your phone","Charged in the last month"],["firstaid","A first aid kit"],["cash",`Cash, about £${people(h)*10}`,"£10 per person in notes and coins"],["opener","A tin opener that isn't electric"],["warm","Enough blankets and warm layers for everyone"],["smoke","A smoke alarm on each floor, tested this month","Press the test button"],...(usesFuel(h)?[["co","A carbon monoxide alarm that works","A small alarm, separate from your smoke alarm, usually marked CO. Tested this month"]]:[]),["docs","Important numbers written on paper"]]},
  {sec:"What you have",id:"fa",type:"one",ask:()=>"Has anyone at home done first aid training in the last three years?",why:"In a big emergency, an ambulance may take much longer than usual.",
@@ -1198,6 +1211,7 @@ function foodList(h,ff=1){
   return L;
 }
 function recipes(h){
+  if(mealPicks(h).length){const seen=new Set(), R=[]; menu(h).forEach(d=>[d.b,d.l,d.t,d.p].filter(Boolean).forEach(id=>{if(!seen.has(id)){seen.add(id);R.push(mealById(id).r(h));}})); return R;}
   const nut=diet(h,"nut"), veg=diet(h,"veg"), gf=diet(h,"gf"), dairy=diet(h,"dairy");
   const R=[
    {t:"Bean and sweetcorn salad",s:"Serves 2",i:["1 tin of beans or chickpeas, drained","1 small tin of sweetcorn, drained",veg?"1 tin of lentils, drained":"1 tin of tuna or mackerel","A squeeze of bottled lemon juice, salt and pepper"],m:"Mix everything in a bowl. Eat straight away. Leftovers can't go in the fridge, so make only what you'll eat."},
@@ -1209,6 +1223,200 @@ function recipes(h){
   ];
   return R;
 }
+/* ================= MEALS: what you'd normally eat, as a 3-day menu that needs no power ================= */
+// Cupboard items. s: servings per pack, c: rough £ per pack, k: months it keeps unopened (for refresh reminders), q: shop search.
+const PANTRY={
+ beans:{n:"tins of baked beans",s:2,c:.7,k:24,q:"baked beans ring pull tins multipack"},
+ chick:{n:"tins of chickpeas",s:2,c:.7,k:24,q:"chickpeas tins multipack"},
+ mixbean:{n:"tins of mixed beans",s:2,c:.7,k:24,q:"mixed beans in water tins"},
+ lentil:{n:"tins of lentils",s:2,c:.8,k:24,q:"green lentils tins"},
+ tuna:{n:"ring-pull tins of tuna",s:1,c:1.2,k:24,q:"tuna ring pull tins multipack"},
+ chicken:{n:"tins of chicken",s:2,c:2,k:24,q:"tinned chicken breast"},
+ corn:{n:"tins of sweetcorn",s:3,c:.6,k:24,q:"sweetcorn tins multipack"},
+ fruit:{n:"tins of fruit in juice",s:2,c:.8,k:18,q:"tinned fruit in juice ring pull"},
+ soup:{n:"tins of soup",s:1,c:.9,k:18,q:"tinned soup multipack"},
+ pasta:{n:"tins of ravioli or spaghetti",s:1,c:.8,k:18,q:"tinned ravioli"},
+ curry:{n:"tins of dal or chana masala",s:2,c:1.5,k:18,q:"tinned chana masala"},
+ rice:{n:"ready-to-eat rice pouches",s:1,c:1,k:9,q:"ready to eat rice pouches"},
+ crackers:{n:"packs of crackers or oatcakes",s:3,c:1,k:9,q:"oatcakes crackers multipack"},
+ oats:{n:"bags of porridge oats",s:20,c:1.2,k:12,q:"porridge oats 1kg"},
+ cereal:{n:"boxes of cereal",s:10,c:2,k:9,q:"breakfast cereal"},
+ milk:{n:"litres of long-life (UHT) milk",s:6,c:1.1,k:6,q:"UHT long life milk 1 litre"},
+ spread:{n:"jars of peanut butter",s:15,c:2,k:12,q:"peanut butter jar"},
+ jam:{n:"jars of jam",s:20,c:1,k:12,q:"jam jar"},
+ pud:{n:"custard or rice pudding pots",s:1,c:.5,k:9,q:"ambient custard pots"},
+};
+// Diet swaps keep the same item, under a name everyone at home can eat.
+function pantryName(h,k){const P=PANTRY[k], veg=diet(h,"veg"), gf=diet(h,"gf"), dairy=diet(h,"dairy"), nut=diet(h,"nut"), halal=diet(h,"halal")||diet(h,"kosher");
+  return ({crackers:gf?"packs of gluten-free crackers or rice cakes":P.n, oats:gf?"bags of gluten-free oats":P.n, milk:dairy?"litres of long-life oat or soya milk":P.n,
+    spread:nut?"jars of sunflower seed butter":P.n, pud:dairy?"dairy-free pudding pots":P.n, chicken:halal?"tins of halal chicken":P.n,
+    pasta:gf?"ready-to-eat rice pouches":P.n})[k]||P.n;}
+function pantryKey(h,k){const veg=diet(h,"veg"), gf=diet(h,"gf");
+  if(veg&&(k==="tuna"||k==="chicken")) return k==="tuna"?"mixbean":"lentil";
+  if(gf&&k==="pasta") return "rice";
+  if(diet(h,"kosher")&&k==="tuna") return "tuna"; return k;}
+// b: breakfast, m: lunch or dinner, p: pudding. i: one serving uses one serving of each item.
+const MEALS=[
+ {id:"porridge",slot:"b",l:"Porridge",to:"Overnight oats",i:["oats","milk","fruit"],r:h=>({t:"Overnight oats",s:"Serves 1",i:[`4 tablespoons of ${diet(h,"gf")?"gluten-free oats":"oats"}`,`About 150ml of ${diet(h,"dairy")?"long-life oat or soya milk":"long-life milk"}`,"A few spoonfuls of tinned fruit"],m:"Put the oats and milk in a jar or cup, stir, and leave for at least 2 hours or overnight. Top with fruit. With no fridge, use opened long-life milk within the day."})},
+ {id:"cereal",slot:"b",l:"Cereal",to:"Cereal with long-life milk",i:["cereal","milk"],r:h=>({t:"Cereal with long-life milk",s:"Serves 1",i:["A bowl of cereal",`About 150ml of ${diet(h,"dairy")?"long-life oat or soya milk":"long-life milk"}`],m:"Just as usual. Once a carton is open and there's no fridge, finish it the same day: plan bowls for everyone at once."})},
+ {id:"toast",slot:"b",l:"Toast with spreads",to:"Crackers with peanut butter or jam",i:["crackers","spread"],r:h=>({t:`Crackers with ${diet(h,"nut")?"seed butter":"peanut butter"} or jam`,s:"Serves 1",i:[diet(h,"gf")?"Gluten-free crackers or rice cakes":"Crackers or oatcakes",`${diet(h,"nut")?"Sunflower seed":"Peanut"} butter or jam`],m:"Spread and eat. Crackers keep for months where bread goes stale in days."})},
+ {id:"beans",slot:"m",l:"Beans on toast",to:"Beans on crackers, eaten cold",i:["beans","crackers"],r:h=>({t:"Beans on crackers",s:"Serves 2",i:["1 tin of baked beans",diet(h,"gf")?"Gluten-free crackers or rice cakes":"Crackers or oatcakes"],m:"Baked beans are cooked already, so they're safe cold. Spoon onto crackers. If your gas hob works, warm them in the pan."})},
+ {id:"tuna",slot:"m",l:"Tuna pasta or sandwiches",to:"Tuna and sweetcorn crackers",i:["tuna","corn","crackers"],r:h=>diet(h,"veg")?({t:"Bean and sweetcorn crackers",s:"Serves 2",i:["1 tin of mixed beans, drained","1 small tin of sweetcorn, drained","Crackers or oatcakes","Salt, pepper, a squeeze of bottled lemon"],m:"Mix the beans and sweetcorn with a fork, season, and pile onto crackers."}):({t:"Tuna and sweetcorn crackers",s:"Serves 2",i:["2 ring-pull tins of tuna","1 small tin of sweetcorn, drained",diet(h,"gf")?"Gluten-free crackers or rice cakes":"Crackers or oatcakes","Salt, pepper, a squeeze of bottled lemon"],m:"Mix the tuna and sweetcorn, season, and pile onto crackers. Eat straight away: leftovers can't go in the fridge."})},
+ {id:"chilli",slot:"m",l:"Chilli, stew or casserole",to:"Three-bean salad",i:["mixbean","corn","lentil"],r:h=>({t:"Three-bean salad",s:"Serves 2",i:["1 tin of mixed beans, drained","1 tin of lentils, drained","1 small tin of sweetcorn, drained","Salt, pepper, chilli flakes or dried herbs"],m:"Mix everything in a bowl and season well. Filling, and no cooking needed."})},
+ {id:"curry",slot:"m",l:"Curry, dal or chana",to:"Tinned dal or chana with rice",i:["curry","rice"],r:h=>({t:"Chana or dal with rice",s:"Serves 2",i:["1 tin of chana masala or dal","2 ready-to-eat rice pouches"],m:"Both are cooked already and safe to eat at room temperature. Squeeze the rice pouch to break it up, then spoon the curry over. Warm it on a gas hob if it works."})},
+ {id:"soup",slot:"m",l:"Soup",to:"Tinned soup with crackers",i:["soup","crackers"],r:h=>({t:"Soup with crackers",s:"Serves 1",i:["1 tin of soup (any kind that's cooked already)",diet(h,"gf")?"Gluten-free crackers or rice cakes":"Crackers or oatcakes"],m:"Most tinned soup is safe cold. It's better warm, so heat it if your hob works. Never use a camping stove indoors."})},
+ {id:"pasta",slot:"m",l:"Pasta",to:"Tinned ravioli or spaghetti",i:["pasta"],r:h=>diet(h,"gf")?({t:"Rice with sweetcorn",s:"Serves 1",i:["1 ready-to-eat rice pouch","Half a tin of sweetcorn"],m:"Mix and season. Safe at room temperature."}):({t:"Tinned ravioli or spaghetti",s:"Serves 1",i:["1 tin of ravioli or spaghetti in sauce"],m:"Cooked already, so it's fine cold. Children often like it straight from the tin."})},
+ {id:"rice",slot:"m",l:"Rice dishes",to:"Rice with chicken or chickpeas",i:["rice","chicken"],r:h=>({t:diet(h,"veg")?"Rice with lentils":"Rice with chicken",s:"Serves 2",i:["2 ready-to-eat rice pouches",diet(h,"veg")?"1 tin of lentils, drained":`1 tin of ${diet(h,"halal")||diet(h,"kosher")?"halal ":""}chicken`,"A pinch of salt and dried herbs"],m:"Break up the rice in the pouch, stir through the rest, and season."})},
+ {id:"salad",slot:"m",l:"Salads",to:"Chickpea and sweetcorn salad",i:["chick","corn"],r:h=>({t:"Chickpea and sweetcorn salad",s:"Serves 2",i:["1 tin of chickpeas, drained","1 small tin of sweetcorn, drained","A squeeze of bottled lemon, salt and pepper"],m:"Mix everything in a bowl. Eat straight away."})},
+ {id:"pudding",slot:"p",l:"Puddings",to:"Fruit and custard",i:["fruit","pud"],r:h=>({t:"Fruit and custard",s:"Serves 2",i:["1 tin of fruit, drained",`2 ready-to-eat ${diet(h,"dairy")?"dairy-free pudding pots":"custard or rice pudding pots"}`],m:"Spoon the fruit over the pudding. Good comfort food, especially for children."})},
+];
+const MEALDEF={b:["porridge","cereal"],m:["beans","salad","soup"]};
+function mealPicks(h){const P=(h.mealPick||[]).filter(id=>MEALS.some(m=>m.id===id)); return P;}
+// Three days: breakfast, lunch, dinner (and a pudding, if picked), cycling through what they'd normally eat.
+function menu(h){const P=mealPicks(h), pick=s=>{const L=P.filter(id=>MEALS.find(m=>m.id===id).slot===s); return L.length?L:(MEALDEF[s]||[]);};
+  const B=pick("b"), M=pick("m"), D=P.includes("pudding"), out=[]; let mi=0;
+  for(let d=0;d<3;d++) out.push({b:B[d%B.length],l:M[mi++%M.length],t:M[mi++%M.length],p:D?"pudding":null});
+  return out;}
+const mealById=id=>MEALS.find(m=>m.id===id);
+// What the menu needs, for everyone who eats normal food, scaled down if they already have some food in.
+function menuShop(h,ff=1){const e=meals(h).eaters; if(!e) return []; const S={};
+  menu(h).forEach(d=>[d.b,d.l,d.t,d.p].filter(Boolean).forEach(id=>mealById(id).i.forEach(k=>{k=pantryKey(h,k);S[k]=(S[k]||0)+e;})));
+  return Object.entries(S).map(([k,sv])=>({k,packs:Math.max(1,Math.ceil(sv*ff/PANTRY[k].s)),cost:PANTRY[k].c}));}
+const one=t=>t.replace(/^(ring-pull )?(tins|bags|packs|litres|jars|boxes|pouches|pots)\b/,(m,a,w)=>(a||"")+({tins:"tin",bags:"bag",packs:"pack",litres:"litre",jars:"jar",boxes:"box",pouches:"pouch",pots:"pot"}[w])).replace(/^ready-to-eat rice pouches/,"ready-to-eat rice pouch").replace(/^custard or rice pudding pots/,"custard or rice pudding pot").replace(/^dairy-free pudding pots/,"dairy-free pudding pot");
+function menuList(h,ff=1){const L=menuShop(h,ff).map(x=>[`${x.packs} ${x.packs===1?one(pantryName(h,x.k)):pantryName(h,x.k)}`,PANTRY[x.k].k>=18?"Keeps about 2 years.":`Keeps about ${PANTRY[x.k].k} months.`]);
+  if(!L.length) return L;
+  L.push([`${Math.ceil(meals(h).eaters*6*ff)} snacks`,`Cereal bars, dried fruit, biscuits${diet(h,"nut")?" (nut-free)":", nuts"}. Something you like: it helps morale.`]);
+  if(weaned(h)) L.push([`${toddlers(h)*9} baby food pouches`,"The squeezy kind that doesn't need heating."]);
+  return L;}
+function menuCost(h,ff=1){return Math.round(menuShop(h,ff).reduce((a,x)=>a+x.packs*x.cost,0)+meals(h).eaters*6*ff*.3);}
+function menuHTML(h){const T=["Day 1","Day 2","Day 3"], n=id=>id?`<span>${mealById(id).r(h).t}</span>`:"";
+  return `<div class="menu3"><p class="sm"><b>Your 3-day menu</b> <span class="mute">${mealPicks(h).length?"From the meals you normally eat.":"A simple starter menu. Pick your usual meals to change it."}</span></p>
+   <div class="mdays">${menu(h).map((d,i)=>`<div class="mday"><p class="mdh">${T[i]}</p><dl class="sm"><dt>Breakfast</dt><dd>${n(d.b)}</dd><dt>Lunch</dt><dd>${n(d.l)}</dd><dt>Dinner</dt><dd>${n(d.t)}${d.p?` <span class="mute">+</span> ${n(d.p)}`:""}</dd></dl></div>`).join("")}</div>
+   ${MEALEDIT?mealPickerHTML(h):`<p class="sm"><button class="linkbtn" onclick="mealEdit()">Change the meals</button></p>`}</div>`;}
+let MEALEDIT=false;
+function mealEdit(){MEALEDIT=true;render();setTimeout(()=>{const e=document.getElementById("mealedit");if(e)e.scrollIntoView({block:"start",behavior:"smooth"});},30);}
+function mealPickerHTML(h){const P=mealPicks(h);
+  return `<div class="mealedit" id="mealedit"><p class="sm"><b>Which of these do you normally eat?</b></p><div class="mealgrid">${MEALS.map(m=>`<label class="ck"><input type="checkbox" value="${m.id}"${P.includes(m.id)?" checked":""}><span><b>${m.l}</b><small>${m.to}</small></span></label>`).join("")}</div>
+   <div class="row3"><button class="btn small" onclick="mealSave()">Save my menu</button><button class="btn small quiet" onclick="MEALEDIT=false;render()">Cancel</button></div></div>`;}
+function mealSave(){const h=H[view]; h.mealPick=[...document.querySelectorAll("#mealedit input:checked")].map(x=>x.value); MEALEDIT=false; render(); toast("Menu and shopping list updated.");}
+/* ================= SHOP: what the plan says is missing, first, with links to buy ================= */
+const SHOPX={
+ water:[{n:"Still water, 2-litre bottles",w:"Usually cheapest at your supermarket. Check the date when you buy.",q:"still water 2 litre bottles multipack",super:true}],
+ hygiene:[{n:"Wet wipes and hand sanitiser",w:"For when the taps are off.",q:"antibacterial wet wipes hand sanitiser"},{n:"Heavy-duty bin bags",w:"Line the toilet if it can't be flushed.",q:"heavy duty bin bags"}],
+ grabbag:[{n:"Waterproof dry bag, 20 litres",w:"Keeps documents, medicines and clothes dry if you have to leave in the rain or a flood.",q:"waterproof dry bag 20L"}],
+ babykit:[{n:"Nappies and baby wipes",w:"Your usual brand and size. Supermarkets are usually cheapest.",q:"baby wipes multipack",super:true}],
+ pets:[{n:"Pet food in pouches or tins",w:"Three days of your pet's usual food, and a bowl for water.",q:"pet food pouches multipack",super:true}],
+};
+const SHOPCAT=[
+ {id:"water",t:"Water",n:["water"]},
+ {id:"food",t:"Food that needs no cooking",n:["food","opener"]},
+ {id:"light",t:"Light, radio and power",n:["torch","radio","power"]},
+ {id:"warm",t:"Keeping warm",n:["warm"]},
+ {id:"safety",t:"First aid and safety",n:["firstaid","co","smoke"]},
+ {id:"hygiene",t:"Toilet and hand-washing",n:["hygiene"]},
+ {id:"grab",t:"A grab bag",n:["grabbag"]},
+ {id:"baby",t:"Babies",n:["babykit","rtf"]},
+ {id:"pets",t:"Pets",n:["pets"]},
+];
+const affTag=()=>{const t=String((window.FETTLE_CONFIG||{}).amazonTag||"");return /^[A-Za-z0-9-]+-21$/.test(t)?t:"";};
+function shopItems(h,need){
+  if(need==="food") return h?menuShop(h).map(x=>({n:x.packs+" "+(x.packs===1?one(pantryName(h,x.k)):pantryName(h,x.k)),w:PANTRY[x.k].k>=18?"Keeps about 2 years.":`Keeps about ${PANTRY[x.k].k} months.`,q:PANTRY[x.k].q,super:true})):Object.values(PANTRY).slice(0,8).map(p=>({n:p.n[0].toUpperCase()+p.n.slice(1),w:"",q:p.q,super:true}));
+  return [...(SHOPX[need]||[]),...(PRODUCTS[need]||[])];}
+function buyLink(x){const paid=!x.url&&!!affTag();
+  return `<a class="plink" href="${x.url||amz(x.q)}" target="_blank" rel="${paid?"sponsored ":""}noopener">${x.url?"View in the charity shop":"View on Amazon"}${paid?" <small>(paid link)</small>":""}</a>`;}
+function shopView(){go("shop");shopDraw();}
+function shopDraw(){
+  const h=H.length?H[view]:null, N=h?needs(h):[], miss=id=>N.find(x=>x.id===id&&x.cat==="buy"&&!h.bought[x.id]);
+  const cats=SHOPCAT.map(c=>({...c,missing:c.n.map(miss).filter(Boolean),inPlan:c.n.some(id=>N.some(x=>x.id===id))}))
+    .filter(c=>!h||c.inPlan||c.missing.length||["water","food","light","safety"].includes(c.id));
+  if(h) cats.sort((a,b)=>(b.missing.length?1:0)-(a.missing.length?1:0));
+  const total=h?N.filter(x=>x.cat==="buy"&&!h.bought[x.id]).reduce((a,x)=>a+(x.cost||0),0):0;
+  const card=c=>{const needsHere=c.n.filter(id=>c.missing.some(m=>m.id===id)||!h), P=(needsHere.length?needsHere:c.n).flatMap(id=>shopItems(h,id).map(p=>({...p,need:id})));
+    const done=h&&!c.missing.length;
+    return `<section class="card shopc${done?" got":""}" id="shop_${c.id}"><div class="shoph"><h2 class="ch">${c.t}</h2>${h?(c.missing.length?`<span class="pill p1">Missing from your plan</span>`:`<span class="pill ok">${sico("check",12,3)} You have this</span>`):""}</div>
+      ${c.missing.map(m=>`<p class="sm"><b>${m.title}</b>${m.amt?`: <span>${m.amt}</span>`:""} <span class="mute">About £${m.cost}</span></p>`).join("")}
+      ${done?`<details class="opts2"><summary class="linkbtn">See the options anyway</summary>`:""}
+      <div class="prods">${P.map(x=>`<div class="prod"><div><b>${x.n}</b>${x.w?`<span>${x.w}</span>`:""}${x.super?`<span class="mute sm">Or any supermarket.</span>`:""}</div>${buyLink(x)}</div>`).join("")}</div>
+      ${done?`</details>`:""}
+      ${c.missing.length?`<div class="row3">${c.missing.map(m=>`<button class="btn small quiet" onclick="tick('${m.id}',true);shopDraw();toast('Ticked off your plan.')"><span>I've bought:</span> <span>${m.title}</span></button>`).join("")}</div>`:""}</section>`;};
+  document.getElementById("shopbox").innerHTML=`<section class="rhead2"><p class="lpv-k">The Fettle shop</p><h1>${h?"What your home is missing":"Everything for 3 days"}</h1>
+    <p class="mute">${h?`<span>From your plan for</span> <span class="notr">${esc(hhName(h))}</span>. ${total?`<span>About £${total} left to buy.</span> <span>You don't need to buy it all at once.</span>`:"<span>You've bought everything on your plan.</span>"}`:"<span>Do the free check first and we'll show you only what your home is missing.</span>"}</p>
+    ${h?`<div class="row3"><button class="btn small" onclick="shopCopy()">Copy my shopping list</button><button class="btn small quiet" onclick="shopSend()">Send it to my phone</button><button class="btn small quiet" onclick="shoppingList()">Print it</button></div>`:`<button class="btn" onclick="start(false)">Check my household</button>`}</section>
+    <div class="note"><p><b>Free and cheap first.</b> Check your cupboards before you buy: you may have some of this already. Supermarket own-brand is fine, and food and water are usually cheapest there.</p></div>
+    ${cats.map(card).join("")}
+    <p class="sm mute" style="margin-top:18px">${affTag()?"Links marked \"paid link\" are Amazon links: if you buy, Fettle earns a small commission at no extra cost to you. It never changes what we recommend. As an Amazon Associate, Fettle earns from qualifying purchases.":"Fettle doesn't earn anything from these links."} Prices are estimates.</p>
+    <p><button class="btn quiet small" onclick="${h?"go('r');render()":"go('landing')"}">${h?"Back to my plan":"Back"}</button></p>`;
+}
+function shopText(h){const B=needs(h).filter(x=>x.cat==="buy"&&!h.bought[x.id]);
+  return [`Shopping list for ${hhName(h)}`,"",...B.flatMap(x=>[`- ${x.title}${x.amt?`: ${x.amt}`:""}`,...(x.list?x.list.map(i=>`    ${Array.isArray(i)?i[0]:i}`):[])]),"",`Made with Fettle: ${siteUrl()}`].join("\n");}
+async function shopCopy(){const t=shopText(H[view]);try{await navigator.clipboard.writeText(t);toast("Copied. Paste it into your notes or a supermarket app.");}catch(e){shareText(t);}}
+function shopSend(){shareText(shopText(H[view]));}
+/* ================= REFRESH: when supplies need checking or replacing ================= */
+// m: months after buying. a: what to do. Food uses the shortest-keeping item on their menu.
+const REFRESH={
+ water:{m:12,a:"Check the dates on the bottles. Use the oldest and replace them."},
+ food:{m:h=>Math.min(12,...menuShop(h).map(x=>PANTRY[x.k].k)),a:"Eat the oldest food in normal meals and replace it."},
+ torch:{m:12,a:"Test the torch. Replace the batteries if they're weak or have leaked."},
+ radio:{m:12,a:"Test the radio, and the batteries if it uses them."},
+ power:{m:3,a:"Recharge the power bank."},
+ firstaid:{m:12,a:"Replace anything used or out of date."},
+ rtf:{m:6,a:"Check the dates on the formula and replace it before it goes out of date."},
+ babykit:{m:3,a:"Check the nappies are still the right size."},
+ pets:{m:6,a:"Check the dates on the pet food."},
+ hygiene:{m:12,a:"Check the wipes haven't dried out."},
+ grabbag:{m:6,a:"Check the grab bag: medicines in date, clothes still fit, phone numbers right."},
+ co:{m:12,a:"Press the test button on the alarm."},
+};
+const addMonths=(d,m)=>{const t=new Date(d);t.setMonth(t.getMonth()+m);return t;};
+const refreshMonths=(h,id)=>{const r=REFRESH[id];return r?(typeof r.m==="function"?r.m(h):r.m):0;};
+// Keeps h.refresh = {id: {due, t}} in step with what's bought. The reminder email reads this, so it never disagrees with the plan.
+function syncRefresh(h){h.refresh=h.refresh||{}; const N=needs(h);
+  Object.keys(h.refresh).forEach(id=>{if(!h.bought[id]) delete h.refresh[id];});
+  N.filter(x=>h.bought[x.id]&&REFRESH[x.id]).forEach(x=>{const d=(h.done&&h.done[x.id]&&h.done[x.id].d)||new Date().toISOString();
+    if(!h.refresh[x.id]) h.refresh[x.id]={due:addMonths(d,refreshMonths(h,x.id)).toISOString().slice(0,10),t:x.title};
+    else h.refresh[x.id].t=x.title;});
+  return h.refresh;}
+function refreshList(h){const R=syncRefresh(h);return Object.entries(R).map(([id,r])=>({id,t:r.t,due:new Date(r.due),a:REFRESH[id]?REFRESH[id].a:""})).sort((a,b)=>a.due-b.due);}
+const refreshSoon=h=>refreshList(h).filter(r=>r.due-Date.now()<30*864e5);
+function refreshed(id){const h=H[view]; syncRefresh(h); h.refresh[id]={due:addMonths(new Date(),refreshMonths(h,id)).toISOString().slice(0,10),t:(h.refresh[id]||{}).t||id}; render(true); toast("Done. We'll remind you next time.");}
+const monthYear=d=>d.toLocaleDateString(LANG==="en"?"en-GB":LANG,{month:"long",year:"numeric"});
+function refreshCard(h){const S=refreshSoon(h); if(!S.length) return "";
+  return `<section class="card refc"><p class="lpv-k">Time to refresh</p><h2 class="ch">${S.length===1?"1 thing needs checking":`${S.length} things need checking`}</h2>
+   <div class="rows">${S.map(r=>`<div class="refrow"><div><b>${r.t}</b><span class="sm">${r.a}</span><span class="sm mute">${r.due<Date.now()?"Due now":`By ${monthYear(r.due)}`}</span></div><button class="btn small quiet" onclick="refreshed('${r.id}')">Done</button></div>`).join("")}</div></section>`;}
+function refreshTable(h){const L=refreshList(h); if(!L.length) return "";
+  return `<section class="card"><h2 class="ch">When to refresh</h2><p class="sm mute">${user?"We'll email you when it's time, if you've asked for reminders.":"Save your plan and we'll remind you when it's time."}</p>
+   <ul class="reflist sm">${L.map(r=>`<li><b>${r.t}</b><span>${monthYear(r.due)}</span></li>`).join("")}</ul></section>`;}
+/* ================= FETTLE PLUS: the subscription ================= */
+// Payments stay off until config.js has plusOn: true (and Cloudflare has PLUS_ON and the Stripe prices). Until then: free while we test.
+const PLUSP={plus:{t:"Fettle Plus",m:"3.50",y:"35"},post:{t:"Fettle Plus with Post",m:"7",y:"70"}};
+const PLUS_FREE=["The check and your plan","The 72-hour checklist","Your 3-day menu and shopping list","The Fettle Book to download and print"];
+const PLUS_GETS=["Warnings for your postcode: floods, storms, heat, cold","Reminders when water, food and batteries need refreshing","Your plan kept up to date as life changes","Up to 5 family homes, with jobs shared and emergency mode"];
+const PLUS_POST=["Everything in Fettle Plus","Your menu, recipes and checklist, printed and posted to you twice a year"];
+const plusOn=()=>!!(window.FETTLE_CONFIG&&window.FETTLE_CONFIG.plusOn);
+let PLUSPER="year";
+function plusOffer(ctx){const P=window.PLUS, per=PLUSPER, save=Math.round(100-100*(+PLUSP.plus.y)/(12*+PLUSP.plus.m));
+  if(P) return `<section class="card plusc on"><p class="lpvk">${P.plan==="post"?PLUSP.post.t:PLUSP.plus.t}</p><h2 class="ch">You're a member. Thank you.</h2>
+    <p class="sm mute">${P.cancel_at_period_end?`<span>Ends on</span> <span>${fmt(new Date(P.current_period_end))}</span>.`:`<span>Renews on</span> <span>${fmt(new Date(P.current_period_end))}</span>.`}</p>
+    <div class="row3"><button class="btn small quiet" onclick="plusManage()">Manage or cancel</button></div></section>`;
+  const tier=(k,L)=>`<div class="tier${k==="post"?" hi":""}"><p class="lpvk">${PLUSP[k].t}</p>
+     <p class="price"><b>£${per==="year"?PLUSP[k].y:PLUSP[k].m}</b><span>${per==="year"?"a year":"a month"}</span></p>
+     <ul class="ticks2">${L.map(t=>`<li>${t}</li>`).join("")}</ul>
+     ${plusOn()?`<button class="btn full${k==="post"?"":" quiet"}" onclick="plusBuy('${k}_${per}')">Choose ${k==="post"?"Plus with Post":"Plus"}</button>`
+       :`<button class="btn full quiet" id="pi-${k}" onclick="plusInterest('${k}')">I'd pay for this</button>`}</div>`;
+  return `<section class="card plusc" id="plusoffer"><p class="lpvk">Fettle Plus</p><h2 class="ch">Stay ready all year.</h2>
+    <p class="sm mute">The check, your plan and your book are free, and always will be. Fettle Plus keeps them working.</p>
+    <div class="seg pseg" role="tablist" aria-label="How often to pay"><button role="tab" aria-selected="${per==="month"}" onclick="PLUSPER='month';plusRedraw('${ctx}')">Monthly</button><button role="tab" aria-selected="${per==="year"}" onclick="PLUSPER='year';plusRedraw('${ctx}')">Yearly <small>save ${save}%</small></button></div>
+    <div class="tiers">${tier("plus",PLUS_GETS)}${tier("post",PLUS_POST)}</div>
+    <p class="sm mute">${plusOn()?"Cancel any time. Cancel within 14 days and we'll refund you in full.":"<b>Free while we test it.</b> Everything in Fettle Plus is switched on for everyone for now. Tell us if you'd pay, and which one."}</p>
+    <p class="sm" id="pi-thanks" role="status"></p>
+    <details class="lmore"><summary><span>What's always free</span><i class="chev" aria-hidden="true"></i></summary><ul class="ticks2">${PLUS_FREE.map(t=>`<li>${t}</li>`).join("")}</ul></details></section>`;}
+function plusInterest(k){countEvent("plus_interest_"+k);["plus","post"].forEach(x=>{const b=document.getElementById("pi-"+x);if(b)b.disabled=true;});
+  const t=document.getElementById("pi-thanks"); if(t) t.textContent="Thank you. That really helps us decide.";}
+function plusRedraw(ctx){if(ctx==="landing"){const el=document.getElementById("plusland");if(el)el.innerHTML=plusOffer("landing");}else if(ctx==="view") plusDraw(); else render(true);}
+async function plusView(){go("plus"); plusDraw(); if(LIVE&&user&&typeof window.plusLoad==="function"){await window.plusLoad(); plusDraw();}}
+function plusDraw(){document.getElementById("plusbox").innerHTML=`${plusOffer("view")}
+  <section class="card"><h2 class="ch">How it works</h2><ol class="sm howlist"><li>Tell us about your home and who lives there.</li><li>Pick the meals you'd normally eat. We turn them into a 3-day menu that needs no power.</li><li>Get your plan, your checklist and your shopping list.</li><li>Buy what's missing, a bit at a time.</li><li>We warn you when trouble's coming to your postcode, and tell you when it's time to refresh your supplies.</li></ol></section>
+  <p><button class="btn quiet small" onclick="${H.length?"go('r');render()":"go('landing')"}">Back</button></p>`;}
 function grabList(h){const k=h.under5,p=h.dogs+h.cats;return [
   "Torch and spare batteries, or a wind-up torch","Phone charger and a charged power bank","Copies of ID, insurance and prescriptions in a plastic wallet",`Cash, about £${people(h)*10}`,"Spare house and car keys",
   has(h,"meds")||has(h,"fridge")?"Your regular medicines, and a list of them with the doses":"Any medicines you take",
@@ -1227,11 +1435,11 @@ const FA_LINKS=[
 
 
 /* ================= AFFILIATE PRODUCTS ================= */
-// Put your Amazon Associates tracking ID here once approved (UK IDs end in -21).
-const AFF_TAG="YOURTAG-21";
+// The Amazon Associates tracking ID goes in config.js as amazonTag (UK IDs end in -21). Without one, links carry no tag
+// and nothing is marked "paid link".
 // Links are Amazon UK searches for a specific model, so they never point at a dead listing.
 // Once approved, swap any of these for exact product links from Amazon's SiteStripe.
-const amz=q=>`https://www.amazon.co.uk/s?k=${encodeURIComponent(q)}&tag=${AFF_TAG}`;
+const amz=q=>`https://www.amazon.co.uk/s?k=${encodeURIComponent(q)}${affTag()?`&tag=${affTag()}`:""}`;
 const PRODUCTS={
  water:[{n:"Highlander 20 litre folding water carrier",w:"Folds flat to store. Fill it from the tap when you're warned water may go off.",q:"Highlander 20L folding water carrier"}],
  torch:[{n:"Petzl Tikkina head torch",w:"Keeps both hands free for carrying water or a baby. Takes 3 AAA batteries.",q:"Petzl Tikkina head torch"},
@@ -1249,7 +1457,7 @@ const PRODUCTS={
 };
 function prodBlock(id){
   const P=PRODUCTS[id]; if(!P) return "";
-  return `<div class="prods"><p class="sm"><b>Suggestions</b> <span class="mute">(links marked "paid link" earn us a small commission)</span></p>${P.map(x=>`<div class="prod"><div><b>${x.n}</b><span>${x.w}</span></div><a class="plink" href="${x.url||amz(x.q)}" target="_blank" rel="${x.url?"noopener":"sponsored noopener"}">${x.url?"View in the charity shop":"View on Amazon"}${x.url?"":" <small>(paid link)</small>"}</a></div>`).join("")}</div>`;
+  return `<div class="prods"><p class="sm"><b>Suggestions</b>${affTag()?` <span class="mute">(links marked "paid link" earn us a small commission)</span>`:""}</p>${P.map(x=>`<div class="prod"><div><b>${x.n}</b><span>${x.w}</span></div>${buyLink(x)}</div>`).join("")}</div>`;
 }
 
 /* ================= NEEDS ================= */
@@ -1262,7 +1470,7 @@ function needs(h){
     why:readyMade(h)?"Keep three days in reserve.":`Powder formula has to be made with freshly boiled water that's still at least 70°C. ${gasHob(h)?"If the gas or water goes off, you can't make a safe bottle.":"Without power you can't boil water."} If your tap water is off or unsafe, follow the Food Standards Agency's guidance on which bottled water is suitable for formula. Use your baby's usual brand.`});
   if(h.under5) add({id:"babykit",pri:2,cat:"buy",title:"Baby essentials",amt:"3 days of nappies and wipes, plus a change of clothes",cost:12*h.under5,why:"And something familiar for comfort."});
   const ff={two:1/3,some:2/3}[h.food]??1, fm=meals(h,ff);
-  if(h.food!=="yes"&&fm.eaters) add({id:"food",pri:2,cat:"buy",title:"Food you can eat cold",amt:`${fm.meals} meals and ${fm.snacks} snacks${ff<1?", to top up what you have to 3 days":""}`,list:foodList(h,ff),cost:Math.round(fm.eaters*10*ff),
+  if(h.food!=="yes"&&fm.eaters) add({id:"food",pri:2,cat:"buy",title:"Food you can eat cold",amt:`${fm.meals} meals and ${fm.snacks} snacks${ff<1?", to top up what you have to 3 days":""}`,list:menuList(h,ff),cost:menuCost(h,ff),
     why:`${gasHob(h)?"Your gas hob may still work if you light it with a match, but plan as if it won't.":"Your hob needs electricity."} ${garden(h)?"A camping stove is fine outside in the garden, never indoors.":"You've nowhere safe to cook outside."} Your book has simple no-cook recipes.`});
   if(!kit(h,"opener")) add({id:"opener",pri:2,cat:"buy",title:"Tin opener that isn't electric",amt:"1",cost:4,why:"Not every tin has a ring-pull."});
   if(!kit(h,"firstaid")) add({id:"firstaid",pri:2,cat:"buy",title:"First aid kit",amt:"1 kit, plus a few medicines",cost:20,list:faList(h),why:"From NHS guidance. Keep it where adults can find it in the dark and children can't reach it."});
@@ -1588,7 +1796,7 @@ function homeView(){
    <div class="glance">
      <button onclick="view=0;go('r');render()"><b>My plan</b><span>Jobs, shopping list and monthly plan</span></button>
      <button onclick="view=0;${h&&h.paid?"openBook()":"extra()"}"><b>The Fettle Book</b><span>${h&&h.paid?"Open, print or save as PDF":"Get your household book"}</span></button>
-     <button onclick="connectView()"><b>Family</b><span>Link up to 5 homes with Fettle Connect</span></button>
+     <button onclick="connectView()"><b>Family</b><span>Link up to 5 homes with Fettle Plus</span></button>
      ${LIVE?"":`<button onclick="giftView()"><b>Give The Fettle Book</b><span>To someone you worry about</span></button>`}
    </div>
    ${h&&!h.other?`<div class="pcard"><label style="display:flex;gap:10px;align-items:flex-start;font-weight:400;margin:0"><input type="checkbox" ${h.countMe?"checked":""} onchange="H[0].countMe=this.checked;toast(this.checked?'Thank you. Only totals of ${MIN_CELL} or more homes are ever shared.':'Your household is no longer counted.')" style="width:20px;height:20px;margin-top:3px;accent-color:var(--brand)"><span><b>Help your council plan</b><br><span class="sm mute">Count ${esc(hhName(h))} in anonymous totals for ${esc(h.area||"your area")}, like "how many homes have 3 days of water". We never share your answers, health details or contact details, and never show a group smaller than ${MIN_CELL}. Optional.</span></span></label></div>`:""}
@@ -1686,7 +1894,6 @@ function neighbourCard(){
 /* ================= FETTLE PLUS ================= */
 function nextSeason(){const d=new Date(),y=d.getFullYear();const c=[[y,2,1],[y,5,1],[y,8,1],[y,11,1],[y+1,2,1]].map(([a,b,c])=>new Date(a,b,c)).find(x=>x>d);return c;}
 function fmt(d){return d.toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"});}
-function startTrial(){user.plus=true;homeView();}
 function checkIn(i){H[i].checkins.unshift(new Date());homeView();toast(`${H[i].other?esc(H[i].name):"You"} checked in: OK.`);}
 function askCheckIn(i){if(!H[i]){toast("Add Mum's household first, then you can ask her to check in.");return;}toast(`In the real app we'd text ${esc(H[i].name)}: "Storm warning tonight. Tap here to say you're OK." (preview copy, nothing sent)`);}
 let alertOn=false;
@@ -1697,30 +1904,7 @@ function setJob(j,v){H[0].jobs[j]=Object.assign(H[0].jobs[j]||{},{who:v});}
 function doneJob(j,v){H[0].jobs[j]=Object.assign(H[0].jobs[j]||{},{done:v});}
 function setExpiry(id,v){H[view].expiry[id]=v;}
 function toast(t){const el=document.getElementById("toast");el.innerHTML=t;el.classList.add("on");clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove("on"),4200);}
-function plusPanel(){
-  const h=H[0]; if(!h) return "";
-  if(!user.plus) return `<section class="plus"><h2>Fettle Plus</h2><p>Keep your plan working all year:</p>
-   <ul class="ticks2"><li>"I'm OK" check-ins with Mum and family during storms</li><li>Local alerts for your postcode, with your plan attached</li><li>Reminders before your water, food and batteries go out of date</li><li>Share the plan and the jobs with everyone at home</li></ul>
-   <button class="btn full" onclick="startTrial()">Try Fettle Plus free for 30 days</button><p class="sm mute" style="margin:8px 0 0">£5 a month after, or included for a year with the printed book.</p></section>`;
-  const rem=[];
-  Object.entries(h.expiry).forEach(([k,v])=>{if(v) rem.push([new Date(v),`${(needs(h).find(x=>x.id===k)||{title:k}).title} goes out of date`]);});
-  rem.push([nextSeason(),"Season check: 20 minutes with your book"]);
-  const pbd=new Date(); pbd.setMonth(pbd.getMonth()+1,1); rem.push([pbd,"Recharge the power bank"]);
-  rem.sort((a,b)=>a[0]-b[0]);
-  return `<section class="plus on"><h2>Fettle Plus <span class="pill p3">Trial</span></h2>
-   <div class="pcard"><h3>Check-ins</h3>${H.map((x,i)=>`<div class="ci"><span><b>${esc(x.other?x.name:"You")}</b><small>${x.checkins[0]?`Last OK: ${x.checkins[0].toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"})} today`:"No check-in yet"}</small></span><span class="row3">${i===0?"":`<button class="btn quiet small" onclick="askCheckIn(${i})">Ask</button>`}<button class="btn small" onclick="checkIn(${i})">I'm OK</button></span></div>`).join("")}
-     ${H.length<2?`<p class="sm mute">Add Mum's household to see her check-ins here.</p>`:""}</div>
-   <div class="pcard"><h3>Alerts for ${esc(placeName(h))}</h3>
-     ${alertOn?`<div class="alert"><b>Sample: yellow wind warning</b><span>Strong winds could cause power cuts from 6pm tonight.</span><div class="row3"><button class="btn small" onclick="emState=null;emergency();emState.f='power';drawEm()">Open my power cut steps</button><button class="btn quiet small" onclick="askCheckIn(1)">Ask Mum to check in</button></div></div>`:`<p class="sm mute">No warnings for your area right now.</p>`}
-     <button class="linkbtn" onclick="toggleAlert()">${alertOn?"Clear the sample warning":"Show a sample warning"}</button>
-     <p class="sm mute" style="margin:6px 0 0">In the real app: Met Office weather warnings, Environment Agency flood warnings and power cuts from your local network.</p></div>
-   <div class="pcard"><h3>Coming up</h3>${rem.slice(0,5).map(([d,t])=>`<div class="rem"><span>${t}</span><span class="mute">${fmt(d)}</span></div>`).join("")}<p class="sm mute" style="margin:6px 0 0">Add use-by dates when you tick off items in your plan.</p></div>
-   <div class="pcard"><h3>Shared with your household</h3>
-     ${h.members.length?h.members.map(m=>`<div class="rem"><span>${esc(m.name)}</span><span class="mute">${m.email?esc(m.email):"Invited"}</span></div>`).join(""):`<p class="sm mute">Invite your partner or older children to see the plan and share the jobs.</p>`}
-     <div class="inv"><input class="txt" id="inv-name" placeholder="Name"><input class="txt" id="inv-email" type="email" placeholder="Email (optional)"><button class="btn small" onclick="invite()">Invite</button></div>
-     <table class="jobs">${JOBS.map((j,k)=>{const o=h.jobs[j]||{};return `<tr><td><label><input type="checkbox" ${o.done?"checked":""} onchange="doneJob('${j}',this.checked)"> ${j}</label></td><td><select aria-label="Who: ${j}" onchange="setJob('${j}',this.value)"><option value="">Who?</option>${[user.name,...h.members.map(m=>m.name)].map(n=>`<option ${o.who===n?"selected":""}>${esc(n)}</option>`).join("")}</select></td></tr>`;}).join("")}</table></div>
-  </section>`;
-}
+
 
 /* ================= GIFTING ================= */
 function giftView(){
@@ -1776,7 +1960,7 @@ let LANG="en";
 const TR={pl:{},ro:{},pa:{},ur:{}};
 /* On the live site each language's dictionary is its own file (tools/build_site.py writes them), loaded only when
    someone picks that language or a book is made in it. In this source file the dictionaries are inline, so TRSRC is empty. */
-const TRSRC={"pl": "tr/pl.e183b3636e.js", "ro": "tr/ro.de127d6f91.js", "pa": "tr/pa.e11573d4df.js", "ur": "tr/ur.416932ca49.js"}/*TRSRC*/, TRREADY={en:true};
+const TRSRC={"pl": "tr/pl.a533426ad1.js", "ro": "tr/ro.31df8b84cd.js", "pa": "tr/pa.a3e9a8e32b.js", "ur": "tr/ur.4b3de7e61f.js"}/*TRSRC*/, TRREADY={en:true};
 function langReady(L){return !L||L==="en"||TRREADY[L]===true||!TRSRC[L];}
 function ensureLang(L){
   if(langReady(L)) return Promise.resolve();
@@ -2884,6 +3068,7 @@ function barrierHelp(h,x,r){
   if(r==="worry"){const small=nextSteps(h).concat(needs(h)).find(n=>!h.bought[n.id]&&!n.cost&&/^(5|10) minutes$/.test(STEP_TIME[n.id]||""));return `<p>That's normal. Almost 1 in 5 people say the same. You don't need to think about emergencies to do this. It's just a few ordinary jobs, like keeping a torch where you can find it.</p>${small?`<p class="sm">Do one small thing today and leave the rest for another day:</p><p><b>${small.title}</b></p><button class="btn quiet small" onclick="commitStep('${small.id}','today')">I'll do that today</button>`:""}`;}
   if(r==="space") return `<p>You don't need much room. For most homes, 3 days fits in a shoebox and a few packs of bottles.</p><ul><li>Water under a bed, at the back of a wardrobe or behind the sofa</li><li>A shoebox for the torch, radio, batteries and cash</li><li>Tins at the back of the cupboard you already use</li></ul>`;
   if(r==="time") return `<p>Tie it to something you already do. Pick a time and add it to your calendar.</p><div class="row3">${["weekend","shop"].map(w=>`<button class="btn quiet small" onclick="commitStep('${x.id}','${w}')">${WHEN[w]}</button>`).join("")}</div>`;
+  if(r==="what"&&x.id==="food") return `${menuHTML(h)}<ul>${x.list.map(i=>`<li>${Array.isArray(i)?i[0]:i}</li>`).join("")}</ul>`;
   if(r==="what") return x.cat==="buy"?`<p>Here are some that would do the job. Anything similar is fine.</p>${prodBlock(x.id)}`:`<p>${x.why}</p>${x.list?`<ul>${x.list.map(i=>`<li>${Array.isArray(i)?i[0]:i}</li>`).join("")}</ul>`:""}`;
   if(r==="landlord") return LANDLORD_JOBS.includes(x.id)?landlordAsk(h,x):`<p>This one is usually yours to sort, not your landlord's. Landlords look after the building and safety equipment like alarms. Things like ${x.cat==="buy"?"supplies":"this"} are up to each household.</p>${CHEAPER[x.id]?`<p class="sm">If cost is the problem, there are cheaper ways:</p><ul class="sm">${CHEAPER[x.id].map(t=>`<li>${t}</li>`).join("")}</ul>`:""}`;
   if(r==="able") return `<p>Ask someone to do it with you: family, a friend or a neighbour. Send them this step.</p><button class="btn quiet small" onclick="shareStep('${x.id}')">Send this step to someone</button>${vuln(h)&&h.psr!=="yes"?`<p class="sm" style="margin-top:8px">If you need extra help, the Priority Services Register is free. It's in your plan.</p>`:""}`;
@@ -3107,19 +3292,19 @@ function calmHTML(h,row){
   if(RTAB==="shop"){
     const G=shopGroups(h);
     body=`<section class="card tot">${buyLeft.length?`<p class="sm mute" style="margin:0">Left to buy</p><p class="big">About £${total}</p><p class="sm mute" style="margin:6px 0 0"><span>${buyLeft.length===1?"1 thing":`${buyLeft.length} things`}</span>. <span>${by?`On £${h.budget} a month you'll be ready by <b>${by}</b>.`:"You don't need to buy it all at once."}</span></p>
-      <div class="row3"><button class="btn small quiet" onclick="shoppingList()">Print the list</button></div>`:`<p class="big">All bought</p><p class="sm mute">Everything on your shopping list is ticked off.</p>`}</section>
+      <div class="row3"><button class="btn small" onclick="shopView()">Shop for what's missing</button><button class="btn small quiet" onclick="shopCopy()">Copy the list</button><button class="btn small quiet" onclick="shoppingList()">Print the list</button></div>`:`<p class="big">All bought</p><p class="sm mute">Everything on your shopping list is ticked off.</p>`}</section>
      ${G.map(g=>`<div class="gh">${g.label}${g.spend?`<span>£${g.spend}</span>`:""}</div>${g.save?`<p class="sm mute" style="margin:-4px 0 10px"><span>Saving towards:</span> ${g.save.map(t=>`<span>${t}</span>`).join(", ")}</p>`:""}
        ${g.items.length?`<div class="rows">${g.items.map(x=>`<details class="srow shop" id="sh_${x.id}"${ROWOPEN.has("sh_"+x.id)?" open":""} ontoggle="this.open?ROWOPEN.add('sh_${x.id}'):ROWOPEN.delete('sh_${x.id}')"><summary>
          <button type="button" class="tc" onclick="event.preventDefault();event.stopPropagation();tick('${x.id}',true);toast('Ticked off.')">${sico("check",15,2.8)}<span class="vh">I've bought this</span></button>
          <span class="rt"><b>${x.title}</b>${x.amt&&!/^\d+$/.test(x.amt)?`<span>${x.amt}</span>`:""}</span><span class="pr">£${x.cost}</span>${chev}</summary>
-         <div class="rbody">${x.list?`<ul class="sm">${x.list.map(i=>Array.isArray(i)?`<li><b>${i[0]}</b>. ${i[1]}</li>`:`<li>${i}</li>`).join("")}</ul>`:""}<p class="sm">${x.why}</p>${UNIVERSAL.has(x.id)?"":`<p class="sm"><span class="pill mine">For your home</span></p>`}
+         <div class="rbody">${x.id==="food"?menuHTML(h):""}${x.list?`<ul class="sm">${x.list.map(i=>Array.isArray(i)?`<li><b>${i[0]}</b>. ${i[1]}</li>`:`<li>${i}</li>`).join("")}</ul>`:""}<p class="sm">${x.why}</p>${UNIVERSAL.has(x.id)?"":`<p class="sm"><span class="pill mine">For your home</span></p>`}
            ${x.guide?`<p class="sm"><a href="guides/${x.guide}.html" target="_blank" rel="noopener">Read the guide</a></p>`:""}
            <details class="opts2"><summary class="linkbtn">See some options</summary>${prodBlock(x.id)||`<p class="sm mute">Any supermarket or hardware shop will have these.</p>`}</details>
            ${howHTML(h,x,false,true)}</div></details>`).join("")}</div>`:""}`).join("")}
      <div class="note"><p><b>Money tight?</b></p><p>Start with the free things on your To do list. They make the biggest difference. Supermarket own-brand is fine, and you can build up a little each week.</p>${tightBase(h)?`<p><button class="linkbtn" onclick="setRTab('todo')">See your free steps</button></p>`:""}</div>
-     <p class="sm mute" style="margin-top:18px">Prices are estimates. Buy anywhere you like: food and water are usually cheapest at your supermarket. As an Amazon Associate I earn from qualifying purchases.</p>`;
+     <p class="sm mute" style="margin-top:18px">Prices are estimates. Buy anywhere you like: food and water are usually cheapest at your supermarket.${affTag()?" As an Amazon Associate, Fettle earns from qualifying purchases.":""}</p>`;
   } else if(RTAB==="family"){
-    body=`${commCard(h,true)}${h.other?"":`<p class="sm mute fam-intro">${homes().length>1?"Your family's homes, linked with Fettle Connect.":"Plan with your family: add Mum, Dad or a grandparent and share the jobs."}</p>`}${famCard(h)}${jobsCard(h)}${connectCard(h)}`;
+    body=`${commCard(h,true)}${h.other?"":`<p class="sm mute fam-intro">${homes().length>1?"Your family's homes, linked with Fettle Plus.":"Plan with your family: add Mum, Dad or a grandparent and share the jobs."}</p>`}${famCard(h)}${jobsCard(h)}${connectCard(h)}`;
   } else if(RTAB==="done"){
     const sit=readyFor(h);
     body=got.length?`<section class="card donec"><div class="ok">${sico("check",34,2.2)}</div><h2>${got.length===1?"1 thing sorted":`${got.length} things sorted`}</h2>
@@ -3128,6 +3313,7 @@ function calmHTML(h,row){
      :`<section class="card donec"><div class="ok">${sico("check",34,2.2)}</div><h2>Nothing ticked off yet</h2><p>Your first step is on the To do tab. Most take 10 minutes.</p><p><button class="btn small" onclick="setRTab('todo')">See my next step</button></p></section>`;
     const first=h.scores&&h.scores[0]&&new Date(h.scores[0].d), due=first?new Date(+first+30*864e5):null;
     if(due&&due>new Date()) body+=`<section class="info"><div class="ic">${sico("cal",24)}</div><div><p><b>Your 30-day check</b></p><p><span>${due.toLocaleDateString(LANG==="en"?"en-GB":LANG,{weekday:"long",day:"numeric",month:"long"})}</span>. <span>${user?"We'll remind you.":"Save your plan and we'll remind you."}</span></p></div></section>`;
+    body+=refreshTable(h);
     body+=`<section class="sharec"><p>Know someone who'd find this useful?</p><button class="btn small" onclick="shareCheck()">Send it</button></section>`;
   } else {
     const rest=S.slice(1), sc=scenIds(h);
@@ -3171,7 +3357,7 @@ function calmHTML(h,row){
   const nav=`<nav class="bnav" aria-label="Your plan">${[["home","Plan","setRTab('todo')",true],["shield","Could I cope?","setRTab('todo','cope')"],["people","Family","connectView()"],["book","Book",h.paid?"openBook()":"setRTab('todo','bookcard')"],["warn","If it happens","setRTab('todo','ifh')"]].map(([i,t,f,on])=>`<button class="${on?"on":""}" onclick="${f}">${sico(i,24)}${t}</button>`).join("")}</nav>`;
   const save=!user?`<div class="saved">${sico("save",22)}<div><b>${justDone?"Your plan is ready. ":""}Save it for later</b><br><span class="sm mute">Come back to it, tick things off, and get a reminder when your 30-day check is due.</span><div style="margin-top:10px"><button class="btn small" onclick="authView('signup')">Save my plan</button></div></div></div>`:"";
   setTimeout(()=>warnRefresh(h,()=>render(true)),0);
-  return `${femBanner()}${checkinCard(h,view)}${save}${followUpHTML(h,view)}${head}${RTAB==="todo"?relStart(h)+relNotes(h)+commCard(h):""}${body}${nav}`;
+  return `${femBanner()}${checkinCard(h,view)}${save}${followUpHTML(h,view)}${head}${RTAB==="todo"?refreshCard(h)+relStart(h)+relNotes(h)+commCard(h):""}${body}${nav}`;
 }
 function openCope(id){
   const t=id==="more"?"readymore":id==="area"?"areacard":"copemore";
@@ -3239,7 +3425,7 @@ function render(keep){
   const row=x=>`<div class="li ${h.bought[x.id]?"done":""}">
      <input type="checkbox" aria-label="Done: ${esc(x.title)}" ${h.bought[x.id]?"checked":""} onchange="tick('${x.id}',this.checked)">
      <div class="body"><h3>${x.title}${pri(x.pri)}</h3>${UNIVERSAL.has(x.id)?"":`<div class="mine-row"><span class="pill mine">For your home</span></div>`}<div class="amt">${x.amt}</div>
-       ${x.list?`<ul>${x.list.map(i=>Array.isArray(i)?`<li><b>${i[0]}</b>. ${i[1]}</li>`:`<li>${i}</li>`).join("")}</ul>`:""}
+       ${x.id==="food"?menuHTML(h):""}${x.list?`<ul>${x.list.map(i=>Array.isArray(i)?`<li><b>${i[0]}</b>. ${i[1]}</li>`:`<li>${i}</li>`).join("")}</ul>`:""}
        <p>${x.why}</p>${x.guide?`<p class="sm"><a href="guides/${x.guide}.html" target="_blank" rel="noopener">Read the guide</a></p>`:""}
        ${isPro()&&h.bought[x.id]?`<label class="verify"><input type="checkbox" ${isVerified(h,x.id)?"checked":""} onchange="verify('${x.id}',this.checked)"><span>Checked on a visit</span>${isVerified(h,x.id)?`<span class="mute">${fmtD(h.verified[x.id])}</span>`:""}</label>`:""}
        ${x.links?`<ul>${x.links.map(([t,u,d])=>`<li><a href="${u}" target="_blank" rel="noopener">${t}</a>. ${d}</li>`).join("")}</ul>`:""}
@@ -3299,10 +3485,11 @@ let lastPages=0; const bookPagesHint=()=>lastPages?`${lastPages} pages, A5`:"A5,
 function tick(id,on){const h=H[view];h.bought[id]=on;h.done=h.done||{};
   if(on&&!h.done[id]){const x=needs(h).find(n=>n.id===id);h.done[id]={d:new Date().toISOString(),pri:x?x.pri:null,crit:critNeedIds(h).includes(id)};}
   if(!on) delete h.done[id];
+  syncRefresh(h);
   if(!document.getElementById("v-r").classList.contains("hide")) render(true);}
 function extra(){cur=H[view];tier="extra";qi=0;go("q");drawQ();}
 function redo(){cur=H[view];H.splice(view,1);tier="core";qi=0;go("q");drawQ();}
-function go(v){["landing","q","r","book","auth","home","gift","tool","connect","comm"].forEach(x=>document.getElementById("v-"+x).classList.toggle("hide",x!==v)); window._stickyUpd&&window._stickyUpd(); keepSave();
+function go(v){["landing","q","r","book","auth","home","gift","tool","connect","comm","shop","plus"].forEach(x=>document.getElementById("v-"+x).classList.toggle("hide",x!==v)); window._stickyUpd&&window._stickyUpd(); keepSave();
   document.querySelector("header.top").classList.toggle("hide",v==="book"); document.getElementById("foot").classList.toggle("hide",v==="book"); scrollTo(0,0);}
 
 /* Touch points: who brought the household to Fettle. A partner shares getfettle.co.uk/?via=hv (and so on). */
@@ -3452,7 +3639,7 @@ function famCard(h){
        <p class="sm"><button class="linkbtn" onclick="FAM={open:'care',edit:-1};render(true)">Change</button></p>`
       :`<p class="sm">Which of their jobs do the carers do, and who in the family would cover each one?</p><button class="btn small quiet" onclick="FAM={open:'care',edit:-1};render(true)">Plan carer cover</button>`}
      ${FAM.open==="care"?careForm(h):""}`:"";
-  return `<section class="card famc" id="famcard"><p class="cbadge">Fettle Connect</p><p class="lpvk">Family circle</p><h3 class="ch">Who will look after them for 3 days?</h3>
+  return `<section class="card famc" id="famcard"><p class="cbadge">Fettle Plus</p><p class="lpvk">Family circle</p><h3 class="ch">Who will look after them for 3 days?</h3>
     <p class="sm">Add the people who can help, and what each will do. Fettle turns it into a rota.</p>
     ${C.length?`<ul class="fm-list">${people}</ul>`:""}
     ${FAM.open==="add"?memberForm(h):`<p><button class="btn small${C.length?" quiet":""}" onclick="FAM={open:'add',edit:-1};render(true)">${C.length?"Add someone else":"Add the first person"}</button></p>`}
@@ -3520,7 +3707,7 @@ function jobsCard(h){
   const A=h.assign||{}, names=["Me",...(h.circle||[]).map(m=>m.name)].filter((v,i,a)=>v&&a.indexOf(v)===i), done=N.filter(x=>A[x.id]).length;
   const order=[...GAPGROUP.map(g=>g[0]),"Other"], groups=order.filter(g=>N.some(x=>gapGroup(x.id)===g));
   const firstOpen=groups.find(g=>N.some(x=>gapGroup(x.id)===g&&!A[x.id]));
-  return `<section class="card jobsc" id="jobscard"><p class="cbadge">Fettle Connect</p><p class="lpvk">What's missing</p><h3 class="ch">Split the jobs between the family</h3>
+  return `<section class="card jobsc" id="jobscard"><p class="cbadge">Fettle Plus</p><p class="lpvk">What's missing</p><h3 class="ch">Split the jobs between the family</h3>
     <p class="sm"><b><span class="notr">${done}</span> <span>of</span> <span class="notr">${N.length}</span></b> <span>have someone sorting them.</span></p>
     ${groups.map(g=>{const G=N.filter(x=>gapGroup(x.id)===g), d=G.filter(x=>A[x.id]).length, open=JOBTOUCH?JOBOPEN.has(g):g===firstOpen;
       return `<details class="jobg"${open?" open":""}><summary onclick="jobTog('${g}',!this.parentNode.open)"><span class="jg-n">${g}</span><span class="sm mute"><span class="notr">${d}/${G.length}</span></span><i class="chev" aria-hidden="true"></i></summary>
@@ -3590,7 +3777,7 @@ const stage3=h=>isPro()||!!(h&&h.reg&&h.reg.on)||!!pilot();
 /* ================= FETTLE CONNECT =================
    Up to 5 family homes in one plan: everyone's weak spots, who's sorting what, warnings near any home,
    one plan to follow when something happens, and getting ready again afterwards.
-   £3 a month later. Free while we test it: nothing is charged. */
+   Part of Fettle Plus (£3.50 a month) later. Free while we test it: nothing is charged. */
 const CONNECT_MAX=5;
 const homes=()=>H.filter(x=>!x.pro).slice(0,CONNECT_MAX);
 const homeText=x=>x.other?x.name:x._shared?hhName(x):trText("Your home",LANG);
@@ -3662,8 +3849,9 @@ function connBookHTML(c,L){
    <div class="row3"><button class="btn" onclick="openBook(true)">Open the connected book</button></div></div></section>`;
 }
 function voteHTML(c){
-  if(c.vote) return `<section class="card cvote"><p class="sm" style="margin:0"><b>Thanks for telling us.</b> Fettle Connect is free while we test it. We'll tell you before it costs anything, and nothing is charged unless you choose to pay.</p></section>`;
-  return `<section class="card cvote" id="cvote"><p class="lpvk">One question</p><h3 class="ch">Would you pay £3 a month for this?</h3><p class="sm">Fettle Connect is free while we test it. Later it will be £3 a month for up to 5 homes. Your answer helps us decide.</p>
+  if(window.PLUS||plusOn()) return plusOffer("plan");
+  if(c.vote) return `<section class="card cvote"><p class="sm" style="margin:0"><b>Thanks for telling us.</b> Fettle Plus is free while we test it. We'll tell you before it costs anything, and nothing is charged unless you choose to pay.</p></section>`;
+  return `<section class="card cvote" id="cvote"><p class="lpvk">One question</p><h3 class="ch">Would you pay £3.50 a month for Fettle Plus?</h3><p class="sm">Family homes, warnings for your postcode and refresh reminders are free while we test them. Later they'll be part of Fettle Plus, from £3.50 a month. Your answer helps us decide.</p>
    <div class="chips2">${[["yes","Yes"],["maybe","Maybe"],["no","No"]].map(([k,t])=>`<button type="button" class="chip" onclick="connVote('${k}')">${t}</button>`).join("")}</div></section>`;
 }
 function connVote(v){const c=connState();c.vote={v,d:new Date().toISOString()};countEvent("connect_"+v);connectView(true);}
@@ -3671,11 +3859,11 @@ function connInterest(){countEvent("connect_landing");const b=document.getElemen
 function connectCard(h){
   if(isPro()||h.pro) return "";
   const L=homes(), n=L.length;
-  return `<section class="card ccard" id="conncard"><p class="lpvk">Fettle Connect</p><h3 class="ch">${n>1?`<span>${n} homes linked</span>`:"Link up to 5 family homes"}</h3>
+  return `<section class="card ccard" id="conncard"><p class="lpvk">Fettle Plus</p><h3 class="ch">${n>1?`<span>${n} homes linked</span>`:"Link up to 5 family homes"}</h3>
    <p class="sm">${n>1?"See everyone's weak spots, who's sorting what, and one plan to follow together when something happens.":"Add Mum, Dad or a grandparent. See everyone's weak spots in one place, split the jobs, and follow one plan together when something happens."}</p>
    ${n>1?`<ul class="cmini">${L.map(x=>`<li><span>${homeName(x)}</span><b class="notr">${score(x)}%</b></li>`).join("")}</ul>`:""}
    <div class="row3"><button class="btn small" onclick="connectView()">${n>1?"Open the family dashboard":"See how it works"}</button>${n<CONNECT_MAX?`<button class="btn small quiet" onclick="start(true)">Add a home</button>`:""}</div>
-   <p class="sm mute" style="margin:10px 0 0">Free while we test it. Later £3 a month for up to 5 homes.</p></section>`;
+   <p class="sm mute" style="margin:10px 0 0">${window.PLUS?"Part of your Fettle Plus.":"Part of Fettle Plus. Free while we test it."} <button class="linkbtn" onclick="plusView()">About Fettle Plus</button></p></section>`;
 }
 let CONNTAB=null, FEMK=null, CGOPEN=new Set();
 function connectView(keep){
@@ -3690,9 +3878,9 @@ function connectView(keep){
   if(CONNTAB==="start"){box.innerHTML=femStartHTML(L);return;}
   const W=weakSpots(L), by=jobsByPerson(L), more=L.length<CONNECT_MAX, extra=H.filter(x=>!x.pro).length>CONNECT_MAX;
   box.innerHTML=`<p class="sm"><button class="linkbtn" onclick="go('r');render()">← <span>Back to the plan</span></button></p>
-   <section class="chero"><p class="lpvk">Fettle Connect</p><h1>${c.fam?`<span class="notr">${esc(c.fam)}</span>`:"Your family"}</h1>
-    <p class="sm mute"><span>${L.length===1?"1 home":`${L.length} homes`}</span> <span>linked, of up to 5.</span> <span>Free while we test it. Later £3 a month.</span></p></section>
-   ${extra?`<p class="sm">Fettle Connect covers 5 homes. These are your first 5 plans.</p>`:""}
+   <section class="chero"><p class="lpvk">Fettle Plus</p><h1>${c.fam?`<span class="notr">${esc(c.fam)}</span>`:"Your family"}</h1>
+    <p class="sm mute"><span>${L.length===1?"1 home":`${L.length} homes`}</span> <span>linked, of up to 5.</span> <span>${window.PLUS?"Part of your Fettle Plus.":"Part of Fettle Plus. Free while we test it."}</span></p></section>
+   ${extra?`<p class="sm">Fettle Plus covers 5 homes. These are your first 5 plans.</p>`:""}
    ${(()=>{const W=L.filter(h=>warnNow(h).length);return W.length?`<button class="embig" onclick="FEMK='flood';CONNTAB='start';connectView()"><b><span>Flood warning near</span> ${W.map(homeName).join(", ")}</b><span>Start family emergency mode: who's OK, and who does what for 72 hours</span></button>`
      :`<button class="embig" onclick="CONNTAB='start';connectView()"><b>Something's happening</b><span>Start family emergency mode: who's OK, and who does what for 72 hours</span></button>`;})()}
    <ul class="ctiles">${L.map(homeTile).join("")}</ul>
@@ -4531,6 +4719,7 @@ function chapters(h){
     `<h3>The order to eat things</h3><ol><li>Food from the fridge, while it's still cold. A fridge stays cold for about 4 hours.</li><li>Food from the freezer as it defrosts. A full freezer stays frozen for about 2 days, a half-full one about 1 day.</li><li>Fresh food that doesn't need the fridge, like bread and fruit.</li><li>Tins and packets last. They're still safe after their best before date.</li></ol><p>Whole fruit and vegetables, hard cheese, yoghurt, butter and long-life milk are safe for up to 7 days if they look and smell normal. In cold weather (below 8°C), food can be kept outside in a clean, sealed container.</p>`,
     (h.under5||h.over70)?`<div class="warn">After 4 hours without power, young children, pregnant women and older people shouldn't eat chilled ready-to-eat food or leftovers (UK Chief Medical Officers).</div>`:"",
     `<div class="warn">Never bring a barbecue, camping stove or patio heater indoors, into a garage or onto a balcony. They give off carbon monoxide, which can kill quickly and without warning.</div>`,
+    `<h3>Your 3-day menu</h3><table class="bk"><thead><tr><th></th><th>Breakfast</th><th>Lunch</th><th>Dinner</th></tr></thead><tbody>${menu(h).map((d,i)=>`<tr><th>${["Day 1","Day 2","Day 3"][i]}</th>${[d.b,d.l,d.t].map(id=>`<td>${mealById(id).r(h).t}</td>`).join("")}</tr>`).join("")}</tbody></table>`,
     ...recipes(h).map(r=>`<div class="box"><h3 style="margin-top:0">${r.t} <span style="font-weight:400;color:#666">(${r.s})</span></h3>${ul(r.i)}<p style="margin:0">${r.m}</p></div>`)]]);
   if(formula(h)||readyMade(h)||h.under5) G.push(["Babies and young children","Feeding, warmth and comfort.",[
     formula(h)||readyMade(h)?`<h3>Feeding</h3><p>Powder formula isn't sterile, so it must be made with freshly boiled tap water that's still at least 70°C. If you can't boil water, use ready-made liquid formula. If your tap water is off or unsafe, follow the Food Standards Agency's guidance on which bottled water is suitable for formula. Keep ${h.bottles*3} ready-made feeds and clean bottles in your kit.</p>`:"",

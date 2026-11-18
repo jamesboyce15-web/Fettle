@@ -3,7 +3,8 @@
 // so nobody gets the same reminder twice. With DRY_RUN="true" nothing is sent or recorded: it only logs.
 import { unsubToken } from "../../../lib/server.js";
 import { runAlerts } from "./alerts.js";
-export { runAlerts };
+import { runRefresh } from "./refresh.js";
+export { runAlerts, runRefresh };
 
 const TITLES = {
   day30: "Your 30-day Fettle check",
@@ -107,6 +108,6 @@ export async function runFlags(env, fetchImpl = fetch) {
 }
 
 export default {
-  // Daily at 10:17 UTC: reminders. Every 15 minutes: postcode alerts, and community flags for Fettle.
-  async scheduled(event, env, ctx) { ctx.waitUntil(event.cron === "*/15 * * * *" ? Promise.all([runAlerts(env), runFlags(env)]) : run(env)); },
+  // Daily at 10:17 UTC: check reminders, then refresh reminders. Every 15 minutes: postcode alerts, and community flags for Fettle.
+  async scheduled(event, env, ctx) { ctx.waitUntil(event.cron === "*/15 * * * *" ? Promise.all([runAlerts(env), runFlags(env)]) : run(env).then(() => runRefresh(env))); },
 };

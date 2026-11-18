@@ -140,3 +140,40 @@ test("unsubscribe with k=alerts turns off warnings only", async () => {
   assert.equal(r.status, 200); assert.match(await r.text(), /Warnings turned off/);
   assert.deepEqual(JSON.parse(calls.find(c => c.init.method === "PUT").init.body).user_metadata, { remind_emails: true, alert_emails: false });
 });
+
+// ---------- refresh reminders ----------
+import { runRefresh, buildRefreshEmail } from "../workers/reminders/src/refresh.js";
+const RENV = { SUPABASE_URL: "https://sb.test", SUPABASE_SERVICE_ROLE_KEY: "svc", RESEND_API_KEY: "re", UNSUBSCRIBE_SECRET: "u", SITE_URL: "https://getfettle.co.uk", FROM_EMAIL: "Fettle <hello@getfettle.co.uk>" };
+const RROW = { household_id: "h1", user_id: "u1", email: "pat@example.com", first_name: "Pat", household_name: "The Smith household", kind: "refresh-2026-11",
+  items: [{ id: "water", t: "Drinking water", due: "2026-11-20" }, { id: "power", t: "Power bank", due: "2026-11-22" }] };
+function refreshFetch() { const calls = []; return { calls, f: async (url, init = {}) => { calls.push({ url: String(url), init });
+  if (String(url).includes("fettle_refresh_due")) return res([RROW]); return res({ id: "e1" }); } }; }
+
+test("refresh: dry run by default sends and records nothing", async () => {
+  const { f, calls } = refreshFetch(); const r = await runRefresh(RENV, f);
+  assert.equal(r.dry, true); assert.equal(r.sent, 0); assert.ok(!calls.some(c => c.url.includes("resend") || c.url.includes("reminders_sent")));
+});
+test("refresh: test address gets it marked [TEST], nothing recorded", async () => {
+  const { f, calls } = refreshFetch(); const r = await runRefresh({ ...RENV, ALERT_TEST_TO: "james@example.com" }, f);
+  const mail = JSON.parse(calls.find(c => c.url.includes("resend")).init.body);
+  assert.equal(r.sent, 1); assert.deepEqual(mail.to, ["james@example.com"]); assert.match(mail.subject, /^\[TEST\] Time to refresh 2 things/);
+  assert.ok(!calls.some(c => c.url.includes("reminders_sent")));
+});
+test("refresh: when switched on, sends to the household once and records it", async () => {
+  const { f, calls } = refreshFetch(); const r = await runRefresh({ ...RENV, REFRESH_DRY_RUN: "false" }, f);
+  const mail = JSON.parse(calls.find(c => c.url.includes("resend")).init.body);
+  assert.equal(r.sent, 1); assert.deepEqual(mail.to, ["pat@example.com"]);
+  assert.match(mail.text, /Drinking water: Check the dates on the bottles/); assert.match(mail.text, /Power bank: Recharge the power bank/); assert.match(mail.text, /Turn them off: https:\/\/getfettle\.co\.uk\/api\/unsubscribe/);
+  assert.equal(JSON.parse(calls.find(c => c.url.includes("reminders_sent")).init.body).kind, "refresh-2026-11");
+});
+test("refresh: one item gets a specific subject", () => {
+  const m = buildRefreshEmail({ ...RROW, items: [RROW.items[0]] }, RENV, "https://u");
+  assert.equal(m.subject, "Time to refresh: Drinking water"); assert.match(m.html, /The Smith household/);
+});
+test("refresh: with PLUS_REQUIRED, only Fettle Plus members get one", async () => {
+  const calls = []; const f = async (url, init = {}) => { url = String(url); calls.push(url);
+    if (url.includes("fettle_refresh_due")) return res([RROW, { ...RROW, household_id: "h2", user_id: "u2", email: "sam@example.com" }]);
+    if (url.includes("fettle_plus_users")) return res([{ user_id: "u2", plan: "plus" }]); return res({ id: "e" }); };
+  const r = await runRefresh({ ...RENV, REFRESH_DRY_RUN: "false", PLUS_REQUIRED: "true" }, f);
+  assert.equal(r.due, 1); assert.equal(r.sent, 1);
+});

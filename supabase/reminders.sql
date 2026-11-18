@@ -108,3 +108,24 @@ language sql security definer set search_path = public as $$
 $$;
 revoke all on function public.fettle_funnel() from public, anon, authenticated;
 grant execute on function public.fettle_funnel() to service_role;
+
+-- "Time to refresh" emails: households whose plan says something is due within a week (data->'refresh', which the app
+-- keeps as {id: {due, t}}), for people who opted in to reminders. At most one a month per household.
+create or replace function public.fettle_refresh_due()
+returns table (household_id uuid, user_id uuid, email text, first_name text, household_name text, kind text, items jsonb)
+language sql security definer set search_path = public as $$
+  with due as (
+    select hh.id, hh.user_id, hh.data,
+           jsonb_agg(jsonb_build_object('id', r.key, 't', r.value->>'t', 'due', r.value->>'due') order by r.value->>'due') as items
+    from public.households hh, jsonb_each(case when jsonb_typeof(hh.data->'refresh') = 'object' then hh.data->'refresh' else '{}'::jsonb end) r
+    where hh.user_id is not null and (r.value->>'due') ~ '^\d{4}-\d{2}-\d{2}$' and (r.value->>'due')::date <= current_date + 7
+    group by hh.id, hh.user_id, hh.data
+  )
+  select d.id, d.user_id, u.email::text, u.raw_user_meta_data->>'first_name', d.data->>'name', 'refresh-' || to_char(current_date, 'YYYY-MM'), d.items
+  from due d join auth.users u on u.id = d.user_id
+  where coalesce((u.raw_user_meta_data->>'remind_emails')::boolean, false)
+    and not exists (select 1 from public.reminders_sent r where r.household_id = d.id and r.kind = 'refresh-' || to_char(current_date, 'YYYY-MM'))
+  limit 500;
+$$;
+revoke all on function public.fettle_refresh_due() from public, anon, authenticated;
+grant execute on function public.fettle_refresh_due() to service_role;

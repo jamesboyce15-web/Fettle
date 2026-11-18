@@ -319,4 +319,5 @@ alter table public.fettle_events add constraint fettle_events_kind_check
                   'tool_flood','tool_flood_found','reg_join','checkin_fine','checkin_maybe','checkin_now',
                   'family_circle','family_checkin',
                   'connect_open','connect_yes','connect_maybe','connect_no','connect_landing','connect_book','connect_emergency','connect_recover',
-                  'alerts_on','community_start','community_join','community_ask','community_newsletter'));
+                  'alerts_on','community_start','community_join','community_ask','community_newsletter',
+                  'plus_interest_plus','plus_interest_post'));
