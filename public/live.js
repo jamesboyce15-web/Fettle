@@ -108,7 +108,7 @@
     try { localStorage.removeItem("fettle_pending"); localStorage.removeItem("fettle_pending_book"); } catch (x) {}
     if (meta.pending_plans || meta.pending_book !== undefined) sb.auth.updateUser({ data: { pending_plans: null, pending_book: null } }).catch(console.error);
     H = fromDb.concat(pending);
-    user = { id: u.id, email: u.email, name: meta.first_name || u.email.split("@")[0], households: H, remind: !!meta.remind_emails };
+    user = { id: u.id, email: u.email, name: meta.first_name || u.email.split("@")[0], households: H, remind: !!meta.remind_emails, alerts: !!meta.alert_emails };
     setAcct();
     await saveAll();
     if (await acceptFamily()) return;
@@ -308,6 +308,12 @@
     const { error } = await sb.auth.updateUser({ data: { remind_emails: on } });
     if (error) { say("Sorry, that didn't save. Please try again."); return; }
     user.remind = on; say(on ? "Reminders on." : "Reminders off.");
+  };
+  window.liveAlerts = async function (on) {
+    const { error } = await sb.auth.updateUser({ data: { alert_emails: on } });
+    if (error) { say("Sorry, that didn't save. Please try again."); const t = document.getElementById("alert-t"); if (t) t.checked = !on; return; }
+    user.alerts = on; if (on) countEvent("alerts_on");
+    say(on ? "Warnings on. We'll email you if there's an official warning near any of your homes." : "Warnings off.");
   };
   window.liveDelete = async function () {
     go("auth");

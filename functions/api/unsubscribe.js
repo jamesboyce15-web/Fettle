@@ -1,4 +1,5 @@
 // GET /api/unsubscribe?u=<user id>&t=<signed token>  -> turns off check-in reminder emails for that person.
+// With &k=alerts it turns off warning emails instead.
 // The link is in every reminder email. The token is an HMAC of the user id, so links can't be guessed.
 import { admin, checkUnsubToken } from "../../lib/server.js";
 
@@ -9,14 +10,15 @@ const page = (title, text, status = 200) => new Response(
   { status, headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" } });
 
 export async function onRequestGet({ request, env }) {
-  const q = new URL(request.url).searchParams, u = q.get("u"), t = q.get("t");
+  const q = new URL(request.url).searchParams, u = q.get("u"), t = q.get("t"), alerts = q.get("k") === "alerts";
   if (!(await checkUnsubToken(env.UNSUBSCRIBE_SECRET, u, t)))
     return page("That link didn't work", "Sign in to Fettle and untick check-in reminders on your home page, or email us and we'll do it for you.", 400);
   const r = await admin(env, `/auth/v1/admin/users/${u}`);
   if (!r.ok) return page("That link didn't work", "We couldn't find your account. It may already have been deleted.", 404);
   const user = await r.json();
-  const meta = { ...(user.user_metadata || {}), remind_emails: false };
+  const meta = { ...(user.user_metadata || {}), [alerts ? "alert_emails" : "remind_emails"]: false };
   const w = await admin(env, `/auth/v1/admin/users/${u}`, { method: "PUT", body: JSON.stringify({ user_metadata: meta }) });
   if (!w.ok) { console.error("unsubscribe", await w.text()); return page("Sorry, something went wrong", "Please try again later, or email us and we'll turn reminders off for you.", 500); }
+  if (alerts) return page("Warnings turned off", "You won't get any more warning emails from Fettle. Your plan is still saved, and you can turn warnings back on from your family dashboard. For official flood warnings, sign up at gov.uk/sign-up-for-flood-warnings.");
   return page("Reminders turned off", "You won't get any more check-in reminders from Fettle. Your plan is still saved, and you can turn reminders back on from your home page.");
 }

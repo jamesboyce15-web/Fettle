@@ -2,6 +2,8 @@
 // Who is due comes from the Supabase function fettle_recheck_due(). Each email is recorded in reminders_sent,
 // so nobody gets the same reminder twice. With DRY_RUN="true" nothing is sent or recorded: it only logs.
 import { unsubToken } from "../../../lib/server.js";
+import { runAlerts } from "./alerts.js";
+export { runAlerts };
 
 const TITLES = {
   day30: "Your 30-day Fettle check",
@@ -83,5 +85,6 @@ export async function run(env, fetchImpl = fetch) {
 }
 
 export default {
-  async scheduled(event, env, ctx) { ctx.waitUntil(run(env)); },
+  // Daily at 10:17 UTC: reminders. Every 15 minutes: postcode alerts.
+  async scheduled(event, env, ctx) { ctx.waitUntil(event.cron === "*/15 * * * *" ? runAlerts(env) : run(env)); },
 };

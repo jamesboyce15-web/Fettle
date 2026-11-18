@@ -31,6 +31,10 @@ let fails = 0; const ok = (c, m) => { if (!c) fails++; console.log((c ? 'PASS ' 
   ok((await p.$$('#cshare button')).length === 2, 'can invite family to each home');
   await p.click('#cvote >> text=Maybe'); await p.waitForTimeout(60);
   ok(await p.evaluate(() => connState().vote.v === 'maybe') && /nothing is charged unless you choose to pay/.test(await p.textContent('#v-connect')), 'price question recorded, nothing charged');
+  ok(await p.isVisible('#alert-t') && /Email me warnings for my homes/.test(await p.textContent('#calerts')), 'warning emails can be turned on from the dashboard');
+  await p.evaluate(() => { window.__t = []; const t = toast; toast = m => { window.__t.push(m); t(m); }; user = { id: 'u', name: 'J', households: H }; }); await p.check('#alert-t');
+  ok(await p.evaluate(() => user.alerts === true && /preview, so nothing is sent/.test(window.__t.join(' '))), 'turning warnings on in the preview says nothing is sent');
+  await p.evaluate(() => { user = null; });
   // emergency mode
   await p.click('text=Something\'s happening'); await p.waitForTimeout(60);
   await p.click('text=Start emergency mode'); ok(/Choose what's happening/.test(await p.textContent('#fem-err')), 'must choose what\'s happening');
