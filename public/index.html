@@ -726,6 +726,23 @@ html[lang^="en"] .notin-en{display:none}
 .polfacts li:before{position:absolute;left:0;top:7px;font-weight:700}.polfacts li.y:before{content:"✓";color:var(--doneink)}.polfacts li.n:before{content:"?";color:#b07a00}
 .polq{margin:8px 0;padding:8px 12px;border-left:3px solid var(--line2);background:var(--soft,#f3f4f1);border-radius:6px;font-size:.92rem}
 .calm .fam-intro{margin:18px 0 0}
+
+/* communities */
+.commjoin{background:var(--tint);border-radius:18px;padding:16px 18px;margin:12px 16px 0}.commjoin p{margin:4px 0}
+.commc .ck,.cm-need .ck{display:flex;gap:10px;align-items:flex-start;font-weight:400;margin:10px 0}.commc .ck input,.cm-need .ck input{margin-top:4px;flex:none}
+.commc label[for],.fpform label[for]{display:block;margin-top:10px}.cm-need{border:0;padding:0;margin:8px 0}.cm-need legend{font-weight:700;padding:0}
+.commnone{margin-top:16px}
+.slugrow{display:flex;align-items:center;gap:4px}.slugrow span{color:var(--mute);white-space:nowrap}.slugrow .txt{flex:1;min-width:0}
+.cseg{margin:16px 0 18px}.calm .cseg button{font-size:clamp(.72rem,3.4vw,.9rem);padding:0 4px}
+#commbox label[for],#commcard label[for]{display:block;margin-top:12px;font-weight:600}#commbox .txt,#commcard .txt{width:100%;box-sizing:border-box}
+#commbox .hint,#commcard .hint{display:block;font-weight:400;font-size:.85rem;color:var(--mute)}#commbox textarea,#commcard textarea{min-height:64px;font:inherit}
+.cstats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 0 14px}.cstats div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px;text-align:center}
+.cstats b{display:block;font-size:1.6rem}.cstats span{font-size:.8rem;color:var(--mute)}
+.cbars{list-style:none;margin:8px 0;padding:0}.cbars li{padding:8px 0;border-bottom:1px solid var(--rowline)}.cb-top{display:flex;justify-content:space-between;gap:10px}
+.cb-bar{height:8px;border-radius:4px;background:var(--ringtrack);margin:6px 0 4px;overflow:hidden}.cb-bar i{display:block;height:100%;background:var(--impink);border-radius:4px}
+.creq{list-style:none;margin:0;padding:0}.creq li{padding:12px 0;border-bottom:1px solid var(--rowline)}.creq li.done{opacity:.6}
+.talk p{margin:0 0 10px;font-size:1.05rem}
+.newsprev .news h1{font-size:1.4rem;margin:4px 0 8px}.newsprev .news h2{font-size:1.1rem;margin:18px 0 4px}
 </style>
 </head>
 <body>
@@ -756,7 +773,7 @@ html[lang^="en"] .notin-en{display:none}
     <p class="sm mute lcenter">No sign-up until you've seen your plan.</p>
     <p class="trustline"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/></svg><span>Built on official UK guidance from the Cabinet Office, NHS, Food Standards Agency and fire service.</span></p>
     <button class="lflood" onclick="toolGo('flood')"><span class="lic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 15c2 0 2-1.5 4.5-1.5S9.5 15 12 15s2.5-1.5 4.5-1.5S19 15 21 15M3 19c2 0 2-1.5 4.5-1.5S9.5 19 12 19s2.5-1.5 4.5-1.5S19 19 21 19M12 3s4 4.3 4 7a4 4 0 0 1-8 0c0-2.7 4-7 4-7z"/></svg></span><span><b>Live somewhere that floods?</b><span>Check your postcode, then get a flood-ready plan</span></span><i class="chev" aria-hidden="true"></i></button>
-    <p class="orglink"><a href="#orgs">Work for a council or housing provider? <b>See Fettle for Communities</b></a></p>
+    <p class="orglink"><a href="#orgs">Work for a council or housing provider? <b>See Fettle for support services</b></a></p>
   </section>
 
   <section class="lsec2">
@@ -834,9 +851,25 @@ html[lang^="en"] .notin-en{display:none}
     <p id="guides" style="margin-top:16px">Looking for something specific? <a href="guides/">Read the free guides</a>.</p>
   </section>
 
+  <section class="lsec2" id="groups">
+    <div class="lcard lconn">
+      <p class="lpv-k">Fettle Communities</p>
+      <h2 class="lh2">Get your community ready together.</h2>
+      <p class="mute">For parish councils, churches, mosques, gurdwaras, sports clubs, local businesses and residents' groups. Your members do the free check, and choose whether to share their answers with you.</p>
+      <ul class="ticks2">
+        <li>Rough totals for your community, never names unless people choose</li>
+        <li>A newsletter written from your biggest gaps, ready to print or send</li>
+        <li>Your meeting point, contacts and support in everyone's Fettle Book</li>
+        <li>A quiet way for people to ask you for help</li>
+      </ul>
+      <p><b>Free for community groups.</b></p>
+      <div class="row3"><button class="btn small" onclick="commStart()">Start a community</button><button class="btn quiet small" onclick="commDash('st-marys-caton')">See an example</button></div>
+    </div>
+  </section>
+
   <section class="lsec2" id="orgs">
     <div class="lcard lorg">
-      <p class="lpv-k">Fettle for Communities</p>
+      <p class="lpv-k">Fettle for support services</p>
       <h2 class="lh2">The people most at risk are the least likely to download an app.</h2>
       <p class="mute">Your frontline staff do the check with a resident in 10 minutes. The resident gets a plan and a printed book. You get evidence of what changed.</p>
       <details class="lmore"><summary><span>What's included</span><i class="chev" aria-hidden="true"></i></summary>
@@ -874,6 +907,7 @@ html[lang^="en"] .notin-en{display:none}
 <main class="pagewrap hide" id="v-auth"><div class="auth" id="authbox"></div></main>
 <main class="pagewrap hide" id="v-home"><div id="homebox"></div></main>
 <main class="pagewrap hide calm" id="v-connect"><div id="connectbox"></div></main>
+<main class="pagewrap hide calm" id="v-comm"><div id="commbox"></div></main>
 <main class="pagewrap hide" id="v-gift"><div class="auth" id="giftbox"></div></main>
 <main class="pagewrap hide" id="v-tool"><div class="auth tool" id="toolbox"></div></main>
 <main class="pagewrap hide" id="v-r"><div class="tabs" id="tabs" role="tablist"></div><div id="res"></div></main>
@@ -1544,7 +1578,7 @@ function homeView(){
   document.getElementById("homebox").innerHTML=`
    <section class="hello"><h1>Hi ${esc(user.name)}.</h1><p class="mute">${h?`${esc(hhName(h))} is <b style="color:var(--ink)">${s}% ready</b> for 72 hours. ${N.filter(x=>!h.bought[x.id]).length} things left to sort.`:"Check your household to get your plan."}</p>
    <div class="meter"><i style="width:${Math.max(3,s)}%"></i></div></section>
-   ${femBanner()}
+   ${femBanner()}${commMineCard()}
    ${H.map((x,i)=>x.pro?"":checkinCard(x,i)).join("")}
    ${(()=>{const i=H.findIndex(x=>followUp(x));return i<0?"":followUpHTML(H[i],i);})()}
    ${(()=>{const i=H.findIndex(x=>checkDue(x));if(i<0)return "";const x=H[i],k=checkDue(x);return `<div class="pcard due"><h3>${k==="30-day"?"Your 30-day check is due":k==="90-day"?"Your 90-day check is due":"Time for your seasonal check"}</h3><p class="sm mute">${x.other?`For ${esc(x.name)}. `:""}Two minutes. Tell us what you've got now, and see how far you've come since your first check (${x.scores[0].s}%).</p><button class="btn small" onclick="recheck(${i})">Start my check</button></div>`;})()}
@@ -1740,7 +1774,7 @@ let LANG="en";
 const TR={pl:{},ro:{},pa:{},ur:{}};
 /* On the live site each language's dictionary is its own file (tools/build_site.py writes them), loaded only when
    someone picks that language or a book is made in it. In this source file the dictionaries are inline, so TRSRC is empty. */
-const TRSRC={"pl": "tr/pl.30b76e4928.js", "ro": "tr/ro.4dcf40ed30.js", "pa": "tr/pa.b3125ffbf1.js", "ur": "tr/ur.1bedb1a239.js"}/*TRSRC*/, TRREADY={en:true};
+const TRSRC={"pl": "tr/pl.c78b02c90d.js", "ro": "tr/ro.2a967fc91e.js", "pa": "tr/pa.bd4eac74ae.js", "ur": "tr/ur.6dafb1e8c1.js"}/*TRSRC*/, TRREADY={en:true};
 function langReady(L){return !L||L==="en"||TRREADY[L]===true||!TRSRC[L];}
 function ensureLang(L){
   if(langReady(L)) return Promise.resolve();
@@ -2111,7 +2145,7 @@ function remindRead(){
 function remindSend(e){e.preventDefault();const r=remindRead();if(!r)return false;REM_EMAIL=r.email;remindView("sent");return false;}
 function remindOff(){if(user)user.remind=false;toast("Reminders off.");remindView();}
 function remindOn(){if(user)user.remind=true;toast("Reminders on.");remindView("on");}
-addEventListener("load",()=>{const t=toolRoute();if(t&&!location.hash)toolGo(t);});
+addEventListener("load",()=>{const t=toolRoute();if(t&&!location.hash)toolGo(t);else commArrive();});
 addEventListener("load",()=>{if(!LIVE)keepRestore();});
 // The workbook on Amazon, once config.js has its address.
 (()=>{try{const u=(window.FETTLE_CONFIG||{}).workbookUrl;if(u&&/^https:\/\//.test(u)){document.getElementById("wblink").href=u;document.getElementById("wbpromo").classList.remove("hide");}}catch(e){}})();
@@ -2307,7 +2341,7 @@ function seedCases(L){
 function proAuth(){
   go("auth");
   document.getElementById("authbox").innerHTML=`
-   <p class="kicker"><span>Fettle for Communities</span> For councils, housing providers and support teams</p>
+   <p class="kicker"><span>Fettle for support services</span> For councils, housing providers and support teams</p>
    <h1 class="qtitle">Professional account</h1>
    <p class="mute">Make plans with the residents you support, track progress, order printed books, and see anonymous totals by ward.</p>
    <form onsubmit="return proSubmit(event)" novalidate>
@@ -2349,7 +2383,7 @@ function proView(){
   const fu=done.filter(h=>h.scores.length>1);
   document.getElementById("homebox").innerHTML=`
    <section class="hello"><p class="kicker"><span>${esc(user.pro.org)}</span> ${esc(user.pro.role)}</p><h1>Hi ${esc(user.name)}.</h1>
-    <p class="mute">${L.length} households in your caseload.</p>${user.sample?`<div class="samplebar"><b>Sample data.</b> This is a made-up caseload, to show how Fettle for Communities works. None of these are real households or real results.</div>`:""}</section>
+    <p class="mute">${L.length} households in your caseload.</p>${user.sample?`<div class="samplebar"><b>Sample data.</b> This is a made-up caseload, to show how Fettle for support services works. None of these are real households or real results.</div>`:""}</section>
    ${L.length?`<div class="kpis">
      <div><b>${L.length}</b><span>Households</span></div>
      <div><b>${avg(firstScore)}% <small>→</small> ${avg(lastScore)}%</b><span>Average Fettle preparedness score, first visit to latest</span></div>
@@ -2500,7 +2534,7 @@ function impactReport(){
   const org=user&&user.pro?user.pro.org:"", top=I.rows.filter(r=>r.n>=MIN_CELL).sort((a,b)=>(b.last-b.first)-(a.last-a.first)).slice(0,3);
   const w=window.open("","_blank"); if(!w){toast("Allow pop-ups to make the report.");return;}
   w.document.write(`<!doctype html><meta charset="utf-8"><title>Fettle impact report</title><style>@page{size:A4;margin:14mm}body{font:10.5px/1.45 system-ui,sans-serif;color:#1c2522;margin:0;max-width:182mm}h1{font-size:19px;color:#173f35;margin:0}h2{font-size:12px;margin:12px 0 5px;color:#173f35}.k{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:10px 0}.k div{border:1px solid #c9d2cd;border-radius:6px;padding:7px}.k b{display:block;font-size:17px;color:#173f35}table{width:100%;border-collapse:collapse}td,th{border-bottom:1px solid #dde3df;padding:3.5px 4px;text-align:left;vertical-align:top}th{font-size:9.5px;color:#555}.up{color:#1f7a4a;font-weight:700}.n{color:#555;font-size:9px;margin-top:10px;border-top:1px solid #ccc;padding-top:6px}.m{color:#555}</style>
-  <div dir="${LANG==="ur"?"rtl":"ltr"}">${trHTML(`<h1>Household preparedness: impact report</h1>${user&&user.sample?`<p style="background:#fff3cd;padding:6px 8px;border-radius:4px"><b>Sample data.</b> These are made-up households, to show what the report looks like.</p>`:""}<p class="m">${esc(org)} with Fettle for Communities. Produced ${new Date().toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"})}.</p>
+  <div dir="${LANG==="ur"?"rtl":"ltr"}">${trHTML(`<h1>Household preparedness: impact report</h1>${user&&user.sample?`<p style="background:#fff3cd;padding:6px 8px;border-radius:4px"><b>Sample data.</b> These are made-up households, to show what the report looks like.</p>`:""}<p class="m">${esc(org)} with Fettle for support services. Produced ${new Date().toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"})}.</p>
   ${(()=>{const O=outcomeStats(L);return `<h2>Outcomes</h2><div class="k"><div><b>${O.assessed}</b>Households assessed</div><div><b>${O.identified}</b>Critical risks found</div><div><b>${O.sorted}</b>Sorted by the latest check</div><div><b>${O.verified}</b>Checked on a visit</div></div>${(()=>{const NS=northStar(L);return NS.n<MIN_CELL?"":`<p><b>${NS.pct}% of households sorted at least one priority gap within 30 days of their first check</b> (${NS.hit} of ${NS.n}).</p>`;})()}`;})()}
   <h2>Fettle preparedness score</h2><div class="k"><div><b>${I.n}</b>Households with a first and follow-up check</div><div><b>${I.first}% → ${I.last}%</b>Average Fettle preparedness score</div><div><b>${I.moved}</b>Households that improved</div><div><b>${I.actions}</b>Things sorted between them</div></div>
   ${(()=>{const C=cohortStats(L),S=improvementSplit(L);return `<p><b>Households at each check:</b> ${C.baseline} at the first check, ${C.d30} at a 30-day follow-up, ${C.d90} at a 90-day follow-up. <b>Of the ${S.all} improvements, ${S.checked} (${S.pct}%) were checked on a visit;</b> the rest are what households reported.</p>`;})()}
@@ -2529,7 +2563,7 @@ function visitChecklist(){
   const items=["Smoke alarm on every floor, and tested","Carbon monoxide alarm near the boiler, fire or any fuel appliance","On the Priority Services Register with energy and water companies","Medicines: a week spare, and how to store them without a fridge","Equipment that needs power: battery life and the supplier's 24-hour number","3 litres of water per person per day, for 3 days","A torch, and a radio that works without the mains","Some cash at home","Someone who will check on them, and a \"check on me\" card","Can they get out? Stairs, lifts, keys, a clear route","Warm layers and blankets for a cold home","Prepayment meter, or cutting back on heating? Refer for money advice"];
   const w=window.open("","_blank"); if(!w){toast("Allow pop-ups to print the checklist.");return;}
   w.document.write(`<!doctype html><meta charset="utf-8"><title>Fettle home visit checklist</title><style>body{font:13px/1.45 system-ui,sans-serif;margin:24px;max-width:700px}h1{font-size:20px;color:#173f35;margin:0 0 4px}li{margin:7px 0;list-style:none;padding-left:26px;position:relative}li:before{content:"";position:absolute;left:0;top:1px;width:14px;height:14px;border:1.5px solid #173f35;border-radius:3px}.n{color:#555;font-size:11px;margin-top:18px;border-top:1px solid #ccc;padding-top:8px}</style>
-   <div dir="${LANG==="ur"?"rtl":"ltr"}">${trHTML(`<h1>Home visit checklist</h1><p>Fettle for Communities. Reference: ________ Date: ________</p><ul>${items.map(i=>`<li>${esc(i)}</li>`).join("")}</ul>
+   <div dir="${LANG==="ur"?"rtl":"ltr"}">${trHTML(`<h1>Home visit checklist</h1><p>Fettle for support services. Reference: ________ Date: ________</p><ul>${items.map(i=>`<li>${esc(i)}</li>`).join("")}</ul>
    <p><b>Notes</b></p><p style="height:120px;border:1px solid #ccc"></p>
    <p class="n">If you have a safeguarding concern, follow your organisation's procedure. For fire safety, ask the local fire and rescue service for a free home safety visit. In an emergency, call 999.</p>`,LANG)}</div><script>print()<\/script>`);
   w.document.close();
@@ -2731,7 +2765,8 @@ function next(){
   if(qi<L.length-1){qi++;drawQ();return;}
   if(tier==="recheck"){cur.conf={...(cur.confPrev||{}),...cur.conf};delete cur.confPrev;const h=cur,was=h.scores.length?h.scores[h.scores.length-1].s:score(h);cur=null;snapshot(h,`${h.scores.length===1?"30-day":h.scores.length===2?"90-day":"Seasonal"} check`);go("r");render();toast(`Check saved. You've gone from ${was}% to ${score(h)}%.`);return;}
   if(tier==="core"&&isPro()){const h=cur;H.push(h);cur=null;finishProCase(h);return;}
-  if(tier==="core"){if(!cur.src)cur.src=srcTag();if(!cur.via)cur.via=viaTag();if(cur.other&&!cur.pro)cur._new=true;snapshot(cur,"First check");countEvent("check_finished",cur.area);H.push(cur);view=H.length-1;cur=null; justDone=!user; go("r");render();}
+  if(tier==="core"){if(!cur.src)cur.src=srcTag();if(!cur.via)cur.via=viaTag();if(cur.other&&!cur.pro)cur._new=true;
+    if(!cur.pro&&!cur.comm&&COMMJOIN) cur.comm={slug:COMMJOIN.slug,name:COMMJOIN.name,state:"ask"};snapshot(cur,"First check");countEvent("check_finished",cur.area);H.push(cur);view=H.length-1;cur=null; justDone=!user; go("r");render();}
   else if(FREEBOOK&&!cur.paid){const h=cur;cur=null;window.liveFreeBook(h);}
   else if(LIVE&&!cur.paid){const h=cur;cur=null;liveCheckout(h);}
   else {cur.paid=true;cur=null;openBook();}
@@ -3082,7 +3117,7 @@ function calmHTML(h,row){
      <div class="note"><p><b>Money tight?</b></p><p>Start with the free things on your To do list. They make the biggest difference. Supermarket own-brand is fine, and you can build up a little each week.</p>${tightBase(h)?`<p><button class="linkbtn" onclick="setRTab('todo')">See your free steps</button></p>`:""}</div>
      <p class="sm mute" style="margin-top:18px">Prices are estimates. Buy anywhere you like: food and water are usually cheapest at your supermarket. As an Amazon Associate I earn from qualifying purchases.</p>`;
   } else if(RTAB==="family"){
-    body=`${h.other?"":`<p class="sm mute fam-intro">${homes().length>1?"Your family's homes, linked with Fettle Connect.":"Plan with your family: add Mum, Dad or a grandparent and share the jobs."}</p>`}${famCard(h)}${jobsCard(h)}${connectCard(h)}`;
+    body=`${commCard(h,true)}${h.other?"":`<p class="sm mute fam-intro">${homes().length>1?"Your family's homes, linked with Fettle Connect.":"Plan with your family: add Mum, Dad or a grandparent and share the jobs."}</p>`}${famCard(h)}${jobsCard(h)}${connectCard(h)}`;
   } else if(RTAB==="done"){
     const sit=readyFor(h);
     body=got.length?`<section class="card donec"><div class="ok">${sico("check",34,2.2)}</div><h2>${got.length===1?"1 thing sorted":`${got.length} things sorted`}</h2>
@@ -3134,7 +3169,7 @@ function calmHTML(h,row){
   const nav=`<nav class="bnav" aria-label="Your plan">${[["home","Plan","setRTab('todo')",true],["shield","Could I cope?","setRTab('todo','cope')"],["people","Family","connectView()"],["book","Book",h.paid?"openBook()":"setRTab('todo','bookcard')"],["warn","If it happens","setRTab('todo','ifh')"]].map(([i,t,f,on])=>`<button class="${on?"on":""}" onclick="${f}">${sico(i,24)}${t}</button>`).join("")}</nav>`;
   const save=!user?`<div class="saved">${sico("save",22)}<div><b>${justDone?"Your plan is ready. ":""}Save it for later</b><br><span class="sm mute">Come back to it, tick things off, and get a reminder when your 30-day check is due.</span><div style="margin-top:10px"><button class="btn small" onclick="authView('signup')">Save my plan</button></div></div></div>`:"";
   setTimeout(()=>warnRefresh(h,()=>render(true)),0);
-  return `${femBanner()}${checkinCard(h,view)}${save}${followUpHTML(h,view)}${head}${RTAB==="todo"?relStart(h)+relNotes(h):""}${body}${nav}`;
+  return `${femBanner()}${checkinCard(h,view)}${save}${followUpHTML(h,view)}${head}${RTAB==="todo"?relStart(h)+relNotes(h)+commCard(h):""}${body}${nav}`;
 }
 function openCope(id){
   const t=id==="more"?"readymore":id==="area"?"areacard":"copemore";
@@ -3265,7 +3300,7 @@ function tick(id,on){const h=H[view];h.bought[id]=on;h.done=h.done||{};
   if(!document.getElementById("v-r").classList.contains("hide")) render(true);}
 function extra(){cur=H[view];tier="extra";qi=0;go("q");drawQ();}
 function redo(){cur=H[view];H.splice(view,1);tier="core";qi=0;go("q");drawQ();}
-function go(v){["landing","q","r","book","auth","home","gift","tool","connect"].forEach(x=>document.getElementById("v-"+x).classList.toggle("hide",x!==v)); window._stickyUpd&&window._stickyUpd(); keepSave();
+function go(v){["landing","q","r","book","auth","home","gift","tool","connect","comm"].forEach(x=>document.getElementById("v-"+x).classList.toggle("hide",x!==v)); window._stickyUpd&&window._stickyUpd(); keepSave();
   document.querySelector("header.top").classList.toggle("hide",v==="book"); document.getElementById("foot").classList.toggle("hide",v==="book"); scrollTo(0,0);}
 
 /* Touch points: who brought the household to Fettle. A partner shares getfettle.co.uk/?via=hv (and so on). */
@@ -3984,6 +4019,308 @@ function policyHTML(r){
     ${!r.floodN||r.excl.length&&!r.covered.length?`<p class="sm">If cover is hard to find because of flood risk, ask your insurer or a broker about <a href="https://www.floodre.co.uk/" target="_blank" rel="noopener">Flood Re</a>.</p>`:""}`;
 }
 
+/* ================= FETTLE COMMUNITIES =================
+   Grassroots groups (parish councils, churches, mosques, gurdwaras, clubs, local businesses, residents' groups) invite
+   their members to do the check. Each household chooses whether to add its answers to the group's anonymous totals,
+   and whether to give a name. Organisers see totals (small numbers hidden), a newsletter written from the biggest gaps,
+   help requests, and names only where people chose to give them. Their local information goes in members' books. */
+const CKINDS=[["parish","Parish or town council"],["faith","Church, mosque, gurdwara, temple or synagogue"],["club","Sports or social club"],["business","Local business"],["residents","Residents' or tenants' group"],["school","School or nursery"],["other","Another community group"]];
+// What the totals count. [id, what it is, plan items, counted for every home?, or counted when...]
+const CIND=[
+  ["water","3 days of drinking water",["water"],true],
+  ["food","3 days of food that needs no cooking",["food","rtf","opener"],true],
+  ["light","A torch with spare batteries",["torch"],true],
+  ["radio","A battery or wind-up radio",["radio"],true],
+  ["power","A charged power bank",["power"],true],
+  ["warm","A way to keep warm without heating",["warm"],true],
+  ["firstaid","A first aid kit",["firstaid","fa","facheck"],true],
+  ["alarms","Smoke and carbon monoxide alarms",["smoke","co","alarm"],true],
+  ["cash","Some cash at home",["cash"],true],
+  ["grab","A grab bag",["grabbag"],true],
+  ["meds","Spare medicines",["meds"],false],
+  ["psr","On the Priority Services Register",["psr"],false,h=>h.psr==="yes"],
+  ["buddy","Someone who'll check on them",["buddy","neighbour"],false],
+  ["fwarn","Signed up for flood warnings",["fwarn"],false,h=>floodRisk(h)],
+  ["fplan","A flood plan",["floodplan"],false,h=>floodRisk(h)]];
+const CINDN=Object.fromEntries(CIND.map(x=>[x[0],x[1]]));
+function commData(h){
+  const N=needs(h), all=new Set(N.map(x=>x.id)), open=new Set(N.filter(x=>!h.bought[x.id]).map(x=>x.id)), ind={};
+  CIND.forEach(([k,,ids,uni,app])=>{if(uni||ids.some(i=>all.has(i))||(app&&app(h))) ind[k]=ids.some(i=>open.has(i))?0:1;});
+  return {v:1,ind,risk:{o70:!!h.over70,alone:people(h)===1,u5:!!h.under5||babies(h)>0},s:score(h)};
+}
+/* The preview copy has one sample community, with made-up members, so the organiser side can be tried. */
+const SAMPLE_COMM={slug:"st-marys-caton",name:"St Mary's Church, Caton",kind:"faith",area:"Lancaster",sample:true,
+  info:{meet:"St Mary's church hall, Brookhouse Road. Open with heating and hot drinks if the power's off for long.",contact:"Rev Jo Taylor: 01524 000000, or after any service",
+    help:"We have a small fund for essentials like water, torches and radios. Speak to Jo, in confidence.",radio:"BBC Radio Lancashire, 95.5 FM",defib:"Outside the post office, Hornby Road",notes:"Our volunteers can collect prescriptions in bad weather."}};
+const SAMPLE_STATS=(()=>{const M=46,R=[["water",31],["food",14],["light",9],["radio",26],["power",17],["warm",6],["firstaid",19],["alarms",8],["cash",21],["grab",24],["meds",5,18],["psr",9,15],["buddy",4,11],["fwarn",9,20],["fplan",11,20]];
+  return {members:M,named:7,ind:Object.fromEntries(R.map(([k,m,a])=>[k,{app:a||M,missing:m}])),risk:{o70:15,alone:11,u5:6},requests:2,updated:new Date(Date.now()-36e5*5).toISOString(),sample:true};})();
+const SAMPLE_REQ=[{id:"r1",need:"costs",note:"We can't afford the water and a radio this month.",named:"Pat",contact:"07700 900333",status:"new",at:new Date(Date.now()-864e5).toISOString()},
+  {id:"r2",need:"knock",note:"I live alone and I'm not good on the stairs.",named:"",contact:"",status:"new",at:new Date(Date.now()-3*864e5).toISOString()},
+  {id:"r3",need:"costs",note:"",named:"Ali",contact:"ali@example.com",status:"done",at:new Date(Date.now()-9*864e5).toISOString()}];
+const SAMPLE_PEOPLE=[{named:"Pat",contact:"07700 900333",missing:["water","radio","grab"],risk:{o70:true,alone:true}},{named:"Ali",contact:"ali@example.com",missing:["firstaid"],risk:{u5:true}},{named:"Margaret",contact:"01524 000111",missing:["psr","buddy","radio"],risk:{o70:true,alone:true}}];
+let COMMJOIN=null; const COMMINFO={}, PREVIEW_COMMS={"st-marys-caton":SAMPLE_COMM};
+const RESERVED=new Set(["flood","calc","local","remind","admin","privacy","terms","guides","tr","c","api","join","connect","book","fettle","index.html"]);
+async function commLoad(slug){
+  if(!slug) return null; if(COMMINFO[slug]) return COMMINFO[slug];
+  const c=typeof window.commPublic==="function"?await window.commPublic(slug):PREVIEW_COMMS[slug]||null;
+  if(c) COMMINFO[slug]=c; return c;
+}
+async function commArrive(){
+  let slug=null;
+  try{const q=new URLSearchParams(location.search), p=location.pathname.replace(/\/+$/,"").split("/").pop().toLowerCase();
+    slug=q.get("c")||(/^[a-z0-9][a-z0-9-]{2,39}$/.test(p)&&!RESERVED.has(p)?p:null)||sessionStorage.getItem("fettle-comm");}catch(e){}
+  if(!slug) return;
+  const c=await commLoad(slug); if(!c) return;
+  COMMJOIN=c; try{sessionStorage.setItem("fettle-comm",c.slug);}catch(e){}
+  if(new URLSearchParams(location.search).has("organise")){commDash(c.slug);return;}
+  const box=document.getElementById("commjoin"); if(box) box.remove();
+  const land=document.getElementById("v-landing"); if(!land) return;
+  land.insertAdjacentHTML("afterbegin",`<div class="commjoin" id="commjoin"><p class="lpv-k">${commKindLabel(c.kind)}</p><p><b class="notr">${esc(c.name)}</b> <span>is helping everyone get ready for power cuts, floods and bad weather.</span></p><p class="sm mute">Do the free check. At the end you choose whether to add your answers to their anonymous totals. Your name is only shared if you want it to be.</p></div>`);
+}
+const commKindLabel=k=>(CKINDS.find(x=>x[0]===k)||[,"Community group"])[1];
+/* Resident side */
+let COMMFORM=null;
+function commCard(h,family){
+  if(isPro()||h.pro) return "";
+  const c=h.comm;
+  if(!c) return family?`<div class="pcard commnone"><p class="sm"><b>Is your parish council, church, mosque, club or local business on Fettle?</b> Ask them to start a community, so you can get ready together.</p><p class="sm"><button class="linkbtn" onclick="commStart()">Start one for your group</button></p></div>`:"";
+  if(family&&c.state!=="shared") return "";
+  const nm=`<b class="notr">${esc(c.name)}</b>`;
+  if(c.state==="ask"||COMMFORM==="share") return `<section class="card commc" id="commcard"><p class="lpvk">Your community</p><h3 class="ch"><span>Share with</span> ${nm}<span>?</span></h3>
+    <p class="sm">Adding your answers helps them see what the community needs, like how many homes are short of water, and write about it in their newsletter.</p>
+    <label class="ck"><input type="checkbox" id="cm-anon" checked><span><b>Add my home to their anonymous totals</b><br><span class="sm mute">They see totals, never your answers on their own. No name, address or postcode.</span></span></label>
+    <label class="ck"><input type="checkbox" id="cm-named"${c.named?" checked":""} onchange="document.getElementById('cm-who').hidden=!this.checked"><span><b>Also give my name, so they can offer help</b><br><span class="sm mute">Optional. Their organisers would see your name, how to reach you, and what your plan is missing.</span></span></label>
+    <div id="cm-who"${c.named?"":" hidden"}><label for="cm-name">Your name</label><input class="txt" id="cm-name" value="${esc(c.named||"")}" maxlength="60"><label for="cm-contact">Phone or email</label><input class="txt" id="cm-contact" value="${esc(c.contact||"")}" maxlength="120"></div>
+    <p class="err" id="cm-err" role="alert"></p>
+    <div class="row3"><button class="btn small" onclick="commShareSave(${view})">Save my choice</button><button class="btn small quiet" onclick="commNotNow(${view})">${c.state==="ask"?"Not now":"Cancel"}</button></div></section>`;
+  if(c.state!=="shared") return "";
+  const I=COMMINFO[c.slug]; if(!I){commLoad(c.slug).then(x=>{if(x)rerenderHere();});}
+  const inf=(I&&I.info)||{};
+  if(COMMFORM==="ask") return commAskForm(h);
+  return `<section class="card commc" id="commcard"><p class="lpvk">Your community</p><h3 class="ch notr">${esc(c.name)}</h3>
+    <p class="sm mute">${c.named?"You've shared your answers and your name.":"You've added your home to their anonymous totals."} <button class="linkbtn" onclick="COMMFORM='share';render(true)">Change</button></p>
+    ${inf.meet?`<p class="sm"><b>If you need to leave home:</b> <span class="notr">${esc(inf.meet)}</span></p>`:""}
+    ${inf.help?`<p class="sm"><b>Help they offer:</b> <span class="notr">${esc(inf.help)}</span></p>`:""}
+    ${inf.contact?`<p class="sm"><b>Contact:</b> <span class="notr">${esc(inf.contact)}</span></p>`:""}
+    <div class="row3"><button class="btn small" onclick="COMMFORM='ask';render(true)">Ask them for help</button></div>
+    <p class="sm"><button class="linkbtn q" onclick="commLeaveClick(${view})">Stop sharing with them</button></p></section>`;
+}
+function commAskForm(h){
+  const c=h.comm;
+  return `<section class="card commc" id="commcard"><p class="lpvk">Ask for help</p><h3 class="ch"><span>Ask</span> <span class="notr">${esc(c.name)}</span></h3>
+    <p class="sm">Only their organisers see this.</p>
+    <fieldset class="cm-need"><legend>What do you need?</legend>
+      <label class="ck"><input type="radio" name="cm-need" value="costs" checked><span>We can't afford some of the things on our plan</span></label>
+      <label class="ck"><input type="radio" name="cm-need" value="knock"><span>Please knock on my door if there's an emergency</span></label>
+      <label class="ck"><input type="radio" name="cm-need" value="other"><span>Something else</span></label></fieldset>
+    <label for="cm-note">Anything they should know <span class="hint">Optional</span></label><textarea class="txt" id="cm-note" rows="3" maxlength="500"></textarea>
+    <label for="cm-aname">Your name</label><input class="txt" id="cm-aname" value="${esc(c.named||"")}" maxlength="60">
+    <label for="cm-acontact">Phone or email <span class="hint">So they can get back to you. Without it, they can only count your request.</span></label><input class="txt" id="cm-acontact" value="${esc(c.contact||"")}" maxlength="120">
+    <p class="err" id="cm-aerr" role="alert"></p>
+    <div class="row3"><button class="btn small" onclick="commAskSend(${view})">Send</button><button class="btn small quiet" onclick="COMMFORM=null;render(true)">Cancel</button></div>
+    <p class="sm mute" style="margin:10px 0 0">If anyone's life is at risk, call 999.</p></section>`;
+}
+function commToken(h){return h.comm.token||(h.comm.token=crypto.randomUUID());}
+async function commShareSave(i){
+  const h=H[i], c=h.comm, anon=document.getElementById("cm-anon").checked, named=document.getElementById("cm-named").checked;
+  const nm=named?document.getElementById("cm-name").value.trim():"", ct=named?document.getElementById("cm-contact").value.trim():"";
+  if(named&&!nm){document.getElementById("cm-err").textContent="Add your name, or untick that box.";return;}
+  if(!anon&&!named){commNotNow(i);return;}
+  Object.assign(c,{named:nm,contact:ct}); const tok=commToken(h);
+  const ok=typeof window.commShare==="function"?await window.commShare(c.slug,tok,commData(h),nm,ct):true;
+  if(!ok){document.getElementById("cm-err").textContent="That didn't save. Please try again.";return;}
+  c.state="shared"; c.last=JSON.stringify(commData(h)); COMMFORM=null; countEvent("community_join"); render(true);
+  toast(LIVE?"Thank you. You're part of "+c.name+".":"On this preview copy, nothing is sent.");
+}
+function commNotNow(i){const c=H[i].comm; COMMFORM=null; if(c.state==="ask") c.state="no"; render(true);}
+async function commLeaveClick(i){const h=H[i], c=h.comm; if(c.token&&typeof window.commLeave==="function") await window.commLeave(c.token); c.state="no"; delete c.token; delete c.last; render(true); toast("You've stopped sharing. Your answers have been removed from their totals.");}
+async function commAskSend(i){
+  const h=H[i], c=h.comm, need=(document.querySelector('input[name="cm-need"]:checked')||{}).value||"other";
+  const note=document.getElementById("cm-note").value.trim(), nm=document.getElementById("cm-aname").value.trim(), ct=document.getElementById("cm-acontact").value.trim();
+  const ok=typeof window.commAsk==="function"?await window.commAsk(c.slug,commToken(h),need,note,nm,ct):true;
+  if(ok!==true){document.getElementById("cm-aerr").textContent=typeof ok==="string"?ok:"That didn't send. Please try again.";return;}
+  COMMFORM=null; countEvent("community_ask"); render(true);
+  toast(LIVE?(ct?"Sent. They'll get back to you.":"Sent. Without a phone number or email they can't reply, but they'll know someone needs help."):"On this preview copy, nothing is sent.");
+}
+// Keep the totals up to date as a household ticks things off.
+setInterval(()=>{if(!LIVE||typeof window.commShare!=="function"||typeof H==="undefined") return;
+  H.forEach(h=>{const c=h.comm; if(!c||c.state!=="shared"||!c.token) return; const d=JSON.stringify(commData(h)); if(d!==c.last){c.last=d; window.commShare(c.slug,c.token,JSON.parse(d),c.named||"",c.contact||"");}});},20000);
+function commBookBlocks(I){
+  const f=I.info||{}, row=(a,b)=>b?`<tr><td>${a}</td><td><span class="notr">${esc(b)}</span></td></tr>`:"";
+  return [`<p><span>Your home is part of</span> <b class="notr">${esc(I.name)}</b><span>. In an emergency, people nearby are often the first to help.</span></p>`,
+    `<table class="numcard">${row("If you need to leave home",f.meet)}${row("Contact",f.contact)}${row("Help they offer",f.help)}${row("Local radio",f.radio)}${row("Nearest defibrillator",f.defib)}${row("Also",f.notes)}${row("Website",f.web)}</table>`,
+    `<div class="tip">If you can't afford something on your plan, or would like a knock on the door in an emergency, ask them. You can do it in Fettle, or in person.</div>`];
+}
+/* Organiser side */
+function commMineCard(){
+  if(typeof window.commMine!=="function"||!user) return "";
+  if(window.__commMine===undefined){window.__commMine=null;window.commMine().then(L=>{window.__commMine=L||[];if(L&&L.length)homeView();});}
+  const L=window.__commMine||[]; if(!L.length) return "";
+  return `<div class="pcard"><p class="lpvk">Communities you look after</p>${L.map(c=>`<p><button class="btn small" onclick="commDash('${esc(c.slug)}')"><span class="notr">${esc(c.name)}</span></button></p>`).join("")}</div>`;
+}
+function commStart(){
+  if(LIVE&&!user){toast("Make an account first, so you can come back to your community.");window.__afterAuth="commStart";authView("signup");return;}
+  go("comm"); const b=document.getElementById("commbox");
+  b.innerHTML=`<p class="sm"><button class="linkbtn" onclick="${user?"homeView()":"go('landing')"}">← <span>Back</span></button></p>
+   <p class="lpvk">Fettle Communities</p><h1>Start a community</h1>
+   <p class="mute">Free for community groups. Your members do the check, and choose whether to share their answers with you. You see totals, and names only where people choose to give them.</p>
+   <form class="fpform" onsubmit="return commCreate(event)" novalidate>
+    <label for="cs-name">Name of your group</label><input class="txt" id="cs-name" maxlength="80" placeholder="For example, St Mary's Church, Caton" oninput="const s=document.getElementById('cs-slug');if(!s.dataset.t)s.value=slugify(this.value)">
+    <label for="cs-kind">What kind of group?</label><select class="txt" id="cs-kind">${CKINDS.map(([k,t])=>`<option value="${k}">${t}</option>`).join("")}</select>
+    <label for="cs-area">Village, town or area <span class="hint">Optional</span></label><input class="txt" id="cs-area" maxlength="80">
+    <label for="cs-slug">Your web address <span class="hint">Short and easy to type. Letters, numbers and dashes.</span></label>
+    <div class="slugrow"><span>getfettle.co.uk/</span><input class="txt" id="cs-slug" maxlength="40" oninput="this.dataset.t=1;this.value=slugify(this.value)"></div>
+    <label for="cs-you">Your first name <span class="hint">Shown to other organisers</span></label><input class="txt" id="cs-you" maxlength="60" value="${esc((user&&user.name)||"")}">
+    <p class="sm mute">You'll be able to add information for your members: where to go if they need to leave home, who to contact, and any help you offer.</p>
+    <p class="err" id="cs-err" role="alert"></p>
+    <button class="btn" type="submit">Start the community</button></form>`;
+}
+const slugify=s=>String(s).toLowerCase().replace(/['’]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"").slice(0,40);
+async function commCreate(e){
+  e.preventDefault(); const v=id=>document.getElementById(id).value.trim(), err=t=>{document.getElementById("cs-err").textContent=t;return false;};
+  const name=v("cs-name"), slug=slugify(v("cs-slug")), kind=v("cs-kind");
+  if(name.length<2) return err("Add the name of your group.");
+  if(!/^[a-z0-9][a-z0-9-]{2,39}$/.test(slug)||RESERVED.has(slug)) return err("Choose a web address of at least 3 letters or numbers.");
+  let c;
+  if(typeof window.commCreateLive==="function"){const r=await window.commCreateLive(slug,name,kind,v("cs-area"),v("cs-you"));if(r.error) return err(r.error);c=r.community;}
+  else{if(PREVIEW_COMMS[slug]) return err("That web address is taken. Try another.");c={slug,name,kind,area:v("cs-area"),info:{},mine:true};PREVIEW_COMMS[slug]=c;}
+  COMMINFO[slug]=c; window.__commMine=undefined; countEvent("community_start");
+  commDash(slug,"info"); toast(LIVE?"Your community is ready. Add your local information next.":"On this preview copy, nothing is saved.");
+  return false;
+}
+let CDTAB="overview", CDSLUG=null, CDSTATS=null, CDREQ=null, CDPEOPLE=null;
+async function commDash(slug,tab){
+  CDSLUG=slug; if(tab) CDTAB=tab; go("comm"); const b=document.getElementById("commbox");
+  b.innerHTML=`<p class="sm mute">Loading…</p>`;
+  const c=await commLoad(slug); if(!c){b.innerHTML=`<p>We couldn't find that community.</p>`;return;}
+  const sample=!!c.sample||(!LIVE);
+  if(LIVE&&!c.sample){
+    if(!user){window.__afterAuth="commDash:"+slug;authView("signin");return;}
+    const [st,rq,pp]=await Promise.all([window.commStats(slug),window.commRequests(slug),window.commPeople(slug)]);
+    if(st&&st.error){b.innerHTML=`<p class="sm"><button class="linkbtn" onclick="homeView()">← <span>Back</span></button></p><h1 class="notr">${esc(c.name)}</h1><p>Only this community's organisers can see its totals.</p>`;return;}
+    CDSTATS=st; CDREQ=rq||[]; CDPEOPLE=pp||[];
+  } else if(c.sample){CDSTATS=SAMPLE_STATS;CDREQ=CDREQ&&CDSLUG===slug&&CDREQ.sampleOf===slug?CDREQ:Object.assign(SAMPLE_REQ.map(x=>({...x})),{sampleOf:slug});CDPEOPLE=SAMPLE_PEOPLE;}
+  else{CDSTATS=previewStats(slug);CDREQ=[];CDPEOPLE=previewPeople(slug);}
+  commDashDraw();
+}
+// In the preview, a community you started counts the plans on this device that joined it.
+function previewStats(slug){const M=H.filter(h=>h.comm&&h.comm.slug===slug&&h.comm.state==="shared");return {members:M.length,small:M.length<5,named:M.filter(h=>h.comm.named).length,ind:{},risk:{},requests:0};}
+function previewPeople(slug){return H.filter(h=>h.comm&&h.comm.slug===slug&&h.comm.named).map(h=>({named:h.comm.named,contact:h.comm.contact,missing:Object.entries(commData(h).ind).filter(([k,v])=>!v).map(([k])=>k),risk:commData(h).risk}));}
+function commGaps(st){return Object.entries(st.ind||{}).filter(([k,x])=>x.app>=5&&x.missing!=null&&x.missing>0).map(([k,x])=>({k,app:x.app,missing:x.missing,pct:Math.round(100*x.missing/x.app)})).sort((a,b)=>b.pct-a.pct);}
+function commDashDraw(){
+  const c=COMMINFO[CDSLUG], st=CDSTATS||{members:0}, b=document.getElementById("commbox"), link=`getfettle.co.uk/${c.slug}`;
+  const tabs=[["overview","Totals"],["news","Newsletter"],["info","Info"],["help","Help"],["invite","Invite"]];
+  const newReq=(CDREQ||[]).filter(r=>r.status==="new").length;
+  let body="";
+  if(CDTAB==="overview"){
+    const G=commGaps(st);
+    body=st.small||st.members<5?`<div class="card"><h3 class="ch"><span class="notr">${st.members||0}</span> <span>${st.members===1?"home has":"homes have"} joined so far</span></h3><p class="sm">Totals show once 5 homes have joined, so nobody can be picked out. Share your link to get started.</p><p><button class="btn small" onclick="CDTAB='invite';commDashDraw()">Invite people</button></p></div>`
+     :`<div class="cstats"><div><b class="notr">${st.members}</b><span>homes have joined</span></div><div><b class="notr">${newReq}</b><span>${newReq===1?"new request for help":"new requests for help"}</span></div><div><b class="notr">${st.named||0}</b><span>gave their name</span></div></div>
+      <section class="card"><p class="lpvk">Where the gaps are</p><h3 class="ch">What homes are missing</h3>
+       <ul class="cbars">${G.map(g=>`<li><div class="cb-top"><span>${CINDN[g.k]}</span><b><span class="notr">${g.pct}%</span> <span>missing</span></b></div><div class="cb-bar"><i style="width:${g.pct}%"></i></div><span class="sm mute"><span class="notr">${g.missing}</span> <span>of</span> <span class="notr">${g.app}</span> <span>homes</span></span></li>`).join("")}</ul>
+       ${(()=>{const Y=Object.entries(st.ind||{}).filter(([k,x])=>x.app>=5&&(x.missing==null||x.missing===0)).map(([k])=>CINDN[k]);return Y.length?`<p class="sm"><b>Almost every home has:</b> ${Y.map(t=>`<span>${t}</span>`).join(", ")}.</p>`:"";})()}
+       <p class="sm mute">Numbers under 3 aren't shown, so nobody can be picked out.</p>
+       <p><button class="btn small" onclick="CDTAB='news';commDashDraw()">Write a newsletter about the top gaps</button></p></section>
+      <section class="card"><p class="lpvk">Who might need more help</p><ul class="calist">${[["o70","homes with someone over 70"],["alone","people living alone"],["u5","homes with a child under 5"]].map(([k,t])=>st.risk&&st.risk[k]!=null?`<li><b class="notr">${st.risk[k]}</b><span>${t}</span></li>`:`<li><b>Fewer than 3</b><span>${t}</span></li>`).join("")}</ul></section>`;
+    if(c.sample) body=`<div class="pcard"><p class="sm" style="margin:0"><b>This is an example.</b> The numbers are made up, to show what a community sees.</p></div>`+body;
+  } else if(CDTAB==="news"){ body=commNewsEditor(c,st);
+  } else if(CDTAB==="info"){ const f=c.info||{}, fld=(k,l,h,rows)=>`<label for="ci-${k}">${l}${h?` <span class="hint">${h}</span>`:""}</label>${rows?`<textarea class="txt notr" id="ci-${k}" rows="${rows}" maxlength="400">${esc(f[k]||"")}</textarea>`:`<input class="txt notr" id="ci-${k}" maxlength="200" value="${esc(f[k]||"")}">`}`;
+    body=`<section class="card"><p class="lpvk">Local information</p><h3 class="ch">What your members see</h3><p class="sm">This goes on members' plans and is printed in their Fettle Book. Only add what you're happy for anyone to see.</p>
+     <form class="fpform" onsubmit="return commInfoSave(event)" novalidate>
+      <label for="ci-name">Name</label><input class="txt notr" id="ci-name" maxlength="80" value="${esc(c.name)}">
+      <label for="ci-area">Village, town or area</label><input class="txt notr" id="ci-area" maxlength="80" value="${esc(c.area||"")}">
+      ${fld("meet","Where to go if people need to leave home","A hall, mosque, clubhouse or other warm, safe place",2)}
+      ${fld("contact","Who to contact","A name and a phone number or email that you're happy to share",0)}
+      ${fld("help","Help you offer","For example, a fund for essentials, lifts, collecting prescriptions",3)}
+      ${fld("radio","Local radio station","",0)}${fld("defib","Nearest defibrillator","",0)}${fld("notes","Anything else","",2)}${fld("web","Website or social media","",0)}
+      <p class="err" id="ci-err" role="alert"></p><button class="btn" type="submit">Save</button></form></section>`;
+  } else if(CDTAB==="help"){
+    const R=CDREQ||[], P=CDPEOPLE||[], NEED={costs:"Can't afford some things on their plan",knock:"Would like a knock on the door in an emergency",other:"Something else"};
+    body=`<section class="card"><p class="lpvk">Requests for help</p><h3 class="ch">People who asked you for help</h3>
+      ${R.length?`<ul class="creq">${R.map(r=>`<li class="${r.status}"><div class="fs-top"><b>${NEED[r.need]||r.need}</b><span class="sm mute notr">${fmtD(r.at)}</span></div>${r.note?`<p class="sm notr">${esc(r.note)}</p>`:""}<p class="sm">${r.named||r.contact?`<b class="notr">${esc([r.named,r.contact].filter(Boolean).join(", "))}</b>`:`<span class="mute">No name or contact given</span>`}</p>${r.status==="new"?`<button class="btn small quiet" onclick="commReqDone('${esc(r.id)}')">Mark as sorted</button>`:`<span class="sm mute">Sorted</span>`}</li>`).join("")}</ul>`:`<p class="sm">No requests yet. People can ask from their plan, privately.</p>`}</section>
+     <section class="card"><p class="lpvk">People who gave their name</p><h3 class="ch">Who you could offer help to</h3><p class="sm mute">Only people who chose to share their name with you. Please keep this to yourselves.</p>
+      ${P.length?`<ul class="calist">${P.map(x=>`<li><b class="notr">${esc(x.named)}</b>${x.contact?`<span class="notr">${esc(x.contact)}</span>`:""}<span class="sm mute">${x.missing&&x.missing.length?`<span>Missing:</span> ${x.missing.map(k=>`<span>${CINDN[k]||k}</span>`).join(", ")}`:"<span>Nothing important missing</span>"}</span></li>`).join("")}</ul>`:`<p class="sm">Nobody has shared their name yet. That's fine: the totals work without names.</p>`}</section>`;
+  } else {
+    body=`<section class="card"><p class="lpvk">Invite people</p><h3 class="ch">Your link</h3><p class="big notr" style="font-weight:700;word-break:break-all">${link}</p>
+      <div class="row3"><button class="btn small" onclick="shareText(commInviteText())">Share the invitation</button><button class="btn small quiet" onclick="commPoster()">Print a poster</button></div></section>
+     <section class="card"><p class="lpvk">Say it out loud</p><h3 class="ch">A 1-minute announcement</h3><p class="sm">For a service, Friday prayers, a match day or a parish meeting.</p><div class="talk">${commTalk(c).map(t=>`<p>${t}</p>`).join("")}</div></section>
+     <section class="card"><p class="lpvk">Bring in another organiser</p><p class="sm">Ask them to make a Fettle account, then email hello@getfettle.co.uk with your community's web address and their email, and we'll add them.</p></section>`;
+  }
+  b.innerHTML=`<p class="sm"><button class="linkbtn" onclick="${user?"homeView()":"go('landing')"}">← <span>Back</span></button></p>
+   <p class="lpvk">${commKindLabel(c.kind)}</p><h1 class="notr">${esc(c.name)}</h1>${c.area?`<p class="sm mute notr" style="margin-top:-6px">${esc(c.area)}</p>`:""}
+   <div class="seg cseg" role="tablist">${tabs.map(([k,t])=>`<button role="tab" aria-selected="${CDTAB===k}" onclick="CDTAB='${k}';commDashDraw()">${t}${k==="help"&&newReq?` <span class="notr">${newReq}</span>`:""}</button>`).join("")}</div>
+   <div class="cbody">${body}</div>`;
+}
+async function commInfoSave(e){
+  e.preventDefault(); const c=COMMINFO[CDSLUG], v=k=>document.getElementById("ci-"+k).value.trim().slice(0,400);
+  const info={}; ["meet","contact","help","radio","defib","notes","web"].forEach(k=>{const x=v(k);if(x)info[k]=x;});
+  const name=v("name")||c.name, area=v("area");
+  if(typeof window.commSetInfo==="function"&&!c.sample){const ok=await window.commSetInfo(c.slug,name,area,info);if(!ok){document.getElementById("ci-err").textContent="That didn't save. Please try again.";return false;}}
+  Object.assign(c,{name,area,info}); commDashDraw(); toast(c.sample||!LIVE?"Saved on this copy only.":"Saved. Members will see it on their plans and in their books."); return false;
+}
+async function commReqDone(id){const r=(CDREQ||[]).find(x=>x.id===id); if(!r) return; if(typeof window.commRequestDone==="function"&&!COMMINFO[CDSLUG].sample) await window.commRequestDone(id); r.status="done"; commDashDraw();}
+function commInviteText(){const c=COMMINFO[CDSLUG];return `${c.name}: ${trText("is the household ready for 3 days without power, water or phones? Do the free 4-minute check. You choose whether to share your answers with us, and your name is only shared if you want it to be.",LANG)} https://getfettle.co.uk/${c.slug}`;}
+function commTalk(c){return [`<span>Storms, floods and power cuts are happening more often. When they do, the people who cope best are the ones who got ready beforehand, and who have neighbours looking out for them.</span>`,
+  `<span>So we've joined Fettle. It's a free 4-minute check that tells you what your home needs for three days without power or water, starting with the free things.</span>`,
+  `<span>At the end, you can add your answers to our totals. We only ever see totals, like how many homes are short of water. Not your name, unless you choose to give it.</span>`,
+  `<span>The link is</span> <b class="notr">getfettle.co.uk/${esc(c.slug)}</b><span>. And if you can't afford something on your plan, please talk to us.</span>`];}
+async function commPoster(){
+  const c=COMMINFO[CDSLUG], url=`https://getfettle.co.uk/${c.slug}`;
+  let qr="";
+  try{if(!window.qrcode) await new Promise((ok,no)=>{const sc=document.createElement("script");sc.src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js";sc.onload=ok;sc.onerror=no;document.head.appendChild(sc);});
+    const q=window.qrcode(0,"M"); q.addData(url); q.make(); qr=q.createSvgTag({cellSize:8,margin:0});}catch(e){}
+  printDoc("Poster",`<div class="poster"><p class="s notr">${esc(c.name)}</p><h1>Is your home ready for 3 days without power or water?</h1>
+    <p style="font-size:1.3rem">Do the free 4-minute check. It tells you what your home needs, starting with the free things.</p>
+    ${qr?`<div class="qr">${qr}</div>`:""}<p style="font-size:1.6rem;font-weight:700" class="notr">getfettle.co.uk/${esc(c.slug)}</p>
+    <p>You choose whether to share your answers with us. We only see totals, never your name unless you want us to.</p>
+    ${c.info&&c.info.help?`<p><b>Can't afford something on your plan?</b> <span class="notr">${esc(c.info.help)}</span></p>`:""}</div>`);
+}
+/* The newsletter: written from the community's biggest gaps. The organiser adds their own news and sends it themselves. */
+const CNEWS={
+  water:{t:"Water to drink",why:"If the water goes off or isn't safe to drink, you need about 2 litres per person per day for drinking, plus some for cooking and washing. Supermarkets sell out within hours.",how:["Keep 3 days of bottled water: for 2 people that's 6 large 2-litre bottles.","Buy a few bottles each shop, and keep them somewhere cool and dark.","Use the oldest first and replace them, so they never go out of date."],cheap:"Tap water in clean, sealed bottles lasts 6 months. Write the date on them.",g:"no-water"},
+  food:{t:"Food that needs no cooking",why:"In a power cut, cookers, microwaves and fridges stop. Food that's ready to eat keeps everyone going.",how:["Keep 3 days of food you can eat cold: tins, crackers, cereal, peanut butter, dried fruit.","Keep a manual tin opener with it.","Rotate it into your normal meals, so nothing goes out of date."],cheap:"Supermarket own-brand tins cost less than £1 each.",g:"no-cook-meals"},
+  light:{t:"A torch, and spare batteries",why:"Candles cause house fires during power cuts. A torch is safer, and phone torches flatten the battery you need for calls.",how:["Keep a torch where you can find it in the dark, like the kitchen drawer.","Keep spare batteries with it.","Check it works when the clocks change."],cheap:"Torches cost from about £3. A wind-up torch needs no batteries.",g:"power-cut"},
+  radio:{t:"A radio that works without power",why:"When the power and mobile signal go, local radio is how you hear what's happening, where to go and when it will be fixed.",how:["Get a battery or wind-up radio.","Find your local station and write the frequency on it.","Keep spare batteries with it."],cheap:"Wind-up radios cost from about £15, and battery radios less.",g:"emergency-radio"},
+  power:{t:"A charged power bank",why:"Your phone is how you call for help and hear from family. In a long power cut, it won't last a day without a top-up.",how:["Keep a power bank charged, and charge it again every few months.","Keep the right cable with it.","In a power cut, use low power mode and keep calls short."],cheap:"A basic power bank costs about £10.",g:"power-cut"},
+  warm:{t:"Keeping warm without heating",why:"Most heating stops in a power cut, and a cold home is dangerous for older people and babies.",how:["Keep blankets or sleeping bags, hats and thick socks for everyone.","Choose one room to keep warm, and close the doors.","Never use a gas cooker or barbecue to heat a room."],cheap:"Charity shops are a good place for blankets.",g:"keeping-warm"},
+  firstaid:{t:"A first aid kit",why:"In an emergency, help can take longer to arrive. A basic kit deals with cuts and burns until it does.",how:["Keep a first aid kit in the kitchen.","Check it's complete and in date.","Consider a free or low-cost first aid course: the Red Cross and St John Ambulance run them."],cheap:"Basic kits cost about £5 to £10.",g:null},
+  alarms:{t:"Smoke and carbon monoxide alarms",why:"Fires and carbon monoxide are more likely during power cuts and cold snaps, when people use candles, heaters and generators.",how:["Fit a smoke alarm on each floor.","Fit a carbon monoxide alarm in rooms with a gas or solid fuel appliance.","Test them monthly."],cheap:"Your fire and rescue service may fit alarms for free with a home safety visit.",g:null},
+  cash:{t:"Some cash at home",why:"When the power or internet is down, card machines and cash machines stop working.",how:["Keep some cash in small notes and coins.","Keep it somewhere safe, with your documents.","Top it up if you use it."],cheap:"Even £20 in small notes helps.",g:"power-cut"},
+  grab:{t:"A grab bag",why:"If you have to leave home quickly, for a flood or a fire, there's no time to think about what to take.",how:["Pack a bag with medicines, chargers, documents, a torch, water and snacks.","Keep it by the door or upstairs.","Tell everyone at home where it is."],cheap:"Use a bag you already have.",g:"grab-bag"},
+  meds:{t:"Spare medicines",why:"Pharmacies can close in bad weather and power cuts, and deliveries stop.",how:["Order repeat prescriptions a week before you run out.","Keep a list of medicines and doses on paper.","Ask the pharmacist what to do with medicines kept in the fridge."],cheap:"Free: it's about ordering in time.",g:"medicines-and-equipment"},
+  psr:{t:"The Priority Services Register",why:"It's free. Energy and water companies give extra help to people on it: warning of planned cuts, priority for bottled water, and checks on them.",how:["Older people, disabled people, those with young children and people who rely on equipment can join.","Join through your energy supplier, your electricity network and your water company.","You can sign up someone else, with their agreement."],cheap:"It's free.",g:"priority-services-register"},
+  buddy:{t:"Someone to check on you",why:"In an emergency, people living alone are the most at risk, and phones may not work.",how:["Agree with a neighbour or relative that they'll knock on your door.","Swap numbers, and write them on paper too.","Agree a sign, like a card in the window, if you need help."],cheap:"It's free.",g:"checking-on-someone"},
+  fwarn:{t:"Free flood warnings",why:"The Environment Agency can warn you hours before flooding, by text, phone or email.",how:["Sign up at gov.uk/sign-up-for-flood-warnings, or call Floodline on 0345 988 1188.","Add a second number, for someone who'd check on you.","Do it for older relatives too, with their agreement."],cheap:"It's free.",g:"flood-plan"},
+  fplan:{t:"A flood plan",why:"When a flood warning comes there may be only a few hours, often at night. A plan means the decisions are made.",how:["Find out how to turn off gas, electricity and water.","Decide what you'd move upstairs first.","Decide where you'd go, and how you'd get there without driving through water."],cheap:"It's free: Fettle helps you write one.",g:"flood-plan"}};
+let NEWSDRAFT=null;
+function commNewsEditor(c,st){
+  const G=commGaps(st), top=G.slice(0,3);
+  if(!top.length) return `<section class="card"><h3 class="ch">Not enough answers yet</h3><p class="sm">The newsletter is written from your community's gaps. It's ready once 5 homes have joined.</p></section>`;
+  const d=NEWSDRAFT&&NEWSDRAFT.slug===c.slug?NEWSDRAFT:(NEWSDRAFT={slug:c.slug,pick:top.map(g=>g.k),intro:trText("Thank you to everyone who's done the Fettle check. Here's what we've learned, and what we can all do about it.",LANG),news:"",help:(c.info&&c.info.help)||""});
+  return `<section class="card"><p class="lpvk">Newsletter</p><h3 class="ch">Written from your biggest gaps</h3><p class="sm">Choose up to 3 topics, add your own news, then print it or copy it into an email, a parish magazine or a WhatsApp group. You send it: Fettle doesn't email your members.</p>
+    <fieldset class="cm-need"><legend>Topics</legend>${G.slice(0,8).map(g=>`<label class="ck"><input type="checkbox" value="${g.k}"${d.pick.includes(g.k)?" checked":""} onchange="newsPick(this)"><span><span>${CNEWS[g.k]?CNEWS[g.k].t:CINDN[g.k]}</span> <span class="sm mute">· <span class="notr">${g.pct}%</span> <span>missing</span></span></span></label>`).join("")}</fieldset>
+    <label for="nw-intro">Opening</label><textarea class="txt notr" id="nw-intro" rows="2" oninput="NEWSDRAFT.intro=this.value">${esc(d.intro)}</textarea>
+    <label for="nw-news">Your news <span class="hint">Optional: a meeting, an event, volunteers needed</span></label><textarea class="txt notr" id="nw-news" rows="2" oninput="NEWSDRAFT.news=this.value">${esc(d.news)}</textarea>
+    <label for="nw-help">Help you offer <span class="hint">For people who can't afford something</span></label><textarea class="txt notr" id="nw-help" rows="2" oninput="NEWSDRAFT.help=this.value">${esc(d.help)}</textarea>
+    <div class="row3"><button class="btn small" onclick="newsPrint()">Print it</button><button class="btn small quiet" onclick="newsCopy()">Copy the text</button></div></section>
+   <section class="card newsprev"><p class="lpvk">Preview</p>${newsHTML(c,st,d)}</section>`;
+}
+function newsPick(el){const d=NEWSDRAFT;if(el.checked){if(d.pick.length>=3){el.checked=false;toast("Choose up to 3 topics.");return;}d.pick.push(el.value);}else d.pick=d.pick.filter(k=>k!==el.value);commDashDraw();}
+function newsHTML(c,st,d){
+  const G=Object.fromEntries(commGaps(st).map(g=>[g.k,g]));
+  return `<div class="news"><p class="s notr">${esc(c.name)}</p><h1>Getting ready together</h1>${d.intro?`<p class="notr">${esc(d.intro)}</p>`:""}
+   <p><span class="notr">${st.members}</span> <span>homes have done the check so far.</span></p>
+   ${d.pick.filter(k=>CNEWS[k]).map(k=>{const n=CNEWS[k], g=G[k];return `<h2>${n.t}</h2>${g?`<p><b><span class="notr">${g.pct}%</span> <span>of homes that did the check don't have this yet.</span></b></p>`:""}<p>${n.why}</p><ol>${n.how.map(x=>`<li>${x}</li>`).join("")}</ol><p><i>${n.cheap}</i></p>${n.g?`<p><span>More:</span> <span class="notr">getfettle.co.uk/guides/${n.g}.html</span></p>`:""}`;}).join("")}
+   ${d.news?`<h2>Our news</h2><p class="notr">${esc(d.news)}</p>`:""}
+   ${d.help?`<h2>If you can't afford it</h2><p class="notr">${esc(d.help)}</p>`:""}
+   <p><span>Not done the check yet? It's free and takes 4 minutes:</span> <b class="notr">getfettle.co.uk/${esc(c.slug)}</b></p>
+   <p class="sm mute">Figures are rough totals from people who chose to share their answers. Nobody's answers are shown on their own.</p></div>`;
+}
+function newsPrint(){const c=COMMINFO[CDSLUG];countEvent("community_newsletter");printDoc("Newsletter",newsHTML(c,CDSTATS,NEWSDRAFT));}
+function newsCopy(){const d=document.createElement("div");d.innerHTML=trHTML(newsHTML(COMMINFO[CDSLUG],CDSTATS,NEWSDRAFT),LANG);
+  d.querySelectorAll("h1,h2,p,li").forEach(x=>x.insertAdjacentText("afterend","\n"));d.querySelectorAll("li").forEach(x=>x.insertAdjacentText("afterbegin","- "));
+  countEvent("community_newsletter"); shareText(d.textContent.replace(/\n{3,}/g,"\n\n").trim());}
+
 /* ================= EMERGENCY LIST =================
    A council's version of the Priority Services Register: who would need help first in a flood or long power cut.
    Residents opt in. Nothing is shared until their council has an agreement with Fettle, and then only during an emergency. */
@@ -4222,6 +4559,8 @@ function chapters(h){
    `<h2>Jobs</h2><table><tr><th>Job</th><th>Who</th></tr>${["Keeps the water stocked","Checks the first aid kit","Charges the power bank","Checks on neighbours","Updates this book"].map(j=>`<tr><td>${j}</td><td><div class="write"></div></td></tr>`).join("")}</table>`,
    `<h2>Practice evening</h2><p>Pick an evening. Switch off the main lights for an hour after dark and use only torches and the radio. Eat a no-cook meal. Notice what's missing.</p><p>Date: <span style="display:inline-block;width:150px;border-bottom:.5pt solid #888"></span></p>`]);
 
+  const CI=h.comm&&h.comm.state==="shared"&&COMMINFO[h.comm.slug];
+  if(CI) ch("Together",CI.name,"Your community, and the help it offers.",commBookBlocks(CI));
   ch("Together","Important numbers","Keep this page up to date. Copy it into everyone's phone too.",[
    `<table class="numcard">${NUMBERS.map(([a,b])=>`<tr><td>${a}</td><td>${b}</td></tr>`).join("")}</table>`,
    `<p style="font-size:9.5pt">If you're deaf or can't speak on the phone, register for emergencySMS before you need it by texting "register" to 999.</p>`,
@@ -4247,6 +4586,7 @@ let BOOKCONN=false;
 async function openBook(conn){
   BOOKCONN=conn===true; if(BOOKCONN&&!homes().length) return;
   const h=forPrint(BOOKCONN?connHome():H[view]); const BL=isPro()?(h.lang||"en"):LANG;
+  if(h.comm&&h.comm.state==="shared") await commLoad(h.comm.slug);
   if(!langReady(BL)) await ensureLang(BL);
   try{await Promise.all(['400 11pt "Source Serif 4"','700 11pt "Source Serif 4"','400 11pt "Atkinson Hyperlegible"','700 11pt "Atkinson Hyperlegible"',...(BL==="pa"?['400 11pt "Noto Sans Gurmukhi"','700 11pt "Noto Sans Gurmukhi"']:[]),...(BL==="ur"?['400 11pt "Noto Nastaliq Urdu"','700 11pt "Noto Nastaliq Urdu"']:[])].map(f=>document.fonts.load(f)));await document.fonts.ready;}catch(e){}
   if(!h.paid&&!BOOKCONN){extra();return;}

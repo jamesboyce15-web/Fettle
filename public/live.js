@@ -192,6 +192,9 @@
         await loadUser(data.user);
       }
       if (wantBook && H.includes(wantBook)) { const h = wantBook; wantBook = null; view = H.indexOf(h); h.paid = true; openBook(); return false; }
+      const after = window.__afterAuth; window.__afterAuth = null; window.__commMine = undefined;
+      if (after === "commStart") { commStart(); return false; }
+      if (after && after.startsWith("commDash:")) { commDash(after.slice(9)); return false; }
       view = 0; homeView(); return false;
     } finally { if (btn) btn.disabled = false; }
   };
@@ -200,7 +203,7 @@
   window.proAuth = function () {
     go("auth");
     document.getElementById("authbox").innerHTML = `
-     <p class="kicker"><span>Fettle for Communities</span> For councils, housing providers and support teams</p>
+     <p class="kicker"><span>Fettle for support services</span> For councils, housing providers and support teams</p>
      <h1 class="qtitle">Join your team</h1>
      <p class="mute">Your team lead will have sent you an invite code. Use your work email.</p>
      <form onsubmit="return liveJoin(event)" novalidate>
@@ -373,6 +376,20 @@
     h.paid = true; view = H.indexOf(h); openBook();
   };
   // Insert-only tables: the public key can add rows but never read them back (see schema.sql).
+  // ---------- Fettle Communities (community.sql) ----------
+  const rpc = async (name, args) => { if (!(await waitSb())) return { data: null, error: { message: "We couldn't connect. Check your signal and try again." } }; return sb.rpc(name, args || {}); };
+  window.commPublic = async slug => { const { data, error } = await rpc("community_public", { p_slug: slug }); return error ? null : data; };
+  window.commShare = async (slug, token, data, named, contact) => { const { error } = await rpc("community_share", { p_slug: slug, p_token: token, p_data: data, p_named: named || "", p_contact: contact || "" }); if (error) console.error(error); return !error; };
+  window.commLeave = async token => { const { error } = await rpc("community_leave", { p_token: token }); return !error; };
+  window.commAsk = async (slug, token, need, note, named, contact) => { const { error } = await rpc("community_ask", { p_slug: slug, p_token: token, p_need: need, p_note: note || "", p_named: named || "", p_contact: contact || "" }); return error ? (/today/.test(error.message) ? error.message : false) : true; };
+  window.commCreateLive = async (slug, name, kind, area, you) => { const { data, error } = await rpc("community_create", { p_slug: slug, p_name: name, p_kind: kind, p_area: area || "", p_admin_name: you || "" }); return error ? { error: /taken|already/.test(error.message) ? error.message : "That didn't work. Please try again." } : { community: data }; };
+  window.commMine = async () => { if (!user) return []; const { data } = await rpc("community_mine"); return data || []; };
+  window.commSetInfo = async (slug, name, area, info) => { const { error } = await rpc("community_set_info", { p_slug: slug, p_name: name, p_area: area || "", p_info: info }); return !error; };
+  window.commStats = async slug => { const { data, error } = await rpc("community_stats", { p_slug: slug }); return error ? { error: error.message } : data; };
+  window.commRequests = async slug => { const { data } = await rpc("community_requests_list", { p_slug: slug }); return data || []; };
+  window.commPeople = async slug => { const { data } = await rpc("community_people", { p_slug: slug }); return data || []; };
+  window.commRequestDone = async id => { const { error } = await rpc("community_request_done", { p_id: id }); return !error; };
+
   window.liveAnon = async function (h, data) {
     const { error } = await sb.from("anon_checks").insert({ area: String(h.area).slice(0, 80), nation: h.nation || null, data });
     if (error) console.error(error);

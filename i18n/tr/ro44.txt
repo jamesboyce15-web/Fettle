@@ -1,0 +1,257 @@
+0|Comunitățile Fettle
+1|Pregătiți-vă comunitatea împreună.
+2|Pentru consilii parohiale, biserici, moschei, gurdware, cluburi sportive, afaceri locale și grupuri de locatari. Membrii tăi fac verificarea gratuită și aleg dacă îți împărtășesc răspunsurile.
+3|Totaluri aproximative pentru comunitatea ta, niciodată nume decât dacă oamenii aleg
+4|Un buletin scris pornind de la cele mai mari lipsuri, gata de tipărit sau trimis
+5|Punctul vostru de întâlnire, contactele și sprijinul în Cartea Fettle a fiecăruia
+6|O cale discretă prin care oamenii vă pot cere ajutor
+7|Gratuit pentru grupurile comunitare.
+8|Pornește o comunitate
+9|Vezi un exemplu
+10|Fettle pentru serviciile de sprijin
+11|Biserică, moschee, gurdwara, templu sau sinagogă
+12|îi ajută pe toți să se pregătească pentru pene de curent, inundații și vreme rea.
+13|Fă verificarea gratuită. La final alegi dacă îți adaugi răspunsurile la totalurile lor anonime. Numele tău e împărtășit doar dacă vrei.
+14|Comunitatea ta
+15|Împărtășești cu
+16|Adăugarea răspunsurilor tale îi ajută să vadă de ce are nevoie comunitatea, de exemplu câte case nu au destulă apă, și să scrie despre asta în buletin.
+17|Adaugă casa mea la totalurile lor anonime
+18|Văd totaluri, niciodată răspunsurile tale separat. Fără nume, adresă sau cod poștal.
+19|Dă și numele meu, ca să poată oferi ajutor
+20|Opțional. Organizatorii lor ar vedea numele tău, cum te pot contacta și ce lipsește din planul tău.
+21|Numele tău
+22|Telefon sau e-mail
+23|Salvează alegerea mea
+24|Nu acum
+25|Adaugă-ți numele sau debifează căsuța.
+26|Ți-ai împărtășit răspunsurile și numele. {0}Schimbă{1}
+27|Dacă trebuie să pleci de acasă:
+28|Ajutorul pe care îl oferă:
+29|Contact:
+30|Cere-le ajutor
+31|Nu mai împărtăși cu ei
+32|Ți-ai adăugat casa la totalurile lor anonime. {0}Schimbă{1}
+33|Cere ajutor
+34|Doar organizatorii lor văd asta.
+35|De ce ai nevoie?
+36|Nu ne permitem unele lucruri din planul nostru
+37|Vă rog să bateți la ușa mea dacă e o urgență
+38|Ceva ce ar trebui să știe {0}Opțional{1}
+39|Telefon sau e-mail {0}Ca să-ți poată răspunde. Fără el, doar îți pot număra cererea.{1}
+40|{0} adult, {1} adult peste {2} ani
+41|{0}{1}Fă un plan pentru inundații
+42|Ce muți, ce închizi, unde mergi. Când vine o avertizare de inundație, e puțin timp. Decide acum ce ai muta la etaj, cum închizi gazul, curentul și apa și unde ai merge. Și nu conduce niciodată prin apa de inundație: {0} cm de apă curgătoare pot ridica o mașină.
+43|{0}{1}Abonează-te la avertizări gratuite de inundație
+44|Prin SMS, telefon sau e-mail. Primești o avertizare când se așteaptă inundații unde locuiești, adesea cu ore înainte să vină apa. Poți abona și o rudă.
+45|{0}{1}Ține documentele și medicamentele într-o pungă impermeabilă
+46|O pungă de congelator sigilată e de ajuns. Apa de inundație distruge hârtia și medicamentele. Ține pașapoartele, datele asigurării și câteva zile de medicamente sigilate, la etaj sau în geanta de urgență.
+47|{0}{1}Verifică dacă asigurarea acoperă inundațiile
+48|Uită-te în poliță sau întreabă-ți asigurătorul. Verifică dacă asigurarea clădirii și a bunurilor include daunele de inundație. Dacă e greu să găsești asigurare din cauza riscului de inundație, întreabă-ți asigurătorul despre Flood Re.
+49|Comunitatea ta și ajutorul pe care îl oferă.
+50|Casa ta face parte din
+51|. Într-o urgență, oamenii din apropiere sunt adesea primii care ajută.
+52|Dacă trebuie să pleci de acasă
+53|Contact
+54|Ajutorul pe care îl oferă
+55|Cel mai apropiat defibrilator
+56|De asemenea
+57|Dacă nu îți permiți ceva din plan sau ai vrea să-ți bată cineva la ușă într-o urgență, cere-le. O poți face în Fettle sau personal.
+58|{0}Consiliul parohial, biserica, moscheea, clubul sau afacerea locală e pe Fettle?{1} Roagă-i să pornească o comunitate, ca să vă pregătiți împreună.
+59|Pornește una pentru grupul tău
+60|Gratuit pentru grupurile comunitare. Membrii tăi fac verificarea și aleg dacă îți împărtășesc răspunsurile. Vezi totaluri, iar nume doar acolo unde oamenii aleg să le dea.
+61|Numele grupului tău
+62|De exemplu, Biserica Sf. Maria, Caton
+63|Ce fel de grup?
+64|Consiliu parohial sau orășenesc
+65|Club sportiv sau social
+66|Afacere locală
+67|Grup de locatari sau chiriași
+68|Alt grup comunitar
+69|Sat, oraș sau zonă {0}Opțional{1}
+70|Adresa ta web {0}Scurtă și ușor de scris. Litere, cifre și liniuțe.{1}
+71|getfettle.co.uk/
+72|Prenumele tău {0}Vizibil pentru ceilalți organizatori{1}
+73|Vei putea adăuga informații pentru membri: unde să meargă dacă trebuie să plece de acasă, pe cine să contacteze și ce ajutor oferiți.
+74|Pornește comunitatea
+75|Alege o adresă web de cel puțin {0} litere sau cifre.
+76|Totaluri
+77|Buletin
+78|Info
+79|Ajutor
+80|Informații locale
+81|Ce văd membrii tăi
+82|Asta apare în planurile membrilor și e tipărit în Cartea lor Fettle. Adaugă doar ce ești de acord să vadă oricine.
+83|Sat, oraș sau zonă
+84|Unde să meargă oamenii dacă trebuie să plece de acasă {0}O sală, o moschee, un club sau alt loc cald și sigur{1}
+85|Pe cine să contacteze {0}Un nume și un telefon sau e-mail pe care ești de acord să-l împărtășești{1}
+86|Ajutorul pe care îl oferi {0}De exemplu, un fond pentru lucruri esențiale, transport, ridicarea rețetelor{1}
+87|Postul de radio local
+88|Altceva
+89|Site web sau rețele sociale
+90|case s-au alăturat până acum
+91|Totalurile apar după ce s-au alăturat {0} case, ca nimeni să nu poată fi identificat. Trimite linkul ca să începi.
+92|Invită oameni
+93|Încă nu sunt destule răspunsuri
+94|Buletinul e scris pornind de la lipsurile comunității. E gata după ce s-au alăturat {0} case.
+95|Cereri de ajutor
+96|Oameni care ți-au cerut ajutorul
+97|Încă nu sunt cereri. Oamenii pot cere din planul lor, în privat.
+98|Oameni care și-au dat numele
+99|Cui îi poți oferi ajutor
+100|Doar oameni care au ales să-ți dea numele. Vă rugăm păstrați asta pentru voi.
+101|Nimeni nu și-a dat încă numele. E în regulă: totalurile funcționează fără nume.
+102|Linkul tău
+103|Trimite invitația
+104|Tipărește un afiș
+105|Spune-o cu voce tare
+106|Un anunț de {0} minut
+107|Pentru o slujbă, rugăciunea de vineri, o zi de meci sau o ședință a parohiei.
+108|Furtunile, inundațiile și penele de curent sunt tot mai dese. Când se întâmplă, cel mai bine se descurcă cei care s-au pregătit dinainte și care au vecini atenți la ei.
+109|Așa că ne-am alăturat Fettle. E o verificare gratuită de {0} minute care îți spune de ce are nevoie casa ta pentru trei zile fără curent sau apă, începând cu lucrurile gratuite.
+110|La final îți poți adăuga răspunsurile la totalurile noastre. Vedem doar totaluri, de exemplu câte case nu au destulă apă. Nu numele tău, decât dacă alegi să-l dai.
+111|Linkul este
+112|. Și dacă nu îți permiți ceva din plan, vorbește cu noi.
+113|Adaugă alt organizator
+114|Roag-o să-și facă un cont Fettle, apoi scrie la hello@getfettle.co.uk cu adresa web a comunității și e-mailul ei, iar noi o adăugăm.
+115|Ajutor {0}{1}{2}
+116|{0}Acesta e un exemplu.{1} Cifrele sunt inventate, ca să arate ce vede o comunitate.
+117|case s-au alăturat
+118|cereri noi de ajutor
+119|și-au dat numele
+120|Unde sunt lipsurile
+121|Ce le lipsește caselor
+122|Apă de băut pentru {0} zile
+123|lipsă
+124|case
+125|Un radio cu baterii sau cu manivelă
+126|Un plan pentru inundații
+127|Abonați la avertizări de inundație
+128|Cineva care să verifice dacă sunt bine
+129|Medicamente de rezervă
+130|O lanternă cu baterii de rezervă
+131|Detectoare de fum și de monoxid de carbon
+132|O cale de a sta la cald fără încălzire
+133|Cifrele sub {0} nu sunt afișate, ca nimeni să nu poată fi identificat.
+134|Scrie un buletin despre cele mai mari lipsuri
+135|Cine ar putea avea nevoie de mai mult ajutor
+136|case cu cineva peste {0} de ani
+137|oameni care locuiesc singuri
+138|case cu un copil sub {0} ani
+139|Scris pornind de la cele mai mari lipsuri
+140|Alege până la {0} subiecte, adaugă-ți noutățile, apoi tipărește sau copiază într-un e-mail, o revistă a parohiei sau un grup de WhatsApp. Tu îl trimiți: Fettle nu le scrie membrilor tăi.
+141|Subiecte
+142|Apă de băut
+143|Registrul Serviciilor Prioritare
+144|Un radio care merge fără curent
+145|Avertizări gratuite de inundație
+146|Început
+147|Noutățile tale {0}Opțional: o întâlnire, un eveniment, voluntari căutați{1}
+148|Ajutorul pe care îl oferi {0}Pentru cei care nu își permit ceva{1}
+149|Tipărește
+150|Copiază textul
+151|Ne pregătim împreună
+152|case au făcut deja verificarea.
+153|dintre casele care au făcut verificarea nu au încă asta.
+154|Dacă se oprește apa sau nu e bună de băut, ai nevoie de aproximativ {0} litri de persoană pe zi pentru băut, plus puțină pentru gătit și spălat. Magazinele rămân fără în câteva ore.
+155|Ține apă îmbuteliată pentru {0} zile: pentru {1} persoane înseamnă {2} sticle mari de {3} litri.
+156|Cumpără câteva sticle la fiecare cumpărătură și ține-le într-un loc răcoros și întunecat.
+157|Folosește-le întâi pe cele mai vechi și înlocuiește-le, ca să nu expire niciodată.
+158|Apa de la robinet în sticle curate și sigilate ține {0} luni. Scrie data pe ele.
+159|Mai multe:
+160|E gratuit. Companiile de energie și apă oferă ajutor în plus celor înscriși: anunță întreruperile planificate, le dau prioritate la apa îmbuteliată și verifică dacă sunt bine.
+161|Se pot înscrie persoanele în vârstă, cele cu dizabilități, cele cu copii mici și cele care depind de echipamente.
+162|Înscrie-te prin furnizorul de energie, operatorul rețelei electrice și compania de apă.
+163|Poți înscrie pe altcineva, cu acordul lui.
+164|Când dispar curentul și semnalul mobil, radioul local îți spune ce se întâmplă, unde să mergi și când se repară.
+165|Ia-ți un radio cu baterii sau cu manivelă.
+166|Găsește postul local și scrie frecvența pe radio.
+167|Ține baterii de rezervă lângă el.
+168|Radiourile cu manivelă costă de la aproximativ £{0}, iar cele cu baterii mai puțin.
+169|Dacă nu îți permiți
+170|N-ai făcut încă verificarea? E gratuită și durează {0} minute:
+171|Cifrele sunt totaluri aproximative de la oamenii care au ales să-și împărtășească răspunsurile. Răspunsurile nimănui nu sunt afișate separat.
+172|Nu își permit unele lucruri din plan
+173|Marchează ca rezolvat
+174|Ar vrea să-i bată cineva la ușă într-o urgență
+175|Fără nume sau contact
+176|Noutățile noastre
+177|Mâncare care nu trebuie gătită
+178|Într-o pană de curent, aragazele, cuptoarele cu microunde și frigiderele se opresc. Mâncarea gata de mâncat îi ține pe toți în putere.
+179|Ține mâncare pentru {0} zile pe care o poți mânca rece: conserve, biscuiți, cereale, unt de arahide, fructe uscate.
+180|Ține lângă ea un deschizător manual de conserve.
+181|Folosește-o prin rotație la mesele obișnuite, ca nimic să nu expire.
+182|Conservele mărcii proprii a supermarketului costă sub £{0} bucata.
+183|O lanternă și baterii de rezervă
+184|Lumânările provoacă incendii în timpul penelor de curent. O lanternă e mai sigură, iar lanterna telefonului descarcă bateria de care ai nevoie pentru apeluri.
+185|Ține lanterna unde o găsești pe întuneric, de exemplu în sertarul din bucătărie.
+186|Verifică dacă merge când se schimbă ora.
+187|Lanternele costă de la aproximativ £{0}. Una cu manivelă nu are nevoie de baterii.
+188|Telefonul e cum chemi ajutor și afli de la familie. Într-o pană lungă de curent, nu ține o zi fără reîncărcare.
+189|Ține o baterie externă încărcată și reîncarc-o la câteva luni.
+190|Ține lângă ea cablul potrivit.
+191|Într-o pană de curent, folosește modul de economisire și ține apelurile scurte.
+192|O baterie externă simplă costă aproximativ £{0}.
+193|Cum stai la cald fără încălzire
+194|Majoritatea sistemelor de încălzire se opresc într-o pană de curent, iar o casă rece e periculoasă pentru vârstnici și bebeluși.
+195|Ține pături sau saci de dormit, căciuli și șosete groase pentru toți.
+196|Alege o cameră pe care s-o ții caldă și închide ușile.
+197|Nu folosi niciodată aragazul sau grătarul ca să încălzești o cameră.
+198|Magazinele caritabile sunt un loc bun pentru pături.
+199|Într-o urgență, ajutorul poate întârzia. O trusă de bază tratează tăieturile și arsurile până ajunge.
+200|Ține o trusă de prim ajutor în bucătărie.
+201|Verifică dacă e completă și în termen.
+202|Gândește-te la un curs de prim ajutor gratuit sau ieftin: le organizează Crucea Roșie și St John Ambulance.
+203|Trusele de bază costă aproximativ între £{0} și £{1}.
+204|Incendiile și intoxicațiile cu monoxid de carbon sunt mai probabile în penele de curent și gerurile, când oamenii folosesc lumânări, aeroterme și generatoare.
+205|Montează un detector de fum pe fiecare etaj.
+206|Montează un detector de monoxid de carbon în camerele cu aparate pe gaz sau combustibil solid.
+207|Testează-le lunar.
+208|Pompierii pot monta detectoare gratuit, la o vizită de siguranță în locuință.
+209|Când nu e curent sau internet, terminalele de plată și bancomatele nu mai merg.
+210|Ține niște numerar în bancnote mici și monede.
+211|Ține-l într-un loc sigur, cu documentele.
+212|Completează-l dacă îl folosești.
+213|Chiar și £{0} în bancnote mici ajută.
+214|Dacă trebuie să pleci repede de acasă, din cauza unei inundații sau a unui incendiu, nu e timp să te gândești ce să iei.
+215|Fă-ți o geantă cu medicamente, încărcătoare, documente, o lanternă, apă și gustări.
+216|Ține-o lângă ușă sau la etaj.
+217|Spune-le tuturor din casă unde e.
+218|Folosește o geantă pe care o ai deja.
+219|Farmaciile se pot închide pe vreme rea și în penele de curent, iar livrările se opresc.
+220|Comandă rețetele repetate cu o săptămână înainte să rămâi fără.
+221|Ține pe hârtie o listă cu medicamentele și dozele.
+222|Întreabă farmacistul ce să faci cu medicamentele ținute în frigider.
+223|Gratuit: e vorba să comanzi la timp.
+224|Cineva care să verifice dacă ești bine
+225|Într-o urgență, cei care locuiesc singuri sunt cei mai expuși, iar telefoanele pot să nu meargă.
+226|Înțelege-te cu un vecin sau o rudă că îți vor bate la ușă.
+227|Schimbați numerele și scrieți-le și pe hârtie.
+228|Stabiliți un semn, de exemplu o foaie în geam, dacă ai nevoie de ajutor.
+229|Environment Agency te poate avertiza cu ore înainte de inundație, prin SMS, telefon sau e-mail.
+230|Abonează-te la gov.uk/sign-up-for-flood-warnings sau sună la Floodline la {0} {1} {2}.
+231|Fă-o și pentru rudele în vârstă, cu acordul lor.
+232|Când vine o avertizare de inundație, pot rămâne doar câteva ore, adesea noaptea. Un plan înseamnă că deciziile sunt deja luate.
+233|Află cum închizi gazul, curentul și apa.
+234|Decide ce ai muta întâi la etaj.
+235|Decide unde ai merge și cum ai ajunge acolo fără să conduci prin apă.
+236|E gratuit: Fettle te ajută să-l scrii.
+237|Aproape fiecare casă are:
+238|casă s-a alăturat până acum
+239|Nu mai împărtășești. Răspunsurile tale au fost scoase din totalurile lor.
+240|În această copie de previzualizare nu se salvează nimic.
+241|Alege până la {0} subiecte.
+242|Salvat doar în această copie.
+243|Casa ta e pregătită pentru {0} zile fără curent sau apă?
+244|Fă verificarea gratuită de {0} minute. Îți spune de ce are nevoie casa ta, începând cu lucrurile gratuite.
+245|Tu alegi dacă ne împărtășești răspunsurile. Vedem doar totaluri, niciodată numele tău, decât dacă vrei.
+246|Nu îți permiți ceva din plan?
+247|Afiș
+248|Se încarcă…
+249|Nu am găsit această comunitate.
+250|Doar organizatorii acestei comunități îi pot vedea totalurile.
+251|casa ta e pregătită pentru {0} zile fără curent, apă sau telefon? Fă verificarea gratuită de {1} minute. Tu alegi dacă ne împărtășești răspunsurile, iar numele tău e împărtășit doar dacă vrei.
+252|Mulțumim tuturor celor care au făcut verificarea Fettle. Iată ce am aflat și ce putem face cu toții.
+253|Nu s-a salvat. Încearcă din nou.
+254|Nu s-a trimis. Încearcă din nou.
+255|Fă-ți mai întâi un cont, ca să te poți întoarce la comunitatea ta.
+256|Comunitățile de care te ocupi

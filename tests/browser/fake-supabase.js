@@ -4,7 +4,7 @@
 // Two people in one browser: set sessionStorage "fake_tab" before the page loads and each tab keeps its own sign-in.
 (function () {
   const L = k => JSON.parse(localStorage.getItem("fake_" + k) || "null"), S = (k, v) => localStorage.setItem("fake_" + k, JSON.stringify(v));
-  const blank = () => ({ users: [], households: [], purchases: [], organisations: [], org_members: [], org_invites: [], case_events: [], anon_checks: [], fettle_events: [], household_members: [], household_invites: [] });
+  const blank = () => ({ users: [], households: [], purchases: [], organisations: [], org_members: [], org_invites: [], case_events: [], anon_checks: [], fettle_events: [], household_members: [], household_invites: [], communities: [], community_admins: [], community_members: [], community_requests: [] });
   const db = () => Object.assign(blank(), L("db") || {}), save = d => S("db", d);
   const uid = () => crypto.randomUUID();
   const TAB = (() => { try { return !!sessionStorage.getItem("fake_tab"); } catch (e) { return false; } })();
@@ -31,7 +31,7 @@
     households: (d, r) => r.org_id ? (r.user_id == null && r.created_by === me() && member(d, r.org_id)) : r.user_id === me(),
     purchases: () => false, organisations: () => false, household_members: () => false, household_invites: () => false, org_members: () => false, org_invites: () => false,
     case_events: (d, r) => member(d, r.org_id) && r.user_id === me(),
-    anon_checks: (d, r) => !!r.area && !r.user_id, fettle_events: (d, r) => ["check_started", "check_finished", "tool_calc", "tool_local", "tool_local_found", "tool_remind", "remind_signup", "tool_flood", "tool_flood_found", "reg_join", "checkin_fine", "checkin_maybe", "checkin_now", "family_circle", "family_checkin", "connect_open", "connect_yes", "connect_maybe", "connect_no", "connect_landing", "connect_book", "connect_emergency", "connect_recover", "alerts_on"].includes(r.kind) && (r.src === undefined || /^[a-z0-9-]{1,20}$/.test(r.src)),
+    anon_checks: (d, r) => !!r.area && !r.user_id, fettle_events: (d, r) => ["check_started", "check_finished", "tool_calc", "tool_local", "tool_local_found", "tool_remind", "remind_signup", "tool_flood", "tool_flood_found", "reg_join", "checkin_fine", "checkin_maybe", "checkin_now", "family_circle", "family_checkin", "connect_open", "connect_yes", "connect_maybe", "connect_no", "connect_landing", "connect_book", "connect_emergency", "connect_recover", "alerts_on", "community_start", "community_join", "community_ask", "community_newsletter"].includes(r.kind) && (r.src === undefined || /^[a-z0-9-]{1,20}$/.test(r.src)),
   };
   function builder(table) {
     const st = { filters: [], op: "select", row: null, single: false };
@@ -100,6 +100,31 @@
       if (!fam(d, inv.household_id)) d.household_members.push({ household_id: inv.household_id, user_id: me(), name: ((u.user_metadata || {}).first_name || "").slice(0, 60), added_at: new Date().toISOString() });
       inv.uses++; save(d); return [inv.household_id]; },
     fettle_recent_checkins() { return [null]; },
+    // community.sql
+    community_public({ p_slug }) { const c = (db().communities || []).find(x => x.slug === String(p_slug).toLowerCase()); return [c ? { slug: c.slug, name: c.name, kind: c.kind, area: c.area, info: c.info } : null]; },
+    community_create({ p_slug, p_name, p_kind, p_area, p_admin_name }) { const d = db(); if (!me()) return [null, "Sign in first"];
+      if (d.communities.some(x => x.slug === p_slug)) return [null, "That web address is taken. Try another"];
+      const c = { id: uid(), slug: p_slug, name: p_name, kind: p_kind, area: p_area || null, info: {}, created_by: me() }; d.communities.push(c);
+      d.community_admins.push({ community_id: c.id, user_id: me(), name: p_admin_name }); save(d); return [{ slug: c.slug, name: c.name, kind: c.kind, area: c.area, info: c.info }]; },
+    community_mine() { const d = db(); return [d.communities.filter(c => d.community_admins.some(a => a.community_id === c.id && a.user_id === me())).map(c => ({ slug: c.slug, name: c.name, kind: c.kind, area: c.area, info: c.info }))]; },
+    community_set_info({ p_slug, p_name, p_area, p_info }) { const d = db(), c = d.communities.find(x => x.slug === p_slug); if (!c || !d.community_admins.some(a => a.community_id === c.id && a.user_id === me())) return [null, "Only this community's organisers can do that"]; Object.assign(c, { name: p_name || c.name, area: p_area || null, info: p_info }); save(d); return [null]; },
+    community_share({ p_slug, p_token, p_data, p_named, p_contact }) { const d = db(), c = d.communities.find(x => x.slug === p_slug); if (!c) return [null, "That community isn't on Fettle"];
+      const row = { token: p_token, community_id: c.id, data: p_data, named: p_named || null, contact: p_contact || null, updated_at: new Date().toISOString() };
+      const i = d.community_members.findIndex(x => x.token === p_token); if (i >= 0) d.community_members[i] = row; else d.community_members.push(row); save(d); return [null]; },
+    community_leave({ p_token }) { const d = db(); d.community_members = d.community_members.filter(x => x.token !== p_token); d.community_requests = (d.community_requests || []).filter(x => x.token !== p_token); save(d); return [null]; },
+    community_ask({ p_slug, p_token, p_need, p_note, p_named, p_contact }) { const d = db(), c = d.communities.find(x => x.slug === p_slug); if (!c) return [null, "That community isn't on Fettle"];
+      d.community_requests.push({ id: uid(), community_id: c.id, token: p_token, need: p_need, note: p_note || null, named: p_named || null, contact: p_contact || null, status: "new", created_at: new Date().toISOString() }); save(d); return [null]; },
+    community_stats({ p_slug }) { const d = db(), c = d.communities.find(x => x.slug === p_slug); if (!c || !d.community_admins.some(a => a.community_id === c.id && a.user_id === me())) return [null, "Only this community's organisers can see this"];
+      const M = d.community_members.filter(x => x.community_id === c.id), n = M.length; if (n < 5) return [{ members: n, small: true }];
+      const hide = x => x >= 1 && x <= 2 ? null : x, ind = {};
+      [...new Set(M.flatMap(m => Object.keys((m.data || {}).ind || {})))].forEach(k => { const A = M.filter(m => k in m.data.ind), has = A.filter(m => m.data.ind[k] === 1).length; ind[k] = { app: A.length, missing: hide(A.length - has) }; });
+      const rk = k => hide(M.filter(m => m.data.risk && m.data.risk[k]).length);
+      return [{ members: n, named: M.filter(m => m.named).length, ind, risk: { o70: rk("o70"), alone: rk("alone"), u5: rk("u5") }, requests: d.community_requests.filter(r => r.community_id === c.id && r.status === "new").length }]; },
+    community_people({ p_slug }) { const d = db(), c = d.communities.find(x => x.slug === p_slug); if (!c || !d.community_admins.some(a => a.community_id === c.id && a.user_id === me())) return [null, "Only this community's organisers can see this"];
+      return [d.community_members.filter(m => m.community_id === c.id && m.named).map(m => ({ named: m.named, contact: m.contact, risk: m.data.risk, missing: Object.entries(m.data.ind || {}).filter(([k, v]) => !v).map(([k]) => k) }))]; },
+    community_requests_list({ p_slug }) { const d = db(), c = d.communities.find(x => x.slug === p_slug); if (!c || !d.community_admins.some(a => a.community_id === c.id && a.user_id === me())) return [null, "Only this community's organisers can see this"];
+      return [d.community_requests.filter(r => r.community_id === c.id).map(r => ({ id: r.id, need: r.need, note: r.note, named: r.named, contact: r.contact, status: r.status, at: r.created_at }))]; },
+    community_request_done({ p_id }) { const d = db(), r = d.community_requests.find(x => x.id === p_id); if (r && d.community_admins.some(a => a.community_id === r.community_id && a.user_id === me())) { r.status = "done"; save(d); } return [null]; },
   };
   window.fakeUser = email => db().users.find(x => x.email === email);
   window.supabase = { createClient() {
