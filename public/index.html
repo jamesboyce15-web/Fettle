@@ -465,8 +465,8 @@ html[lang^="en"] .notin-en{display:none}
 .calm .rhead h1{margin:0;font-family:var(--serif);font-weight:600;font-size:1.7rem;line-height:1.12;color:var(--brand)}
 .calm .rhead p{margin:6px 0 0;font-size:.92rem;color:var(--mute)}
 .calm .critline{display:inline-block;margin-top:8px;font-size:.85rem;font-weight:700;color:var(--red);background:color-mix(in srgb,var(--red) 10%,transparent);border-radius:10px;padding:3px 10px}
-.calm .seg{margin:22px 0 0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));background:var(--soft);border-radius:14px;padding:4px}
-.calm .seg button{height:42px;border:0;border-radius:11px;background:transparent;font:inherit;font-size:.92rem;color:var(--mute);cursor:pointer;padding:0 4px}
+.calm .seg{margin:22px 0 0;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);background:var(--soft);border-radius:14px;padding:4px}
+.calm .seg button{height:42px;border:0;border-radius:11px;background:transparent;font:inherit;font-size:clamp(.78rem,3.6vw,.92rem);white-space:nowrap;color:var(--mute);cursor:pointer;padding:0 4px}
 .calm .seg button[aria-selected="true"]{background:var(--surface);font-weight:700;color:var(--brand);box-shadow:0 1px 3px rgba(0,0,0,.08)}
 .calm .card{background:var(--surface);border-radius:24px;padding:22px;margin:22px 0 0;box-shadow:0 1px 2px rgba(23,63,53,.06),0 10px 28px rgba(23,63,53,.08)}
 .calm h2.ch,.calm h3.ch{margin:0;font-family:var(--serif);font-weight:600;font-size:1.3rem;color:var(--brand)}
@@ -725,6 +725,7 @@ html[lang^="en"] .notin-en{display:none}
 .polfacts{list-style:none;padding:0;margin:12px 0}.polfacts li{padding:7px 0 7px 26px;position:relative;border-bottom:1px solid var(--line)}
 .polfacts li:before{position:absolute;left:0;top:7px;font-weight:700}.polfacts li.y:before{content:"✓";color:var(--doneink)}.polfacts li.n:before{content:"?";color:#b07a00}
 .polq{margin:8px 0;padding:8px 12px;border-left:3px solid var(--line2);background:var(--soft,#f3f4f1);border-radius:6px;font-size:.92rem}
+.calm .fam-intro{margin:18px 0 0}
 </style>
 </head>
 <body>
@@ -1563,7 +1564,7 @@ function homeView(){
      <h3>${n.title}</h3><p style="margin:0">${n.what}</p>
      ${h?`<div class="means"><b>What it means for you</b>${n.means(h)}</div>`:""}
      <div class="act">${h?n.act.filter(a=>titles[a]||a==="monthly").map(a=>`<button class="linkbtn" onclick="view=0;go('r');render()">${a==="monthly"?"See my monthly plan":titles[a]}</button>`).join(""):""}<span class="sm mute">Source: <a href="${n.src[1]}" target="_blank" rel="noopener">${n.src[0]}</a></span></div></article>`).join("")}
-   <p class="sm mute">We summarise news from public sources and link to each one. Reviewed weekly by [name, role]. Follow official alerts in an emergency.</p></section>`;
+   <p class="sm mute">We summarise news from public sources and link to each one, so you can check them. Follow official alerts in an emergency.</p></section>`;
 }
 
 
@@ -3053,7 +3054,7 @@ function calmHTML(h,row){
   const S=nextSteps(h), M=plan(h), by=h.budget&&buyLeft.length?M[M.length-1].label:null;
   const chev=`<i class="chev" aria-hidden="true"></i>`;
   const head=`<section class="rhead">${ring(s)}<div><h1>${esc(hhName(h))}</h1><p>${got.length} of ${N.length} things sorted</p>${oc?`<span class="critline">${oc===1?"1 critical risk to sort first":`${oc} critical risks to sort first`}</span>`:""}</div></section>
-   <div class="seg" role="tablist" aria-label="Your plan" id="rseg">${[["todo","To do",left.length],["shop","Shopping",buyLeft.length],["done","Done",got.length]].map(([k,t,n])=>`<button role="tab" aria-selected="${RTAB===k}" onclick="setRTab('${k}')">${t} ${n}</button>`).join("")}</div>`;
+   <div class="seg" role="tablist" aria-label="Your plan" id="rseg">${[["todo","To do",left.length],["shop","Shopping",buyLeft.length],["done","Done",got.length],...(isPro()||h.pro?[]:[["family","Family",null]])].map(([k,t,n])=>`<button role="tab" aria-selected="${RTAB===k}" onclick="setRTab('${k}')">${t}${n==null?"":` ${n}`}</button>`).join("")}</div>`;
   let body="";
   if(RTAB==="shop"){
     const G=shopGroups(h);
@@ -3069,6 +3070,8 @@ function calmHTML(h,row){
            ${howHTML(h,x,false,true)}</div></details>`).join("")}</div>`:""}`).join("")}
      <div class="note"><p><b>Money tight?</b></p><p>Start with the free things on your To do list. They make the biggest difference. Supermarket own-brand is fine, and you can build up a little each week.</p>${tightBase(h)?`<p><button class="linkbtn" onclick="setRTab('todo')">See your free steps</button></p>`:""}</div>
      <p class="sm mute" style="margin-top:18px">Prices are estimates. Buy anywhere you like: food and water are usually cheapest at your supermarket. As an Amazon Associate I earn from qualifying purchases.</p>`;
+  } else if(RTAB==="family"){
+    body=`${h.other?"":`<p class="sm mute fam-intro">${homes().length>1?"Your family's homes, linked with Fettle Connect.":"Plan with your family: add Mum, Dad or a grandparent and share the jobs."}</p>`}${famCard(h)}${jobsCard(h)}${connectCard(h)}`;
   } else if(RTAB==="done"){
     const sit=readyFor(h);
     body=got.length?`<section class="card donec"><div class="ok">${sico("check",34,2.2)}</div><h2>${got.length===1?"1 thing sorted":`${got.length} things sorted`}</h2>
@@ -3087,8 +3090,6 @@ function calmHTML(h,row){
     body=`${S.length?`<section id="steps">${winHTML(h)}${stepCalm(h,S[0],0)}
       ${rest.length?`<div class="sect"><div class="secth"><h3 class="ch">Then these</h3>${left.length>S.length?`<button class="linkbtn strong" onclick="setRTab('todo','allplan')">See all ${left.length}</button>`:""}</div><div class="rows">${rest.map((x,i)=>stepCalm(h,x,i+1)).join("")}</div></div>`:""}</section>`
       :`<section id="steps" class="card donec">${winHTML(h)}<div class="ok">${sico("check",34,2.2)}</div><h2>You've sorted everything in your plan.</h2><p>Keep it that way: check your supplies each season. We'll remind you.</p></section>`}
-    ${famCard(h)}
-    ${jobsCard(h)}
     ${pledgeCard(h)}
     <section class="sect cope" id="cope"><h3 class="ch" style="margin-bottom:12px">Could you cope?</h3><div class="tiles">${tiles.join("")}</div>
       ${cope?`<details class="fold" id="copemore"><summary><span>What you said, and what's missing</span></summary>${cope}</details>`:""}
@@ -3104,7 +3105,7 @@ function calmHTML(h,row){
     <section class="bookc" id="bookcard"><div class="bk" aria-hidden="true"></div><div style="flex:1"><p class="bt">Your household book</p>
       ${h.paid?`<p class="bs">Your book is ready: ${bookPagesHint()}.</p><div class="row3"><button class="btn" onclick="openBook()">Open my book</button><button class="btn quiet" onclick="extra()">Change details</button></div>`
        :`<p class="bs">Your plan, numbers and 72 hours, ready to print.${LIVE&&!FREEBOOK?"":" Free."}</p><button class="btn" onclick="extra()">${LIVE&&!FREEBOOK?"Get The Fettle Book: £5":"Make my book"}</button>`}</div></section>
-    ${connectCard(h)}
+
     <div class="links helpcard">
       ${!h.other&&!h.pro?`<button class="btn" onclick="start(true)">${sico("heart",22)}<span>Check on Mum or a neighbour</span>${chev}</button>
       <button class="btn quiet" onclick="shareCheck()">${sico("share",22)}<span>Send the check to someone</span>${chev}</button>
@@ -3498,7 +3499,7 @@ function relNotes(h){
 function relStart(h){
   if(!h.other||h.pro||!h._new) return "";
   return `<section class="card relstart" id="relstart"><p class="lpvk">Next, with the family</p><h3 class="ch">${esc(h.name)}'s plan is ready</h3>
-    <ol class="sm"><li><button class="linkbtn" onclick="relGo('jobscard')">Split the jobs that are missing</button></li><li><button class="linkbtn" onclick="relGo('famcard')">Add who's in the family circle</button></li><li><button class="linkbtn" onclick="relGo('famshare')">Invite them to the plan</button></li></ol>
+    <ol class="sm"><li><button class="linkbtn" onclick="setRTab('family','jobscard')">Split the jobs that are missing</button></li><li><button class="linkbtn" onclick="setRTab('family','famcard')">Add who's in the family circle</button></li><li><button class="linkbtn" onclick="setRTab('family','famshare')">Invite them to the plan</button></li></ol>
     <p class="sm"><button class="linkbtn q" onclick="delete H[view]._new;render(true)">Got it</button></p></section>`;
 }
 function relGo(id){const el=document.getElementById(id);if(el)el.scrollIntoView({block:"start",behavior:"smooth"});}

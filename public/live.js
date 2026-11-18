@@ -22,15 +22,18 @@
     return new Promise((ok, bad) => { const s = document.createElement("script"); s.src = src; s.onload = ok; s.onerror = bad; document.head.appendChild(s); });
   }
 
+  // Anything that needs the database waits for it, so a fast tap on a slow connection still works.
+  let sbReadyOk; const sbReady = new Promise(r => sbReadyOk = r);
+  const waitSb = async () => { if (!sb) await Promise.race([sbReady, new Promise(r => setTimeout(r, 10000))]); return !!sb; };
   async function boot() {
     try { await loadScript("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"); }
     catch (e) { console.error("Could not load Supabase", e); keepRestore(); return; }
-    sb = window.supabase.createClient(CFG.supabaseUrl, CFG.supabaseAnonKey, { auth: { persistSession: true, autoRefreshToken: true } });
+    sb = window.supabase.createClient(CFG.supabaseUrl, CFG.supabaseAnonKey, { auth: { persistSession: true, autoRefreshToken: true } }); sbReadyOk();
     sb.auth.onAuthStateChange((ev) => { if (ev === "PASSWORD_RECOVERY") newPasswordView(); });
     const { data } = await sb.auth.getSession();
     // Signed in: plans come from the account. Signed out: bring back a check this tab was part-way through.
     if (data.session) { keepClear(); await loadUser(data.session.user); } else keepRestore();
-    await handleReturn();
+    await handleReturn(); window.__liveReady = true;
     await remindArrive();
     if (new URLSearchParams(location.search).get("recheck")) { // link from a reminder email
       history.replaceState(null, "", location.pathname);
@@ -161,6 +164,7 @@
     e.preventDefault();
     const email = document.getElementById("a-email").value.trim().toLowerCase(), pw = document.getElementById("a-pw").value;
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return errBox("Enter an email address like name@example.com.");
+    if (!(await waitSb())) return errBox("We couldn't connect. Check your signal and try again.");
     const btn = e.target.querySelector("button[type=submit]"); if (btn) btn.disabled = true;
     try {
       if (mode === "signup") {
@@ -429,11 +433,12 @@
   async function pullShared() {
     if (document.hidden || !user || user.pro || !sb) return;
     const em = !!(window.femActive && window.femActive());
-    const S = H.filter(h => h._id && (h._shared || h._hasFamily || h.em || em) && saved.get(h._id) === JSON.stringify(strip(h)));
+    // Every saved plan: any of them may have family in it, and one query is cheap.
+    const S = H.filter(h => h._id && saved.get(h._id) === JSON.stringify(strip(h)));
     if (!S.length) return;
     const { data } = await sb.from("households").select("id,data").in("id", S.map(h => h._id));
     let changed = false;
-    (data || []).forEach(r => { const h = S.find(x => x._id === r.id); const body = JSON.stringify(strip(Object.assign({}, r.data))); if (h && body !== saved.get(r.id)) { Object.keys(h).forEach(k => { if (!k.startsWith("_") && k !== "paid") delete h[k]; }); Object.assign(h, r.data); saved.set(r.id, JSON.stringify(strip(h))); changed = true; } });
+    (data || []).forEach(r => { const h = S.find(x => x._id === r.id); const body = JSON.stringify(strip(Object.assign({}, r.data))); if (h && body !== saved.get(r.id)) { Object.keys(h).forEach(k => { if (!k.startsWith("_") && k !== "paid") delete h[k]; }); Object.assign(h, fresh(r.data.other), r.data); saved.set(r.id, JSON.stringify(strip(h))); changed = true; } });
     if (changed) { if (window.femRefresh) window.femRefresh(); else if (!document.getElementById("v-r").classList.contains("hide")) render(true); }
   }
   document.addEventListener("visibilitychange", pullShared);

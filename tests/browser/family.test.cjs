@@ -9,6 +9,8 @@ let fails = 0; const ok = (c, m) => { if (!c) fails++; console.log((c ? 'PASS ' 
   ok(await p.evaluate(() => { Object.assign(cur, { over70: 1, adults: 0 }); return list().some(q => q.id === 'carers'); }), 'a relative\'s check asks whether carers visit');
   await p.evaluate(() => { Object.assign(cur, { name: 'Mum', pc: 'LA1', area: 'Lancaster', home: 'bungalow', outdoor: 'garden', tenure: 'own', adults: 0, over70: 1, heat: 'gas', hob: 'gas', cold: 'fast', healthGate: 'yes', health: ['meds'], carers: 'daily', water: 'none', food: 'some', kit: [], fa: 'no', budget: 0 }); qi = list().length - 1; drawQ(); next(); });
   await p.waitForTimeout(200);
+  ok(await p.isVisible('.seg >> text=Family') && !(await p.$('#famcard')), 'family circle lives on the Family tab, not the To do list');
+  await p.evaluate(() => setRTab('family')); await p.waitForTimeout(60);
   ok(await p.isVisible('#famcard') && /Who will look after them for 3 days/.test(await p.textContent('#famcard')), 'relative\'s plan has a family circle');
   ok(await p.evaluate(() => hasHealth(H[view]) && regNeeds(H[view]).includes('Relies on carer visits')), 'carer visits count as a care need and show on the emergency list');
   // add two people
@@ -52,15 +54,21 @@ let fails = 0; const ok = (c, m) => { if (!c) fails++; console.log((c ? 'PASS ' 
   await p.evaluate(() => { Object.assign(cur, { relOK: 'later', pc: 'LA1', area: 'Lancaster', home: 'house', outdoor: 'garden', tenure: 'own', adults: 0, over70: 1, heat: 'gas', hob: 'gas', cold: 'fast', healthGate: 'no', carers: 'no', water: 'none', food: 'no', kit: [], fa: 'no', budget: 0 }); qi = list().length - 1; drawQ(); next(); });
   await p.waitForTimeout(200);
   ok(await p.evaluate(() => H[view].name === 'Dad' && H[view].relHow === 'alone'), 'answers kept');
+  await p.evaluate(() => { RTAB = 'todo'; render(); }); await p.waitForTimeout(60);
   ok(await p.isVisible('#relstart') && /Dad's plan is ready/.test(await p.textContent('#relstart')), 'finishes with next steps for the family');
   const notes = await p.textContent('#res');
   ok(/Talk to them about this plan/.test(notes) && /You answered from what you know/.test(notes), 'reminds them to talk to Dad and check the guesses');
   ok(!(await p.$('#regcard')), 'no emergency list for residents without a council pilot');
   await p.evaluate(() => { sessionStorage.setItem('fettle-pilot', 'demo'); render(true); }); await p.waitForTimeout(80);
   ok(/Talk to them first/.test(await p.textContent('#regcard')) && !(await p.isVisible('#regcard >> text=Add us to the list')), 'no emergency list until Dad agrees');
+  await p.click('#relstart >> text=Split the jobs that are missing'); await p.waitForTimeout(80);
+  ok(await p.evaluate(() => RTAB === 'family') && await p.isVisible('#jobscard'), 'the next-steps links open the Family tab');
   ok(/Talk to them first, then invite the family/.test(await p.textContent('#famshare')), 'no inviting until Dad agrees');
+  await p.evaluate(() => { RTAB = 'todo'; render(); }); await p.waitForTimeout(60);
   await p.click('text=We\'ve talked, they\'re happy'); await p.waitForTimeout(80);
-  ok(await p.isVisible('#famshare >> text=Invite someone') && await p.isVisible('#regcard >> text=Add us to the list'), 'once Dad agrees, sharing and the list open up');
+  ok(await p.isVisible('#regcard >> text=Add us to the list'), 'once Dad agrees, the list opens up');
+  await p.evaluate(() => setRTab('family')); await p.waitForTimeout(60);
+  ok(await p.isVisible('#famshare >> text=Invite someone'), 'and sharing opens up');
   // what's missing, and who's sorting it
   const groups = await p.$$eval('#jobscard .jg-n', e => e.map(x => x.textContent));
   ok(groups[0] === 'Water' && groups[1] === 'Food' && groups.includes('Light and news') && groups[groups.length - 1] === 'Other' && await p.locator('#jobscard details[open]').count() === 1, 'gaps grouped, essentials first, one group open at a time');

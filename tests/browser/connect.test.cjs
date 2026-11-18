@@ -18,6 +18,7 @@ let fails = 0; const ok = (c, m) => { if (!c) fails++; console.log((c ? 'PASS ' 
   });
   await p.waitForTimeout(150);
   ok(!(await p.$('#regcard')), 'emergency list hidden from residents');
+  await p.evaluate(() => setRTab('family')); await p.waitForTimeout(60);
   const card = await p.textContent('#conncard');
   ok(/2 homes linked/.test(card) && /Mum/.test(card) && /Later £3 a month/.test(card), 'plan page shows the Connect card with both homes');
   ok(await p.isVisible('.bnav >> text=Family'), 'bottom nav has Family');
