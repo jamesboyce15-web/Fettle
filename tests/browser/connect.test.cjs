@@ -35,19 +35,36 @@ let fails = 0; const ok = (c, m) => { if (!c) fails++; console.log((c ? 'PASS ' 
   await p.click('text=Something\'s happening'); await p.waitForTimeout(60);
   await p.click('text=Start emergency mode'); ok(/Choose what's happening/.test(await p.textContent('#fem-err')), 'must choose what\'s happening');
   await p.click('#fem-k >> text=Power cut'); await p.click('text=Start emergency mode'); await p.waitForTimeout(100);
-  ok(await p.evaluate(() => connState().em.kind === 'power' && connState().em.homes.length === 2), 'emergency mode started for both homes');
+  ok(await p.evaluate(() => femNow().kind === 'power' && femNow().homes.length === 2 && H[0].em && H[1].em && H[0].em.id === H[1].em.id), 'emergency mode started, with a copy on both homes\' plans');
+  ok(/0\s*of\s*2\s*homes have checked in/.test(await p.textContent('.fembar')), 'shows how many homes have checked in');
   const tl = await p.textContent('#ftime');
   ok(/The first hour/.test(tl) && /first call from\s*Sarah/.test(tl) && /105/.test(tl) && /medicine kept in the fridge/.test(tl) && /Day 3/.test(tl), '72-hour timeline from the family circle and Mum\'s needs');
   ok(/Not heard from yet/.test(await p.textContent('#fstatus')), 'status board starts unknown');
   await p.click('#fstatus li:nth-child(2) >> text=Fine'); await p.waitForTimeout(80);
   ok(/Fine/.test(await p.textContent('#fstatus li:nth-child(2) .fs-chip')), 'marking Mum as fine updates the board');
-  await p.check('#ftime input >> nth=0'); ok(await p.evaluate(() => Object.values(connState().em.done).some(Boolean)), 'steps can be ticked');
+  await p.check('#ftime input >> nth=0'); ok(await p.evaluate(() => Object.values(H[1].em.done).some(x => x.v)), 'ticked steps are saved on every copy');
+  // what a family member sees: someone invited only to Mum's plan, after the plans sync
+  const other = await p.evaluate(() => {
+    const mum = JSON.parse(JSON.stringify(H[1])); const keep = H; H = [Object.assign(fresh(true), mum, { _shared: true })];
+    const em = femNow(), board = femHomes(em).map(x => !!x.h), banner = femBanner();
+    H = keep; return { kind: em && em.kind, board, banner: /Family emergency mode/.test(banner) };
+  });
+  ok(other.kind === 'power' && other.board.join() === 'false,true' && other.banner, 'a family member invited to Mum\'s plan sees the same emergency and its banner');
+  await p.evaluate(() => { view = 0; go('r'); render(); }); await p.waitForTimeout(80);
+  ok(await p.isVisible('.fembanner') && /Power cut/.test(await p.textContent('.fembanner')), 'banner on the plan page while it\'s on');
+  await p.evaluate(() => emergency()); await p.waitForTimeout(60);
+  ok(/Open family emergency mode/.test(await p.textContent('#em-body')), 'the "It\'s happening now" screen links to family mode');
+  await p.click('.em-fam'); await p.waitForTimeout(80); ok(await p.isVisible('#fstatus'), 'and opens it');
   // get ready again
   await p.click('text=It\'s over: get ready again'); await p.waitForTimeout(80);
   ok(/Get ready again/.test(await p.textContent('#v-connect')) && await p.isChecked('#frec input[value=water]'), 'recovery asks what was used, water ticked');
   await p.fill('#rec-notes', 'Mum needed a second torch.'); await p.click('text=Put it back on our plans'); await p.waitForTimeout(100);
-  ok(await p.evaluate(() => !H[0].bought.water && H[0].bought.radio && !connState().em && connState().history[0].notes === 'Mum needed a second torch.'), 'used water goes back on the plan; notes kept');
+  ok(await p.evaluate(() => !H[0].bought.water && H[0].bought.radio && !femNow() && femLog()[0].notes === 'Mum needed a second torch.' && H[1].emLog.length === 1), 'used water goes back on the plan; notes kept');
   ok(/What you've been through together/.test(await p.textContent('#v-connect')), 'dashboard remembers the emergency');
+  // started by mistake
+  await p.click('text=Something\'s happening'); await p.click('#fem-k >> text=Flooding'); await p.click('text=Start emergency mode'); await p.waitForTimeout(80);
+  await p.click('text=Started by mistake'); await p.waitForTimeout(80);
+  ok(await p.evaluate(() => !femNow() && femLog().length === 1) && !(await p.isVisible('#fstatus')), 'stopping a mistake leaves no record');
   // connected book
   await p.evaluate(() => { connState().fam = 'The Boyce family'; openBook(true); }); await p.waitForTimeout(900);
   const book = await p.textContent('#shelf');

@@ -419,15 +419,19 @@
     return true;
   };
   // Shared plans: when you come back to the tab, pick up changes the family made, if you haven't changed anything since.
-  document.addEventListener("visibilitychange", async () => {
+  // While family emergency mode is on, check every 30 seconds so everyone sees who's OK.
+  async function pullShared() {
     if (document.hidden || !user || user.pro || !sb) return;
-    const S = H.filter(h => h._id && (h._shared || h._hasFamily) && saved.get(h._id) === JSON.stringify(strip(h)));
+    const em = !!(window.femActive && window.femActive());
+    const S = H.filter(h => h._id && (h._shared || h._hasFamily || h.em || em) && saved.get(h._id) === JSON.stringify(strip(h)));
     if (!S.length) return;
     const { data } = await sb.from("households").select("id,data").in("id", S.map(h => h._id));
     let changed = false;
     (data || []).forEach(r => { const h = S.find(x => x._id === r.id); const body = JSON.stringify(strip(Object.assign({}, r.data))); if (h && body !== saved.get(r.id)) { Object.keys(h).forEach(k => { if (!k.startsWith("_") && k !== "paid") delete h[k]; }); Object.assign(h, r.data); saved.set(r.id, JSON.stringify(strip(h))); changed = true; } });
-    if (changed && !document.getElementById("v-r").classList.contains("hide")) render(true);
-  });
+    if (changed) { if (window.femRefresh) window.femRefresh(); else if (!document.getElementById("v-r").classList.contains("hide")) render(true); }
+  }
+  document.addEventListener("visibilitychange", pullShared);
+  setInterval(() => { if (window.femActive && window.femActive()) pullShared(); }, 30000);
 
   // ---------- payment ----------
   window.liveCheckout = async function (h) {

@@ -1,0 +1,19 @@
+0|Nikt nie ma jeszcze zadania. Wybierz powyżej, kto zajmie się słabymi punktami, albo dodaj rodzinny krąg w planie bliskiej osoby.
+1|Nikt nie ma jeszcze zadania. Wybierz powyżej, kto zajmie się słabymi punktami.
+2|Każdy zaproszony do planów tych domów zobaczy tryb awaryjny i może aktualizować, kto jest cały.
+3|Włączył(a):
+4|domów dało znać, co u nich.
+5|potrzebuje pomocy teraz
+6|Jeśli czyjeś życie jest zagrożone, zadzwoń pod {0} i powiedz, gdzie ta osoba jest. Potem powiedz rodzinie, kto jedzie.
+7|Pierwsza godzina {0}Teraz{1}
+8|zadzwoń teraz i ustalcie, kto zadzwoni ponownie wieczorem.
+9|Ustalcie, kto zawiezie im wodę i jedzenie.
+10|Nieudostępnione Tobie
+11|Poproś, żeby zaprosili Cię do swojego planu, albo do nich zadzwoń.
+12|Rodzinny tryb awaryjny:
+13|Zobacz, kto jest cały i co robić.
+14|Otwórz rodzinny tryb awaryjny{0}Zobacz, kto jest cały w każdym domu i kto co robi{1}
+15|Już po wszystkim. Uzupełnij zapasy, póki pamiętasz, czego użyłeś.
+16|Włącz rodzinny tryb awaryjny{0}Zobacz, kto jest cały w każdym domu i kto co robi{1}
+17|Tryb awaryjny jest włączony. Widzi go każdy w tych planach. Powiedz też rodzinie.
+18|Zobacz, kto jest cały i co robić:
