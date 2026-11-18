@@ -1,3 +1,4 @@
+import { onRequestPost as commJoin } from "../functions/api/community-join.js";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { verifyStripe, unsubToken, checkUnsubToken } from "../lib/server.js";
@@ -221,4 +222,40 @@ test("NHS search: by name, by town near their postcode, and GP practices only", 
   assert.deepEqual(await nhsFind({ type: "dentist", q: "x" }, f), { error: "type" });
   assert.deepEqual((await nhsFind({ type: "gp", q: "<script>" }, f)).results, []);
   assert.equal(nhsTitle("ST MARY'S PHARMACY AND CLINIC"), "St Mary's Pharmacy and Clinic");
+});
+
+// ---------- /api/community-join ----------
+const TOK = "33333333-3333-4333-8333-333333333333";
+const cjReq = (body, ip = "203.0.113.5") => new Request("https://f.test/api/community-join", { method: "POST", headers: { "CF-Connecting-IP": ip }, body: JSON.stringify(body) });
+const goodBody = { slug: "stmarys", token: TOK, data: { v: 1, ind: { water: 0 } }, turnstile: "tt" };
+
+test("community-join: robot check must pass when a secret is set", async () => {
+  const calls = mockFetch(url => url.includes("turnstile") ? res({ success: false }) : res("ok"));
+  const r = await commJoin({ request: cjReq(goodBody), env: { ...env, TURNSTILE_SECRET: "ts" } });
+  assert.equal(r.status, 403);
+  assert.ok(!calls.some(c => c.url.includes("community_join")), "database not called");
+});
+
+test("community-join: passes the check, sends a scrambled daily connection code, never the address", async () => {
+  const calls = mockFetch(url => url.includes("turnstile") ? res({ success: true }) : res("ok"));
+  const r = await commJoin({ request: cjReq(goodBody), env: { ...env, TURNSTILE_SECRET: "ts" } });
+  assert.equal(r.status, 200);
+  const db = calls.find(c => c.url.endsWith("/rest/v1/rpc/community_join")); const b = JSON.parse(db.init.body);
+  assert.match(b.p_net, /^[0-9a-f]{32}$/); assert.ok(!db.init.body.includes("203.0.113.5"));
+  assert.equal(db.init.headers.Authorization, "Bearer svc");
+  const calls2 = mockFetch(url => url.includes("turnstile") ? res({ success: true }) : res("ok"));
+  await commJoin({ request: cjReq(goodBody, "198.51.100.9"), env: { ...env, TURNSTILE_SECRET: "ts" } });
+  assert.notEqual(JSON.parse(calls2.find(c => c.url.includes("community_join")).init.body).p_net, b.p_net, "different connection, different code");
+});
+
+test("community-join: limits and bad input come back as plain messages", async () => {
+  mockFetch(() => res("net"));
+  let r = await commJoin({ request: cjReq(goodBody), env });
+  assert.equal(r.status, 429); assert.match((await r.json()).error, /internet connection/);
+  mockFetch(() => res("busy")); r = await commJoin({ request: cjReq(goodBody), env }); assert.equal(r.status, 429);
+  mockFetch(() => res("missing")); r = await commJoin({ request: cjReq(goodBody), env }); assert.equal(r.status, 404);
+  const calls = mockFetch(() => res("ok"));
+  for (const bad of [{ ...goodBody, slug: "x" }, { ...goodBody, token: "nope" }, { ...goodBody, data: "x" }, { ...goodBody, data: { big: "a".repeat(3000) } }]) {
+    r = await commJoin({ request: cjReq(bad), env }); assert.equal(r.status, 400); }
+  assert.equal(calls.length, 0);
 });

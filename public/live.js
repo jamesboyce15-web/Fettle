@@ -379,9 +379,24 @@
   // ---------- Fettle Communities (community.sql) ----------
   const rpc = async (name, args) => { if (!(await waitSb())) return { data: null, error: { message: "We couldn't connect. Check your signal and try again." } }; return sb.rpc(name, args || {}); };
   window.commPublic = async slug => { const { data, error } = await rpc("community_public", { p_slug: slug }); return error ? null : data; };
-  window.commShare = async (slug, token, data, named, contact) => { const { error } = await rpc("community_share", { p_slug: slug, p_token: token, p_data: data, p_named: named || "", p_contact: contact || "" }); if (error) console.error(error); return !error; };
+  // Robot check (Cloudflare Turnstile) for new homes joining a community. Usually invisible; it only shows a box if it needs a tap.
+  const TS = CFG.turnstileSiteKey || ""; let tsP = null;
+  const tsLoad = () => tsP || (tsP = new Promise((res, rej) => { const s = document.createElement("script"); s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"; s.async = true; s.onload = () => res(window.turnstile); s.onerror = () => { tsP = null; rej(new Error("turnstile")); }; document.head.appendChild(s); }));
+  const tsToken = async () => { if (!TS) return ""; try { const t = await tsLoad(); return await new Promise(res => {
+      let box = document.getElementById("ts-box"); if (!box) { box = document.createElement("div"); box.id = "ts-box"; box.style.cssText = "position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:80"; document.body.appendChild(box); }
+      box.innerHTML = ""; let id; const done = v => { res(v); setTimeout(() => { try { t.remove(id); } catch (e) {} }, 0); };
+      id = t.render(box, { sitekey: TS, appearance: "interaction-only", callback: done, "error-callback": () => done(""), "timeout-callback": () => done("") }); }); } catch (e) { return ""; } };
+  // Update this home's answers; if it hasn't joined (or was removed), join through the robot check. Returns true, or a message.
+  window.commShare = async (slug, token, data, named, contact) => {
+    const { data: found, error } = await rpc("community_share", { p_slug: slug, p_token: token, p_data: data, p_named: named || "", p_contact: contact || "" });
+    if (error) { console.error(error); return false; }
+    if (found) return true;
+    try { const r = await fetch("/api/community-join", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ slug, token, data, named: named || "", contact: contact || "", turnstile: await tsToken() }) });
+      if (r.ok) return true; const j = await r.json().catch(() => ({})); return j.error || false; } catch (e) { return false; }
+  };
+  window.commFlag = async (slug, hours, note) => { const { data, error } = await rpc("community_flag", { p_slug: slug, p_hours: hours, p_note: note || "" }); if (error) return { error: error.message }; return { n: data }; };
   window.commLeave = async token => { const { error } = await rpc("community_leave", { p_token: token }); return !error; };
-  window.commAsk = async (slug, token, need, note, named, contact) => { const { error } = await rpc("community_ask", { p_slug: slug, p_token: token, p_need: need, p_note: note || "", p_named: named || "", p_contact: contact || "" }); return error ? (/today/.test(error.message) ? error.message : false) : true; };
+  window.commAsk = async (slug, token, need, note, named, contact) => { const { error } = await rpc("community_ask", { p_slug: slug, p_token: token, p_need: need, p_note: note || "", p_named: named || "", p_contact: contact || "" }); return error ? (/today|first/.test(error.message) ? error.message : false) : true; };
   window.commCreateLive = async (slug, name, kind, area, you) => { const { data, error } = await rpc("community_create", { p_slug: slug, p_name: name, p_kind: kind, p_area: area || "", p_admin_name: you || "" }); return error ? { error: /taken|already/.test(error.message) ? error.message : "That didn't work. Please try again." } : { community: data }; };
   window.commMine = async () => { if (!user) return []; const { data } = await rpc("community_mine"); return data || []; };
   window.commSetInfo = async (slug, name, area, info) => { const { error } = await rpc("community_set_info", { p_slug: slug, p_name: name, p_area: area || "", p_info: info }); return !error; };

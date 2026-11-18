@@ -1,0 +1,24 @@
+0|Înscrieri
+1|Când s-au alăturat casele
+2|în ultima oră
+3|în ultima zi
+4|în ultima săptămână
+5|Casele care s-au alăturat în fiecare zi, în ultimele {0} zile
+6|acum {0} zile
+7|Comunitățile reale se alătură în valuri: după o slujbă, un meci sau un buletin. Dacă un val nu se potrivește cu nimic din ce ați făcut, spune-ne.
+8|Ceva pare în neregulă?
+9|Ce case par în neregulă?
+10|Cele care s-au alăturat în ultima oră
+11|Cele care s-au alăturat în ultima zi
+12|Cele care s-au alăturat în ultima săptămână
+13|Ce pare în neregulă? {0}Opțional{1}
+14|Trimite la Fettle
+15|Vom verifica acele case și le vom scoate pe cele care par inventate. Casele reale sunt adăugate automat înapoi data viitoare când deschid Fettle.
+16|{0}Ai semnalat asta.{1} Ne uităm.
+17|Mulțumim. Ne vom uita.
+18|Nu am putut verifica că ești o persoană. Încearcă din nou.
+19|Multe case s-au alăturat azi de pe această conexiune la internet. Încearcă mâine sau folosește datele mobile.
+20|Acum se alătură foarte multe case. Încearcă peste o oră.
+21|Adaugă-ți întâi casa la totalurile lor, apoi poți cere ajutor
+22|Ai semnalat de câteva ori azi. Vom lua legătura
+23|Alege un interval

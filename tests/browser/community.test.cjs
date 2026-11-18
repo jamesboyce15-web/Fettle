@@ -86,6 +86,7 @@ let fails = 0; const ok = (c, m) => { if (!c) fails++; console.log((c ? 'PASS ' 
     await O.evaluate(() => commDash('stmarys', 'overview')); await O.waitForTimeout(300);
     const ov = await O.textContent('#commbox');
     ok(/6\s*homes have joined/.test(ov) && /3 days of drinking water\s*67%\s*missing/.test(ov), 'totals: 4 of 6 homes are short of water (67%)');
+    ok(/When homes joined/.test(ov) && /6\s*in the last hour/.test(ov) && (await O.$$('.cdays i')).length === 14, 'the organiser sees when homes joined: 6 in the last hour, and 14 days of bars');
     ok(!/A torch with spare batteries\s*\d+%/.test(ov) && /Almost every home has:[^.]*A torch with spare batteries/.test(ov), 'essentials that no home (or only 1 or 2) lack are listed as covered, without numbers');
     await O.evaluate(() => { CDTAB = 'help'; commDashDraw(); }); await O.waitForTimeout(100);
     const hp = await O.textContent('#commbox');
@@ -104,6 +105,30 @@ let fails = 0; const ok = (c, m) => { if (!c) fails++; console.log((c ? 'PASS ' 
     ok((await O.evaluate(() => JSON.parse(localStorage.getItem('fake_db')).community_members.length)) === 5, 'stopping sharing removes the home from the totals');
     await O.evaluate(t => window.commLeave(t), d.community_members[0].token);
     ok((await O.evaluate(() => JSON.parse(localStorage.getItem('fake_db')).community_requests.length)) === 0, 'and removes any help request that home sent');
+
+    // ---------- keeping the totals honest ----------
+    const R2 = await open(URL0 + 'stmarys');
+    await R2.evaluate(() => { window.__fakeRobot = false; start(false); Object.assign(cur, { home: 'house', outdoor: 'garden', tenure: 'own', adults: 1, heat: 'gas', hob: 'gas', cold: 'slow', healthGate: 'no', water: 'none', food: 'yes', kit: [], fa: 'no', budget: 0 }); tier = 'core'; qi = list().length - 1; go('q'); drawQ(); next(); });
+    await R2.waitForSelector('#commcard'); await R2.click('text=Save my choice'); await R2.waitForTimeout(200);
+    ok(/couldn't check this was a person/.test(await R2.textContent('#cm-err')) && await R2.evaluate(() => H[view].comm.state !== 'shared'), 'a home that fails the robot check isn\'t added, and is told why');
+    await R2.close();
+    const before = (await O.evaluate(() => JSON.parse(localStorage.getItem('fake_db')).community_members.length));
+    const bulk = await O.evaluate(async () => { const out = []; for (let i = 0; i < 17; i++) out.push(await window.commShare('stmarys', crypto.randomUUID(), { v: 1, ind: { water: 1 } }, '', '')); return out; });
+    ok(bulk.slice(0, 14).every(x => x === true) && bulk.slice(14).every(x => typeof x === 'string' && /internet connection/.test(x)), 'one internet connection can add 20 homes a day to a community, then is told to try tomorrow');
+    ok((await O.evaluate(() => JSON.parse(localStorage.getItem('fake_db')).community_members.length)) === before + 14, 'the extra homes weren\'t counted');
+    ok(await O.evaluate(async () => { window.__fakeNet = 'net-2'; const r = await window.commShare('stmarys', crypto.randomUUID(), { v: 1, ind: {} }, '', ''); window.__fakeNet = 'net-1'; return r === true; }), 'another connection can still join');
+    ok(/Add your home to their totals first/.test(String(await O.evaluate(() => window.commAsk('stmarys', crypto.randomUUID(), 'costs', 'spam', '', '')))), 'help requests only come from homes that have joined');
+    // a home removed after a flag is added back when it next updates
+    const back = await O.evaluate(async () => { const d = JSON.parse(localStorage.getItem('fake_db')), m = d.community_members[0]; d.community_members.shift(); localStorage.setItem('fake_db', JSON.stringify(d));
+      window.__fakeNet = 'net-3'; const ok = await window.commShare('stmarys', m.token, m.data, '', ''); window.__fakeNet = 'net-1'; return ok === true && JSON.parse(localStorage.getItem('fake_db')).community_members.some(x => x.token === m.token); });
+    ok(back, 'a real home that was removed rejoins on its next visit');
+    // the organiser flags the burst
+    await O.evaluate(() => commDash('stmarys', 'overview')); await O.waitForTimeout(300);
+    ok(/16\s*in the last hour|1[0-9]\s*in the last hour|2[0-9]\s*in the last hour/.test(await O.textContent('#commbox')), 'the burst shows up in the last hour');
+    await O.click('text=Something look wrong?'); await O.check('input[name=cf-h][value="1"]'); await O.fill('#cf-note', 'We had no event today.'); await O.click('text=Send to Fettle'); await O.waitForTimeout(300);
+    const fl = await O.evaluate(() => JSON.parse(localStorage.getItem('fake_db')).community_flags);
+    ok(fl && fl.length === 1 && fl[0].joins >= 15 && fl[0].note === 'We had no event today.', 'the flag is recorded with how many homes joined in that hour');
+    ok(/You've flagged this/.test(await O.textContent('#commbox')), 'and the organiser sees it\'s being looked at');
     ok(!errs.length, 'no page errors ' + errs.join(' | '));
   } catch (e) { console.log('FAIL', e); fails++; }
   finally { await b.close(); srv.close(); if (fails) { console.log(fails + ' FAILED'); process.exit(1); } }

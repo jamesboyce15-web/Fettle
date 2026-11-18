@@ -1,0 +1,24 @@
+0|Dołączanie
+1|Kiedy dołączały domy
+2|w ostatniej godzinie
+3|w ostatniej dobie
+4|w ostatnim tygodniu
+5|Domy, które dołączyły każdego dnia, przez ostatnie {0} dni
+6|{0} dni temu
+7|Prawdziwe społeczności dołączają falami: po nabożeństwie, meczu albo biuletynie. Jeśli jakaś fala nie pasuje do niczego, co robiliście, daj nam znać.
+8|Coś wygląda nie tak?
+9|Które domy wyglądają podejrzanie?
+10|Te, które dołączyły w ostatniej godzinie
+11|Te, które dołączyły w ostatniej dobie
+12|Te, które dołączyły w ostatnim tygodniu
+13|Co wygląda nie tak? {0}Opcjonalnie{1}
+14|Wyślij do Fettle
+15|Sprawdzimy te domy i usuniemy te, które wyglądają na zmyślone. Prawdziwe domy zostaną automatycznie dodane z powrotem, gdy następnym razem otworzą Fettle.
+16|{0}Zgłosiłeś to.{1} Sprawdzamy.
+17|Dziękujemy. Przyjrzymy się temu.
+18|Nie udało się sprawdzić, że jesteś człowiekiem. Spróbuj ponownie.
+19|Z tego połączenia internetowego dołączyło dziś wiele domów. Spróbuj jutro albo użyj danych komórkowych.
+20|Teraz dołącza bardzo dużo domów. Spróbuj za godzinę.
+21|Najpierw dodaj swój dom do ich sum, a potem możesz poprosić o pomoc
+22|Zgłaszałeś już dziś kilka razy. Odezwiemy się
+23|Wybierz czas

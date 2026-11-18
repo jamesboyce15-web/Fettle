@@ -109,18 +109,120 @@ end $$;
 revoke all on function public.community_set_info(text, text, text, jsonb) from public, anon;
 grant execute on function public.community_set_info(text, text, text, jsonb) to authenticated;
 
--- A household shares (or updates) its anonymous answers with a community. Anyone can call it: the random token is the key.
-create or replace function public.community_share(p_slug text, p_token uuid, p_data jsonb, p_named text, p_contact text)
-returns void language plpgsql security definer set search_path = public as $$
+-- ---------- Keeping the totals honest ----------
+-- New homes join only through /api/community-join, which runs a robot check (Cloudflare Turnstile) and passes a scrambled,
+-- daily-changing code for the internet connection. Up to 20 new homes per connection per community per day, and 150 per
+-- community per hour. Homes that have joined update their answers directly: their random token is the key.
+alter table public.community_members add column if not exists joined_at timestamptz not null default now();
+create index if not exists community_members_j_idx on public.community_members(community_id, joined_at);
+
+create table if not exists public.community_join_log (
+  community_id uuid not null references public.communities(id) on delete cascade,
+  net          text not null check (char_length(net) <= 64),
+  at           timestamptz not null default now()
+);
+create index if not exists community_join_log_idx on public.community_join_log(community_id, net, at);
+alter table public.community_join_log enable row level security;
+
+create table if not exists public.community_flags (
+  id           uuid primary key default gen_random_uuid(),
+  community_id uuid not null references public.communities(id) on delete cascade,
+  flagged_by   uuid references auth.users(id) on delete set null,
+  since        timestamptz not null,
+  joins        int not null,
+  note         text check (char_length(note) <= 500),
+  status       text not null default 'new' check (status in ('new','removed','kept')),
+  created_at   timestamptz not null default now(),
+  notified_at  timestamptz
+);
+alter table public.community_flags enable row level security;
+alter table public.community_flags add column if not exists notified_at timestamptz;
+
+create or replace function public.community_join(p_slug text, p_token uuid, p_data jsonb, p_named text, p_contact text, p_net text)
+returns text language plpgsql security definer set search_path = public as $$
+declare cid uuid;
+begin
+  select id into cid from public.communities where slug = lower(p_slug);
+  if cid is null then return 'missing'; end if;
+  if exists (select 1 from public.community_members where token = p_token) then
+    update public.community_members set community_id = cid, data = p_data, named = nullif(left(p_named, 60), ''),
+      contact = nullif(left(p_contact, 120), ''), updated_at = now() where token = p_token;
+    return 'ok';
+  end if;
+  delete from public.community_join_log where at < now() - interval '2 days';
+  if (select count(*) from public.community_join_log where community_id = cid and net = p_net and at > now() - interval '1 day') >= 20 then return 'net'; end if;
+  if (select count(*) from public.community_members where community_id = cid and joined_at > now() - interval '1 hour') >= 150 then return 'busy'; end if;
+  insert into public.community_join_log (community_id, net) values (cid, left(p_net, 64));
+  insert into public.community_members (token, community_id, data, named, contact)
+    values (p_token, cid, p_data, nullif(left(p_named, 60), ''), nullif(left(p_contact, 120), ''));
+  return 'ok';
+end $$;
+revoke all on function public.community_join(text, uuid, jsonb, text, text, text) from public, anon, authenticated;
+grant execute on function public.community_join(text, uuid, jsonb, text, text, text) to service_role;
+
+-- A home that has already joined updates its answers. Returns false if the token isn't a member (never joined, or removed),
+-- and the app then joins again through the robot check.
+drop function if exists public.community_share(text, uuid, jsonb, text, text);
+create function public.community_share(p_slug text, p_token uuid, p_data jsonb, p_named text, p_contact text)
+returns boolean language plpgsql security definer set search_path = public as $$
 declare cid uuid;
 begin
   select id into cid from public.communities where slug = lower(p_slug);
   if cid is null then raise exception 'That community isn''t on Fettle'; end if;
-  insert into public.community_members (token, community_id, data, named, contact, updated_at)
-    values (p_token, cid, p_data, nullif(left(p_named, 60), ''), nullif(left(p_contact, 120), ''), now())
-    on conflict (token) do update set community_id = cid, data = excluded.data, named = excluded.named, contact = excluded.contact, updated_at = now();
+  update public.community_members set community_id = cid, data = p_data, named = nullif(left(p_named, 60), ''),
+    contact = nullif(left(p_contact, 120), ''), updated_at = now() where token = p_token;
+  return found;
 end $$;
 grant execute on function public.community_share(text, uuid, jsonb, text, text) to anon, authenticated;
+
+-- How many homes joined when: last hour, last day, last week, and each of the last 14 days. No answers, just counts.
+create or replace function public.community_joins(cid uuid)
+returns jsonb language sql stable security definer set search_path = public as $$
+  select jsonb_build_object(
+    'h1', count(*) filter (where joined_at > now() - interval '1 hour'),
+    'd1', count(*) filter (where joined_at > now() - interval '1 day'),
+    'd7', count(*) filter (where joined_at > now() - interval '7 days'),
+    'days', (select jsonb_agg((select count(*) from public.community_members m where m.community_id = cid and m.joined_at::date = d::date) order by d)
+             from generate_series(current_date - 13, current_date, interval '1 day') d),
+    'flag', (select status from public.community_flags where community_id = cid order by created_at desc limit 1))
+  from public.community_members where community_id = cid;
+$$;
+revoke all on function public.community_joins(uuid) from public, anon, authenticated;
+
+-- An organiser flags a burst of joins that looks wrong. Fettle reviews it and can remove those homes; real homes are
+-- added back next time they use Fettle, through the robot check.
+create or replace function public.community_flag(p_slug text, p_hours int, p_note text)
+returns int language plpgsql security definer set search_path = public as $$
+declare cid uuid; s timestamptz; n int;
+begin
+  select id into cid from public.communities where slug = lower(p_slug);
+  if cid is null or not public.is_community_admin(cid) then raise exception 'Only this community''s organisers can do that'; end if;
+  if p_hours not in (1, 24, 168) then raise exception 'Choose a time'; end if;
+  if (select count(*) from public.community_flags where community_id = cid and created_at > now() - interval '1 day') >= 5 then
+    raise exception 'You''ve flagged a few times today. We''ll be in touch'; end if;
+  s := now() - make_interval(hours => p_hours);
+  select count(*) into n from public.community_members where community_id = cid and joined_at > s;
+  insert into public.community_flags (community_id, flagged_by, since, joins, note) values (cid, auth.uid(), s, n, nullif(left(p_note, 500), ''));
+  return n;
+end $$;
+revoke all on function public.community_flag(text, int, text) from public, anon;
+grant execute on function public.community_flag(text, int, text) to authenticated;
+
+-- For Fettle, after reviewing a flag: removes the homes that joined in that window (and their help requests).
+create or replace function public.community_remove_flagged(p_flag uuid)
+returns int language plpgsql security definer set search_path = public as $$
+declare f public.community_flags; n int;
+begin
+  select * into f from public.community_flags where id = p_flag;
+  if f.id is null then raise exception 'No such flag'; end if;
+  delete from public.community_requests where token in (select token from public.community_members where community_id = f.community_id and joined_at > f.since);
+  delete from public.community_members where community_id = f.community_id and joined_at > f.since;
+  get diagnostics n = row_count;
+  update public.community_flags set status = 'removed' where id = p_flag;
+  return n;
+end $$;
+revoke all on function public.community_remove_flagged(uuid) from public, anon, authenticated;
+grant execute on function public.community_remove_flagged(uuid) to service_role;
 
 create or replace function public.community_leave(p_token uuid)
 returns void language sql security definer set search_path = public as $$
@@ -136,6 +238,8 @@ declare cid uuid;
 begin
   select id into cid from public.communities where slug = lower(p_slug);
   if cid is null then raise exception 'That community isn''t on Fettle'; end if;
+  if not exists (select 1 from public.community_members where token = p_token and community_id = cid) then
+    raise exception 'Add your home to their totals first, then you can ask for help'; end if;
   if (select count(*) from public.community_requests where token = p_token and created_at > now() - interval '1 day') >= 5 then
     raise exception 'You''ve sent a few requests today. They''ll be in touch'; end if;
   insert into public.community_requests (community_id, token, need, note, named, contact)
@@ -151,7 +255,7 @@ begin
   select id into cid from public.communities where slug = lower(p_slug);
   if cid is null or not public.is_community_admin(cid) then raise exception 'Only this community''s organisers can see this'; end if;
   select count(*) into n from public.community_members where community_id = cid;
-  if n < 5 then return jsonb_build_object('members', n, 'small', true); end if;
+  if n < 5 then return jsonb_build_object('members', n, 'small', true, 'joins', public.community_joins(cid)); end if;
   for k in select distinct jsonb_object_keys(data->'ind') from public.community_members where community_id = cid and jsonb_typeof(data->'ind') = 'object' loop
     select count(*) filter (where (data->'ind'->>k)::int = 1), count(*) filter (where data->'ind' ? k) into has, app
       from public.community_members where community_id = cid;
@@ -167,6 +271,7 @@ begin
                    count(*) filter (where (data->'risk'->>'u5')::boolean) u
             from public.community_members where community_id = cid) t),
     'requests', (select count(*) from public.community_requests where community_id = cid and status = 'new'),
+    'joins', public.community_joins(cid),
     'updated', (select max(updated_at) from public.community_members where community_id = cid));
 end $$;
 revoke all on function public.community_stats(text) from public, anon;

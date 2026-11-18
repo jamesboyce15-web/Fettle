@@ -738,6 +738,8 @@ html[lang^="en"] .notin-en{display:none}
 #commbox .hint,#commcard .hint{display:block;font-weight:400;font-size:.85rem;color:var(--mute)}#commbox textarea,#commcard textarea{min-height:64px;font:inherit}
 .cstats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 0 14px}.cstats div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px;text-align:center}
 .cstats b{display:block;font-size:1.6rem}.cstats span{font-size:.8rem;color:var(--mute)}
+.cdays{display:flex;align-items:flex-end;gap:3px;height:56px;margin:14px 0 4px;border-bottom:1px solid var(--line)}.cdays i{flex:1;background:var(--brand);border-radius:2px 2px 0 0;min-height:0}
+.cdays-k{display:flex;justify-content:space-between;margin:0 0 10px}.cflag{border-top:1px solid var(--line);padding-top:12px;margin-top:6px}
 .cbars{list-style:none;margin:8px 0;padding:0}.cbars li{padding:8px 0;border-bottom:1px solid var(--rowline)}.cb-top{display:flex;justify-content:space-between;gap:10px}
 .cb-bar{height:8px;border-radius:4px;background:var(--ringtrack);margin:6px 0 4px;overflow:hidden}.cb-bar i{display:block;height:100%;background:var(--impink);border-radius:4px}
 .creq{list-style:none;margin:0;padding:0}.creq li{padding:12px 0;border-bottom:1px solid var(--rowline)}.creq li.done{opacity:.6}
@@ -1774,7 +1776,7 @@ let LANG="en";
 const TR={pl:{},ro:{},pa:{},ur:{}};
 /* On the live site each language's dictionary is its own file (tools/build_site.py writes them), loaded only when
    someone picks that language or a book is made in it. In this source file the dictionaries are inline, so TRSRC is empty. */
-const TRSRC={"pl": "tr/pl.c78b02c90d.js", "ro": "tr/ro.2a967fc91e.js", "pa": "tr/pa.bd4eac74ae.js", "ur": "tr/ur.6dafb1e8c1.js"}/*TRSRC*/, TRREADY={en:true};
+const TRSRC={"pl": "tr/pl.e183b3636e.js", "ro": "tr/ro.de127d6f91.js", "pa": "tr/pa.e11573d4df.js", "ur": "tr/ur.416932ca49.js"}/*TRSRC*/, TRREADY={en:true};
 function langReady(L){return !L||L==="en"||TRREADY[L]===true||!TRSRC[L];}
 function ensureLang(L){
   if(langReady(L)) return Promise.resolve();
@@ -4053,7 +4055,7 @@ const SAMPLE_COMM={slug:"st-marys-caton",name:"St Mary's Church, Caton",kind:"fa
   info:{meet:"St Mary's church hall, Brookhouse Road. Open with heating and hot drinks if the power's off for long.",contact:"Rev Jo Taylor: 01524 000000, or after any service",
     help:"We have a small fund for essentials like water, torches and radios. Speak to Jo, in confidence.",radio:"BBC Radio Lancashire, 95.5 FM",defib:"Outside the post office, Hornby Road",notes:"Our volunteers can collect prescriptions in bad weather."}};
 const SAMPLE_STATS=(()=>{const M=46,R=[["water",31],["food",14],["light",9],["radio",26],["power",17],["warm",6],["firstaid",19],["alarms",8],["cash",21],["grab",24],["meds",5,18],["psr",9,15],["buddy",4,11],["fwarn",9,20],["fplan",11,20]];
-  return {members:M,named:7,ind:Object.fromEntries(R.map(([k,m,a])=>[k,{app:a||M,missing:m}])),risk:{o70:15,alone:11,u5:6},requests:2,updated:new Date(Date.now()-36e5*5).toISOString(),sample:true};})();
+  return {members:M,named:7,ind:Object.fromEntries(R.map(([k,m,a])=>[k,{app:a||M,missing:m}])),risk:{o70:15,alone:11,u5:6},requests:2,joins:{h1:0,d1:2,d7:9,days:[0,1,0,0,14,3,1,0,0,11,2,0,1,2],flag:null},updated:new Date(Date.now()-36e5*5).toISOString(),sample:true};})();
 const SAMPLE_REQ=[{id:"r1",need:"costs",note:"We can't afford the water and a radio this month.",named:"Pat",contact:"07700 900333",status:"new",at:new Date(Date.now()-864e5).toISOString()},
   {id:"r2",need:"knock",note:"I live alone and I'm not good on the stairs.",named:"",contact:"",status:"new",at:new Date(Date.now()-3*864e5).toISOString()},
   {id:"r3",need:"costs",note:"",named:"Ali",contact:"ali@example.com",status:"done",at:new Date(Date.now()-9*864e5).toISOString()}];
@@ -4128,7 +4130,7 @@ async function commShareSave(i){
   if(!anon&&!named){commNotNow(i);return;}
   Object.assign(c,{named:nm,contact:ct}); const tok=commToken(h);
   const ok=typeof window.commShare==="function"?await window.commShare(c.slug,tok,commData(h),nm,ct):true;
-  if(!ok){document.getElementById("cm-err").textContent="That didn't save. Please try again.";return;}
+  if(ok!==true){document.getElementById("cm-err").textContent=typeof ok==="string"?ok:"That didn't save. Please try again.";return;}
   c.state="shared"; c.last=JSON.stringify(commData(h)); COMMFORM=null; countEvent("community_join"); render(true);
   toast(LIVE?"Thank you. You're part of "+c.name+".":"On this preview copy, nothing is sent.");
 }
@@ -4143,8 +4145,10 @@ async function commAskSend(i){
   toast(LIVE?(ct?"Sent. They'll get back to you.":"Sent. Without a phone number or email they can't reply, but they'll know someone needs help."):"On this preview copy, nothing is sent.");
 }
 // Keep the totals up to date as a household ticks things off.
-setInterval(()=>{if(!LIVE||typeof window.commShare!=="function"||typeof H==="undefined") return;
-  H.forEach(h=>{const c=h.comm; if(!c||c.state!=="shared"||!c.token) return; const d=JSON.stringify(commData(h)); if(d!==c.last){c.last=d; window.commShare(c.slug,c.token,JSON.parse(d),c.named||"",c.contact||"");}});},20000);
+// The first time each visit, it also checks the home is still counted (it may have been removed after a flag) and joins again if not.
+let COMMSEEN=false;
+setInterval(()=>{if(!LIVE||typeof window.commShare!=="function"||typeof H==="undefined") return; const first=!COMMSEEN; COMMSEEN=true;
+  H.forEach(h=>{const c=h.comm; if(!c||c.state!=="shared"||!c.token) return; const d=JSON.stringify(commData(h)); if(first||d!==c.last){c.last=d; window.commShare(c.slug,c.token,JSON.parse(d),c.named||"",c.contact||"");}});},20000);
 function commBookBlocks(I){
   const f=I.info||{}, row=(a,b)=>b?`<tr><td>${a}</td><td><span class="notr">${esc(b)}</span></td></tr>`:"";
   return [`<p><span>Your home is part of</span> <b class="notr">${esc(I.name)}</b><span>. In an emergency, people nearby are often the first to help.</span></p>`,
@@ -4188,6 +4192,23 @@ async function commCreate(e){
   commDash(slug,"info"); toast(LIVE?"Your community is ready. Add your local information next.":"On this preview copy, nothing is saved.");
   return false;
 }
+let COMMFLAG=false;
+function commJoinsCard(st){const j=st.joins; if(!j||!j.days) return ""; const mx=Math.max(1,...j.days);
+  return `<section class="card"><p class="lpvk">Joining</p><h3 class="ch">When homes joined</h3>
+   <div class="cstats"><div><b class="notr">${j.h1}</b><span>in the last hour</span></div><div><b class="notr">${j.d1}</b><span>in the last day</span></div><div><b class="notr">${j.d7}</b><span>in the last week</span></div></div>
+   <div class="cdays" role="img" aria-label="Homes that joined each day, for the last 14 days">${j.days.map(n=>`<i style="height:${n?Math.max(6,Math.round(100*n/mx)):0}%"></i>`).join("")}</div>
+   <div class="cdays-k sm mute"><span>14 days ago</span><span>Today</span></div>
+   ${j.flag==="new"?`<p class="sm"><b>You've flagged this.</b> We're looking at it.</p>`:COMMFLAG?commFlagForm():`<p class="sm">Real communities join in bursts, after a service, a match or a newsletter. If a burst doesn't match anything you did, tell us.</p><p><button class="btn small quiet" onclick="COMMFLAG=true;commDashDraw()">Something look wrong?</button></p>`}</section>`;}
+function commFlagForm(){return `<div class="cflag"><fieldset class="cm-need"><legend>Which homes look wrong?</legend>
+   ${[[1,"The ones that joined in the last hour"],[24,"The ones that joined in the last day"],[168,"The ones that joined in the last week"]].map(([h,t],i)=>`<label class="ck"><input type="radio" name="cf-h" value="${h}"${i===0?" checked":""}><span>${t}</span></label>`).join("")}</fieldset>
+   <label for="cf-note">What looks wrong? <span class="hint">Optional</span></label><textarea class="txt" id="cf-note" rows="2" maxlength="500"></textarea>
+   <p class="err" id="cf-err" role="alert"></p>
+   <div class="row3"><button class="btn small" onclick="commFlagSend()">Send to Fettle</button><button class="btn small quiet" onclick="COMMFLAG=false;commDashDraw()">Cancel</button></div>
+   <p class="sm mute">We'll check those homes and remove any that look made up. Real homes are added back automatically the next time they open Fettle.</p></div>`;}
+async function commFlagSend(){const h=+((document.querySelector('input[name="cf-h"]:checked')||{}).value||1), note=document.getElementById("cf-note").value.trim(), c=COMMINFO[CDSLUG];
+  if(c.sample||!LIVE||typeof window.commFlag!=="function"){COMMFLAG=false;commDashDraw();toast("On this preview copy, nothing is sent.");return;}
+  const r=await window.commFlag(c.slug,h,note); if(r.error){document.getElementById("cf-err").textContent=r.error;return;}
+  COMMFLAG=false; if(CDSTATS&&CDSTATS.joins) CDSTATS.joins.flag="new"; commDashDraw(); toast("Thank you. We'll look at it.");}
 let CDTAB="overview", CDSLUG=null, CDSTATS=null, CDREQ=null, CDPEOPLE=null;
 async function commDash(slug,tab){
   CDSLUG=slug; if(tab) CDTAB=tab; go("comm"); const b=document.getElementById("commbox");
@@ -4222,6 +4243,7 @@ function commDashDraw(){
        <p class="sm mute">Numbers under 3 aren't shown, so nobody can be picked out.</p>
        <p><button class="btn small" onclick="CDTAB='news';commDashDraw()">Write a newsletter about the top gaps</button></p></section>
       <section class="card"><p class="lpvk">Who might need more help</p><ul class="calist">${[["o70","homes with someone over 70"],["alone","people living alone"],["u5","homes with a child under 5"]].map(([k,t])=>st.risk&&st.risk[k]!=null?`<li><b class="notr">${st.risk[k]}</b><span>${t}</span></li>`:`<li><b>Fewer than 3</b><span>${t}</span></li>`).join("")}</ul></section>`;
+    body+=commJoinsCard(st);
     if(c.sample) body=`<div class="pcard"><p class="sm" style="margin:0"><b>This is an example.</b> The numbers are made up, to show what a community sees.</p></div>`+body;
   } else if(CDTAB==="news"){ body=commNewsEditor(c,st);
   } else if(CDTAB==="info"){ const f=c.info||{}, fld=(k,l,h,rows)=>`<label for="ci-${k}">${l}${h?` <span class="hint">${h}</span>`:""}</label>${rows?`<textarea class="txt notr" id="ci-${k}" rows="${rows}" maxlength="400">${esc(f[k]||"")}</textarea>`:`<input class="txt notr" id="ci-${k}" maxlength="200" value="${esc(f[k]||"")}">`}`;

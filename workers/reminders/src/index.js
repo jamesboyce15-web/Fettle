@@ -84,7 +84,29 @@ export async function run(env, fetchImpl = fetch) {
   return { due: rows.length, sent, failed, dry };
 }
 
+// Tells Fettle (ADMIN_ALERT_TO, a secret; nothing is sent without it) when a community organiser flags joins that look made up.
+export async function runFlags(env, fetchImpl = fetch) {
+  if (!env.ADMIN_ALERT_TO) return { flags: 0, sent: 0 };
+  const r = await sb(env, "/rest/v1/community_flags?status=eq.new&notified_at=is.null&select=id,since,joins,note,created_at,communities(slug,name)&order=created_at");
+  if (!r.ok) { console.error("flags query failed", await r.text()); return { flags: 0, sent: 0 }; }
+  const F = await r.json(); let sent = 0;
+  for (const f of F) {
+    const c = f.communities || {}, hours = Math.round((Date.parse(f.created_at) - Date.parse(f.since)) / 36e5);
+    const text = [`${c.name} (${env.SITE_URL}/${c.slug}) flagged the ${f.joins} home${f.joins === 1 ? "" : "s"} that joined in the ${hours <= 1 ? "last hour" : hours <= 24 ? "last day" : "last week"} as looking made up.`,
+      f.note ? `Their note: ${f.note}` : "They didn't add a note.", "",
+      "To remove those homes (real ones rejoin on their next visit), run this in the Supabase SQL editor:",
+      `  select public.community_remove_flagged('${f.id}');`, "",
+      "To keep them:", `  update public.community_flags set status = 'kept' where id = '${f.id}';`].join("\n");
+    const s = await fetchImpl("https://api.resend.com/emails", { method: "POST", headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ from: env.FROM_EMAIL, to: [env.ADMIN_ALERT_TO], subject: `Community flag: ${c.name}`, text }) });
+    if (!s.ok) { console.error("flag email failed", await s.text()); continue; }
+    await sb(env, `/rest/v1/community_flags?id=eq.${f.id}`, { method: "PATCH", body: JSON.stringify({ notified_at: new Date().toISOString() }) });
+    sent++;
+  }
+  return { flags: F.length, sent };
+}
+
 export default {
-  // Daily at 10:17 UTC: reminders. Every 15 minutes: postcode alerts.
-  async scheduled(event, env, ctx) { ctx.waitUntil(event.cron === "*/15 * * * *" ? runAlerts(env) : run(env)); },
+  // Daily at 10:17 UTC: reminders. Every 15 minutes: postcode alerts, and community flags for Fettle.
+  async scheduled(event, env, ctx) { ctx.waitUntil(event.cron === "*/15 * * * *" ? Promise.all([runAlerts(env), runFlags(env)]) : run(env)); },
 };

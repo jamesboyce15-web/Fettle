@@ -109,17 +109,35 @@
     community_mine() { const d = db(); return [d.communities.filter(c => d.community_admins.some(a => a.community_id === c.id && a.user_id === me())).map(c => ({ slug: c.slug, name: c.name, kind: c.kind, area: c.area, info: c.info }))]; },
     community_set_info({ p_slug, p_name, p_area, p_info }) { const d = db(), c = d.communities.find(x => x.slug === p_slug); if (!c || !d.community_admins.some(a => a.community_id === c.id && a.user_id === me())) return [null, "Only this community's organisers can do that"]; Object.assign(c, { name: p_name || c.name, area: p_area || null, info: p_info }); save(d); return [null]; },
     community_share({ p_slug, p_token, p_data, p_named, p_contact }) { const d = db(), c = d.communities.find(x => x.slug === p_slug); if (!c) return [null, "That community isn't on Fettle"];
-      const row = { token: p_token, community_id: c.id, data: p_data, named: p_named || null, contact: p_contact || null, updated_at: new Date().toISOString() };
-      const i = d.community_members.findIndex(x => x.token === p_token); if (i >= 0) d.community_members[i] = row; else d.community_members.push(row); save(d); return [null]; },
+      const m = d.community_members.find(x => x.token === p_token); if (!m) return [false];
+      Object.assign(m, { community_id: c.id, data: p_data, named: p_named || null, contact: p_contact || null, updated_at: new Date().toISOString() }); save(d); return [true]; },
+    // service role only (called by /api/community-join, which the page's fetch is routed to below)
+    community_join({ p_slug, p_token, p_data, p_named, p_contact, p_net }) { const d = db(), c = d.communities.find(x => x.slug === p_slug); if (!c) return ["missing"];
+      const now = Date.now(), m = d.community_members.find(x => x.token === p_token);
+      if (m) { Object.assign(m, { community_id: c.id, data: p_data, named: p_named || null, contact: p_contact || null, updated_at: new Date().toISOString() }); save(d); return ["ok"]; }
+      d.community_join_log = (d.community_join_log || []).filter(x => now - Date.parse(x.at) < 2 * 864e5);
+      if (d.community_join_log.filter(x => x.community_id === c.id && x.net === p_net && now - Date.parse(x.at) < 864e5).length >= 20) { save(d); return ["net"]; }
+      if (d.community_members.filter(x => x.community_id === c.id && now - Date.parse(x.joined_at) < 36e5).length >= 150) return ["busy"];
+      const at = new Date().toISOString(); d.community_join_log.push({ community_id: c.id, net: p_net, at });
+      d.community_members.push({ token: p_token, community_id: c.id, data: p_data, named: p_named || null, contact: p_contact || null, updated_at: at, joined_at: at }); save(d); return ["ok"]; },
+    community_flag({ p_slug, p_hours, p_note }) { const d = db(), c = d.communities.find(x => x.slug === p_slug); if (!c || !d.community_admins.some(a => a.community_id === c.id && a.user_id === me())) return [null, "Only this community's organisers can do that"];
+      if (![1, 24, 168].includes(p_hours)) return [null, "Choose a time"]; const since = Date.now() - p_hours * 36e5;
+      const n = d.community_members.filter(m => m.community_id === c.id && Date.parse(m.joined_at) > since).length;
+      (d.community_flags = d.community_flags || []).push({ id: uid(), community_id: c.id, flagged_by: me(), since: new Date(since).toISOString(), joins: n, note: p_note || null, status: "new", created_at: new Date().toISOString() }); save(d); return [n]; },
     community_leave({ p_token }) { const d = db(); d.community_members = d.community_members.filter(x => x.token !== p_token); d.community_requests = (d.community_requests || []).filter(x => x.token !== p_token); save(d); return [null]; },
     community_ask({ p_slug, p_token, p_need, p_note, p_named, p_contact }) { const d = db(), c = d.communities.find(x => x.slug === p_slug); if (!c) return [null, "That community isn't on Fettle"];
+      if (!d.community_members.some(m => m.token === p_token && m.community_id === c.id)) return [null, "Add your home to their totals first, then you can ask for help"];
       d.community_requests.push({ id: uid(), community_id: c.id, token: p_token, need: p_need, note: p_note || null, named: p_named || null, contact: p_contact || null, status: "new", created_at: new Date().toISOString() }); save(d); return [null]; },
     community_stats({ p_slug }) { const d = db(), c = d.communities.find(x => x.slug === p_slug); if (!c || !d.community_admins.some(a => a.community_id === c.id && a.user_id === me())) return [null, "Only this community's organisers can see this"];
-      const M = d.community_members.filter(x => x.community_id === c.id), n = M.length; if (n < 5) return [{ members: n, small: true }];
+      const M = d.community_members.filter(x => x.community_id === c.id), n = M.length, now = Date.now(), ago = ms => M.filter(m => now - Date.parse(m.joined_at) < ms).length;
+      const day = t => new Date(t).toISOString().slice(0, 10), days = [...Array(14)].map((_, i) => M.filter(m => day(m.joined_at) === day(now - (13 - i) * 864e5)).length);
+      const fl = (d.community_flags || []).filter(f => f.community_id === c.id).slice(-1)[0];
+      const joins = { h1: ago(36e5), d1: ago(864e5), d7: ago(7 * 864e5), days, flag: fl ? fl.status : null };
+      if (n < 5) return [{ members: n, small: true, joins }];
       const hide = x => x >= 1 && x <= 2 ? null : x, ind = {};
       [...new Set(M.flatMap(m => Object.keys((m.data || {}).ind || {})))].forEach(k => { const A = M.filter(m => k in m.data.ind), has = A.filter(m => m.data.ind[k] === 1).length; ind[k] = { app: A.length, missing: hide(A.length - has) }; });
       const rk = k => hide(M.filter(m => m.data.risk && m.data.risk[k]).length);
-      return [{ members: n, named: M.filter(m => m.named).length, ind, risk: { o70: rk("o70"), alone: rk("alone"), u5: rk("u5") }, requests: d.community_requests.filter(r => r.community_id === c.id && r.status === "new").length }]; },
+      return [{ members: n, named: M.filter(m => m.named).length, ind, risk: { o70: rk("o70"), alone: rk("alone"), u5: rk("u5") }, requests: d.community_requests.filter(r => r.community_id === c.id && r.status === "new").length, joins }]; },
     community_people({ p_slug }) { const d = db(), c = d.communities.find(x => x.slug === p_slug); if (!c || !d.community_admins.some(a => a.community_id === c.id && a.user_id === me())) return [null, "Only this community's organisers can see this"];
       return [d.community_members.filter(m => m.community_id === c.id && m.named).map(m => ({ named: m.named, contact: m.contact, risk: m.data.risk, missing: Object.entries(m.data.ind || {}).filter(([k, v]) => !v).map(([k]) => k) }))]; },
     community_requests_list({ p_slug }) { const d = db(), c = d.communities.find(x => x.slug === p_slug); if (!c || !d.community_admins.some(a => a.community_id === c.id && a.user_id === me())) return [null, "Only this community's organisers can see this"];
@@ -127,6 +145,14 @@
     community_request_done({ p_id }) { const d = db(), r = d.community_requests.find(x => x.id === p_id); if (r && d.community_admins.some(a => a.community_id === r.community_id && a.user_id === me())) { r.status = "done"; save(d); } return [null]; },
   };
   window.fakeUser = email => db().users.find(x => x.email === email);
+  // Stands in for functions/api/community-join.js: robot check passes unless window.__fakeRobot is false; the connection code is window.__fakeNet.
+  const prevFetch = window.fetch;
+  window.fetch = async (u, init) => { if (String(u).endsWith("/api/community-join")) { const b = JSON.parse(init.body);
+      if (window.__fakeRobot === false) return new Response(JSON.stringify({ error: "We couldn't check this was a person. Please try again." }), { status: 403 });
+      const [r] = RPC.community_join({ p_slug: b.slug, p_token: b.token, p_data: b.data, p_named: b.named, p_contact: b.contact, p_net: window.__fakeNet || "net-1" });
+      const M = { missing: "We couldn't find that community.", net: "A lot of homes have joined from this internet connection today. Please try again tomorrow, or use mobile data.", busy: "Lots of homes are joining right now. Please try again in an hour." };
+      return r === "ok" ? new Response('{"ok":true}', { status: 200 }) : new Response(JSON.stringify({ error: M[r] }), { status: 429 }); }
+    return prevFetch(u, init); };
   window.supabase = { createClient() {
     const sess = () => SL("session");
     return {

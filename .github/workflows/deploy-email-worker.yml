@@ -9,6 +9,7 @@
 #   RESEND_API_KEY             from Resend: API keys
 #   UNSUBSCRIBE_SECRET         the same value as the Pages site's UNSUBSCRIBE_SECRET
 #   ALERT_TEST_TO (optional)   your own email: every warning email then goes only to you, marked [TEST]
+#   ADMIN_ALERT_TO (optional)  your own email: you're told when a community organiser flags joins that look made up
 # Each run copies these into the worker. Leave a secret out and the worker keeps the value it already has.
 # Remove ALERT_TEST_TO from GitHub and run again to stop test mode.
 name: Deploy email worker
@@ -52,8 +53,9 @@ jobs:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           UNSUBSCRIBE_SECRET: ${{ secrets.UNSUBSCRIBE_SECRET }}
           ALERT_TEST_TO: ${{ secrets.ALERT_TEST_TO }}
+          ADMIN_ALERT_TO: ${{ secrets.ADMIN_ALERT_TO }}
         run: |
-          for n in SUPABASE_URL SUPABASE_SERVICE_ROLE_KEY RESEND_API_KEY UNSUBSCRIBE_SECRET; do
+          for n in SUPABASE_URL SUPABASE_SERVICE_ROLE_KEY RESEND_API_KEY UNSUBSCRIBE_SECRET ADMIN_ALERT_TO; do
             v="${!n}"; if [ -n "$v" ]; then printf '%s' "$v" | npx --yes wrangler@3 secret put "$n" >/dev/null && echo "$n set"; else echo "$n not in GitHub: kept as it was"; fi
           done
           if [ -n "$ALERT_TEST_TO" ]; then printf '%s' "$ALERT_TEST_TO" | npx --yes wrangler@3 secret put ALERT_TEST_TO >/dev/null && echo "Test mode: warnings go only to the test address";
