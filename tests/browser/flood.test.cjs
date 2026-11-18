@@ -28,7 +28,7 @@ let fails = 0; const ok = (c, m) => { if (!c) fails++; console.log((c ? 'PASS ' 
   ok(/This area has places that flood/.test(out) && /LA1 · Lancaster/.test(out) && /2 flood warning areas/.test(out) && /River Lune at Lancaster Quay/.test(out), 'finds the flood warning areas near LA1');
   ok(/In force now/.test(out) && /Flood alert: flooding is possible/.test(out), 'shows the warning in force now');
   ok(sent.some(u => /floodAreas\?lat=54\.05&long=-2\.8&dist=3/.test(u)) && !sent.some(u => /LA1/i.test(u)), 'sends only the centre point to the Environment Agency, never the postcode');
-  ok(await p.isVisible('#f-out >> text=Sign up for flood warnings on GOV.UK') && /0345 988 1188/.test(out), 'links to flood warning sign-up and Floodline');
+  ok(await p.isVisible('#f-out >> text=Sign up on GOV.UK') && /0345 988 1188/.test(out), 'links to flood warning sign-up and Floodline');
   ok(/30cm can float a car/.test(out), 'flood check carries the floodwater rule');
 
   // a dry area, and Wales

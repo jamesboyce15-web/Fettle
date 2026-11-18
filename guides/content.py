@@ -5,6 +5,13 @@
 CHECKED = "12 November 2026"
 
 S = {  # shared sources
+    "gov_floodplan": ("Environment Agency: personal flood plan", "https://www.gov.uk/government/publications/personal-flood-plan/personal-flood-plan"),
+    "gov_prepare_flood": ("GOV.UK: prepare for flooding", "https://www.gov.uk/prepare-for-flooding"),
+    "gov_floodwarn": ("GOV.UK: get flood warnings by text, phone or email", "https://www.gov.uk/sign-up-for-flood-warnings"),
+    "nrw_floodwarn": ("Natural Resources Wales: sign up to receive flood warnings", "https://www.naturalresourceswales.gov.uk/flooding/sign-up-to-receive-flood-warnings/?lang=en"),
+    "sepa_floodline": ("SEPA: Floodline sign-up (Scotland)", "https://myfloodline.sepa.scot/"),
+    "nff": ("National Flood Forum", "https://nationalfloodforum.org.uk/"),
+    "floodre": ("Flood Re", "https://www.floodre.co.uk/"),
     "fsa_power": ("Food Standards Agency: food safety in a power cut", "https://www.gov.uk/government/publications/food-safety-in-a-power-cut-advice-for-consumers/food-safety-in-a-power-cut-advice-for-consumers"),
     "cmo_food": ("UK Chief Medical Officers: food and nutrition in a national power outage", "https://www.gov.uk/government/publications/public-health-advice-from-uk-cmos-during-a-national-power-outage/food-and-nutrition-scripts-for-broadcast-media"),
     "beready": ("Cabinet Office: Be Ready, households encouraged to take small, simple steps", "https://www.gov.uk/government/news/households-encouraged-to-take-small-simple-steps-to-stay-prepared-in-an-emergency"),
@@ -1224,6 +1231,90 @@ body="""
 sources=["cmo_water", "cmo_all", "beready_water", "beready"],
 ),
 
+dict(
+slug="flood-plan", cat="home", mins=6, flag=None,
+title="Make a flood plan",
+summary="Step by step: warnings, what to switch off, what to move, where to go and who to call. Half an hour now, while it's dry, saves panic later.",
+body="""
+<p class="lede">When a flood warning comes there may be only a few hours, and it's often dark and raining. A flood plan means the decisions are already made. Work through these steps once, write the answers down, and keep the plan somewhere you'll find it.</p>
+
+<div class="tip"><b>Fettle can fill most of it in for you.</b> If you've done the free check, open your plan and choose <b>Make my flood plan</b>. It starts from your answers, and you can print it.</div>
+
+<h2>1. Get warnings</h2>
+<p>Sign up for free flood warnings by text, phone or email. You'll hear when flooding is expected, often hours before the water arrives.</p>
+<ul class="check">
+<li><b>England:</b> <a href="https://www.gov.uk/sign-up-for-flood-warnings">gov.uk/sign-up-for-flood-warnings</a></li>
+<li><b>Wales:</b> <a href="https://www.naturalresourceswales.gov.uk/flooding/sign-up-to-receive-flood-warnings/?lang=en">Natural Resources Wales flood warnings</a></li>
+<li><b>Scotland:</b> <a href="https://myfloodline.sepa.scot/">Floodline Scotland</a></li>
+<li>Or call <b>Floodline: 0345 988 1188</b>, any time. You can also sign up an older relative, with their agreement, so warnings go to you too.</li>
+</ul>
+<p>Know the three levels:</p>
+<ul>
+<li><b>Flood alert:</b> flooding is possible. Be prepared: check your plan and your kit.</li>
+<li><b>Flood warning:</b> flooding is expected. Act now: move things upstairs, switch off, be ready to leave.</li>
+<li><b>Severe flood warning:</b> danger to life. Follow the emergency services' advice. If you're told to leave, go.</li>
+</ul>
+
+<h2>2. Find your switch-offs</h2>
+<p>Find the water stop tap, the gas valve and the electricity main switch, and check you can reach and turn each one. Write down where they are. Our guide <a href="turn-off-water-gas-electricity.html">Find and turn off your water, gas and electricity</a> shows what each one looks like.</p>
+<div class="flag"><b>Never touch a switch or plug while standing in water.</b> If water has already reached the sockets, don't go near them. Leave it to the emergency services.</div>
+
+<h2>3. Decide what you'd move first</h2>
+<p>Write a short list, in order. If you only have ten minutes, these go first:</p>
+<ul class="check">
+<li>People, then pets</li>
+<li>Medicines, and any equipment that needs charging</li>
+<li>Documents: passports, insurance, bank cards, in a sealed bag</li>
+<li>Phones, chargers and a power bank</li>
+<li>Things you can't replace: photos, keepsakes</li>
+<li>Then, if there's time: rugs, small furniture, electrical items. Roll up curtains or hang them over the rail.</li>
+</ul>
+<p>Live in a bungalow or a ground-floor flat? Decide now which neighbour or relative upstairs or on higher ground you'd go to, and ask them.</p>
+
+<h2>4. Decide where you'd go, and how</h2>
+<p>Choose two places: one nearby, like a neighbour or friend on higher ground, and one further away, like a relative in another town. Write down the addresses and how you'd get there without driving through water. If there's nowhere, the council opens rest centres: local radio will say where.</p>
+<p>Plan for pets too: carriers, leads, food, and where they could go.</p>
+
+<h2>5. Decide who you'll call, and who will check on you</h2>
+<ul class="check">
+<li>One person who'd check on you, and whose number is in the plan on paper</li>
+<li>Anyone you'd check on: an older neighbour, a relative living alone</li>
+<li>Your insurer's claims line and your policy number</li>
+<li>Your electricity network (105), gas emergency (0800 111 999), water company, and your council</li>
+<li>Your local radio station's frequency</li>
+</ul>
+
+<h2>6. Pack a flood kit</h2>
+<p>Keep it upstairs or by the door: your plan, documents in a waterproof bag, a torch, drinking water, medicines, warm waterproof clothes and boots, baby things if you need them, and chargers. Our <a href="grab-bag.html">grab bag guide</a> has the full list.</p>
+
+<h2>7. Protect your home, if you can</h2>
+<p>Homes that flood often can be made more resilient: flood doors and barriers, air brick covers, non-return valves, and raising sockets. Some councils offer grants after a flood. The <a href="https://nationalfloodforum.org.uk/">National Flood Forum</a> gives free, independent advice on what works.</p>
+
+<h2>8. Check your insurance</h2>
+<p>Check your buildings and contents cover include flood, what the flood excess is, and whether it pays for somewhere to stay. Renters: your landlord insures the building, but not your things. If you own your home and cover is hard to find or very expensive because of flood risk, ask your insurer or a broker about <a href="https://www.floodre.co.uk/">Flood Re</a>. In Fettle you can check your policy PDF on your phone: it looks for what it says about flood. Nothing is uploaded.</p>
+
+<h2>9. Share it and practise</h2>
+<p>Tell everyone at home where the plan, the kit and the switch-offs are. Walk through it once: who does what, in what order. Give a copy to the person who'd check on you. Look at it again each autumn, before the wettest months.</p>
+
+<h2>When a warning comes</h2>
+<ul class="check">
+<li>Check your plan. Charge phones. Fill some bottles with drinking water.</li>
+<li>Move people, pets, medicines and documents upstairs or somewhere high.</li>
+<li>Put flood barriers in place if you have them. Move the car to higher ground.</li>
+<li>Turn off gas, electricity and water, if it's safe.</li>
+<li>Be ready to leave. If you're told to go, go: don't wait to see the water.</li>
+<li>Never walk or drive through floodwater. 15cm of fast-flowing water can knock you off your feet, and 30cm can float a car.</li>
+</ul>
+
+<h2>Afterwards</h2>
+<ul>
+<li>Don't go back until you're told it's safe. Floodwater often has sewage in it: wear gloves and boots.</li>
+<li>Call your insurer straight away. Take photos before you clear anything, and keep damaged things until the loss adjuster has seen them.</li>
+<li>Have a qualified engineer check gas and electrics before you turn them back on.</li>
+</ul>
+""",
+sources=["gov_floodplan", "gov_prepare_flood", "gov_floodwarn", "nrw_floodwarn", "sepa_floodline", "nff", "floodre"],
+),
 dict(
 slug="turn-off-water-gas-electricity", cat="home", mins=4, flag=None,
 title="Find and turn off your water, gas and electricity",

@@ -1,0 +1,111 @@
+0|Citește ghidul pas cu pas. Durează cam {0} minute.
+1|Completează planul pentru inundații. L-am început din răspunsurile tale.
+2|Tipărește-l și ține-l la etaj, cu documentele.
+3|Fă-mi planul pentru inundații
+4|{0}Abonează-te pe GOV.UK{1}. Gratuit. Sau sună la Floodline, oricând: {2} {3} {4}
+5|Apasă butonul de mai jos ca să te abonezi online. Sau sună la Floodline, oricând: {0} {1} {2}.
+6|Abonează-te pe GOV.UK
+7|Sună la Floodline
+8|Găsește-ți polița. Adesea e un PDF într-un e-mail de la asigurător.
+9|Apasă Verifică-mi polița și alege PDF-ul. Fettle îl citește pe telefonul tău și îți arată ce scrie despre inundații. Nu se încarcă nimic.
+10|Dacă nu e clar, pune-i asigurătorului întrebările pe care ți le dăm.
+11|Verifică-mi polița
+12|Greu de găsit o asigurare? Flood Re
+13|{0}Inundații{1} Casa ta
+14|Planul tău pentru inundații
+15|Completează ce poți. L-am început din răspunsurile tale. Apoi tipărește-l și ține-l la etaj, cu documentele.
+16|Citește ghidul pas cu pas
+17|{0}. Avertizări
+18|Ne-am abonat la avertizările gratuite de inundație
+19|Floodline: {0} {1} {2}
+20|Postul nostru de radio local {0}Pentru noutăți dacă nu mai merg curentul și internetul{1}
+21|{0}. Robinete și întrerupătoare
+22|Cum arată și cum le închizi
+23|Robinetul principal de apă {0}De exemplu, sub chiuveta din bucătărie{1}
+24|Robinetul de gaz {0}De obicei lângă contorul de gaz{1}
+25|Întrerupătorul general de curent {0}Pe tabloul electric, adesea lângă ușa de la intrare sau sub scări{1}
+26|{0}. Ce mutăm întâi
+27|În ordine, dacă am avea doar {0} minute
+28|{0}. Unde am merge
+29|Undeva aproape, pe teren mai înalt {0}Un vecin de la etaj sau un prieten{1}
+30|Undeva mai departe {0}O rudă din alt oraș{1}
+31|Cum am ajunge acolo {0}Fără să conducem sau să mergem prin apă{1}
+32|Animalele noastre {0}Cuști de transport, lese, mâncare și unde ar merge{1}
+33|{0}. Oameni
+34|Cine verifică dacă suntem bine
+35|Pe cine verificăm noi {0}Un vecin în vârstă, o rudă care locuiește singură{1}
+36|{0}. Trusa noastră pentru inundații
+37|Unde e {0}La etaj sau lângă ușă{1}
+38|{0}. Asigurare
+39|Asigurător
+40|Linia telefonică pentru daune
+41|Salvează-mi planul pentru inundații
+42|Salvează și tipărește
+43|{0}Asigurare{1} Inundații
+44|Verifică dacă polița acoperă inundațiile
+45|Alege polița de asigurare a locuinței, ca PDF. Fettle o citește pe telefonul tău și îți arată ce scrie despre inundații. Nu se încarcă și nu se păstrează.
+46|Majoritatea polițelor vin în două documente: {0}condițiile poliței{1}, care spun ce e acoperit, și {2}anexa{3}, cu franșiza și limitele. Verifică-le pe amândouă.
+47|Alege PDF-ul poliței
+48|Ce am găsit
+49|Inundațiile sunt acoperite, cu unele excepții
+50|Citește excepțiile de mai jos. Adesea privesc porți, garduri și ziduri de grădină.
+51|Asigurarea clădirii e menționată
+52|Asigurarea bunurilor e menționată
+53|Franșiza pentru inundații:
+54|Cazarea cât îți repari casa e menționată
+55|Ce spune că acoperă
+56|pagina
+57|Ce spune despre excepții
+58|E o căutare rapidă de cuvinte în poliță, nu un sfat. Asigurătorul îți poate spune sigur.
+59|Acoperă inundațiile: bifează
+60|Verifică alt document
+61|Întreabă-ți asigurătorul
+62|Sunt acoperit pentru daune de inundație, la clădire și la bunurile mele?
+63|Care e franșiza mea dacă cer despăgubire pentru inundație?
+64|Ați plăti cazarea dacă ar trebui să ne mutăm temporar?
+65|Ați exclus ceva din cauza riscului de inundație la adresa mea?
+66|Se pare că inundațiile sunt acoperite
+67|Polița ta numește inundația printre lucrurile acoperite. Verifică franșiza și limitele de mai jos.
+68|Asigurarea clădirii nu e menționată
+69|Asigurarea bunurilor nu e menționată
+70|Nu am găsit franșiza. De obicei e în anexă.
+71|Nu am găsit acoperire pentru cazare
+72|Polița ta menționează inundația la ce nu acoperă
+73|Citește ce scrie mai jos și întreabă-ți asigurătorul dacă ești acoperit.
+74|Am găsit o franșiză de
+75|, dar nu o franșiză separată pentru inundații. Verifică anexa.
+76|Dacă e greu să găsești asigurare din cauza riscului de inundație, întreabă asigurătorul sau un broker despre {0}Flood Re{1}.
+77|Inundația e menționată, dar nu ne dăm seama dacă e acoperită
+78|Citește ce scrie mai jos sau întreabă-ți asigurătorul.
+79|Nu am găsit menționate inundațiile
+80|Poate fi în celălalt document: condițiile poliței sau anexa. Sau întreabă-ți asigurătorul.
+81|Nu putem citi cuvintele din acest PDF
+82|Pare o scanare sau o fotografie a poliței. Caută secțiunea {0}Ce e acoperit{1} sau {2}Evenimente asigurate{3} și verifică dacă include inundația, sau întreabă-ți asigurătorul.
+83|Acesta nu e un PDF. Alege PDF-ul trimis de asigurător.
+84|Fișierul e prea mare pentru a fi citit aici. Alege separat condițiile poliței sau anexa.
+85|Îți citim polița…
+86|Nu am putut citi acest PDF. Dacă are parolă, deschide-l și salvează o copie fără parolă, sau pune-i asigurătorului întrebările de mai jos.
+87|Salvat. Adaugă unde ai merge și unde sunt robinetele și întrerupătoarele, și e gata.
+88|Salvat și bifat în planul tău.
+89|Planul nostru pentru inundații
+90|Ține-l la etaj, cu documentele. Verifică-l în fiecare toamnă.
+91|Dacă vine o avertizare de inundație
+92|Mută oamenii, animalele, medicamentele și documentele la etaj.
+93|Închide gazul, curentul și apa, dacă e sigur. Nu atinge niciodată un întrerupător stând în apă.
+94|Fii gata să pleci. Dacă ți se spune să pleci, pleacă.
+95|Robinete și întrerupătoare
+96|Robinetul principal de apă
+97|Robinetul de gaz
+98|Întrerupătorul general de curent
+99|Ce mutăm întâi
+100|Unde am merge
+101|Aproape
+102|Mai departe
+103|Cum am ajunge acolo
+104|Pe cine verificăm noi
+105|Trusa pentru inundații și asigurarea
+106|Trusa pentru inundații e
+107|Radio local
+108|Plan pentru inundații
+109|Oamenii și animalele
+110|Fotografii și amintiri
