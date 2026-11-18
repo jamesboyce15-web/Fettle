@@ -351,7 +351,7 @@ footer{max-width:680px;margin:0 auto;padding:20px 20px 60px;font-size:.85rem;col
 .bp .folio{position:absolute;bottom:26px;left:0;right:0;text-align:center;font:400 8.5pt var(--sans);color:#6b7177}
 .bp h1{font:700 21pt/1.12 var(--sans);margin:0 0 12px;letter-spacing:-.01em}
 .bp h2{font:700 13pt/1.25 var(--sans);margin:14px 0 6px}
-.bp h3{font:700 10.5pt/1.3 var(--sans);margin:10px 0 3px}
+.bp h3{font:700 10.5pt/1.3 var(--sans);margin:10px 0 3px}.bp .jlab{font:700 7.5pt var(--sans);text-transform:uppercase;letter-spacing:.06em;color:#5a6670;margin:6px 0 2px}
 .bp p{margin:0 0 8px}
 .bp ul,.bp ol{margin:0 0 8px;padding-left:18px}
 .bp li{margin:2px 0}
@@ -396,14 +396,16 @@ footer{max-width:680px;margin:0 auto;padding:20px 20px 60px;font-size:.85rem;col
 [lang="ur"] .toc{columns:2;column-gap:16px}[lang="ur"] .toc li{break-inside:avoid;line-height:1.7;font-size:9.5pt}[lang="ur"] .toc li.part{margin-top:4px}
 .numcard td:first-child{font:700 13pt var(--sans);white-space:nowrap;width:1%}
 @media print{
-  /* Laid out as A5, printed 14% larger and centred on A4. Fits inside the margins and footer an iPhone adds. */
-  @page{size:A4;margin:26mm 20mm}
+  /* Laid out as A5 and centred on A4, at its real size. 210mm leaves room for any browser's own margins, header and
+     footer (Safari's included), so a page never spills onto a second sheet. */
+  @page{size:A4;margin:12mm}
   body{background:#fff}
   header.top,footer,.booktools,#v-landing,#v-q,#v-r{display:none!important}
   #v-book{background:#fff;padding:0}
   .shelf{padding:0;gap:0;display:block}
   .scaler{transform:none!important;height:auto!important}
-  .bp{width:148mm;height:210mm;zoom:1.14;margin:0 auto;box-shadow:none;page-break-after:always;break-after:page;background:#fff}
+  .bp{width:148mm;height:210mm;margin:0 auto;box-shadow:none;page-break-after:always;break-after:page;page-break-inside:avoid;break-inside:avoid;background:#fff}
+  .scaler{page-break-after:auto;break-after:auto;page-break-inside:avoid;break-inside:avoid}
   .bp.cover,.bp.back{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#173f35}
   .scaler:last-child .bp{page-break-after:auto;break-after:auto}
 }
@@ -1960,7 +1962,7 @@ let LANG="en";
 const TR={pl:{},ro:{},pa:{},ur:{}};
 /* On the live site each language's dictionary is its own file (tools/build_site.py writes them), loaded only when
    someone picks that language or a book is made in it. In this source file the dictionaries are inline, so TRSRC is empty. */
-const TRSRC={"pl": "tr/pl.a533426ad1.js", "ro": "tr/ro.31df8b84cd.js", "pa": "tr/pa.a3e9a8e32b.js", "ur": "tr/ur.4b3de7e61f.js"}/*TRSRC*/, TRREADY={en:true};
+const TRSRC={"pl": "tr/pl.d33971c84d.js", "ro": "tr/ro.3781e9a896.js", "pa": "tr/pa.5615341385.js", "ur": "tr/ur.fdbb2aaee6.js"}/*TRSRC*/, TRREADY={en:true};
 function langReady(L){return !L||L==="en"||TRREADY[L]===true||!TRSRC[L];}
 function ensureLang(L){
   if(langReady(L)) return Promise.resolve();
@@ -2875,7 +2877,7 @@ function tidyName(s){return String(s||"").replace(/(^|[^A-Za-z\u00c0-\u024f'\u20
 function tidyContact(s){s=String(s||"");if(!s)return s;const i=s.indexOf(",");const nm=i<0?s:s.slice(0,i);return (/\d/.test(nm)?nm:tidyName(nm))+(i<0?"":s.slice(i)).replace(/\b([a-z]{1,2}\d[a-z\d]?)\s*(\d[a-z]{2})\b/gi,(m,a,b)=>(a+" "+b).toUpperCase());}
 function capFirst(s){s=String(s||"");return s?s[0].toUpperCase()+s.slice(1):s;}
 function telProblem(t){const raw=String(t||"").trim();if(!raw)return "";let d=raw.replace(/[^\d+]/g,"");if(d.startsWith("+44"))d="0"+d.slice(3);else if(d.startsWith("0044"))d="0"+d.slice(4);
-  if(/^\+/.test(d))return ""; if(!/^0/.test(d))return d.length>=3&&d.length<=6?"":"UK phone numbers start with 0. Please check it.";
+  if(/^\+/.test(d))return ""; if(/^0[46]/.test(d))return "UK phone numbers don't start with "+d.slice(0,2)+". Mobile numbers start with 07. Please check it."; if(!/^0/.test(d))return d.length>=3&&d.length<=6?"":"UK phone numbers start with 0. Please check it.";
   return d.length===11||d.length===10?"":`That number has ${d.length} digits. UK phone numbers have 11. Please check it.`;}
 function cfGet(id){const h=cur;if(!h[id+"F"]||typeof h[id+"F"]!=="object")h[id+"F"]={name:String(h[id]||""),tel:"",addr:""};return h[id+"F"];}
 function cfSet(id,k,v){const F=cfGet(id);F[k]=v;cur[id]=["name","tel","addr"].map(x=>String(F[x]||"").trim()).filter(Boolean).join(", ");updNext();
@@ -3502,7 +3504,8 @@ const viaTag=()=>{try{const q=new URLSearchParams(location.search).get("via");if
    a one-tap message to their "check on me" person, and how many others nearby have checked in. */
 const TAKE=[["meds","Medicines"],["docs","Documents and bank cards"],["phone","Phones and chargers"],["glasses","Glasses and hearing aids"],["baby","The baby's feeds and nappies"],["pets","Pets, with a lead or carrier"]];
 const takeLabel=k=>(TAKE.find(x=>x[0]===k)||[,k])[1];
-function contactFirst(h){const p=h.pledge||{}, F=h.c1F||{};return {name:p.who||F.name||(h.c1?String(h.c1).split(",")[0]:""),tel:p.tel||F.tel||""};}
+function contactFirst(h){const p=h.pledge||{}, F=h.c1F||{}, parts=String(h.c1||"").split(",").map(x=>x.trim());
+  return {name:p.who||F.name||parts[0]||"",tel:p.tel||F.tel||parts.slice(1).find(x=>/^[+0][\d\s]{8,}$/.test(x))||""};}
 function actionScript(h){
   const p=h.pledge||{}, take=(p.take&&p.take.length?p.take:["meds","docs","phone",...(babies(h)?["baby"]:[]),...(h.dogs+h.cats?["pets"]:[])]).map(takeLabel);
   return [
@@ -3784,7 +3787,13 @@ const homeText=x=>x.other?x.name:x._shared?hhName(x):trText("Your home",LANG);
 const homeName=x=>x.other||x._shared?`<span class="notr">${esc(x.other?x.name:hhName(x))}</span>`:`<span>Your home</span>`;
 function connHome(){const L=homes();return L.find(x=>!x.other&&!x._shared)||L[0];}
 function connState(){const h=connHome(); if(!h) return {}; h.connect=h.connect||{}; return h.connect;}
-const whoLabel=(h,w)=>w==="Me"?(user&&user.name||trText("Me",LANG)):w==="Them"?h.name:w;
+// "Me" is the account holder. If they gave only a first name and the family circle has one person with that first name
+// and a surname (James / James Boyce), that's the same person: use the fuller name, so nobody appears twice.
+function meName(){const me=String(user&&user.name||"").trim(); if(!me) return trText("Me",LANG); const W=me.split(/\s+/);
+  if(W.length>1) return tidyName(me); const f=W[0].toLowerCase();
+  const hits=[...new Set(homes().flatMap(h=>(h.circle||[]).map(m=>tidyName(m.name))).filter(n=>n.split(/\s+/).length>1&&n.split(/\s+/)[0].toLowerCase()===f))];
+  return hits.length===1?hits[0]:tidyName(me);}
+const whoLabel=(h,w)=>w==="Me"?meName():w==="Them"?h.name:tidyName(w);
 function famNames(){const N=["Me"];homes().forEach(h=>{(h.circle||[]).forEach(m=>m.name&&N.push(m.name));});return [...new Set(N)];}
 function whoSelect(h,id){
   const A=h.assign||{}, names=famNames().filter(n=>n!==h.name);
@@ -3799,10 +3808,15 @@ function weakSpots(L){
 function jobsByPerson(L){
   const by={}, add=(w,o)=>(by[w]=by[w]||[]).push(o);
   L.forEach(h=>{const A=h.assign||{};
-    needs(h).filter(x=>!h.bought[x.id]&&A[x.id]).forEach(x=>add(whoLabel(h,A[x.id]),{h,t:x.title}));
-    (h.circle||[]).forEach(m=>m.roles.forEach(r=>add(m.name,{h,t:roleLabel(r)})));});
+    needs(h).filter(x=>!h.bought[x.id]&&A[x.id]).forEach(x=>add(whoLabel(h,A[x.id]),{h,t:x.title,when:"now"}));
+    (h.circle||[]).forEach(m=>m.roles.forEach(r=>add(tidyName(m.name),{h,t:roleLabel(r),when:"em"})));});
   return by;
 }
+// A job written for the household ("Check your first aid kit") reads wrongly on someone else's list.
+const theirs=(h,t)=>h.other&&LANG==="en"?String(t).replace(/\byour\b/g,"their").replace(/\bYour\b/g,"Their"):t;
+function jobsHTML(J,tick){const homesIn=[...new Set(J.map(o=>o.h))];
+  return homesIn.map(h=>{const now=J.filter(o=>o.h===h&&o.when==="now"), em=J.filter(o=>o.h===h&&o.when==="em");
+    return `<h3>${h.other?`<span>For</span> ${homeName(h)}`:`<span>For our home</span>`}</h3>${now.length?`<p class="jlab">Now</p>${tick(now.map(o=>`<b>${theirs(h,o.t)}</b>`))}`:""}${em.length?`<p class="jlab">In an emergency</p>${tick(em.map(o=>`<b>${o.t}</b>`))}`:""}`;}).join("");}
 function connJobsText(){return [trText("Who's doing what",LANG),...Object.entries(jobsByPerson(homes())).map(([w,J])=>`\n${w}\n- ${J.map(o=>homeText(o.h)+": "+trText(o.t,LANG)).join("\n- ")}`)].join("\n");}
 const CHEV=`<i class="chev" aria-hidden="true"></i>`;
 function homeTile(h){
@@ -4037,6 +4051,21 @@ function recDone(){
 }
 
 /* The Connected Book: every home in one book, and how they work together. Uses the same book engine as the household book. */
+// Anyone with a key more than 30 minutes away may not get there in snow or floods: say so, and ask for someone local.
+function farWarn(h){const V=(h.circle||[]).filter(m=>m.roles.includes("visit")); if(!h.other||!V.length||V.some(m=>(m.mins||99)<=20)) return "";
+  return `<div class="warn"><span>Everyone with a key lives more than 30 minutes away.</span> <span>In snow or floods they may not get there. Ask a neighbour or someone local to keep a spare key, and write them here:</span><span class="write" style="display:block;margin-top:10px"></span></div>`;}
+// What someone stepping in needs: where it is, how to get in, who to ring.
+function helperTable(h){const W=WATERCOS.find(w=>w.id===h.waterCo), line='<span class="write" style="display:block"></span>', nm=x=>esc(String(x||"").split(",")[0]);
+  const R=[["Address",line],["Where the key is",line],...(has(h,"meds")||has(h,"fridge")?[["Medicines, and where they are",line]]:[]),
+    ["Power cut","105"],...(W&&(W.emergency||W.phone)?[[`<span>Water:</span> <span class="notr">${esc(W.name)}</span>`,`<span class="notr">${esc(W.emergency||W.phone)}</span>`]]:[]),
+    ...(h.gp?[["GP",`<span class="notr">${esc(tidyContact(h.gp))}</span>`]]:[]),...(h.pharmacy?[["Pharmacy",`<span class="notr">${esc(tidyContact(h.pharmacy))}</span>`]]:[])];
+  return `<h2>If you're stepping in</h2><table class="numcard">${R.map(([a,b])=>`<tr><td>${a}</td><td>${b}</td></tr>`).join("")}</table>`;}
+function menuLine(h){if(!meals(h).eaters) return ""; const M=menu(h), t=id=>mealById(id).r(h).t, U=a=>[...new Set(a)];
+  return `<h2>${h.other?"Their 3-day menu":"Our 3-day menu"}</h2><p><span>Breakfast:</span> ${U(M.map(d=>d.b)).map(t).map(x=>`<span>${x}</span>`).join(", ")}. <span>Lunch and dinner:</span> ${U(M.flatMap(d=>[d.l,d.t])).map(t).map(x=>`<span>${x}</span>`).join(", ")}.</p>`;}
+function commLine(h){const c=h.comm, I=c&&c.state==="shared"&&COMMINFO[c.slug]; if(!I) return ""; const i=I.info||{};
+  return `<h2>Community</h2><p><b class="notr">${esc(I.name)}</b>${i.meet?`<br><span>If they have to leave home:</span> <span class="notr">${esc(i.meet)}</span>`:""}${i.contact?`<br><span>Contact:</span> <span class="notr">${esc(i.contact)}</span>`:""}</p>`;}
+function refreshLine(h){const L=refreshList(h).slice(0,4); if(!L.length) return "";
+  return `<h2>Next to check</h2><ul>${L.map(r=>`<li><span>${r.t}</span>: <span>${monthYear(r.due)}</span></li>`).join("")}</ul>`;}
 function connChapters(){
   const L=homes().map(forPrint), c=connState(), C=[], ch=(part,title,lead,blocks)=>C.push({part,title,lead,blocks}), nm=homeName;
   const tick=a=>`<ul style="list-style:none;padding-left:0">${a.map(x=>`<li><span class="tickbox"></span>${x}</li>`).join("")}</ul>`;
@@ -4048,23 +4077,27 @@ function connChapters(){
     `<div class="warn">This book doesn't replace official warnings. In an emergency, follow what the emergency services tell you. If anyone's life is at risk, call 999.</div>`]);
   const W=weakSpots(L);
   ch("Start here","Our weak spots","What's missing across our homes, and who's sorting it.",
-    W.length?W.map(([g,I])=>`<h2>${g}</h2>${tick(I.map(({h,x})=>`${nm(h)}: <b>${x.title}</b><br><span>Sorting it:</span> ${(h.assign||{})[x.id]?`<b class="notr">${esc(whoLabel(h,h.assign[x.id]))}</b>`:'<span class="write" style="display:inline-block;width:50%"></span>'}`))}`)
+    W.length?W.map(([g,I])=>`<h2>${g}</h2>${tick(I.map(({h,x})=>{const sup=["water","food"].includes(x.id)&&(h.circle||[]).find(m=>m.roles.includes("supplies"));
+      return `${nm(h)}: <b>${theirs(h,x.title)}</b><br><span>Sorting it now:</span> ${(h.assign||{})[x.id]?`<b class="notr">${esc(whoLabel(h,h.assign[x.id]))}</b>`:'<span class="write" style="display:inline-block;width:50%"></span>'}${sup?`<br><span>In an emergency, bringing supplies:</span> <b class="notr">${esc(sup.name)}</b>`:""}`;}))}`)
      :[`<p>Nothing important is missing in any of our homes. Check again each season.</p>`]);
   const S=femSteps(null,L);
   ch("When it happens","The first 72 hours","What each of us does, from the first hour to day 3.",
     FPHASE.map((p,pi)=>S[pi].length?`<h2>${p[2]}</h2>${tick(S[pi].map(x=>x[1]))}`:"").concat(`<div class="warn">Never walk or drive through floodwater to reach someone. If you can't get there safely, call 999 and say who needs help and where.</div>`));
   const by=jobsByPerson(L);
   ch("When it happens","Who does what","Everyone's jobs, before and during an emergency.",
-    (Object.keys(by).length?Object.entries(by).map(([w,J])=>`<h2 class="notr">${esc(w)}</h2>${tick(J.map(o=>`${nm(o.h)}: <b>${o.t}</b>`))}`):[`<p>No one has a job yet. Write them in here.</p>${write(6)}`])
+    (Object.keys(by).length?Object.entries(by).map(([w,J])=>`<h2 class="notr">${esc(w)}</h2>${jobsHTML(J,tick)}`):[`<p>No one has a job yet. Write them in here.</p>${write(6)}`])
      .concat(`<h2>If you can't get through</h2><p>If no one can reach someone by phone for a few hours, the person with a key visits, if it's safe to travel.</p>`));
   L.forEach(h=>{
     const N=regNeeds(h), miss=needs(h).filter(x=>!h.bought[x.id]&&x.pri===1).slice(0,8), cf=contactFirst(h), leave=(h.pledge&&h.pledge.go)||h.stayWith||"", care=h.care, R=buildRota(h);
     const cov=Object.entries((care&&care.tasks)||{}).filter(([k,v])=>v);
     ch("Our homes",h.other?h.name:hhName(h),"At a glance, for anyone helping.",[
       `<table class="numcard"><tr><td>Who lives there</td><td>${regWho(h)}</td></tr><tr><td>Water and food</td><td>${daysLabel(supplyDays(h))}</td></tr><tr><td>Ready for 72 hours</td><td><span class="notr">${score(h)}%</span></td></tr>${h.area?`<tr><td>Area</td><td class="notr">${esc(h.area)}</td></tr>`:""}${h.subjTel?`<tr><td>Phone</td><td class="notr">${esc(h.subjTel)}</td></tr>`:""}${cf.name?`<tr><td>First call</td><td class="notr">${esc(cf.name+(cf.tel?", "+cf.tel:""))}</td></tr>`:""}${leave?`<tr><td>If they have to leave</td><td class="notr">${esc(leave)}</td></tr>`:""}</table>`,
-      N.length?`<h2>Good to know</h2><ul>${N.map(t=>`<li>${t}</li>`).join("")}</ul>`:"",
+      (()=>{const G=[...N,...(h.over70&&!(people(h)===1)?["Someone over 70"]:[]),...(has(h,"meds")?["Takes medicine every day"]:[])];return G.length?`<h2>Good to know</h2><ul>${G.map(t=>`<li>${t}</li>`).join("")}</ul>`:"";})(),
+      helperTable(h),
+      menuLine(h), commLine(h), refreshLine(h),
       care&&(care.agency||care.tel)?`<h2>Carers</h2><p class="notr">${esc([care.agency,care.tel].filter(Boolean).join(", "))}</p>`:"",
       cov.length?`<h2>If the carers can't get there</h2><ul>${cov.map(([k,v])=>`<li><span>${(CTASKS.find(t=>t[0]===k)||[,k])[1]}</span>: <b class="notr">${esc(v)}</b></li>`).join("")}</ul>`:"",
+      farWarn(h),
       h.other&&(h.circle||[]).length?`<h2>Who will call or visit</h2><table class="numcard"><tr><td></td><td><b>Will phone</b></td><td><b>Will visit</b></td></tr>${R.map(r=>`<tr><td><span>Day</span> ${r.day}</td><td class="notr">${esc([r.am,r.pm].filter((x,j,a)=>x&&a.indexOf(x)===j).join(", "))}</td><td class="notr">${esc(r.visit||"")}</td></tr>`).join("")}</table>`:"",
       miss.length?`<h2>Still missing</h2>${tick(miss.map(x=>`<b>${x.title}</b>`))}`:""]);
   });
@@ -4072,7 +4105,7 @@ function connChapters(){
     `<p>The days after an emergency are when homes are least ready: the water's drunk, the batteries are flat and everyone's tired. Spend an hour on this as soon as you can.</p>`,
     tick(["Restock water and food in each home.",...READYAGAIN,"Update this book and each home's plan on Fettle."]),
     `<h2>What we learned</h2>${femLog().map(e=>`<p><b>${femLabel(e.kind)}</b>, <span class="notr">${fmtD(e.start)}</span>${e.notes?`<br><span class="notr">${esc(e.notes)}</span>`:""}</p>`).join("")}${write(5)}`]);
-  const P=[];homes().forEach(h=>{if(h.other&&h.subjTel)P.push([h.name,h.subjTel]);(h.circle||[]).forEach(m=>{if(m.tel&&!P.some(x=>x[0]===m.name))P.push([m.name,m.tel]);});if(h.care&&h.care.tel)P.push([h.care.agency||trText("Carers",LANG),h.care.tel]);});
+  const P=[];homes().forEach(h=>{if(h.other&&h.subjTel)P.push([h.name,h.subjTel]);(h.circle||[]).forEach(m=>{const n=tidyName(m.name);if(m.tel&&!P.some(x=>x[0]===n))P.push([n,m.tel]);});if(h.care&&h.care.tel)P.push([h.care.agency||trText("Carers",LANG),h.care.tel]);});
   ch("Afterwards","Our numbers","Everyone in one place.",[
     `<table class="numcard">${P.map(([a,b])=>`<tr><td class="notr">${esc(a)}</td><td class="notr">${esc(b)}</td></tr>`).join("")}${Array(Math.max(2,6-P.length)).fill(`<tr><td><span class="write" style="display:block"></span></td><td><span class="write" style="display:block"></span></td></tr>`).join("")}</table>`,
     `<h2>In an emergency</h2><table class="numcard"><tr><td>Life at risk</td><td>999</td></tr><tr><td>Power cut</td><td>105</td></tr><tr><td>Urgent medical help</td><td>111</td></tr><tr><td>Smell gas</td><td>0800 111 999</td></tr><tr><td>Floodline</td><td>0345 988 1188</td></tr></table>`]);
@@ -4792,12 +4825,20 @@ function chapters(h){
 }
 
 function forPrint(h){if(!h)return h;const o=Object.assign({},h);if(o.surname)o.surname=tidyName(o.surname);if(o.other&&o.name)o.name=tidyName(o.name);
-  ["c1","c2","stayWith","gp","pharmacy","vet"].forEach(k=>{if(o[k])o[k]=tidyContact(o[k]);});if(o.meet)o.meet=capFirst(o.meet);return o;}
+  ["c1","c2","stayWith","gp","pharmacy","vet"].forEach(k=>{if(o[k])o[k]=tidyContact(o[k]);});if(o.meet)o.meet=capFirst(o.meet);
+  if(o.circle) o.circle=o.circle.map(m=>({...m,name:tidyName(m.name)}));
+  if(o.assign) o.assign=Object.fromEntries(Object.entries(o.assign).map(([k,v])=>[k,v==="Me"||v==="Them"?v:tidyName(v)]));
+  return o;}
 let BOOKCONN=false;
+function coverPoints(){const L=homes().map(forPrint), w='<span class="write" style="display:block"></span>';
+  const row=(h,v)=>`<tr><td>${homeName(h)}</td><td>${v?`<span class="notr">${esc(v)}</span>`:w}</td></tr>`;
+  return `<h2>Meeting points</h2><table class="numcard">${L.map(h=>row(h,h.meet||(h.pledge&&h.pledge.go)||"")).join("")}</table>
+    <h2>First call</h2><table class="numcard">${L.map(h=>{const c=contactFirst(h);return row(h,c.name?c.name+(c.tel?", "+c.tel:""):"");}).join("")}</table>`;}
 async function openBook(conn){
   BOOKCONN=conn===true; if(BOOKCONN&&!homes().length) return;
   const h=forPrint(BOOKCONN?connHome():H[view]); const BL=isPro()?(h.lang||"en"):LANG;
   if(h.comm&&h.comm.state==="shared") await commLoad(h.comm.slug);
+  if(BOOKCONN) await Promise.all(homes().filter(x=>x.comm&&x.comm.state==="shared").map(x=>commLoad(x.comm.slug)));
   if(!langReady(BL)) await ensureLang(BL);
   try{await Promise.all(['400 11pt "Source Serif 4"','700 11pt "Source Serif 4"','400 11pt "Atkinson Hyperlegible"','700 11pt "Atkinson Hyperlegible"',...(BL==="pa"?['400 11pt "Noto Sans Gurmukhi"','700 11pt "Noto Sans Gurmukhi"']:[]),...(BL==="ur"?['400 11pt "Noto Nastaliq Urdu"','700 11pt "Noto Nastaliq Urdu"']:[])].map(f=>document.fonts.load(f)));await document.fonts.ready;}catch(e){}
   if(!h.paid&&!BOOKCONN){extra();return;}
@@ -4835,7 +4876,7 @@ async function openBook(conn){
   const pg=i=>i+FRONT; // printed page number (cover is page 1 unnumbered)
   const html=[];
   html.push(`<div class="bp cover"><div class="spine"></div><div class="t"><div class="k"><svg width="34" height="34" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#f2a900"/><path d="M8 15.5 16 9l8 6.5V24a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1z" fill="none" stroke="#173f35" stroke-width="2" stroke-linejoin="round"/><path d="M16 14.5c1.9 1.7 2.8 3.2 2.8 4.6a2.8 2.8 0 0 1-5.6 0c0-1.4.9-2.9 2.8-4.6z" fill="#173f35"/></svg></div>${BOOKCONN?`<h1>The Fettle<br>Connected Book</h1><p>Three days without power, water or phones, sorted. Written for one family.</p>`:`<h1>The Fettle<br>Book</h1><p>Three days without power, water or phones, sorted. Written for one home.</p>`}</div><div class="band"></div><div class="for">${BOOKCONN?`<b class="notr">${esc(connState().fam||"")}</b>${connState().fam?"":`<b>Our family</b>`}<span>${homes().length===1?"1 home":`${homes().length} homes`}</span>`:`<b>${esc(hhName(h))}</b>${esc(placeName(h)==="your area"?"":placeName(h))}`}</div><div class="foot"><span>Edition: ${new Date().toLocaleDateString("en-GB",{month:"long",year:"numeric"})}</span><span>Keep with the torch</span></div></div>`);
-  html.push(`<div class="bp"><div class="inner"><h1 style="font-size:16pt">In an emergency</h1><table class="numcard">${NUMBERS.slice(0,4).map(([a,b])=>`<tr><td>${a}</td><td>${b}</td></tr>`).join("")}</table><h2>Our meeting point</h2><p>${esc(h.meet)||'<span class="write" style="display:block"></span>'}</p><h2>First call</h2><p>${esc(h.c1)||'<span class="write" style="display:block"></span>'}</p><div class="tip" style="margin-top:14px">Turn to <b>The first 72 hours</b>, page ${pg(toc.find(t=>t.title==="The first 72 hours").idx)+1}.</div></div><div class="folio">2</div></div>`);
+  html.push(`<div class="bp"><div class="inner"><h1 style="font-size:16pt">In an emergency</h1><table class="numcard">${NUMBERS.slice(0,4).map(([a,b])=>`<tr><td>${a}</td><td>${b}</td></tr>`).join("")}</table>${BOOKCONN?coverPoints():`<h2>Our meeting point</h2><p>${esc(h.meet)||'<span class="write" style="display:block"></span>'}</p><h2>First call</h2><p>${esc(h.c1)||'<span class="write" style="display:block"></span>'}</p>`}<div class="tip" style="margin-top:14px">Turn to <b>The first 72 hours</b>, page ${pg(toc.find(t=>t.title==="The first 72 hours").idx)+1}.</div></div><div class="folio">2</div></div>`);
   let lastPart="";
   html.push(`<div class="bp"><div class="inner"><h1>Contents</h1><ul class="toc">${toc.map(t=>{const p=(t.part!==lastPart?`<li class="part">${t.part}</li>`:"");lastPart=t.part;return p+`<li><span>${t.title}</span><span class="dots"></span><span class="pg">${pg(t.idx)+1}</span></li>`;}).join("")}</ul></div><div class="folio">3</div></div>`);
   let chNo=0;

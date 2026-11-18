@@ -1,0 +1,20 @@
+0|Nasza rodzina
+1|Miejsca spotkań
+2|Kto to załatwia teraz:
+3|W sytuacji awaryjnej zapasy przywozi:
+4|Dla:
+5|Teraz
+6|Jeśli przejmujesz opiekę
+7|Gdzie jest klucz
+8|Nasze {0}-dniowe menu
+9|Śniadanie:
+10|Obiad i kolacja:
+11|Do sprawdzenia
+12|Leki i gdzie są
+13|Woda:
+14|Ich {0}-dniowe menu
+15|Wszyscy, którzy mają klucz, mieszkają dalej niż {0} minut drogi.
+16|W śniegu lub podczas powodzi mogą nie dojechać. Poproś sąsiada lub kogoś z okolicy o zapasowy klucz i wpisz go tutaj:
+17|Brytyjskie numery telefonów nie zaczynają się od {0}. Numery komórkowe zaczynają się od {1}. Sprawdź go.
+18|Społeczność
+19|Jeśli muszą opuścić dom:
