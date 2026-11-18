@@ -1,11 +1,6 @@
 # Fettle emails: check-in reminders (daily) and postcode alerts (every 15 minutes). A small scheduled Worker, separate from the Pages site.
 # Deploy with: cd workers/reminders && npx wrangler deploy
-# Reminders are ON (DRY_RUN = "false"
-# Postcode alerts start as a DRY RUN: they log what they would send and send nothing. To check the wording, add
-# ALERT_TEST_TO as a secret (npx wrangler secret put ALERT_TEST_TO) with your own address: every alert then goes only there,
-# marked [TEST], and nothing is recorded. Delete that secret when you're done.
-# Set ALERTS_DRY_RUN to "false" only once James has approved the emails.
-ALERTS_DRY_RUN = "true"), approved by James on 13 November 2026: once deployed with its secrets, it emails
+# Reminders are ON (DRY_RUN = "false"), approved by James on 13 November 2026: once deployed with its secrets, it emails
 # people who asked for reminders. Set DRY_RUN to "true" to go back to logging only.
 name = "fettle-reminders"
 main = "src/index.js"
