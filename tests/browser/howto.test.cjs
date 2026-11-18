@@ -11,7 +11,7 @@ let fails = 0; const ok = (c, m) => { if (!c) fails++; console.log((c ? 'PASS ' 
   const ids = Object.keys(r);
   ok(ids.length >= 34 && ids.every(i => r[i].n >= 2 && r[i].n <= 3), 'every step has 2 or 3 instructions (' + ids.length + ' steps)');
   const bare = ids.filter(i => !r[i].acts.length && !r[i].panel);
-  ok(bare.every(i => ['insure', 'kitplace', 'facheck', 'tempacc', 'device', 'alarm'].includes(i)), 'every step that can be started with a tap has one: only ' + bare.join(', ') + ' have none');
+  ok(bare.every(i => ['insure', 'kitplace', 'facheck', 'tempacc', 'device', 'alarm', 'reach', 'sattry', 'o2sat', 'sossat'].includes(i)), 'every step that can be started with a tap has one: only ' + bare.join(', ') + ' have none');
   ok(ids.every(i => r[i].acts.every(([t, u]) => /^(https:\/\/|guides\/)/.test(u) || /^[a-zA-Z]+\(.*\)$/.test(u))), 'every action is a link or a function call');
   ok(['landlord', 'door', 'evac', 'buddy'].every(i => !r[i] || /^Hello\. .* Thank you\.$/.test(r[i].msg)), 'message steps carry a message ready to send');
   // printable sheets

@@ -1,0 +1,113 @@
+0|Cum păstrați legătura
+1|Ce telefoane mobile au cei din casă?
+2|Unele telefoane pot trimite acum mesaje prin satelit când cad antenele. Îți spunem care.
+3|Nimeni nu are telefon mobil
+4|iPhone {0} sau mai nou
+5|iPhone {0}
+6|Samsung Galaxy S{0}, în rețeaua O{1}
+7|Alt Samsung Galaxy din {0} sau mai nou
+8|S{0}, Z Flip {1}, Z Fold {2} sau mai nou
+9|Alt telefon Android
+10|Un telefon mai vechi sau simplu
+11|Se bazează cineva pe telefonul fix?
+12|Majoritatea telefoanelor fixe trec la digital. Telefoanele fixe digitale nu mai merg în pană de curent decât dacă au o baterie de rezervă.
+13|Gata: Cere o baterie de rezervă pentru telefonul fix
+14|Cere o baterie de rezervă pentru telefonul fix{0}Mai întâi{1}
+15|Un telefon la furnizor
+16|Telefoanele fixe digitale nu mai merg în pană de curent. Dacă cineva se bazează pe telefonul fix și nu are un mobil cu semnal bun, furnizorul trebuie să-i dea gratuit o baterie de rezervă. Trebuie să țină cel puțin o oră, iar unele țin până la șapte. Întreabă înainte să ajungă schimbarea la tine.
+17|Sună furnizorul la numărul de pe factură.
+18|Spune că cineva se bazează pe telefonul fix și cere o baterie de rezervă gratuită pentru penele de curent.
+19|Întreabă cât ține și ține-o încărcată.
+20|Ofcom: telefonul fix în pană de curent
+21|Gata: Stabiliți cum veți lua legătura
+22|Stabiliți cum veți lua legătura{0}Mai departe{1}
+23|Când nu e curent zile întregi, bateriile telefoanelor se termină și antenele pot cădea. Stabiliți orele la care porniți telefoanele și trimiteți mesaje, pe cineva din afara zonei căruia îi scrie toată lumea și ce faceți dacă cineva nu mai dă semne. Intră în cartea ta.
+24|Stabiliți orele la care porniți telefoanele și trimiteți mesaje, de exemplu {0} dimineața și {1} seara.
+25|Alegeți pe cineva din afara zonei căruia îi scrie toată lumea și cine merge să verifice dacă cineva nu mai dă semne.
+26|Completează-l la acest pas. Intră în cartea ta, cu bilețele pentru ușă de decupat.
+27|Gata: Gândește-te la O{0} Satellite
+28|Gândește-te la O{0} Satellite{1}Mai târziu{2}
+29|Opțiune de £{0} pe lună
+30|În rețeaua O{0}, un Galaxy S{1} poate trimite mesaje și folosi WhatsApp prin satelit când antenele nu merg, inclusiv în pană de curent. Încă nu poate suna la {2} așa. Cere-i lui O{3} să-l adauge.
+31|Cere-i lui O{0} să adauge Satellite la abonament. Costă £{1} pe lună.
+32|Când nu e semnal, telefonul trece singur pe satelit. Ieși afară ca să-l folosești.
+33|Gata: Încearcă să trimiți un mesaj prin satelit
+34|Încearcă să trimiți un mesaj prin satelit{0}Mai târziu{1}
+35|{0} minute, afară
+36|iPhone-urile recente pot trimite mesaje prin satelit când nu e semnal, gratuit deocamdată. Exersează cât e liniște: ieși afară, deschide Configurări, apoi SOS de urgență, și atinge Încearcă demonstrația. Ai nevoie de cer liber, iar mesajele pot dura un minut-două.
+37|Ieși afară, undeva cu cer liber.
+38|Deschide Configurări, apoi SOS de urgență, și atinge Încearcă demonstrația.
+39|Urmează săgețile ca să îndrepți telefonul spre un satelit. Nu se trimite nimic serviciilor de urgență.
+40|Cere o baterie de rezervă pentru telefonul fix
+41|Stabiliți cum veți lua legătura
+42|Gândește-te la O{0} Satellite
+43|Încearcă să trimiți un mesaj prin satelit
+44|{0}, câte una pentru fiecare telefon, încărcate
+45|Cu telefoanele oprite între verificări, o baterie externă încărcată de {0} mAh ține un telefon trei zile. Reîncarcă-le o dată pe lună.
+46|Deschide Setări și caută Satelit.
+47|Citește acum cum funcționează, ca să știi că o ai într-o urgență. E doar pentru urgențe.
+48|Cere o baterie de rezervă pentru telefonul lor fix
+49|Află că telefonul tău poate trimite un mesaj de urgență prin satelit
+50|Caută Satelit în setările telefonului.
+51|Dacă nu mai merg telefoanele
+52|Cum vom lua legătura
+53|Stabiliți-le acum, cât încă puteți vorbi. Toată familia ar trebui să le știe.
+54|Când pornesc toți telefoanele și trimit mesaje? {0}De două ori pe zi e destul{1}
+55|Cui din afara zonei îi scrie toată lumea? {0}Un nume și un număr. Cineva destul de departe încât să aibă curent.{1}
+56|Când mergem să verificăm?
+57|Când cineva ratează ora de verificare
+58|Când nu sunt vești până la sfârșitul zilei {0}
+59|Când nu sunt vești {0} de ore
+60|Cine merge să verifice? {0}Cineva aproape, ideal cu o cheie{1}
+61|Salvează planul nostru
+62|Trimite mesaje, nu suna.
+63|Porniți telefoanele la
+64|, pentru {0} minute.
+65|Toată lumea îi scrie lui
+66|că sunt bine.
+67|Dacă nu e semnal, încearcă să trimiți mesaje prin satelit de pe
+68|iPhone
+69|Galaxy S{0}, cu O{1} Satellite
+70|Dacă cineva ratează ora de verificare,
+71|merge să verifice, dacă e sigur.
+72|Lasă un bilet pe ușă dacă pleci undeva.
+73|Ascultă radioul local pentru știri.
+74|{0}{1}Cere o baterie de rezervă pentru telefonul fix
+75|Un telefon la furnizor. Telefoanele fixe digitale nu mai merg în pană de curent. Dacă cineva se bazează pe telefonul fix și nu are un mobil cu semnal bun, furnizorul trebuie să-i dea gratuit o baterie de rezervă. Trebuie să țină cel puțin o oră, iar unele țin până la șapte. Întreabă înainte să ajungă schimbarea la tine.
+76|{0}{1}Stabiliți cum veți lua legătura
+77|{0} minute. Când nu e curent zile întregi, bateriile telefoanelor se termină și antenele pot cădea. Stabiliți orele la care porniți telefoanele și trimiteți mesaje, pe cineva din afara zonei căruia îi scrie toată lumea și ce faceți dacă cineva nu mai dă semne. Intră în cartea ta.
+78|{0}{1}Gândește-te la O{2} Satellite
+79|Opțiune de £{0} pe lună. În rețeaua O{1}, un Galaxy S{2} poate trimite mesaje și folosi WhatsApp prin satelit când antenele nu merg, inclusiv în pană de curent. Încă nu poate suna la {3} așa. Cere-i lui O{4} să-l adauge.
+80|{0}{1}Încearcă să trimiți un mesaj prin satelit
+81|{0} minute, afară. iPhone-urile recente pot trimite mesaje prin satelit când nu e semnal, gratuit deocamdată. Exersează cât e liniște: ieși afară, deschide Configurări, apoi SOS de urgență, și atinge Încearcă demonstrația. Ai nevoie de cer liber, iar mesajele pot dura un minut-două.
+82|{0}{1}Baterie externă: {2}, câte una pentru fiecare telefon, încărcate
+83|Când nu e curent zile întregi și telefoanele tac.
+84|Mesajele ajung adesea când apelurile nu merg, și consumă mai puțină baterie.
+85|Apoi opriți-le din nou. Un telefon oprit își păstrează bateria zile întregi.
+86|Pe cineva din afara zonei îl prinzi mai ușor, și poate transmite mesajele mai departe.
+87|Ieși afară, sub cer liber. Mesajele pot dura un minut-două.
+88|Nu merge și nu conduce niciodată prin apa de inundație. Dacă nu poți ajunge, sună la {0} și spune cine are nevoie de ajutor și unde.
+89|Dacă nu merg telefoanele și curentul:
+90|Știri, încărcare și mesaje, de la comunitatea ta.
+91|Scrie unde ai plecat și când. Folosește cartonașele din carte.
+92|Radioul local BBC și Radio {0} transmit actualizări de urgență.
+93|Telefoanele fixe digitale nu mai merg în pană de curent, decât dacă au o baterie de rezervă.
+94|Bilețele pentru ușă
+95|Decupează-le. Lasă unul pe ușă, unde se vede din afară.
+96|Suntem bine
+97|Data și ora:
+98|Am plecat la:
+99|Ne întoarcem:
+100|Dacă nu merg telefoanele și curentul
+101|Pentru casa noastră
+102|Casa noastră
+103|Trimite mesaje, nu suna. Mesajele ajung adesea când apelurile nu merg, și consumă mai puțină baterie.
+104|Dacă nu merg telefoanele și curentul {0}Unde pot merge oamenii pentru știri, să-și încarce telefonul sau să lase un mesaj. De exemplu: sala bisericii are generator și internet prin satelit, de la {1} la {2}{3}
+105|Salvat. E în cartea ta.
+106|Sunt bine.
+107|Trimite-i familiei: sunt bine
+108|Mesajul pleacă ca SMS obișnuit, deci merge și când nu e internet.
+109|Se bazează pe telefonul fix?
+110|Ce telefoane mobile au?
+111|Dacă nu sunt vești de la cineva până la sfârșitul zilei {0},
+112|Dacă nu sunt vești de la cineva {0} de ore,

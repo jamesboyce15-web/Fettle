@@ -754,6 +754,8 @@ html[lang^="en"] .notin-en{display:none}
 .plusc .tiers{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}.plusc .tier{border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column}.plusc .tier.hi{border-color:var(--brand);border-width:2px}
 .plusc .tier .ticks2{flex:1}.plusc .price{margin:2px 0 8px}.plusc .price b{font-size:1.7rem}.plusc .price span{color:var(--mute);margin-left:4px}.plusc .pseg{margin:10px 0 0}.plusc .pseg small{font-weight:600;color:var(--brand)}
 @media(max-width:560px){.plusc .tiers{grid-template-columns:1fr}}.howlist{padding-left:20px}.howlist li{margin:6px 0}
+.reachl{padding-left:20px;margin:8px 0}.reachl li{margin:4px 0}.reachc label{display:block;margin:10px 0 4px;font-weight:600}.reachc .txt{width:100%}
+.doorcards{display:grid;grid-template-columns:1fr 1fr;gap:10px}.dcard{border:2px dashed #173f35;border-radius:8px;padding:10px;display:flex;flex-direction:column;gap:6px}.dcard b{font:700 13pt var(--sans)}
 .cdays{display:flex;align-items:flex-end;gap:3px;height:56px;margin:14px 0 4px;border-bottom:1px solid var(--line)}.cdays i{flex:1;background:var(--brand);border-radius:2px 2px 0 0;min-height:0}
 .cdays-k{display:flex;justify-content:space-between;margin:0 0 10px}.cflag{border-top:1px solid var(--line);padding-top:12px;margin-top:6px}
 .cbars{list-style:none;margin:8px 0;padding:0}.cbars li{padding:8px 0;border-bottom:1px solid var(--rowline)}.cb-top{display:flex;justify-content:space-between;gap:10px}
@@ -1052,7 +1054,7 @@ let H=[], cur=null, qi=0, tier="core", view=0;
 const fresh=other=>({name:other?"Mum":"My household",surname:"",other,paid:false,scen:{},conf:{},doorEntry:null,pump:null,
   home:null,floor:null,lift:null,outdoor:null,adults:other?0:2,over70:other?1:0,under5:0,kids:0,dogs:0,cats:0,
   feed:null,bottles:6,heat:null,hob:null,cold:null,healthGate:null,health:[],psr:null,water:null,food:null,kit:[],fa:null,budget:null,mShock:null,mBills:null,mFood:null,src:null,
-  diets:[],mealPick:[],prepay:null,solar:null,car:null,c1:"",c2:"",meet:"",school:null,gp:"",pharmacy:"",vet:"",
+  diets:[],mealPick:[],phones:[],landline:null,prepay:null,solar:null,car:null,c1:"",c2:"",meet:"",school:null,gp:"",pharmacy:"",vet:"",
   supplier:"",pay:null,waterCo:"",netCo:"",areas:[],area:"",pc:"",nation:null,babies:null,meds:[],bought:{},
   tenure:null,stayWith:"",expiry:{},verified:{},commit:{},done:{},na:{},checkins:[],members:[],jobs:{},feedback:null,
   lang:typeof LANG==="string"?LANG:"en",pro:false,ref:"",ward:"",consent:null,scores:[],bookStatus:"",large:false,
@@ -1159,6 +1161,9 @@ const Q=[
   opts:()=>MEALS.map(m=>[m.id,m.l,"Becomes: "+m.to])},
  {sec:"What you have",id:"kit",type:"multi",ask:()=>"Which of these do you have at home right now?",why:"Only tick things you could find in the dark and that work.",none:"I don't have any of these",
   opts:h=>[["torch","A torch that works, and you could find it in the dark","With spare batteries that haven't leaked"],["radio","A radio with FM that works without the mains","Battery or wind-up"],["power","A charged power bank, with the right cable for your phone","Charged in the last month"],["firstaid","A first aid kit"],["cash",`Cash, about £${people(h)*10}`,"£10 per person in notes and coins"],["opener","A tin opener that isn't electric"],["warm","Enough blankets and warm layers for everyone"],["smoke","A smoke alarm on each floor, tested this month","Press the test button"],...(usesFuel(h)?[["co","A carbon monoxide alarm that works","A small alarm, separate from your smoke alarm, usually marked CO. Tested this month"]]:[]),["docs","Important numbers written on paper"]]},
+ {sec:"Staying in touch",id:"phones",type:"multi",ask:o=>o.other?"Which mobile phones do they have?":"Which mobile phones does everyone at home have?",why:"Some phones can now send texts by satellite when the masts go down. We'll tell you which.",none:"No one has a mobile phone",opts:()=>PHONES},
+ {sec:"Staying in touch",id:"landline",type:"one",ask:o=>o.other?"Do they rely on a landline phone?":"Does anyone rely on a landline phone?",why:"Most landlines are moving to digital. Digital landlines stop working in a power cut unless they have a battery backup.",
+  opts:[["yes","Yes"],["no","No"],["unsure","I'm not sure",""]]},
  {sec:"What you have",id:"fa",type:"one",ask:()=>"Has anyone at home done first aid training in the last three years?",why:"In a big emergency, an ambulance may take much longer than usual.",
   opts:[["yes","Yes"],["no","No"],["unsure","I'm not sure",""]]},
  {sec:"Money",id:"mShock",type:"one",show:h=>!h.other,ask:()=>"Could you pay an unexpected bill of £200 without borrowing?",why:MONEYWHY,
@@ -1419,6 +1424,49 @@ async function plusView(){go("plus"); plusDraw(); if(LIVE&&user&&typeof window.p
 function plusDraw(){document.getElementById("plusbox").innerHTML=`${plusOffer("view")}
   <section class="card"><h2 class="ch">How it works</h2><ol class="sm howlist"><li>Tell us about your home and who lives there.</li><li>Pick the meals you'd normally eat. We turn them into a 3-day menu that needs no power.</li><li>Get your plan, your checklist and your shopping list.</li><li>Buy what's missing, a bit at a time.</li><li>We warn you when trouble's coming to your postcode, and tell you when it's time to refresh your supplies.</li></ol></section>
   <p><button class="btn quiet small" onclick="${H.length?"go('r');render()":"go('landing')"}">Back</button></p>`;}
+/* ================= REACHING EACH OTHER: when the power's off for days =================
+   Digital landlines stop in a power cut, mast batteries run down, phones go flat. What's left: texts at agreed times,
+   satellite texting on some phones, someone outside the area, a rule for when someone goes quiet, door notes. */
+const PHONES=[["iphone15","iPhone 15 or newer"],["iphone14","iPhone 14"],["s25o2","Samsung Galaxy S25, on O2"],["samsung","Another Samsung Galaxy from 2024 or later","S24, Z Flip 6, Z Fold 6 or newer"],["android","Another Android phone"],["older","An older or basic mobile"],["unsure","I'm not sure",""]];
+const phoneHas=(h,k)=>(h.phones||[]).includes(k);
+const satText=h=>phoneHas(h,"iphone15")||phoneHas(h,"iphone14")||phoneHas(h,"s25o2");
+const phoneCount=h=>(h.phones||[]).includes("none")?0:Math.max(1,h.adults+h.over70+h.kids);
+const NONEWS=[["checkin","When someone misses a check-in time","If someone misses a check-in time,"],["day1","When there's no news by the end of day 1","If there's no news from someone by the end of day 1,"],["24h","When there's no news for 24 hours","If there's no news from someone for 24 hours,"]];
+function reachData(h){const r=h.reach||{}, c2=String(h.c2||"").trim(), V=(h.circle||[]).find(m=>m.roles.includes("visit"));
+  return {times:r.times||"9am and 7pm", out:r.out!=null?r.out:c2, noNews:r.noNews||"checkin", who:r.who!=null?r.who:(V?tidyName(V.name):""), set:!!h.reach};}
+function reachLines(h){const d=reachData(h), sat=[]; const L=[];
+  if(phoneHas(h,"iphone15")||phoneHas(h,"iphone14")) sat.push("the iPhone");
+  if(phoneHas(h,"s25o2")) sat.push("the Galaxy S25, with O2 Satellite");
+  L.push(["Text, don't call.","Texts often get through when calls don't, and they use less battery."]);
+  L.push([`<span>Switch phones on at</span> <b class="notr">${esc(d.times)}</b><span>, for 10 minutes.</span>`,"Then off again. A phone that's off keeps its charge for days."]);
+  if(d.out) L.push([`<span>Everyone texts</span> <b class="notr">${esc(d.out)}</b> <span>to say they're OK.</span>`,"Someone outside the area is easier to reach, and can pass messages on."]);
+  if(sat.length) L.push([`<span>If there's no signal, try texting by satellite on</span> ${sat.map(x=>`<span>${x}</span>`).join(", ")}.`,"Go outside, with a clear view of the sky. Messages can take a minute or two."]);
+  L.push([`<span>${NONEWS.find(n=>n[0]===d.noNews)[2]}</span> ${d.who?`<b class="notr">${esc(d.who)}</b> <span>goes round, if it's safe.</span>`:"<span>someone goes round, if it's safe. Agree who.</span>"}`,"Never walk or drive through floodwater. If you can't get there, call 999 and say who needs help and where."]);
+  const C=h.comm&&h.comm.state==="shared"&&COMMINFO[h.comm.slug], out=C&&C.info&&C.info.outage;
+  if(out) L.push([`<span>If phones and power are down:</span> <b class="notr">${esc(out)}</b>`,"News, charging and messages, from your community."]);
+  L.push(["Leave a note on the door if you go anywhere.","Say where you've gone and when. Use the cards in your book."]);
+  L.push(["Listen to local radio for news.","BBC local radio and Radio 2 carry emergency updates."]);
+  return L;}
+let REACHEDIT=false;
+function reachHTML(h){const d=reachData(h);
+  if(!REACHEDIT&&d.set) return `<div class="reachc"><ol class="reachl sm">${reachLines(h).map(([a])=>`<li>${a}</li>`).join("")}</ol><p class="sm"><button class="linkbtn" onclick="REACHEDIT=true;render(true)">Change</button></p></div>`;
+  return `<form class="reachc" id="reachform" onsubmit="return reachSave(event)"><p class="sm">Agree these now, while you can still talk. Everyone in the family should know them.</p>
+    <label for="re-times">When will everyone switch phones on and text? <span class="hint">Twice a day is enough</span></label><input class="txt notr" id="re-times" maxlength="40" value="${esc(d.times)}">
+    <label for="re-out">Who outside the area will everyone text? <span class="hint">A name and number. Someone far enough away to have power.</span></label><input class="txt notr" id="re-out" maxlength="80" value="${esc(d.out)}">
+    <label for="re-nonews">When do we go round to check?</label><select class="txt" id="re-nonews">${NONEWS.map(([k,t])=>`<option value="${k}"${d.noNews===k?" selected":""}>${t}</option>`).join("")}</select>
+    <label for="re-who">Who goes round? <span class="hint">Someone close by, ideally with a key</span></label><input class="txt notr" id="re-who" maxlength="60" value="${esc(d.who)}">
+    <div class="row3"><button class="btn small" type="submit">Save our plan</button>${d.set?`<button class="btn small quiet" type="button" onclick="REACHEDIT=false;render(true)">Cancel</button>`:""}</div></form>`;}
+function reachSave(e){e.preventDefault(); const h=H[view], v=id=>document.getElementById(id).value.trim();
+  h.reach={times:v("re-times")||"9am and 7pm",out:v("re-out"),noNews:v("re-nonews"),who:v("re-who")}; REACHEDIT=false;
+  if(!h.bought.reach) tick("reach",true); else render(true); toast("Saved. It's in your book."); return false;}
+// "I'm OK" as an ordinary text: works when mobile data doesn't. Goes to everyone in the family circles and first calls.
+function okNumbers(){const N=[];const add=t=>{const d=String(t||"").replace(/[^\d+]/g,"");if(d.length>=10&&!N.includes(d))N.push(d);};
+  homes().forEach(h=>{(h.circle||[]).forEach(m=>add(m.tel));add(contactFirst(h).tel);if(h.other)add(h.subjTel);const r=h.reach;if(r&&r.out){const m=String(r.out).match(/[+0][\d\s]{9,}/);if(m)add(m[0]);}});
+  return N;}
+function okText(){const h=connHome()||H[view], name=h?(h.other?h.name:hhName(h)):"";
+  const body=`${trText("I'm OK.",LANG)} ${name} (${new Date().toLocaleTimeString(LANG==="en"?"en-GB":LANG,{hour:"2-digit",minute:"2-digit"})}).`;
+  const N=okNumbers(); location.href=`sms:${N.join(",")}${/iPhone|iPad/.test(navigator.userAgent)?"&":"?"}body=${encodeURIComponent(body)}`;}
+function doorCards(){return `<div class="doorcards"><div class="dcard"><b>We're OK</b><span>Date and time:</span><span class="write" style="display:block"></span></div><div class="dcard"><b>We've gone to:</b><span class="write" style="display:block"></span><span>Back:</span><span class="write" style="display:block"></span><span>Phone:</span><span class="write" style="display:block"></span></div></div>`;}
 function grabList(h){const k=h.under5,p=h.dogs+h.cats;return [
   "Torch and spare batteries, or a wind-up torch","Phone charger and a charged power bank","Copies of ID, insurance and prescriptions in a plastic wallet",`Cash, about £${people(h)*10}`,"Spare house and car keys",
   has(h,"meds")||has(h,"fridge")?"Your regular medicines, and a list of them with the doses":"Any medicines you take",
@@ -1483,7 +1531,13 @@ function needs(h){
     why:"In a national power cut the sewers stop, so the Chief Medical Officers advise not flushing at all: use a bin bag in the toilet, seal it and put it in the outside bin. Soap and water in a shared bowl works better than hand sanitiser. The tablets and bleach are for making water safe if your bottles run out.",guide:"emergency-toilet"});
   add({id:"kitplace",pri:2,cat:"do",title:"Keep the torch, radio and batteries together",amt:"One box or drawer everyone knows",cost:0,list:["Torches, with spare batteries kept in their packet next to them, not inside","The radio, tuned to Radio 2, Radio 4 and your local station","A pen and notepad","Your Fettle Book"],
     why:"In a power cut you'll be looking in the dark. Batteries left inside a torch for months can leak and ruin it. One BBC reporter found exactly that when his street lost power, and couldn't find his wind-up radio either."});
-  if(!kit(h,"power")) add({id:"power",pri:3,cat:"buy",title:"Power bank",amt:"1, kept charged",cost:15,why:"Recharge it once a month."});
+  const pc=phoneCount(h);
+  if(!kit(h,"power")&&pc) add({id:"power",pri:3,cat:"buy",title:"Power bank",amt:pc===1?"1, kept charged":`${pc}, one for each phone, kept charged`,cost:15*pc,why:"With phones off between check-ins, one charged 10,000 mAh power bank keeps a phone going for three days. Recharge them once a month."});
+  if(h.landline==="yes") add({id:"lineback",pri:h.over70||has(h,"device")?1:2,cat:"do",title:h.other?"Ask for a battery backup for their landline":"Ask for a battery backup for your landline",amt:"One phone call to the provider",cost:0,why:"Digital landlines stop working in a power cut. If someone relies on their landline and doesn't have a mobile with good signal, the phone provider must give them a battery backup for free. It must last at least an hour, and some last up to seven. Ask before the switchover reaches you."});
+  if(phoneHas(h,"iphone15")||phoneHas(h,"iphone14")) add({id:"sattry",pri:3,cat:"do",title:"Try texting by satellite",amt:"5 minutes, outside",cost:0,why:"Recent iPhones can send texts by satellite when there's no mobile signal, free for now. Practise while things are calm: go outside, open Settings, then Emergency SOS, and tap Try Demo. You need a clear view of the sky, and messages can take a minute or two."});
+  if(phoneHas(h,"s25o2")) add({id:"o2sat",pri:3,cat:"do",title:"Think about O2 Satellite",amt:"£3 a month add-on",cost:0,why:"On O2, a Galaxy S25 can text and use WhatsApp by satellite when the masts are down, including in a power cut. It can't call 999 that way yet. Ask O2 to add it."});
+  if(phoneHas(h,"samsung")&&!satText(h)) add({id:"sossat",pri:3,cat:"do",title:"Know your phone can send an emergency message by satellite",amt:"5 minutes",cost:0,why:"Recent Samsung Galaxy phones can send an emergency message by satellite when there's no signal. It's for emergencies, not for texting family. Look for Satellite in your phone's settings."});
+  add({id:"reach",pri:2,cat:"do",title:"Agree how you'll reach each other",amt:"10 minutes",cost:0,why:"When the power's off for days, phone batteries run out and mobile masts can fail. Agree times to switch phones on and text, someone outside the area everyone reports to, and what happens if someone goes quiet. It goes in your book."});
   if(!kit(h,"warm")) add({id:"warm",pri:(h.over70||h.under5||h.cold==="fast")?1:2,cat:"buy",title:"Blankets and warm layers",amt:`${n} blankets or sleeping bags, hats and thick socks`,cost:8*n,
     why:`${["gas","electric","heatpump","oil","unsure"].includes(h.heat)?"Your heating will probably stop in a power cut, even gas. ":""}${h.cold==="fast"?"Your home loses heat quickly. ":""}${h.over70||h.under5?"Older people and young children get cold fastest.":""}`});
   if(h.doorEntry==="yes"||h.doorEntry==="unsure") add({id:"door",pri:2,cat:"do",title:"Find out what your building door does in a power cut",amt:"One message or call",cost:0,
@@ -1962,7 +2016,7 @@ let LANG="en";
 const TR={pl:{},ro:{},pa:{},ur:{}};
 /* On the live site each language's dictionary is its own file (tools/build_site.py writes them), loaded only when
    someone picks that language or a book is made in it. In this source file the dictionaries are inline, so TRSRC is empty. */
-const TRSRC={"pl": "tr/pl.d33971c84d.js", "ro": "tr/ro.3781e9a896.js", "pa": "tr/pa.5615341385.js", "ur": "tr/ur.fdbb2aaee6.js"}/*TRSRC*/, TRREADY={en:true};
+const TRSRC={"pl": "tr/pl.e1c4ecc3bb.js", "ro": "tr/ro.a0561c89ca.js", "pa": "tr/pa.53cce6e914.js", "ur": "tr/ur.85a7cd09d1.js"}/*TRSRC*/, TRREADY={en:true};
 function langReady(L){return !L||L==="en"||TRREADY[L]===true||!TRSRC[L];}
 function ensureLang(L){
   if(langReady(L)) return Promise.resolve();
@@ -3087,6 +3141,11 @@ function barrierList(h,x){const R=[["cost","It costs too much"],["expiry","It'll
    Every step gets up to 3 tiny instructions and one thing to tap that starts the job: a link, a sheet to print, or a
    message ready to send. People who have never done this before shouldn't have to work out how. */
 const HOW_STEPS={
+  reach:["Agree times to switch phones on and text, like 9am and 7pm.","Choose someone outside the area everyone texts, and who goes round if someone goes quiet.","Fill it in on this step. It goes in your book, with door notes to cut out."],
+  lineback:["Call the phone provider on the number on the bill.","Say someone relies on the landline, and ask for a free battery backup for power cuts.","Ask how long it lasts, and keep it charged."],
+  sattry:["Go outside, somewhere with a clear view of the sky.","Open Settings, then Emergency SOS, and tap Try Demo.","Follow the arrows to point your phone at a satellite. Nothing is sent to the emergency services."],
+  o2sat:["Ask O2 to add Satellite to your plan. It's £3 a month.","When there's no signal, your phone switches to satellite by itself. Stand outside to use it."],
+  sossat:["Open Settings and search for Satellite.","Read how it works now, so you know it's there in an emergency. It's for emergencies only."],
   fwarn:["Tap the button below to sign up online. Or call Floodline, any time: 0345 988 1188.","Enter your address and choose text, phone or email.","Add a second number, for someone who'd check on you."],
   floodplan:["Read the step-by-step guide. It takes about 5 minutes.","Fill in your flood plan. We've started it from your answers.","Print it, and keep it upstairs with your documents."],
   floodbag:["Put copies of documents and a few days of medicine in a sealed freezer bag.","Keep it upstairs, or in your grab bag by the door."],
@@ -3137,7 +3196,9 @@ function howActs(h,x){
     moneyhelp:[["Find my council","https://www.gov.uk/find-local-council"],["Citizens Advice","https://www.citizensadvice.org.uk/"]],
     prepay:[["Check for weather warnings","https://www.metoffice.gov.uk/weather/warnings-and-advice/uk-warnings"]],
     food:[shop,["See no-cook meal ideas","guides/no-cook-meals.html"]],power:[shop,["Remind me each season","icsSeason()"]],
-    cash:[["Add a reminder to my calendar",`icsStep('cash')`]],insure:[],kitplace:[],facheck:[],tempacc:[],device:[],alarm:[],meds:[],psr:[]};
+    cash:[["Add a reminder to my calendar",`icsStep('cash')`]],reach:[],
+    lineback:[["Ofcom: landlines in a power cut","https://www.ofcom.org.uk/phones-and-broadband/landline-phones/future-of-landline-calls"]],
+    sattry:[],o2sat:[],sossat:[],insure:[],kitplace:[],facheck:[],tempacc:[],device:[],alarm:[],meds:[],psr:[]};
   if(x.id==="fwarn"){const su=floodSignup(h);return [[su[0],su[1]],["Call Floodline","tel:03459881188"]];}
   if(x.id==="floodplan") return [["Make my flood plan",`floodPlanView(${H.indexOf(h)})`],["Read the guide","guides/flood-plan.html"]];
   if(x.id==="floodinsure") return [["Check my policy",`policyView(${H.indexOf(h)})`],...(h.tenure==="own"?[["Cover hard to find? Flood Re","https://www.floodre.co.uk/"]]:[])];
@@ -3243,7 +3304,7 @@ function stepCalm(h,x,i){
   const when=c.when&&c.when!=="help"&&c.due?`<div class="said sm"><div><b>You said</b></div><div class="chip on">${c.when==="date"?"On this day":WHEN[c.when]}</div>${c.when!=="today"?`<div class="mute">${new Date(c.due).toLocaleDateString(LANG==="en"?"en-GB":LANG,{weekday:"short",day:"numeric",month:"short"})}</div>`:""}</div>
     <div class="row3 sm"><button class="linkbtn" onclick="icsStep('${x.id}')">Add to my calendar</button><button class="linkbtn" onclick="stepPanel('${x.id}','when')">Change</button></div>`:"";
   const meta=`<span>${x.cost?`About £${x.cost}`:"Free"}</span> · <span>${stepTime(x)}</span>`;
-  const body=`${lead?"":`<p class="lwhy">${firstSentence(x.why)}</p>`}
+  const body=`${lead?"":`<p class="lwhy">${firstSentence(x.why)}</p>`}${x.id==="reach"?reachHTML(h):""}
     ${(x.id==="facheck"||x.id==="firstaid")&&x.list?`<div class="kitlist"><p class="sm"><b>What should be in it</b></p><ul class="sm">${x.list.map(i=>`<li>${Array.isArray(i)?i[0]:i}</li>`).join("")}</ul></div>`:""}
     ${x.amt&&!/^Takes /.test(x.amt)&&x.cat==="buy"?`<p class="sm mute" style="margin:12px 0 0">${x.amt}</p>`:""}
     ${howHTML(h,x,false)}${x.guide?`<p class="sm" style="margin:12px 0 0"><a href="guides/${x.guide}.html" target="_blank" rel="noopener">Read the guide</a></p>`:""}
@@ -3306,7 +3367,7 @@ function calmHTML(h,row){
      <div class="note"><p><b>Money tight?</b></p><p>Start with the free things on your To do list. They make the biggest difference. Supermarket own-brand is fine, and you can build up a little each week.</p>${tightBase(h)?`<p><button class="linkbtn" onclick="setRTab('todo')">See your free steps</button></p>`:""}</div>
      <p class="sm mute" style="margin-top:18px">Prices are estimates. Buy anywhere you like: food and water are usually cheapest at your supermarket.${affTag()?" As an Amazon Associate, Fettle earns from qualifying purchases.":""}</p>`;
   } else if(RTAB==="family"){
-    body=`${commCard(h,true)}${h.other?"":`<p class="sm mute fam-intro">${homes().length>1?"Your family's homes, linked with Fettle Plus.":"Plan with your family: add Mum, Dad or a grandparent and share the jobs."}</p>`}${famCard(h)}${jobsCard(h)}${connectCard(h)}`;
+    body=`<section class="card"><p class="lpvk">If the phones go down</p><h3 class="ch">How we'll reach each other</h3>${reachHTML(h)}</section>${commCard(h,true)}${h.other?"":`<p class="sm mute fam-intro">${homes().length>1?"Your family's homes, linked with Fettle Plus.":"Plan with your family: add Mum, Dad or a grandparent and share the jobs."}</p>`}${famCard(h)}${jobsCard(h)}${connectCard(h)}`;
   } else if(RTAB==="done"){
     const sit=readyFor(h);
     body=got.length?`<section class="card donec"><div class="ok">${sico("check",34,2.2)}</div><h2>${got.length===1?"1 thing sorted":`${got.length} things sorted`}</h2>
@@ -4007,7 +4068,8 @@ function femHTML(em){
   return `<section class="fembar" role="status"><p class="lpvk">Family emergency mode</p><h1>${femLabel(em.kind)}</h1>
     <p class="sm">${em.by?`<span>Started by</span> <b class="notr">${esc(em.by)}</b>, `:"<span>Started</span> "}<span class="notr">${ago(em.start)}</span>. <span>If anyone's life is at risk, call 999.</span></p>
     <p class="sm"><b><span class="notr">${heard}</span> <span>of</span> <span class="notr">${F.length}</span></b> <span>homes have checked in.</span></p>
-    <div class="row3"><a class="btn small" href="tel:999">Call 999</a><button class="btn small quiet" onclick="femShare()">Tell the family</button></div></section>
+    <div class="row3"><a class="btn small" href="tel:999">Call 999</a><button class="btn small quiet" onclick="okText()">Text the family: I'm OK</button><button class="btn small quiet" onclick="femShare()">Tell the family</button></div>
+    <p class="sm mute">The text goes as an ordinary message, so it works when the internet doesn't.</p></section>
    ${help.length?`<section class="card femhelp" role="alert"><h3 class="ch">${help.map(h=>homeName(h)).join(", ")}: <span>needs help now</span></h3><p class="sm">If anyone's life is at risk, call 999 and say where they are. Then tell the family who's going.</p></section>`:""}
    <section class="card" id="fstatus"><p class="lpvk">Who's OK</p><h3 class="ch">Each home</h3><ul class="fstats">${F.map(({h,name})=>{
      if(!h) return `<li class="fstat none"><div class="fs-top"><b class="notr">${esc(name)}</b><span class="fs-chip">Not shared with you</span></div><p class="sm mute" style="margin:4px 0 0">Ask them to invite you to their plan, or phone them.</p></li>`;
@@ -4063,7 +4125,7 @@ function helperTable(h){const W=WATERCOS.find(w=>w.id===h.waterCo), line='<span 
 function menuLine(h){if(!meals(h).eaters) return ""; const M=menu(h), t=id=>mealById(id).r(h).t, U=a=>[...new Set(a)];
   return `<h2>${h.other?"Their 3-day menu":"Our 3-day menu"}</h2><p><span>Breakfast:</span> ${U(M.map(d=>d.b)).map(t).map(x=>`<span>${x}</span>`).join(", ")}. <span>Lunch and dinner:</span> ${U(M.flatMap(d=>[d.l,d.t])).map(t).map(x=>`<span>${x}</span>`).join(", ")}.</p>`;}
 function commLine(h){const c=h.comm, I=c&&c.state==="shared"&&COMMINFO[c.slug]; if(!I) return ""; const i=I.info||{};
-  return `<h2>Community</h2><p><b class="notr">${esc(I.name)}</b>${i.meet?`<br><span>If they have to leave home:</span> <span class="notr">${esc(i.meet)}</span>`:""}${i.contact?`<br><span>Contact:</span> <span class="notr">${esc(i.contact)}</span>`:""}</p>`;}
+  return `<h2>Community</h2><p><b class="notr">${esc(I.name)}</b>${i.meet?`<br><span>If they have to leave home:</span> <span class="notr">${esc(i.meet)}</span>`:""}${i.contact?`<br><span>Contact:</span> <span class="notr">${esc(i.contact)}</span>`:""}${i.outage?`<br><span>If phones and power are down:</span> <span class="notr">${esc(i.outage)}</span>`:""}</p>`;}
 function refreshLine(h){const L=refreshList(h).slice(0,4); if(!L.length) return "";
   return `<h2>Next to check</h2><ul>${L.map(r=>`<li><span>${r.t}</span>: <span>${monthYear(r.due)}</span></li>`).join("")}</ul>`;}
 function connChapters(){
@@ -4087,6 +4149,9 @@ function connChapters(){
   ch("When it happens","Who does what","Everyone's jobs, before and during an emergency.",
     (Object.keys(by).length?Object.entries(by).map(([w,J])=>`<h2 class="notr">${esc(w)}</h2>${jobsHTML(J,tick)}`):[`<p>No one has a job yet. Write them in here.</p>${write(6)}`])
      .concat(`<h2>If you can't get through</h2><p>If no one can reach someone by phone for a few hours, the person with a key visits, if it's safe to travel.</p>`));
+  ch("When it happens","How we'll reach each other","When the power's off for days, and the phones go quiet.",
+    L.map(h=>`<h2>${h.other?homeName(h):"<span>Our home</span>"}</h2><ul>${reachLines(h).slice(1,5).map(([a])=>`<li>${a}</li>`).join("")}</ul>`).concat(
+    `<div class="tip">Text, don't call. Texts often get through when calls don't, and they use less battery.</div>`));
   L.forEach(h=>{
     const N=regNeeds(h), miss=needs(h).filter(x=>!h.bought[x.id]&&x.pri===1).slice(0,8), cf=contactFirst(h), leave=(h.pledge&&h.pledge.go)||h.stayWith||"", care=h.care, R=buildRota(h);
     const cov=Object.entries((care&&care.tasks)||{}).filter(([k,v])=>v);
@@ -4324,6 +4389,7 @@ function commCard(h,family){
     <p class="sm mute">${c.named?"You've shared your answers and your name.":"You've added your home to their anonymous totals."} <button class="linkbtn" onclick="COMMFORM='share';render(true)">Change</button></p>
     ${inf.meet?`<p class="sm"><b>If you need to leave home:</b> <span class="notr">${esc(inf.meet)}</span></p>`:""}
     ${inf.help?`<p class="sm"><b>Help they offer:</b> <span class="notr">${esc(inf.help)}</span></p>`:""}
+    ${inf.outage?`<p class="sm"><b>If phones and power are down:</b> <span class="notr">${esc(inf.outage)}</span></p>`:""}
     ${inf.contact?`<p class="sm"><b>Contact:</b> <span class="notr">${esc(inf.contact)}</span></p>`:""}
     <div class="row3"><button class="btn small" onclick="COMMFORM='ask';render(true)">Ask them for help</button></div>
     <p class="sm"><button class="linkbtn q" onclick="commLeaveClick(${view})">Stop sharing with them</button></p></section>`;
@@ -4373,7 +4439,7 @@ setInterval(()=>{if(!LIVE||typeof window.commShare!=="function"||typeof H==="und
 function commBookBlocks(I){
   const f=I.info||{}, row=(a,b)=>b?`<tr><td>${a}</td><td><span class="notr">${esc(b)}</span></td></tr>`:"";
   return [`<p><span>Your home is part of</span> <b class="notr">${esc(I.name)}</b><span>. In an emergency, people nearby are often the first to help.</span></p>`,
-    `<table class="numcard">${row("If you need to leave home",f.meet)}${row("Contact",f.contact)}${row("Help they offer",f.help)}${row("Local radio",f.radio)}${row("Nearest defibrillator",f.defib)}${row("Also",f.notes)}${row("Website",f.web)}</table>`,
+    `<table class="numcard">${row("If you need to leave home",f.meet)}${row("Contact",f.contact)}${row("Help they offer",f.help)}${row("If phones and power are down",f.outage)}${row("Local radio",f.radio)}${row("Nearest defibrillator",f.defib)}${row("Also",f.notes)}${row("Website",f.web)}</table>`,
     `<div class="tip">If you can't afford something on your plan, or would like a knock on the door in an emergency, ask them. You can do it in Fettle, or in person.</div>`];
 }
 /* Organiser side */
@@ -4475,6 +4541,7 @@ function commDashDraw(){
       ${fld("meet","Where to go if people need to leave home","A hall, mosque, clubhouse or other warm, safe place",2)}
       ${fld("contact","Who to contact","A name and a phone number or email that you're happy to share",0)}
       ${fld("help","Help you offer","For example, a fund for essentials, lifts, collecting prescriptions",3)}
+      ${fld("outage","If phones and power are down","Where people can go for news, to charge a phone or leave a message. For example: the church hall has a generator and satellite internet, 9am to 5pm",2)}
       ${fld("radio","Local radio station","",0)}${fld("defib","Nearest defibrillator","",0)}${fld("notes","Anything else","",2)}${fld("web","Website or social media","",0)}
       <p class="err" id="ci-err" role="alert"></p><button class="btn" type="submit">Save</button></form></section>`;
   } else if(CDTAB==="help"){
@@ -4496,7 +4563,7 @@ function commDashDraw(){
 }
 async function commInfoSave(e){
   e.preventDefault(); const c=COMMINFO[CDSLUG], v=k=>document.getElementById("ci-"+k).value.trim().slice(0,400);
-  const info={}; ["meet","contact","help","radio","defib","notes","web"].forEach(k=>{const x=v(k);if(x)info[k]=x;});
+  const info={}; ["meet","contact","help","outage","radio","defib","notes","web"].forEach(k=>{const x=v(k);if(x)info[k]=x;});
   const name=v("name")||c.name, area=v("area");
   if(typeof window.commSetInfo==="function"&&!c.sample){const ok=await window.commSetInfo(c.slug,name,area,info);if(!ok){document.getElementById("ci-err").textContent="That didn't save. Please try again.";return false;}}
   Object.assign(c,{name,area,info}); commDashDraw(); toast(c.sample||!LIVE?"Saved on this copy only.":"Saved. Members will see it on their plans and in their books."); return false;
@@ -4731,6 +4798,10 @@ function chapters(h){
 
   ch("During","The first 72 hours","Follow these pages in order when something happens.",[
    ...pb.map(p=>`<div class="box"><h2 style="margin-top:0">${p.w}: ${p.t}</h2>${ul(p.l)}</div>`)]);
+  ch("During","How we'll reach each other","When the power's off for days, and the phones go quiet.",[
+    `<ol>${reachLines(h).map(([a,b])=>`<li><b>${a}</b><br><span>${b}</span></li>`).join("")}</ol>`,
+    h.landline==="yes"?`<div class="warn">Digital landlines stop working in a power cut, unless they have a battery backup.</div>`:"",
+    `<h2>Door notes</h2><p>Cut these out. Leave one on the door, where it can be seen from outside.</p>${doorCards()}`]);
   ch("During","Leaving home","Floods, fire, a gas leak, or being told to go.",[
    `<div class="warn">If you're told to leave, or you're in danger, go. Your belongings can be replaced.</div>`,
    `<h2>Step by step</h2><ol>${leavePlan(h).map(x=>`<li>${x}</li>`).join("")}</ol>`,
