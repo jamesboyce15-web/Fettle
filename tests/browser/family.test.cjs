@@ -55,6 +55,8 @@ let fails = 0; const ok = (c, m) => { if (!c) fails++; console.log((c ? 'PASS ' 
   ok(await p.isVisible('#relstart') && /Dad's plan is ready/.test(await p.textContent('#relstart')), 'finishes with next steps for the family');
   const notes = await p.textContent('#res');
   ok(/Talk to them about this plan/.test(notes) && /You answered from what you know/.test(notes), 'reminds them to talk to Dad and check the guesses');
+  ok(!(await p.$('#regcard')), 'no emergency list for residents without a council pilot');
+  await p.evaluate(() => { sessionStorage.setItem('fettle-pilot', 'demo'); render(true); }); await p.waitForTimeout(80);
   ok(/Talk to them first/.test(await p.textContent('#regcard')) && !(await p.isVisible('#regcard >> text=Add us to the list')), 'no emergency list until Dad agrees');
   ok(/Talk to them first, then invite the family/.test(await p.textContent('#famshare')), 'no inviting until Dad agrees');
   await p.click('text=We\'ve talked, they\'re happy'); await p.waitForTimeout(80);

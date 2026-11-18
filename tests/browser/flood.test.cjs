@@ -52,7 +52,9 @@ let fails = 0; const ok = (c, m) => { if (!c) fails++; console.log((c ? 'PASS ' 
   ok(await p.evaluate(() => { const h = H[view]; h.floodWarn = 'yes'; const r = !needs(h).some(x => x.id === 'fwarn'); h.floodWarn = 'no'; return r; }), 'already signed up: no warning step');
   ok(await p.evaluate(() => { const h = fresh(false); Object.assign(h, { floodRisk: 'no' }); return !needs(h).some(x => /^flood|fwarn/.test(x.id)); }), 'no flood risk: no flood steps');
 
-  // emergency list
+  // emergency list: hidden from residents until a council has joined (a pilot link)
+  ok(!(await p.$('#regcard')) && !/emergency list/i.test(await p.textContent('#res')), 'no emergency list for residents without a council pilot');
+  await p.evaluate(() => { sessionStorage.setItem('fettle-pilot', 'demo'); render(true); }); await p.waitForTimeout(80);
   ok(await p.isVisible('#regcard') && /Let your council know if you'd need help/.test(await p.textContent('#regcard')), 'plan page offers the emergency list');
   ok(/Less than a day/.test(await p.textContent('#regcard .regdl')) && /2 adults, 1 under 5/.test(await p.textContent('#regcard .regdl')), 'shows exactly what planners would see');
   await p.click('#regcard >> text=Add us to the list'); await p.waitForTimeout(150);
@@ -82,7 +84,7 @@ let fails = 0; const ok = (c, m) => { if (!c) fails++; console.log((c ? 'PASS ' 
   ok(await p.isVisible('#checkin') && /River Lune at Lancaster Quay/.test(await p.textContent('#checkin')), 'a flood warning in force asks "Are you OK?"');
   await p.click('#checkin button.btn.small'); await p.waitForTimeout(80);
   ok(/Choose whether you're OK/.test(await p.textContent('#chk-err')), 'needs an answer');
-  await p.click('#checkin >> text=We might need help'); await p.click('#checkin >> text=Less than a day'); await p.click('#checkin >> text=Send'); await p.waitForTimeout(150);
+  await p.click('#checkin >> text=We might need help'); await p.click('#checkin >> text=Less than a day'); await p.click('#checkin >> text=Save'); await p.waitForTimeout(150);
   ok(await p.evaluate(() => { const c = H[view].checkins.slice(-1)[0]; return c.ok === 'maybe' && c.days === 0 && supplyDays(H[view]) === 0; }), 'check-in saved and updates days of supplies');
   ok(await p.isVisible('.pcard.chk.done') && /you checked in at/.test(await p.textContent('.pcard.chk.done')), 'thanks them and shows when');
   ok(await p.evaluate(() => { const h = H[view], s0 = regScore(h); h.checkins.push({ d: new Date().toISOString(), ok: 'now', days: 0 }); const r = regScore(h) - s0 >= 16; h.checkins.pop(); return r; }), 'asking for help now puts a household at the top');
@@ -104,7 +106,7 @@ let fails = 0; const ok = (c, m) => { if (!c) fails++; console.log((c ? 'PASS ' 
   const card = (await p.textContent('#checkin')).replace(/\s+/g, ' ');
   ok(/Your plan for now/.test(card) && /go to: ?Sam's house on Aldcliffe Road/.test(card) && /Medicines ?Documents and bank cards ?Phones and chargers/.test(card), 'warning shows their own plan as a short script');
   ok(/23 households in your area have checked in today/.test(card), 'shows how many others nearby have checked in');
-  await p.click('#checkin >> text=We\'re fine'); await p.click('#checkin >> text=Send'); await p.waitForTimeout(120);
+  await p.click('#checkin >> text=We\'re fine'); await p.click('#checkin >> text=Save'); await p.waitForTimeout(120);
   const href = await p.getAttribute('.pcard.chk.done a[href^="sms:"]', 'href');
   ok(/^sms:07700900456\?&body=Flood%20warning%20here\.%20We're%20OK\./.test(href), 'one tap to text their check-on-me person');
 

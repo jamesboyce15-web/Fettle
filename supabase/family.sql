@@ -1,4 +1,12 @@
--- Shared family plans (November 2026). Run after communities.sql.
+-- Shared family plans and Fettle Connect (November 2026). Run after flood.sql.
+-- 0. Anonymous counts for Fettle Connect: opening it, the price question, the connected book, emergency mode and getting ready again.
+alter table public.fettle_events drop constraint if exists fettle_events_kind_check;
+alter table public.fettle_events add constraint fettle_events_kind_check
+  check (kind in ('check_started','check_finished','tool_calc','tool_local','tool_local_found','tool_remind','remind_signup',
+                  'tool_flood','tool_flood_found','reg_join','checkin_fine','checkin_maybe','checkin_now',
+                  'family_circle','family_checkin',
+                  'connect_open','connect_yes','connect_maybe','connect_no','connect_landing','connect_book','connect_emergency','connect_recover'));
+
 -- A plan's owner (households.user_id) can invite family by link. People who accept can read and update the plan
 -- from their own account. They can't delete it, change who owns it, or see any other plan. Council caseloads
 -- (org_id not null) can't be shared this way.

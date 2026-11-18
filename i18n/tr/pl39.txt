@@ -1,0 +1,183 @@
+0|Fettle Connect
+1|Jeden plan dla całej rodziny.
+2|Połącz do {0} domów: swój, mamy, dziadka. Gdy zabraknie prądu albo przyjdzie ostrzeżenie przed powodzią, wszyscy wiedzą, kto jest cały i kto co robi.
+3|Słabe punkty każdego domu w jednym miejscu
+4|Podział zadań, np. kto zawiezie mamie wodę
+5|Ostrzeżenia przed powodzią w pobliżu każdego z Twoich domów
+6|Tryb awaryjny: kto jest cały i co dzieje się przez {0} godziny
+7|Przygotowanie od nowa po wszystkim, żeby następnym razem było łatwiej
+8|Wspólna książka, ze wszystkimi domami
+9|£{0} miesięcznie za maksymalnie {1} domów.
+10|Za darmo, dopóki testujemy.
+11|Zacznij od swojego domu
+12|Zapłaciłbym za to
+13|Tak. Test, Twój plan i cyfrowa książka są za darmo i tak zostanie. Fettle Connect, do łączenia do {0} domów rodziny, będzie kosztować £{1} miesięcznie. Dopóki testujemy, jest za darmo.
+14|Tak. Dodaj jej dom, za jej zgodą. Z Fettle Connect możesz połączyć do {0} domów rodziny, podzielić zadania i działać według jednego planu, gdy coś się stanie.
+15|Dziękujemy. Zacznij od swojego domu, potem dodaj domy rodziny.
+16|Połącz do {0} domów rodziny
+17|Dodaj mamę, tatę albo dziadka lub babcię. Zobacz słabe punkty wszystkich w jednym miejscu, podziel zadania i działajcie według jednego planu, gdy coś się stanie.
+18|Zobacz, jak to działa
+19|Dodaj dom
+20|Za darmo, dopóki testujemy. Później £{0} miesięcznie za maksymalnie {1} domów.
+21|Połączone domy: {0}
+22|Zobacz słabe punkty wszystkich, kto czym się zajmuje i jeden wspólny plan na wypadek, gdy coś się stanie.
+23|Otwórz panel rodziny
+24|{0}Porozmawiaj z nimi o tym planie.{1} To ich dom i ich informacje. Zanim udostępnisz go rodzinie, sprawdź, czy się zgadzają.
+25|Wróć do planu
+26|Twoja rodzina
+27|Domy: {0}
+28|połączone, z maksymalnie {0}.
+29|Za darmo, dopóki testujemy. Później £{0} miesięcznie.
+30|Coś się dzieje
+31|Włącz rodzinny tryb awaryjny: kto jest cały i kto co robi przez {0} godziny
+32|Woda i jedzenie:
+33|Poważne zagrożenia: {0}
+34|Dodaj kolejny dom
+35|Słabe punkty
+36|Czego brakuje w Twoich domach
+37|Rzeczy najważniejsze w pierwszych {0} godzinach. Wybierz, kto zajmie się każdą z nich.
+38|Koordynacja
+39|Kto co robi
+40|W pobliżu Twoich domów
+41|Lokalne ostrzeżenia
+42|Dodaj kod pocztowy do każdego planu, żeby widzieć ostrzeżenia przed powodzią w pobliżu domów.
+43|Aktualne ostrzeżenia przed powodzią z Environment Agency, dla domów w Anglii. Wkrótce ostrzeżenia pogodowe Met Office i przerwy w dostawie prądu.
+44|Łączenie domów
+45|Zaproś rodzinę
+46|Zaproś kogoś do planu, a zobaczy go, odhaczy zrobione rzeczy i weźmie zadania na swoim telefonie. Żeby połączyć też swój dom, sprawdza go w Fettle i zaprasza Ciebie.
+47|Wspólna książka
+48|Wszystkie domy ({0}) w jednej książce
+49|: kto w nich jest, słabe punkty, kto co robi, pierwsze {0} godziny razem i przygotowanie od nowa.
+50|Nazwisko rodziny na okładkę
+51|Na przykład: Rodzina Kowalskich
+52|Otwórz wspólną książkę
+53|Jedno pytanie
+54|Czy zapłaciłbyś za to £{0} miesięcznie?
+55|Fettle Connect jest za darmo, dopóki testujemy. Później będzie kosztować £{0} miesięcznie za maksymalnie {1} domów. Twoja odpowiedź pomoże nam zdecydować.
+56|Może
+57|Teraz nie ma ostrzeżeń przed powodzią w pobliżu Twoich domów.
+58|{0}Dziękujemy za odpowiedź.{1} Fettle Connect jest za darmo, dopóki testujemy. Powiemy Ci, zanim zacznie coś kosztować, i nic nie zostanie pobrane, jeśli sam nie zdecydujesz się zapłacić.
+59|Rodzinny tryb awaryjny
+60|Jeśli czyjeś życie jest zagrożone, najpierw zadzwoń pod {0}.
+61|Burza, śnieg lub silny mróz
+62|Ktoś musi opuścić dom
+63|Których domów to dotyczy?
+64|Włącz tryb awaryjny
+65|Wybierz, co się dzieje.
+66|Rozpoczęto
+67|Zadzwoń pod {0}
+68|Kto jest cały
+69|Każdy dom
+70|Jeszcze bez wiadomości
+71|Ich kroki
+72|Zadzwoń do nich
+73|Następne {0} godziny
+74|Co i kiedy
+75|Pierwsza godzina
+76|Sprawdź, czy wszyscy są cali. Jeśli nie możesz się z kimś skontaktować, spróbuj przez sąsiadów.
+77|pierwszy telefon od:
+78|Zgłoś przerwę w dostawie prądu pod {0}. To bezpłatne i powiedzą, jak długo może potrwać.
+79|Nie otwieraj lodówek i zamrażarek.
+80|Każdy dom wykonuje pierwsze kroki ze swojego planu.
+81|Dzień {0}
+82|wody i jedzenia na mniej niż dzień.
+83|Zapasy przywiezie:
+84|korzysta ze sprzętu na prąd. Sprawdź akumulator zapasowy albo przenieś tę osobę tam, gdzie jest prąd.
+85|leki trzymane w lodówce. Jeśli prądu nie ma dłużej niż kilka godzin, zapytaj farmaceutę, co robić.
+86|jeśli opiekunowie nie mogą dojechać:
+87|wieczorny telefon od:
+88|Oszczędzaj baterię telefonu: tryb oszczędzania energii, a powerbanki tylko w razie potrzeby.
+89|Dzień {0} {1}Teraz{2}
+90|dzwonią:
+91|. Odwiedzi w razie potrzeby:
+92|Zapytaj każdy dom, ile zostało wody i jedzenia. Oznacz tych, którym się kończy, jako mogących potrzebować pomocy.
+93|Jeśli to wciąż trwa, pomyśl o przeniesieniu osób najbardziej potrzebujących pomocy do rodziny.
+94|Gdy się skończy, przygotuj się od nowa: uzupełnij zapasy, póki pamiętasz, czego użyłeś.
+95|Czy to już koniec?
+96|Gdy wróci prąd, woda albo przejezdne drogi, przygotuj wszystkich na następny raz, póki pamiętasz, czego użyliście.
+97|Już po wszystkim: przygotuj się od nowa
+98|Włączone przez pomyłkę? Wyłącz tryb awaryjny
+99|Sprawdź ostrzeżenia Met Office dla okolicy każdego domu.
+100|Upewnij się, że wszystkim jest ciepło: jeden ciepły pokój, warstwy ubrań, czapki i koce.
+101|Ładuj telefony i powerbanki, póki możesz.
+102|Sprawdź ostrzeżenia przed powodzią Environment Agency dla każdego domu.
+103|Nigdy nie idź ani nie jedź przez wodę powodziową, żeby do kogoś dotrzeć. {0} cm płynącej wody może unieść samochód.
+104|Sprawdź na stronie wodociągów, gdzie są punkty z wodą butelkowaną.
+105|Wszyscy najpierw piją zapasową wodę butelkowaną.
+106|Ustalcie, dokąd każdy jedzie i kto go odbierze.
+107|Zabierzcie leki, telefony, ładowarki i dokumenty.
+108|Przygotuj się od nowa
+109|Brawo, udało się przetrwać.
+110|Uzupełnij zapasy teraz, póki pamiętasz, czego użyłeś. Następnym razem będzie łatwiej.
+111|Czego użył każdy dom?
+112|Zaznaczone rzeczy wracają do planu tego domu, żeby kupić je ponownie.
+113|W tym planie nic jeszcze nie odhaczono, więc nie ma czego uzupełniać.
+114|Potem
+115|Naładuj powerbanki, telefony i latarki.
+116|Wymień zużyte baterie.
+117|Sprawdź jedzenie w lodówkach i zamrażarkach. W razie wątpliwości wyrzuć.
+118|Podziękuj tym, którzy pomogli, i zapytaj, co by im to ułatwiło.
+119|Sprawdź, czy podział zadań nadal pasuje wszystkim. Zamieńcie te, które się nie sprawdziły.
+120|Co zrobiłbyś inaczej następnym razem?
+121|Dodaj to z powrotem do naszych planów
+122|Wspólna{0}książka Fettle
+123|Trzy dni bez prądu, wody i telefonów, przygotowane. Napisane dla jednej rodziny.
+124|Nasz rodzinny plan
+125|Nasze słabe punkty
+126|Kiedy to się stanie
+127|Kto co robi
+128|Nasze domy
+129|Potem
+130|Nasze numery
+131|Kto w nim jest i jak dbamy o siebie przez trzy dni.
+132|Każdy z naszych domów ma własny plan na trzy dni bez prądu, wody i telefonów. Ta książka mówi, jak sobie pomagamy: kto sprawdza, co u kogo, kto co przynosi i co robimy najpierw.
+133|Kto tam mieszka
+134|Trzymaj tę książkę razem z książką Fettle każdego domu. Daj kopię każdemu domowi i aktualizuj co sezon.
+135|Ta książka nie zastępuje oficjalnych ostrzeżeń. W sytuacji awaryjnej słuchaj służb ratunkowych. Jeśli czyjeś życie jest zagrożone, zadzwoń pod {0}.
+136|Czego brakuje w naszych domach i kto się tym zajmuje.
+137|Zajmuje się tym:
+138|Co robi każdy z nas, od pierwszej godziny do dnia {0}.
+139|{0}{1}Sprawdź, czy wszyscy są cali. Jeśli nie możesz się z kimś skontaktować, spróbuj przez sąsiadów.
+140|{0}{1}Słuchaj komunikatów w lokalnym radiu.
+141|{0}{1}Każdy dom wykonuje pierwsze kroki ze swojego planu.
+142|{0}{1}Ładuj telefony i powerbanki, póki możesz.
+143|{0}{1}Zapytaj każdy dom, ile zostało wody i jedzenia. Oznacz tych, którym się kończy, jako mogących potrzebować pomocy.
+144|{0}{1}Zajrzyj do sąsiadów, jeśli to bezpieczne.
+145|{0}{1}Jeśli to wciąż trwa, pomyśl o przeniesieniu osób najbardziej potrzebujących pomocy do rodziny.
+146|{0}{1}Gdy się skończy, przygotuj się od nowa: uzupełnij zapasy, póki pamiętasz, czego użyłeś.
+147|Nigdy nie idź ani nie jedź przez wodę powodziową, żeby do kogoś dotrzeć. Jeśli nie da się bezpiecznie dojechać, zadzwoń pod {0} i powiedz, kto potrzebuje pomocy i gdzie.
+148|Zadania wszystkich, przed sytuacją awaryjną i w jej trakcie.
+149|Jeśli nie możesz się dodzwonić
+150|Jeśli przez kilka godzin nikt nie może się z kimś skontaktować telefonicznie, odwiedza go osoba z kluczem, jeśli podróż jest bezpieczna.
+151|W skrócie, dla każdego, kto pomaga.
+152|Gotowość na {0} godziny
+153|Nadal brakuje
+154|Warto wiedzieć
+155|Opiekunowie
+156|Gdy się skończy, uzupełnij zapasy, póki pamiętasz, czego użyłeś.
+157|Dni po sytuacji awaryjnej to czas, gdy domy są najmniej gotowe: woda wypita, baterie rozładowane, wszyscy zmęczeni. Poświęć na to godzinę, gdy tylko możesz.
+158|{0}{1}Uzupełnij wodę i jedzenie w każdym domu.
+159|{0}{1}Naładuj powerbanki, telefony i latarki.
+160|{0}{1}Wymień zużyte baterie.
+161|{0}{1}Sprawdź jedzenie w lodówkach i zamrażarkach. W razie wątpliwości wyrzuć.
+162|{0}{1}Podziękuj tym, którzy pomogli, i zapytaj, co by im to ułatwiło.
+163|{0}{1}Sprawdź, czy podział zadań nadal pasuje wszystkim. Zamieńcie te, które się nie sprawdziły.
+164|{0}{1}Zaktualizuj tę książkę i plan każdego domu w Fettle.
+165|Czego się nauczyliśmy
+166|Wszyscy w jednym miejscu.
+167|Ta książka powstała dla Twojej rodziny z planów każdego domu. Aktualizuj ją co sezon i za każdym razem, gdy coś się zmieni.
+168|Wróć do rodziny
+169|Wspólna książka. Drukuje się na A{0},
+170|stron.
+171|{0} dom
+172|Nikt nie ma jeszcze zadania. Wpisz je tutaj.
+173|{0}Dziękujemy, zgłosiłeś się o {1}{2}{3}.{4} Widzi to każdy, kogo zaprosiłeś do tego planu.
+174|Jeśli czyjeś życie jest zagrożone, zadzwoń teraz pod {0}.
+175|{0} rzecz wróciła do planów, żeby kupić ją ponownie.
+176|Zapisano. Twoje plany są gotowe na następny raz.
+177|Zapisano. Jeśli czyjeś życie jest zagrożone, zadzwoń teraz pod {0}.
+178|Zapisano. Dziękujemy.
+179|Wiadomość dla rodziny:
+180|Przed chwilą
+181|Książka Twojego domu. Drukuje się na A{0},
+182|Rzeczy, które wróciły do planów, żeby kupić je ponownie: {0}.
