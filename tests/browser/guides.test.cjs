@@ -15,7 +15,7 @@ const vis=await p.$$eval('#cards li',l=>l.filter(x=>!x.hidden).length);console.l
 // landing + deep link
 p=await ctx.newPage();await p.goto(base+'index.html');const n=await p.$$eval('#guides .guidegrid a',a=>a.length);console.log('landing guide links',n);
 const ov=await p.evaluate(()=>document.documentElement.scrollWidth-innerWidth);console.log('landing overflow',ov);if(ov>0)fail++;
-await p.screenshot({path:out+'/header.png'});await (await p.$('#guides')).screenshot({path:out+'/landing-guides.png'});
+await p.screenshot({path:out+'/header.png'});
 p=await ctx.newPage();await p.goto(base+'index.html#check');await p.waitForTimeout(800);
 const q=await p.evaluate(()=>!document.getElementById('v-q')?.classList.contains('hide')&&location.hash==='');console.log('deep link opens check',q);if(!q)fail++;
 await b.close();console.log(fail?'FAILURES '+fail:'ALL OK');})();

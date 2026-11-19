@@ -17,8 +17,8 @@ let fails = 0; const ok = (c, m) => { if (!c) fails++; console.log((c ? 'PASS ' 
   try {
     // ----- off -----
     let ctx = await mk(false); let p = await ctx.newPage(); p.on('pageerror', e => errs.push(e.message));
-    await p.goto(URL0); await p.waitForFunction(() => window.__liveReady);
-    ok(await p.isVisible('#pi-plus') && !(await p.isVisible('#plus >> text=Choose Plus')), 'switched off: no subscribe buttons, just "I\'d pay for this"');
+    await p.goto(URL0); await p.waitForFunction(() => window.__liveReady); await p.evaluate(() => plusView()); await p.waitForTimeout(150);
+    ok(await p.isVisible('#pi-plus') && !(await p.isVisible('#v-plus >> text=Choose Plus')), 'switched off: no subscribe buttons, just "I\'d pay for this"');
     await ctx.close();
     // ----- on -----
     ctx = await mk(true); let body = null;
@@ -26,7 +26,7 @@ let fails = 0; const ok = (c, m) => { if (!c) fails++; console.log((c ? 'PASS ' 
     await ctx.route('**/api/billing', r => r.fulfill({ contentType: 'application/json', body: JSON.stringify({ url: URL0 + '?plus=manage' }) }));
     p = await ctx.newPage(); p.on('pageerror', e => errs.push(e.message));
     await p.goto(URL0); await p.waitForFunction(() => window.__liveReady);
-    await p.click('#plus >> text=Monthly'); await p.click('#plus >> text=Choose Plus with Post');
+    await p.evaluate(() => plusView()); await p.waitForTimeout(150); await p.click('#v-plus >> text=Monthly'); await p.click('#v-plus >> text=Choose Plus with Post');
     ok(await p.isVisible('#a-name'), 'choosing a plan asks for an account first');
     await p.fill('#a-name', 'Pat'); await p.fill('#a-email', 'pat@example.com'); await p.fill('#a-pw', 'password123');
     // Stripe would create the subscription; the webhook writes the row. Simulate that as the redirect happens.

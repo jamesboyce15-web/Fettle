@@ -20,8 +20,8 @@ let fails = 0; const ok = (c, m) => { if (!c) fails++; console.log((c ? 'PASS ' 
   await p.goto('file://' + path.join(site, 'index.html')); await p.waitForTimeout(300);
 
   // landing entry point
-  ok(await p.isVisible('.lflood'), 'landing page offers the flood check');
-  await p.click('.lflood'); await p.waitForTimeout(100);
+  ok(await p.isVisible('#foot a[href="flood"]'), 'the footer offers the flood check');
+  await p.evaluate(() => toolGo('flood')); await p.waitForTimeout(100);
   ok(await p.isVisible('#v-tool >> text=Does your area flood?'), 'flood tool opens');
   await p.fill('#f-pc', 'LA1'); await p.click('#v-tool button[type=submit]'); await p.waitForTimeout(300);
   const out = (await p.textContent('#f-out')).replace(/\s+/g, ' ');

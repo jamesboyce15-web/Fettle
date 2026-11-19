@@ -387,6 +387,13 @@
       let box = document.getElementById("ts-box"); if (!box) { box = document.createElement("div"); box.id = "ts-box"; box.style.cssText = "position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:80"; document.body.appendChild(box); }
       box.innerHTML = ""; let id; const done = v => { res(v); setTimeout(() => { try { t.remove(id); } catch (e) {} }, 0); };
       id = t.render(box, { sitekey: TS, appearance: "interaction-only", callback: done, "error-callback": () => done(""), "timeout-callback": () => done("") }); }); } catch (e) { return ""; } };
+  // A family asks for a call (landing page). Robot check, then /api/book-call. Nothing is charged.
+  window.callBookSend = async p => {
+    const r = await fetch("/api/book-call", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(Object.assign({}, p, { turnstile: await tsToken() })) });
+    let j = {}; try { j = await r.json(); } catch (e) {}
+    if (!r.ok) throw new Error(j.error || "That didn't send. Please try again, or email hello@getfettle.co.uk.");
+    return true;
+  };
   // Update this home's answers; if it hasn't joined (or was removed), join through the robot check. Returns true, or a message.
   window.commShare = async (slug, token, data, named, contact) => {
     const { data: found, error } = await rpc("community_share", { p_slug: slug, p_token: token, p_data: data, p_named: named || "", p_contact: contact || "" });

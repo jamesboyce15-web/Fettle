@@ -1,0 +1,758 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Coordinator · Fettle</title>
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+:root{--brand:#173f35;--brand2:#215a4b;--amber:#f2a900;--bg:#f3f5f2;--card:#fff;--ink:#1c2522;--mute:#5d6964;--line:#dde3df;
+  --g:#2e7d4f;--gb:#e6f2ea;--a:#8a5a00;--ab:#fff3d6;--r:#b3261e;--rb:#fde7e5;--blue:#1f5f99;--bb:#e7f0f9}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:var(--brand2)}
+button{font:inherit;cursor:pointer}
+input,select,textarea{font:inherit;color:inherit}
+.hide{display:none!important}
+/* layout */
+.shell{display:grid;grid-template-columns:220px 1fr;min-height:100vh}
+.side{background:var(--brand);color:#e9f1ed;padding:16px 12px;display:flex;flex-direction:column;gap:4px;position:sticky;top:0;height:100vh}
+.brand{display:flex;align-items:center;gap:8px;font-weight:700;font-size:1.2rem;color:#fff;text-decoration:none;padding:4px 8px 14px}
+.brand small{font-weight:500;font-size:.75rem;opacity:.75;display:block;letter-spacing:.02em}
+.nav{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:none;border:0;color:inherit;padding:9px 10px;border-radius:10px;font-weight:500}
+.nav:hover{background:rgba(255,255,255,.08)}
+.nav[aria-current=page]{background:rgba(255,255,255,.16);color:#fff}
+.nav .n{margin-left:auto;background:var(--amber);color:#1c2522;border-radius:999px;font-size:.75rem;font-weight:700;padding:0 7px;min-width:20px;text-align:center}
+.side .foot{margin-top:auto;font-size:.82rem;opacity:.85;padding:8px 10px}
+.side .foot button{background:none;border:0;color:#fff;text-decoration:underline;padding:0}
+.main{padding:22px 26px 60px;min-width:0}
+.demo{background:var(--ab);color:#5a3d00;border:1px solid #f0d38a;border-radius:10px;padding:8px 12px;margin:0 0 14px;font-size:.9rem}
+h1{font-size:1.5rem;margin:0 0 4px;color:var(--brand);letter-spacing:-.01em}
+h2{font-size:1.08rem;margin:0 0 10px;color:var(--brand)}
+h3{font-size:.98rem;margin:0 0 8px}
+.lead{color:var(--mute);margin:0 0 18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin:0 0 16px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.sp{flex:1}
+.mute{color:var(--mute)}.sm{font-size:.86rem}.xs{font-size:.78rem}
+.kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin:0 0 16px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;text-align:left;border-left:5px solid var(--line)}
+button.kpi:hover{border-color:#b9c4be}
+.kpi b{display:block;font-size:1.8rem;line-height:1.1;color:var(--brand)}
+.kpi span{font-size:.85rem;color:var(--mute)}
+.kpi.warn{border-left-color:var(--amber)}.kpi.bad{border-left-color:var(--r)}.kpi.good{border-left-color:var(--g)}
+.cols{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:16px}
+.btn{background:var(--brand);color:#fff;border:0;border-radius:10px;padding:8px 14px;font-weight:600}
+.btn:hover{background:var(--brand2)}
+.btn.q{background:#fff;color:var(--brand);border:1px solid #c9d3ce}
+.btn.q:hover{background:#f3f6f4}
+.btn.amber{background:var(--amber);color:#1c2522}
+.btn.sm{padding:5px 10px;font-size:.85rem}
+.btn.danger{background:#fff;color:var(--r);border:1px solid #efc2bd}
+.link{background:none;border:0;color:var(--brand2);text-decoration:underline;padding:0}
+table.t{width:100%;border-collapse:collapse}
+.t th,.t td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.t th{font-size:.74rem;text-transform:uppercase;letter-spacing:.05em;color:var(--mute);font-weight:600;background:#f8faf9;position:sticky;top:0}
+.t tbody tr{cursor:pointer}.t tbody tr:hover{background:#f6f9f7}
+.t tr.sel{background:#eaf2ee}
+.chip{display:inline-block;border-radius:999px;padding:1px 9px;font-size:.78rem;font-weight:600;white-space:nowrap;background:#eef1ef;color:var(--mute)}
+.chip.ok{background:var(--gb);color:var(--g)}.chip.thin{background:var(--ab);color:var(--a)}.chip.gap{background:var(--rb);color:var(--r)}.chip.info{background:var(--bb);color:var(--blue)}
+.bands{display:inline-flex;gap:4px}
+.bd{width:22px;height:22px;border-radius:6px;display:inline-grid;place-items:center;font-size:.72rem;font-weight:700;color:#fff}
+.bd.ok{background:var(--g)}.bd.thin{background:#d49a00}.bd.gap{background:var(--r)}.bd.none{background:#cfd6d2}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin:0 0 16px;flex-wrap:wrap}
+.tab{background:none;border:0;border-bottom:3px solid transparent;padding:8px 12px;font-weight:600;color:var(--mute)}
+.tab[aria-selected=true]{color:var(--brand);border-bottom-color:var(--brand)}
+.tab .chip{margin-left:4px}
+.list{list-style:none;margin:0;padding:0}
+.list li{padding:10px 0;border-bottom:1px solid var(--line);display:flex;gap:10px;align-items:flex-start}
+.list li:last-child{border-bottom:0}
+.ic{flex:0 0 30px;height:30px;border-radius:8px;display:grid;place-items:center;font-size:.85rem;font-weight:700;background:#eef1ef;color:var(--mute)}
+.ic.r{background:var(--rb);color:var(--r)}.ic.a{background:var(--ab);color:var(--a)}.ic.g{background:var(--gb);color:var(--g)}.ic.b{background:var(--bb);color:var(--blue)}
+.split{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:16px;align-items:start}
+.panel{position:sticky;top:16px}
+dl.kv{display:grid;grid-template-columns:120px 1fr;gap:4px 10px;margin:0 0 12px}
+dl.kv dt{color:var(--mute);font-size:.86rem}dl.kv dd{margin:0}
+/* forms */
+.f{display:block;margin:0 0 10px}
+.f>span{display:block;font-size:.82rem;color:var(--mute);margin:0 0 3px;font-weight:500}
+.f input,.f select,.f textarea{width:100%;border:1px solid #cbd4cf;border-radius:8px;padding:7px 9px;background:#fff}
+.f textarea{min-height:70px}
+.f input:focus,.f select:focus,.f textarea:focus{outline:2px solid #9cc3b3;border-color:#7fae9a}
+.fg{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:0 14px}
+.yn{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px dashed #e4e9e6}
+.yn>span{font-size:.92rem}
+.seg{display:inline-flex;border:1px solid #cbd4cf;border-radius:8px;overflow:hidden;flex:0 0 auto}
+.seg button{background:#fff;border:0;padding:4px 10px;font-size:.84rem;border-left:1px solid #cbd4cf}
+.seg button:first-child{border-left:0}
+.seg button[aria-pressed=true]{background:var(--brand);color:#fff}
+.multi{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}
+.multi label{border:1px solid #cbd4cf;border-radius:999px;padding:3px 10px;font-size:.84rem;background:#fff;cursor:pointer}
+.multi input{margin:0 5px 0 0}
+.multi label:has(input:checked){background:var(--gb);border-color:#9cc3b3}
+.ynwrap{columns:2;column-gap:24px}
+.ynwrap .yn{break-inside:avoid}
+.hcard{border:1px solid var(--line);border-radius:12px;padding:12px;margin:0 0 12px;background:#fbfcfb}
+.htable{width:100%;border-collapse:collapse;font-size:.88rem}
+.htable th{font-size:.72rem;text-transform:uppercase;color:var(--mute);text-align:left;padding:4px;font-weight:600}
+.htable td{padding:3px 4px;border-top:1px solid var(--line);vertical-align:middle}
+.htable input[type=text],.htable input[type=number],.htable select{width:100%;border:1px solid #cbd4cf;border-radius:6px;padding:4px 6px;min-width:60px}
+.htable input[type=checkbox]{width:18px;height:18px}
+.htable td.c{text-align:center}
+/* call */
+.steps{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 14px}
+.step{border:1px solid var(--line);background:#fff;border-radius:999px;padding:5px 12px;font-size:.85rem;font-weight:600;color:var(--mute)}
+.step[aria-current=step]{background:var(--brand);color:#fff;border-color:var(--brand)}
+.step.done{color:var(--g);border-color:#a9d3b8}
+.script{background:#f3f7f5;border-left:4px solid var(--brand);border-radius:0 10px 10px 0;padding:10px 14px;margin:0 0 14px;font-size:.93rem}
+.script b{color:var(--brand)}
+.timer{font-variant-numeric:tabular-nums;font-size:1.5rem;font-weight:700;color:var(--brand)}
+.timer.over{color:var(--r)}
+.cov{width:100%;border-collapse:collapse;font-size:.88rem}
+.cov th,.cov td{padding:6px 4px;border-bottom:1px solid var(--line);text-align:left}
+.cov th{font-size:.72rem;text-transform:uppercase;color:var(--mute)}
+.why{font-size:.78rem;color:var(--mute);display:block}
+.saved{font-size:.8rem;color:var(--mute)}
+.find{border-left:3px solid var(--line);padding:2px 0 2px 10px;margin:0 0 8px;font-size:.88rem}
+.find.high{border-color:var(--r)}
+.empty{color:var(--mute);padding:18px;text-align:center;border:1px dashed #cdd5d0;border-radius:12px}
+.modal{position:fixed;inset:0;background:rgba(20,30,26,.45);display:grid;place-items:center;padding:16px;z-index:20}
+.modal .box{background:#fff;border-radius:16px;max-width:620px;width:100%;padding:20px;max-height:90vh;overflow:auto}
+.signin{max-width:380px;margin:12vh auto;background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--brand);color:#fff;border-radius:10px;padding:10px 16px;opacity:0;transition:.2s;pointer-events:none;z-index:30}
+.toast.on{opacity:1}
+.preview{background:var(--bg);border-radius:14px;padding:16px}
+@media(max-width:1100px){.split{grid-template-columns:1fr}.panel{position:static}.kpis{grid-template-columns:repeat(3,1fr)}.cols{grid-template-columns:1fr}}
+@media(max-width:820px){.shell{grid-template-columns:1fr}.side{position:static;height:auto;flex-direction:row;flex-wrap:wrap;padding:8px}.brand{padding:4px 8px}.side .foot{margin:0;width:100%}.nav{width:auto}.main{padding:16px}.kpis{grid-template-columns:repeat(2,1fr)}.ynwrap{columns:1}dl.kv{grid-template-columns:100px 1fr}}
+</style>
+</head>
+<body>
+<div id="root"><p style="padding:24px">Loading…</p></div>
+<div class="toast" id="toast" role="status"></div>
+<script src="config.js"></script>
+<script src="call-kit.js"></script>
+<script src="call-demo.js"></script>
+<script src="plan-view.js"></script>
+<script>
+(function () {
+"use strict";
+const K = window.FettleCall, CFG = window.FETTLE_CONFIG || {}, Q = new URLSearchParams(location.search);
+const DEMO = Q.has("demo") || !CFG.supabaseUrl || !!window.FETTLE_FAKE_DB;
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const $ = s => document.querySelector(s);
+const uid = () => (crypto.randomUUID ? crypto.randomUUID() : "id-" + Math.random().toString(36).slice(2) + Date.now().toString(36));
+const short = () => Math.random().toString(36).slice(2, 8);
+const clone = o => JSON.parse(JSON.stringify(o));
+const fmtD = s => { if (!s) return ""; const d = new Date(s); return isNaN(d) ? "" : d.toLocaleDateString("en-GB", { day: "numeric", month: "short" }); };
+const fmtDT = s => { if (!s) return ""; const d = new Date(s); return isNaN(d) ? "" : d.toLocaleString("en-GB", { weekday: "short", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" }); };
+const ago = s => { const m = (Date.now() - new Date(s)) / 60000; if (m < 60) return Math.max(1, Math.round(m)) + " min ago"; if (m < 1440) return Math.round(m / 60) + " h ago"; return Math.round(m / 1440) + " days ago"; };
+const safeUrl = u => /^https?:\/\//i.test(String(u || "")) ? String(u) : "";
+const toISOlocal = s => { if (!s) return ""; const d = new Date(s); const p = n => String(n).padStart(2, "0"); return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`; };
+const today = () => new Date().toISOString().slice(0, 10);
+const addDays = (n, from) => { const d = from ? new Date(from) : new Date(); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); };
+function toast(t) { const el = $("#toast"); el.textContent = t; el.classList.add("on"); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove("on"), 2600); }
+const planUrl = (tok, extra) => DEMO ? `plan.html?demo=1&t=${encodeURIComponent(tok)}${extra || ""}`
+  : `${location.protocol === "file:" ? "plan.html" : location.origin + "/plan"}?t=${encodeURIComponent(tok)}${extra || ""}`;
+
+const REQ_ST = { new: "New", contacted: "Contacted", scheduled: "Call booked", done: "Call done", declined: "Not going ahead" };
+const CL_ST = { call: "In call", plan_sent: "Plan sent", active: "Active", paused: "Paused", closed: "Closed" };
+const KIT_ST = [["recommended", "Recommended"], ["approved", "Approved"], ["ordered", "Ordered"], ["delivered", "Delivered"]];
+const EV_KIND = [["weather", "Weather warning"], ["flood", "Flood"], ["power", "Power cut"], ["water", "Water outage"], ["health", "Health alert"], ["cyber", "Cyber threat"], ["scam", "Scams"], ["funding", "Funding"], ["resource", "New local help"], ["other", "Other"]];
+const SOURCES = [
+  ["Met Office warnings", "https://weather.metoffice.gov.uk/warnings-and-advice/uk-warnings"],
+  ["Flood warnings (Environment Agency)", "https://check-for-flooding.service.gov.uk/"],
+  ["Power cuts (105)", "https://www.powercut105.com/"],
+  ["UKHSA heat and cold alerts", "https://ukhsa-dashboard.data.gov.uk/weather-health-alerts"],
+  ["NCSC news", "https://www.ncsc.gov.uk/section/keep-up-to-date/ncsc-news"],
+  ["Action Fraud", "https://www.actionfraud.police.uk/"],
+];
+
+/* ===================== data ===================== */
+function fakeDB() {
+  const D = window.FETTLE_FAKE_DB || FettleDemo, S = { coordinators: clone(D.coordinators), requests: clone(D.requests), clients: clone(D.clients), messages: clone(D.messages), events: clone(D.events) };
+  let me = clone(D.ME);
+  const upd = (arr, key, id, p) => { const r = S[arr].find(x => x[key] === id); Object.assign(r, clone(p)); return clone(r); };
+  return { demo: true, S,
+    async me() { return me; }, async signIn() {}, async signOut() { me = null; },
+    async loadAll() { return clone(S); },
+    async updRequest(id, p) { return upd("requests", "id", id, p); },
+    async newClient(row) { const r = Object.assign({ id: uid(), share_token: "demo-" + short(), status: "call", data: {}, private: {}, created_at: new Date().toISOString(), updated_at: new Date().toISOString() }, clone(row)); S.clients.unshift(r); return clone(r); },
+    async updClient(id, p) { return upd("clients", "id", id, Object.assign({}, p, { updated_at: new Date().toISOString() })); },
+    async addMessage(row) { const r = Object.assign({ id: uid(), at: new Date().toISOString(), seen: false }, clone(row)); S.messages.unshift(r); return clone(r); },
+    async updMessage(id, p) { return upd("messages", "id", id, p); },
+    async saveEvent(row) { if (row.id && S.events.some(e => e.id === row.id)) return upd("events", "id", row.id, row); const r = Object.assign({ id: uid(), created_at: new Date().toISOString(), contacted: {}, closed: false }, clone(row)); S.events.unshift(r); return clone(r); },
+    async updMe(id, p) { Object.assign(me, p); return clone(me); },
+  };
+}
+function loadScript(src) { return new Promise((ok, bad) => { const s = document.createElement("script"); s.src = src; s.onload = ok; s.onerror = bad; document.head.appendChild(s); }); }
+async function liveDB() {
+  await loadScript("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js");
+  const sb = window.supabase.createClient(CFG.supabaseUrl, CFG.supabaseAnonKey, { auth: { persistSession: true, autoRefreshToken: true } });
+  const ok = r => { if (r.error) throw new Error(r.error.message); return r.data; };
+  const noId = o => { const c = Object.assign({}, o); if (!c.id) delete c.id; return c; };
+  return { demo: false,
+    async me() { const { data } = await sb.auth.getSession(); const s = data && data.session; if (!s) return null;
+      const r = await sb.from("coordinators").select("*").eq("user_id", s.user.id).maybeSingle(); return r.data || { notCoordinator: true, email: s.user.email }; },
+    async signIn(email, password) { const r = await sb.auth.signInWithPassword({ email, password }); if (r.error) throw new Error(/invalid/i.test(r.error.message) ? "That email and password don't match." : r.error.message); },
+    async signOut() { await sb.auth.signOut(); },
+    async loadAll() {
+      const [co, rq, cl, ms, ev] = await Promise.all([sb.from("coordinators").select("*"), sb.from("call_requests").select("*").order("created_at", { ascending: false }).limit(500),
+        sb.from("call_clients").select("*").order("updated_at", { ascending: false }).limit(1000), sb.from("call_messages").select("*").order("at", { ascending: false }).limit(500),
+        sb.from("watch_events").select("*").order("created_at", { ascending: false }).limit(200)]);
+      return { coordinators: ok(co), requests: ok(rq), clients: ok(cl), messages: ok(ms), events: ok(ev) };
+    },
+    async updRequest(id, p) { return ok(await sb.from("call_requests").update(p).eq("id", id).select().single()); },
+    async newClient(row) { return ok(await sb.from("call_clients").insert(row).select().single()); },
+    async updClient(id, p) { return ok(await sb.from("call_clients").update(p).eq("id", id).select("id,updated_at").single()); },
+    async addMessage(row) { return ok(await sb.from("call_messages").insert(row).select().single()); },
+    async updMessage(id, p) { return ok(await sb.from("call_messages").update(p).eq("id", id).select().single()); },
+    async saveEvent(row) { return row.id ? ok(await sb.from("watch_events").update(noId(row)).eq("id", row.id).select().single()) : ok(await sb.from("watch_events").insert(noId(row)).select().single()); },
+    async updMe(id, p) { return ok(await sb.from("coordinators").update(p).eq("user_id", id).select().single()); },
+  };
+}
+
+/* ===================== state ===================== */
+let DB, ME, S = { coordinators: [], requests: [], clients: [], messages: [], events: [] };
+const V = { view: "today", client: null, tab: "call", step: 0, req: null, ev: null, reqTab: "new", q: "", cf: "all", timer: null, timerAt: 0 };
+const client = id => S.clients.find(c => c.id === id);
+const C = () => client(V.client);
+const geoOf = c => (c.data && c.data.geo) || {};
+const coordName = id => (S.coordinators.find(x => x.user_id === id) || {}).name || "";
+
+/* ===================== routing ===================== */
+function nav(view, extra) { Object.assign(V, { view }, extra || {}); if (view !== "client") stopTimer(); render(); scrollTo(0, 0);
+  try { history.replaceState(null, "", "#" + view + (V.client && view === "client" ? "/" + V.client : "")); } catch (e) {} }
+
+/* ===================== shell ===================== */
+function counts() {
+  const newReq = S.requests.filter(r => r.status === "new").length;
+  const unread = S.messages.filter(m => m.kind === "family" && !m.seen).length;
+  const openEv = S.events.filter(e => !e.closed).length;
+  return { newReq, unread, openEv };
+}
+function render() {
+  if (!ME) return;
+  const n = counts();
+  const item = (v, t, badge) => `<button class="nav" data-nav="${v}" ${V.view === v || (v === "clients" && V.view === "client") ? 'aria-current="page"' : ""}>${t}${badge ? `<span class="n">${badge}</span>` : ""}</button>`;
+  $("#root").innerHTML = `<div class="shell"><aside class="side">
+    <a class="brand" href="#" data-nav="today"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#f6f7f4"/><path d="M8 15.5 16 9l8 6.5V24a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1z" fill="none" stroke="#173f35" stroke-width="2" stroke-linejoin="round"/><path d="M16 14.5c1.9 1.7 2.8 3.2 2.8 4.6a2.8 2.8 0 0 1-5.6 0c0-1.4.9-2.9 2.8-4.6z" fill="#f2a900"/></svg><span>fettle<small>Coordinator</small></span></a>
+    ${item("today", "Today", n.unread || "")}${item("requests", "Call requests", n.newReq || "")}${item("clients", "Families")}${item("watch", "Watch", n.openEv || "")}${item("settings", "Settings")}
+    <div class="foot">${esc(ME.name)}${ME.patch ? `<br><span class="xs">${esc(ME.patch)}</span>` : ""}<br><button data-act="signout">Sign out</button></div></aside>
+    <main class="main" id="main">${DB.demo ? `<p class="demo"><b>Demo.</b> Made-up families. Changes last until you reload the page.</p>` : ""}${view()}</main></div>`;
+  after();
+}
+function view() {
+  try { return ({ today: vToday, requests: vRequests, clients: vClients, client: vClient, watch: vWatch, settings: vSettings })[V.view](); }
+  catch (e) { console.error(e); return `<p class="card">Something went wrong showing this page: ${esc(e.message)}</p>`; }
+}
+function after() { if (V.view === "client") { rail(); tickTimer(); } }
+
+/* ===================== helpers for families ===================== */
+function bandWorst(c) {
+  const cov = K.coverage(c.data || {}, geoOf(c)); if (!cov.length) return null;
+  const rank = { gap: 2, thin: 1, ok: 0 }, out = {};
+  K.BANDS.forEach(b => { out[b.k] = cov.reduce((w, r) => rank[r.bands[b.k].status] > rank[w] ? r.bands[b.k].status : w, "ok"); });
+  return out;
+}
+function bandDots(c) { const w = bandWorst(c); if (!w) return `<span class="bands">${K.BANDS.map(b => `<span class="bd none" title="${b.name}: nobody marked as needing help">${b.name[0]}</span>`).join("")}</span>`;
+  return `<span class="bands">${K.BANDS.map(b => `<span class="bd ${w[b.k]}" title="${b.name}: ${({ ok: "covered", thin: "no backup", gap: "nobody can get there" })[w[b.k]]}">${b.name[0]}</span>`).join("")}</span>`; }
+const peopleNames = c => K.vulnPeople(c.data || {}).map(x => x.person.name).filter(Boolean).join(", ");
+const areaOf = c => [...new Set(((c.data || {}).homes || []).map(h => h.district).filter(Boolean))].join(", ");
+function kitState(c) { const ks = ((c.data || {}).homes || []).map(h => (h.kit || {}).tier === "none" ? null : (h.kit || {}).status || "recommended").filter(Boolean);
+  if (!ks.length) return "None"; const o = KIT_ST.map(x => x[0]); const lo = ks.sort((a, b) => o.indexOf(a) - o.indexOf(b))[0]; return (KIT_ST.find(x => x[0] === lo) || [, lo])[1]; }
+
+/* ===================== Today ===================== */
+function attention() {
+  const a = [];
+  S.requests.filter(r => r.status === "new").forEach(r => a.push({ ic: "b", t: `New request from <b>${esc(r.booker_name)}</b> for ${esc(r.for_name || "a relative")}${r.for_district ? ` in ${esc(r.for_district)}` : ""}`, s: `Get in touch to book a time · ${ago(r.created_at)}`, act: `data-open-req="${r.id}"`, b: "Open" }));
+  S.messages.filter(m => m.kind === "family" && !m.seen).forEach(m => { const c = client(m.client_id); a.push({ ic: "a", t: `<b>${esc(m.author || "The family")}</b> (${esc(c ? c.family_name : "")}): ${esc(m.body.slice(0, 120))}`, s: `Something's changed · ${ago(m.at)}`, act: `data-open-client="${m.client_id}" data-tab="notes"`, b: "Open" }); });
+  S.clients.filter(c => c.status === "call" && c.data && c.data.call && c.data.call.doneAt).forEach(c => a.push({ ic: "a", t: `<b>${esc(c.family_name)}</b>: call done, plan not sent yet`, s: "Check it over, then send it to the family", act: `data-open-client="${c.id}" data-tab="plan"`, b: "Open" }));
+  S.clients.filter(c => !["call", "closed"].includes(c.status)).forEach(c => { const g = K.gaps(c.data || {}, geoOf(c)).filter(x => x.status === "gap");
+    if (g.length) a.push({ ic: "r", t: `<b>${esc(c.family_name)}</b>: ${esc(g.map(x => x.text).slice(0, 2).join("; "))}`, s: "Arrange a local check-in", act: `data-open-client="${c.id}" data-tab="call" data-step="4"`, b: "Fix" }); });
+  S.clients.forEach(c => ((c.data || {}).homes || []).forEach(h => { const st = (h.kit || {}).status; if (st === "approved") a.push({ ic: "a", t: `<b>${esc(c.family_name)}</b>: kit approved, not ordered yet`, s: esc(h.label || ""), act: `data-open-client="${c.id}" data-tab="kit"`, b: "Open" }); }));
+  S.clients.filter(c => c.next_review && c.next_review <= addDays(30) && c.status !== "closed").forEach(c => a.push({ ic: "g", t: `<b>${esc(c.family_name)}</b>: yearly review due ${fmtD(c.next_review)}`, s: "Book a short call", act: `data-open-client="${c.id}"`, b: "Open" }));
+  return a;
+}
+function vToday() {
+  const n = counts(), soon = S.requests.filter(r => r.status === "scheduled" && r.scheduled_at && new Date(r.scheduled_at) > Date.now() - 3 * 3600e3).sort((a, b) => new Date(a.scheduled_at) - new Date(b.scheduled_at));
+  const week = soon.filter(r => new Date(r.scheduled_at) < Date.now() + 7 * 864e5).length;
+  const withGap = S.clients.filter(c => c.status !== "closed" && K.score(c.data || {}, geoOf(c)).gaps > 0).length;
+  const todo = S.clients.filter(c => c.status !== "closed").reduce((t, c) => t + K.score(c.data || {}, geoOf(c)).todo, 0);
+  const active = S.clients.filter(c => ["plan_sent", "active"].includes(c.status)).length;
+  const att = attention(), hr = new Date().getHours();
+  return `<h1>Good ${hr < 12 ? "morning" : hr < 18 ? "afternoon" : "evening"}, ${esc(ME.name)}</h1><p class="lead">${new Date().toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long" })}</p>
+  <div class="kpis">
+    <button class="kpi ${n.newReq ? "warn" : ""}" data-nav="requests"><b>${n.newReq}</b><span>New call requests</span></button>
+    <button class="kpi" data-nav="requests" data-reqtab="scheduled"><b>${week}</b><span>Calls in the next 7 days</span></button>
+    <button class="kpi good" data-nav="clients"><b>${active}</b><span>Families with a plan</span></button>
+    <button class="kpi ${withGap ? "bad" : "good"}" data-nav="clients" data-cf="gaps"><b>${withGap}</b><span>Families with someone uncovered</span></button>
+    <button class="kpi ${todo ? "warn" : ""}" data-nav="clients"><b>${todo}</b><span>Actions still to do</span></button>
+  </div>
+  <div class="cols"><section class="card"><h2>Needs attention</h2>${att.length ? `<ul class="list">${att.slice(0, 14).map(x => `<li><span class="ic ${x.ic}">${x.ic === "r" ? "!" : x.ic === "b" ? "+" : x.ic === "g" ? "↻" : "•"}</span><span class="sp">${x.t}<br><span class="sm mute">${x.s}</span></span><button class="btn q sm" ${x.act}>${x.b}</button></li>`).join("")}</ul>` : `<p class="empty">Nothing waiting. Nice.</p>`}</section>
+  <div><section class="card"><h2>Next calls</h2>${soon.length ? `<ul class="list">${soon.slice(0, 6).map(r => `<li><span class="ic g">☎</span><span class="sp"><b>${esc(fmtDT(r.scheduled_at))}</b><br>${esc(r.booker_name)} for ${esc(r.for_name || "a relative")}${r.for_district ? `, ${esc(r.for_district)}` : ""}</span>${r.client_id ? `<button class="btn sm" data-open-client="${r.client_id}" data-tab="call">Open call</button>` : `<button class="btn sm" data-start="${r.id}">Start call</button>`}</li>`).join("")}</ul>` : `<p class="empty">No calls booked.</p>`}</section>
+  <section class="card"><h2>Watch</h2>${S.events.filter(e => !e.closed).length ? `<ul class="list">${S.events.filter(e => !e.closed).slice(0, 4).map(e => `<li><span class="ic ${e.band}">${e.band.toUpperCase()}</span><span class="sp">${esc(e.title)}<br><span class="sm mute">${affected(e).length} families affected · ${Object.keys(e.contacted || {}).length} contacted</span></span><button class="btn q sm" data-open-ev="${e.id}">Open</button></li>`).join("")}</ul>` : `<p class="empty">Nothing on the watch list. <button class="link" data-nav="watch">Log something coming</button></p>`}</section></div></div>`;
+}
+
+/* ===================== Requests ===================== */
+function vRequests() {
+  const tabs = Object.keys(REQ_ST), list = S.requests.filter(r => r.status === V.reqTab), r = S.requests.find(x => x.id === V.req);
+  return `<div class="row"><h1>Call requests</h1></div><p class="lead">Families who've asked for a call. Get in touch within one working day to agree a time.</p>
+  <div class="tabs" role="tablist">${tabs.map(t => `<button class="tab" role="tab" aria-selected="${V.reqTab === t}" data-reqtab="${t}">${REQ_ST[t]}<span class="chip">${S.requests.filter(x => x.status === t).length}</span></button>`).join("")}</div>
+  <div class="split"><section class="card" style="padding:0;overflow:auto">${list.length ? `<table class="t"><thead><tr><th>Received</th><th>From</th><th>For</th><th>Area</th><th>Notes</th>${V.reqTab === "scheduled" ? "<th>Call</th>" : ""}</tr></thead><tbody>
+    ${list.map(x => `<tr data-req="${x.id}" class="${x.id === V.req ? "sel" : ""}"><td class="sm">${fmtD(x.created_at)}</td><td><b>${esc(x.booker_name)}</b><br><span class="xs mute">${esc(x.relation || "")}</span></td>
+      <td>${esc(x.for_name || "")}<br><span class="xs mute">${esc(x.for_age || "")}${x.lives_alone ? " · lives alone" : ""}${x.carers ? " · has carers" : ""}</span></td><td>${esc(x.for_district || "")}</td>
+      <td class="sm">${esc((x.notes || "").slice(0, 60))}</td>${V.reqTab === "scheduled" ? `<td class="sm">${esc(fmtDT(x.scheduled_at))}</td>` : ""}</tr>`).join("")}</tbody></table>` : `<p class="empty" style="margin:16px">None here.</p>`}</section>
+  <aside class="panel">${r ? reqPanel(r) : `<div class="card"><p class="mute">Choose a request to see the details.</p></div>`}</aside></div>`;
+}
+function reqPanel(r) {
+  return `<div class="card"><div class="row"><h2 style="margin:0">${esc(r.booker_name)}</h2><span class="sp"></span><span class="chip ${r.status === "new" ? "thin" : "info"}">${REQ_ST[r.status]}</span></div>
+  <p class="sm mute">Asked ${ago(r.created_at)}</p>
+  <dl class="kv"><dt>Email</dt><dd><a href="mailto:${esc(r.booker_email)}">${esc(r.booker_email)}</a></dd>${r.booker_phone ? `<dt>Phone</dt><dd><a href="tel:${esc(r.booker_phone.replace(/\s/g, ""))}">${esc(r.booker_phone)}</a></dd>` : ""}
+    <dt>Relation</dt><dd>${esc(r.relation || "Not said")}</dd><dt>For</dt><dd>${esc(r.for_name || "Not said")}${r.for_age ? `, ${esc(r.for_age)}` : ""}</dd><dt>Area</dt><dd>${esc(r.for_district || "Not said")}</dd>
+    <dt>Lives alone</dt><dd>${r.lives_alone == null ? "Not said" : r.lives_alone ? "Yes" : "No"}</dd><dt>Carers visit</dt><dd>${r.carers == null ? "Not said" : r.carers ? "Yes" : "No"}</dd>
+    <dt>Joining</dt><dd>${esc(r.joining || "Not said")}</dd><dt>Best times</dt><dd>${esc((r.times || []).join(", ") || "Any")}</dd>${r.notes ? `<dt>Notes</dt><dd>${esc(r.notes)}</dd>` : ""}</dl>
+  <label class="f"><span>Coordinator</span><select data-rq="coordinator_id"><option value="">Not assigned</option>${S.coordinators.map(c => `<option value="${esc(c.user_id)}" ${c.user_id === r.coordinator_id ? "selected" : ""}>${esc(c.name)}</option>`).join("")}</select></label>
+  <label class="f"><span>Call time</span><input type="datetime-local" data-rq="scheduled_at" value="${esc(toISOlocal(r.scheduled_at))}"></label>
+  <label class="f"><span>Your notes</span><textarea data-rq="coord_notes">${esc(r.coord_notes || "")}</textarea></label>
+  <div class="row">${r.status === "new" ? `<button class="btn q" data-rqst="contacted">Mark as contacted</button>` : ""}
+    ${r.client_id ? `<button class="btn" data-open-client="${r.client_id}" data-tab="call">Open the call</button>` : `<button class="btn" data-start="${r.id}">Start the call</button>`}
+    ${r.status !== "declined" ? `<button class="btn danger" data-rqst="declined">Not going ahead</button>` : `<button class="btn q" data-rqst="new">Reopen</button>`}</div>
+  <p class="xs mute" style="margin-top:12px">Agree a time by phone or email, put it in above, then send the Teams or Zoom link from your own calendar.</p></div>`;
+}
+async function updReq(id, p) { const r = S.requests.find(x => x.id === id); Object.assign(r, p); try { await DB.updRequest(id, p); } catch (e) { toast(e.message); } }
+async function startCall(reqId) {
+  const r = S.requests.find(x => x.id === reqId); if (!r) return;
+  if (r.client_id && client(r.client_id)) return nav("client", { client: r.client_id, tab: "call", step: 0 });
+  const surname = (r.booker_name || "").trim().split(/\s+/).slice(-1)[0] || "New";
+  const data = { geo: {}, booker: { name: r.booker_name, email: r.booker_email, phone: r.booker_phone || "", relation: r.relation || "" },
+    consent: {}, call: { scheduledAt: r.scheduled_at || null },
+    homes: [{ id: "h" + short(), label: `${r.for_name ? r.for_name + "'s" : "Their"} home`, district: r.for_district || "", people: [{ id: "p" + short(), name: r.for_name || "", age: r.for_age || "", alone: !!r.lives_alone, vuln: true }], a: { carers: r.carers === true ? true : r.carers === false ? false : undefined }, kit: { has: {} } }],
+    helpers: [{ id: "x" + short(), name: (r.booker_name || "").split(/\s+/)[0], role: "family" }], outcomes: {} };
+  try {
+    const c = await DB.newClient({ request_id: r.id, coordinator_id: r.coordinator_id || ME.user_id, family_name: surname, status: "call", data, private: {} });
+    S.clients.unshift(c); await updReq(r.id, { client_id: c.id, status: r.status === "new" || r.status === "contacted" ? "scheduled" : r.status, coordinator_id: r.coordinator_id || ME.user_id });
+    nav("client", { client: c.id, tab: "call", step: 0 }); ensureGeo(c);
+  } catch (e) { toast(e.message); }
+}
+
+/* ===================== Families ===================== */
+function vClients() {
+  const q = V.q.toLowerCase();
+  let list = S.clients.filter(c => c.status !== "closed" || V.cf === "closed");
+  if (V.cf === "gaps") list = list.filter(c => K.score(c.data || {}, geoOf(c)).gaps > 0);
+  else if (V.cf !== "all" && V.cf !== "closed") list = list.filter(c => c.status === V.cf);
+  else if (V.cf === "closed") list = list.filter(c => c.status === "closed");
+  if (q) list = list.filter(c => [c.family_name, peopleNames(c), areaOf(c), (c.data.booker || {}).name].join(" ").toLowerCase().includes(q));
+  const f = [["all", "All"], ["call", "In call"], ["plan_sent", "Plan sent"], ["active", "Active"], ["gaps", "Someone uncovered"], ["closed", "Closed"]];
+  return `<div class="row"><h1>Families</h1><span class="sp"></span><button class="btn" data-act="newclient">New family</button></div><p class="lead">Every family you've had a call with, and how covered they are in each kind of emergency.</p>
+  <div class="row" style="margin-bottom:12px"><input type="search" id="q" placeholder="Search names or areas" value="${esc(V.q)}" style="flex:1 1 220px;max-width:340px;border:1px solid #cbd4cf;border-radius:8px;padding:7px 10px" aria-label="Search families">
+    ${f.map(([k, t]) => `<button class="btn ${V.cf === k ? "" : "q"} sm" data-cf="${k}">${t}</button>`).join("")}</div>
+  <section class="card" style="padding:0;overflow:auto">${list.length ? `<table class="t"><thead><tr><th>Family</th><th>Area</th><th>Needs someone</th><th title="Green, Amber, Red">Covered</th><th>To do</th><th>Kit</th><th>Status</th><th>Review</th></tr></thead><tbody>
+  ${list.map(c => { const s = K.score(c.data || {}, geoOf(c)); return `<tr data-client="${c.id}"><td><b>${esc(c.family_name)}</b><br><span class="xs mute">${esc((c.data.booker || {}).name || "")}</span></td><td>${esc(areaOf(c))}</td><td>${esc(peopleNames(c) || "None marked")}</td>
+    <td>${bandDots(c)}</td><td>${s.todo ? `<span class="chip thin">${s.todo} left</span>` : `<span class="chip ok">Done</span>`}</td><td class="sm">${esc(kitState(c))}</td><td><span class="chip ${c.status === "call" ? "thin" : c.status === "closed" ? "" : "ok"}">${CL_ST[c.status]}</span></td><td class="sm">${esc(fmtD(c.next_review))}</td></tr>`; }).join("")}</tbody></table>` : `<p class="empty" style="margin:16px">No families here yet.</p>`}</section>`;
+}
+async function newClient() {
+  const data = { geo: {}, booker: {}, consent: {}, call: {}, homes: [{ id: "h" + short(), label: "Their home", district: "", people: [{ id: "p" + short(), name: "", vuln: true }], a: {}, kit: { has: {} } }], helpers: [], outcomes: {} };
+  try { const c = await DB.newClient({ coordinator_id: ME.user_id, family_name: "New family", status: "call", data, private: {} }); S.clients.unshift(c); nav("client", { client: c.id, tab: "call", step: 0 }); } catch (e) { toast(e.message); }
+}
+
+/* ===================== one family ===================== */
+const STEPS = [["Welcome", 5], ["Their home", 10], ["People and needs", 5], ["Helpers", 10], ["Filling gaps", 8], ["Doing it now", 5], ["Wrap up", 2]];
+function vClient() {
+  const c = C(); if (!c) return `<p class="card">That family isn't here. <button class="link" data-nav="clients">Back to families</button></p>`;
+  const d = c.data, unread = S.messages.filter(m => m.client_id === c.id && m.kind === "family" && !m.seen).length;
+  const tabs = [["call", "Call"], ["plan", "Family view"], ["kit", "Kit and actions"], ["notes", "Notes" + (unread ? ` <span class="chip thin">${unread}</span>` : "")]];
+  return `<p class="sm"><button class="link" data-nav="clients">← Families</button></p>
+  <div class="row"><h1 style="margin:0"><input data-k="@family_name" value="${esc(c.family_name)}" aria-label="Family name" style="font:inherit;color:inherit;border:0;background:transparent;padding:0;width:${Math.max(6, c.family_name.length + 1)}ch"></h1>
+    <select data-k="@status" aria-label="Status" style="border:1px solid #cbd4cf;border-radius:8px;padding:4px 8px">${Object.entries(CL_ST).map(([k, t]) => `<option value="${k}" ${c.status === k ? "selected" : ""}>${t}</option>`).join("")}</select>
+    <span class="saved" id="saved"></span><span class="sp"></span>
+    <button class="btn q" data-act="present">Present to family</button><button class="btn q" data-act="copylink">Copy family link</button><button class="btn amber" data-act="send">Send plan</button></div>
+  <p class="lead" style="margin-top:6px">${esc((d.booker || {}).name || "")}${(d.booker || {}).relation ? ` (${esc(d.booker.relation)})` : ""}${(d.booker || {}).email ? ` · <a href="mailto:${esc(d.booker.email)}">${esc(d.booker.email)}</a>` : ""}${(d.booker || {}).phone ? ` · <a href="tel:${esc(d.booker.phone.replace(/\s/g, ""))}">${esc(d.booker.phone)}</a>` : ""}${c.sent_at ? ` · plan sent ${fmtD(c.sent_at)}` : ""}</p>
+  <div class="tabs" role="tablist">${tabs.map(([k, t]) => `<button class="tab" role="tab" aria-selected="${V.tab === k}" data-ctab="${k}">${t}</button>`).join("")}</div>
+  <div class="split"><div id="work">${work(c)}</div><aside class="panel" id="rail"></aside></div>`;
+}
+function work(c) { return ({ call: wCall, plan: wPlan, kit: wKit, notes: wNotes })[V.tab](c); }
+
+/* --- form fields, bound by path: "homes.0.a.heat" in data, "@field" on the family row, "!path" in private notes --- */
+const getP = (o, p) => p.split(".").reduce((a, k) => (a == null ? undefined : a[k]), o);
+function setP(o, p, v) { const ks = p.split("."); let a = o; ks.slice(0, -1).forEach((k, i) => { if (a[k] == null) a[k] = /^\d+$/.test(ks[i + 1]) ? [] : {}; a = a[k]; }); a[ks[ks.length - 1]] = v; }
+function val(c, k) { return k[0] === "@" ? c[k.slice(1)] : k[0] === "!" ? getP(c.private || {}, k.slice(1)) : getP(c.data, k); }
+function put(c, k, v) { if (k[0] === "@") c[k.slice(1)] = v; else if (k[0] === "!") { c.private = c.private || {}; setP(c.private, k.slice(1), v); } else setP(c.data, k, v); }
+let FC; // the family being drawn
+const fText = (k, label, o = {}) => `<label class="f"><span>${label}</span><input type="${o.type || "text"}" data-k="${k}" data-t="str" value="${esc(val(FC, k) ?? "")}" ${o.ph ? `placeholder="${esc(o.ph)}"` : ""} ${o.geo ? "data-geo" : ""} ${o.redraw ? "data-redraw" : ""} maxlength="${o.max || 120}"></label>`;
+const fNum = (k, label, o = {}) => `<label class="f"><span>${label}</span><input type="number" inputmode="decimal" min="0" step="${o.step || 1}" data-k="${k}" data-t="num" value="${esc(val(FC, k) ?? "")}" ${o.redraw ? "data-redraw" : ""}></label>`;
+const fSel = (k, label, opts, o = {}) => `<label class="f"><span>${label}</span><select data-k="${k}" data-t="str" ${o.redraw ? "data-redraw" : ""}><option value="">Not asked yet</option>${opts.map(([v, t]) => `<option value="${esc(v)}" ${String(val(FC, k) ?? "") === v ? "selected" : ""}>${esc(t)}</option>`).join("")}</select></label>`;
+const fArea = (k, label, o = {}) => `<label class="f"><span>${label}</span><textarea data-k="${k}" data-t="str" maxlength="${o.max || 2000}" ${o.ph ? `placeholder="${esc(o.ph)}"` : ""}>${esc(val(FC, k) ?? "")}</textarea></label>`;
+function fYN(k, label, o = {}) { const v = val(FC, k); const b = (x, t) => `<button type="button" data-yn="${k}" data-v="${x}" aria-pressed="${String(v) === x}" ${o.redraw ? "data-redraw" : ""}>${t}</button>`;
+  return `<div class="yn"><span>${label}</span><span class="seg">${b("true", "Yes")}${b("false", "No")}${o.unknown ? b("unknown", "Don't know") : ""}</span></div>`; }
+const fMulti = (k, opts) => `<div class="multi" data-multi="${k}">${opts.map(([v, t]) => `<label><input type="checkbox" value="${esc(v)}" ${(val(FC, k) || []).includes(v) ? "checked" : ""}>${esc(t)}</label>`).join("")}</div>`;
+
+function wCall(c) {
+  FC = c; const s = V.step, d = c.data, homes = d.homes || [];
+  const nav = `<div class="steps">${STEPS.map(([t], i) => `<button class="step ${i < s ? "done" : ""}" data-step="${i}" ${i === s ? 'aria-current="step"' : ""}>${i + 1}. ${t}</button>`).join("")}</div>`;
+  const pn = `<div class="row" style="margin-top:16px">${s > 0 ? `<button class="btn q" data-step="${s - 1}">Back</button>` : ""}<span class="sp"></span>${s < STEPS.length - 1 ? `<button class="btn" data-step="${s + 1}">Next: ${STEPS[s + 1][0]}</button>` : ""}</div>`;
+  let h = "";
+  const vul = K.vulnPeople(d).map(x => x.person.name).filter(Boolean)[0] || "your relative";
+  if (s === 0) {
+    h = `<div class="script"><b>Say:</b> Thanks for joining. I'm ${esc(ME.name)}, your Fettle coordinator. Over the next 45 minutes we'll work out what would really happen at ${esc(vul)}'s home in a short power cut, a storm that lasts a few days, and a national emergency, and who could realistically get there. You'll see the plan build on screen as we go. Anything you tell me about health stays in the plan and is only shared with the people you choose. We're not an emergency service: if life is at risk, always call 999.</div>
+    <h3>Consent</h3>${fYN("consent.person", `${esc(vul)} agrees to this plan, in their own words`)}${fYN("consent.lpa", "Or: someone with lasting power of attorney agrees for them")}${fYN("consent.share", "Happy for the plan to be shared with the family on this call")}${fYN("consent.recorded", "The call is being recorded (only with everyone's agreement)")}
+    <div class="fg" style="margin-top:12px">${fText("booker.name", "Who booked")}${fText("booker.relation", "Relation")}${fText("booker.email", "Their email", { type: "email" })}${fText("booker.phone", "Their phone", { type: "tel" })}</div>
+    <p class="sm mute">Now press <b>Present to family</b> and share that window in Teams or Zoom, so everyone watches the plan being built.</p>`;
+  } else if (s === 1) {
+    h = `<div class="script"><b>Say:</b> Let's go through what stops working at ${esc(vul)}'s home when the power goes. Mostly yes or no.</div>`;
+    homes.forEach((home, i) => { const p = `homes.${i}`, a = `${p}.a`, eq = (home.a || {}).equip || [];
+      h += `<div class="hcard"><div class="row"><h3 style="margin:0">${esc(home.label || "Home " + (i + 1))}</h3><span class="sp"></span>${homes.length > 1 ? `<button class="btn danger sm" data-del-home="${i}">Remove</button>` : ""}</div>
+      <div class="fg" style="margin-top:8px">${fText(p + ".label", "Name for this home", { redraw: true })}${fText(p + ".district", "Postcode, first half", { ph: "OL11", geo: true, max: 8 })}${fSel(p + ".type", "Type", [["house", "House"], ["bungalow", "Bungalow"], ["flat", "Flat"], ["other", "Other"]])}${fNum(p + ".floor", "Floor (0 is ground)")}</div>
+      ${fYN(p + ".flood", 'In a flood risk area? <a class="xs" href="https://check-long-term-flood-risk.service.gov.uk/postcode" target="_blank" rel="noopener">Check</a>')}
+      <div class="fg" style="margin-top:10px">${fSel(a + ".heat", "Heating", [["gas", "Gas boiler"], ["electric", "Electric heaters"], ["oil", "Oil"], ["heatpump", "Heat pump"], ["solid", "Coal, wood or a gas fire that needs no power"]])}
+      ${fSel(a + ".phone", "Landline", [["copper", "Old copper line"], ["digital", "Digital (plugs into the router)"], ["mobile", "No landline, mobile only"]], { redraw: true })}
+      ${fSel(a + ".signal", "Mobile signal at home", [["good", "Good"], ["poor", "Poor"], ["none", "None"]])}
+      ${fSel(a + ".water", "Water", [["mains", "Mains"], ["private", "Private supply (well or borehole)"]])}
+      ${fSel(a + ".cook", "Cooking", [["gas", "Gas hob"], ["electric", "Electric only"], ["none", "Doesn't cook"]])}
+      ${fSel(a + ".canLeave", "Could they get out if they had to?", [["yes", "Yes, on their own"], ["help", "With help"], ["no", "No"]])}</div>
+      <div class="ynwrap">${fYN(a + ".warmRoom", "One room that can be kept warm")}${(home.a || {}).phone === "digital" ? fYN(a + ".phoneBackup", "Landline has a battery backup", { unknown: true }) : ""}${fYN(a + ".alarm", "Pendant or care alarm")}
+      ${fYN(a + ".highWater", "Upper floor or high ground (water pressure)")}${fYN(a + ".stairs", "Stairs to get out")}${fYN(a + ".foodCold", "Food they'd eat without cooking")}
+      ${fYN(a + ".co", "Carbon monoxide alarm")}${fYN(a + ".candles", "Uses candles for light")}${fYN(a + ".indoorFuel", "Uses a gas heater, barbecue or generator indoors")}</div>
+      <h3 style="margin-top:12px">Equipment that needs power</h3>${fMulti(a + ".equip", Object.entries(K.EQUIP))}
+      ${eq.length ? `<div class="fg">${fNum(a + ".equipHours", "Battery lasts (hours)", { step: 0.5 })}</div>${fYN(a + ".supplierBackup", "Supplier has given backup batteries or cylinders", { unknown: true })}` : ""}</div>`; });
+    h += `<button class="btn q" data-act="addhome">Add another home</button>`;
+  } else if (s === 2) {
+    h = `<div class="script"><b>Say:</b> Now the people at each home, and what they'd need if nobody could get there for a few days.</div>`;
+    homes.forEach((home, i) => { const p = `homes.${i}`, a = `${p}.a`;
+      h += `<div class="hcard"><h3>${esc(home.label || "Home " + (i + 1))}</h3><table class="htable"><thead><tr><th>Name</th><th>Age</th><th>Lives alone</th><th>Needs a helper</th><th></th></tr></thead><tbody>
+      ${(home.people || []).map((pp, j) => `<tr><td><input type="text" data-k="${p}.people.${j}.name" data-t="str" value="${esc(pp.name || "")}" maxlength="60" aria-label="Name"></td>
+        <td><select data-k="${p}.people.${j}.age" data-t="str" aria-label="Age"><option value=""></option>${K.AGE.map(x => `<option ${pp.age === x ? "selected" : ""}>${x}</option>`).join("")}</select></td>
+        <td class="c"><input type="checkbox" data-k="${p}.people.${j}.alone" data-t="bool" ${pp.alone ? "checked" : ""} aria-label="Lives alone"></td>
+        <td class="c"><input type="checkbox" data-k="${p}.people.${j}.vuln" data-t="bool" ${pp.vuln ? "checked" : ""} aria-label="Needs a helper"></td>
+        <td><button class="btn danger sm" data-del-person="${i}.${j}" aria-label="Remove">×</button></td></tr>`).join("")}</tbody></table>
+      <p><button class="btn q sm" data-add-person="${i}">Add a person</button></p>
+      <div class="fg">${fNum(a + ".medsDays", "Days of medicine in hand")}${fText(a + ".medsCollector", "Who collects prescriptions")}${fText(a + ".agency", "Care agency")}${fText(a + ".keyHolders", "Who has a key or the key safe code", { ph: "Names only, never the code" })}${fText(a + ".pets", "Pets")}</div>
+      <div class="ynwrap">${fYN(a + ".fridgeMeds", "Medicine kept in the fridge")}${fYN(a + ".memory", "Memory problems")}${fYN(a + ".hearing", "Hard of hearing")}${fYN(a + ".sight", "Poor sight")}${fYN(a + ".cash", "Some cash at home")}${fYN(a + ".keysafe", "Key safe or a spare key with someone")}
+      ${fYN(a + ".carers", "Carers visit", { redraw: true })}${(home.a || {}).carers ? fYN(a + ".agencyListed", "On the agency's emergency list", { unknown: true }) : ""}</div>
+      <h3 style="margin-top:12px">What they already have</h3><div class="multi">${K.KIT_ITEMS.map(([k, t]) => `<label><input type="checkbox" data-k="${p}.kit.has.${k}" data-t="bool" ${((home.kit || {}).has || {})[k] ? "checked" : ""}>${esc(t)}</label>`).join("")}</div></div>`; });
+  } else if (s === 3) {
+    h = `<div class="script"><b>Say:</b> Now everyone who might help. Same five questions for each of you. Be honest: the plan only works if it's realistic.</div>
+    <div style="overflow:auto"><table class="htable"><thead><tr><th>Name</th><th>Who</th><th>Postcode</th><th>Miles</th><th>Car</th><th>Children under 12</th><th>Cares for someone</th><th>Other adult at home</th><th>Essential job</th><th>Over 75 or poor health</th><th>Key</th><th></th></tr></thead><tbody>
+    ${(d.helpers || []).map((x, j) => { const p = `helpers.${j}`, cb = (k, l) => `<td class="c"><input type="checkbox" data-k="${p}.${k}" data-t="bool" ${x[k] ? "checked" : ""} aria-label="${l}"></td>`;
+      const auto = K.helperMiles(Object.assign({}, x, { miles: "" }), (d.homes || []).find(hh => (hh.people || []).some(pp => pp.vuln)) || (d.homes || [])[0], geoOf(c));
+      return `<tr><td><input type="text" data-k="${p}.name" data-t="str" value="${esc(x.name || "")}" maxlength="60" aria-label="Name"></td>
+      <td><select data-k="${p}.role" data-t="str" aria-label="Who">${Object.entries(K.ROLES).map(([k, t]) => `<option value="${k}" ${x.role === k ? "selected" : ""}>${t}</option>`).join("")}</select></td>
+      <td><input type="text" data-k="${p}.district" data-t="str" data-geo value="${esc(x.district || "")}" maxlength="8" style="width:70px" aria-label="Postcode"></td>
+      <td><input type="number" min="0" step="0.1" data-k="${p}.miles" data-t="num" value="${esc(x.miles ?? "")}" placeholder="${auto != null ? auto : ""}" style="width:70px" aria-label="Miles"></td>
+      ${cb("car", "Car")}${cb("kids", "Children under 12")}${cb("cares", "Cares for someone")}${cb("otherAdult", "Other adult at home")}${cb("essential", "Essential job")}${cb("older", "Over 75 or poor health")}${cb("key", "Has a key")}
+      <td><button class="btn danger sm" data-del-helper="${j}" aria-label="Remove">×</button></td></tr>`; }).join("")}</tbody></table></div>
+    <p><button class="btn q sm" data-add-helper="family">Add a family member</button> <button class="btn q sm" data-add-helper="friend">Add a friend</button> <button class="btn q sm" data-add-helper="neighbour">Add a neighbour</button></p>
+    <p class="xs mute">Miles are worked out from the postcodes. Type a figure to override. Same postcode counts as 2 miles: check it.</p>
+    <h3 style="margin-top:14px">Why each person counts or not</h3><div id="reasons">${reasonsTable(c)}</div>`;
+  } else if (s === 4) {
+    const g = K.gaps(d, geoOf(c)), local = (d.helpers || []).map((x, j) => ({ x, j })).filter(({ x }) => ["neighbour", "volunteer", "partner"].includes(x.role));
+    h = `<div class="script"><b>Say:</b> Here's where nobody can realistically get there. Who else is close by: neighbours, friends, church, a club? If there's nobody, we'll arrange someone local.</div>
+    <h3>Gaps</h3>${g.length ? `<ul class="list">${g.map(x => `<li><span class="ic ${x.status === "gap" ? "r" : "a"}">${K.BAND[x.band].name[0]}</span><span>${esc(x.text)}</span></li>`).join("")}</ul>` : `<p class="chip ok">Everyone is covered, with a backup, in every band.</p>`}
+    <h3 style="margin-top:14px">Local check-ins</h3>${local.length ? `<table class="htable"><thead><tr><th>Name</th><th>Who</th><th>Miles</th><th>Status</th><th></th></tr></thead><tbody>${local.map(({ x, j }) => `<tr><td>${esc(x.name)}</td><td>${esc(K.ROLES[x.role])}</td><td>${esc(x.miles ?? "")}</td>
+      <td><select data-k="helpers.${j}.status" data-t="str" aria-label="Status"><option value="" ${!x.status ? "selected" : ""}>Agreed on the call</option><option value="asked" ${x.status === "asked" ? "selected" : ""}>Asked, waiting</option><option value="agreed" ${x.status === "agreed" ? "selected" : ""}>Agreed</option><option value="declined" ${x.status === "declined" ? "selected" : ""}>Said no</option></select></td>
+      <td><button class="btn danger sm" data-del-helper="${j}" aria-label="Remove">×</button></td></tr>`).join("")}</tbody></table>` : `<p class="mute sm">None yet.</p>`}
+    <p><button class="btn q sm" data-add-helper="neighbour">Add a neighbour or friend</button> <button class="btn q sm" data-add-helper="volunteer">Add a Fettle volunteer</button> <button class="btn q sm" data-add-helper="partner">Add a local partner</button></p>
+    <p class="xs mute">Someone marked "Asked, waiting" doesn't count until they agree.</p>`;
+    h += kitBlock(c);
+  } else if (s === 5) {
+    h = `<div class="script"><b>Say:</b> Let's do the registrations now, while we're all here.</div>${outcomesBlock(c, true)}
+    ${fText("alerts.numbers", "Who gets text warnings", { ph: "Names and mobile numbers", max: 300 })}`;
+  } else {
+    const o = K.outcomesFor(d, geoOf(c)).filter(x => !x.done);
+    h = `<div class="script"><b>Say:</b> Here's what happens next. Your plan comes by email today, the kit within 48 hours, the printed book within a week, and we'll confirm the local check-ins within two weeks. If anything changes, use the button at the bottom of your plan.</div>
+    <h3>Still to do</h3>${o.length ? `<ul class="list">${o.map(x => `<li><span class="ic a">•</span><span class="sp">${esc(x.t)}</span><span class="sm mute">${esc(x.when)}</span></li>`).join("")}</ul>` : `<p class="chip ok">Everything's done.</p>`}
+    <div class="fg" style="margin-top:12px"><label class="f"><span>Yearly review</span><input type="date" data-k="@next_review" data-t="str" value="${esc(c.next_review || addDays(365))}"></label></div>
+    ${fArea("!notes", "Your private notes (never shown to the family)")}
+    <div class="row">${d.call && d.call.doneAt ? `<span class="chip ok">Call finished ${fmtD(d.call.doneAt)}</span>` : `<button class="btn" data-act="finish">Finish the call</button>`}<button class="btn amber" data-act="send">Send the plan</button></div>`;
+  }
+  return nav + `<section class="card">${h}${pn}</section>`;
+}
+function reasonsTable(c) {
+  const reasons = K.helperReasons(c.data, geoOf(c));
+  return `<table class="cov"><thead><tr><th>Helper</th>${K.BANDS.map(b => `<th>${b.name}</th>`).join("")}</tr></thead><tbody>
+    ${reasons.map(r => `<tr><td><b>${esc(r.h.name)}</b><span class="why">${r.miles == null ? "distance not known" : r.miles + " miles"}</span></td>${K.BANDS.map(b => `<td>${r.bands[b.k].ok ? '<span class="chip ok">Can come</span>' : `<span class="chip gap">No</span><span class="why">${esc(r.bands[b.k].why)}</span>`}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
+}
+function kitBlock(c) {
+  const cov = K.coverage(c.data, geoOf(c));
+  return `<h3 style="margin-top:16px">Kit</h3>` + (c.data.homes || []).map((home, i) => { const k = K.kitFor(home, cov), p = `homes.${i}.kit`;
+    return `<div class="hcard"><div class="row"><b>${esc(home.label || "Home")}</b><span class="sp"></span><span class="chip info">Suggested: ${esc(K.KITS[k.suggested].name)}${k.medicalSuggested ? " + medical" : ""}</span></div>
+    <div class="fg" style="margin-top:8px"><label class="f"><span>Kit</span><select data-k="${p}.tier" data-t="str" data-redraw><option value="">Suggested (${esc(K.KITS[k.suggested].name)})</option>${Object.entries(K.KITS).map(([t, x]) => `<option value="${t}" ${(home.kit || {}).tier === t ? "selected" : ""}>${esc(x.name)} (£${x.price})</option>`).join("")}<option value="none" ${(home.kit || {}).tier === "none" ? "selected" : ""}>No kit</option></select></label>
+      <label class="f"><span>Medical add-on (£${K.MEDICAL.price})</span><select data-k="${p}.medical" data-t="bool3" data-redraw><option value="">${k.medicalSuggested ? "Suggested: yes" : "Suggested: no"}</option><option value="true" ${(home.kit || {}).medical === true ? "selected" : ""}>Yes</option><option value="false" ${(home.kit || {}).medical === false ? "selected" : ""}>No</option></select></label>
+      <label class="f"><span>Status</span><select data-k="${p}.status" data-t="str" data-redraw>${KIT_ST.map(([v, t]) => `<option value="${v}" ${((home.kit || {}).status || "recommended") === v ? "selected" : ""}>${t}</option>`).join("")}</select></label>
+      ${fText(p + ".payer", "Who's paying and approved it")}</div>
+    <p class="sm">${k.tier === "none" ? "No kit." : `<b>£${k.total}</b> inc VAT and delivery. Fills: ${esc(k.missing.map(m => m.t).join(", ") || "nothing missing")}.`}</p></div>`; }).join("");
+}
+function outcomesBlock(c, withHelp) {
+  const help = { psrElec: `<a href="https://www.ofgem.gov.uk/your-energy-supply/how-manage-your-energy-supply/join-your-suppliers-priority-services-register" target="_blank" rel="noopener">How</a>: with the account holder on the call, register with the energy supplier. It's shared with the network.`,
+    psrWater: "Call the water company, or use its website, with the bill to hand.", floodline: "Floodline: 0345 988 1188.", alerts: "Turn on warnings for each home on the plan.",
+    texts: "Add the numbers below.", keys: "Tell each helper where the key is. Never write the code here.", phoneBackup: "Ask the phone provider for a free battery backup.",
+    supplier: "Ask the equipment supplier about backup batteries or cylinders.", meds: "Ask the GP or pharmacy about ordering repeats earlier.", agency: "Send the plan to the agency, with permission.",
+    kit: "Order the approved kit.", book: "Print and post the book and fridge sheet.", checkin: "Confirm each local check-in.", review: "Set the yearly review date." };
+  const o = K.outcomesFor(c.data, geoOf(c));
+  return `<ul class="list">${o.map(x => `<li><input type="checkbox" data-outcome="${x.k}" ${x.done ? "checked" : ""} style="width:20px;height:20px;margin-top:2px" aria-label="${esc(x.t)}"><span class="sp"><b>${esc(x.t)}</b>${withHelp && help[x.k] ? `<br><span class="sm mute">${help[x.k]}</span>` : ""}</span><span class="sm mute">${x.done ? "Done " + esc(fmtD(x.at)) : esc(x.when)}</span></li>`).join("")}</ul>`;
+}
+function wPlan(c) {
+  return `<section class="card"><div class="row"><p class="sm mute" style="margin:0">Exactly what the family sees on their link.</p><span class="sp"></span><a class="btn q sm" href="${esc(planUrl(c.share_token))}" target="_blank" rel="noopener">Open their page</a></div></section>
+  <div class="preview" id="pv"></div>`;
+}
+function wKit(c) { FC = c; return `<section class="card"><h2>Kit</h2>${kitBlock(c)}</section><section class="card"><h2>Actions</h2>${outcomesBlock(c, true)}</section>`; }
+function wNotes(c) {
+  FC = c; const ms = S.messages.filter(m => m.client_id === c.id).sort((a, b) => new Date(b.at) - new Date(a.at));
+  return `<section class="card"><h2>Add a note</h2><label class="f"><span>Only coordinators see notes</span><textarea id="note" maxlength="2000"></textarea></label><button class="btn" data-act="addnote">Add note</button></section>
+  <section class="card"><h2>Messages and notes</h2>${ms.length ? `<ul class="list">${ms.map(m => `<li><span class="ic ${m.kind === "family" ? "a" : m.kind === "system" ? "g" : "b"}">${m.kind === "family" ? "✉" : m.kind === "system" ? "✓" : "✎"}</span><span class="sp">${m.kind === "family" ? `<b>${esc(m.author || "The family")}</b> wrote: ` : m.kind === "note" ? `<b>${esc(m.author || "")}</b>: ` : ""}${esc(m.body)}<br><span class="xs mute">${esc(fmtDT(m.at))}</span></span>${m.kind === "family" && !m.seen ? `<button class="btn q sm" data-seen="${m.id}">Mark as dealt with</button>` : ""}</li>`).join("")}</ul>` : `<p class="empty">Nothing yet.</p>`}</section>
+  <section class="card"><h2>Private notes</h2>${fArea("!notes", "About this family, for coordinators only")}</section>`;
+}
+
+/* --- the right-hand rail: what the family would see, at a glance --- */
+function rail() {
+  const c = C(), el = $("#rail"); if (!c || !el) return;
+  const d = c.data, cov = K.coverage(d, geoOf(c)), s = K.score(d, geoOf(c)), f = (d.homes || []).flatMap(h => K.findings(h).map(x => Object.assign({ home: h.label }, x)));
+  const tgt = STEPS.slice(0, V.step + 1).reduce((t, x) => t + x[1], 0);
+  el.innerHTML = `${V.tab === "call" ? `<div class="card"><div class="row"><span class="timer" id="timer">00:00</span><span class="sm mute">target ${tgt} min by end of this step</span><span class="sp"></span><button class="btn q sm" data-act="timer">${V.timer ? "Pause" : "Start"}</button></div></div>` : ""}
+  <div class="card"><h2>Who can get there</h2>${cov.length ? `<table class="cov"><thead><tr><th></th>${K.BANDS.map(b => `<th>${b.name}</th>`).join("")}</tr></thead><tbody>${cov.map(r => `<tr><td><b>${esc(r.person.name || "Someone")}</b></td>${K.BANDS.map(b => { const x = r.bands[b.k];
+    return `<td><span class="chip ${x.status}">${x.status === "ok" ? "Covered" : x.status === "thin" ? "No backup" : "Gap"}</span>${x.main ? `<span class="why">${esc(x.main.name)}${x.backup ? ", " + esc(x.backup.name) : ""}</span>` : ""}</td>`; }).join("")}</tr>`).join("")}</tbody></table>`
+    : `<p class="mute sm">Tick "Needs a helper" for anyone who'd need someone to get to them.</p>`}
+    <p class="sm" style="margin:10px 0 0"><span class="chip ${s.gaps ? "gap" : "ok"}">${s.gaps} gap${s.gaps === 1 ? "" : "s"}</span> <span class="chip ${s.thin ? "thin" : "ok"}">${s.thin} without backup</span> <span class="chip ${s.todo ? "thin" : "ok"}">${s.todo} actions left</span></p></div>
+  <div class="card"><h2>What we've found</h2>${f.length ? f.slice(0, 8).map(x => `<div class="find ${x.level}"><b>${esc(x.title)}</b><br><span class="mute">${esc(x.fix)}</span></div>`).join("") + (f.length > 8 ? `<p class="xs mute">And ${f.length - 8} more in the family view.</p>` : "") : `<p class="mute sm">Nothing yet. Findings appear as you go through their home.</p>`}</div>`;
+  if (V.tab === "plan") { const pv = $("#pv"); if (pv) FettlePlanView.render(pv, planPayload(c), { band: "a" }); }
+}
+function planPayload(c) { return { family_name: c.family_name, status: c.status, sent_at: c.sent_at, next_review: c.next_review, updated_at: c.updated_at, data: c.data, coordinator: { name: ME.name, phone: ME.phone, email: ME.email } }; }
+
+/* --- timer --- */
+function stopTimer() { if (V.timer) { clearInterval(V.timer); V.timer = null; } }
+function tickTimer() { const el = $("#timer"); if (!el) return; const m = Math.floor(V.timerAt / 60), sec = V.timerAt % 60; el.textContent = `${String(m).padStart(2, "0")}:${String(sec).padStart(2, "0")}`;
+  const tgt = STEPS.slice(0, V.step + 1).reduce((t, x) => t + x[1], 0); el.classList.toggle("over", m >= tgt); }
+
+/* --- saving --- */
+let saveT = null;
+function save(c) {
+  const el = $("#saved"); if (el) el.textContent = "Saving…";
+  clearTimeout(saveT); saveT = setTimeout(async () => {
+    try { const r = await DB.updClient(c.id, { family_name: c.family_name, status: c.status, next_review: c.next_review || null, data: c.data, private: c.private || {} });
+      if (r && r.updated_at) c.updated_at = r.updated_at; const e2 = $("#saved"); if (e2) e2.textContent = "Saved";
+      if (DB.demo) try { localStorage.setItem("fettle-demo-live-" + c.share_token, JSON.stringify(planPayload(c))); } catch (e) {}
+    } catch (e) { const e2 = $("#saved"); if (e2) e2.textContent = "Not saved: " + e.message; }
+  }, 600);
+}
+const geoCache = (() => { try { return JSON.parse(localStorage.getItem("fettle-geo") || "{}"); } catch (e) { return {}; } })();
+async function ensureGeo(c) {
+  const d = c.data; d.geo = d.geo || {};
+  const want = [...new Set([...(d.homes || []).map(h => h.district), ...(d.helpers || []).map(h => h.district)].map(K.normDistrict).filter(Boolean))].filter(x => !d.geo[x]);
+  if (!want.length) return;
+  let changed = false;
+  for (const w of want) {
+    if (geoCache[w]) { d.geo[w] = geoCache[w]; changed = true; continue; }
+    if (DB.demo) continue;
+    try { const r = await fetch("https://api.postcodes.io/outcodes/" + encodeURIComponent(w)); if (!r.ok) continue; const j = await r.json();
+      if (j && j.result && j.result.latitude != null) { geoCache[w] = d.geo[w] = { lat: j.result.latitude, lng: j.result.longitude }; changed = true; } } catch (e) {}
+  }
+  try { localStorage.setItem("fettle-geo", JSON.stringify(geoCache)); } catch (e) {}
+  if (changed) { save(c); if (V.view === "client" && V.client === c.id) { rail(); if (V.tab === "call" && V.step === 3) { const r = $("#reasons"); if (r) r.innerHTML = reasonsTable(c); } } }
+}
+function redrawWork() { const c = C(), w = $("#work"); if (!c || !w) return; const y = scrollY; w.innerHTML = work(c); rail(); tickTimer(); scrollTo(0, y); }
+
+/* --- Send plan --- */
+function sendModal() {
+  const c = C(), b = c.data.booker || {}, link = planUrl(c.share_token), who = K.vulnPeople(c.data).map(x => x.person.name).filter(Boolean).join(" and ") || "everyone";
+  const body = `Hi ${(b.name || "").split(/\s+/)[0] || "there"},\n\nHere's the ${c.family_name} family plan from our call:\n${link}\n\nIt shows what to do in a short power cut, a storm that lasts a few days, and a national emergency, and who will help ${who} in each. The printed book is on its way.\n\nIf anything changes, use the "Something's changed" box at the bottom of the plan, or reply to this email.\n\n${ME.name}\nYour Fettle coordinator${ME.phone ? "\n" + ME.phone : ""}`;
+  const subj = `The ${c.family_name} family plan`;
+  const m = document.createElement("div"); m.className = "modal"; m.id = "modal";
+  m.innerHTML = `<div class="box" role="dialog" aria-modal="true" aria-labelledby="mt"><h2 id="mt">Send the plan</h2><p class="sm mute">Check it over in the Family view first. Then send this from your own email.</p>
+    <label class="f"><span>To</span><input value="${esc(b.email || "")}" readonly></label><label class="f"><span>Message</span><textarea id="sendbody" style="min-height:240px">${esc(body)}</textarea></label>
+    <div class="row"><button class="btn q" data-act="copymsg">Copy message</button>${b.email ? `<a class="btn q" id="mailto" href="mailto:${esc(b.email)}?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(body)}">Open in email</a>` : ""}<span class="sp"></span><button class="btn q" data-act="closemodal">Cancel</button><button class="btn amber" data-act="marksent">I've sent it</button></div></div>`;
+  document.body.appendChild(m);
+}
+async function markSent() {
+  const c = C(); c.status = c.status === "call" ? "plan_sent" : c.status; c.sent_at = new Date().toISOString(); c.next_review = c.next_review || addDays(365);
+  c.data.call = c.data.call || {}; c.data.call.doneAt = c.data.call.doneAt || new Date().toISOString();
+  try { await DB.updClient(c.id, { status: c.status, sent_at: c.sent_at, next_review: c.next_review, data: c.data });
+    const r = S.requests.find(x => x.client_id === c.id); if (r && r.status !== "done") await updReq(r.id, { status: "done" });
+    S.messages.unshift(await DB.addMessage({ client_id: c.id, kind: "system", body: `Plan sent to ${(c.data.booker || {}).name || "the family"}.`, author: ME.name }));
+  } catch (e) { toast(e.message); }
+  $("#modal") && $("#modal").remove(); toast("Marked as sent"); render();
+}
+
+/* ===================== Watch ===================== */
+function affected(e) {
+  const ds = (e.districts || []).map(K.normDistrict), all = ds.includes("ALL");
+  return S.clients.filter(c => c.status !== "closed" && ((c.data || {}).homes || []).some(h => all || ds.includes(K.normDistrict(h.district))))
+    .map(c => ({ c, risk: K.eventRisk(c.data || {}, e.band, geoOf(c)) })).sort((a, b) => b.risk - a.risk);
+}
+function vWatch() {
+  const ev = S.events.find(x => x.id === V.ev), open = S.events.filter(e => !e.closed), closed = S.events.filter(e => e.closed);
+  return `<h1>Watch</h1><p class="lead">Log what's coming, from official and public sources, and work through the families it affects, highest risk first. Never research individuals.</p>
+  <div class="split"><div>
+    ${ev ? evDetail(ev) : ""}
+    <section class="card"><h2>Log something coming</h2><div class="fg">
+      <label class="f" style="grid-column:1/-1"><span>What</span><input id="ev-title" maxlength="140" placeholder="Amber wind warning: Greater Manchester, Saturday"></label>
+      <label class="f"><span>Kind</span><select id="ev-kind">${EV_KIND.map(([k, t]) => `<option value="${k}">${t}</option>`).join("")}</select></label>
+      <label class="f"><span>Band</span><select id="ev-band">${K.BANDS.map(b => `<option value="${b.k}" ${b.k === "a" ? "selected" : ""}>${b.name}: ${b.what.toLowerCase()}</option>`).join("")}</select></label>
+      <label class="f"><span>From</span><input id="ev-starts" type="date"></label><label class="f"><span>To</span><input id="ev-ends" type="date"></label>
+      <label class="f" style="grid-column:1/-1"><span>Postcode areas, or ALL for every family</span><input id="ev-districts" placeholder="OL11, OL12, M14"></label>
+      <label class="f" style="grid-column:1/-1"><span>Source link</span><input id="ev-source" type="url" placeholder="https://"></label>
+      <label class="f" style="grid-column:1/-1"><span>What it means for plans</span><textarea id="ev-note" maxlength="1000"></textarea></label></div>
+      <button class="btn" data-act="logev">Log it</button></section>
+    <section class="card"><h2>Flood warnings near your families</h2><p class="sm mute">Live from the Environment Agency, within about 10 km of each family's home.</p><button class="btn q" data-act="floods">Check now</button><div id="floods" style="margin-top:10px"></div></section>
+  </div><aside class="panel"><section class="card"><h2>On the watch list</h2>${open.length ? `<ul class="list">${open.map(e => `<li><span class="ic ${e.band}">${e.band.toUpperCase()}</span><span class="sp"><button class="link" data-open-ev="${e.id}">${esc(e.title)}</button><br><span class="xs mute">${esc((EV_KIND.find(x => x[0] === e.kind) || [, e.kind])[1])} · ${affected(e).length} families · ${Object.keys(e.contacted || {}).length} contacted</span></span></li>`).join("")}</ul>` : `<p class="mute sm">Nothing yet.</p>`}
+    ${closed.length ? `<p class="xs mute" style="margin-top:10px">${closed.length} closed</p>` : ""}</section>
+    <section class="card"><h2>Where to look</h2><ul class="list">${SOURCES.map(([t, u]) => `<li><a href="${u}" target="_blank" rel="noopener">${esc(t)}</a></li>`).join("")}</ul></section></aside></div>`;
+}
+function evDetail(e) {
+  const list = affected(e), done = e.contacted || {}, res = ["funding", "resource"].includes(e.kind);
+  return `<section class="card" id="evd"><div class="row"><span class="ic ${e.band}">${e.band.toUpperCase()}</span><h2 style="margin:0">${esc(e.title)}</h2><span class="sp"></span><button class="btn q sm" data-act="closeev">${e.closed ? "Reopen" : "Close"}</button></div>
+  <p class="sm mute">${[e.starts && "From " + fmtD(e.starts), e.ends && "to " + fmtD(e.ends), (e.districts || []).join(", ")].filter(Boolean).join(" · ")}${safeUrl(e.source) ? ` · <a href="${esc(safeUrl(e.source))}" target="_blank" rel="noopener">Source</a>` : ""}</p>${e.note ? `<p>${esc(e.note)}</p>` : ""}
+  ${res ? `<p><button class="btn" data-act="addres">Add to these families' plans as "New near you"</button></p>` : ""}
+  ${list.length ? `<table class="t"><thead><tr><th>Family</th><th>Needs someone</th><th>${K.BAND[e.band].name}</th><th>Contact</th><th>Contacted</th></tr></thead><tbody>${list.map(({ c, risk }) => {
+    const cov = K.coverage(c.data, geoOf(c)), st = cov.map(r => r.bands[e.band].status), worst = st.includes("gap") ? "gap" : st.includes("thin") ? "thin" : st.length ? "ok" : "";
+    const b = c.data.booker || {};
+    return `<tr><td><button class="link" data-open-client="${c.id}">${esc(c.family_name)}</button><br><span class="xs mute">risk ${risk}</span></td><td>${esc(peopleNames(c) || "None marked")}</td>
+    <td>${worst ? `<span class="chip ${worst}">${worst === "ok" ? "Covered" : worst === "thin" ? "No backup" : "Gap"}</span>` : ""}</td>
+    <td class="sm">${esc(b.name || "")}${b.phone ? `<br><a href="tel:${esc(b.phone.replace(/\s/g, ""))}">${esc(b.phone)}</a>` : ""}${b.email ? `<br><a href="mailto:${esc(b.email)}">Email</a>` : ""}</td>
+    <td><input type="checkbox" data-contacted="${c.id}" ${done[c.id] ? "checked" : ""} style="width:20px;height:20px" aria-label="Contacted ${esc(c.family_name)}">${done[c.id] ? `<span class="xs mute"> ${esc(fmtD(done[c.id]))}</span>` : ""}</td></tr>`; }).join("")}</tbody></table>` : `<p class="empty">No families in those areas.</p>`}</section>`;
+}
+async function logEvent() {
+  const g = id => ($("#" + id).value || "").trim(), title = g("ev-title");
+  if (!title) { toast("Say what's coming first"); return; }
+  const row = { title, kind: g("ev-kind"), band: g("ev-band"), starts: g("ev-starts") || null, ends: g("ev-ends") || null, source: safeUrl(g("ev-source")) || null, note: g("ev-note") || null,
+    districts: g("ev-districts").split(/[\s,;]+/).map(x => x.toUpperCase() === "ALL" ? "ALL" : K.normDistrict(x)).filter(Boolean), created_by: ME.user_id };
+  try { const e = await DB.saveEvent(row); S.events.unshift(e); V.ev = e.id; render(); toast(`${affected(e).length} families affected`); } catch (e) { toast(e.message); }
+}
+async function checkFloods() {
+  const out = $("#floods"); out.innerHTML = `<p class="sm mute">Checking…</p>`;
+  const pts = []; S.clients.filter(c => c.status !== "closed").forEach(c => (c.data.homes || []).forEach(h => { const p = geoOf(c)[K.normDistrict(h.district)]; if (p) pts.push({ c, h, p }); }));
+  if (!pts.length) { out.innerHTML = `<p class="sm mute">No family homes with a known location yet.</p>`; return; }
+  const seen = new Map();
+  for (const x of pts) {
+    try { const r = await fetch(`https://environment.data.gov.uk/flood-monitoring/id/floods?lat=${x.p.lat}&long=${x.p.lng}&dist=10`); const j = await r.json();
+      (j.items || []).forEach(it => { const k = it.floodAreaID || it.description; if (!seen.has(k)) seen.set(k, { it, fams: new Set() }); seen.get(k).fams.add(x.c.family_name); });
+    } catch (e) { out.innerHTML = `<p class="sm">Couldn't reach the Environment Agency just now. Try again, or check <a href="https://check-for-flooding.service.gov.uk/" target="_blank" rel="noopener">their site</a>.</p>`; return; }
+  }
+  if (!seen.size) { out.innerHTML = `<p class="chip ok">No flood warnings or alerts near your families right now.</p>`; return; }
+  const lvl = { 1: ["Severe flood warning", "gap"], 2: ["Flood warning", "gap"], 3: ["Flood alert", "thin"], 4: ["No longer in force", ""] };
+  out.innerHTML = `<ul class="list">${[...seen.values()].sort((a, b) => a.it.severityLevel - b.it.severityLevel).map(({ it, fams }) => `<li><span class="chip ${(lvl[it.severityLevel] || [])[1] || ""}">${esc((lvl[it.severityLevel] || [it.severity])[0])}</span><span class="sp">${esc(it.description || it.eaAreaName || "")}<br><span class="xs mute">Near: ${esc([...fams].join(", "))}</span></span></li>`).join("")}</ul>`;
+}
+
+/* ===================== Settings ===================== */
+function vSettings() {
+  return `<h1>Settings</h1><p class="lead">What families see about you on their plan.</p><section class="card" style="max-width:560px">
+  <label class="f"><span>Your name</span><input data-me="name" value="${esc(ME.name || "")}" maxlength="60"></label>
+  <label class="f"><span>Phone families can call</span><input data-me="phone" value="${esc(ME.phone || "")}" maxlength="30"></label>
+  <label class="f"><span>Email families can write to</span><input data-me="email" type="email" value="${esc(ME.email || "")}" maxlength="120"></label>
+  <label class="f"><span>Your patch</span><input data-me="patch" value="${esc(ME.patch || "")}" maxlength="120" placeholder="Greater Manchester"></label>
+  <button class="btn" data-act="saveme">Save</button></section>
+  <section class="card" style="max-width:560px"><h2>Coordinators</h2><ul class="list">${S.coordinators.map(x => `<li><span class="sp"><b>${esc(x.name)}</b>${x.role === "admin" ? ' <span class="chip info">Admin</span>' : ""}<br><span class="xs mute">${esc(x.patch || "")}</span></span></li>`).join("")}</ul>
+  <p class="xs mute">To add a coordinator, they make a Fettle account first, then an admin adds them in the database.</p></section>`;
+}
+
+/* ===================== events ===================== */
+document.addEventListener("click", async ev => {
+  const t = ev.target.closest("button,a,tr[data-req],tr[data-client],input[type=checkbox]"); if (!t) return;
+  const ds = t.dataset;
+  if (ds.nav) { ev.preventDefault(); const x = {}; if (ds.reqtab) x.reqTab = ds.reqtab; if (ds.cf) x.cf = ds.cf; return nav(ds.nav, x); }
+  if (ds.reqtab) { V.reqTab = ds.reqtab; V.req = null; return render(); }
+  if (ds.req) { V.req = ds.req; return render(); }
+  if (ds.openReq) { const r = S.requests.find(x => x.id === ds.openReq); return nav("requests", { reqTab: r.status, req: r.id }); }
+  if (ds.client) return nav("client", { client: ds.client, tab: "call", step: 0 });
+  if (ds.openClient) { const m = S.messages.filter(x => x.client_id === ds.openClient && x.kind === "family" && !x.seen); return nav("client", { client: ds.openClient, tab: ds.tab || "call", step: ds.step ? +ds.step : 0 }); }
+  if (ds.openEv) return nav("watch", { ev: ds.openEv });
+  if (ds.start) return startCall(ds.start);
+  if (ds.cf) { V.cf = ds.cf; return render(); }
+  if (ds.ctab) { V.tab = ds.ctab; return redrawAll(); }
+  if (ds.step != null && t.classList.contains("step") || (ds.step != null && t.closest("#work"))) { V.step = +ds.step; redrawWork(); return scrollTo(0, 0); }
+  if (ds.rqst) { await updReq(V.req, { status: ds.rqst }); V.reqTab = ds.rqst; return render(); }
+  const c = C();
+  if (ds.yn && c) { const cur = String(val(c, ds.yn)); const v = cur === ds.v ? undefined : ds.v === "true" ? true : ds.v === "false" ? false : "unknown";
+    put(c, ds.yn, v); t.parentElement.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.v === String(v)))); save(c); return ds.redraw !== undefined ? redrawWork() : rail(); }
+  if (ds.outcome && c) { c.data.outcomes = c.data.outcomes || {}; c.data.outcomes[ds.outcome] = t.checked ? { done: true, at: today() } : { done: false }; save(c); return redrawWork(); }
+  if (ds.contacted) { const e = S.events.find(x => x.id === V.ev); e.contacted = e.contacted || {}; if (t.checked) e.contacted[ds.contacted] = today(); else delete e.contacted[ds.contacted];
+    try { await DB.saveEvent({ id: e.id, contacted: e.contacted }); } catch (x) { toast(x.message); } return render(); }
+  if (ds.addPerson != null && c) { c.data.homes[+ds.addPerson].people.push({ id: "p" + short(), name: "", vuln: false }); save(c); return redrawWork(); }
+  if (ds.delPerson && c) { const [i, j] = ds.delPerson.split(".").map(Number); c.data.homes[i].people.splice(j, 1); save(c); return redrawWork(); }
+  if (ds.addHelper && c) { c.data.helpers = c.data.helpers || []; c.data.helpers.push({ id: "x" + short(), name: "", role: ds.addHelper, status: ["volunteer", "partner"].includes(ds.addHelper) ? "asked" : "" }); save(c); return redrawWork(); }
+  if (ds.delHelper && c) { c.data.helpers.splice(+ds.delHelper, 1); save(c); return redrawWork(); }
+  if (ds.delHome && c) { c.data.homes.splice(+ds.delHome, 1); save(c); return redrawWork(); }
+  if (ds.seen) { const m = S.messages.find(x => x.id === ds.seen); m.seen = true; try { await DB.updMessage(m.id, { seen: true }); } catch (x) { toast(x.message); } return render(); }
+  switch (ds.act) {
+    case "signout": await DB.signOut(); ME = null; return boot();
+    case "newclient": return newClient();
+    case "addhome": c.data.homes.push({ id: "h" + short(), label: "Another home", district: "", people: [], a: {}, kit: { has: {} } }); save(c); return redrawWork();
+    case "present": if (DB.demo) try { localStorage.setItem("fettle-demo-live-" + c.share_token, JSON.stringify(planPayload(c))); } catch (x) {}
+      window.open(planUrl(c.share_token, "&live=1"), "fettle-present", "width=1100,height=900"); return;
+    case "copylink": try { await navigator.clipboard.writeText(planUrl(c.share_token)); toast("Family link copied"); } catch (x) { prompt("Family link", planUrl(c.share_token)); } return;
+    case "send": return sendModal();
+    case "copymsg": try { await navigator.clipboard.writeText($("#sendbody").value); toast("Copied"); } catch (x) {} return;
+    case "closemodal": return $("#modal").remove();
+    case "marksent": return markSent();
+    case "finish": c.data.call = c.data.call || {}; c.data.call.doneAt = new Date().toISOString(); c.next_review = c.next_review || addDays(365); stopTimer(); save(c);
+      { const r = S.requests.find(x => x.client_id === c.id); if (r) await updReq(r.id, { status: "done" }); } toast("Call finished. Check the plan, then send it."); V.tab = "plan"; return redrawAll();
+    case "timer": if (V.timer) stopTimer(); else V.timer = setInterval(() => { V.timerAt++; tickTimer(); }, 1000); return rail(), tickTimer();
+    case "addnote": { const b = $("#note").value.trim(); if (!b) return; try { S.messages.unshift(await DB.addMessage({ client_id: c.id, kind: "note", body: b, author: ME.name })); } catch (x) { return toast(x.message); } return redrawWork(); }
+    case "logev": return logEvent();
+    case "floods": return checkFloods();
+    case "closeev": { const e = S.events.find(x => x.id === V.ev); e.closed = !e.closed; try { await DB.saveEvent({ id: e.id, closed: e.closed }); } catch (x) { toast(x.message); } return render(); }
+    case "addres": { const e = S.events.find(x => x.id === V.ev); let n = 0;
+      for (const { c: cc } of affected(e)) { cc.data.resources = cc.data.resources || []; if (cc.data.resources.some(r => r.event === e.id)) continue;
+        cc.data.resources.push({ title: e.title, band: e.band, source: e.source || "", note: e.note || "", added: today(), event: e.id }); n++;
+        try { await DB.updClient(cc.id, { data: cc.data }); } catch (x) { toast(x.message); } }
+      return toast(`Added to ${n} plan${n === 1 ? "" : "s"}`); }
+    case "saveme": { const p = {}; document.querySelectorAll("[data-me]").forEach(i => p[i.dataset.me] = i.value.trim() || null); if (!p.name) return toast("Your name can't be empty");
+      try { Object.assign(ME, await DB.updMe(ME.user_id, p)); const co = S.coordinators.find(x => x.user_id === ME.user_id); if (co) Object.assign(co, p); toast("Saved"); render(); } catch (x) { toast(x.message); } return; }
+  }
+});
+function redrawAll() { const c = C(); if (!c) return render(); render(); }
+document.addEventListener("input", ev => {
+  const t = ev.target;
+  if (t.id === "q") { V.q = t.value; const pos = t.selectionStart; render(); const q = $("#q"); q.focus(); q.setSelectionRange(pos, pos); return; }
+  if (t.dataset.k && t.tagName !== "SELECT" && t.type !== "checkbox") onField(t, false);
+});
+document.addEventListener("change", ev => {
+  const t = ev.target;
+  if (t.dataset.rq) { const v = t.value; const p = { [t.dataset.rq]: t.dataset.rq === "scheduled_at" ? (v ? new Date(v).toISOString() : null) : (v || null) };
+    if (t.dataset.rq === "scheduled_at" && v) { const r = S.requests.find(x => x.id === V.req); if (r && ["new", "contacted"].includes(r.status)) p.status = "scheduled"; }
+    updReq(V.req, p).then(() => { if (p.status) { V.reqTab = p.status; render(); } }); return; }
+  if (t.closest("[data-multi]")) { const g = t.closest("[data-multi]"), c = C(); put(c, g.dataset.multi, [...g.querySelectorAll("input:checked")].map(i => i.value)); save(c); return redrawWork(); }
+  if (t.dataset.k) onField(t, true);
+});
+function onField(t, committed) {
+  const c = C(); if (!c) return;
+  const k = t.dataset.k, ty = t.dataset.t;
+  let v = t.type === "checkbox" ? t.checked : t.value;
+  if (ty === "num") v = v === "" ? "" : +v;
+  if (ty === "bool3") v = v === "" ? undefined : v === "true";
+  if (ty === "str" && typeof v === "string" && k !== "@family_name" && !k.startsWith("!") && v === "") v = undefined;
+  if (k === "@family_name") v = (v || "").slice(0, 80) || "Family";
+  put(c, k, v); save(c);
+  if (committed && t.hasAttribute("data-geo")) ensureGeo(c);
+  if (k === "@status" && committed) return render();
+  if (V.tab === "call" && V.step === 3 && k.startsWith("helpers.")) { const r = $("#reasons"); if (r) r.innerHTML = reasonsTable(c); return rail(); }
+  if (committed && (t.hasAttribute("data-redraw") || t.type === "checkbox" || t.tagName === "SELECT")) redrawWork();
+  else rail();
+}
+
+/* ===================== start ===================== */
+function signinView(msg) {
+  $("#root").innerHTML = `<div class="signin"><h1>Coordinator sign in</h1><p class="sm mute">Use your Fettle account. Only coordinators can open this page.</p>${msg ? `<p class="chip gap" style="white-space:normal">${esc(msg)}</p>` : ""}
+  <form id="si"><label class="f"><span>Email</span><input type="email" id="si-e" required autocomplete="username"></label><label class="f"><span>Password</span><input type="password" id="si-p" required autocomplete="current-password"></label>
+  <button class="btn" style="width:100%">Sign in</button></form><p class="xs mute" style="margin-top:14px">Want to see how it works first? <a href="?demo=1">Open the demo</a> with made-up families.</p></div>`;
+  $("#si").addEventListener("submit", async e => { e.preventDefault(); try { await DB.signIn($("#si-e").value.trim(), $("#si-p").value); boot(); } catch (x) { signinView(x.message); } });
+}
+async function boot() {
+  try { DB = DB || (DEMO ? fakeDB() : await liveDB()); } catch (e) { $("#root").innerHTML = `<p class="signin">Couldn't load. Check your connection and refresh.</p>`; return; }
+  ME = await DB.me();
+  if (!ME) return signinView();
+  if (ME.notCoordinator) { $("#root").innerHTML = `<div class="signin"><h1>Not a coordinator yet</h1><p>You're signed in as ${esc(ME.email)}, but this account isn't set up as a Fettle coordinator.</p><button class="btn q" id="so">Sign out</button></div>`; $("#so").onclick = async () => { await DB.signOut(); ME = null; boot(); }; ME = null; return; }
+  try { Object.assign(S, await DB.loadAll()); } catch (e) { toast(e.message); }
+  S.clients.forEach(c => { c.data = c.data || {}; c.private = c.private || {}; });
+  const h = (location.hash || "").slice(1).split("/");
+  if (h[0] === "client" && client(h[1])) Object.assign(V, { view: "client", client: h[1] }); else if (["today", "requests", "clients", "watch", "settings"].includes(h[0])) V.view = h[0];
+  render();
+  if (!DB.demo) S.clients.filter(c => ["call", "plan_sent"].includes(c.status)).slice(0, 20).forEach(ensureGeo);
+}
+window.__coord = { V, S: () => S, render, K };
+boot();
+})();
+</script>
+</body>
+</html>

@@ -200,5 +200,5 @@ open(os.path.join(PUB, "sitemap.xml"), "w", encoding="utf8").write(
     '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
     + "".join(f"  <url><loc>{u}</loc><lastmod>{today}</lastmod></url>\n" for u in urls) + "</urlset>\n")
 open(os.path.join(PUB, "robots.txt"), "w", encoding="utf8").write(
-    "User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /area-report\nDisallow: /api/\n\nSitemap: " + SITE + "/sitemap.xml\n")
+    "User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /area-report\nDisallow: /coordinator\nDisallow: /plan\nDisallow: /api/\n\nSitemap: " + SITE + "/sitemap.xml\n")
 print("wrote sitemap.xml (", len(urls), "addresses ) and robots.txt")

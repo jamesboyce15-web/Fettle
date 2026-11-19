@@ -34,7 +34,7 @@ const URL0 = 'http://localhost:8775/';
     let p = await page();
     await p.goto(URL0); await p.waitForTimeout(300);
     ok(!(await p.isVisible('#wbpromo')), 'no workbook link until config.js has its Amazon address');
-    await p.click('#hero-cta'); await p.waitForTimeout(200);
+    await p.evaluate(() => start(false)); await p.waitForTimeout(200);
     ok(/What kind of home/.test(await p.textContent('#qt')) && !(await p.isVisible('#v-q input.txt')), 'first question is a tap, not typing');
     await p.click('.opt >> nth=0'); await p.waitForTimeout(400);
     ok(await p.evaluate(() => cur.home === 'house' && qi === 1), 'one tap answers it and moves on');
@@ -70,7 +70,7 @@ const URL0 = 'http://localhost:8775/';
 
     // ---------- the workbook link, once config.js has it ----------
     const w = await page(null, 'window.FETTLE_CONFIG={workbookUrl:"https://www.amazon.co.uk/dp/EXAMPLE"};'); await w.goto(URL0); await w.waitForTimeout(300);
-    ok(await w.isVisible('#wbpromo') && await w.getAttribute('#wblink', 'href') === 'https://www.amazon.co.uk/dp/EXAMPLE', 'with an address in config.js, the home page links to the workbook');
+    ok(!(await w.$('#wbpromo')) && await w.isVisible('#hero-cta'), 'the home page keeps one call to action, even with a workbook address in config.js');
     await w.selectOption('header select', 'pl'); await w.waitForTimeout(300);
     ok(!(await w.isVisible('#wbpromo')), 'not shown in other languages: the workbook is in English');
 

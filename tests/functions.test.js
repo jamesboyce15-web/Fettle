@@ -313,3 +313,35 @@ test("billing: opens Stripe's page for members, not for others", async () => {
   r = await billing({ request: new Request("https://f.test/api/billing", { method: "POST", headers: { Authorization: "Bearer tok" } }), env: PENV });
   assert.equal(r.status, 404);
 });
+
+// ---------- /api/book-call ----------
+import { onRequestPost as bookCall } from "../functions/api/book-call.js";
+const bcReq = (body, ip = "203.0.113.7") => new Request("https://f.test/api/book-call", { method: "POST", headers: { "CF-Connecting-IP": ip }, body: JSON.stringify(body) });
+const goodCall = { booker_name: "James", booker_email: "James@Example.com", for_name: "Mum", for_district: "la1", lives_alone: true, times: ["Weekday evening"], turnstile: "tt" };
+
+test("book-call: bad email never reaches the database", async () => {
+  const calls = mockFetch(() => res("ok"));
+  const r = await bookCall({ request: bcReq({ ...goodCall, booker_email: "nope" }), env });
+  assert.equal(r.status, 400); assert.equal(calls.length, 0);
+});
+
+test("book-call: robot check must pass when a secret is set", async () => {
+  const calls = mockFetch(url => url.includes("turnstile") ? res({ success: false }) : res("ok"));
+  const r = await bookCall({ request: bcReq(goodCall), env: { ...env, TURNSTILE_SECRET: "ts" } });
+  assert.equal(r.status, 403); assert.ok(!calls.some(c => c.url.includes("book_call")));
+});
+
+test("book-call: sends the request with a scrambled connection code, never the address", async () => {
+  const calls = mockFetch(url => url.includes("turnstile") ? res({ success: true }) : res("ok"));
+  const r = await bookCall({ request: bcReq(goodCall), env: { ...env, TURNSTILE_SECRET: "ts" } });
+  assert.equal(r.status, 200);
+  const db = calls.find(c => c.url.endsWith("/rest/v1/rpc/book_call")); const b = JSON.parse(db.init.body);
+  assert.equal(b.p.booker_email, "james@example.com"); assert.equal(b.p.lives_alone, true); assert.deepEqual(b.p.times, ["Weekday evening"]);
+  assert.match(b.p_net, /^[0-9a-f]{32}$/); assert.ok(!db.init.body.includes("203.0.113.7"));
+});
+
+test("book-call: too many from one connection", async () => {
+  mockFetch(() => res("net"));
+  const r = await bookCall({ request: bcReq(goodCall), env });
+  assert.equal(r.status, 429); assert.match((await r.json()).error, /tomorrow/);
+});

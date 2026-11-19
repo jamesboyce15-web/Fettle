@@ -5,11 +5,8 @@ let fails = 0; const ok = (c, m) => { if (!c) fails++; console.log((c ? 'PASS ' 
   const p = await b.newPage({ viewport: { width: 390, height: 844 } }); const errs = []; p.on('pageerror', e => errs.push(e.message));
   await p.route('**fonts.googleapis.com**', r => r.fulfill({ contentType: 'text/css', body: '' })); await p.route('**/api.postcodes.io/**', r => r.fulfill({ status: 404, body: '' }));
   await p.goto('file://' + path.join(require('./proto-site.cjs'), 'index.html')); await p.waitForTimeout(300);
-  const land = await p.textContent('#plus');
-  ok(/Stay ready all year/.test(land) && /£35/.test(land) && /£70/.test(land) && /Free while we test it/.test(land) && /Up to 5 family homes/.test(land), 'landing explains Fettle Plus, both plans and prices, free while testing');
-  await p.click('#plus >> text=Monthly'); ok(/£3.50/.test(await p.textContent('#plus')) && /£7/.test(await p.textContent('#plus')), 'monthly prices: £3.50 and £7');
-  await p.click('#pi-post'); ok(/Thank you/.test(await p.textContent('#pi-thanks')) && await p.isDisabled('#pi-plus'), 'landing interest button says thanks');
-  ok(/digital book are free, and they'll stay free/.test(await p.textContent('.lfaq')), 'FAQ: the core stays free');
+  const land = await p.textContent('#price');
+  ok(/£79/.test(land) && /£5/.test(land) && /a month/.test(land), 'landing shows the family call and the monthly price');
   await p.evaluate(() => {
     start(false); Object.assign(cur, { pc: 'LA1', area: 'Lancaster', home: 'house', outdoor: 'garden', tenure: 'own', adults: 2, heat: 'gas', hob: 'gas', water: 'half', food: 'yes', kit: ['torch'], budget: 20 }); qi = list().length - 1; drawQ(); next();
     H[0].bought.water = true; H[0].bought.radio = true;

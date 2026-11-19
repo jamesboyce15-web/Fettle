@@ -7,7 +7,7 @@ let fails = 0; const ok = (c, m) => { if (!c) fails++; console.log((c ? 'PASS ' 
     const P = await b.newPage({ viewport: { width: 390, height: 844 } }); P.on('pageerror', e => errs.push(e.message));
     await P.route('**fonts.googleapis.com**', r => r.fulfill({ contentType: 'text/css', body: '' })); await P.route('**/api.postcodes.io/**', r => r.fulfill({ status: 404, body: '' }));
     await P.goto('file://' + path.join(site, 'index.html')); await P.waitForTimeout(300);
-    await P.click('header.top a.hdrlink:has-text("Shop")'); await P.waitForTimeout(100);
+    await P.evaluate(() => shopView()); await P.waitForTimeout(100);
     ok(/Everything for 3 days/.test(await P.textContent('#shopbox')) && await P.isVisible('#shopbox >> text=Check my household'), 'without a plan, the shop asks you to do the check first');
     ok(!(await P.$$eval('#shopbox a.plink', A => A.map(a => a.href))).some(h => /tag=/.test(h)) && !/paid link/.test(await P.textContent('#shopbox')) && /doesn't earn anything/.test(await P.textContent('#shopbox')), 'with no affiliate ID set: no tag, no "paid link", and it says so');
     await P.evaluate(() => { start(false); Object.assign(cur, { home: 'house', outdoor: 'garden', tenure: 'own', adults: 2, heat: 'gas', hob: 'gas', cold: 'slow', healthGate: 'no', water: 'all', food: 'no', kit: ['torch', 'opener'], fa: 'yes', budget: 20, mealPick: ['soup'] }); qi = list().length - 1; drawQ(); next(); });

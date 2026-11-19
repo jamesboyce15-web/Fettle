@@ -763,9 +763,42 @@ html[lang^="en"] .notin-en{display:none}
 .creq{list-style:none;margin:0;padding:0}.creq li{padding:12px 0;border-bottom:1px solid var(--rowline)}.creq li.done{opacity:.6}
 .talk p{margin:0 0 10px;font-size:1.05rem}
 .newsprev .news h1{font-size:1.4rem;margin:4px 0 8px}.newsprev .news h2{font-size:1.1rem;margin:18px 0 4px}
+
+/* ================= FAMILY CALL LANDING ================= */
+body.onland .hdrlink{display:none}
+.lsteps{list-style:none;counter-reset:s;margin:0;padding:0}
+.lsteps li{counter-increment:s;position:relative;padding:0 0 18px 52px}
+.lsteps li::before{content:counter(s);position:absolute;left:0;top:0;width:36px;height:36px;border-radius:50%;background:var(--brand);color:var(--brand-ink);display:grid;place-items:center;font-weight:700}
+[dir="rtl"] .lsteps li{padding:0 52px 18px 0}[dir="rtl"] .lsteps li::before{left:auto;right:0}
+.lsteps b{display:block;font-size:1.08rem}.lsteps span{color:var(--mute)}
+.lgrid{padding:14px 16px 10px;margin:0 0 14px}
+.lgrow{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;align-items:center;padding:6px 0}
+.lghead span{font-size:.78rem;color:var(--mute);font-weight:700;line-height:1.2}
+.lchip{border-radius:10px;padding:5px 8px;font-size:.85rem;font-weight:700;text-align:center}
+.lchip.ok{background:#e6f2ea;color:#1d6b45}.lchip.gap{background:#fde7e5;color:#b42318}
+.lgets{margin:0;padding:0;list-style:none}
+.lgets li{position:relative;padding:0 0 12px 30px}
+.lgets li::before{content:"";position:absolute;left:4px;top:6px;width:14px;height:8px;border-left:3px solid var(--green);border-bottom:3px solid var(--green);transform:rotate(-45deg)}
+.lprice{padding:16px 18px}
+.lprow{display:flex;gap:16px;align-items:flex-start;padding:0 0 14px;margin:0 0 14px;border-bottom:1px solid var(--line)}
+.lprow>div{flex:0 0 84px}.lprow b{display:block;font-size:2rem;line-height:1;color:var(--brand);font-family:var(--serif)}.lprow span{font-size:.85rem;color:var(--mute)}.lprow p{margin:0}
+.callform fieldset{border:0;padding:0;margin:0 0 22px;min-width:0}
+.callform legend{font-weight:700;font-size:1.1rem;margin:0 0 10px;color:var(--brand)}
+.callform label.fl{display:block;margin:0 0 12px}
+.callform label.fl>span{display:block;font-size:.92rem;font-weight:600;margin:0 0 4px}
+.callform input[type=text],.callform input[type=email],.callform input[type=tel],.callform select,.callform textarea{width:100%;box-sizing:border-box;border:1px solid var(--line2);border-radius:12px;padding:11px 12px;font:inherit;background:var(--surface);color:var(--ink)}
+.callform textarea{min-height:90px}
+.callform .opts{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+.callform .opts label{border:1px solid var(--line2);border-radius:999px;padding:7px 14px;cursor:pointer;background:var(--surface)}
+.callform .opts label:has(input:checked){background:var(--tint);border-color:var(--brand)}
+.callform .opts input{margin:0 6px 0 0}
+.callform .two{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+@media(max-width:520px){.callform .two{grid-template-columns:1fr}.lgrow{grid-template-columns:1.1fr 1fr 1fr 1fr}.lchip{font-size:.76rem;padding:4px 4px}}
+.callform .err{color:var(--red);font-weight:600}
+.callok{background:var(--surface);border-radius:20px;padding:22px}
 </style>
 </head>
-<body>
+<body class="onland">
 <header class="top">
   <a class="brand" href="#" onclick="go('landing');return false">
     <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#173f35"/><path d="M8 15.5 16 9l8 6.5V24a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1z" fill="none" stroke="#f6f7f4" stroke-width="2" stroke-linejoin="round"/><path d="M16 14.5c1.9 1.7 2.8 3.2 2.8 4.6a2.8 2.8 0 0 1-5.6 0c0-1.4.9-2.9 2.8-4.6z" fill="#f2a900"/></svg>
@@ -779,135 +812,74 @@ html[lang^="en"] .notin-en{display:none}
 <main id="v-landing" class="lcalm">
   <div class="pagewrap">
   <section class="lhero" id="hero">
-    <p class="lpill">Free. About 5 minutes.</p>
-    <h1>Could your home cope for 3 days without power or water?</h1>
-    <p class="lede">Tell us about your home and pick the meals you'd normally eat. Get a free plan, a 3-day menu that needs no power, and a shopping list for what's missing.</p>
-    <div class="lpreview" aria-hidden="true">
-      <div class="lpv-head"><div class="lring"><svg width="56" height="56" viewBox="0 0 56 56"><circle cx="28" cy="28" r="23" fill="none" stroke-width="6" class="t"/><circle cx="28" cy="28" r="23" fill="none" stroke-width="6" stroke-linecap="round" stroke-dasharray="52 145" transform="rotate(-90 28 28)" class="v"/></svg><b>36%</b></div>
-        <div><p class="lpv-k">Example plan</p><p class="lpv-t">Your next step</p></div></div>
-      <div class="lpv-row"><span class="lpv-tile"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 4V2M12 22v-2"/></svg></span><span><b>Carbon monoxide alarm</b><span><span>About £20</span> · <span>10 minutes</span></span></span></div>
-      <div class="lpv-row done"><span class="tcx"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg></span><span><b>Join the Priority Services Register</b><span><span>Free</span> · <span>10 minutes</span></span></span></div>
-    </div>
-    <button class="btn full lbig" id="hero-cta" onclick="start(false)">Check my household</button>
+    <p class="lpill">For families who can't always be there</p>
+    <h1>If the power went off for three days, who would get to your mum or dad?</h1>
+    <p class="lede">Book one call with your whole family. A local Fettle coordinator works out what would really happen in a power cut, a storm or a national emergency, fills the gaps, and keeps watch after that.</p>
+    <button class="btn full lbig" id="hero-cta" onclick="callView()">Book your family call</button>
+    <p class="sm mute lcenter">£79 for the call and your printed plan, then £5 a month. Nothing to pay until your call is booked.</p>
     <div id="resume" style="margin-top:10px"></div>
-    <p class="sm mute lcenter">No sign-up until you've seen your plan.</p>
-    <p class="trustline"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/></svg><span>Built on official UK guidance from the Cabinet Office, NHS, Food Standards Agency and fire service.</span></p>
-    <button class="lflood" onclick="toolGo('flood')"><span class="lic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 15c2 0 2-1.5 4.5-1.5S9.5 15 12 15s2.5-1.5 4.5-1.5S19 15 21 15M3 19c2 0 2-1.5 4.5-1.5S9.5 19 12 19s2.5-1.5 4.5-1.5S19 19 21 19M12 3s4 4.3 4 7a4 4 0 0 1-8 0c0-2.7 4-7 4-7z"/></svg></span><span><b>Live somewhere that floods?</b><span>Check your postcode, then get a flood-ready plan</span></span><i class="chev" aria-hidden="true"></i></button>
   </section>
 
-  <section class="lsec2">
-    <h2 class="lh2">A plan for your home, not a generic list.</h2>
-    <div class="seg2" role="tablist" aria-label="Example homes">
-      <button role="tab" aria-selected="true" onclick="lhome(0,this)">Flat, 9th floor</button><button role="tab" aria-selected="false" onclick="lhome(1,this)">House with a garden</button></div>
-    <div class="lcard lhome" id="lh0"><p class="sm mute">2 adults, a baby on formula, electric hob, no garden</p>
-      <div class="lrow"><span class="lic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6M10 3v3l-2 3v11a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V9l-2-3V3"/><path d="M8 13h8"/></svg></span><span><b>Ready-made formula.</b><span>No power means no way to boil water for powder.</span></span></div><div class="lrow"><span class="lic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></svg></span><span><b>27 litres of water, stored now.</b><span>The building's pumps need electricity.</span></span></div><div class="lrow"><span class="lic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="6" rx="7" ry="2.5"/><path d="M5 6v12c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5V6"/></svg></span><span><b>No-cook food only.</b><span>Nowhere safe to use a camping stove.</span></span></div></div>
-    <div class="lcard lhome" id="lh1" hidden><p class="sm mute">2 adults, gas hob, gas central heating</p>
-      <div class="lrow"><span class="lic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 4V2M12 22v-2"/></svg></span><span><b>A carbon monoxide alarm.</b><span>Gas appliances, and the temptation to cook indoors.</span></span></div><div class="lrow"><span class="lic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v20M4.9 6.5l14.2 11M19.1 6.5 4.9 17.5"/></svg></span><span><b>Blankets and a warm room.</b><span>The gas boiler stops without electricity.</span></span></div><div class="lrow"><span class="lic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c3 3.5 5 6.2 5 9.5a5 5 0 0 1-10 0C7 9.6 9 7.5 12 3z"/></svg></span><span><b>Matches by the hob.</b><span>The gas may still work, the spark won't.</span></span></div></div>
-  </section>
-
-  <section class="lsec2">
+  <section class="lsec2" id="how">
     <h2 class="lh2">How it works</h2>
-    <div class="lcard lsteps">
-      <div class="lrow"><span class="lnum">1</span><span><b>Tell us about your home</b><span>Who lives there, including anyone who'd need extra help, and what you already have.</span></span></div>
-      <div class="lrow"><span class="lnum">2</span><span><b>Pick the meals you'd normally eat</b><span>We turn them into a 3-day menu that works with no power and no fridge.</span></span></div>
-      <div class="lrow"><span class="lnum">3</span><span><b>Get your plan and checklist</b><span>Your first 72 hours, step by step, with the free jobs first.</span></span></div>
-      <div class="lrow"><span class="lnum">4</span><span><b>Shop for what's missing</b><span>One list to copy, print or send to your phone, and a shop that only shows what your home needs.</span></span></div>
-      <div class="lrow"><span class="lnum">5</span><span><b>Get your book and recipes</b><span>Free to download and print. With Fettle Plus with Post, we post them to you.</span></span></div>
-      <div class="lrow"><span class="lnum">6</span><span><b>Stay ready</b><span>With Fettle Plus, we warn you when trouble's coming to your postcode and tell you when to refresh your food, water and batteries.</span></span></div>
+    <ol class="lsteps">
+      <li><b>Tell us who it's for</b><span>Five minutes. We'll be in touch within one working day to find a time that suits everyone.</span></li>
+      <li><b>One call, everyone on it</b><span>About 45 minutes on Teams, Zoom or the phone. You watch the plan being built on screen as we go.</span></li>
+      <li><b>We keep watch</b><span>Your coordinator lives locally. When a storm, flood or outage is on its way, they check your plan and get in touch.</span></li>
+    </ol>
+  </section>
+
+  <section class="lsec2" id="finds">
+    <h2 class="lh2">What the call finds</h2>
+    <p>Most families name the nearest relative. Then we ask the real questions.</p>
+    <div class="lcard lgrid" aria-label="Example: who can get to Margaret">
+      <p class="lpv-k">Example: Margaret, 82, lives alone</p>
+      <div class="lgrow lghead"><span></span><span>Short power cut</span><span>Storm, 1 to 3 days</span><span>National emergency</span></div>
+      <div class="lgrow"><b>Margaret</b><span class="lchip ok">Claire comes</span><span class="lchip gap">Nobody</span><span class="lchip gap">Nobody</span></div>
+    </div>
+    <p class="mute">Her daughter Claire is a nurse, so in a big emergency she'll be called in to work. Her son Tom is 150 miles away with two young children. In the two emergencies that matter most, nobody in the family can get to Margaret. So we arrange someone local who can.</p>
+  </section>
+
+  <section class="lsec2" id="gets">
+    <h2 class="lh2">What you get</h2>
+    <ul class="lgets">
+      <li>A plan for each kind of emergency: a short power cut, a few days of disruption, and a national emergency.</li>
+      <li>A named helper and a backup for everyone who needs one, or a local check-in that we arrange.</li>
+      <li>The Priority Services Register and flood and weather warnings, set up during the call.</li>
+      <li>Your plan online for the whole family, and as a printed book for the fridge.</li>
+      <li>A kit that fills exactly what's missing, delivered, if you want one.</li>
+      <li>A local coordinator who gets in touch when something's coming, and a review every year.</li>
+    </ul>
+  </section>
+
+  <section class="lsec2" id="price">
+    <div class="lcard lprice">
+      <div class="lprow"><div><b>£79</b><span>once</span></div><p>The family call, your plan and the printed book.</p></div>
+      <div class="lprow"><div><b>£5</b><span>a month</span></div><p>Your coordinator, warnings for every home on the plan, and updates when life changes. Text warnings are £1 a month more.</p></div>
+      <p class="sm mute">Kits from £99, only if you want one. Cancel the monthly plan at any time.</p>
     </div>
   </section>
 
-  <section class="lsec2">
-    <h2 class="lh2">The government's Be Ready campaign asks every home to manage for three days.</h2>
-    <p class="mute">Most of us aren't there yet. The government's own 2026 survey of over 10,000 people found:</p>
-    <div class="ltiles">
-      <div class="ltile2"><b>82%</b><span>have less than one day of bottled water at home.</span></div>
-      <div class="ltile2"><b>14%</b><span>have a household emergency plan.</span></div>
-      <div class="ltile2"><b>21%</b><span>have none of the basics on the government's list.</span></div>
-      <div class="ltile2"><b>73%</b><span>in England and Wales have never heard of their Local Resilience Forum.</span></div>
-    </div>
-    <p class="sm mute">Source: <a href="https://www.gov.uk/government/statistics/uk-public-survey-of-risk-perception-resilience-and-preparedness-2026/uk-public-survey-of-risk-perception-resilience-and-preparedness-2026-headline-findings-html" target="_blank" rel="noopener">Cabinet Office, UK Public Survey of Risk Perception, Resilience and Preparedness 2026</a></p>
-  </section>
-
-  <section class="lsec2">
-    <div class="lbook">
-      <div class="bigcover"><span class="bc-logo"></span><b>The Fettle<br>Book</b><i></i><span class="bc-name">Your household</span></div>
-      <div>
-        <h2 class="lh2 inv">A book for the kitchen drawer.</h2>
-        <p>When the power's off, a phone app is no use. The Fettle Book is your plan, written for your home.</p>
-        <ul class="ticks2">
-          <li>Your emergency numbers inside the front cover</li>
-          <li>The first 72 hours, hour by hour</li>
-          <li>Your 3-day menu, with recipes that need no power</li>
-          <li>What to pack and where to go if you have to leave</li>
-        </ul>
-        <p><b>Free to download and print.</b></p>
-      </div>
-    </div>
-    <div class="lcard wbpromo hide" id="wbpromo"><p><b>Prefer pen and paper?</b> The 3-Day Household Emergency Workbook is a book you fill in by hand: 21 steps to tick off, with pages for your numbers, your contacts and your family plan.</p>
-      <p><a class="btn quiet small" id="wblink" target="_blank" rel="noopener">See the workbook on Amazon</a></p></div>
-  </section>
-
-  <section class="lsec2" id="shopland">
-    <div class="lcard lconn">
-      <p class="lpv-k">The Fettle shop</p>
-      <h2 class="lh2">Only what your home is missing.</h2>
-      <p class="mute">Your plan already knows what you have. The shop shows the rest, the cheapest options first, and reminds you to check your cupboards before you buy.</p>
-      <div class="row3"><button class="btn small quiet" onclick="shopView()">Open the shop</button></div>
-    </div>
-  </section>
-
-  <section class="lsec2" id="plus"><div id="plusland"></div></section>
-
-  <section class="lsec2">
+  <section class="lsec2" id="faq">
     <h2 class="lh2">Questions</h2>
-    <div class="lcard lfaq"><details><summary><span>Is it really free?</span><i class="chev" aria-hidden="true"></i></summary><p>Yes. The check, your plan and your digital book are free, and they'll stay free. Fettle Plus, with warnings for your postcode, refresh reminders and up to 5 family homes, will be £3.50 a month. It's free while we test it.</p></details><details><summary><span>Is this official advice?</span><i class="chev" aria-hidden="true"></i></summary><p>Fettle is independent. Everything we recommend comes from official UK sources, which we link to, and we turn it into a plan for your home. In an emergency, always follow official alerts.</p></details><details><summary><span>Do I have to buy lots of stuff?</span><i class="chev" aria-hidden="true"></i></summary><p>No. Many of the most important jobs are free, like joining the Priority Services Register. The rest is spread over months at a budget you choose. We never sell a doomsday kit.</p></details><details><summary><span>I rent, or live in a flat. Is it still for me?</span><i class="chev" aria-hidden="true"></i></summary><p>Yes. Flats, especially high up, have their own risks, like water pumps and lifts that need power. The plan takes that into account.</p></details><details><summary><span>What do you do with my health answers?</span><i class="chev" aria-hidden="true"></i></summary><p>They're optional, only used to build your plan, and never shared or sold. If a council or charity worker helps you make your plan, they can see it too. Only if you agree, your answers are counted in anonymous totals for your area, and small numbers are always hidden.</p></details><details><summary><span>Can I make a plan for my mum?</span><i class="chev" aria-hidden="true"></i></summary><p>Yes. Add her home, with her agreement. With Fettle Plus you can link up to 5 family homes, share the jobs, and follow one plan together when something happens.</p></details><details><summary><span>Do you earn money from products you suggest?</span><i class="chev" aria-hidden="true"></i></summary><p>Only from links marked "paid link". Those are Amazon links: if you buy, Fettle earns a small commission at no extra cost to you. Links without that label earn nothing. It never changes what we recommend, and you can buy anywhere. The printed book has no shopping links.</p></details></div>
-    <p id="guides" style="margin-top:16px">Looking for something specific? <a href="guides/">Read the free guides</a>.</p>
-  </section>
-
-  <section class="lsec2" id="groups">
-    <div class="lcard lconn">
-      <p class="lpv-k">Fettle Communities</p>
-      <h2 class="lh2">Get your community ready together.</h2>
-      <p class="mute">For parish councils, churches, mosques, gurdwaras, sports clubs, local businesses and residents' groups. Your members do the free check, and choose whether to share their answers with you.</p>
-      <ul class="ticks2">
-        <li>Rough totals for your community, never names unless people choose</li>
-        <li>A newsletter written from your biggest gaps, ready to print or send</li>
-        <li>Your meeting point, contacts and support in everyone's Fettle Book</li>
-        <li>A quiet way for people to ask you for help</li>
-      </ul>
-      <p><b>Free for community groups.</b></p>
-      <div class="row3"><button class="btn small" onclick="commStart()">Start a community</button><button class="btn quiet small" onclick="commDash('st-marys-caton')">See an example</button></div>
-    </div>
-  </section>
-
-  <section class="lsec2" id="orgs" hidden>
-    <div class="lcard lorg">
-      <p class="lpv-k">Fettle for support services</p>
-      <h2 class="lh2">The people most at risk are the least likely to download an app.</h2>
-      <p class="mute">Your frontline staff do the check with a resident in 10 minutes. The resident gets a plan and a printed book. You get evidence of what changed.</p>
-      <details class="lmore"><summary><span>What's included</span><i class="chev" aria-hidden="true"></i></summary>
-      <ul class="orglist">
-        <li><b>Supported visits.</b> Staff go through the questions with the resident, after a consent script they read aloud.</li>
-        <li><b>A printed book for every home</b>, in English, Polish, Romanian, Panjabi or Urdu, with large print for older residents.</li>
-        <li><b>Priority Services Register sign-ups</b> done on the visit, and counted.</li>
-        <li><b>Progress you can report.</b> Readiness at the first visit and at the check-in, by household and by ward.</li>
-      </ul></details>
-      <div class="row3"><button class="btn small" onclick="proSample()">See the sample caseload</button><button class="btn quiet small" onclick="proAuth()">Professional account</button></div>
-      <p class="sm mute" style="margin:12px 0 0">Pilots from 50 households.</p>
-    </div>
+    <details class="lmore"><summary><span>Is this an emergency service?</span><i class="chev" aria-hidden="true"></i></summary><p>No. If life is at risk, always call 999. Fettle makes sure your family has a realistic plan before anything happens, and your coordinator checks in when something's on its way.</p></details>
+    <details class="lmore"><summary><span>What if Mum or Dad doesn't want this?</span><i class="chev" aria-hidden="true"></i></summary><p>They're on the call and they decide. Nothing about their health goes into the plan without their agreement, and the plan is only shared with the people they choose.</p></details>
+    <details class="lmore"><summary><span>Who is the coordinator?</span><i class="chev" aria-hidden="true"></i></summary><p>A trained, DBS-checked person who lives in the area. They run your call, arrange local check-ins where the family can't get there, and keep an eye on warnings for your homes.</p></details>
+    <details class="lmore"><summary><span>Do you cover my area?</span><i class="chev" aria-hidden="true"></i></summary><p>We're starting with a small number of families. Book a call and we'll tell you within one working day if we can't help in your area yet.</p></details>
+    <details class="lmore"><summary><span>Can I do it myself?</span><i class="chev" aria-hidden="true"></i></summary><p>Yes. There's a <button class="linkbtn" onclick="start(false)">free online check</button> for your own home.</p></details>
   </section>
   </div>
 
   <section class="lsec final"><div class="pagewrap">
-    <h2 class="lh2 inv">Get your house in fettle.</h2>
-    <button class="btn full lbig" onclick="start(false)">Check my household</button>
-    <p class="sm" style="margin-top:10px;opacity:.85">Free. No sign-up until you've seen your plan.</p>
+    <h2 class="lh2 inv">Get your family in fettle.</h2>
+    <button class="btn full lbig" onclick="callView()">Book your family call</button>
+    <p class="sm" style="margin-top:10px;opacity:.85">Nothing to pay until your call is booked.</p>
     <p class="sm" style="margin-top:14px;opacity:.7"><b>fettle</b> <i>(verb, Lancashire, about 1750)</i>: to make ready, put in order.</p>
   </div></section>
 
-  <div class="stickycta" id="sticky" aria-hidden="true"><button class="btn full lbig" onclick="start(false)" tabindex="-1">Check my household</button></div>
+  <div class="stickycta" id="sticky" aria-hidden="true"><button class="btn full lbig" onclick="callView()" tabindex="-1">Book your family call</button></div>
 </main>
+<main class="pagewrap hide calm" id="v-call"><div id="callbox"></div></main>
 
 <main class="pagewrap hide" id="v-q">
   <div class="prog"><span id="q-sec"></span><span id="q-num"></span></div>
@@ -941,13 +913,58 @@ html[lang^="en"] .notin-en{display:none}
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 <footer id="foot">
   <p id="amzline" hidden>As an Amazon Associate, Fettle earns from qualifying purchases.</p>
-  <p class="tools-row"><a href="calc">Work out your numbers</a> · <a href="local">Your local information</a> · <a href="remind">Seasonal reminders</a> · <a href="flood">Does your area flood?</a> · <a href="guides/">Guides</a></p>
+  <p class="tools-row"><a href="#" onclick="callView();return false">Book a family call</a> · <a href="#" onclick="start(false);return false">Free online check</a> · <a href="coordinator">Coordinators</a> · <a href="calc">Work out your numbers</a> · <a href="local">Your local information</a> · <a href="remind">Seasonal reminders</a> · <a href="flood">Does your area flood?</a> · <a href="guides/">Guides</a></p>
   <p>Fettle gives general guidance based on official UK sources. It isn't medical advice and doesn't replace official warnings. In an emergency, follow official alerts and call 999 if life is at risk. <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></p>
   <p>Sources: <a href="https://www.gov.uk/government/news/households-encouraged-to-take-small-simple-steps-to-stay-prepared-in-an-emergency" target="_blank" rel="noopener">Be Ready</a>, <a href="https://www.gov.uk/government/publications/food-safety-in-a-power-cut-advice-for-consumers/food-safety-in-a-power-cut-advice-for-consumers" target="_blank" rel="noopener">Food Standards Agency</a>, <a href="https://www.gov.uk/government/publications/public-health-advice-from-uk-cmos-during-a-national-power-outage/food-and-nutrition-scripts-for-broadcast-media" target="_blank" rel="noopener">Chief Medical Officers</a>, <a href="https://www.nct.org.uk/parenting/how-do-i-make-bottle-formula-milk-safely" target="_blank" rel="noopener">NCT</a>, <a href="https://www.healthiertogether.nhs.uk/child-under-12-years/what-to-keep-in-your-medicine-cabinet" target="_blank" rel="noopener">NHS</a>, <a href="https://www.gosh.nhs.uk/documents/5754/medicines_cabinet_families.pdf" target="_blank" rel="noopener">GOSH</a>, <a href="https://www.ofgem.gov.uk/your-energy-supply/how-manage-your-energy-supply/join-your-suppliers-priority-services-register" target="_blank" rel="noopener">Ofgem</a>, <a href="https://www.enwl.co.uk/globalassets/customer/documents/psr/psr-info-booklet_web.pdf" target="_blank" rel="noopener">Electricity North West</a>, <a href="https://corporate.unitedutilities.com/globalassets/documents/pdf/10271-7021-priority-services-booklet-2025.pdf" target="_blank" rel="noopener">United Utilities</a>, <a href="https://www.redcross.org.uk/first-aid/learn-first-aid" target="_blank" rel="noopener">British Red Cross</a>.</p>
 </footer>
 
 <script src="config.js"></script>
 <script>
+/* ================= FAMILY CALL BOOKING ================= */
+const CALLTIMES=["Weekday daytime","Weekday evening","Weekend"];
+function callView(){go("call");callDraw();}
+function callDraw(done){
+  const el=document.getElementById("callbox"); if(!el) return;
+  if(done){el.innerHTML=`<div class="callok"><h1 class="lh2">Thanks, ${esc(done.booker_name.split(/\s+/)[0])}. We've got your request.</h1>
+    <p>Your coordinator will email <b>${esc(done.booker_email)}</b> within one working day to agree a time for the call.</p>
+    <h3>Before the call</h3><ul><li>Check ${done.for_name?esc(done.for_name)+" is":"they're"} happy to join. They decide what goes in the plan.</li><li>Have the repeat prescription slip and an energy bill to hand.</li><li>Ask anyone who might help to join too, even for ten minutes.</li></ul>
+    <p class="sm mute">Nothing to pay yet. If life is at risk, always call 999.</p><button class="btn quiet" onclick="go('landing')">Back to the home page</button></div>`;return;}
+  const r=(v,t,n)=>`<label><input type="radio" name="${n}" value="${v}">${t}</label>`;
+  el.innerHTML=`<form class="callform" id="callform" novalidate><h1 class="lh2">Book your family call</h1>
+  <p class="mute">About 5 minutes. Your coordinator will be in touch within one working day to agree a time. Nothing to pay now.</p>
+  <fieldset><legend>About you</legend><div class="two"><label class="fl"><span>Your name</span><input type="text" name="booker_name" autocomplete="name" maxlength="80" required></label>
+  <label class="fl"><span>Email</span><input type="email" name="booker_email" autocomplete="email" maxlength="120" required></label>
+  <label class="fl"><span>Phone (optional)</span><input type="tel" name="booker_phone" autocomplete="tel" maxlength="30"></label>
+  <label class="fl"><span>Who are they to you?</span><select name="relation"><option value="">Choose</option><option>Son</option><option>Daughter</option><option>Grandchild</option><option>Partner</option><option>Friend or neighbour</option><option>It's for me</option><option>Other</option></select></label></div></fieldset>
+  <fieldset><legend>Who it's for</legend><div class="two"><label class="fl"><span>Their first name</span><input type="text" name="for_name" maxlength="60"></label>
+  <label class="fl"><span>Their age</span><select name="for_age"><option value="">Choose</option><option>Under 65</option><option>65 to 74</option><option>75 to 84</option><option>85 or over</option></select></label>
+  <label class="fl"><span>First half of their postcode</span><input type="text" name="for_district" maxlength="4" placeholder="For example OL11" autocapitalize="characters"></label></div>
+  <p class="sm" style="margin:0 0 6px"><b>Do they live alone?</b></p><div class="opts">${r("true","Yes","lives_alone")}${r("false","No","lives_alone")}</div>
+  <p class="sm" style="margin:0 0 6px"><b>Do carers visit?</b></p><div class="opts">${r("true","Yes","carers")}${r("false","No","carers")}${r("","Not sure","carers")}</div></fieldset>
+  <fieldset><legend>The call</legend><label class="fl"><span>Who else might join?</span><input type="text" name="joining" maxlength="300" placeholder="For example: me, my sister (Leeds), Mum"></label>
+  <p class="sm" style="margin:0 0 6px"><b>Best times</b></p><div class="opts">${CALLTIMES.map(t=>`<label><input type="checkbox" name="times" value="${t}">${t}</label>`).join("")}</div>
+  <label class="fl"><span>Anything we should know? (optional)</span><textarea name="notes" maxlength="1000" placeholder="For example: Dad is hard of hearing, so a phone call is easier than video"></textarea></label></fieldset>
+  <label class="fl" style="display:flex;gap:10px;align-items:flex-start"><input type="checkbox" name="told" style="margin-top:5px;width:20px;height:20px;flex:0 0 auto"><span style="font-weight:400">They know about this call and are happy for us to talk to them.</span></label>
+  <p class="sm mute">We use these details only to arrange and run your call. <a href="privacy.html#calls">Privacy</a></p>
+  <p class="err" id="callerr" role="alert"></p>
+  <button class="btn full lbig" id="callgo">Book my call</button></form>`;
+  document.getElementById("callform").addEventListener("submit",callSubmit);
+}
+async function callSubmit(e){
+  e.preventDefault(); const f=e.target, v=n=>(f.elements[n]&&f.elements[n].value||"").trim(), err=document.getElementById("callerr");
+  const rad=n=>{const x=f.querySelector(`input[name="${n}"]:checked`);return !x||x.value===""?null:x.value==="true";};
+  const p={booker_name:v("booker_name"),booker_email:v("booker_email"),booker_phone:v("booker_phone"),relation:v("relation"),for_name:v("for_name"),for_age:v("for_age"),
+    for_district:v("for_district").toUpperCase().replace(/[^A-Z0-9]/g,""),lives_alone:rad("lives_alone"),carers:rad("carers"),joining:v("joining"),
+    times:[...f.querySelectorAll('input[name="times"]:checked')].map(x=>x.value),notes:v("notes"),source:(new URLSearchParams(location.search).get("via")||"").slice(0,60)};
+  if(!p.booker_name){err.textContent="Please tell us your name.";return;}
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(p.booker_email)){err.textContent="Please check your email address.";return;}
+  if(!f.elements.told.checked){err.textContent="Please check they know about the call first. It's their plan.";return;}
+  const b=document.getElementById("callgo"); b.disabled=true; b.textContent="Sending…"; err.textContent="";
+  try{ if(LIVE&&typeof window.callBookSend==="function") await window.callBookSend(p);
+    else { try{const l=JSON.parse(localStorage.getItem("fettle-call-requests")||"[]");l.push(Object.assign({at:new Date().toISOString()},p));localStorage.setItem("fettle-call-requests",JSON.stringify(l));}catch(x){} }
+    callDraw(p); scrollTo(0,0);
+  }catch(x){ err.textContent=x.message||"That didn't send. Please try again."; b.disabled=false; b.textContent="Book my call"; }
+}
 /* ================= STICKY CTA ================= */
 (()=>{const st=document.getElementById("sticky"),hero=document.getElementById("hero-cta"),fin=document.querySelector(".lsec.final");
  if(!st||!hero||!("IntersectionObserver" in window)) return; let heroVis=true,finVis=false;
@@ -3552,7 +3569,7 @@ function tick(id,on){const h=H[view];h.bought[id]=on;h.done=h.done||{};
   if(!document.getElementById("v-r").classList.contains("hide")) render(true);}
 function extra(){cur=H[view];tier="extra";qi=0;go("q");drawQ();}
 function redo(){cur=H[view];H.splice(view,1);tier="core";qi=0;go("q");drawQ();}
-function go(v){["landing","q","r","book","auth","home","gift","tool","connect","comm","shop","plus"].forEach(x=>document.getElementById("v-"+x).classList.toggle("hide",x!==v)); window._stickyUpd&&window._stickyUpd(); keepSave();
+function go(v){document.body.classList.toggle("onland",v==="landing"||v==="call");["landing","call","q","r","book","auth","home","gift","tool","connect","comm","shop","plus"].forEach(x=>document.getElementById("v-"+x).classList.toggle("hide",x!==v)); window._stickyUpd&&window._stickyUpd(); keepSave();
   document.querySelector("header.top").classList.toggle("hide",v==="book"); document.getElementById("foot").classList.toggle("hide",v==="book"); scrollTo(0,0);}
 
 /* Touch points: who brought the household to Fettle. A partner shares getfettle.co.uk/?via=hv (and so on). */
@@ -4347,7 +4364,7 @@ const SAMPLE_REQ=[{id:"r1",need:"costs",note:"We can't afford the water and a ra
   {id:"r3",need:"costs",note:"",named:"Ali",contact:"ali@example.com",status:"done",at:new Date(Date.now()-9*864e5).toISOString()}];
 const SAMPLE_PEOPLE=[{named:"Pat",contact:"07700 900333",missing:["water","radio","grab"],risk:{o70:true,alone:true}},{named:"Ali",contact:"ali@example.com",missing:["firstaid"],risk:{u5:true}},{named:"Margaret",contact:"01524 000111",missing:["psr","buddy","radio"],risk:{o70:true,alone:true}}];
 let COMMJOIN=null; const COMMINFO={}, PREVIEW_COMMS={"st-marys-caton":SAMPLE_COMM};
-const RESERVED=new Set(["flood","calc","local","remind","admin","privacy","terms","guides","tr","c","api","join","connect","book","fettle","index.html"]);
+const RESERVED=new Set(["flood","calc","local","remind","admin","privacy","terms","guides","tr","c","api","join","connect","book","fettle","index.html","coordinator","plan","call-kit.js","plan-view.js","call-demo.js"]);
 async function commLoad(slug){
   if(!slug) return null; if(COMMINFO[slug]) return COMMINFO[slug];
   const c=typeof window.commPublic==="function"?await window.commPublic(slug):PREVIEW_COMMS[slug]||null;

@@ -19,7 +19,7 @@ let fails = 0; const ok = (c, m) => { if (!c) fails++; console.log((c ? 'PASS ' 
     await P.route('**fonts.googleapis.com**', r => r.fulfill({ contentType: 'text/css', body: '' })); await P.route('**/api.postcodes.io/**', r => r.fulfill({ status: 404, body: '' }));
     await P.goto('file://' + path.join(site, 'index.html') + '?c=st-marys-caton'); await P.waitForTimeout(500);
     ok(/St Mary's Church, Caton/.test(await P.textContent('#commjoin')) && /choose whether/.test(await P.textContent('#commjoin')), 'a community link shows who invited you, and that sharing is your choice');
-    ok(/Get your community ready together/.test(await P.textContent('#groups')) && /Fettle for support services/.test(await P.textContent('#orgs')), 'landing: community groups, and the professional offer renamed');
+    ok(await P.isVisible('#hero-cta') && /Book your family call/.test(await P.textContent('#hero-cta')), 'landing: one call to action, the family call');
     await P.evaluate(() => { start(false); Object.assign(cur, { pc: 'LA1', area: 'Lancaster', home: 'house', outdoor: 'garden', tenure: 'own', adults: 2, heat: 'gas', hob: 'gas', water: 'few', food: 'some', kit: [], budget: 20 }); qi = list().length - 1; drawQ(); next(); });
     await P.waitForTimeout(150);
     ok(await P.isVisible('#commcard') && await P.isChecked('#cm-anon') && !(await P.isChecked('#cm-named')) && !(await P.isVisible('#cm-name')), 'after the check: anonymous totals ticked, name not asked unless they choose');
@@ -42,7 +42,7 @@ let fails = 0; const ok = (c, m) => { if (!c) fails++; console.log((c ? 'PASS ' 
     await ctx.route('**/config.js', r => r.fulfill({ contentType: 'text/javascript', body: 'window.FETTLE_CONFIG={supabaseUrl:"https://fake.supabase.co",supabaseAnonKey:"anon",freeBook:true};' }));
     const open = async u => { const p = await ctx.newPage(); p.on('pageerror', e => errs.push(e.message)); await p.goto(u); await p.waitForFunction(() => window.__liveReady); await p.waitForTimeout(400); return p; };
     const O = await open(URL0);
-    await O.click('#groups >> text=Start a community'); await O.waitForTimeout(200);
+    await O.evaluate(() => commStart()); await O.waitForTimeout(200);
     ok(await O.isVisible('#a-name'), 'starting a community asks for an account first');
     await O.fill('#a-name', 'Jo'); await O.fill('#a-email', 'jo@example.com'); await O.fill('#a-pw', 'password123'); await O.click('#v-auth button[type=submit]');
     await O.waitForSelector('#cs-name', { timeout: 15000 });
