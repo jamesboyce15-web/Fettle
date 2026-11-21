@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Patch visit</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@500;700&display=swap">
+<link rel="stylesheet" href="patch.css">
+<style>
+.wrap{max-width:640px;padding-bottom:110px}
+.card h2{display:flex;align-items:baseline;gap:10px}.card h2 .n{font-size:.8rem;color:var(--mute);font-family:Inter,system-ui,sans-serif;font-weight:600}
+.q{padding:12px 0;border-top:1px solid var(--line)}.q:first-of-type{border-top:0}
+.q .lab{display:flex;justify-content:space-between;gap:8px;align-items:baseline;margin:0 0 8px}.q .lab b{font-weight:600}
+.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.scale.na{grid-template-columns:repeat(5,1fr) 1.2fr}
+.scale button,.yn button,.tags button{border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;min-height:46px;font-weight:700;font-size:1rem;cursor:pointer}
+.scale button[aria-pressed=true],.yn button[aria-pressed=true],.tags button[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.ends{display:flex;justify-content:space-between;font-size:.75rem;color:var(--mute);margin-top:4px;gap:10px}.ends span:last-child{text-align:right}
+.mins{display:flex;align-items:center;gap:8px}.mins button{width:46px;height:46px;border-radius:10px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);font-size:1.3rem;font-weight:700;cursor:pointer}
+.mins input{width:84px;height:46px;text-align:center;font-size:1.15rem;font-weight:700;border:1.5px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)}
+.facts{display:grid;grid-template-columns:1fr auto;gap:8px 12px;align-items:center}
+.yn{display:inline-grid;grid-template-columns:64px 64px;gap:6px}.yn button{min-height:40px;font-size:.9rem}
+.pick{list-style:none;margin:6px 0 0;padding:0;border:1px solid var(--line);border-radius:12px;max-height:260px;overflow:auto}
+.pick li button{display:block;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:10px 12px;cursor:pointer;color:var(--ink)}.pick li:last-child button{border-bottom:0}
+.pick li button:hover{background:var(--tint)}
+.venue{background:var(--tint);border-radius:12px;padding:12px 14px;display:flex;gap:10px;align-items:flex-start}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+.drop{display:block;border:2px dashed var(--line);border-radius:14px;padding:18px;text-align:center;cursor:pointer;color:var(--mute)}.drop b{color:var(--accent2)}
+.drop input{position:absolute;width:1px;height:1px;opacity:0}
+.photos{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-top:12px}
+.ph{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card)}.ph img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
+.ph .tg{padding:6px}.ph select{width:100%;border:1px solid var(--line);border-radius:8px;padding:5px;background:var(--card);color:var(--ink);font-size:.82rem}
+.ph .rm{display:block;width:100%;border:0;border-top:1px solid var(--line);background:none;color:var(--bad);padding:6px;font-size:.82rem;cursor:pointer}
+.prices{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+.dock{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));z-index:20}
+.dock .in{max-width:640px;margin:0 auto;display:flex;align-items:center;gap:12px}
+.dock .sc{font-family:var(--serif);font-size:1.6rem;font-weight:700;line-height:1}.dock .sc small{font-size:.8rem;color:var(--mute);font-family:Inter,system-ui,sans-serif}
+.dock .rk{font-size:.85rem;color:var(--mute);line-height:1.3}
+.dim{display:grid;grid-template-columns:minmax(0,1fr) 120px 44px;gap:10px;align-items:center;padding:5px 0;font-size:.9rem}
+.meter{position:relative;height:8px;background:var(--line);border-radius:6px}.meter i{position:absolute;left:0;top:0;bottom:0;border-radius:6px;background:var(--accent)}.meter u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.done{text-align:center}.done .big{font-family:var(--serif);font-size:3rem;font-weight:700;margin:6px 0}
+@media(max-width:420px){.two,.prices{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top"><a class="brand" href="admin.html">Patch<i>.</i></a><span class="sp"></span><span class="sm mute">Café visit</span></header>
+  <div id="demo"></div>
+  <main id="app"><p class="mute">Loading…</p></main>
+</div>
+<div class="dock" id="dock" hidden></div>
+<div class="toast" id="toast" role="status"></div>
+<script src="config.js"></script>
+<script src="patch-core.js"></script>
+<script src="patch-ops.js"></script>
+<script src="patch-insights.js"></script>
+<script src="patch-data.js"></script>
+<script>
+"use strict";
+const P = PatchCore, I = PatchInsights, D = PatchData, $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+const TAGS = ["Counter and cakes", "Menu board", "Your drink", "Food", "Seating", "Outside", "Toilets", "Other"];
+const DRAFT = "patch-visit-draft-v1";
+const now = new Date(), pad = n => String(n).padStart(2, "0");
+let DB = null, ME = null, AREA = null, VENUES = [], OBS = [];
+const blank = () => ({ venue: null, at: `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`, time: `${pad(now.getHours())}:${pad(now.getMinutes())}`,
+  scores: {}, prices: {}, notes: "", google: {}, photos: [], q: "" });
+let F = blank();
+function toast(t) { const el = $("#toast"); el.textContent = t; el.classList.add("on"); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove("on"), 2600); }
+// Keep the answers (not the photos) in this browser in case the page is closed mid-visit.
+function keep() { try { localStorage.setItem(DRAFT, JSON.stringify(Object.assign({}, F, { photos: [] }))); } catch (e) {} }
+function restore() { try { const d = JSON.parse(localStorage.getItem(DRAFT) || "null"); if (d && d.venue) F = Object.assign(blank(), d, { photos: [] }); } catch (e) {} }
+const venue = () => VENUES.find(v => v.id === F.venue);
+
+/* ---------- the form ---------- */
+function render() {
+  const v = venue();
+  let h = `<h1 style="font-size:2rem">Record a visit</h1><p class="sm mute" style="margin-top:-6px">Order a drink like any customer. Fill this in afterwards, outside or in the car, not at the table.</p>`;
+  h += `<section class="card"><h2>The café <span class="n">1 of 6</span></h2>${v ? `<div class="venue"><span style="flex:1"><b>${esc(v.name)}</b><br><span class="sm mute">${esc(v.address || "")} ${esc(v.postcode || "")}${v.hygiene ? ` · hygiene ${esc(v.hygiene)}` : ""}</span></span><button class="btn q sm" data-act="change">Change</button></div>`
+    : `<label class="f"><span>Which café?</span><input id="q" value="${esc(F.q)}" placeholder="Start typing a name or postcode" autocomplete="off"></label><ul class="pick" id="pick">${pickList()}</ul>`}
+    <div class="two" style="margin-top:12px"><label class="f"><span>Date</span><input type="date" data-f="at" value="${esc(F.at)}"></label><label class="f"><span>Time you arrived</span><input type="time" data-f="time" value="${esc(F.time)}"></label></div></section>`;
+  if (!v) { $("#app").innerHTML = h; $("#dock").hidden = true; return; }
+  const g = F.google, maps = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(v.name + " " + (v.postcode || ""));
+  h += `<section class="card"><h2>On Google <span class="n">2 of 6</span></h2><p class="sm"><a href="${esc(g.url || maps)}" target="_blank" rel="noopener">${g.url ? "Open their Google profile" : "Find them on Google Maps"}</a>, then copy what it shows.</p>
+    <label class="f"><span>Google Maps link</span><input data-g="url" value="${esc(g.url ?? v.googleUrl ?? "")}" inputmode="url" placeholder="https://maps.app.goo.gl/…"></label>
+    <div class="two"><label class="f"><span>Star rating</span><input data-g="rating" value="${esc(g.rating ?? v.googleRating ?? "")}" inputmode="decimal" placeholder="4.6"></label><label class="f"><span>Number of reviews</span><input data-g="reviews" value="${esc(g.reviews ?? v.googleReviews ?? "")}" inputmode="numeric" placeholder="212"></label></div>
+    <label class="f"><span>Address</span><input data-g="address" value="${esc(g.address ?? v.address ?? "")}"></label><p class="err" id="gErr"></p></section>`;
+  h += `<section class="card"><h2>Photos <span class="n">3 of 6</span></h2><p class="sm mute">The counter, the menu board (we'll take prices from it), your drink and the seating. No faces, please.</p>
+    <label class="drop"><input type="file" id="photoIn" accept="image/*" multiple><b>Add photos</b><br><span class="sm">Take one or choose from your phone. Up to 12.</span></label>
+    <div class="photos">${F.photos.map((p, i) => `<div class="ph"><img src="${p.thumb}" alt="${esc(p.tag)}"><div class="tg"><select data-ptag="${i}" aria-label="What this shows">${TAGS.map(t => `<option ${t === p.tag ? "selected" : ""}>${t}</option>`).join("")}</select></div><button class="rm" data-prm="${i}">Remove</button></div>`).join("")}</div></section>`;
+  I.VISIT.forEach((grp, gi) => {
+    if (grp.g === "Facts") return;
+    h += `<section class="card"><h2>${esc(grp.g)}${gi === 0 ? ` <span class="n">4 of 6</span>` : ""}</h2>${grp.items.map(question).join("")}</section>`;
+  });
+  const facts = I.VISIT.find(x => x.g === "Facts").items;
+  h += `<section class="card"><h2>Facts <span class="n">5 of 6</span></h2><p class="sm mute">Shown to owners, not scored.</p><div class="facts">${facts.map(f => `<span>${esc(f.t)}</span>${yn(f.k)}`).join("")}</div></section>`;
+  h += `<section class="card"><h2>Prices and notes <span class="n">6 of 6</span></h2><p class="sm mute">As charged, with VAT. Skip any they don't sell, or leave it to the menu board photo.</p>
+    <div class="prices">${P.ITEMS.map(i => { const o = online(v, i.k); return `<label class="f"><span>${esc(i.t)}${o ? ` <span class="xs mute">· £${o.toFixed(2)} online</span>` : ""}</span><input inputmode="decimal" data-price="${i.k}" value="${esc(F.prices[i.k] ?? "")}" placeholder="£"></label>`; }).join("")}</div>
+    ${P.ITEMS.some(i => online(v, i.k)) ? `<p class="xs mute" style="margin-top:-4px">“Online” is their delivery-app price, which is often higher than the counter. Put what the counter charges.</p>` : ""}
+    <label class="f"><span>Anything else worth knowing</span><textarea data-f="notes" maxlength="1000" placeholder="New menu, building work, very busy with a school group…">${esc(F.notes)}</textarea></label></section>`;
+  h += `<section class="card" id="where"></section><p class="err" id="saveErr"></p><button class="btn big" style="width:100%" data-act="save">Save the visit</button>`;
+  $("#app").innerHTML = h; place();
+}
+// The latest delivery-app price for an item: a guide for the visitor, never a benchmark.
+function online(v, k) { const o = OBS.filter(x => x.venueId === v.id && x.source === "delivery" && x.prices && x.prices[k] != null).sort((a, b) => String(b.at).localeCompare(String(a.at)))[0]; return o ? +o.prices[k] : null; }
+function question(f) {
+  const val = F.scores[f.k];
+  if (f.type === "scale") return `<div class="q"><div class="lab"><b>${esc(f.t)}</b></div><div class="scale ${f.na ? "na" : ""}">${[1, 2, 3, 4, 5].map(n => `<button type="button" data-s="${f.k}" data-v="${n}" aria-pressed="${val === n}">${n}</button>`).join("")}${f.na ? `<button type="button" data-s="${f.k}" data-v="na" aria-pressed="${val === "na"}" style="font-size:.85rem">Didn't use</button>` : ""}</div><div class="ends"><span>1 ${esc(f.lo)}</span><span>5 ${esc(f.hi)}</span></div></div>`;
+  if (f.type === "minutes" || f.type === "count") return `<div class="q"><div class="lab"><b>${esc(f.t)}</b>${f.help ? `<span class="xs mute">${esc(f.help)}</span>` : ""}</div><div class="mins"><button type="button" data-step="${f.k}" data-d="-1" aria-label="Less">−</button><input data-n="${f.k}" inputmode="numeric" value="${esc(val ?? "")}" aria-label="${esc(f.t)}"><button type="button" data-step="${f.k}" data-d="1" aria-label="More">+</button><span class="sm mute">${f.type === "minutes" ? "minutes" : "people"}</span></div></div>`;
+  return `<div class="q facts"><b style="font-weight:600">${esc(f.t)}</b>${yn(f.k)}</div>`;
+}
+const yn = k => `<span class="yn"><button type="button" data-s="${k}" data-v="true" aria-pressed="${F.scores[k] === true}">Yes</button><button type="button" data-s="${k}" data-v="false" aria-pressed="${F.scores[k] === false}">No</button></span>`;
+function pickList() {
+  const q = F.q.trim().toLowerCase(), list = VENUES.filter(v => v.included && (!q || (v.name + " " + (v.postcode || "") + " " + (v.address || "")).toLowerCase().includes(q))).sort((a, b) => a.name.localeCompare(b.name)).slice(0, 40);
+  const visited = new Set(OBS.filter(o => o.source === "visit").map(o => o.venueId));
+  return list.length ? list.map(v => `<li><button data-pick="${v.id}"><b>${esc(v.name)}</b> <span class="sm mute">${esc(v.postcode || "")}${visited.has(v.id) ? " · visited before" : ""}</span></button></li>`).join("") : `<li class="sm mute" style="padding:10px 12px">No café by that name. Add it under Cafés in admin first.</li>`;
+}
+
+/* ---------- where this visit ranks, as you go ---------- */
+function place() {
+  const v = venue(); if (!v) return;
+  const r = I.visitPlace(F.scores, v, VENUES.filter(x => x.included), OBS, 10), dock = $("#dock"), box = $("#where");
+  dock.hidden = false;
+  if (!r) { dock.innerHTML = `<div class="in"><span class="sc">–<small>/100</small></span><span class="rk">Answer a few more to see a score and where this visit ranks.</span></div>`; if (box) box.innerHTML = `<h2>How this visit ranks</h2><p class="sm mute">Answer at least four scored questions.</p>`; return; }
+  dock.innerHTML = `<div class="in"><span class="sc">${r.score}<small>/100</small></span><span class="rk">${r.of > 1 ? `<b>${I.ord(r.rank)} of ${r.of}</b> against the latest visits to the cafés nearest it` : "The first visit nearby: nothing to rank against yet"}</span></div>`;
+  if (box) box.innerHTML = `<h2>How this visit ranks</h2><p class="sm">${r.of > 1 ? `Score ${r.score} puts it <b>${I.ord(r.rank)} of ${r.of}</b> among the cafés nearest it that we've visited. The middle score nearby is ${Math.round(r.middle)}.` : `Score ${r.score}. It's the first visit near here, so there's nothing to rank against yet.`}</p>
+    <p class="xs mute" style="margin:10px 0 4px">Each answer against the middle of nearby visits (the line)</p>${r.dims.map(d => { const f = I.VFIELDS.find(x => x.k === d.k), pct = x => f.type === "minutes" ? Math.max(0, 1 - x / f.cap) * 100 : ((x - 1) / 4) * 100;
+      return `<div class="dim"><span>${esc(d.t)}</span><span class="meter"><i style="width:${pct(d.mine)}%"></i>${d.middle != null ? `<u style="left:${pct(d.middle)}%"></u>` : ""}</span><span class="sm" style="text-align:right">${d.mine}${f.type === "minutes" ? "m" : ""}</span></div>`; }).join("")}
+    <p class="xs mute" style="margin-top:8px">Scored answers count by weight: coffee most, then time to order, friendliness and cleanliness. Facts aren't scored. Owners see their own rank, never another café's scores.</p>`;
+}
+
+/* ---------- photos: shrunk on the phone before they're sent ---------- */
+function shrink(file, max, q) {
+  return new Promise((ok, bad) => { const url = URL.createObjectURL(file), img = new Image();
+    img.onload = () => { const k = Math.min(1, max / Math.max(img.width, img.height)), c = document.createElement("canvas"); c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+      c.getContext("2d").drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(url); c.toBlob(b => (b ? ok(b) : bad(new Error("Couldn't read that photo"))), "image/jpeg", q); };
+    img.onerror = () => { URL.revokeObjectURL(url); bad(new Error("That file isn't a photo we can read")); }; img.src = url; });
+}
+const toData = b => new Promise(ok => { const r = new FileReader(); r.onload = () => ok(r.result); r.readAsDataURL(b); });
+async function addPhotos(files) {
+  for (const f of [...files]) {
+    if (F.photos.length >= 12) { toast("That's 12: enough for one visit"); break; }
+    try { const full = await shrink(f, DB.demo ? 640 : 1600, DB.demo ? 0.6 : 0.82), thumb = await toData(await shrink(f, 360, 0.6));
+      const n = F.photos.length, tag = n === 0 ? "Counter and cakes" : n === 1 ? "Menu board" : n === 2 ? "Your drink" : "Seating";
+      F.photos.push({ blob: full, thumb, tag }); } catch (e) { toast(e.message); }
+  }
+  render();
+}
+
+/* ---------- saving ---------- */
+const numOr = (v, lo, hi) => { if (v === "" || v == null) return null; const x = parseFloat(String(v).replace(/[£,\s]/g, "")); return isNaN(x) || x < lo || x > hi ? NaN : x; };
+async function save(btn) {
+  const v = venue(), err = $("#saveErr"); err.textContent = "";
+  const score = I.visitScore(F.scores); if (!score) { err.textContent = "Answer at least four of the scored questions first."; return; }
+  const g = F.google, rating = numOr(g.rating ?? v.googleRating, 1, 5), reviews = numOr(g.reviews ?? v.googleReviews, 0, 1e6);
+  if (Number.isNaN(rating)) { err.textContent = "The Google rating should be between 1 and 5."; return; }
+  if (Number.isNaN(reviews)) { err.textContent = "The number of Google reviews should be a number."; return; }
+  const url = String(g.url ?? v.googleUrl ?? "").trim(); if (url && !/^https:\/\/(www\.)?(google\.[a-z.]+\/maps|maps\.google\.[a-z.]+|maps\.app\.goo\.gl|goo\.gl\/maps|g\.page)\b/i.test(url)) { err.textContent = "That doesn't look like a Google Maps link."; return; }
+  const prices = {}; for (const i of P.ITEMS) { const x = numOr(F.prices[i.k], 0.2, 40); if (Number.isNaN(x)) { err.textContent = `${i.t}: that price doesn't look right.`; return; } if (x != null) prices[i.k] = x; }
+  btn.disabled = true; btn.textContent = F.photos.length ? "Sending photos…" : "Saving…";
+  try {
+    const photos = [];
+    for (const [i, p] of F.photos.entries()) { const path = `${v.id}/${F.at}/${Date.now()}-${i}.jpg`; photos.push(Object.assign({ tag: p.tag }, await DB.uploadPhoto(path, p.blob))); btn.textContent = `Sending photos (${i + 1} of ${F.photos.length})…`; }
+    const scores = Object.assign({}, F.scores, { time: F.time });
+    const o = await DB.addObservation({ venue_id: v.id, at: F.at, source: "visit", prices, scores, notes: F.notes.trim() || null, by_name: (ME && ME.name) || null, photos });
+    OBS.push(o);
+    const vp = {}; if (rating != null) vp.google_rating = Math.round(rating * 10) / 10; if (reviews != null) vp.google_reviews = Math.round(reviews); if (url) vp.google_url = url;
+    const addr = String(g.address ?? "").trim(); if (addr && addr !== v.address) vp.address = addr.slice(0, 200);
+    if (Object.keys(vp).length) Object.assign(v, await DB.updVenue(v.id, vp));
+    const r = I.visitPlace(F.scores, v, VENUES.filter(x => x.included), OBS.filter(x => x !== o), 10);
+    try { localStorage.removeItem(DRAFT); } catch (e) {}
+    $("#dock").hidden = true;
+    $("#app").innerHTML = `<section class="card done"><p class="sm mute">Saved: ${esc(v.name)}, ${new Date(F.at + "T12:00:00Z").toLocaleDateString("en-GB", { day: "numeric", month: "long" })}</p><p class="big">${r.score}<span style="font-size:1.1rem;color:var(--mute)">/100</span></p>
+      <p>${r.of > 1 ? `${I.ord(r.rank)} of ${r.of} nearby on their latest visits.` : "The first visit near here."} ${photos.length} photo${photos.length === 1 ? "" : "s"}, ${Object.keys(prices).length} price${Object.keys(prices).length === 1 ? "" : "s"}.</p>
+      <p style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="btn" data-act="another">Record another visit</button><a class="btn q" href="admin.html${D.DEMO ? "?demo=1" : ""}">Back to admin</a></p></section>`;
+    F = blank(); scrollTo(0, 0);
+  } catch (e) { err.textContent = "Not saved: " + e.message + ". Your answers are still here: try again."; btn.disabled = false; btn.textContent = "Save the visit"; }
+}
+
+/* ---------- events ---------- */
+document.addEventListener("click", e => {
+  const t = e.target.closest("button"); if (!t) return; const d = t.dataset;
+  if (d.pick) { F.venue = d.pick; const v = venue(); F.google = {}; keep(); render(); scrollTo(0, 0); return; }
+  if (d.act === "change") { F.venue = null; keep(); return render(); }
+  if (d.act === "another") { render(); return; }
+  if (d.act === "save") return save(t);
+  if (d.s) { const v = d.v === "true" ? true : d.v === "false" ? false : d.v === "na" ? "na" : +d.v; if (F.scores[d.s] === v) delete F.scores[d.s]; else F.scores[d.s] = v;
+    t.parentElement.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(F.scores[d.s] !== undefined && String(F.scores[d.s]) === b.dataset.v))); keep(); place(); return; }
+  if (d.step) { const cur = +F.scores[d.step] || 0, nx = Math.max(0, cur + +d.d); F.scores[d.step] = nx; $(`[data-n="${d.step}"]`).value = nx; keep(); place(); return; }
+  if (d.prm != null) { F.photos.splice(+d.prm, 1); return render(); }
+});
+document.addEventListener("input", e => {
+  const t = e.target, d = t.dataset;
+  if (t.id === "q") { F.q = t.value; $("#pick").innerHTML = pickList(); return; }
+  if (d.f) { F[d.f] = t.value; keep(); return; }
+  if (d.g) { F.google[d.g] = t.value; keep(); return; }
+  if (d.price) { F.prices[d.price] = t.value; keep(); return; }
+  if (d.n) { const x = parseInt(t.value, 10); if (isNaN(x)) delete F.scores[d.n]; else F.scores[d.n] = Math.max(0, Math.min(120, x)); keep(); place(); return; }
+});
+document.addEventListener("change", e => {
+  const t = e.target;
+  if (t.id === "photoIn") { addPhotos(t.files); t.value = ""; return; }
+  if (t.dataset.ptag != null) { F.photos[+t.dataset.ptag].tag = t.value; }
+});
+
+function signin(msg) {
+  $("#app").innerHTML = `<section class="card" style="max-width:380px;margin:8vh auto"><h1 style="font-size:1.8rem">Sign in to record a visit</h1>${msg ? `<p class="err">${esc(msg)}</p>` : ""}<form id="si"><label class="f"><span>Email</span><input type="email" id="si-e" autocomplete="username" required></label><label class="f"><span>Password</span><input type="password" id="si-p" autocomplete="current-password" required></label><button class="btn" style="width:100%">Sign in</button></form><p class="xs mute" style="margin-top:12px"><a href="?demo=1">Try the demo</a></p></section>`;
+  $("#si").addEventListener("submit", async ev => { ev.preventDefault(); try { await DB.signIn($("#si-e").value.trim(), $("#si-p").value); boot(); } catch (x) { signin(x.message); } });
+}
+async function boot() {
+  try { DB = DB || await D.admin(); ME = await DB.me(); if (!ME) return signin(); if (ME.notAdmin) return signin("That account can't record visits.");
+    const areas = await DB.areas(), want = new URLSearchParams(location.search).get("area");
+    AREA = areas.find(a => a.slug === want) || areas.find(a => a.slug === (D.CFG.defaultArea || "")) || areas[0];
+    [VENUES, OBS] = await Promise.all([DB.venues(AREA.id), DB.observations(AREA.id)]);
+    if (D.DEMO) $("#demo").innerHTML = `<p class="demo"><b>Demo.</b> Made-up cafés in ${esc(AREA.name)}. What you save stays in this browser.</p>`;
+    restore(); const pre = new URLSearchParams(location.search).get("v"); if (pre && VENUES.some(v => v.id === pre)) F.venue = pre;
+    render();
+  } catch (e) { $("#app").innerHTML = `<p class="err">Couldn't load: ${esc(e.message)}</p>`; }
+}
+boot();
+</script>
+</body>
+</html>

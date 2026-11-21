@@ -1,0 +1,81 @@
+// The owner's home in the demo: the briefing, the week ahead, money, reviews, posts, reminders and adding sales.
+const { chromium } = require('playwright');
+const http = require('http'), fs = require('fs'), path = require('path'), os = require('os');
+const PUB = path.resolve(__dirname, '../../public'), PORT = 8782, U = `http://localhost:${PORT}/`;
+const TYPES = { js: 'text/javascript', css: 'text/css', json: 'application/json' };
+const srv = http.createServer((q, s) => { let f = path.join(PUB, decodeURIComponent(q.url.split('?')[0])); if (f.endsWith('/')) f += 'index.html'; if (!path.extname(f)) f += '.html';
+  fs.readFile(f, (e, b) => { if (e) { s.writeHead(404); s.end(); return; } s.writeHead(200, { 'Content-Type': TYPES[f.split('.').pop()] || 'text/html' }); s.end(b); }); });
+let pass = 0, fail = 0; const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL ') + m); c ? pass++ : fail++; };
+const SHOTS = process.env.SHOTS;
+(async () => {
+  await new Promise(r => srv.listen(PORT, r)); const b = await chromium.launch(), errs = [];
+  try {
+    const ctx = await b.newContext({ viewport: { width: 390, height: 844 } }); await ctx.route('**fonts.g*/**', r => r.fulfill({ body: '' }));
+    const p = await ctx.newPage(); p.on('pageerror', e => errs.push(e.message));
+    await p.goto(U + 'owner.html?demo=1'); await p.waitForTimeout(500);
+    const home = await p.textContent('#app');
+    ok(/a year in the actions waiting for you/.test(home) && /made so far/.test(home), 'home: what is waiting, and what has been made');
+    ok((await p.$$('#app .act')).length === 3, 'home: the next three actions');
+    const vals = await p.$$eval('#app .act .val', x => x.map(y => parseInt(y.textContent.replace(/[^0-9]/g, '')) || 0));
+    ok(vals[0] >= vals[1] && vals[1] >= vals[2], 'most money first: ' + vals.join(', '));
+    if (SHOTS) await p.screenshot({ path: SHOTS + '/owner-home.png', fullPage: true });
+    await p.click('[data-tab=actions]'); await p.waitForTimeout(150);
+    const areas = await p.$$eval('#app .act .area', x => [...new Set(x.map(y => y.textContent))]);
+    ['Suppliers', 'Prices', 'Google', 'AI answers', 'Visit', 'Reviews'].forEach(a => ok(areas.includes(a), 'the golden thread includes ' + a));
+    const priceKey = await p.$eval('#app .act[data-key^="price:"]', x => x.dataset.key);
+    await p.click(`[data-done="${priceKey}"]`); await p.waitForTimeout(150);
+    ok(await p.isVisible('#modal') && (await p.inputValue('#pc-to')) !== '', 'done on a price action asks what it was changed to, filled in');
+    await p.click('#modal [data-act=logchange]'); await p.waitForTimeout(400);
+    ok(await p.evaluate(k => __owner.S.actions[k].status === 'done' && __owner.S.changes.length === 2, priceKey), 'the change is logged and the action marked done');
+    await p.click('[data-filter=done]'); ok((await p.$$('#app .act')).length >= 1, 'it shows under Done');
+    await p.click('[data-tab=insights]'); await p.waitForTimeout(150);
+    ok(/of 11/.test(await p.textContent('#app')) && /\/100/.test(await p.textContent('#app')), 'insights: ranking on visits and the Google score up front');
+    await p.click('[data-sub=ranking]'); ok(/Down from 1st/.test(await p.textContent('#app')) && /Most room to improve:<\/b>|Most room to improve:/.test(await p.textContent('#app')), 'ranking: the trend and the weakest point');
+    await p.click('[data-sub=""]'); await p.click('[data-sub=search]'); ok(/of answers mention you/.test(await p.textContent('#app')) && /Bramble Café/.test(await p.textContent('#app')), 'search and AI: who gets recommended instead');
+    await p.click('[data-sub=""]'); await p.click('[data-sub=suppliers]'); ok(/a year more than cafés like yours pay/.test(await p.textContent('#app')) && /Takeaway cups/.test(await p.textContent('#app')), 'suppliers: what they pay against typical');
+    ok((await p.$$('details.pb')).length >= 18 && /Yorkshire Tea one-cup tea bags/.test(await p.textContent('#app')), 'suppliers: the seeded price list is there before any tea invoice');
+    await p.click('details.pb[data-pb=tea] > summary'); await p.fill('[data-pc="tea.price"]', '95'); await p.click('[data-pcsave=tea]'); await p.waitForTimeout(450);
+    ok(await p.$eval('details.pb[data-pb=tea]', el => el.open) && /% more/.test(await p.textContent('details.pb[data-pb=tea] > summary')), 'a typed-in tea price is compared straight away');
+    await p.click('[data-tab=actions]'); await p.click('[data-filter=todo]'); ok(/Get a better price on tea bags/.test(await p.textContent('#app')), 'and becomes an action');
+    await p.click('[data-tab=insights]'); await p.click('[data-sub=suppliers]');
+    await p.click('[data-sub=""]'); await p.click('[data-sub=reviews]'); await p.click('[data-reply=r1]'); await p.waitForTimeout(100);
+    ok(/^Hi Chris, I'm sorry/.test(await p.inputValue('#replyText')), 'a reply draft');
+    await p.click('[data-tab=plan]'); await p.waitForTimeout(150); ok((await p.$$('.day')).length === 7 && /People on/.test(await p.textContent('#app')), 'plan: the week, people on and prep');
+    // kits: the review QR card, the menu written out, and the insurance renewal
+    await p.click('[data-tab=actions]'); await p.click('[data-filter=todo]'); await p.waitForTimeout(100);
+    ok(await p.$('[data-kit="seo:gbp_reviews"]') !== null && await p.$('[data-kit="rem:r:m1"]') !== null, 'Google and renewal actions offer help, not just advice');
+    await p.click('[data-kit="seo:gbp_reviews"]'); await p.fill('#k-rl', 'https://maps.app.goo.gl/xyz'); await p.click('[data-k=rl-make]');
+    ok(/Ask for reviews/.test(await p.textContent('#k-rlerr')), 'a Maps link is caught and explained');
+    await p.click('[data-k=rl-demo]'); await p.waitForTimeout(200);
+    const card = await p.$eval('.qrcard', i => ({ w: i.naturalWidth, h: i.naturalHeight, src: i.src.slice(0, 22) }));
+    ok(card.w === 1240 && card.h === 1748 && card.src === 'data:image/png;base64,', 'an A6 QR card is made');
+    ok(/g\.page\/r\/CdemoLittleFigEAE\/review/.test(await p.inputValue('#k-ask')), 'and a message for regulars with the link');
+    await p.click('[data-act=closemodal]');
+    await p.click('[data-kit="seo:menu"]'); ok(/Flat white \.\.\. £/.test(await p.inputValue('#k-menu')), 'the menu is written out from their prices'); await p.click('[data-act=closemodal]');
+    await p.click('[data-kit="rem:r:m1"]'); ok(/Get two quotes/.test(await p.textContent('#modal')), 'the insurance kit says what to do before it renews');
+    await p.setInputFiles('#k-docfile', { name: 'renewal.jpg', mimeType: 'image/jpeg', buffer: Buffer.from('/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAP//////////////////////////////////////////////////////////////////////////////////////wAALCAABAAEBAREA/8QAFAABAAAAAAAAAAAAAAAAAAAACf/EABQQAQAAAAAAAAAAAAAAAAAAAAD/2gAIAQEAAD8AKp//2Q==', 'base64') });
+    await p.waitForTimeout(200); await p.click('[data-k=doc-save]'); ok(/Add the date/.test(await p.textContent('#k-docerr')), 'a photo needs the date typed in');
+    await p.fill('#k-due', '2027-12-01'); await p.fill('#k-prem', '1,284.60'); await p.fill('#k-ins', 'Aviva'); await p.click('[data-k=doc-save]'); await p.waitForTimeout(450);
+    ok(await p.$('[data-kit="rem:r:m1"]') === null, 'the renewal action is cleared');
+    await p.click('[data-tab=upload]'); const up = await p.textContent('#app');
+    ok(/Insurance renewal/.test(up) && /1 Dec 2027/.test(up) && /£1,284\.60/.test(up) && /Aviva/.test(up), 'the document is kept with its next date and price');
+    // uploads: an invoice CSV and a till export
+    await p.click('[data-tab=upload]');
+    const inv = path.join(os.tmpdir(), 'patch-invoice.csv'); fs.writeFileSync(inv, 'Date,Description,Qty,Unit Price,Line Total\n10/11/2026,Whole Milk 4pt,12,3.10,37.20\n10/11/2026,Oatly Barista 6 x 1L,1,11.40,11.40\n');
+    await p.setInputFiles('[data-file=invoices]', inv); await p.waitForTimeout(400);
+    ok(/2 lines read \(milk, oat milk\)/.test(await p.textContent('#msg-invoices')), 'a supplier invoice is read: ' + await p.textContent('#msg-invoices'));
+    await p.setInputFiles('[data-file=invoices]', { name: 'photo.jpg', mimeType: 'image/jpeg', buffer: Buffer.from([255, 216, 255]) }); await p.waitForTimeout(300);
+    ok(/Being read/.test(await p.textContent('#app')), 'a photo of an invoice waits to be read');
+    const lines = ['Date,Time,Item,Qty,Gross Sales']; const d0 = new Date(); for (let k = 1; k <= 3; k++) { const ds = new Date(d0 - k * 864e5).toISOString().slice(0, 10); for (let i = 0; i < 20; i++) lines.push(`${ds},${8 + (i % 8)}:00,Latte,1,3.45`); }
+    const csv = path.join(os.tmpdir(), 'patch-owner-till.csv'); fs.writeFileSync(csv, lines.join('\n'));
+    await p.setInputFiles('[data-file=sales]', csv); await p.waitForTimeout(300);
+    ok(/3 days added, with item names/.test(await p.textContent('#msg-sales')), 'a till export is merged in');
+    if (SHOTS) await p.screenshot({ path: SHOTS + '/owner-upload.png', fullPage: true });
+    await p.reload(); await p.waitForTimeout(500);
+    ok(await p.evaluate(() => __owner.S.invoices.length === 7 && __owner.S.changes.length === 2), 'everything is still there after reloading');
+    await p.click('[data-tab=upload]'); await p.click('details.more > summary'); await p.uncheck('#emailOn'); await p.waitForTimeout(150);
+    ok(await p.evaluate(() => JSON.parse(localStorage.getItem('patch-demo-db-v7')).requests.find(r => r.token === 'demo-owner').briefing_off === true), 'an owner can turn off the Monday email');
+    ok(!errs.length, 'no page errors ' + errs.join(' | '));
+  } catch (e) { console.log('FAIL ' + e.message); fail++; }
+  await b.close(); srv.close(); console.log(`${pass} passed, ${fail} failed`); process.exit(fail ? 1 : 0);
+})();

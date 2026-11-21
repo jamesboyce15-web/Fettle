@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Your Patch</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@500;700&display=swap">
+<link rel="stylesheet" href="patch.css">
+<style>
+body{padding-bottom:calc(78px + env(safe-area-inset-bottom,0px))}
+.wrap{max-width:760px}
+.top .who{font-size:.9rem;color:var(--mute);text-align:right;line-height:1.25}
+.top .who button{background:none;border:0;color:var(--accent2);font:inherit;font-size:.82rem;padding:0;cursor:pointer}
+h1.hi{font-size:clamp(1.6rem,5vw,2.2rem);margin:0 0 4px}
+.found{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0 18px}
+.found .stat b{font-size:1.7rem}
+.found .stat.made b{color:var(--good)}
+.sect{display:flex;align-items:baseline;gap:10px;margin:22px 0 10px}.sect h2{margin:0;font-size:1.2rem}.sect a,.sect button{margin-left:auto;font-size:.9rem;background:none;border:0;color:var(--accent2);font-weight:600;cursor:pointer;padding:0}
+.act{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin:0 0 10px}
+.act .meta{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:0 0 6px}
+.act h3{margin:0 0 4px;font-size:1.02rem;line-height:1.3}
+.act p{margin:0 0 8px;color:var(--mute);font-size:.92rem}
+.act .val{margin-left:auto;font-weight:700;color:var(--good);white-space:nowrap}
+.act .val.soft{color:var(--mute);font-weight:600;font-size:.85rem}
+.act .btns{display:flex;gap:8px;flex-wrap:wrap}
+.act.done{opacity:.65}
+.area{font-size:.72rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--accent2);background:var(--tint);border-radius:6px;padding:2px 7px}
+.item{display:flex;gap:12px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;text-align:left;width:100%;cursor:pointer;color:inherit;margin:0 0 8px}
+.item:hover,.act:hover{border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
+.item .dot{flex:0 0 10px;height:10px;border-radius:50%;margin-top:7px;background:var(--accent)}
+.item .dot.good{background:var(--good)}.item .dot.warn{background:var(--warn)}.item .dot.bad{background:var(--bad)}
+.item b{display:block}.item span.s{color:var(--mute);font-size:.9rem}
+.item .x{margin-left:auto;background:none;border:0;color:var(--mute);font-size:1.2rem;line-height:1;padding:0 4px;cursor:pointer}
+.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:flex;justify-content:center;gap:2px;padding:6px max(8px,env(safe-area-inset-left,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-right,0px));z-index:20}
+.tabs button{flex:0 1 128px;background:none;border:0;border-radius:12px;padding:8px 4px;font-weight:600;font-size:.88rem;color:var(--mute);cursor:pointer;position:relative}
+.tabs button[aria-current=page]{background:var(--tint);color:var(--accent2)}
+.tabs .n{position:absolute;top:0;right:6%;background:var(--accent);color:var(--accent-ink);border-radius:999px;font-size:.66rem;padding:0 5px;line-height:16px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px}
+.chips button{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 12px;font-weight:600;font-size:.86rem;cursor:pointer;color:var(--mute)}
+.chips button[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.icard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;text-align:left;cursor:pointer;color:inherit;font:inherit}
+.icard small{display:block;font-size:.74rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--mute)}
+.icard b{display:block;font-family:var(--serif);font-size:1.5rem;margin:4px 0 2px}
+.icard span{color:var(--mute);font-size:.88rem}
+.back{background:none;border:0;color:var(--accent2);font:inherit;font-weight:600;padding:0;margin:0 0 10px;cursor:pointer}
+.big{font-family:var(--serif);font-size:clamp(2rem,7vw,2.8rem);line-height:1;margin:2px 0 6px}
+.rk{display:grid;grid-template-columns:150px 1fr 70px;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line);font-size:.92rem}.rk:last-child{border-bottom:0}
+.pips{display:flex;gap:3px}.pips i{flex:1;height:10px;border-radius:3px;background:var(--line)}.pips i.me{background:var(--accent)}
+.check{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);font-size:.93rem}.check:last-child{border-bottom:0}
+.check .ok{color:var(--good);font-weight:700}.check .no{color:var(--bad);font-weight:700}
+.qtable{width:100%;border-collapse:collapse;font-size:.9rem}.qtable td,.qtable th{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}.qtable th{font-size:.72rem;text-transform:uppercase;color:var(--mute)}
+.days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;margin:0 0 14px}
+.day{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 2px;text-align:center;cursor:pointer;color:inherit;font:inherit}
+.day[aria-pressed=true]{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.day small{display:block;color:var(--mute);font-size:.72rem}.day b{display:block;font-size:.92rem;font-variant-numeric:tabular-nums}
+.day i{display:block;height:4px;border-radius:2px;margin:6px auto 0;width:60%}.day i.good{background:var(--good)}.day i.warn{background:var(--warn)}
+.hours{display:flex;flex-direction:column;gap:4px;margin:8px 0 14px}
+.hrow{display:grid;grid-template-columns:48px 1fr 54px;gap:8px;align-items:center;font-size:.85rem;font-variant-numeric:tabular-nums}.hrow .bar{height:14px}
+.line{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid var(--line)}.line:last-child{border-bottom:0}
+.drop{border:2px dashed var(--line);border-radius:16px;padding:22px 16px;text-align:center;background:var(--card);transition:.15s}
+.drop.over{border-color:var(--accent);background:var(--tint)}
+.drop b{display:block;font-size:1.05rem;margin:0 0 4px}
+.drop label.btn{margin-top:10px}
+.drop input{position:absolute;width:1px;height:1px;opacity:0}
+.uploads{margin-top:8px}
+.small-in{width:90px;border:1px solid var(--line);border-radius:8px;padding:7px;background:var(--card)}
+.post{white-space:pre-wrap;background:var(--bg);border-radius:10px;padding:10px;margin:8px 0}
+.stars{color:var(--warn);letter-spacing:1px}
+.kitbox{width:100%;font:13px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace;border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--bg);color:var(--ink);margin:6px 0;resize:vertical}
+.kitsteps{padding-left:20px;margin:8px 0 12px}.kitsteps li{margin:0 0 6px}
+.qrcard{display:block;width:100%;max-width:300px;margin:12px auto;border:1px solid var(--line);border-radius:8px;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.btn.kitb{border-color:var(--accent);color:var(--accent2)}
+.modal .btns{display:flex;gap:8px;flex-wrap:wrap}
+details.pb{border-bottom:1px solid var(--line)}details.pb>summary{list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;cursor:pointer}details.pb>summary::-webkit-details-marker{display:none}details.pb[open]>summary{padding-bottom:4px}
+.pcheck{display:grid;grid-template-columns:1fr 1.3fr 1fr;gap:8px}.pcheck .f{margin:0}@media(max-width:480px){.pcheck{grid-template-columns:1fr 1fr}}.pbt{margin:8px 0 12px;font-size:.82rem}.pbt a{color:var(--accent2)}.linkbtn{background:none;border:0;padding:0;color:var(--accent2);font:inherit;font-weight:600;cursor:pointer;text-decoration:underline}
+details.more>summary{cursor:pointer;color:var(--accent2);font-weight:600;margin:6px 0}
+.empty{color:var(--mute);text-align:center;padding:18px;border:1px dashed var(--line);border-radius:14px}
+.modal{position:fixed;inset:0;background:rgba(10,15,12,.5);display:grid;place-items:center;padding:16px;z-index:60}
+.modal .box{background:var(--card);border-radius:18px;max-width:520px;width:100%;padding:20px;max-height:90vh;overflow:auto}
+@media(min-width:900px){.wrap{max-width:1020px}.homegrid{display:grid;grid-template-columns:1.25fr 1fr;gap:22px;align-items:start}}
+@media(max-width:430px){.rk{grid-template-columns:110px 1fr 56px}.tabs button{font-size:.8rem}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top"><a class="brand" href="./">Patch<i>.</i></a><span class="sp"></span><span class="who" id="who"></span></header>
+  <div id="demo"></div>
+  <main id="app"><p class="mute">Loading…</p></main>
+</div>
+<nav class="tabs" id="tabs" hidden aria-label="Sections">
+  <button data-tab="home">Home</button><button data-tab="actions">Actions</button><button data-tab="insights">Insights</button><button data-tab="plan">Plan</button><button data-tab="upload">Upload</button>
+</nav>
+<div class="toast" id="toast" role="status"></div>
+<script src="config.js"></script>
+<script src="patch-core.js"></script>
+<script src="patch-ops.js"></script>
+<script src="patch-insights.js"></script>
+<script src="patch-data.js"></script>
+<script src="patch-kits.js"></script>
+<script src="vendor/qrcode.js"></script>
+<script>
+(function () {
+"use strict";
+const P = PatchCore, O = PatchOps, I = PatchInsights, D = PatchData, Q = new URLSearchParams(location.search), token = Q.get("t") || (D.DEMO ? "demo-owner" : "");
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const $ = s => document.querySelector(s), money = P.money, pounds = n => "£" + Math.round(n || 0).toLocaleString("en-GB");
+const today = O.iso(new Date());
+const dd = s => new Date(String(s).slice(0, 10) + "T12:00:00Z").toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" });
+const hr = h => (h === 0 ? "12am" : h < 12 ? h + "am" : h === 12 ? "12pm" : h - 12 + "pm");
+const pence = x => (x < 1 ? Math.round(x * 100) + "p" : money(x));
+function toast(t) { const el = $("#toast"); el.textContent = t; el.classList.add("on"); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove("on"), 2400); }
+let W = null, S = null;
+const V = { tab: "home", sub: null, day: today, reply: null, filter: "todo" };
+const ctx = () => ({ district: (W.venue.postcode || "").split(" ")[0], cafe: W.venue.name, calendar: W.area.calendar || [], newNearby: W.newNearby || [], venue: W.venue, moves: (W.rank || {}).moves || [] });
+
+let saveT = null;
+function save(msg) { clearTimeout(saveT); saveT = setTimeout(async () => { try { await D.rpc("owner_put", { p_token: token, p_state: S }); if (msg) toast(msg); } catch (e) { toast("Not saved: " + e.message); } }, 300); }
+
+/* ---------- what Patch knows, worked out once per render ---------- */
+function facts() {
+  const invLines = (S.invoices || []).filter(x => x.at >= O.addD(today, -120)).flatMap(x => x.lines || []);
+  const suppliers = I.supplierFindings(invLines, W.area.supplyBench, S.priceCheck), seo = I.seoScore(W.seo && W.seo.checks), geo = I.geoSummary(W.geo, W.venue.name);
+  const thread = I.goldenThread({ today, report: W.report, suppliers, seo, geo, visitRank: W.rank && W.rank.visit, moves: (W.rank || {}).moves, state: S, venue: W.venue });
+  const made = (S.changes || []).reduce((t, c) => t + (O.priceImpact(S, c, today).extra || 0), 0);
+  return { suppliers, seo, geo, thread, made, open: thread.filter(a => a.status !== "done" && a.status !== "skip") };
+}
+
+/* ---------- shell ---------- */
+function render() {
+  const F = facts();
+  document.querySelectorAll("[data-tab]").forEach(b => { if (b.dataset.tab === V.tab) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current"); });
+  const ab = document.querySelector('[data-tab=actions]'); ab.innerHTML = `Actions${F.open.length ? `<span class="n">${F.open.length}</span>` : ""}`;
+  $("#app").innerHTML = ({ home: vHome, actions: vActions, insights: vInsights, plan: vPlan, upload: vUpload })[V.tab](F);
+  scrollTo(0, 0);
+}
+function actionCard(a, compact) {
+  const val = a.value ? `<span class="val">${pounds(a.value)} a year${a.estimate ? "*" : ""}</span>` : `<span class="val soft">${{ Google: "Helps you get found", "AI answers": "Helps you get recommended", Reviews: "Builds trust", Visit: "Better visits", Admin: "Keeps you covered", Sales: "Fills a quiet hour", "Opening hours": "New customers" }[a.area] || ""}</span>`;
+  return `<article class="act ${a.status === "done" ? "done" : ""}" data-key="${esc(a.key)}"><div class="meta"><span class="area">${esc(a.area)}</span><span class="chip">${esc(I.EFFORT[a.effort])}</span>${a.status === "doing" ? '<span class="chip warn">Doing</span>' : a.status === "done" ? '<span class="chip good">Done</span>' : ""}${val}</div>
+    <h3>${esc(a.t)}</h3><p>${esc(a.why)}</p>${!compact && a.steps ? `<ul class="sm" style="margin:0 0 8px;padding-left:18px">${a.steps.map(s => `<li>${esc(s)}</li>`).join("")}</ul>` : ""}
+    <div class="btns">${a.status !== "done" ? `<button class="btn sm" data-done="${esc(a.key)}">Done</button>${a.status !== "doing" ? `<button class="btn q sm" data-doing="${esc(a.key)}">I'm on it</button>` : ""}` : `<button class="btn q sm" data-undo="${esc(a.key)}">Not done after all</button>`}${a.status !== "done" && kitFor(a) ? `<button class="btn q sm kitb" data-kit="${esc(a.key)}">${KIT_BTN[kitFor(a)]}</button>` : ""}<button class="btn q sm" data-go="${esc(a.go)}">See why</button>${!compact && a.status !== "done" ? `<button class="btn q sm" data-skip="${esc(a.key)}">Not for us</button>` : ""}</div></article>`;
+}
+
+/* ---------- home ---------- */
+function vHome(F) {
+  const h = new Date().getHours(), worth = F.open.reduce((t, a) => t + (a.value || 0), 0);
+  const brief = O.briefing(S, ctx(), today).filter(i => !["rev", "rem", "win", "theme", "post"].includes(i.k)).slice(0, 3);
+  return `<p class="sm mute" style="margin:0">${new Date().toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long" })}</p><h1 class="hi">Good ${h < 12 ? "morning" : h < 18 ? "afternoon" : "evening"}${W.name ? ", " + esc(W.name.split(/\s+/)[0]) : ""}</h1>
+    <div class="found"><div class="stat"><b>${pounds(worth)}</b><span>a year in the actions waiting for you</span></div><div class="stat made"><b>${pounds(F.made)}</b><span>made so far from changes you've made</span></div></div>
+    <div class="homegrid"><section><div class="sect"><h2>Do next</h2><button data-tab-go="actions">All ${F.open.length}</button></div>
+      ${F.open.length ? F.open.slice(0, 3).map(a => actionCard(a, true)).join("") : `<p class="empty">Nothing waiting. We'll add actions as we learn more about your patch.</p>`}</section>
+    <section><div class="sect"><h2>This week</h2></div>${brief.map(i => `<div class="item" role="button" tabindex="0" data-go="${esc(i.go === "week" ? "plan" : i.go === "more:area" ? "insights:local" : i.go === "more:sales" ? "upload" : i.go)}"><span class="dot ${i.tone}"></span><span><b>${esc(i.t)}</b><span class="s">${esc(i.s)}</span></span>${i.dkey ? `<button class="x" data-dismiss="${esc(i.dkey)}" aria-label="Dismiss">×</button>` : ""}</div>`).join("")}
+      <button class="item" data-tab-go="upload"><span class="dot"></span><span><b>Add sales or invoices</b><span class="s">The more we see, the sharper your forecast and supplier checks.</span></span></button></section></div>`;
+}
+
+/* ---------- actions: the golden thread ---------- */
+function vActions(F) {
+  const f = V.filter, list = F.thread.filter(a => f === "todo" ? a.status === "todo" || a.status === "doing" : f === "done" ? a.status === "done" : a.status === "skip");
+  const n = s => F.thread.filter(a => s === "todo" ? a.status === "todo" || a.status === "doing" : a.status === s).length;
+  return `<h2>Your actions</h2><p class="sm mute">Everything Patch finds becomes one list: what to do, why, and what it's worth. Most money first.</p>
+    <div class="chips">${[["todo", "To do"], ["done", "Done"], ["skip", "Not for us"]].map(([k, t]) => `<button data-filter="${k}" aria-pressed="${f === k}">${t} (${n(k)})</button>`).join("")}</div>
+    ${list.length ? list.map(a => actionCard(a, false)).join("") : `<p class="empty">${f === "todo" ? "All done. Nice." : "Nothing here yet."}</p>`}
+    ${F.thread.some(a => a.estimate) ? `<p class="xs mute">* Estimated from a typical café's sales. Upload sales with item names for your own figures.</p>` : ""}`;
+}
+
+/* ---------- insights ---------- */
+function vInsights(F) {
+  if (V.sub) return `<button class="back" data-sub="">‹ Insights</button>` + ({ ranking: iRanking, search: iSearch, prices: iPrices, suppliers: iSuppliers, reviews: iReviews, local: iLocal })[V.sub](F);
+  const vr = W.rank && W.rank.visit, priced = ((W.report || {}).items || []).filter(i => i.diff != null), under = priced.filter(i => i.diff <= -0.1).length;
+  const unrep = (S.reviews || []).filter(r => +r.rating <= 3 && !r.replied).length, sup = F.suppliers.filter(s => s.perYear > 0);
+  const card = (k, label, big, s) => `<button class="icard" data-sub="${k}"><small>${label}</small><b>${big}</b><span>${s}</span></button>`;
+  return `<h2>Insights</h2><div class="cards">
+    ${card("ranking", "On our last visit", vr ? `${I.ord(vr.rank)} of ${vr.of}` : "Not visited yet", vr ? `Among the cafés nearest you, ${dd(vr.at)}${vr.before ? `. ${vr.rank < vr.before.rank ? "Up" : vr.rank > vr.before.rank ? "Down" : "Same as"} from ${I.ord(vr.before.rank)}` : ""}.` : "We'll visit soon.")}
+    ${card("search", "Google and AI", F.seo ? `${F.seo.score}/100` : "Not checked", `${F.geo ? `AI assistants mention you in ${F.geo.share}% of answers` : "AI answers not checked yet"}.`)}
+    ${card("prices", "Your prices", priced.length ? `${under} below` : "–", priced.length ? `of ${priced.length} items are below what your neighbours charge.` : "Send us your menu to compare.")}
+    ${card("suppliers", "Suppliers", sup.length ? pounds(sup.reduce((t, s) => t + s.perYear, 0)) : F.suppliers.length ? "On par" : I.priceBook().length + " prices", sup.length ? "a year more than cafés like yours pay." : F.suppliers.length ? "You're paying about what others do." : "What cafés pay for milk, beans, cups and more. Check yours.")}
+    ${card("reviews", "Reviews", String((S.reviews || []).length), unrep ? `${unrep} waiting for a reply.` : "All replied to.")}
+    ${card("local", "Your area", String(P.calendarFor(ctx().calendar, ctx().district, today, 28).length), `things on locally in the next 4 weeks${(W.newNearby || []).length ? `, ${W.newNearby.length} new café${W.newNearby.length > 1 ? "s" : ""} nearby` : ""}.`)}</div>`;
+}
+function iRanking() {
+  const vr = W.rank && W.rank.visit;
+  if (!vr) return `<section class="card"><h2>Ranking on visits</h2><p>We haven't visited yet. Our visitors score every café nearby on the same things, so you can see where you stand.</p></section>`;
+  const pips = (r, of) => `<span class="pips" aria-label="${I.ord(r)} of ${of}">${Array.from({ length: of }, (_, i) => `<i class="${i === r - 1 ? "me" : ""}"></i>`).join("")}</span>`;
+  return `<section class="card"><p class="sm mute" style="margin:0">On our visit on ${dd(vr.at)}, against the ${vr.of - 1} cafés nearest you that we visited</p><p class="big">${I.ord(vr.rank)} of ${vr.of}</p>
+    ${vr.before ? `<p class="sm">${vr.rank < vr.before.rank ? `<span class="chip good">Up from ${I.ord(vr.before.rank)}</span>` : vr.rank > vr.before.rank ? `<span class="chip warn">Down from ${I.ord(vr.before.rank)}</span>` : `<span class="chip">Same as last time</span>`} since our visit on ${dd(vr.before.at)}.</p>` : ""}
+    <h3 style="margin-top:14px">Thing by thing</h3>${vr.dims.map(d => `<div class="rk"><span>${esc(d.t)}</span>${pips(d.rank, d.of)}<span class="sm" style="text-align:right">${I.ord(d.rank)}</span></div>`).join("")}
+    <p class="sm" style="margin-top:12px"><b>Best at:</b> ${esc(vr.strongest.t.toLowerCase())}. <b>Most room to improve:</b> ${esc(vr.weakest.t.toLowerCase())}${vr.weakest.k === "wait" ? ` (${vr.weakest.mine} minutes; the middle nearby is ${vr.weakest.middle})` : ""}.</p>
+    <p class="xs mute">Overall also counts your food hygiene rating. Other cafés are never named, and never see your scores.</p></section>`;
+}
+function iSearch(F) {
+  const s = F.seo, g = F.geo, peers = (W.rank && W.rank.seoPeers) || [];
+  const myRank = s ? 1 + peers.filter(x => x > s.score).length : null;
+  let h = `<section class="card"><h2>On Google</h2>${s ? `<p class="big">${s.score}<span style="font-size:1.1rem;color:var(--mute)">/100</span></p><p class="sm">${peers.length ? `${I.ord(myRank)} of ${peers.length + 1} cafés near you. The middle score nearby is ${Math.round(P.median(peers))}.` : ""} Checked ${W.seo.at ? dd(W.seo.at) : "recently"}.</p>
+    ${I.SEO_CHECKS.filter(c => W.seo.checks[c.k] === true || W.seo.checks[c.k] === false).sort((a, b) => (W.seo.checks[a.k] ? 1 : 0) - (W.seo.checks[b.k] ? 1 : 0) || b.w - a.w).map(c => `<div class="check"><span class="${W.seo.checks[c.k] ? "ok" : "no"}">${W.seo.checks[c.k] ? "✓" : "✗"}</span><span><b>${esc(c.t)}</b>${W.seo.checks[c.k] ? "" : `<br><span class="sm mute">${esc(c.fix)}</span>`}</span></div>`).join("")}`
+    : `<p class="mute">We haven't checked yet. Add your website under Settings.</p>`}</section>`;
+  h += `<section class="card"><h2>In AI answers</h2><p class="sm mute">When people ask ChatGPT, Claude and other assistants for a café near you, who do they suggest?</p>${g ? `<p class="big">${g.share}%</p><p class="sm">of answers mention you. ${I.ord(g.rank)} of ${g.of} cafés named.${g.leaders.length ? ` Most mentioned: ${g.leaders.map(l => `${esc(l.name)} (${l.share}%)`).join(", ")}.` : ""}</p>
+    <div style="overflow-x:auto"><table class="qtable"><thead><tr><th>Question</th><th>You</th><th>They suggest</th></tr></thead><tbody>${g.byPrompt.map(p => `<tr><td>${esc(p.q)}</td><td>${p.mentioned ? `<span class="chip good">${p.mentioned} of ${p.asked}</span>` : `<span class="chip bad">No</span>`}</td><td class="sm">${esc(p.top.join(", "))}</td></tr>`).join("")}</tbody></table></div>
+    <p class="xs mute">Asked ${g.at ? dd(g.at) : "recently"} of ${esc((g.engines || []).join(" and "))}. AI answers vary from day to day, so we ask each question more than once over time.</p>` : `<p class="mute">Not checked yet.</p>`}</section>`;
+  return h;
+}
+// What's changed nearby since the last price sweep: who's put prices up, by how much, and whether you have.
+function movesCard() {
+  const mv = ((W.rank || {}).moves || []).filter(m => m.up || m.down).sort((a, b) => b.up - a.up); if (!mv.length) return "";
+  const since = mv.map(m => m.since).filter(Boolean).sort()[0], mon = since ? new Date(since + "T12:00:00Z").toLocaleDateString("en-GB", { month: "long" }) : "";
+  return `<section class="card"><h2>What's changed nearby${mon ? ` since ${mon}` : ""}</h2><p class="sm mute">From our price sweeps of the cafés nearest you.</p>${mv.map(m => `<div class="line"><span>${esc(m.t)}<br><span class="sm mute">${m.up} of ${m.n} put it up${m.avgUp ? `, by ${pence(m.avgUp)} on average` : ""}${m.down ? `; ${m.down} cut it` : ""}</span></span><span class="sm" style="text-align:right">${m.mine ? (m.mine.d >= 0.05 ? `<span class="chip good">You did too</span>` : m.mine.d <= -0.05 ? `<span class="chip">You cut it</span>` : `<span class="chip warn">You haven't</span>`) : ""}</span></div>`).join("")}</section>`;
+}
+function iPrices(F) {
+  const items = ((W.report || {}).items || []).filter(i => i.mine != null && i.median != null);
+  const ch = (S.changes || []).map(c => Object.assign({ c }, O.priceImpact(S, c, today)));
+  return `<section class="card"><h2>Your prices against your neighbours</h2>${items.length ? items.map(i => `<div class="line"><span>${esc(i.t)}<br><span class="sm mute">Nearby middle ${money(i.median)}</span></span><span style="text-align:right"><b>${money(i.mine)}</b><br><span class="sm ${i.diff <= -0.1 ? "" : "mute"}">${Math.abs(i.diff) < 0.05 ? "In line" : (i.diff < 0 ? pence(-i.diff) + " below" : pence(i.diff) + " above")}</span></span></div>`).join("") : `<p class="mute">Send us your menu and we'll compare it.</p>`}
+    <p class="sm"><a href="report.html?t=${encodeURIComponent(token)}${D.DEMO ? "&demo=1" : ""}">Full report and margin calculator</a></p></section>
+    <section class="card"><h2>Changes you've made</h2><p class="big" style="color:var(--good)">${pounds(F.made)}</p><p class="sm mute">extra so far</p>
+    ${ch.map(x => `<div class="line"><span><b>${esc(x.c.item)}</b> ${money(x.c.from)} to ${money(x.c.to)}<br><span class="sm mute">since ${dd(x.c.at)}${x.measured ? `: ${x.afterPerDay} a day, ${x.volume >= 0 ? "+" : ""}${x.volume}% on before` : ""}</span></span><b style="color:var(--good)">${x.extra != null ? pounds(x.extra) : "–"}</b></div>`).join("")}
+    <details class="more"><summary>Log a price change</summary>${priceForm()}</details></section>${movesCard()}`;
+}
+function priceForm(pre) {
+  pre = pre || {};
+  return `<div class="row" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px"><label class="f" style="flex:1 1 150px"><span>Item</span><input id="pc-item" list="pc-items" value="${esc(pre.item || "")}"><datalist id="pc-items">${P.ITEMS.map(i => `<option value="${esc(i.t)}">`).join("")}</datalist></label>
+    <label class="f" style="flex:0 0 84px"><span>Was</span><input id="pc-from" inputmode="decimal" value="${pre.from != null ? (+pre.from).toFixed(2) : ""}"></label><label class="f" style="flex:0 0 84px"><span>Now</span><input id="pc-to" inputmode="decimal" value="${pre.to != null ? (+pre.to).toFixed(2) : ""}"></label>
+    <label class="f" style="flex:0 0 150px"><span>From</span><input id="pc-at" type="date" value="${today}"></label></div><p class="err" id="pc-err"></p><button class="btn" data-act="logchange" data-key="${esc(pre.key || "")}">Log it</button>`;
+}
+function iSuppliers(F) {
+  const inv = S.invoices || [], tot = F.suppliers.reduce((t, s) => t + s.perYear, 0), book = I.priceBook(W.area.supplyBench), mine = Object.fromEntries(F.suppliers.map(s => [s.k, s]));
+  const a1 = u => (/^[aeiou]/.test(u) ? "an " : "a ") + esc(u);
+  const pp = x => (x < 1 ? (Math.round(x * 1000) / 10).toString().replace(/\.0$/, "") + "p" : money(x));
+  const head = F.suppliers.length ? `<p class="big">${pounds(tot)}</p><p class="sm mute">a year more than cafés like yours pay, from ${[inv.length ? `${inv.length} invoice${inv.length > 1 ? "s" : ""}` : "", F.suppliers.some(s => s.from === "check") ? "prices you checked" : ""].filter(Boolean).join(" and ")}</p>
+    <div style="overflow-x:auto"><table class="qtable"><thead><tr><th>What</th><th>You pay</th><th>Typical</th><th>A year</th></tr></thead><tbody>${F.suppliers.map(s => `<tr><td>${esc(s.t)}<br><span class="xs mute">about ${s.weekly} ${esc(s.units)} a week${s.from === "check" ? ", your estimate" : ""}</span></td><td>${pp(s.perUnit)} ${a1(s.unit)}</td><td>${pp(s.bench)}</td><td>${s.perYear ? `<b style="color:var(--bad)">${pounds(s.perYear)}</b> more` : '<span class="chip good">Fine</span>'}</td></tr>`).join("")}</tbody></table></div>`
+    : `<p>Type in what you pay for anything below and we'll compare it straight away. Or <button class="linkbtn" data-tab-go="upload">upload invoices</button> and we'll do it for everything on them.</p>`;
+  const row = g => { const m = mine[g.k], ch = (S.priceCheck || {})[g.k] || {}, ref = g.ref;
+    const tag = m ? (m.perYear ? `<span class="chip bad">${m.overPct}% more</span>` : m.overPct < -5 ? `<span class="chip good">${-m.overPct}% less</span>` : `<span class="chip good">In line</span>`) : `<span class="xs mute">Check</span>`;
+    return `<details class="pb" data-pb="${g.k}" ${V.pb === g.k ? "open" : ""}><summary><span><b>${esc(g.t)}</b><br><span class="xs mute">typical ${pp(g.bench)} ${a1(g.unit)}${m ? ` · you ${pp(m.perUnit)}` : ""}</span></span>${tag}</summary>
+      ${m && m.from === "invoices" ? `<p class="sm">From your invoices: ${pp(m.perUnit)} ${a1(g.unit)}, about ${m.weekly} ${esc(g.units)} a week.</p>` : `<div class="pcheck"><label class="f"><span>You pay (£)</span><input data-pc="${g.k}.price" inputmode="decimal" value="${esc(ch.price ?? "")}" placeholder="${ref.price.toFixed(2)}"></label><label class="f"><span>For</span><input data-pc="${g.k}.pack" value="${esc(ch.pack || ref.pack)}"></label><label class="f"><span>${esc(g.units[0].toUpperCase() + g.units.slice(1))} a week</span><input data-pc="${g.k}.weekly" inputmode="decimal" value="${esc(ch.weekly ?? g.wk)}"></label></div>
+        <div class="btns"><button class="btn sm" data-pcsave="${g.k}">Compare</button>${ch.price ? `<button class="btn q sm" data-pcclear="${g.k}">Clear</button>` : ""}</div><p class="err" id="pc-${g.k}"></p>`}
+      <table class="qtable pbt"><thead><tr><th>On the price list</th><th>Pack</th><th>Price</th><th>Per ${esc(g.unit)}</th></tr></thead><tbody>${g.lines.map(x => `<tr><td><a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.name)}</a></td><td>${esc(x.pack)}</td><td>${money(x.price)}</td><td>${pp(x.per)}</td></tr>`).join("")}</tbody></table></details>`; };
+  return `<section class="card"><h2>Suppliers</h2>${head}</section>
+    <section class="card"><h2>What cafés pay</h2><p class="sm mute">${book.length} things cafés buy every week, with the typical price for each. Tap one to see the price list or check yours.</p>${book.map(row).join("")}
+    <p class="xs mute" style="margin-top:10px">${esc(I.PRICE_BOOK_NOTE)} The typical price is the middle of the list, and gets sharper as cafés share invoices. We never show your costs to anyone.</p></section>`;
+}
+function iReviews() {
+  const rs = (S.reviews || []).slice().sort((a, b) => b.at.localeCompare(a.at)), th = O.reviewThemes(S.reviews, O.addD(today, -90));
+  return `<section class="card"><h2>Reviews</h2>${th.length ? `<p class="sm mute">What the last 3 months mention</p><p>${th.map(t => `<span class="chip ${t.bad > t.good ? "warn" : "good"}">${esc(t.t)}: ${t.good} good, ${t.bad} not</span>`).join(" ")}</p>` : ""}
+    ${rs.map(r => `<div class="line" style="display:block"><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span class="stars" aria-label="${r.rating} stars">${"★".repeat(+r.rating || 0)}${"☆".repeat(5 - (+r.rating || 0))}</span><span class="sm mute">${esc(r.author || "")} · ${dd(r.at)}</span><span class="sp"></span>${r.replied ? '<span class="chip good">Replied</span>' : `<button class="btn q sm" data-reply="${r.id}">Draft a reply</button>`}</div><p style="margin:6px 0 0">${esc(r.text)}</p>
+      ${V.reply === r.id ? `<textarea id="replyText" style="width:100%;min-height:110px;border:1px solid var(--line);border-radius:10px;padding:10px;margin-top:8px;background:var(--card)">${esc(O.replyDraft(r, W.venue.name))}</textarea><div style="display:flex;gap:8px;margin-top:6px"><button class="btn q sm" data-act="copyreply">Copy</button><button class="btn sm" data-replied="${r.id}">I've posted it</button></div>` : ""}</div>`).join("")}
+    <details class="more"><summary>Add a review</summary><div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px"><label class="f" style="flex:0 0 90px"><span>Stars</span><select id="rv-r">${[5, 4, 3, 2, 1].map(n => `<option>${n}</option>`).join("")}</select></label><label class="f" style="flex:1"><span>Name</span><input id="rv-a"></label></div><label class="f"><span>What they wrote</span><textarea id="rv-t"></textarea></label><button class="btn" data-act="addreview">Add</button></details></section>`;
+}
+function iLocal() {
+  const cal = P.calendarFor(ctx().calendar, ctx().district, today, 42), costs = (W.area.costs || []).filter(c => c.at >= O.addD(today, -120)), ps = O.posts(ctx().calendar, ctx().district, ctx().cafe, S.settings, today, 14);
+  return `<section class="card"><h2>Coming up near you</h2>${cal.length ? cal.map(e => `<div class="line"><span>${esc(e.title)} <span class="chip ${e.effect === "busier" ? "good" : e.effect === "quieter" ? "warn" : ""}">${esc(P.CAL_TYPES[e.type] || "")}</span></span><span class="sm mute">${dd(e.start)}${e.end && e.end !== e.start ? " to " + dd(e.end) : ""}</span></div>`).join("") : `<p class="mute">Nothing logged yet.</p>`}</section>
+    ${(W.newNearby || []).length ? `<section class="card"><h2>New nearby</h2>${W.newNearby.map(n => `<div class="line"><span>${esc(n.name)}</span><span class="sm mute">${n.d != null ? (+n.d).toFixed(1) + " miles" : ""}</span></div>`).join("")}<p class="xs mute">Waiting for a first hygiene inspection, which usually means newly opened.</p></section>` : ""}
+    ${costs.length ? `<section class="card"><h2>Costs on the move</h2>${costs.map(c => `<div class="line"><span>${esc((P.COST_INPUTS[c.k] || {}).t || c.k)} ${c.pct > 0 ? "up" : "down"} ${Math.abs(c.pct)}%</span><span class="sm mute">since ${dd(c.at)}</span></div>`).join("")}</section>` : ""}
+    <section class="card"><h2>Posts for the next two weeks</h2><label class="f"><span>This week's special (optional)</span><input data-set="special" value="${esc(S.settings.special || "")}" placeholder="Mince pie croissants"></label>
+    ${ps.length ? ps.map((p, i) => `<div style="margin-top:12px"><div style="display:flex;gap:8px;align-items:center"><b>${esc(p.for)}</b><span class="sm mute">${dd(p.when)}</span><span class="sp"></span><button class="btn q sm" data-copy="${i}">Copy</button></div><div class="post" id="post${i}">${esc(p.text)}</div>${p.todo ? `<p class="sm"><span class="chip warn">To do</span> ${esc(p.todo)}</p>` : ""}</div>`).join("") : `<p class="mute">Nothing on in the next two weeks.</p>`}</section>`;
+}
+
+/* ---------- plan ---------- */
+function vPlan() {
+  const cal = ctx().calendar, wk = O.forecastWeek(S, today, cal, ctx().district);
+  if (!wk.some(d => d.total)) return `<section class="card"><h2>Plan your week</h2><p>Upload a few weeks of sales and we'll forecast each day, and tell you how many people you need on and how much to prep.</p><button class="btn" data-tab-go="upload">Upload sales</button></section>`;
+  if (!wk.some(d => d.date === V.day)) V.day = today;
+  const ev = d => P.calendarFor(cal, ctx().district, d, 0).filter(e => d >= e.start && d <= (e.end || e.start)), sel = O.forecastDay(S, V.day, cal, ctx().district);
+  let h = `<h2>Plan your week</h2><div class="days">${wk.map(d => { const e = ev(d.date); return `<button class="day" data-day="${d.date}" aria-pressed="${d.date === V.day}"><small>${P.DOW[d.dow]}</small><b>${d.total ? "£" + Math.round(d.total) : "–"}</b><small>${new Date(d.date + "T12:00:00Z").getUTCDate()}</small><i class="${e.some(x => x.effect === "busier") ? "good" : e.length ? "warn" : ""}"></i></button>`; }).join("")}</div>`;
+  if (!sel) return h + `<p class="card mute">Not enough past days like this one to forecast it yet.</p>`;
+  const max = Math.max(...Object.values(sel.hourly)), sh = O.staffing(sel, S.settings), pr = O.prep(sel, S);
+  return h + `<section class="card"><div style="display:flex;align-items:baseline"><h3 style="margin:0">${dd(V.day)}</h3><span class="sp"></span><b style="font-size:1.35rem">${pounds(sel.total)}</b></div>
+    ${ev(V.day).length ? `<p class="sm" style="margin:6px 0 0">${ev(V.day).map(e => `<span class="chip ${e.effect === "busier" ? "good" : e.effect === "quieter" ? "warn" : ""}">${esc(e.title)}</span>`).join(" ")}</p>` : ""}
+    <div class="hours">${Object.keys(sel.hourly).map(Number).sort((a, b) => a - b).map(x => `<div class="hrow"><span class="mute">${hr(x)}</span><span class="bar"><i style="width:${(sel.hourly[x] / max) * 100}%"></i></span><span style="text-align:right">£${sel.hourly[x]}</span></div>`).join("")}</div>
+    <h3>People on</h3>${sh.map(b => `<div class="line"><span>${hr(b.from)} to ${hr(b.to)}</span><b>${b.n} ${b.n === 1 ? "person" : "people"}</b></div>`).join("")}
+    ${pr.length ? `<h3 style="margin-top:14px">Prep</h3>${pr.map(p => `<div class="line"><span>${esc(p.name)} <span class="xs mute">(usually ${p.usual})</span></span><b>${p.qty}</b></div>`).join("")}` : ""}
+    <details class="more"><summary>Why this number</summary><p class="sm">Based on your last ${sel.basedOn} ${P.DAYNAME[["sun", "mon", "tue", "wed", "thu", "fri", "sat"][sel.dow]]}s.${sel.reasons.length ? " " + sel.reasons.map(esc).join(". ") + "." : ""}</p></details></section>`;
+}
+
+/* ---------- upload ---------- */
+function vUpload() {
+  const d = O.salesDays(S), inv = (S.invoices || []).slice().sort((a, b) => b.at.localeCompare(a.at));
+  const zone = (k, title, sub, accept) => `<div class="drop" data-drop="${k}"><b>${title}</b><span class="sm mute">${sub}</span><br><label class="btn q sm">Choose files<input type="file" multiple data-file="${k}" accept="${accept}"></label><p class="sm" id="msg-${k}" style="margin:8px 0 0"></p></div>`;
+  return `<h2>Upload</h2><p class="sm mute">Drop files here, or choose them. Only totals are kept: never single sales, and never your costs shown to anyone else.</p>
+    <section style="margin:14px 0">${zone("sales", "Sales from your till", "A CSV export from Square, SumUp, Zettle, Lightspeed, Epos Now or similar. Sale-by-sale or item-by-item is best.", ".csv,text/csv")}
+    <p class="sm" style="margin:8px 2px">${d.length ? `We have <b>${d.length} days</b> of sales, ${dd(d[0].date)} to ${dd(d[d.length - 1].date)}.` : "No sales yet."}</p></section>
+    <section style="margin:14px 0">${zone("invoices", "Supplier invoices", "PDFs or CSV exports from your suppliers. Photos of paper invoices work too: we'll read them for you.", ".csv,.pdf,image/*")}
+    ${inv.length ? `<div class="card uploads" style="margin-top:10px">${inv.slice(0, 12).map(x => `<div class="line"><span>${esc(x.name)}<br><span class="xs mute">${dd(x.at)}${x.supplier ? " · " + esc(x.supplier) : ""}</span></span><span class="sm" style="text-align:right">${x.status === "queued" ? '<span class="chip warn">Being read</span>' : `${(x.lines || []).length} lines${x.found ? `<br><span class="xs mute">${esc(x.found)}</span>` : ""}`}</span></div>`).join("")}</div>` : ""}</section>
+    <section style="margin:14px 0"><div class="drop"><b>Your menu board</b><span class="sm mute">A photo of your board or printed menu keeps your comparison right when you change prices.${S.menuBoard ? ` Last sent ${dd(S.menuBoard.at)}.` : ""}</span><br><label class="btn q sm">Choose a photo<input type="file" accept="image/*,.pdf" id="menuIn"></label><div id="menuRead"></div></div></section>
+    <section style="margin:14px 0"><div class="drop"><b>Renewals and certificates</b><span class="sm mute">Insurance, gas safety, fire risk, EICR, PAT, pest control, pavement licence. We read the dates and remind you in time.</span><br><button class="btn q sm" data-adddoc="1">Add one</button></div>${docsList()}</section>
+    <details class="more card"><summary>Settings</summary>${settingsBox()}</details>`;
+}
+function settingsBox() {
+  return `<label class="sm" style="display:flex;gap:8px;align-items:center;margin-top:10px"><input type="checkbox" id="emailOn" ${W.emailOn === false ? "" : "checked"}> Email me my week every Monday morning</label>
+    <label class="f" style="margin-top:10px"><span>Your website</span><input data-set="website" value="${esc(S.settings.website || "")}" placeholder="littlefig.co.uk"></label>
+    <div style="display:flex;gap:12px;flex-wrap:wrap"><label class="sm">One person can serve about £<input class="small-in" data-set="perStaffHour" value="${esc(S.settings.perStaffHour)}" inputmode="numeric"> an hour</label><label class="sm">At least <input class="small-in" data-set="minStaff" value="${esc(S.settings.minStaff)}" inputmode="numeric" style="width:60px"> on</label></div>
+    <p class="sm mute" style="margin-top:12px">Prep: how many of each on an average day</p>${(S.prep || []).map((p, i) => `<div style="display:flex;gap:8px;margin:0 0 6px"><input data-prep="${i}.name" value="${esc(p.name)}" style="flex:1;border:1px solid var(--line);border-radius:8px;padding:7px;background:var(--card)" aria-label="Item"><input class="small-in" data-prep="${i}.perDay" value="${esc(p.perDay)}" inputmode="numeric" aria-label="On an average day"><button class="btn q sm" data-delprep="${i}">Remove</button></div>`).join("")}<button class="btn q sm" data-act="addprep">Add an item</button>
+    <p class="sm mute" style="margin-top:12px">Dates for your reminders</p>${(S.reminders || []).map((r, i) => `<div style="display:flex;gap:8px;align-items:center;margin:0 0 6px"><span style="flex:1" class="sm">${esc(r.t)}</span><input type="date" data-rem="${i}" value="${esc(r.due || "")}" style="border:1px solid var(--line);border-radius:8px;padding:6px;background:var(--card)"></div>`).join("")}`;
+}
+
+/* ---------- reading uploads ---------- */
+let pdfjs = null;
+async function pdfText(file) {
+  if (!pdfjs) { await new Promise((ok, bad) => { const s = document.createElement("script"); s.src = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"; s.onload = ok; s.onerror = bad; document.head.appendChild(s); });
+    pdfjs = window.pdfjsLib; pdfjs.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js"; }
+  const doc = await pdfjs.getDocument({ data: await file.arrayBuffer() }).promise; let out = "";
+  for (let i = 1; i <= Math.min(doc.numPages, 20); i++) { const c = await (await doc.getPage(i)).getTextContent(), rows = {};
+    c.items.forEach(t => { const y = Math.round(t.transform[5]); (rows[y] = rows[y] || []).push({ x: t.transform[4], s: t.str }); });
+    out += Object.keys(rows).sort((a, b) => b - a).map(y => rows[y].sort((a, b) => a.x - b.x).map(t => t.s).join("  ")).join("\n") + "\n"; }
+  return out;
+}
+const readAs = f => new Promise((ok, bad) => { const r = new FileReader(); r.onload = () => ok(String(r.result)); r.onerror = bad; r.readAsText(f); });
+async function handleFiles(kind, files) {
+  const msg = $("#msg-" + kind), notes = [];
+  for (const f of files) {
+    if (f.size > 40e6) { notes.push(`${f.name}: too big`); continue; }
+    try {
+      if (kind === "sales") { const r = P.readSales(await readAs(f)); if (r.error) { notes.push(`${f.name}: ${r.error}`); continue; }
+        const res = O.addSales(S, r.rows); notes.push(`${f.name}: ${res.days} days added${r.rows.some(x => x.item) ? ", with item names" : ""}`); continue; }
+      S.invoices = S.invoices || [];
+      const isPdf = /pdf$/i.test(f.name) || f.type === "application/pdf";
+      let r = isPdf ? I.readInvoice(await pdfText(f).catch(() => ""), "pdf", {}) : /^image\//.test(f.type) ? { lines: [] } : I.readInvoice(await readAs(f), "csv", {});
+      // Photos, and PDFs that are scans: stored privately, then read by Claude.
+      if (!r.lines.length && (isPdf || /^image\//.test(f.type))) {
+        if (D.DEMO) { S.invoices.push({ id: O.uid(), name: f.name, at: today, kind: "photo", status: "queued", lines: [] }); notes.push(`${f.name}: in the live version, Claude reads this for you`); continue; }
+        if (msg) msg.textContent = `Reading ${f.name}…`;
+        const file = await storeDoc(f), got = await readPhoto(file.path, "invoice");
+        if (got.error || !got.lines || !got.lines.length) { S.invoices.push({ id: O.uid(), name: f.name, at: today, kind: "photo", status: "queued", lines: [], file }); notes.push(`${f.name}: ${got.error || "we couldn't find invoice lines"}. We've kept it and will read it by hand`); continue; }
+        r = { lines: got.lines.map(l => Object.assign({ date: got.date || today }, l)) };
+        const kinds = [...new Set(r.lines.map(l => I.classify(l.desc)).filter(Boolean))].map(k => I.SUPPLY[k].t.toLowerCase());
+        S.invoices.push({ id: O.uid(), name: f.name, at: got.date || today, kind: "photo", supplier: got.supplier || null, lines: r.lines, file, read: "claude", found: kinds.length ? kinds.join(", ") : "nothing we track yet" });
+        notes.push(`${f.name}: ${r.lines.length} lines read from the photo${kinds.length ? " (" + kinds.join(", ") + ")" : ""}. Check them on the invoice list`); continue;
+      }
+      if (!r.lines.length) { notes.push(`${f.name}: ${r.error || "we couldn't find invoice lines in this one"}`); continue; }
+      const kinds = [...new Set(r.lines.map(l => I.classify(l.desc)).filter(Boolean))].map(k => I.SUPPLY[k].t.toLowerCase());
+      S.invoices.push({ id: O.uid(), name: f.name, at: r.lines[0].date || today, kind: isPdf ? "pdf" : "csv", lines: r.lines.slice(0, 2000), found: kinds.length ? kinds.join(", ") : "nothing we track yet" });
+      notes.push(`${f.name}: ${r.lines.length} lines read${kinds.length ? " (" + kinds.join(", ") + ")" : ""}`);
+    } catch (e) { notes.push(`${f.name}: couldn't read it (${e.message})`); }
+  }
+  save(); render(); const m = $("#msg-" + kind); if (m) m.textContent = notes.join(". ") + ".";
+}
+
+/* ---------- kits: "help me do it" ---------- */
+const Kt = PatchKits;
+const kitFor = a => a.key.startsWith("rem:") ? "doc" : ({ "seo:gbp_reviews": "reviews", "seo:gbp_photos": "photos", "seo:gbp_hours": "hours", "seo:gbp_category": "category", "seo:menu": "menu", "seo:schema": "schema", "seo:title": "title", "seo:nap": "nap", "seo:site": "web", "seo:https": "web", "seo:mobile": "web" })[a.key] || null;
+const KIT_BTN = { doc: "Upload the paperwork", reviews: "Make my QR card", photos: "Show me what to shoot", hours: "Give me my hours", category: "Show me how", menu: "Write my menu", schema: "Get the code", title: "Write my title", nap: "Write it for me", web: "Write to my web person" };
+const BP = "https://business.google.com/";
+const box = (id, text, rows) => `<textarea class="kitbox" id="${id}" rows="${rows || Math.min(14, String(text).split("\n").length + 1)}" readonly>${esc(text)}</textarea><button class="btn q sm" data-copybox="${id}">Copy</button>`;
+const steps = a => `<ol class="kitsteps">${a.map(s => `<li>${s}</li>`).join("")}</ol>`;
+function modal(title, body, key) {
+  const m = document.createElement("div"); m.className = "modal"; m.id = "modal";
+  m.innerHTML = `<div class="box" role="dialog" aria-modal="true" aria-labelledby="mt"><h2 id="mt">${esc(title)}</h2>${body}<div class="btns" style="margin-top:14px">${key ? `<button class="btn sm" data-kitdone="${esc(key)}">I've done it</button>` : ""}<button class="btn q sm" data-act="closemodal">Close</button></div></div>`;
+  document.body.appendChild(m); const f = m.querySelector("input,textarea,button"); if (f) f.focus();
+}
+function closeModal() { const m = $("#modal"); if (m) m.remove(); }
+function openKit(key) {
+  const a = facts().thread.find(x => x.key === key); if (!a) return; const kind = kitFor(a), v = W.venue, place = (W.area.name || "").replace(/\s*\(demo\)/, "") || v.postcode;
+  closeModal();
+  if (kind === "doc") return docModal(a);
+  if (kind === "reviews") return reviewsModal(a);
+  if (kind === "photos") return modal("Ten photos that get clicks", `<p class="sm">Take these on your phone, then add them in <a href="${BP}" target="_blank" rel="noopener">Google Business Profile</a>: Photos, then Add. Do a few a week rather than all at once: Google likes fresh ones.</p>
+    <ol class="kitsteps">${Kt.PHOTO_SHOTS.map(([t, h], i) => `<li><label><input type="checkbox" data-shot="${i}" ${(S.shots || {})[i] ? "checked" : ""}> <b>${esc(t)}</b></label><br><span class="sm mute">${esc(h)}</span></li>`).join("")}</ol>`, key);
+  if (kind === "hours") { const h = (W.report && W.report.venue && W.report.venue.hours) || null, bh = P.BANK_HOLIDAYS.filter(d => d >= today).slice(0, 4);
+    return modal("Your hours, ready for Google", `${h ? box("k-hours", Kt.hoursText(h)) : `<p class="sm">We don't have your hours yet. Write them like this and paste them in:</p>${box("k-hours", Kt.hoursText({}))}`}
+      ${steps([`Open <a href="${BP}" target="_blank" rel="noopener">Google Business Profile</a> (or search your café's name on Google while signed in)`, "Tap Edit profile, then Hours", "Copy each day across", `Add special hours for the next bank holidays: ${bh.map(d => dd(d)).join(", ")}`])}`, key); }
+  if (kind === "category") return modal("Set your Google category", `${steps([`Open <a href="${BP}" target="_blank" rel="noopener">Google Business Profile</a>`, "Tap Edit profile, then Business category", "Main category: <b>Coffee shop</b> (or <b>Café</b> if food is half your takings)", "Add extras that are true: Breakfast restaurant, Brunch restaurant, Bakery, Cake shop, Sandwich shop"])}<p class="sm mute">The main category decides most of what you show up for.</p>`, key);
+  if (kind === "menu") { const items = ((W.report && W.report.items) || []).map(i => ({ t: i.t, mine: i.mine })), m = Kt.menuText(v.name, items);
+    return modal("Your menu, written out", `<p class="sm">From the prices we have for you (${m.n}). Add your other items, then paste it onto your website's menu page. Text, not a photo, so Google and AI tools can read it.</p>
+      <p class="sm"><b>As text</b> (for Squarespace, Wix or WordPress: paste into a text block)</p>${box("k-menu", m.text)}
+      <p class="sm" style="margin-top:12px"><b>As HTML</b> (for whoever builds your site)</p>${box("k-menuh", m.html)}
+      <p class="sm mute" style="margin-top:10px">Also add it to Google: Business Profile, Edit profile, Menu.</p>`, key); }
+  if (kind === "schema") return modal("The code for your website", `<p class="sm">This tells Google exactly what you are, where, and when you're open. Send it to whoever does your website: it goes in the page's head, and changes nothing you can see.</p>
+    <label class="f"><span>Your phone number (optional)</span><input id="k-phone" value="${esc(S.settings.phone || "")}" inputmode="tel" placeholder="0161 000 0000"></label>${box("k-schema", schemaFor(), 16)}
+    <p class="sm mute">Check it after with <a href="https://search.google.com/test/rich-results" target="_blank" rel="noopener">Google's Rich Results Test</a>.</p>`, key);
+  if (kind === "title") { const t = Kt.titleFor(v.name, null, place.split(",")[0]);
+    return modal("Your homepage title", `<p class="sm">The title is the blue link people see on Google. Make it say what you are and where:</p>${box("k-title", t, 2)}
+      ${steps(["Squarespace: Settings, then SEO, then Home page title", "Wix: your homepage's SEO settings, then Title tag", "WordPress: the SEO box under your homepage (Yoast or Rank Math)"])}`, key); }
+  if (kind === "nap") { const t = `${v.name}\n${v.address ? v.address + "\n" : ""}${v.postcode || ""}\n${S.settings.phone || "[your phone number]"}`;
+    return modal("Your address, for every page", `<p class="sm">Put this in your website's footer so it's on every page. Use exactly the same wording as on Google.</p>${box("k-nap", t, 5)}`, key); }
+  if (kind === "web") { const fails = ((facts().seo || {}).fails || []).filter(f => f.src === "site").map(f => f.fix);
+    return modal("A message for your web person", `<p class="sm">Everything your website is missing, in one message. Copy it into an email or WhatsApp.</p>${box("k-web", Kt.webBrief(v.name, S.settings.website, fails.length ? fails : [a.why]))}
+      <p class="sm mute" style="margin-top:10px">No web person? A one-page site with your menu, hours and address on Squarespace or Wix takes an afternoon.</p>`, key); }
+}
+function schemaFor() { const v = W.venue; return Kt.schemaJson({ name: v.name, address: v.address, postcode: v.postcode, phone: S.settings.phone, url: S.settings.website, hours: W.report && W.report.venue && W.report.venue.hours, lat: v.lat, lng: v.lng }); }
+
+/* review QR card */
+function reviewsModal(a) {
+  const link = S.settings.reviewLink || "";
+  modal("Your review QR card", `<p class="sm">A card by the till does most of the asking for you. First, your review link:</p>
+    ${steps([`Open <a href="${BP}" target="_blank" rel="noopener">Google Business Profile</a>, or search your café on Google while signed in`, "Tap <b>Ask for reviews</b> (sometimes <b>Get more reviews</b>)", "Copy the link: it starts <b>https://g.page/r/</b>"])}
+    <label class="f"><span>Your review link</span><input id="k-rl" value="${esc(link)}" inputmode="url" placeholder="https://g.page/r/…/review"></label><p class="err" id="k-rlerr"></p>
+    <div class="btns"><button class="btn sm" data-k="rl-make">Make my card</button>${D.DEMO ? `<button class="btn q sm" data-k="rl-demo">Use a demo link</button>` : ""}</div><div id="k-card">${link ? "" : ""}</div>`, a.key);
+  if (link) makeCard(link);
+}
+function makeCard(url) {
+  const qr = qrcode(0, "M"); qr.addData(url); qr.make(); const n = qr.getModuleCount();
+  const W2 = 1240, H2 = 1748, c = document.createElement("canvas"); c.width = W2; c.height = H2; const g = c.getContext("2d");
+  g.fillStyle = "#ffffff"; g.fillRect(0, 0, W2, H2); g.fillStyle = "#1f58a8"; g.fillRect(0, 0, W2, 26);
+  g.fillStyle = "#14201b"; g.textAlign = "center"; g.font = "700 78px 'Space Grotesk', system-ui, sans-serif"; g.fillText(fit(g, "Enjoyed it?", 1080), W2 / 2, 190);
+  g.font = "400 50px Inter, system-ui, sans-serif"; g.fillStyle = "#3d4a44"; g.fillText("We'd love a Google review", W2 / 2, 270);
+  stars(g, W2 / 2, 360, 5, 34);
+  const size = 760, cell = Math.floor(size / (n + 8)), qs = cell * (n + 8), x0 = (W2 - qs) / 2, y0 = 440;
+  g.fillStyle = "#ffffff"; g.fillRect(x0, y0, qs, qs); g.fillStyle = "#14201b";
+  for (let r = 0; r < n; r++) for (let q = 0; q < n; q++) if (qr.isDark(r, q)) g.fillRect(x0 + (q + 4) * cell, y0 + (r + 4) * cell, cell, cell);
+  g.font = "600 46px Inter, system-ui, sans-serif"; g.fillStyle = "#14201b"; g.fillText("Point your camera here", W2 / 2, y0 + qs + 80);
+  g.font = "400 38px Inter, system-ui, sans-serif"; g.fillStyle = "#5a6660"; g.fillText("It takes 30 seconds. Thank you!", W2 / 2, y0 + qs + 140);
+  g.font = "700 64px 'Space Grotesk', system-ui, sans-serif"; g.fillStyle = "#14201b"; g.fillText(fit(g, W.venue.name, 1100), W2 / 2, H2 - 110);
+  const png = c.toDataURL("image/png"), file = (W.venue.name || "cafe").replace(/[^a-z0-9]+/gi, "-").toLowerCase() + "-review-card.png";
+  $("#k-card").innerHTML = `<img class="qrcard" src="${png}" alt="A card for the till: a QR code that opens your Google review page">
+    <div class="btns"><a class="btn sm" href="${png}" download="${esc(file)}">Download the card</a><a class="btn q sm" href="${esc(url)}" target="_blank" rel="noopener">Test the link</a></div>
+    <p class="xs mute">On a phone, press and hold the card to save it. It's A6 size: print it at any print shop or at home, and stand it by the till or stick it on tables.</p>
+    <p class="sm" style="margin-top:12px"><b>A message for regulars</b> (WhatsApp, Instagram, email)</p>${box("k-ask", Kt.reviewAsk(W.venue.name, url), 4)}`;
+}
+const fit = (g, t, max) => { let s = String(t); while (g.measureText(s).width > max && s.length > 4) s = s.slice(0, -2) + "…"; return s; };
+function stars(g, cx, cy, n, r) { g.fillStyle = "#f2b01e"; for (let i = 0; i < n; i++) { const x = cx + (i - (n - 1) / 2) * r * 2.6; g.beginPath(); for (let k = 0; k < 10; k++) { const a = Math.PI / 2 * 3 + k * Math.PI / 5, rr = k % 2 ? r * 0.45 : r; g.lineTo(x + Math.cos(a) * rr, cy + Math.sin(a) * rr); } g.closePath(); g.fill(); } }
+
+/* renewals and certificates */
+let DOC = null;
+const dY = x => new Date(x + "T12:00:00Z").toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+const gbp = x => "£" + (+x).toLocaleString("en-GB", { minimumFractionDigits: x % 1 ? 2 : 0, maximumFractionDigits: 2 });
+function docModal(a, rid) {
+  const rem = rid ? (S.reminders || []).find(r => r.id === rid) : (S.reminders || []).find(r => a && ("rem:r:" + r.id) === a.key);
+  const d = Kt.docFor(rem ? rem.t : a ? a.t : ""), last = (S.docs || []).filter(x => rem && x.rid === rem.id).sort((x, y) => y.at.localeCompare(x.at))[0];
+  DOC = { key: a ? a.key : null, rid: rem ? rem.id : null, title: rem ? rem.t : "Document", kind: d.kind, facts: {}, file: null };
+  modal(rem ? rem.t : "Add a renewal or certificate", `${!rem ? `<label class="f"><span>What is it?</span><select id="k-docrem">${(S.reminders || []).map(r => `<option value="${r.id}">${esc(r.t)}</option>`).join("")}</select></label>` : ""}
+    <p class="sm">Upload ${esc(d.ask)} as a PDF or a photo. We'll read the dates${d.kind === "insurance" ? " and what you paid" : ""}, set your next reminder, and keep it with your records.</p>
+    ${rem ? steps(Kt.renewalSteps(d.kind, last)) : ""}${last ? `<p class="sm mute">Last one: ${esc(last.name)}, added ${dd(last.at)}${last.due ? `, next due ${dY(last.due)}` : ""}${last.premium ? `, ${gbp(last.premium)}` : ""}.</p>` : ""}
+    <label class="drop" style="display:block"><b>Choose the file</b><br><span class="sm mute">PDF, or a clear photo of the page with the dates</span><input type="file" id="k-docfile" accept=".pdf,application/pdf,image/*" style="display:block;margin:8px auto 0"></label>
+    <div id="k-docfacts"></div>`, null);
+  if (!rem) $("#k-docrem").addEventListener("change", e => { const r = S.reminders.find(x => x.id === e.target.value); DOC.rid = r.id; DOC.title = r.t; DOC.kind = Kt.docFor(r.t).kind; });
+  if (!rem && S.reminders && S.reminders[0]) { DOC.rid = S.reminders[0].id; DOC.title = S.reminders[0].t; DOC.kind = Kt.docFor(DOC.title).kind; }
+}
+async function readDoc(file) {
+  const out = $("#k-docfacts"); if (file.size > 8 * 1024 * 1024) { out.innerHTML = `<p class="err">That's over 8MB. Try a PDF, or a smaller photo.</p>`; return; }
+  out.innerHTML = `<p class="sm mute">Reading ${esc(file.name)}…</p>`; let text = "";
+  if (/pdf/i.test(file.type) || /\.pdf$/i.test(file.name)) { try { text = await pdfText(file); } catch (e) { text = ""; } }
+  let f = text ? Kt.docFacts(text, DOC.title, today) : {}; DOC.facts = f; DOC.file = file; DOC.stored = null;
+  // A photo or a scan, or a PDF we couldn't find the date in: Claude reads it (live only).
+  if (!f.due && !D.DEMO) { try { DOC.stored = await storeDoc(file); out.innerHTML = `<p class="sm mute">Reading it…</p>`; const g = await readPhoto(DOC.stored.path, "doc", DOC.title);
+    if (!g.error && (g.due || g.done)) { f = { due: g.due || (g.done ? Kt.addMonths(g.done, Kt.docFor(DOC.title).every) : null), dueFrom: g.due ? "the document" : "the date it was done", done: g.done, premium: g.premium, insurer: g.insurer, policy: g.policy }; DOC.facts = f; text = "read"; } } catch (e) { /* fall back to typing it in */ } }
+  const ins = DOC.kind === "insurance";
+  out.innerHTML = `<p class="sm" style="margin-top:12px">${f.due ? `Found the next date: <b>${dY(f.due)}</b> (from ${esc(f.dueFrom)}). Check it's right:` : D.DEMO && !text ? "In the live version, Claude reads photos for you. In the demo, add the dates here:" : "We couldn't find the dates in it. Add them here:"}</p>
+    <div class="pcheck"><label class="f"><span>Next due</span><input type="date" id="k-due" value="${esc(f.due || "")}"></label>${ins ? `<label class="f"><span>Price paid (£)</span><input id="k-prem" inputmode="decimal" value="${esc(f.premium ?? "")}"></label><label class="f"><span>Insurer</span><input id="k-ins" value="${esc(f.insurer || "")}"></label>` : `<label class="f"><span>Done on</span><input type="date" id="k-done" value="${esc(f.done || "")}"></label>`}</div>
+    <p class="err" id="k-docerr"></p><button class="btn sm" data-k="doc-save">Save and set my reminder</button>`;
+}
+async function saveDoc(btn) {
+  const due = $("#k-due").value, err = $("#k-docerr"); if (!due) { err.textContent = "Add the date the next one is due."; return; }
+  if (due < today) { err.textContent = "That date has passed: is it the next one?"; return; }
+  btn.disabled = true; btn.textContent = "Saving…";
+  try {
+    const file = DOC.file, stored = DOC.stored || await storeDoc(file);
+    const prem = $("#k-prem") ? parseFloat(($("#k-prem").value || "").replace(/[£,\s]/g, "")) : NaN;
+    const rec = { id: O.uid(), rid: DOC.rid, kind: DOC.kind, title: DOC.title, name: file.name, size: file.size, type: file.type, at: today, due, done: $("#k-done") ? $("#k-done").value || null : null,
+      premium: isNaN(prem) ? null : prem, insurer: $("#k-ins") ? $("#k-ins").value.trim() || null : null, policy: DOC.facts.policy || null, file: stored };
+    S.docs = S.docs || []; S.docs.push(rec);
+    const r = (S.reminders || []).find(x => x.id === DOC.rid); if (r) { r.due = due; r.done = false; }
+    if (DOC.key) setAction(DOC.key, "done");
+    save("Saved. We'll remind you before " + dY(due)); closeModal(); render();
+  } catch (e) { err.textContent = "Not saved: " + e.message; btn.disabled = false; btn.textContent = "Save and set my reminder"; }
+}
+// Live: the file goes to private storage through our server, which checks the owner's link. Demo: small files stay in this browser.
+async function storeDoc(file) {
+  if (D.DEMO) { if (file.size > 300 * 1024) return { kept: false, note: "In the demo, files over 300KB aren't kept" };
+    return { data: await new Promise(ok => { const r = new FileReader(); r.onload = () => ok(r.result); r.readAsDataURL(file); }) }; }
+  const fd = new FormData(); fd.append("t", token); fd.append("file", file);
+  const r = await fetch("/api/owner-doc", { method: "POST", body: fd }), j = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(j.error || "the upload didn't work"); return { path: j.path };
+}
+// Claude reads a stored photo or scan (live only). Returns lines for an invoice, or dates for a renewal.
+async function readPhoto(path, kind, title) {
+  try { const r = await fetch("/api/read-photo", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ t: token, path, kind, title }) });
+    return await r.json().catch(() => ({ error: "We couldn't read it" })); } catch (e) { return { error: "We couldn't reach the reader" }; }
+}
+// The owner's own menu board: Claude reads it (live), they check the prices, and it goes to Patch to update their comparison.
+let MENU = null;
+async function readMenu(file) {
+  const out = $("#menuRead"); MENU = { prices: {}, path: null };
+  if (!D.DEMO) { out.innerHTML = `<p class="sm mute">Reading your board…</p>`; try { const st = await storeDoc(file); MENU.path = st.path; const g = await readPhoto(st.path, "menu"); if (!g.error) MENU.prices = g.prices || {}; else out.dataset.err = g.error; } catch (e) { out.dataset.err = e.message; } }
+  const n = Object.keys(MENU.prices).length;
+  out.innerHTML = `<p class="sm" style="margin-top:10px">${D.DEMO ? "In the live version, Claude reads your board and fills these in. In the demo, type a few:" : n ? `We read ${n} prices. Check them, and fill in any we missed:` : `We couldn't read the prices${out.dataset.err ? ` (${esc(out.dataset.err)})` : ""}. Type them in instead:`}</p>
+    <div class="pcheck" style="grid-template-columns:repeat(auto-fill,minmax(130px,1fr))">${P.ITEMS.map(i => `<label class="f"><span>${esc(i.t)}</span><input inputmode="decimal" data-mb="${i.k}" value="${MENU.prices[i.k] ?? ""}" placeholder="£"></label>`).join("")}</div><p class="err" id="mbErr"></p><button class="btn sm" data-k="mb-save">Send to Patch</button>`;
+}
+function saveMenu() {
+  const prices = {}, bad = []; document.querySelectorAll("[data-mb]").forEach(i => { const v = i.value.trim(); if (!v) return; const x = parseFloat(v.replace(/[£,\s]/g, "")); if (isNaN(x) || x < 0.05 || x > 40) bad.push(P.ITEM[i.dataset.mb].t); else prices[i.dataset.mb] = Math.round(x * 100) / 100; });
+  if (bad.length) { $("#mbErr").textContent = "Check: " + bad.join(", "); return; } if (!Object.keys(prices).length) { $("#mbErr").textContent = "Add at least one price."; return; }
+  S.menuBoard = { at: today, prices, path: MENU && MENU.path, used: false }; save("Sent. We'll update your comparison."); render();
+}
+async function openDoc(id) {
+  const x = (S.docs || []).find(d => d.id === id); if (!x || !x.file) return;
+  if (x.file.data) { const u = URL.createObjectURL(await (await fetch(x.file.data)).blob()); const w = window.open(u, "_blank"); if (!w) toast("Your browser blocked the new tab"); return; }
+  if (x.file.path) { const r = await fetch(`/api/owner-doc?t=${encodeURIComponent(token)}&path=${encodeURIComponent(x.file.path)}`), j = await r.json().catch(() => ({})); if (j.url) location.href = j.url; else toast(j.error || "Couldn't open it"); }
+}
+function docsList() {
+  const docs = (S.docs || []).slice().sort((a, b) => (a.due || "9").localeCompare(b.due || "9"));
+  return docs.length ? `<div class="card uploads" style="margin-top:10px">${docs.map(x => `<div class="line"><span>${esc(x.title)}<br><span class="xs mute">${esc(x.name)} · added ${dd(x.at)}${x.premium ? ` · ${gbp(x.premium)}` : ""}${x.insurer ? " · " + esc(x.insurer) : ""}</span></span><span class="sm" style="text-align:right">${x.due ? `Next due<br><b>${dY(x.due)}</b>` : ""}${x.file && (x.file.data || x.file.path) ? `<br><button class="linkbtn xs" data-opendoc="${x.id}">Open</button>` : ""}</span></div>`).join("")}</div>` : "";
+}
+
+/* ---------- events ---------- */
+function setAction(key, status) { S.actions = S.actions || {}; S.actions[key] = { status, at: today }; save(status === "done" ? "Nice one. Marked as done." : null); }
+function go(where) { const [t, sub] = String(where).split(":"); V.tab = t === "more" ? (sub === "reminders" ? "actions" : "insights") : t; V.sub = t === "insights" ? sub || null : t === "more" && sub !== "reminders" ? (sub === "area" ? "local" : sub) : null; render(); }
+document.addEventListener("click", async e => {
+  const t = e.target.closest("button,[data-go],[data-sub],[data-day]"); if (!t) return; const d = t.dataset;
+  if (d.dismiss) { e.stopPropagation(); S.dismissed = S.dismissed || {}; S.dismissed[d.dismiss] = today; save(); return render(); }
+  if (d.tab || d.tabGo) { V.tab = d.tab || d.tabGo; V.sub = null; return render(); }
+  if (d.go) return go(d.go);
+  if (d.sub !== undefined) { V.sub = d.sub || null; return render(); }
+  if (d.day) { V.day = d.day; return render(); }
+  if (d.filter) { V.filter = d.filter; return render(); }
+  if (d.doing) { setAction(d.doing, "doing"); return render(); }
+  if (d.skip) { setAction(d.skip, "skip"); return render(); }
+  if (d.undo) { setAction(d.undo, "todo"); return render(); }
+  if (d.done) { const a = facts().thread.find(x => x.key === d.done);
+    if (a && a.done === "logprice") return priceModal(Object.assign({ key: a.key }, a.prefill));
+    setAction(d.done, "done"); if (a && a.key.startsWith("rem:")) { const k = a.key.slice(4), own = (S.reminders || []).find(r => "r:" + r.id === k);
+      if (own) { if (own.every) { const n = new Date((own.due || today) + "T12:00:00Z"); n.setUTCMonth(n.getUTCMonth() + +own.every); own.due = O.iso(n); } else own.done = true; } else { S.dismissed = S.dismissed || {}; S.dismissed[k] = today; } }
+    return render(); }
+  if (d.kit) return openKit(d.kit);
+  if (d.adddoc) return docModal(null);
+  if (d.opendoc) return openDoc(d.opendoc);
+  if (d.kitdone) { setAction(d.kitdone, "done"); closeModal(); return render(); }
+  if (d.copybox) { const el = $("#" + d.copybox); try { await navigator.clipboard.writeText(el.value); toast("Copied"); } catch (x) { el.focus(); el.select(); toast("Selected: copy it from here"); } return; }
+  if (d.k === "rl-demo") { $("#k-rl").value = "https://g.page/r/CdemoLittleFigEAE/review"; }
+  if (d.k === "rl-make" || d.k === "rl-demo") { const r = Kt.reviewLink($("#k-rl").value); $("#k-rlerr").textContent = r.error || ""; if (r.error) return; S.settings.reviewLink = r.url; save(); makeCard(r.url); return; }
+  if (d.k === "doc-save") return saveDoc(t);
+  if (d.k === "mb-save") return saveMenu();
+  if (d.pcsave) { const k = d.pcsave, v = f => (document.querySelector(`[data-pc="${k}.${f}"]`) || {}).value || "", price = parseFloat(v("price").replace(/[£,\s]/g, ""));
+    const err = $("#pc-" + k); if (!(price > 0)) { err.textContent = "Type in what you pay, in pounds."; return; }
+    if (!I.packSize(v("pack"), I.SUPPLY[k].unit)) { err.textContent = `We can't tell how much is in “${v("pack")}”. Try something like 6 x 1L, 1kg or box of 1000.`; return; }
+    S.priceCheck = S.priceCheck || {}; S.priceCheck[k] = { price, pack: v("pack").trim(), weekly: parseFloat(v("weekly")) || I.SUPPLY[k].wk, at: today }; V.pb = k; save("Compared"); return render(); }
+  if (d.pcclear) { delete (S.priceCheck || {})[d.pcclear]; V.pb = d.pcclear; save("Cleared"); return render(); }
+  if (d.reply) { V.reply = d.reply; return render(); }
+  if (d.replied) { const r = S.reviews.find(x => x.id === d.replied); r.replied = true; V.reply = null; save("Marked as replied"); return render(); }
+  if (d.copy != null) { const el = $("#post" + d.copy); try { await navigator.clipboard.writeText(el.textContent); toast("Copied"); } catch (x) { const r = document.createRange(); r.selectNodeContents(el); getSelection().removeAllRanges(); getSelection().addRange(r); } return; }
+  if (d.delprep) { S.prep.splice(+d.delprep, 1); save(); return render(); }
+  switch (d.act) {
+    case "addprep": S.prep.push({ name: "", perDay: "" }); return render();
+    case "logchange": { const it = $("#pc-item").value.trim(), f = parseFloat($("#pc-from").value), to = parseFloat($("#pc-to").value);
+      if (!it || isNaN(f) || isNaN(to)) { $("#pc-err").textContent = "Fill in the item, what it was and what it is now."; return; }
+      S.changes = S.changes || []; S.changes.push({ id: O.uid(), item: it, k: (P.ITEMS.find(i => i.t.toLowerCase() === it.toLowerCase()) || {}).k, from: f, to, at: $("#pc-at").value || today });
+      if (d.key) setAction(d.key, "done"); save("Logged. We'll track what it brings in."); const m = $("#modal"); if (m) m.remove(); return render(); }
+    case "closemodal": return $("#modal").remove();
+    case "addreview": { const txt = $("#rv-t").value.trim(); if (!txt) return; S.reviews = S.reviews || []; S.reviews.push({ id: O.uid(), at: today, rating: +$("#rv-r").value, author: $("#rv-a").value.trim(), text: txt }); save("Added"); return render(); }
+    case "copyreply": try { await navigator.clipboard.writeText($("#replyText").value); toast("Copied"); } catch (x) { $("#replyText").select(); } return;
+  }
+});
+function priceModal(pre) {
+  const m = document.createElement("div"); m.className = "modal"; m.id = "modal";
+  m.innerHTML = `<div class="box" role="dialog" aria-modal="true" aria-labelledby="mt"><h2 id="mt">What did you change it to?</h2><p class="sm mute">We'll track what it brings in, from your sales.</p>${priceForm(pre)}<button class="btn q" data-act="closemodal" style="margin-left:6px">Cancel</button></div>`;
+  document.body.appendChild(m);
+}
+document.addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === " ") && e.target.matches(".item[data-go]")) { e.preventDefault(); go(e.target.dataset.go); } });
+document.addEventListener("toggle", e => { const el = e.target; if (el.matches && el.matches("details.pb")) { if (el.open) V.pb = el.dataset.pb; else if (V.pb === el.dataset.pb) V.pb = null; } }, true);
+document.addEventListener("change", e => {
+  const t = e.target, d = t.dataset;
+  if (d.file && t.files.length) return handleFiles(d.file, [...t.files]);
+  if (t.id === "k-docfile" && t.files.length) return readDoc(t.files[0]);
+  if (t.id === "menuIn" && t.files.length) return readMenu(t.files[0]);
+  if (t.id === "emailOn") { D.rpc("owner_email_pref", { p_token: token, p_on: t.checked }).then(ok => { W.emailOn = t.checked; toast(ok ? (t.checked ? "We'll email you on Mondays" : "No more Monday emails") : "Not saved"); }).catch(e => toast("Not saved: " + e.message)); return; }
+  if (t.id === "k-phone") { S.settings.phone = t.value.trim(); save(); $("#k-schema").value = schemaFor(); return; }
+  if (d.shot != null) { S.shots = S.shots || {}; S.shots[d.shot] = t.checked; save(); return; }
+  if (d.set) { S.settings[d.set] = ["special", "website"].includes(d.set) ? t.value.trim() : +t.value || ""; save("Saved"); if (d.set !== "website") render(); return; }
+  if (d.prep) { const [i, k] = d.prep.split("."); S.prep[+i][k] = k === "perDay" ? +t.value || "" : t.value; save("Saved"); return; }
+  if (d.rem != null) { S.reminders[+d.rem].due = t.value || null; S.reminders[+d.rem].done = false; save("Saved"); }
+});
+["dragenter", "dragover"].forEach(ev => document.addEventListener(ev, e => { const z = e.target.closest && e.target.closest("[data-drop]"); if (z) { e.preventDefault(); z.classList.add("over"); } }));
+["dragleave", "drop"].forEach(ev => document.addEventListener(ev, e => { const z = e.target.closest && e.target.closest("[data-drop]"); if (z) { e.preventDefault(); z.classList.remove("over"); if (ev === "drop" && e.dataTransfer.files.length) handleFiles(z.dataset.drop, [...e.dataTransfer.files]); } }));
+
+/* ---------- start ---------- */
+async function boot() {
+  if (D.DEMO) $("#demo").innerHTML = `<p class="demo"><b>Demo.</b> A made-up café with made-up figures. Changes stay in this browser.</p>`;
+  if (!token) { $("#app").innerHTML = `<p class="card">Open Patch from the link in your email.</p>`; return; }
+  try { W = await D.rpc("owner_get", { p_token: token }); } catch (e) { W = null; }
+  if (!W || !W.venue) { $("#app").innerHTML = `<p class="card">We couldn't find your café. Use the link from your email.</p>`; return; }
+  W.area = W.area || { name: "", calendar: [], costs: [] };
+  // After a price sweep, the area's latest comparison is fresher than the report snapshot.
+  if (W.rank && W.rank.prices && W.rank.prices.length) W.report = Object.assign({}, W.report || {}, { items: W.rank.prices });
+  S = W.state || {}; S.settings = Object.assign({ perStaffHour: 60, minStaff: 1, special: "", website: "" }, S.settings || {}); S.prep = S.prep || [];
+  if (!S.reminders) S.reminders = O.DEFAULT_REMINDERS.map(([t, every]) => ({ id: O.uid(), t, every, due: null }));
+  $("#who").innerHTML = `<b>${esc(W.venue.name)}</b><br>${esc(W.area.name)}`; document.title = `${W.venue.name} · Patch`; $("#tabs").hidden = false;
+  render();
+}
+window.__owner = { get S() { return S; }, V, facts: () => facts() };
+boot();
+})();
+</script>
+</body>
+</html>

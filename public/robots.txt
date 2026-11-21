@@ -1,9 +1,7 @@
 User-agent: *
-Allow: /
 Disallow: /admin
-Disallow: /area-report
-Disallow: /coordinator
-Disallow: /plan
+Disallow: /owner
+Disallow: /report
+Disallow: /visit
 Disallow: /api/
-
-Sitemap: https://getfettle.co.uk/sitemap.xml
+Disallow: /sweep

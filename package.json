@@ -1,1 +1,12 @@
-{ "name": "fettle", "private": true, "type": "module", "scripts": { "test": "node --test tests/functions.test.js tests/alerts.test.js tests/call-kit.test.js" } }
+{
+  "name": "patch",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/core.test.js tests/ops.test.js tests/insights.test.js tests/kits.test.js tests/server.test.js tests/ownerdoc.test.js tests/emails.test.js tests/sweep.test.js",
+    "test:browser": "node tests/browser/demo.test.cjs && node tests/browser/owner.test.cjs && node tests/browser/visit.test.cjs && node tests/browser/sweep.test.cjs"
+  },
+  "devDependencies": {
+    "playwright": "1.63.0"
+  }
+}

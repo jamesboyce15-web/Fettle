@@ -1,0 +1,20 @@
+# Each morning: James's round-up of new requests, and on Mondays each owner's week.
+# Needs two repository secrets: PATCH_URL (the live site, like https://patch.example.co.uk) and PATCH_CRON_SECRET
+# (the same value as CRON_SECRET in Cloudflare). Until both exist this does nothing.
+name: Daily emails
+on:
+  schedule:
+    - cron: "0 7 * * *"   # 7am UTC: 7am in winter, 8am in summer
+  workflow_dispatch:
+permissions: {}
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call the daily job
+        env:
+          URL: ${{ secrets.PATCH_URL }}
+          SECRET: ${{ secrets.PATCH_CRON_SECRET }}
+        run: |
+          if [ -z "$URL" ] || [ -z "$SECRET" ]; then echo "Not set up yet"; exit 0; fi
+          curl -sS --fail-with-body -X POST "$URL/api/cron" -H "x-cron-secret: $SECRET"

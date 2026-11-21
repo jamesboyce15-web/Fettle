@@ -1,5 +1,0 @@
-0|Rezumăm știri din surse publice și punem link la fiecare, ca să le poți verifica. În caz de urgență, urmează avertizările oficiale.
-1|Limba nu s-a încărcat. Verifică semnalul și încearcă din nou.
-2|Nu ne-am putut conecta. Verifică semnalul și încearcă din nou.
-3|Planifică împreună cu familia: adaugă-i pe mama, tata sau un bunic și împărțiți sarcinile.
-4|Casele familiei tale, legate cu Fettle Connect.

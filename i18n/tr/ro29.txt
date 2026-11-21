@@ -1,5 +1,0 @@
-0|Campania Be Ready a guvernului cere fiecărei locuințe să se poată descurca trei zile.
-1|Opțional. Nu vă schimbă scorul.
-2|Aflați acum, pe site-ul furnizorului, cum activați creditul de urgență (emergency credit).
-3|Vreau să ajut consiliul local (council) să planifice. {0}Opțional. Includeți gospodăria mea în totalurile anonime pentru zona mea. Niciodată răspunsurile sau datele mele de contact și niciodată un grup mai mic de {1} locuințe.{2}
-4|Un plan pentru casa dumneavoastră: verificare gratuită de {0} minute

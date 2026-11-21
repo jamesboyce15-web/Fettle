@@ -1,9 +1,0 @@
-0|Cele mai probabile urgențe pentru locuințele din Marea Britanie sunt furtunile puternice, penele de curent de peste o zi, inundațiile, frigul extrem și întreruperea apei. Forumul local de reziliență (Local Resilience Forum) enumeră riscurile pentru zona ta în registrul său (Community Risk Register). Ca să-l găsești, caută online numele consiliului tău și „community risk register”.
-1|O oră sau două, gratuit. Cursurile și ghidurile gratuite sunt pe pagina despre prim ajutor.
-2|Dacă vi se spune că canalizarea nu funcționează, cum se poate întâmpla la o pană de curent la nivel național, nu trageți deloc apa. Puneți un sac de gunoi rezistent în toaletă, apoi legați-l și puneți-l în coșul de afară (medicii-șefi ai Marii Britanii).
-3|Numărul are {0} cifre. Numerele de telefon din Marea Britanie au {1} cifre. Vă rugăm să-l verificați.
-4|Numărul are {0} cifre. Numerele de telefon din Marea Britanie au {1} cifre. Vă rugăm să-l verificați. Dacă este corect, apăsați din nou Continuă.
-5|Numerele de telefon din Marea Britanie încep cu {0}. Vă rugăm să-l verificați.
-6|Numerele de telefon din Marea Britanie încep cu {0}. Vă rugăm să-l verificați. Dacă este corect, apăsați din nou Continuă.
-7|Cartea gospodăriei tale. Se tipărește pe A4, {0} pagini.
-8|Ce ar trebui să conțină

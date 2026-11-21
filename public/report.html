@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Your Patch report</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@500;700&display=swap">
+<link rel="stylesheet" href="patch.css">
+<style>
+.head{padding:10px 0 4px}
+.big{font-family:var(--serif);font-size:clamp(2.2rem,7vw,3.4rem);line-height:1;color:var(--accent2);margin:4px 0}
+.prow{display:grid;grid-template-columns:150px 80px 1fr;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.prow:last-child{border-bottom:0}
+.prow .p{font-weight:700;font-variant-numeric:tabular-nums}
+.prow .note{grid-column:2/-1;font-size:.86rem;color:var(--mute);margin-top:-4px}
+.prow details{grid-column:1/-1;font-size:.86rem}
+.acts{margin:0;padding-left:1.2em}.acts li{margin:0 0 8px}
+.crow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px 12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.crow:last-child{border-bottom:0}
+.cname{grid-column:1/-1;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.crow label{font-size:.78rem;color:var(--mute);display:flex;flex-direction:column;justify-content:flex-end;gap:3px}
+.crow input{border:1px solid var(--line);border-radius:8px;padding:8px;background:var(--card);font-variant-numeric:tabular-nums;width:100%}
+.crow .sug{grid-column:1/-1;margin:0;font-size:.88rem}
+.gain{font-weight:700;color:var(--good);margin-left:auto}
+.calc{width:100%;border-collapse:collapse;font-size:.92rem}
+.calc th,.calc td{padding:7px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.calc th{font-size:.72rem;text-transform:uppercase;color:var(--mute);letter-spacing:.04em}
+.calc input{width:74px;border:1px solid var(--line);border-radius:8px;padding:6px;background:var(--card);text-align:right;font-variant-numeric:tabular-nums}
+.calc .sug{font-size:.84rem;color:var(--mute);max-width:320px}
+.calc .gain{font-weight:700;color:var(--good);white-space:nowrap}
+.found{background:var(--tint);border-color:transparent}
+.heat{border-collapse:separate;border-spacing:3px;font-size:.78rem;font-variant-numeric:tabular-nums;min-width:440px}
+.heat th{font-weight:600;color:var(--mute);padding:2px 4px}
+.heat td{text-align:center;padding:6px 2px;border-radius:6px;min-width:46px;position:relative}
+.heat td span{position:relative}
+.heat td i{position:absolute;inset:0;border-radius:6px;background:var(--accent)}
+.heatwrap{overflow-x:auto}
+.fx{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}.fx:last-child{border-bottom:0}
+.drop{border:2px dashed var(--line);border-radius:14px;padding:18px;text-align:center}
+.drop input{max-width:100%}
+.key{display:flex;gap:16px;flex-wrap:wrap;font-size:.82rem;color:var(--mute);margin:4px 0 8px}
+.key i{display:inline-block;vertical-align:middle;margin-right:6px}
+@media(max-width:620px){.prow{grid-template-columns:1fr 70px}.prow .range{grid-column:1/-1}.prow .note{grid-column:1/-1}.calcwrap{overflow-x:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top noprint"><a class="brand" href="./">Patch<i>.</i></a><span class="sp"></span><button class="btn q sm" onclick="print()">Print</button></header>
+  <div id="demo"></div>
+  <main id="app"><p class="mute">Loading your report…</p></main>
+  <footer id="foot"></footer>
+</div>
+<script src="config.js"></script>
+<script src="patch-core.js"></script>
+<script src="patch-data.js"></script>
+<script>
+(function () {
+"use strict";
+const P = PatchCore, D = PatchData, CFG = D.CFG, Q = new URLSearchParams(location.search), token = Q.get("t") || "";
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const money = P.money, fmtD = s => s ? new Date(s).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) : "";
+const pounds = n => "£" + Math.round(n).toLocaleString("en-GB");
+const KEY = "patch-calc-" + token;
+let R = null, rows = [];
+
+function bar(i) {
+  if (i.median == null) return `<span class="sm mute">Not enough nearby prices yet</span>`;
+  const xs = i.peers.map(p => p.price).concat(i.mine != null ? [i.mine] : []), lo = Math.min(...xs) * 0.95, hi = Math.max(...xs) * 1.05, pc = x => Math.max(0, Math.min(100, ((x - lo) / (hi - lo || 1)) * 100));
+  return `<div class="range" role="img" aria-label="Nearby cafés mostly charge ${money(i.low)} to ${money(i.high)}, middle ${money(i.median)}${i.mine != null ? `; you charge ${money(i.mine)}` : ""}"><div class="track"></div>
+    <div class="band" style="left:${pc(i.low)}%;width:${pc(i.high) - pc(i.low)}%"></div><div class="med" style="left:${pc(i.median)}%"></div>${i.mine != null ? `<div class="me" style="left:${pc(i.mine)}%"></div>` : ""}</div>`;
+}
+function itemNote(i) {
+  if (i.mine == null || i.median == null) return i.mine == null && i.median != null ? `Nearby middle price ${money(i.median)}. We don't have yours yet.` : "";
+  const d = i.diff, n = i.peers.length;
+  if (Math.abs(d) < 0.05) return `In line with the middle of the ${n} cafés near you.`;
+  return d < 0 ? `${P.pence(-d)} below the middle price of ${money(i.median)}. ${i.cheaperThan} of ${n} nearby cafés charge more.` : `${P.pence(d)} above the middle price of ${money(i.median)}. ${n - i.cheaperThan} of ${n} nearby cafés charge more or the same.`;
+}
+
+function render() {
+  const s = R.report, v = s.venue, priced = s.items.filter(i => i.mine != null && i.median != null);
+  const below = priced.filter(i => i.diff <= -0.05).length, above = priced.filter(i => i.diff >= 0.05).length;
+  const far = s.near.length ? s.near[s.near.length - 1].d : 0;
+  let h = `<section class="head"><p class="sm mute">Your Patch report · ${fmtD(s.at)}</p><h1>${esc(v.name)}</h1>
+    <p class="lede">How you compare with the ${s.near.length} cafés nearest you, all within ${far.toFixed(1)} miles, in ${esc(s.area.name)}.</p></section>`;
+  h += `<section class="card"><div id="headline"></div></section>`;
+  if ((s.actions || []).length) h += `<section class="card"><h2>What we'd look at first</h2><ol class="acts">${s.actions.map(a => `<li>${esc(a)}</li>`).join("")}</ol></section>`;
+  h += `<section class="card"><h2>Your prices against your neighbours</h2><p class="sm mute">${priced.length ? `You're below the middle price on ${below} item${below === 1 ? "" : "s"}, and above it on ${above}.` : "We need your prices to compare them."}</p>
+    <div class="key"><span><i style="width:26px;height:11px;border-radius:6px;background:var(--tint)"></i>Where most nearby cafés are</span><span><i style="width:2px;height:14px;background:var(--mute)"></i>Middle price</span><span><i style="width:14px;height:14px;border-radius:50%;background:var(--accent)"></i>You</span></div>
+    ${s.items.filter(i => i.median != null || i.mine != null).map(i => `<div class="prow"><span>${esc(i.t)}</span><span class="p">${i.mine != null ? money(i.mine) : "–"}</span>${bar(i)}<span class="note">${esc(itemNote(i))}</span>
+      ${i.peers.length ? `<details><summary>The ${i.peers.length} nearby prices</summary><table class="t"><tbody>${i.peers.slice().sort((a, b) => a.price - b.price).map(p => `<tr><td>${esc(p.name)}</td><td class="n">${p.d.toFixed(1)} mi</td><td class="n">${money(p.price)}</td></tr>`).join("")}</tbody></table></details>` : ""}</div>`).join("")}</section>`;
+  if (s.me.visited) {
+    h += `<section class="card"><h2>What we found when we visited</h2><table class="t"><thead><tr><th></th><th class="n">You</th><th class="n">Nearby, middle</th></tr></thead><tbody>
+      ${s.nearScores.filter(x => s.me.scores[x.k] != null).map(x => `<tr><td>${esc(x.t)}</td><td class="n">${esc(s.me.scores[x.k])}${x.k === "wait" ? " min" : "/5"}</td><td class="n">${x.median != null ? Math.round(x.median * 10) / 10 + (x.k === "wait" ? " min" : "/5") : "–"}</td></tr>`).join("")}
+      ${s.me.scores.wifi != null ? `<tr><td>Wifi</td><td class="n">${s.me.scores.wifi ? "Yes" : "No"}</td><td class="n">${s.areaScores.wifi != null ? s.areaScores.wifi + "% of the area" : "–"}</td></tr>` : ""}</tbody></table></section>`;
+  }
+  if (s.gaps) h += `<section class="card"><h2>When your neighbours are open</h2><div class="grid"><div class="stat"><b>${s.gaps.before8}%</b><span>open before 8am on weekdays</span></div><div class="stat"><b>${s.gaps.after5}%</b><span>open after 5pm on weekdays</span></div><div class="stat"><b>${s.gaps.sunday}%</b><span>open on Sundays</span></div></div>
+    ${v.hours ? `<p class="sm mute" style="margin-top:10px">Your hours as we have them: ${P.DAYS.map(d => `${P.DAYNAME[d].slice(0, 3)} ${v.hours[d] ? v.hours[d].join("–") : v.hours[d] === null ? "closed" : "?"}`).join(", ")}.</p>` : ""}</section>`;
+  const hyg = s.near.reduce((m, x) => (m[x.hygiene] = (m[x.hygiene] || 0) + 1, m), {});
+  h += `<section class="card"><h2>Food hygiene</h2><p>Your rating: <b>${esc(v.hygiene === "AwaitingInspection" ? "awaiting inspection" : v.hygiene || "not known")}</b>${v.hygieneDate ? `, from ${fmtD(v.hygieneDate)}` : ""}. Near you: ${Object.entries(hyg).sort().reverse().map(([k, n]) => `${n} rated ${k === "AwaitingInspection" ? "awaiting" : esc(k)}`).join(", ")}.</p>
+    ${s.newNearby.length ? `<p><b>New nearby:</b> ${s.newNearby.map(x => `${esc(x.name)} (${x.d.toFixed(1)} mi)`).join(", ")}. These are waiting for a first inspection, which usually means newly opened or new owners.</p>` : ""}</section>`;
+  h += `<section class="card"><h2>Where you could save, or charge more</h2><p class="sm mute">Put in what one serving costs you and how many you sell in a week. For each item we check first whether you could buy it cheaper, and if not, whether you could charge a little more and still be competitive. Your figures stay in this browser.</p>
+    <div id="calcBody"></div>
+    <p class="xs mute">Margin is worked out after 20% VAT. Costs start as typical figures for a café like yours: change them to yours. This is information to help you decide, not financial advice.</p></section>`;
+  const cal = (s.calendar || []).filter(e => (e.end || e.start) >= new Date().toISOString().slice(0, 10));
+  const dm = x => new Date(x).toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+  if (cal.length) h += `<section class="card"><h2>Coming up near you</h2>${cal.slice(0, 8).map(e => `<div class="fx"><span><b>${esc(e.title)}</b> <span class="chip ${e.effect === "busier" ? "good" : e.effect === "quieter" ? "warn" : ""}">${esc(P.CAL_TYPES[e.type] || "")}</span>${e.note ? `<br><span class="sm mute">${esc(e.note)}</span>` : ""}</span><span class="sm mute" style="white-space:nowrap">${dm(e.start)}${e.end && e.end !== e.start ? "–" + dm(e.end) : ""}</span></div>`).join("")}</section>`;
+  const moved = (s.costs || []).filter(c => c.at >= P.BENCH_DATE);
+  if (moved.length) h += `<section class="card"><h2>Costs that have moved</h2>${moved.map(c => `<div class="fx"><span>${esc((P.COST_INPUTS[c.k] || {}).t || c.k)} ${c.pct > 0 ? "up" : "down"} ${Math.abs(c.pct)}%${c.source ? `<br><span class="xs mute">${esc(c.source)}</span>` : ""}</span><span class="sm mute">since ${dm(c.at)}</span></div>`).join("")}<p class="sm mute">Already included in the costs per serving in the calculator below.</p></section>`;
+  h += `<section class="card noprint" id="sales"><h2>Your sales, hour by hour</h2><p class="sm mute">Export your sales from your till as a CSV file (most tills have this under reports or transactions: Square, SumUp, Zettle, Lightspeed, Epos Now and others) and drop it here. We'll show your busy and quiet hours, and how local events and holidays change your takings. The file is read in this browser and isn't uploaded.</p>
+    <div class="drop"><input type="file" id="salesFile" accept=".csv,text/csv"><p class="xs mute" style="margin:8px 0 0">At least a few weeks of sales works best. Item-by-item or sale-by-sale exports both work.</p></div><div id="salesOut"></div></section>`;
+  h += `<section class="card found noprint" id="found"></section>`;
+  document.getElementById("app").innerHTML = h;
+  drawCalc(); drawFound();
+}
+function drawCalc() {
+  const s = R.report, pos = { items: s.items, quality: s.quality };
+  const out = P.calculator(rows, pos, P.benchAfter(s.bench || P.BENCH, s.costs, P.BENCH_DATE));
+  document.getElementById("calcBody").innerHTML = out.rows.map((r, j) => { const m = r.margin, sug = r.saving ? r.saving.text : r.price ? `${r.price.text} Try ${money(r.price.to)}.` : rows[j].perWeek ? "Nothing to change: you're in a good place." : "";
+    return `<div class="crow"><div class="cname"><b>${esc(r.t)}</b>${m ? `<span class="chip ${m.pct >= 70 ? "good" : m.pct >= 55 ? "" : "warn"}">${m.pct}% margin</span>` : ""}${r.perYear ? `<span class="gain">${pounds(r.perYear)} a year</span>` : ""}</div>
+      <label>Your price<input data-c="${j}.price" value="${rows[j].price ?? ""}" inputmode="decimal" aria-label="${esc(r.t)} price"></label>
+      <label>Cost per serving<input data-c="${j}.cost" value="${rows[j].cost ?? ""}" inputmode="decimal" aria-label="${esc(r.t)} cost per serving"></label>
+      <label>Sold a week<input data-c="${j}.perWeek" value="${rows[j].perWeek ?? ""}" inputmode="numeric" aria-label="${esc(r.t)} sold a week"></label>
+      ${sug ? `<p class="sug">${esc(sug)}</p>` : ""}</div>`; }).join("");
+  const hd = document.getElementById("headline"), priced = s.items.filter(i => i.mine != null && i.median != null), below = priced.filter(i => i.diff <= -0.05);
+  hd.innerHTML = out.total > 0 ? `<p class="sm mute" style="margin:0">From the figures you've put in below</p><p class="big">${pounds(out.total)} a year</p><p style="margin:0">${out.saving ? `${pounds(out.saving)} from cheaper supplies` : ""}${out.saving && out.price ? " and " : ""}${out.price ? `${pounds(out.price)} from small price changes` : ""}.</p>`
+    : `<h2 style="margin:0 0 6px">Here's where you stand</h2><p style="margin:0">${priced.length ? `On ${below.length} of ${priced.length} items you charge less than the middle of your neighbours.` : "We'll fill this in once we have your prices."} Put your costs and weekly sales into the calculator at the bottom to see what that's worth in a year.</p>`;
+}
+function drawFound() {
+  const el = document.getElementById("found");
+  if (R.founding) { el.innerHTML = `<h2>Thanks. We'll be in touch about your founding place.</h2>`; return; }
+  el.innerHTML = `<h2>Want this every month?</h2><p>We're taking 10 founding members in ${esc(R.report.area.name)} at <b>£${CFG.foundingPrice} a month for the first 12 months</b> (then £${CFG.fullPrice}). A fresh report each month, alerts when a café opens near you or a neighbour changes prices, local events worth planning for, and this calculator kept up to date.</p>
+    <label class="f"><span>Anything you'd like us to know? (optional)</span><textarea id="fmsg" maxlength="1000"></textarea></label><p class="err" id="ferr"></p>
+    <button class="btn big" id="fgo">I'd like a founding place</button><p class="xs mute" style="margin-top:8px">Nothing to pay now. We'll email you to set it up.</p>`;
+  document.getElementById("fgo").addEventListener("click", async () => {
+    const b = document.getElementById("fgo"); b.disabled = true;
+    try { const ok = await D.rpc("founding_interest", { p_token: token, p_message: document.getElementById("fmsg").value }); if (!ok) throw new Error("We couldn't find this report."); R.founding = true; drawFound(); }
+    catch (x) { document.getElementById("ferr").textContent = x.message; b.disabled = false; }
+  });
+}
+/* ---------- sales ---------- */
+let SALES = null, SALES_TEXT = null;
+const hr = h => (h === 0 ? "12am" : h < 12 ? h + "am" : h === 12 ? "12pm" : h - 12 + "pm");
+const DOWS = [1, 2, 3, 4, 5, 6, 0];
+function drawSales(res) {
+  const out = document.getElementById("salesOut");
+  if (res.error) {
+    out.innerHTML = `<p class="err" style="margin-top:12px">${esc(res.error)}</p>${res.head ? `<div class="grid" style="gap:0 12px">${["date", "time", "amount"].map(k => `<label class="f"><span>${{ date: "Date column", time: "Time column (if separate)", amount: "Amount column" }[k]}</span><select data-map="${k}"><option value="-1">None</option>${res.head.map((h, i) => `<option value="${i}" ${res.mapping[k] === i ? "selected" : ""}>${esc(h)}</option>`).join("")}</select></label>`).join("")}</div><button class="btn q" id="remap">Try again</button>` : ""}`;
+    const b = document.getElementById("remap"); if (b) b.onclick = () => { const m = {}; document.querySelectorAll("[data-map]").forEach(x => m[x.dataset.map] = +x.value); drawSales(P.readSales(SALES_TEXT, m)); };
+    return;
+  }
+  const p = SALES = P.salesPattern(res.rows), fx = P.salesVsCalendar(p, R.report.salesCalendar || []);
+  let h = `<div class="grid" style="margin-top:14px"><div class="stat"><b>${money(p.avgDay)}</b><span>average day</span></div><div class="stat"><b>${money(p.avgSale)}</b><span>average sale</span></div><div class="stat"><b>${p.days.length}</b><span>days, ${esc(fmtD(p.from))} to ${esc(fmtD(p.to))}</span></div></div>`;
+  if (res.skipped) h += `<p class="xs mute">${res.skipped} rows couldn't be read and were left out.</p>`;
+  if (res.hasTime) {
+    const hours = []; for (let x = p.hMin; x <= p.hMax; x++) hours.push(x);
+    h += `<h3 style="margin-top:18px">Average takings by hour</h3><div class="heatwrap"><table class="heat"><thead><tr><th></th>${DOWS.map(d => `<th>${P.DOW[d]}</th>`).join("")}</tr></thead><tbody>
+      ${hours.map(x => `<tr><th>${hr(x)}</th>${DOWS.map(d => { const v = p.grid[d + ":" + x]; return `<td>${v ? `<i style="opacity:${Math.max(0.08, v / p.peak).toFixed(2)}"></i><span style="color:${v / p.peak > 0.55 ? "var(--accent-ink)" : "var(--ink)"}">£${Math.round(v)}</span>` : ""}</td>`; }).join("")}</tr>`).join("")}</tbody></table></div>
+      <p class="sm"><b>Busiest:</b> ${p.best.map(b => `${P.DOW[b.dow]} ${hr(b.hour)} (${money(b.v)})`).join(", ")}.</p>
+      ${p.quiet.length ? `<p class="sm"><b>Quietest while open:</b> ${p.quiet.slice(0, 4).map(b => `${P.DOW[b.dow]} ${hr(b.hour)} (${money(b.v)})`).join(", ")}. Worth a look: an offer to bring people in, a shorter shift, or prep and baking in that hour.</p>` : ""}`;
+  } else h += `<p class="sm mute" style="margin-top:12px">Your export has dates but no times, so we can show days but not hours. Most tills can include the time if you choose a sale-by-sale export.</p>`;
+  h += `<h3 style="margin-top:18px">By day of the week</h3>${DOWS.map(d => { const x = p.byDow.find(y => y.dow === d); return x && x.avg != null ? `<div class="fx"><span>${P.DOW[d]}</span><span style="flex:1;margin:8px 12px 0"><span class="bar" style="display:block"><i style="width:${(x.avg / Math.max(...p.byDow.map(y => y.avg || 0))) * 100}%"></i></span></span><span class="sm">${money(x.avg)}</span></div>` : ""; }).join("")}`;
+  if (fx.length) h += `<h3 style="margin-top:18px">What local happenings did to your takings</h3><p class="sm mute">Each against the same weekdays without it.</p>${fx.map(f => `<div class="fx"><span>${esc(f.title)} <span class="xs mute">(${f.days} day${f.days === 1 ? "" : "s"})</span></span><span class="chip ${f.pct >= 5 ? "good" : f.pct <= -5 ? "warn" : ""}">${f.pct > 0 ? "+" : ""}${f.pct}%</span></div>`).join("")}`;
+  else h += `<p class="sm mute" style="margin-top:12px">Once your file covers a few weeks with local events or holidays in them, we'll show what each one did to your takings.</p>`;
+  h += `<div class="card" style="margin:16px 0 0;background:var(--tint);border:0"><label style="display:flex;gap:10px;align-items:flex-start"><input type="checkbox" id="shareSales" style="margin-top:4px;width:18px;height:18px"><span>Share these totals with Patch, so your next report can compare your busy hours with your neighbours'. We only get average takings by weekday and hour, never single sales, and never show them to another café.</span></label><p class="sm" id="shareMsg"></p></div>`;
+  out.innerHTML = h;
+  document.getElementById("shareSales").addEventListener("change", async e => {
+    if (!e.target.checked) return; const m = document.getElementById("shareMsg");
+    try { const ok = await D.rpc("share_sales", { p_token: token, p_sales: P.salesShare(SALES) }); m.textContent = ok ? "Shared. Thank you." : "We couldn't find this report."; } catch (x) { m.textContent = x.message; e.target.checked = false; }
+  });
+}
+document.addEventListener("change", e => {
+  if (e.target.id !== "salesFile" || !e.target.files[0]) return;
+  const f = e.target.files[0];
+  if (f.size > 25e6) { drawSales({ error: "That file is too big. Export a shorter period, such as the last 3 months." }); return; }
+  const rd = new FileReader(); rd.onload = () => { SALES_TEXT = String(rd.result); drawSales(P.readSales(SALES_TEXT)); }; rd.readAsText(f);
+});
+document.addEventListener("input", e => {
+  const c = e.target.dataset.c; if (!c) return; const [j, k] = c.split(".");
+  rows[+j][k] = e.target.value === "" ? "" : e.target.value.replace(/[£,\s]/g, "");
+  try { localStorage.setItem(KEY, JSON.stringify(rows)); } catch (x) {}
+  const pos = e.target.selectionStart, id = e.target.dataset.c; drawCalc(); const el = document.querySelector(`[data-c="${id}"]`); if (el) { el.focus(); try { el.setSelectionRange(pos, pos); } catch (x) {} }
+});
+async function boot() {
+  if (D.DEMO) document.getElementById("demo").innerHTML = `<p class="demo"><b>Demo.</b> Made-up cafés. Nothing here is real.</p>`;
+  document.getElementById("foot").innerHTML = `Prices as we saw them on menus and visits. Food hygiene ratings from the Food Standards Agency; contains public sector information licensed under the Open Government Licence v3.0. This report is private to you.`;
+  if (!token) { document.getElementById("app").innerHTML = `<p class="card">This link is missing its code. Use the link from your email.</p>`; return; }
+  try { R = await D.rpc("report_public", { p_token: token }); } catch (e) { R = null; }
+  if (!R || !R.report) { document.getElementById("app").innerHTML = `<p class="card">We couldn't find this report. Check the link in your email${CFG.contactEmail ? `, or write to <a href="mailto:${esc(CFG.contactEmail)}">${esc(CFG.contactEmail)}</a>` : ""}.</p>`; return; }
+  let saved = null; try { saved = JSON.parse(localStorage.getItem(KEY)); } catch (e) {}
+  const b0 = P.benchAfter(R.report.bench || P.BENCH, R.report.costs, P.BENCH_DATE);
+  rows = saved && saved.length ? saved : R.report.items.filter(i => i.mine != null).map(i => ({ k: i.k, price: i.mine, cost: b0[i.k] ?? "", perWeek: "" }));
+  document.title = `${R.report.venue.name} · Patch report`;
+  render();
+}
+boot();
+})();
+</script>
+</body>
+</html>

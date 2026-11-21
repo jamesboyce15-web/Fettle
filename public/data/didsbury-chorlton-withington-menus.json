@@ -1,0 +1,36 @@
+{
+  "area": "didsbury-chorlton-withington",
+  "read": "2026-11-19",
+  "about": "Prices from cafés' delivery-app menus, read on 19 November 2026. They include VAT. Delivery apps often charge more than the counter, so these are kept apart: Patch shows them to visitors as a guide and never uses them in benchmarks until someone confirms the counter price on a visit.",
+  "menus": [
+    {
+      "fsaId": 1819751, "name": "Medo Cafe", "postcode": "M20 6EL", "channel": "Deliveroo",
+      "url": "https://deliveroo.co.uk/menu/manchester/withington/medo-cafe-didsbury",
+      "prices": { "espresso": 2.20, "americano": 2.80, "flat_white": 3.20, "latte": 3.20, "cappuccino": 3.20, "tea": 2.50, "hot_choc": 3.99, "oat_extra": 0.79, "croissant": 2.99, "cake": 5.99, "toastie": 3.99, "brunch": 9.99 },
+      "notes": { "oat_extra": "Worked out: oat latte £3.99 less latte £3.20", "cake": "Chocolate fudge cake", "toastie": "Toastie with one filling (paninis are £9.99)", "brunch": "Halal English breakfast" }
+    },
+    {
+      "fsaId": 1816371, "name": "The Crazy Cow Cafe", "postcode": "M20 5WD", "channel": "Deliveroo",
+      "url": "https://deliveroo.co.uk/menu/Manchester/didsbury/the-crazy-cow-didsbury",
+      "prices": { "espresso": 2.53, "americano": 2.76, "flat_white": 3.60, "latte": 3.90, "cappuccino": 3.50, "tea": 2.07, "hot_choc": 3.80, "cake": 4.60, "toastie": 5.18, "brunch": 11.50 },
+      "notes": { "espresso": "Double espresso; no single listed", "cake": "Homemade carrot cake", "toastie": "Cheddar cheese jaffle", "brunch": "The Big Cow" }
+    },
+    {
+      "fsaId": 1817794, "name": "Boulevard Deli", "postcode": "M20 2EU", "channel": "Deliveroo",
+      "url": "https://deliveroo.co.uk/menu/Manchester/withington/the-boulevard-deli-cafe-ltd",
+      "prices": { "toastie": 6.50, "brunch": 14.95 },
+      "notes": { "toastie": "Cheese and tomato panini", "brunch": "Boulevard Breakfast (a smaller Deli Breakfast is £11.00)" }
+    },
+    {
+      "fsaId": 1819081, "name": "Chorlton Metro Cafe", "postcode": "M21 0UA", "channel": "Uber Eats",
+      "url": "https://www.ubereats.com/gb/store/chorlton-metro-cafe/oYWpEbHnRh2JvAvrwrU6_w",
+      "prices": { "brunch": 10.50 },
+      "notes": { "brunch": "Special Breakfast" }
+    }
+  ],
+  "checkOnVisit": [
+    { "fsaId": 1818632, "name": "Rustik Cafe Bar", "why": "The Manc reported it was closing: check it's still trading, and untick it under Cafés if not." },
+    { "fsaId": 1819081, "name": "Chorlton Metro Cafe", "why": "Its Deliveroo page now shows \"The Persian Stop\": check whether it has changed name." },
+    { "fsaId": 1820080, "name": "SMOAK Coffee", "why": "Its Deliveroo menu is salt beef and bagels with no coffee listed: check what it sells at the counter." }
+  ]
+}

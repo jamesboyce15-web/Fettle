@@ -1,9 +1,9 @@
+node_modules/
+.DS_Store
 .dev.vars
 .env
-node_modules/
 .wrangler/
 *.log
-
-# The workbook is a product for sale: keep it out of the public repository
-book/
 __pycache__/
+# Fettle workbook source, kept locally only
+book/

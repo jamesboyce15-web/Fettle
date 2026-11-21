@@ -1,24 +1,18 @@
-// GET /api/unsubscribe?u=<user id>&t=<signed token>  -> turns off check-in reminder emails for that person.
-// With &k=alerts it turns off warning emails instead.
-// The link is in every reminder email. The token is an HMAC of the user id, so links can't be guessed.
-import { admin, checkUnsubToken } from "../../lib/server.js";
+// Stop the Monday email. A link opens a page with a button (so email scanners following links don't unsubscribe anyone);
+// mail apps' one-click unsubscribe posts here directly.
+import { anonRpc, isUuid } from "../../lib/supa.js";
 
-const page = (title, text, status = 200) => new Response(
-  `<!doctype html><html lang="en-GB"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${title} | Fettle</title>
-<body style="font:18px/1.6 system-ui,sans-serif;background:#f6f7f4;color:#1c2522;margin:0;padding:48px 16px"><main style="max-width:520px;margin:0 auto">
-<h1 style="font-size:1.6rem">${title}</h1><p>${text}</p><p><a href="/" style="color:#1a5c8c">Go to Fettle</a></p></main></body></html>`,
-  { status, headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" } });
+const page = (title, body) => new Response(`<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>${title}</title>
+<style>body{font:16px/1.55 system-ui,sans-serif;background:#f3f5f3;color:#14201b;margin:0;padding:12vh 16px}main{max-width:420px;margin:auto;background:#fff;border:1px solid #dce2de;border-radius:14px;padding:24px}button{background:#1f58a8;color:#fff;border:0;border-radius:10px;padding:12px 18px;font-weight:700;font-size:1rem;cursor:pointer}</style></head><body><main>${body}</main></body></html>`,
+  { headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store", "Referrer-Policy": "no-referrer" } });
 
-export async function onRequestGet({ request, env }) {
-  const q = new URL(request.url).searchParams, u = q.get("u"), t = q.get("t"), alerts = q.get("k") === "alerts";
-  if (!(await checkUnsubToken(env.UNSUBSCRIBE_SECRET, u, t)))
-    return page("That link didn't work", "Sign in to Fettle and untick check-in reminders on your home page, or email us and we'll do it for you.", 400);
-  const r = await admin(env, `/auth/v1/admin/users/${u}`);
-  if (!r.ok) return page("That link didn't work", "We couldn't find your account. It may already have been deleted.", 404);
-  const user = await r.json();
-  const meta = { ...(user.user_metadata || {}), [alerts ? "alert_emails" : "remind_emails"]: false };
-  const w = await admin(env, `/auth/v1/admin/users/${u}`, { method: "PUT", body: JSON.stringify({ user_metadata: meta }) });
-  if (!w.ok) { console.error("unsubscribe", await w.text()); return page("Sorry, something went wrong", "Please try again later, or email us and we'll turn reminders off for you.", 500); }
-  if (alerts) return page("Warnings turned off", "You won't get any more warning emails from Fettle. Your plan is still saved, and you can turn warnings back on from your family dashboard. For official flood warnings, sign up at gov.uk/sign-up-for-flood-warnings.");
-  return page("Reminders turned off", "You won't get any more check-in reminders from Fettle. Your plan is still saved, and you can turn reminders back on from your home page.");
+export async function onRequestGet({ request }) {
+  const t = new URL(request.url).searchParams.get("t") || "";
+  if (!isUuid(t)) return page("Patch", "<h1>That link doesn't work</h1><p>Reply to any Patch email and we'll stop them for you.</p>");
+  return page("Stop the Monday email", `<h1>Stop the Monday email?</h1><p>You can still open Patch whenever you like, and turn it back on in Upload, then Settings.</p><form method="post" action="?t=${encodeURIComponent(t)}"><button>Stop the emails</button></form>`);
+}
+export async function onRequestPost({ request, env }) {
+  const t = new URL(request.url).searchParams.get("t") || "";
+  const ok = isUuid(t) && (await anonRpc(env, "owner_email_pref", { p_token: t, p_on: false })) === true;
+  return ok ? page("Done", "<h1>Done</h1><p>No more Monday emails. Thanks for trying Patch.</p>") : page("Patch", "<h1>That didn't work</h1><p>Reply to any Patch email and we'll stop them for you.</p>");
 }

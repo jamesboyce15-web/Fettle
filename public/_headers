@@ -1,0 +1,24 @@
+# Cloudflare Pages headers. Owner, report and admin links carry secrets in the address, so no page sends a referrer,
+# and none of the private pages are indexed.
+/*
+  Referrer-Policy: no-referrer
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Permissions-Policy: geolocation=(), microphone=(), camera=(self)
+  Strict-Transport-Security: max-age=31536000
+
+/admin*
+  X-Robots-Tag: noindex, nofollow
+  Cache-Control: no-store
+/owner*
+  X-Robots-Tag: noindex, nofollow
+  Cache-Control: no-store
+/report*
+  X-Robots-Tag: noindex, nofollow
+  Cache-Control: no-store
+/visit*
+  X-Robots-Tag: noindex, nofollow
+  Cache-Control: no-store
+/sweep*
+  X-Robots-Tag: noindex, nofollow
+  Cache-Control: no-store

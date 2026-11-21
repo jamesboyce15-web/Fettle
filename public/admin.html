@@ -2,147 +2,548 @@
 <html lang="en-GB">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex">
-<title>Fettle admin</title>
-<!-- The owner's numbers. The page itself holds no data: it asks the database for fettle_admin(), which only answers
-     for accounts listed in the fettle_admins table (supabase/admin.sql). Everyone else sees "not allowed". -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<title>Patch admin</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@500;700&display=swap">
+<link rel="stylesheet" href="patch.css">
 <style>
-:root{--brand:#173f35;--ink:#1c2522;--mute:#5a6670;--line:#d9dfe3;--tint:#e8eee9;--hivis:#f2a900;--bg:#f6f7f4;--good:#1d6b45}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 "Atkinson Hyperlegible",system-ui,sans-serif}
-main{max-width:960px;margin:0 auto;padding:28px 16px 64px}
-h1{font-size:1.9rem;line-height:1.15;margin:0 0 4px;color:var(--brand)}
-h2{font-size:1.3rem;margin:34px 0 6px;color:var(--brand)}
-p{margin:0 0 10px}a{color:var(--brand)}
-.mute{color:var(--mute)}.sm{font-size:.9rem}
-.kicker{font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--good);margin:0 0 6px}
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:12px 0}
-.kpis div{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px}
-.kpis b{display:block;font-size:1.7rem;line-height:1.1;color:var(--brand)}
-.kpis span{font-size:.88rem;color:var(--mute)}
-table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);font-size:.95rem}
-th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
-th{background:var(--tint);font-size:.85rem}
-td.n,th.n{text-align:right;white-space:nowrap}
-.scroll{overflow-x:auto}
-button,.btn{font:inherit;font-weight:700;background:var(--brand);color:#fff;border:0;border-radius:10px;padding:9px 16px;cursor:pointer;text-decoration:none;display:inline-block}
-button.quiet{background:#fff;color:var(--brand);border:2px solid var(--brand);padding:5px 12px;font-size:.9rem}
-input{font:inherit;padding:9px 12px;border:1.5px solid var(--line);border-radius:10px;width:100%;max-width:340px}
-.note{background:#fff4cc;border:1px solid #e8c547;border-radius:12px;padding:12px 14px;margin:14px 0}
-.small{color:#9a5b00;font-weight:700}
-.bars{display:flex;align-items:flex-end;gap:3px;height:90px;margin:10px 0 2px;border-bottom:1px solid var(--line)}
-.bars i{flex:1;background:var(--brand);min-height:1px;border-radius:2px 2px 0 0;position:relative}
-.bars i u{position:absolute;left:0;right:0;bottom:0;background:var(--hivis);border-radius:2px 2px 0 0}
-code{background:#fff;border:1px solid var(--line);border-radius:6px;padding:2px 6px;font-size:.9rem;word-break:break-all}
-@media (max-width:640px){.kpis{grid-template-columns:repeat(2,1fr)}}
+.wrap{max-width:1180px}
+.nav{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 16px;border-bottom:1px solid var(--line);padding-bottom:8px}
+.nav button{background:none;border:0;padding:8px 12px;border-radius:9px;font-weight:600;color:var(--mute);cursor:pointer}
+.nav button[aria-current=page]{background:var(--tint);color:var(--accent2)}
+.nav .n{background:var(--accent);color:var(--accent-ink);border-radius:999px;font-size:.72rem;padding:0 7px;margin-left:4px}
+.split{display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:16px;align-items:start}
+.panel{position:sticky;top:12px}
+.t tbody tr.click{cursor:pointer}.t tbody tr.click:hover{background:var(--tint)}.t tr.sel{background:var(--tint)}
+.prices{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:0 12px}
+.prices .f input{font-variant-numeric:tabular-nums}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:9px;overflow:hidden;margin:0 0 10px}
+.seg button{background:var(--card);border:0;border-left:1px solid var(--line);padding:7px 12px;cursor:pointer}
+.seg button:first-child{border-left:0}
+.seg button[aria-pressed=true]{background:var(--accent);color:var(--accent-ink)}
+.scorerow{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.hrs{display:grid;grid-template-columns:90px 1fr 1fr 80px;gap:6px;align-items:center;font-size:.9rem}
+.hrs input{border:1px solid var(--line);border-radius:8px;padding:5px 6px;background:var(--card);width:100%}
+.modal{position:fixed;inset:0;background:rgba(20,15,12,.45);display:grid;place-items:center;padding:16px;z-index:30}
+.modal .box{background:var(--card);border-radius:16px;max-width:640px;width:100%;max-height:90vh;overflow:auto;padding:20px}
+.signin{max-width:380px;margin:12vh auto}
+.t input,.t select{border:1px solid var(--line);border-radius:7px;padding:5px 6px;background:var(--card)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.pill{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;background:var(--line)}
+.pill.ok{background:var(--good)}.pill.part{background:var(--warn)}
+@media(max-width:980px){.split{grid-template-columns:1fr}.panel{position:static}}
 </style>
 </head>
 <body>
-<main>
-<p class="kicker">Fettle</p>
-<h1>Admin</h1>
-<div id="box"><p class="mute">Loading…</p></div>
-</main>
+<div class="wrap"><div id="root"><p class="mute" style="padding:20px">Loading…</p></div></div>
+<div class="toast" id="toast" role="status"></div>
 <script src="config.js"></script>
+<script src="patch-core.js"></script>
+<script src="patch-ops.js"></script>
+<script src="patch-insights.js"></script>
+<script src="patch-data.js"></script>
+<script src="patch-emails.js"></script>
 <script>
-const MIN = 5, box = document.getElementById("box");
-const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const num = n => n == null ? "–" : Number(n).toLocaleString("en-GB");
-const pct = (a, b) => b ? Math.round(a / b * 100) + "%" : "–";
-const day = d => new Date(d).toLocaleDateString("en-GB", { day: "numeric", month: "short" });
-let sb, D;
+(function () {
+"use strict";
+const P = PatchCore, D = PatchData, CFG = D.CFG, I = PatchInsights;
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const $ = s => document.querySelector(s), money = P.money;
+const today = () => new Date().toISOString().slice(0, 10);
+const fmtD = s => s ? new Date(s).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) : "";
+const ago = s => { const d = (Date.now() - new Date(s)) / 864e5; return d < 1 ? "today" : Math.round(d) + " days ago"; };
+function toast(t) { const el = $("#toast"); el.textContent = t; el.classList.add("on"); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove("on"), 2600); }
+const reportUrl = tok => `${location.protocol === "file:" ? "report.html" : location.origin + location.pathname.replace(/admin(\.html)?$/, "report")}?t=${encodeURIComponent(tok)}${D.DEMO ? "&demo=1" : ""}`;
+const ownerUrl = tok => `${location.protocol === "file:" ? "owner.html" : location.origin + location.pathname.replace(/admin(\.html)?$/, "owner")}?t=${encodeURIComponent(tok)}${D.DEMO ? "&demo=1" : ""}`;
+const STATUS = { new: "New", report_sent: "Report sent", founding: "Founding member", not_now: "Not now" };
 
-function loadScript(src) { return new Promise((ok, bad) => { const s = document.createElement("script"); s.src = src; s.onload = ok; s.onerror = bad; document.head.appendChild(s); }); }
+let DB, ME, S = { areas: [], area: null, venues: [], obs: [], requests: [] };
+const V = { view: "requests", req: null, q: "", all: false, rec: { venue: null, source: "visit", scores: {}, prices: {}, hours: null }, cal: [], costs: [], profile: {}, draft: null };
+const venue = id => S.venues.find(v => v.id === id);
 
-async function boot() {
-  const CFG = window.FETTLE_CONFIG || {};
-  if (!CFG.supabaseUrl) { box.innerHTML = `<p>This copy of the site isn't connected to the database, so there's nothing to show.</p>`; return; }
-  try { await loadScript("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"); }
-  catch (e) { box.innerHTML = `<p>Couldn't load the page. Check your internet connection and try again.</p>`; return; }
-  sb = window.supabase.createClient(CFG.supabaseUrl, CFG.supabaseAnonKey, { auth: { persistSession: true, autoRefreshToken: true } });
-  const { data: { session } } = await sb.auth.getSession();
-  if (!session) { box.innerHTML = `<p>Sign in to Fettle first, then come back to this page.</p><p><a class="btn" href="./">Go to sign in</a></p>`; return; }
-  await load();
+async function loadArea(id) {
+  S.area = S.areas.find(a => a.id === id) || S.areas[0];
+  if (!S.area) { S.venues = []; S.obs = []; return; }
+  [S.venues, S.obs] = await Promise.all([DB.venues(S.area.id), DB.observations(S.area.id)]);
+  V.cal = clone(S.area.calendar || []); V.costs = clone(S.area.costs || []); V.profile = clone(S.area.profile || {});
 }
+const clone = o => JSON.parse(JSON.stringify(o));
+const bench = () => Object.assign({}, P.BENCH, (S.area && S.area.bench) || {});
 
-async function load(area) {
-  const { data, error } = await sb.rpc("fettle_admin", { p_area: area || null });
-  if (error) {
-    box.innerHTML = /not allowed/.test(error.message || "") ? `<p><b>This account can't see the admin page.</b></p><p class="mute">Only accounts added to the admin list in the database can. <a href="./">Back to Fettle</a></p>`
-      : `<p><b>Couldn't load the numbers.</b> ${esc(error.message || "")}</p><p><button onclick="load()">Try again</button></p>`;
-    return;
+/* ---------- shell ---------- */
+function render() {
+  const nNew = S.requests.filter(r => r.status === "new" && (!S.area || r.area_id === S.area.id)).length;
+  const nFound = S.requests.filter(r => r.founding_interest && r.status !== "founding").length;
+  const nav = (v, t, n) => `<button data-nav="${v}" ${V.view === v ? 'aria-current="page"' : ""}>${t}${n ? `<span class="n">${n}</span>` : ""}</button>`;
+  $("#root").innerHTML = `<header class="top"><a class="brand" href="./${D.DEMO ? "?demo=1" : ""}">Patch<i>.</i></a><span class="chip">Admin</span><span class="sp"></span>
+    <select id="areaSel" aria-label="Area" style="border:1px solid var(--line);border-radius:9px;padding:6px 8px;background:var(--card)">${S.areas.map(a => `<option value="${a.id}" ${S.area && a.id === S.area.id ? "selected" : ""}>${esc(a.name)}</option>`).join("")}</select>
+    <button class="btn q sm" data-act="signout">${D.DEMO ? "Reset demo" : "Sign out"}</button></header>
+    ${D.DEMO ? `<p class="demo"><b>Demo.</b> Made-up cafés, saved only in this browser. Try: open a request, build the report, then open the report link.</p>` : ""}
+    <nav class="nav">${nav("requests", "Report requests", nNew + nFound)}${nav("record", "Record a visit or menu")}${nav("sweeps", "Price sweeps")}${nav("cafes", "Cafés")}${nav("search", "Search and AI")}${nav("calendar", "Local calendar")}${nav("area", "Area page")}${nav("settings", "Costs")}${nav("emails", "Emails")}</nav>
+    <div id="main">${view()}</div>`;
+}
+function view() { try { return ({ requests: vRequests, record: vRecord, cafes: vCafes, search: vSearch, calendar: vCalendar, area: vArea, settings: vSettings, emails: vEmails, sweeps: vSweeps })[V.view](); } catch (e) { console.error(e); return `<p class="card err">${esc(e.message)}</p>`; } }
+function coverage(v) { const l = P.latest(S.obs, v.id); return { n: Object.keys(l.prices).length, visited: l.visited, last: l.lastAt }; }
+
+/* ---------- requests ---------- */
+function vRequests() {
+  const list = S.requests.filter(r => !S.area || r.area_id === S.area.id), r = S.requests.find(x => x.id === V.req);
+  return `<div class="split"><section class="card" style="padding:0;overflow:auto">${list.length ? `<table class="t"><thead><tr><th>Asked</th><th>Who</th><th>Café</th><th>Status</th></tr></thead><tbody>
+    ${list.map(x => { const v = venue(x.venue_id); return `<tr class="click ${x.id === V.req ? "sel" : ""}" data-req="${x.id}"><td class="sm">${esc(ago(x.created_at))}</td><td><b>${esc(x.name)}</b><br><span class="xs mute">${esc(x.role || "")} · ${esc(x.email)}</span></td>
+      <td>${esc(v ? v.name : x.venue_text || "Not said")}${v ? "" : ' <span class="chip warn">Not linked</span>'}</td><td><span class="chip ${x.status === "new" ? "warn" : x.status === "founding" ? "good" : ""}">${STATUS[x.status]}</span>${x.founding_interest && x.status !== "founding" ? '<br><span class="chip good">Wants a founding place</span>' : ""}</td></tr>`; }).join("")}</tbody></table>`
+    : `<p class="mute" style="padding:16px">No requests yet. They arrive from the area page.</p>`}</section><aside class="panel">${r ? reqPanel(r) : `<div class="card"><p class="mute">Choose a request.</p></div>`}</aside></div>`;
+}
+function reqPanel(r) {
+  const v = venue(r.venue_id);
+  let h = `<div class="card"><h2 style="margin:0 0 4px">${esc(r.name)}</h2><p class="sm mute">${esc(r.role || "")} · <a href="mailto:${esc(r.email)}">${esc(r.email)}</a>${r.phone ? ` · ${esc(r.phone)}` : ""}</p>
+    ${r.message ? `<p>“${esc(r.message)}”</p>` : ""}${r.founding_interest ? `<p class="chip good">Wants a founding place</p>${r.founding_message ? `<p class="sm">“${esc(r.founding_message)}”</p>` : ""}` : ""}
+    <label class="f"><span>Their café</span><select data-rq="venue_id"><option value="">${esc(r.venue_text || "Choose")}</option>${S.venues.filter(x => x.included).sort((a, b) => a.name.localeCompare(b.name)).map(x => `<option value="${x.id}" ${x.id === r.venue_id ? "selected" : ""}>${esc(x.name)} (${esc(x.postcode || "")})</option>`).join("")}</select></label>
+    <label class="f"><span>Status</span><select data-rq="status">${Object.entries(STATUS).map(([k, t]) => `<option value="${k}" ${r.status === k ? "selected" : ""}>${t}</option>`).join("")}</select></label>
+    <label class="f"><span>Your notes</span><textarea data-rq="admin_notes">${esc(r.admin_notes || "")}</textarea></label>`;
+  if (!v) h += `<p class="sm mute">Link the request to a café to build their report. If it's not on the list, add it under Cafés.</p>`;
+  else if (v.lat == null) h += `<p class="sm err">This café has no location yet. Open it under Cafés and find its location.</p>`;
+  else {
+    const c = coverage(v);
+    h += `<p class="sm">${c.n ? `We have ${c.n} of their prices` : `<span class="err">We have none of their prices yet.</span> Record their menu first`}${c.visited ? ", and a visit" : ""}.</p>
+      <div class="row"><button class="btn" data-act="build">${r.report ? "Rebuild the report" : "Build the report"}</button>${r.report ? `<a class="btn q" href="${esc(reportUrl(r.token))}" target="_blank" rel="noopener">Open it</a>` : ""}</div>`;
+    if (r.report) h += `<p class="xs mute" style="margin-top:8px">Saved ${fmtD(r.report_at)}.</p><div class="row"><button class="btn sm" data-act="emailreport">Email them the report</button><button class="btn q sm" data-act="copylink">Copy their link</button><a class="btn q sm" href="${esc(mailto(r, v))}">Email it yourself</a></div>`;
+    const mb = r.owner_state && r.owner_state.menuBoard, mbUsed = mb && S.obs.some(o => o.venueId === r.venue_id && o.source === "owner" && o.at === mb.at && (o.notes || "").startsWith("Their menu board"));
+    if (mb && r.venue_id) h += `<div class="card" style="margin:12px 0;background:var(--tint)"><p class="sm" style="margin:0 0 6px"><b>They sent their menu board</b> on ${fmtD(mb.at)}: ${Object.entries(mb.prices || {}).map(([k, p]) => `${esc((P.ITEM[k] || {}).t || k)} £${(+p).toFixed(2)}`).join(", ")}.</p>${mbUsed ? `<span class="chip good">Added to their prices</span>` : `<button class="btn sm" data-act="usemenu">Use these prices</button>`}</div>`;
+    h += `<div class="row" style="margin-top:10px"><a class="btn q sm" href="${esc(ownerUrl(r.token))}" target="_blank" rel="noopener">Their Patch home</a>${r.owner_state ? `<button class="btn q sm" data-act="briefing">This week's briefing as an email</button>` : ""}</div>`;
   }
-  D = data; draw(area);
+  return h + `</div>${V.draft && V.draft.id === r.id ? draftPanel() : ""}`;
+}
+function mailto(r, v) {
+  const first = (r.name || "").split(/\s+/)[0] || "there";
+  const body = `Hi ${first},\n\nHere's your free Patch report for ${v.name}: how you compare with the 10 cafés nearest you, item by item, and a calculator to see where you could save or charge more.\n\n${reportUrl(r.token)}\n\nIt's private: no other café sees your figures.\n\nIf it's useful, we're taking 10 founding members at £${CFG.foundingPrice} a month for the first year, with a fresh report every month. There's a button at the end of the report.\n\nThanks`;
+  return `mailto:${encodeURIComponent(r.email)}?subject=${encodeURIComponent("Your Patch report for " + v.name)}&body=${encodeURIComponent(body)}`;
 }
 
-function draw(area) {
-  const o = D.overview, days = D.days || [], S = D.sources || [], A = D.areas || [], P = D.partners || [], R = D.reminders || [];
-  const max = Math.max(1, ...days.map(d => d.started));
-  const by = Object.fromEntries(days.map(d => [d.day, d])), span = [];
-  for (let i = 29; i >= 0; i--) { const k = new Date(Date.now() - i * 864e5).toISOString().slice(0, 10); span.push(by[k] || { day: k, started: 0, finished: 0 }); }
-  let h = `<p class="mute sm">As of ${new Date(D.made).toLocaleString("en-GB", { dateStyle: "long", timeStyle: "short" })}. <button class="quiet" onclick="load()">Refresh</button></p>
-  <div class="note sm"><b>This page is for you only.</b> It shows true totals, including small ones. Before you pass any figure on, use the area report: it hides any group under ${MIN} households.</div>
-
-  <h2>Overall</h2>
-  <div class="kpis">
-    <div><b>${num(o.started)}</b><span>Checks started</span></div>
-    <div><b>${num(o.finished)}</b><span>Checks finished (${pct(o.finished, o.started)})</span></div>
-    <div><b>${num(o.plans)}</b><span>Plans saved with an account</span></div>
-    <div><b>${num(o.checked_twice)}</b><span>Came back for a second check</span></div>
-    <div><b>${num(o.accounts)}</b><span>Accounts (${num(o.confirmed)} confirmed)</span></div>
-    <div><b>${num(o.reminders_on)}</b><span>Have seasonal reminders on</span></div>
-    <div><b>${num(o.count_me)}</b><span>Agreed to be counted for their council</span></div>
-    <div><b>${num(o.anon_checks)}</b><span>Anonymous checks counted</span></div>
-  </div>
-  <p class="sm">${o.score_latest_twice == null ? `<span class="mute">No before-and-after scores yet: nobody has done a second check.</span>` : `<b>Average score, first check to latest:</b> ${o.score_first_twice}% → <b>${o.score_latest_twice}%</b> <span class="mute">(${num(o.checked_twice)} households with two or more checks)</span>`}
-  ${o.plans ? ` Average score at first check, all saved plans: <b>${o.score_first}%</b>.` : ""} Reminder emails sent so far: <b>${num(o.reminders_sent)}</b>. Organisations: <b>${num(o.organisations)}</b>.</p>
-
-  <h2>Last 30 days</h2>
-  <div class="bars" role="img" aria-label="Checks started and finished each day for the last 30 days">${span.map(d => `<i style="height:${Math.round(d.started / max * 100)}%" title="${day(d.day)}: ${d.started} started, ${d.finished} finished"><u style="height:${d.started ? Math.round(d.finished / d.started * 100) : 0}%"></u></i>`).join("")}</div>
-  <p class="sm mute">${day(span[0].day)} to ${day(span[29].day)}. Green: started. Amber: finished. Hover over a bar for the numbers.</p>
-
-  <h2>Where people came from</h2>
-  <p class="sm mute">Each QR code in the workbook and each partner link carries a tag. "(no tag)" is everyone who came straight to the site.</p>
-  <div class="scroll"><table><tr><th>Tag</th><th class="n">Started</th><th class="n">Finished</th><th class="n">Calculator</th><th class="n">Local info</th><th class="n">Reminders page</th><th class="n">Reminder sign-ups</th></tr>
-  ${S.map(s => `<tr><td>${esc(s.src)}</td><td class="n">${s.started}</td><td class="n">${s.finished}</td><td class="n">${s.calc}</td><td class="n">${s.local_info}</td><td class="n">${s.remind_page}</td><td class="n">${s.remind_signup}</td></tr>`).join("") || `<tr><td colspan="7" class="mute">Nothing yet.</td></tr>`}</table></div>
-
-  <h2>Partners</h2>
-  <p class="sm mute">Saved plans that arrived through a partner's link, once a partner has ${MIN} or more.</p>
-  ${P.length ? `<div class="scroll"><table><tr><th>Partner tag</th><th class="n">Households</th><th class="n">Second check</th><th class="n">Score at first check</th><th class="n">Latest</th></tr>
-  ${P.map(p => `<tr><td>${esc(p.src)}</td><td class="n">${p.households}</td><td class="n">${p.followed_up}</td><td class="n">${p.score_first}%</td><td class="n">${p.score_latest == null ? "Too few yet" : p.score_latest + "%"}</td></tr>`).join("")}</table></div>` : `<p class="sm mute">None yet.</p>`}
-  <p class="sm"><b>Make a link for a partner.</b> Give each organisation its own, and put it in their emails, leaflets or QR codes.</p>
-  <p><input id="pname" placeholder="For example: Rochdale fire" aria-label="Partner name" oninput="plink()"> <span id="plink" class="sm"></span></p>
-
-  <h2>Areas</h2>
-  <p class="sm mute">Council areas, from the first half of the postcode. Choose one to see its report.</p>
-  <div class="scroll"><table><tr><th>Area</th><th class="n">Finished</th><th class="n">Plans saved</th><th class="n">Agreed to be counted</th><th class="n">Second check</th><th class="n">Anonymous</th><th></th></tr>
-  ${A.map((a, i) => `<tr><td>${esc(a.area)}${Math.max(a.count_me, a.anon) < MIN ? ` <span class="small sm">under ${MIN}</span>` : ""}</td><td class="n">${a.finished}</td><td class="n">${a.plans}</td><td class="n">${a.count_me}</td><td class="n">${a.checked_twice}</td><td class="n">${a.anon}</td><td><button class="quiet" onclick="report(${i})">Report</button></td></tr>`).join("") || `<tr><td colspan="7" class="mute">Nothing yet.</td></tr>`}</table></div>
-  <p class="sm mute">"Under ${MIN}" means the area report will be mostly empty: it only shows groups of ${MIN} or more households who agreed to be counted.</p>
-  <p id="rmsg" class="sm"></p>
-
-  <h2>Seasonal reminders</h2>
-  <div class="scroll"><table><tr><th>Area</th><th class="n">Households</th></tr>${R.map(r => `<tr><td>${esc(r.area)}</td><td class="n">${r.households}</td></tr>`).join("")}</table></div>
-  <p class="sm mute">Areas appear once ${MIN} or more households there have reminders on and agreed to be counted.</p>`;
-  box.innerHTML = h;
+// A report is a snapshot you check before it's saved: nothing reaches the owner until you press Save.
+function buildReport(r) {
+  const v = venue(r.venue_id), pos = P.position(v, S.venues, S.obs, 10), area = P.areaStats(S.venues, S.obs);
+  const nearV = pos.near.map(x => x.v);
+  const snap = { at: new Date().toISOString(), area: { name: S.area.name, slug: S.area.slug },
+    venue: { name: v.name, address: v.address, postcode: v.postcode, hygiene: v.hygiene, hygieneDate: v.hygieneDate, hours: v.hours || null },
+    quality: pos.quality, me: { scores: pos.me.scores, visited: pos.me.visited, lastAt: pos.me.lastAt },
+    near: pos.near.map(x => ({ name: x.v.name, d: x.d, hygiene: x.v.hygiene, kind: x.v.kind })),
+    items: pos.items.map(i => ({ k: i.k, t: i.t, mine: i.mine, n: i.n, median: i.median, low: i.low, high: i.high, diff: i.diff, cheaperThan: i.cheaperThan, peers: i.peers })),
+    areaScores: { scores: area.scores, wifi: area.wifi, cardOnly: area.cardOnly, visited: area.visited },
+    nearScores: P.SCORES.map(s => ({ k: s.k, t: s.t, unit: s.unit, median: P.median(nearV.map(x => +P.latest(S.obs, x.id).scores[s.k]).filter(x => !isNaN(x))) })),
+    calendar: P.calendarFor(S.area.calendar || [], (v.postcode || "").split(" ")[0], null, 56), salesCalendar: (S.area.calendar || []), profile: S.area.profile || null,
+    costs: S.area.costs || [], gaps: P.hoursGaps(nearV), newNearby: P.newNearby(v, S.venues, 1).map(x => ({ name: x.v.name, d: x.d, postcode: x.v.postcode })), bench: bench() };
+  snap.actions = draftActions(snap);
+  return snap;
+}
+function draftActions(s) {
+  const a = [];
+  s.items.filter(i => i.diff != null && i.diff <= -0.2).sort((x, y) => x.diff - y.diff).slice(0, 3).forEach(i => a.push(`Your ${i.t.toLowerCase()} is ${money(-i.diff)} below the nearby average of ${money(i.median)}. There's room to raise it and still be competitive.`));
+  s.items.filter(i => i.diff != null && i.diff >= 0.3).slice(0, 1).forEach(i => a.push(`Your ${i.t.toLowerCase()} is ${money(i.diff)} above the nearby average. Make sure the menu says why: the beans, the bake, the portion.`));
+  const g = s.gaps, h = s.venue.hours;
+  if (g && g.before8 <= 30 && !(h && h.mon && h.mon[0] && h.mon[0] <= "08:00")) a.push(`Only ${g.before8}% of the cafés near you open before 8am on weekdays. An earlier start could catch commuters and school runs.`);
+  if (g && g.sunday <= 40 && !(h && h.sun)) a.push(`Only ${g.sunday}% of the cafés near you open on Sundays.`);
+  if (s.newNearby.length) a.push(`${s.newNearby.length} place${s.newNearby.length > 1 ? "s" : ""} within a mile ${s.newNearby.length > 1 ? "are" : "is"} new or waiting for a first hygiene inspection: ${s.newNearby.slice(0, 3).map(x => x.name).join(", ")}.`);
+  if (/^[0-4]$/.test(s.venue.hygiene || "")) a.push(`Your hygiene rating is ${s.venue.hygiene}. Most cafés near you are 5. Once the issues are fixed, you can ask the council to re-inspect.`);
+  const missing = s.items.filter(i => i.mine == null && i.n >= 3).map(i => i.t.toLowerCase());
+  if (missing.length) a.push(`We couldn't find your prices for: ${missing.slice(0, 5).join(", ")}. Send us your menu for a fuller comparison.`);
+  return a.slice(0, 6);
+}
+function draftPanel() {
+  const s = V.draft.snap, priced = s.items.filter(i => i.mine != null && i.median != null);
+  return `<div class="card"><h3>Check before saving</h3><p class="sm">${s.near.length} nearest cafés, from ${s.near[0] ? s.near[0].d : "?"} to ${s.near.length ? s.near[s.near.length - 1].d : "?"} miles. ${priced.length} items compared.</p>
+    <table class="t"><thead><tr><th>Item</th><th class="n">Them</th><th class="n">Nearby</th><th class="n">Diff</th></tr></thead><tbody>${priced.map(i => `<tr><td>${esc(i.t)}</td><td class="n">${money(i.mine)}</td><td class="n">${money(i.median)}</td><td class="n">${i.diff > 0 ? "+" : ""}${i.diff.toFixed(2)}</td></tr>`).join("")}</tbody></table>
+    <label class="f" style="margin-top:12px"><span>Suggested actions (one per line). Edit freely: these go in the report.</span><textarea id="actions" style="min-height:180px">${esc(s.actions.join("\n"))}</textarea></label>
+    <div class="row"><button class="btn" data-act="savereport">Save the report</button><button class="btn q" data-act="canceldraft">Cancel</button></div></div>`;
 }
 
-function plink() {
-  const v = document.getElementById("pname").value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 20).replace(/-+$/, "");
-  const site = (window.FETTLE_CONFIG && window.FETTLE_CONFIG.siteUrl) || location.origin;
-  document.getElementById("plink").innerHTML = v ? `<code id="pl">${esc(site)}/?src=${esc(v)}</code> <button class="quiet" onclick="navigator.clipboard.writeText(document.getElementById('pl').textContent).then(()=>this.textContent='Copied')">Copy</button>` : "";
+/* ---------- record a visit or menu ---------- */
+function vRecord() {
+  const R = V.rec, v = venue(R.venue), last = v ? P.latest(S.obs, v.id) : null;
+  const list = S.venues.filter(x => x.included).sort((a, b) => a.name.localeCompare(b.name));
+  const scoreBtns = (k, n) => `<span class="seg">${Array.from({ length: n }, (_, i) => i + 1).map(x => `<button type="button" data-score="${k}" data-v="${x}" aria-pressed="${R.scores[k] === x}">${x}</button>`).join("")}</span>`;
+  const yn = k => `<span class="seg"><button type="button" data-score="${k}" data-v="true" aria-pressed="${R.scores[k] === true}">Yes</button><button type="button" data-score="${k}" data-v="false" aria-pressed="${R.scores[k] === false}">No</button></span>`;
+  let h = `<div class="split"><section class="card"><h2>Record a visit or menu</h2><p class="sm"><a class="btn q sm" href="visit.html${D.DEMO ? "?demo=1" : ""}${v ? (D.DEMO ? "&" : "?") + "v=" + encodeURIComponent(v.id) : ""}">Open the visit form</a> <span class="mute">Made for your phone: Google details, photos, every score, and where the visit ranks. Use this page for menus and websites.</span></p>
+    <label class="f"><span>Café</span><input id="recCafe" list="recList" autocomplete="off" value="${v ? esc(v.name + " (" + (v.postcode || "") + ")") : ""}" placeholder="Start typing"><datalist id="recList">${list.map(x => `<option value="${esc(x.name)} (${esc(x.postcode || "")})">`).join("")}</datalist></label>
+    <div class="row"><label class="f" style="flex:0 0 170px"><span>Date</span><input type="date" id="recAt" value="${esc(R.at || today())}"></label>
+    <div><span class="sm" style="display:block;font-weight:600;margin:0 0 4px">From</span><span class="seg">${[["visit", "A visit"], ["menu", "Menu or photo"], ["website", "Website"], ["owner", "The owner"]].map(([k, t]) => `<button type="button" data-src="${k}" aria-pressed="${R.source === k}">${t}</button>`).join("")}</span></div></div>
+    <div class="row" style="justify-content:space-between;margin-top:14px"><h3 style="margin:0">Prices (as charged, VAT included)</h3><label class="btn q sm" style="position:relative;overflow:hidden">${V.rec.reading ? "Reading…" : "Read them from a photo"}<input type="file" accept="image/*" data-menuphoto="1" style="position:absolute;inset:0;opacity:0;cursor:pointer" aria-label="Read prices from a menu photo"></label></div>${V.rec.readNote ? `<p class="sm mute">${esc(V.rec.readNote)}</p>` : ""}<div class="prices">${P.ITEMS.map(i => `<label class="f"><span>${esc(i.t)}</span><input inputmode="decimal" data-price="${i.k}" value="${R.prices[i.k] ?? ""}" placeholder="${last && last.prices[i.k] != null ? last.prices[i.k].toFixed(2) : "£"}"></label>`).join("")}</div>`;
+  if (R.source === "visit") h += `<h3>What you found</h3>
+    <div class="scorerow"><span>Minutes to be served</span><input type="number" min="0" max="60" data-scorenum="wait" value="${R.scores.wait ?? ""}" style="width:80px;border:1px solid var(--line);border-radius:8px;padding:6px;background:var(--card)"></div>
+    <div class="scorerow"><span>Cleanliness</span>${scoreBtns("clean", 5)}</div><div class="scorerow"><span>Friendliness</span>${scoreBtns("friendly", 5)}</div><div class="scorerow"><span>Seats free</span>${scoreBtns("seats", 5)}</div>
+    <div class="scorerow"><span>Wifi</span>${yn("wifi")}</div><div class="scorerow"><span>Cards only</span>${yn("card_only")}</div>`;
+  h += `<details style="margin:10px 0"${R.hours ? " open" : ""}><summary><b>Opening hours</b> <span class="sm mute">(optional, from the door or Google)</span></summary><div class="hrs" style="margin-top:8px">${P.DAYS.map(d => { const x = (R.hours || (v && v.hours) || {})[d];
+    return `<span>${P.DAYNAME[d]}</span><input type="time" data-hr="${d}.0" value="${x ? x[0] : ""}"><input type="time" data-hr="${d}.1" value="${x ? x[1] : ""}"><label class="sm"><input type="checkbox" data-closed="${d}" ${x === null ? "checked" : ""}> Closed</label>`; }).join("")}</div></details>
+    <label class="f"><span>Notes (optional)</span><textarea id="recNotes" maxlength="1000"></textarea></label>
+    <p class="err" id="recErr"></p><button class="btn big" data-act="saverec">Save</button></section>
+    <aside class="panel"><div class="card"><h3>Coverage</h3>${coverageBox()}</div>${v ? `<div class="card"><h3>${esc(v.name)}: what we have</h3>${obsList(v)}</div>` : ""}</aside></div>`;
+  return h;
+}
+function coverageBox() {
+  const inc = S.venues.filter(x => x.included), priced = inc.filter(x => coverage(x).n), visited = inc.filter(x => coverage(x).visited);
+  const todo = inc.filter(x => !coverage(x).n).slice(0, 8);
+  return `<p class="sm">${priced.length} of ${inc.length} cafés have prices. ${visited.length} visited.</p><div class="bar"><i style="width:${inc.length ? (priced.length / inc.length) * 100 : 0}%"></i></div>
+    ${todo.length ? `<p class="sm" style="margin-top:10px"><b>Still to do</b></p><ul class="sm" style="padding-left:18px;margin:0">${todo.map(x => `<li><button class="link btn q sm" style="padding:0 6px;border:0" data-pick="${x.id}">${esc(x.name)}</button></li>`).join("")}</ul>` : ""}`;
+}
+function obsList(v) {
+  const o = S.obs.filter(x => x.venueId === v.id).sort((a, b) => String(b.at).localeCompare(String(a.at)));
+  if (!o.length) return `<p class="sm mute">Nothing yet.</p>`;
+  return `<ul class="sm" style="list-style:none;padding:0;margin:0">${o.map(x => `<li style="padding:6px 0;border-bottom:1px solid var(--line)"><b>${fmtD(x.at)}</b> · ${esc(x.source)} · ${Object.keys(x.prices || {}).length} prices${Object.keys(x.scores || {}).length ? " · scores" + (I.visitScore(x.scores) ? " " + I.visitScore(x.scores).score + "/100" : "") : ""}${(x.photos || []).length ? ` · ${x.photos.length} photo${x.photos.length > 1 ? "s" : ""}` : ""}
+    <button class="btn q sm" style="float:right;padding:1px 8px" data-delobs="${x.id}">Remove</button></li>`).join("")}</ul>`;
 }
 
-async function report(i) {
-  const a = D.areas[i], msg = document.getElementById("rmsg"); msg.textContent = "Getting the report for " + a.area + "…";
-  const { data, error } = await sb.rpc("fettle_admin", { p_area: a.area });
-  if (error || !data || !data.area) { msg.textContent = "Couldn't get that report. Try again."; return; }
-  try { sessionStorage.setItem("fettle-report", JSON.stringify(data.area)); } catch (e) {}
-  location.href = "area-report";
+/* ---------- cafés ---------- */
+function vCafes() {
+  const q = V.q.toLowerCase();
+  let list = S.venues.filter(x => V.all || x.included);
+  if (q) list = S.venues.filter(x => (x.name + " " + (x.postcode || "") + " " + (x.address || "")).toLowerCase().includes(q));
+  list = list.slice().sort((a, b) => (b.included - a.included) || a.name.localeCompare(b.name));
+  const inc = S.venues.filter(x => x.included).length, noLoc = S.venues.filter(x => x.included && x.lat == null).length;
+  return `<div class="row" style="margin-bottom:10px"><h2 style="margin:0">Cafés</h2><span class="chip">${inc} included</span><span class="sp"></span>
+    ${noLoc ? `<button class="btn q sm" data-act="locate">Find ${noLoc} missing locations</button>` : ""}<button class="btn q sm" data-act="addcafe">Add a café</button>${!D.DEMO ? `<button class="btn q sm" data-act="loadmenus">Load online menu prices</button><button class="btn q sm" data-act="loadfsa">Load the hygiene list</button>` : ""}</div>
+    <p class="sm mute">Cafés come from the Food Standards Agency list. Only cafés with “café” or “coffee” in their name are included at first: search for bakeries, delis and brunch places and tick them in.</p>
+    <div class="row" style="margin-bottom:10px"><input type="search" id="q" value="${esc(V.q)}" placeholder="Search every food business in the area" style="flex:1 1 260px;max-width:420px;border:1px solid var(--line);border-radius:9px;padding:8px 10px;background:var(--card)">
+    <label class="sm"><input type="checkbox" id="showAll" ${V.all ? "checked" : ""}> Show those not included</label></div>
+    <section class="card" style="padding:0;overflow:auto"><table class="t"><thead><tr><th>In</th><th>Name</th><th>Postcode</th><th>Kind</th><th>Hygiene</th><th>Our data</th><th></th></tr></thead><tbody>
+    ${list.slice(0, 400).map(x => { const c = coverage(x); return `<tr><td><input type="checkbox" data-inc="${x.id}" ${x.included ? "checked" : ""} aria-label="Include ${esc(x.name)}"></td><td><b>${esc(x.name)}</b><br><span class="xs mute">${esc(x.address || "")}${x.fsaType ? " · " + esc(x.fsaType) : ""}</span></td>
+      <td>${esc(x.postcode || "")}${x.lat == null ? '<br><span class="chip warn">No location</span>' : ""}</td><td><select data-kind="${x.id}" aria-label="Kind"><option value="independent" ${x.kind !== "chain" ? "selected" : ""}>Independent</option><option value="chain" ${x.kind === "chain" ? "selected" : ""}>Chain</option></select></td>
+      <td>${esc(x.hygiene === "AwaitingInspection" ? "Awaiting" : x.hygiene || "")}</td><td class="sm"><span class="pill ${c.visited ? "ok" : c.n ? "part" : ""}"></span>${c.n ? c.n + " prices" : "None"}${c.last ? "<br>" + fmtD(c.last) : ""}</td>
+      <td><button class="btn q sm" data-edit="${x.id}">Edit</button></td></tr>`; }).join("")}</tbody></table>${list.length > 400 ? `<p class="sm mute" style="padding:10px">Showing 400 of ${list.length}. Search to narrow it down.</p>` : ""}</section>`;
 }
+function editModal(v) {
+  const m = document.createElement("div"); m.className = "modal"; m.id = "modal";
+  m.innerHTML = `<div class="box" role="dialog" aria-modal="true"><h2>${v ? "Edit " + esc(v.name) : "Add a café"}</h2>
+    <label class="f"><span>Name</span><input id="e-name" value="${esc(v ? v.name : "")}" maxlength="120"></label>
+    <div class="grid" style="gap:0 12px"><label class="f"><span>Address</span><input id="e-addr" value="${esc(v ? v.address || "" : "")}"></label><label class="f"><span>Postcode</span><input id="e-pc" value="${esc(v ? v.postcode || "" : "")}" maxlength="10"></label>
+    <label class="f"><span>Latitude</span><input id="e-lat" value="${v && v.lat != null ? v.lat : ""}"></label><label class="f"><span>Longitude</span><input id="e-lng" value="${v && v.lng != null ? v.lng : ""}"></label>
+    <label class="f"><span>Google rating (optional, you check it)</span><input id="e-g" value="${v && v.google_rating != null ? v.google_rating : ""}" inputmode="decimal"></label><label class="f"><span>Website</span><input id="e-web" value="${esc(v ? v.website || "" : "")}"></label></div>
+    <label class="f"><span>Notes</span><textarea id="e-notes">${esc(v ? v.notes || "" : "")}</textarea></label><p class="err" id="e-err"></p>
+    <div class="row"><button class="btn" data-act="saveedit" data-id="${v ? v.id : ""}">Save</button><button class="btn q" data-act="findloc">Find location from postcode</button><span class="sp"></span><button class="btn q" data-act="closemodal">Cancel</button></div></div>`;
+  document.body.appendChild(m);
+}
+async function postcodeLoc(pc) {
+  const r = await fetch("https://api.postcodes.io/postcodes/" + encodeURIComponent(pc)); if (!r.ok) return null;
+  const j = await r.json(); return j && j.result ? { lat: j.result.latitude, lng: j.result.longitude } : null;
+}
+
+/* ---------- area page ---------- */
+const PROFILE = [["people", "People living here", "e.g. 68,000"], ["students", "Full-time students (%)", "e.g. 14"], ["over65", "Aged 65 and over (%)", "e.g. 13"], ["wfh", "Working mainly from home (%)", "e.g. 38"], ["families", "Households with children (%)", "e.g. 27"]];
+const GBP = PatchInsights.SEO_CHECKS.filter(c => c.src === "gbp");
+function vSearch() {
+  const I = PatchInsights, list = S.venues.filter(v => v.included).sort((a, b) => a.name.localeCompare(b.name)), geo = S.area.geo, prompts = V.prompts ?? ((geo && geo.prompts) || defaultPrompts()).map(p => p.q + (p.theme ? " | " + p.theme : "")).join("\n");
+  V.prompts = prompts;
+  return `<section class="card"><h2>On Google</h2><p class="sm mute">Website checks run by reading the café's homepage. Google profile checks: look the café up on Google Maps and tick what's true.</p>
+    <div style="overflow-x:auto"><table class="t"><thead><tr><th>Café</th><th>Website</th><th class="n">Score</th>${GBP.map(c => `<th title="${esc(c.t)}">${esc(c.t.replace(/ on Google| to reviews/g, "").slice(0, 16))}</th>`).join("")}<th></th></tr></thead><tbody>
+    ${list.map(v => { const s = v.seo || {}, sc = I.seoScore(s.checks); return `<tr><td><b>${esc(v.name)}</b>${s.at ? `<br><span class="xs mute">${fmtD(s.at)}</span>` : ""}</td><td><input data-web="${v.id}" value="${esc(v.website || "")}" placeholder="littlefig.co.uk" style="width:150px"></td><td class="n">${sc ? `<span class="chip ${sc.score >= 70 ? "good" : sc.score >= 45 ? "warn" : "bad"}">${sc.score}</span>` : "–"}</td>
+      ${GBP.map(c => `<td class="c" style="text-align:center"><input type="checkbox" data-gbp="${v.id}.${c.k}" ${(s.checks || {})[c.k] ? "checked" : ""} aria-label="${esc(c.t)}"></td>`).join("")}<td><button class="btn q sm" data-seocheck="${v.id}">Check website</button></td></tr>`; }).join("")}</tbody></table></div></section>
+    <section class="card"><h2>In AI answers</h2><p class="sm mute">The questions people ask, one per line. After a | add the short theme used in actions. We ask each AI assistant every question and record which cafés here it names.</p>
+    <label class="f"><textarea id="prompts" style="min-height:140px">${esc(prompts)}</textarea></label><div class="row"><button class="btn" data-act="geo">Ask the AI assistants</button><span class="sm mute">${geo ? `Last asked ${fmtD(geo.at)} of ${esc((geo.engines || []).join(" and "))}.` : "Not asked yet."}</span></div>
+    ${geo ? `<div style="overflow-x:auto;margin-top:12px"><table class="t"><thead><tr><th>Question</th>${(geo.engines || []).map(e => `<th>${esc(e)}</th>`).join("")}</tr></thead><tbody>${geo.prompts.map(p => `<tr><td>${esc(p.q)}</td>${geo.engines.map(e => `<td class="sm">${esc((geo.answers[p.q + "|" + e] || []).join(", ") || "None of ours")}</td>`).join("")}</tr>`).join("")}</tbody></table></div>` : ""}
+    <p class="xs mute">Rankings, search scores and AI answers reach owners when you publish the area page.</p></section>`;
+}
+function defaultPrompts() { const a = S.area.name.replace(/\s*\(demo\)/, ""); return [["Where's the best coffee in " + a + "?", "best coffee"], ["Good brunch in " + a, "brunch"], ["Dog-friendly café in " + a, "dog-friendly"], ["Quiet café to work from in " + a, "laptop-friendly"], ["Best cake in " + a, "cake"]].map(([q, theme]) => ({ q, theme })); }
+async function callCheck(path, body) {
+  const tok = await DB.token(); if (!tok) throw new Error("In the demo, checks use made-up results.");
+  const r = await fetch(path, { method: "POST", headers: { "Content-Type": "application/json", Authorization: "Bearer " + tok }, body: JSON.stringify(body) });
+  const j = await r.json().catch(() => ({})); if (!r.ok) throw new Error(j.error || "The check didn't work."); return j;
+}
+function vCalendar() {
+  const rows = V.cal.map((e, i) => ({ e, i })).sort((a, b) => String(a.e.start).localeCompare(String(b.e.start)));
+  const sel = (i, k, opts) => `<select data-cal="${i}.${k}">${opts.map(([v, t]) => `<option value="${v}" ${V.cal[i][k] === v ? "selected" : ""}>${t}</option>`).join("")}</select>`;
+  return `<section class="card"><div class="row"><h2 style="margin:0">Local calendar</h2><span class="sp"></span><button class="btn q sm" data-act="addcal">Add</button><button class="btn sm" data-act="savecal">Save</button></div>
+    <p class="sm mute">Everything that makes trade busier or quieter: markets and festivals, school and university holidays, roadworks, big matches. Bank holidays are added for you. Used in the weekly heads-up, on the area page, and to read owners' sales.</p>
+    <p class="xs mute">Where to look: the council's events page, school term dates (council site), university term dates, roadworks at one.network or the council, Transport for Greater Manchester service changes.</p>
+    <div style="overflow-x:auto"><table class="t"><thead><tr><th>Type</th><th>What</th><th>From</th><th>To</th><th>Postcode areas</th><th>Effect</th><th></th></tr></thead><tbody>
+    ${rows.map(({ e, i }) => `<tr><td>${sel(i, "type", Object.entries(P.CAL_TYPES).filter(([k]) => k !== "bank"))}</td><td><input data-cal="${i}.title" value="${esc(e.title || "")}" style="min-width:180px"></td>
+      <td><input type="date" data-cal="${i}.start" value="${esc(e.start || "")}"></td><td><input type="date" data-cal="${i}.end" value="${esc(e.end || "")}"></td>
+      <td><input data-cal="${i}.districts" value="${esc((e.districts || []).join(", "))}" placeholder="All" style="width:110px"></td><td>${sel(i, "effect", [["", "Not sure"], ["busier", "Busier"], ["quieter", "Quieter"]])}</td>
+      <td><button class="btn q sm" data-delcal="${i}">×</button></td></tr>`).join("") || `<tr><td colspan="7" class="mute">Nothing yet.</td></tr>`}</tbody></table></div></section>`;
+}
+function vArea() {
+  const st = P.areaStats(S.venues, S.obs), pub = S.area.published;
+  const items = st.prices.map(p => `<tr><td>${esc(p.t)}</td><td class="n">${p.n}</td><td class="n">${p.median != null ? money(p.median) : '<span class="mute">needs ' + P.MIN_N + "</span>"}</td><td class="n">${p.low != null ? money(p.low) + " to " + money(p.high) : ""}</td></tr>`).join("");
+  return `<div class="split"><section><div class="card"><h2>What the area page will show</h2><p class="sm mute">Only figures from at least ${P.MIN_N} cafés are shown. No café is ever named with its visit scores.</p>
+    <div class="grid"><div class="stat"><b>${st.cafes}</b><span>cafés included</span></div><div class="stat"><b>${st.priced}</b><span>with prices</span></div><div class="stat"><b>${st.visited}</b><span>visited</span></div><div class="stat"><b>${st.awaiting}</b><span>awaiting inspection</span></div></div>
+    <table class="t" style="margin-top:12px"><thead><tr><th>Item</th><th class="n">Cafés</th><th class="n">Typical</th><th class="n">Range</th></tr></thead><tbody>${items}</tbody></table>
+    <p class="sm" style="margin-top:10px">Opening hours known for ${st.gaps ? st.gaps.known : "fewer than " + P.MIN_N} cafés.</p></div></section>
+    <aside class="panel"><div class="card"><h3>Who lives and works here</h3><p class="sm mute">From the 2021 Census and ONS (build a custom area at ons.gov.uk for these postcodes). Shown on the area page and in reports.</p>
+    ${PROFILE.map(([k, t, u]) => `<label class="f"><span>${t}</span><input data-prof="${k}" value="${esc(V.profile[k] ?? "")}" placeholder="${u}"></label>`).join("")}
+    <label class="f"><span>Source</span><input data-prof="source" value="${esc(V.profile.source || "")}" placeholder="Census 2021, ONS"></label><button class="btn q sm" data-act="saveprofile">Save</button></div>
+    <div class="card"><p class="sm">${pub ? `Last published ${fmtD(S.area.published_at)}.` : "Not published yet."}</p><div class="row"><button class="btn" data-act="publish">Publish the area page</button><a class="btn q" href="./?a=${esc(S.area.slug)}${D.DEMO ? "&demo=1" : ""}" target="_blank" rel="noopener">View it</a></div></div></aside></div>`;
+}
+
+/* ---------- costs per serving ---------- */
+/* ---------- price sweeps ---------- */
+const sweepUrl = tok => `${location.protocol === "file:" ? "sweep.html" : location.origin + location.pathname.replace(/admin(\.html)?$/, "sweep")}?s=${encodeURIComponent(tok)}${D.DEMO ? "&demo=1" : ""}`;
+const payingVenues = () => new Set(S.requests.filter(r => r.status === "founding" && r.venue_id).map(r => r.venue_id));
+async function loadSweeps() { try { S.sweeps = await DB.sweeps(S.area.id); } catch (e) { S.sweeps = []; toast(e.message); } V.swLoaded = S.area.id; if (V.view === "sweeps") render(); }
+async function openSweep(id) { V.sw = id; V.swItems = null; render(); try { V.swItems = await DB.sweepItems(id); } catch (e) { V.swItems = []; toast(e.message); } V.swPhotos = {}; render();
+  for (const it of V.swItems.filter(x => x.status === "sent")) { V.swPhotos[it.id] = await DB.sweepPhotoUrl(it); } render(); }
+function vSweeps() {
+  if (V.swLoaded !== S.area.id) { loadSweeps(); return `<p class="mute">Loading…</p>`; }
+  const sw = (S.sweeps || []).find(x => x.id === V.sw);
+  if (sw) return sweepDetail(sw);
+  const inc = S.venues.filter(v => v.included), pay = payingVenues(), month = new Date().toLocaleDateString("en-GB", { month: "long" });
+  return `<div class="split"><section class="card"><h2>Price sweeps</h2><p class="sm mute">Someone photographs the menu board in each café from a link on their phone. Claude reads the prices, you approve them, and every owner sees what's changed nearby.</p>
+    ${(S.sweeps || []).length ? `<table class="t"><thead><tr><th>Sweep</th><th>Who</th><th class="n">Done</th><th class="n">To check</th><th></th></tr></thead><tbody>${S.sweeps.map(s => `<tr class="click" data-sw="${s.id}"><td><b>${esc(s.name)}</b><br><span class="xs mute">${fmtD(s.created_at)}${s.status === "closed" ? " · closed" : ""}</span></td><td>${esc(s.sweeper || "")}</td><td class="n">${s._done ?? ""}</td><td class="n">${s._sent ?? ""}</td><td><button class="btn q sm" data-sw="${s.id}">Open</button></td></tr>`).join("")}</tbody></table>` : `<p class="sm">No sweeps yet.</p>`}</section>
+    <aside class="panel"><div class="card"><h3>Start a sweep</h3>
+      <label class="f"><span>Name</span><input id="sw-name" value="${esc(month)} prices"></label>
+      <div class="row"><label class="f" style="flex:1"><span>Who's doing it</span><input id="sw-who" placeholder="First name"></label><label class="f" style="flex:0 0 100px"><span>£ a café</span><input id="sw-rate" value="5" inputmode="decimal"></label></div>
+      <label class="f"><span>Done by</span><input type="date" id="sw-due" value="${new Date(Date.now() + 7 * 864e5).toISOString().slice(0, 10)}"></label>
+      <label class="sm" style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="sw-skippay" checked> Leave out the ${pay.size} café${pay.size === 1 ? "" : "s"} that pay us (they send their own board)</label>
+      <p class="sm mute" style="margin:8px 0">${inc.length - pay.size} cafés, about £${((inc.length - pay.size) * 5).toLocaleString("en-GB")} at £5 each.</p><p class="err" id="sw-err"></p>
+      <button class="btn" data-act="newsweep">Make the link</button></div></aside></div>`;
+}
+function sweepDetail(sw) {
+  const items = V.swItems; if (!items) return `<p class="mute">Loading…</p>`;
+  const by = s => items.filter(i => i.status === s), vn = id => venue(id) || { name: "?" }, approved = by("approved").length;
+  const box = it => { const rd = it.read || {}, pr = Object.assign({}, rd.prices || {}, (V.swEdit || {})[it.id] || {}), ph = V.swPhotos[it.id];
+    return `<article class="card" id="si-${it.id}"><div class="row"><h3 style="margin:0">${esc(vn(it.venue_id).name)}</h3><span class="sp"></span><span class="xs mute">${it.taken_at ? "Taken " + fmtD(it.taken_at) : ""}</span></div>
+      <div class="split" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr);margin-top:10px">${ph ? `<a href="${esc(ph)}" target="_blank" rel="noopener"><img src="${esc(ph)}" alt="Menu board at ${esc(vn(it.venue_id).name)}" style="width:100%;border-radius:10px;border:1px solid var(--line)"></a>` : `<div class="sm mute" style="border:1px dashed var(--line);border-radius:10px;padding:20px;text-align:center">${D.DEMO ? "No photo in the demo" : "Loading the photo…"}</div>`}
+      <div>${rd.error ? `<p class="err">Claude couldn't read it: ${esc(rd.error)}</p>` : `<p class="xs mute" style="margin:0 0 6px">${rd.legible ? `Legibility: ${esc(rd.legible)}. ` : ""}${rd.notes ? esc(rd.notes) : ""}${rd.demo ? " (Demo: made-up readings.)" : ""}</p>`}
+        <div class="prices" style="grid-template-columns:repeat(auto-fill,minmax(120px,1fr))">${P.ITEMS.map(i => `<label class="f" title="${esc((rd.seen || {})[i.k] || "")}"><span>${esc(i.t)}</span><input inputmode="decimal" data-swp="${it.id}.${i.k}" value="${pr[i.k] ?? ""}"></label>`).join("")}</div>
+        <div class="row"><button class="btn sm" data-swok="${it.id}">Approve</button><input id="rt-${it.id}" placeholder="Why it needs a retake" style="flex:1;min-width:140px;border:1px solid var(--line);border-radius:8px;padding:7px;background:var(--card)"><button class="btn q sm" data-swre="${it.id}">Ask for a retake</button></div></div></div></article>`; };
+  const list = (t, xs, f) => xs.length ? `<details class="card"${t === "Still to do" ? "" : ""}><summary><b>${t}</b> <span class="sm mute">(${xs.length})</span></summary><ul class="sm" style="padding-left:18px">${xs.map(f).join("")}</ul></details>` : "";
+  return `<p><button class="btn q sm" data-sw="">← All sweeps</button></p>
+    <section class="card"><div class="row"><h2 style="margin:0">${esc(sw.name)}</h2><span class="chip">${sw.status === "open" ? "Open" : "Closed"}</span><span class="sp"></span>${sw.status === "open" ? `<button class="btn q sm" data-act="closesweep">Close it</button>` : ""}</div>
+      <p class="sm">${approved} approved, ${by("sent").length} to check, ${by("todo").length + by("retake").length} to do, ${by("skipped").length} skipped.${sw.sweeper ? ` Pay ${esc(sw.sweeper)} <b>£${(approved * sw.rate).toLocaleString("en-GB", { minimumFractionDigits: 2 })}</b> (${approved} × £${(+sw.rate).toFixed(2)}).` : ""}</p>
+      <div class="row"><input readonly value="${esc(sweepUrl(sw.token))}" style="flex:1;min-width:200px;border:1px solid var(--line);border-radius:8px;padding:7px;background:var(--bg)" aria-label="The sweep link"><button class="btn q sm" data-act="copysweep">Copy the link</button><a class="btn q sm" href="${esc(sweepUrl(sw.token))}" target="_blank" rel="noopener">Open it</a></div>
+      <p class="xs mute">Send this to whoever's doing the sweep. It shows only café names and addresses. Payment isn't made by Patch: pay them as you normally would.</p>
+      ${approved ? `<div class="row" style="margin-top:8px"><button class="btn sm" data-act="updowners">Update owners now</button><span class="sm mute">Recalculates every café's comparison and what's changed nearby, without republishing the area page.</span></div>` : ""}</section>
+    ${by("sent").length ? `<h3>To check (${by("sent").length})</h3>${by("sent").map(box).join("")}` : `<p class="sm mute">Nothing to check right now.</p>`}
+    ${list("Still to do", by("todo").concat(by("retake")), i => `<li>${esc(vn(i.venue_id).name)}${i.status === "retake" ? ` <span class="chip bad">retake</span> ${esc(i.note || "")}` : ""}</li>`)}
+    ${list("Approved", by("approved"), i => `<li>${esc(vn(i.venue_id).name)} <span class="xs mute">${Object.keys((i.read || {}).prices || {}).length} prices</span></li>`)}
+    ${list("Skipped", by("skipped"), i => `<li>${esc(vn(i.venue_id).name)}: ${esc(i.note || "")}</li>`)}`;
+}
+async function approveItem(id) {
+  const sw = S.sweeps.find(x => x.id === V.sw), it = V.swItems.find(x => x.id === id), prices = {}, err = [];
+  document.querySelectorAll(`[data-swp^="${id}."]`).forEach(inp => { const k = inp.dataset.swp.split(".")[1], v = inp.value.trim(); if (!v) return; const x = parseFloat(v.replace(/[£,\s]/g, "")); if (isNaN(x) || x < 0.05 || x > 40) err.push(P.ITEM[k].t); else prices[k] = Math.round(x * 100) / 100; });
+  if (err.length) return toast("Check: " + err.join(", ")); if (!Object.keys(prices).length) return toast("No prices to save: ask for a retake instead");
+  try { const o = await DB.addObservation({ venue_id: it.venue_id, at: String(it.taken_at || new Date().toISOString()).slice(0, 10), source: "menu", prices, scores: {}, notes: `${sw.name}: menu board photo${sw.sweeper ? " by " + sw.sweeper : ""}`.slice(0, 1000), by_name: (ME && ME.name) || null, photos: it.photo_path ? [{ bucket: "sweep-photos", path: it.photo_path, tag: "Menu board" }] : [] });
+    S.obs.push(o); Object.assign(it, await DB.updSweepItem(id, { status: "approved", approved_at: new Date().toISOString(), observation_id: o.id })); toast(`Approved: ${Object.keys(prices).length} prices`); render(); } catch (x) { toast(x.message); }
+}
+// Every café's comparison, what's moved nearby, its visit rank and nearby search scores: what owners see.
+function computeRankings() {
+  const I = PatchInsights, rankings = {}, at = new Date().toISOString();
+  S.venues.filter(v => v.included && v.lat != null).forEach(v => { const near = P.nearest(v, S.venues, 10).map(x => x.v), pos = P.position(v, S.venues, S.obs, 10);
+    rankings[v.id] = { at, visit: I.rankTrend(v, S.venues, S.obs), seoPeers: near.map(x => x.seo && I.seoScore(x.seo.checks)).filter(Boolean).map(x => x.score),
+      moves: P.priceMoves(v, S.venues, S.obs, 10), prices: pos.items.map(i => ({ k: i.k, t: i.t, mine: i.mine, median: i.median, high: i.high, low: i.low, n: i.n, diff: i.diff })) }; });
+  return rankings;
+}
+
+/* ---------- emails ---------- */
+function vEmails() {
+  const E = PatchEmails, st = V.estatus, log = V.elog || [];
+  if (!D.DEMO && !st && !V.eloading) { V.eloading = true; loadEmailInfo(); }
+  const on = (b, yes, no) => `<li><span class="pill ${b ? "ok" : ""}"></span>${b ? yes : no}</li>`;
+  const status = D.DEMO ? `<p class="sm">In the demo nothing is sent. Every email is written to the log below so you can read it.</p>`
+    : !st ? `<p class="sm mute">Checking…</p>` : st.error ? `<p class="err">${esc(st.error)}</p>`
+    : `<ul class="sm" style="list-style:none;padding:0;margin:0">${on(!st.dryRun, "<b>Sending for real</b>", "<b>Dry run is on</b>: nothing is sent, every email goes to the log below")}${on(st.resend && st.from, "Resend is set up, sending from " + esc(st.from || ""), "Resend isn't set up: add RESEND_API_KEY and EMAIL_FROM in Cloudflare")}${on(st.admin, "Your daily round-up has an address", "Add ADMIN_EMAIL in Cloudflare for your daily round-up")}${on(st.cron, "The daily job is set up", "Add CRON_SECRET in Cloudflare and GitHub for the daily job")}${on(st.reading, "Claude reads photos and scans", "Add ANTHROPIC_API_KEY in Cloudflare to read photos")}${on(st.storage, "Private storage for documents", "Add SUPABASE_SERVICE_ROLE_KEY in Cloudflare for documents")}</ul>
+      ${st.dryRun ? `<p class="sm" style="margin-top:10px">When you're happy with the wording below, set <code>EMAIL_DRY_RUN</code> to <code>false</code> in Cloudflare.</p>` : ""}`;
+  const preview = (k, t, when) => { const m = E.SAMPLES[k](); return `<details class="card"><summary><b>${t}</b> <span class="sm mute">${when}</span></summary><p class="sm" style="margin-top:10px"><b>Subject:</b> ${esc(m.subject)}</p>
+    <iframe title="${esc(t)}" sandbox="" srcdoc="${esc(m.html)}" style="width:100%;height:560px;border:1px solid var(--line);border-radius:10px;background:#fff"></iframe><details style="margin-top:8px"><summary class="sm">Plain-text version</summary><pre class="sm" style="white-space:pre-wrap">${esc(m.text)}</pre></details></details>`; };
+  return `<div class="split"><div><section class="card"><h2>Emails</h2>${status}</section>
+    ${preview("reportReady", "Your report is ready", "when you press “Email them the report”")}${preview("weekly", "The Monday email", "every Monday at 7am, to owners using Patch")}${preview("adminDigest", "Your daily round-up", "each morning there's something new")}
+    <p class="xs mute">These use made-up examples. The wording lives in <code>public/patch-emails.js</code>.</p></div>
+    <aside class="panel"><div class="card"><h3>Sent and dry-run emails</h3>${log.length ? `<ul class="sm" style="list-style:none;padding:0;margin:0">${log.map(e => `<li style="padding:7px 0;border-bottom:1px solid var(--line)"><b>${esc(e.subject || e.kind)}</b><br><span class="xs mute">${esc(e.to_email)} · ${fmtD(e.at)} · ${esc(e.status)}${e.error ? " · " + esc(e.error) : ""}</span>${e.body_text ? `<details><summary class="xs">Read it</summary><pre class="xs" style="white-space:pre-wrap">${esc(e.body_text)}</pre></details>` : ""}</li>`).join("")}</ul>` : `<p class="sm mute">Nothing yet.</p>`}</div></aside></div>`;
+}
+async function loadEmailInfo() {
+  try { const tok = await DB.token(), r = await fetch("/api/email-status", { headers: { Authorization: "Bearer " + tok } }); V.estatus = r.ok ? await r.json() : { error: "Couldn't check: is the site deployed?" }; } catch (e) { V.estatus = { error: e.message }; }
+  try { V.elog = await DB.emailLog(); } catch (e) { V.elog = []; }
+  V.eloading = false; if (V.view === "emails") render();
+}
+async function emailReport(r) {
+  const v = venue(r.venue_id);
+  if (D.DEMO) { const m = PatchEmails.reportReady({ name: r.name, cafe: v ? v.name : r.venue_text, reportUrl: reportUrl(r.token), brand: CFG.brand, from: ME.name || "James", foundingPrice: CFG.foundingPrice });
+    V.elog = [{ at: new Date().toISOString(), to_email: r.email, kind: "report", subject: m.subject, status: "dry-run", body_text: m.text }].concat(V.elog || []); toast("Demo: written to the Emails log, not sent"); V.view = "emails"; return render(); }
+  try { const tok = await DB.token(), res = await fetch("/api/email-report", { method: "POST", headers: { "Content-Type": "application/json", Authorization: "Bearer " + tok }, body: JSON.stringify({ id: r.id, again: r.status !== "new" }) }), j = await res.json().catch(() => ({}));
+    if (!res.ok) return toast(j.error || "Couldn't send it");
+    if (j.status === "sent") { r.status = r.status === "new" ? "report_sent" : r.status; toast("Sent to " + r.email); } else if (j.status === "dry-run") toast("Dry run: written to the Emails log, not sent"); else toast("Not sent: " + (j.error || "try again"));
+    V.estatus = null; render();
+  } catch (e) { toast(e.message); }
+}
+function vSettings() {
+  const b = bench();
+  return `<section class="card" style="max-width:640px"><h2>Costs per serving</h2><p class="sm mute">What a café like theirs typically pays for one serving, before VAT. Used to spot where an owner could save. These start as estimates from public wholesale prices: replace them as real invoices come in.</p>
+    <table class="t"><thead><tr><th>Item</th><th class="n">Cost per serving</th><th class="n">Starting estimate</th></tr></thead><tbody>${P.ITEMS.map(i => `<tr><td>${esc(i.t)}</td><td class="n"><input data-bench="${i.k}" value="${b[i.k] != null ? b[i.k].toFixed(2) : ""}" inputmode="decimal" style="width:90px;text-align:right;border:1px solid var(--line);border-radius:8px;padding:5px;background:var(--card)"></td><td class="n mute">${money(P.BENCH[i.k])}</td></tr>`).join("")}</tbody></table>
+    <p style="margin-top:12px"><button class="btn" data-act="savebench">Save</button></p></section>
+    <section class="card" style="max-width:860px"><h2>Typical supplier prices</h2><p class="sm mute">What owners' invoices and typed-in prices are compared against, per litre, kilo or item. Seeded from ${I.PRICE_BOOK.length} lines on Brakes' public price list (${esc(I.PRICE_BOOK_AT)}); the typical price is the middle of the list. Change one when you have better local evidence, such as shared invoices.</p>
+    <div style="overflow-x:auto"><table class="t"><thead><tr><th>What</th><th class="n">Typical</th><th class="n">From the list</th><th>Lines on the list</th></tr></thead><tbody>${I.priceBook(S.area.supply_bench).map(g => `<tr><td>${esc(g.t)}<br><span class="xs mute">per ${esc(g.unit)}</span></td><td class="n"><input data-sbench="${g.k}" value="${(+g.bench).toFixed(g.bench < 1 ? 3 : 2)}" inputmode="decimal" style="width:80px;text-align:right;border:1px solid var(--line);border-radius:8px;padding:5px;background:var(--card)"></td><td class="n mute">${money(g.startBench)}</td><td class="sm">${g.lines.map(x => `<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.name)}</a>, ${esc(x.pack)}, ${money(x.price)}`).join("<br>")}</td></tr>`).join("")}</tbody></table></div>
+    <p class="xs mute">${esc(I.PRICE_BOOK_NOTE)}</p><p style="margin-top:12px"><button class="btn" data-act="savesbench">Save</button></p></section>
+    <section class="card" style="max-width:760px"><div class="row"><h2 style="margin:0">Cost changes</h2><span class="sp"></span><button class="btn q sm" data-act="addcost">Add</button><button class="btn sm" data-act="savecosts">Save</button></div>
+    <p class="sm mute">When a big input moves, log it here: the report calculator updates every owner's costs from the date of their report. Sources: AHDB for milk prices, coffee futures or your roaster for beans, suppliers' price letters.</p>
+    <table class="t"><thead><tr><th>Input</th><th>From</th><th class="n">Change %</th><th>Source</th><th></th></tr></thead><tbody>${V.costs.map((c, i) => `<tr><td><select data-cost="${i}.k">${Object.entries(P.COST_INPUTS).map(([k, x]) => `<option value="${k}" ${c.k === k ? "selected" : ""}>${x.t}</option>`).join("")}</select></td>
+      <td><input type="date" data-cost="${i}.at" value="${esc(c.at || "")}"></td><td class="n"><input data-cost="${i}.pct" value="${esc(c.pct ?? "")}" inputmode="decimal" style="width:70px;text-align:right"></td><td><input data-cost="${i}.source" value="${esc(c.source || "")}"></td><td><button class="btn q sm" data-delcost="${i}">×</button></td></tr>`).join("") || `<tr><td colspan="5" class="mute">Nothing logged yet.</td></tr>`}</tbody></table></section>`;
+}
+
+/* ---------- events ---------- */
+document.addEventListener("click", async e => {
+  const t = e.target.closest("button,a,tr[data-req],tr[data-sw],input[type=checkbox]"); if (!t) return; const d = t.dataset;
+  if (d.nav) { V.view = d.nav; if (d.nav === "sweeps") V.sw = null; return render(); }
+  if (d.sw !== undefined) { if (!d.sw) { V.sw = null; await loadSweeps(); return render(); } return openSweep(d.sw); }
+  if (d.swok) return approveItem(d.swok);
+  if (d.swre) { const note = ($("#rt-" + d.swre).value || "").trim() || "The photo wasn't clear enough"; try { Object.assign(V.swItems.find(x => x.id === d.swre), await DB.updSweepItem(d.swre, { status: "retake", note: note.slice(0, 300) })); toast("Asked for a retake"); } catch (x) { toast(x.message); } return render(); }
+  if (d.req) { V.req = d.req; if (!V.draft || V.draft.id !== d.req) V.draft = null; return render(); }
+  if (d.src) { V.rec.source = d.src; return render(); }
+  if (d.score) { const v = d.v === "true" ? true : d.v === "false" ? false : +d.v; V.rec.scores[d.score] = V.rec.scores[d.score] === v ? undefined : v; return renderKeep(); }
+  if (d.pick) { V.rec = { venue: d.pick, source: V.rec.source, scores: {}, prices: {}, hours: null }; return render(); }
+  if (d.delobs) { if (!confirmIt()) return; await DB.delObservation(d.delobs); S.obs = S.obs.filter(o => o.id !== d.delobs); toast("Removed"); return render(); }
+  if (d.inc) { const v = venue(d.inc); v.included = t.checked; try { await DB.updVenue(v.id, { included: v.included }); } catch (x) { toast(x.message); } return; }
+  if (d.edit) return editModal(venue(d.edit));
+  if (d.seocheck) { const v = venue(d.seocheck); if (!v.website) return toast("Add their website first");
+    try { const j = await callCheck("/api/seo-check", { url: v.website, places: [S.area.name, ...(S.area.districts || [])] }); const seo = { at: j.at, checks: Object.assign({}, (v.seo || {}).checks, j.checks) }; delete seo.checks.title_text;
+      Object.assign(v, await DB.updVenue(v.id, { seo })); toast("Checked"); } catch (x) { toast(x.message); } return render(); }
+  if (d.gbp) { const [id, k] = d.gbp.split("."), v = venue(id), seo = Object.assign({ at: today(), checks: {} }, v.seo || {}); seo.checks = Object.assign({}, seo.checks, { [k]: t.checked }); seo.at = today();
+    try { Object.assign(v, await DB.updVenue(v.id, { seo })); } catch (x) { toast(x.message); } return; }
+  if (d.delcal != null) { V.cal.splice(+d.delcal, 1); return render(); }
+  if (d.delcost != null) { V.costs.splice(+d.delcost, 1); return render(); }
+  const r = S.requests.find(x => x.id === V.req);
+  switch (d.act) {
+    case "signout": if (D.DEMO) { await DB.reset(); location.reload(); return; } await DB.signOut(); ME = null; return boot();
+    case "build": V.draft = { id: r.id, snap: buildReport(r) }; return render();
+    case "canceldraft": V.draft = null; return render();
+    case "savereport": { const snap = V.draft.snap; snap.actions = $("#actions").value.split("\n").map(x => x.trim()).filter(Boolean);
+      try { Object.assign(r, await DB.updRequest(r.id, { report: snap, report_at: new Date().toISOString() })); V.draft = null; toast("Report saved. Copy the link or email it."); } catch (x) { toast(x.message); } return render(); }
+    case "briefing": { const v = venue(r.venue_id), st = r.owner_state || {}, items = PatchOps.briefing(st, { district: (v.postcode || "").split(" ")[0], cafe: v.name, calendar: S.area.calendar || [], newNearby: P.newNearby(v, S.venues, 1).map(x => ({ name: x.v.name, d: x.d })), venue: v }, today());
+      const txt = PatchOps.briefingText(items, v.name) + "\n" + ownerUrl(r.token); try { await navigator.clipboard.writeText(txt); toast("Briefing copied: paste it into an email"); } catch (x) { prompt("Briefing", txt); } return; }
+    case "emailreport": return emailReport(r);
+    case "usemenu": { const mb = r.owner_state.menuBoard; try { S.obs.push(await DB.addObservation({ venue_id: r.venue_id, at: mb.at, source: "owner", prices: mb.prices, scores: {}, notes: "Their menu board, sent from Patch", by_name: r.name })); toast("Added. Rebuild their report, or update owners from Price sweeps"); } catch (x) { toast(x.message); } return render(); }
+    case "newsweep": { const name = $("#sw-name").value.trim(), rate = parseFloat($("#sw-rate").value), pay = $("#sw-skippay").checked ? payingVenues() : new Set();
+      if (!name) { $("#sw-err").textContent = "Give it a name."; return; } if (isNaN(rate) || rate < 0 || rate > 100) { $("#sw-err").textContent = "Check the amount per café."; return; }
+      const ids = S.venues.filter(v => v.included && !pay.has(v.id)).map(v => v.id); if (!ids.length) { $("#sw-err").textContent = "No cafés to sweep: load the area's cafés first."; return; }
+      try { const sw = await DB.addSweep({ area_id: S.area.id, name, sweeper: $("#sw-who").value.trim() || null, rate, due: $("#sw-due").value || null }, ids); S.sweeps = [sw].concat(S.sweeps || []); toast(`Sweep made: ${ids.length} cafés`); return openSweep(sw.id); } catch (x) { $("#sw-err").textContent = x.message; return; } }
+    case "copysweep": { const sw = S.sweeps.find(x => x.id === V.sw); try { await navigator.clipboard.writeText(sweepUrl(sw.token)); toast("Link copied: send it to them"); } catch (x) { toast("Select the link and copy it"); } return; }
+    case "closesweep": { const sw = S.sweeps.find(x => x.id === V.sw); try { Object.assign(sw, await DB.updSweep(sw.id, { status: "closed" })); toast("Closed: the link now shows it's finished"); } catch (x) { toast(x.message); } return render(); }
+    case "updowners": try { Object.assign(S.area, await DB.updArea(S.area.id, { rankings: computeRankings() })); toast("Owners updated"); } catch (x) { toast(x.message); } return;
+    case "copylink": try { await navigator.clipboard.writeText(reportUrl(r.token)); toast("Link copied"); } catch (x) { prompt("Their link", reportUrl(r.token)); } return;
+    case "saverec": return saveRec();
+    case "addcafe": return editModal(null);
+    case "closemodal": return $("#modal").remove();
+    case "findloc": { const pc = $("#e-pc").value.trim(); if (!pc) return; try { const l = await postcodeLoc(pc); if (!l) { $("#e-err").textContent = "Couldn't find that postcode."; return; } $("#e-lat").value = l.lat; $("#e-lng").value = l.lng; } catch (x) { $("#e-err").textContent = "Couldn't reach the postcode lookup."; } return; }
+    case "saveedit": return saveEdit(d.id);
+    case "locate": { let n = 0; for (const v of S.venues.filter(x => x.included && x.lat == null && x.postcode)) { try { const l = await postcodeLoc(v.postcode); if (l) { Object.assign(v, l); await DB.updVenue(v.id, l); n++; } } catch (x) {} } toast(`Found ${n} locations (postcode centres)`); return render(); }
+    case "loadfsa": return loadFsa();
+    case "loadmenus": return loadMenus();
+    case "geo": { const prompts = $("#prompts").value.split("\n").map(l => l.trim()).filter(Boolean).slice(0, 12).map(l => { const [q, theme] = l.split("|").map(x => x.trim()); return { q, theme: theme || "" }; });
+      try { const j = await callCheck("/api/geo-check", { prompts, venues: S.venues.filter(v => v.included).map(v => v.name) }); Object.assign(S.area, await DB.updArea(S.area.id, { geo: j.geo })); toast(j.errors && j.errors.length ? "Done, with some errors: " + j.errors[0] : "Done"); } catch (x) { toast(x.message); } return render(); }
+    case "addcal": V.cal.push({ type: "event", title: "", start: "", end: "", districts: [], effect: "" }); return render();
+    case "savecal": { const cal = V.cal.filter(x => x.title && x.start).map(x => Object.assign({}, x, { end: x.end || x.start }));
+      try { Object.assign(S.area, await DB.updArea(S.area.id, { calendar: cal })); V.cal = clone(cal); toast("Calendar saved"); } catch (x) { toast(x.message); } return render(); }
+    case "addcost": V.costs.push({ k: "milk", at: today(), pct: "", source: "" }); return render();
+    case "savecosts": { const c = V.costs.filter(x => x.at && x.pct !== "" && !isNaN(+x.pct)).map(x => Object.assign({}, x, { pct: +x.pct }));
+      try { Object.assign(S.area, await DB.updArea(S.area.id, { costs: c })); V.costs = clone(c); toast("Saved"); } catch (x) { toast(x.message); } return render(); }
+    case "saveprofile": { try { Object.assign(S.area, await DB.updArea(S.area.id, { profile: V.profile })); toast("Saved"); } catch (x) { toast(x.message); } return; }
+    case "publish": { const pub = { at: new Date().toISOString(), stats: P.areaStats(S.venues, S.obs), calendar: P.calendarFor(S.area.calendar || [], "", null, 70), profile: S.area.profile || null, costs: (S.area.costs || []).filter(c => c.at >= new Date(Date.now() - 180 * 864e5).toISOString().slice(0, 10)) };
+      const rankings = computeRankings();
+      try { Object.assign(S.area, await DB.updArea(S.area.id, { published: pub, published_at: pub.at, rankings })); toast("Published, with rankings for every café"); } catch (x) { toast(x.message); } return render(); }
+    case "savesbench": { const b = {}; document.querySelectorAll("[data-sbench]").forEach(i => { const v = parseFloat(i.value), k = i.dataset.sbench; if (!isNaN(v) && v > 0 && Math.abs(v - I.SUPPLY[k].bench) > 0.0005) b[k] = v; });
+      try { Object.assign(S.area, await DB.updArea(S.area.id, { supply_bench: Object.keys(b).length ? b : null })); toast("Saved"); } catch (x) { toast(x.message); } return render(); }
+    case "savebench": { const b = {}; document.querySelectorAll("[data-bench]").forEach(i => { const v = parseFloat(i.value); if (!isNaN(v) && Math.abs(v - P.BENCH[i.dataset.bench]) > 0.001) b[i.dataset.bench] = v; });
+      try { Object.assign(S.area, await DB.updArea(S.area.id, { bench: b })); toast("Saved"); } catch (x) { toast(x.message); } return; }
+  }
+});
+const confirmIt = () => true;
+function renderKeep() { const y = scrollY; render(); scrollTo(0, y); }
+document.addEventListener("change", async e => {
+  const t = e.target, d = t.dataset;
+  if (t.id === "areaSel") { await loadArea(t.value); V.req = null; V.draft = null; return render(); }
+  if (t.id === "showAll") { V.all = t.checked; return render(); }
+  if (d.menuphoto && t.files.length) return readMenuPhoto(t.files[0]);
+  if (d.rq) { const r = S.requests.find(x => x.id === V.req), p = { [d.rq]: t.value || null }; Object.assign(r, p); try { await DB.updRequest(r.id, p); } catch (x) { toast(x.message); } if (d.rq !== "admin_notes") render(); return; }
+  if (d.kind) { const v = venue(d.kind); v.kind = t.value; try { await DB.updVenue(v.id, { kind: v.kind }); } catch (x) { toast(x.message); } return; }
+  if (t.id === "recCafe") { const v = S.venues.find(x => `${x.name} (${x.postcode || ""})` === t.value); if (v && v.id !== V.rec.venue) { V.rec = { venue: v.id, source: V.rec.source, scores: {}, prices: {}, hours: null }; render(); } return; }
+  if (d.cal) { const [i, k] = d.cal.split("."); V.cal[+i][k] = k === "districts" ? t.value.split(/[\s,;]+/).map(x => x.toUpperCase()).filter(Boolean) : t.value; return; }
+  if (d.cost) { const [i, k] = d.cost.split("."); V.costs[+i][k] = t.value; return; }
+  if (d.prof) { V.profile[d.prof] = t.value.trim(); return; }
+  if (d.web) { const v = venue(d.web); v.website = t.value.trim() || null; try { await DB.updVenue(v.id, { website: v.website }); } catch (x) { toast(x.message); } return; }
+  if (t.id === "prompts") { V.prompts = t.value; return; }
+});
+document.addEventListener("input", e => {
+  const t = e.target, d = t.dataset;
+  if (t.id === "q") { V.q = t.value; const p = t.selectionStart; render(); const q = $("#q"); q.focus(); q.setSelectionRange(p, p); return; }
+  if (d.price) V.rec.prices[d.price] = t.value;
+  if (d.swp) { const [id, k] = d.swp.split("."); V.swEdit = V.swEdit || {}; V.swEdit[id] = V.swEdit[id] || {}; V.swEdit[id][k] = t.value; }
+  if (d.scorenum) V.rec.scores[d.scorenum] = t.value === "" ? undefined : +t.value;
+  if (d.hr || d.closed !== undefined) {}
+});
+function readHours() {
+  const h = {}; let any = false;
+  P.DAYS.forEach(d => { const c = document.querySelector(`[data-closed="${d}"]`), a = document.querySelector(`[data-hr="${d}.0"]`), b = document.querySelector(`[data-hr="${d}.1"]`);
+    if (c && c.checked) { h[d] = null; any = true; } else if (a && b && a.value && b.value) { h[d] = [a.value, b.value]; any = true; } });
+  return any ? h : null;
+}
+// A menu photo, for the café being recorded: stored with the visit photos, read by Claude, prices filled in to check.
+async function readMenuPhoto(file) {
+  const R = V.rec, v = venue(R.venue); if (!v) return toast("Choose the café first");
+  if (D.DEMO) { R.readNote = "In the live version, Claude reads the photo and fills these in for you to check."; return render(); }
+  R.reading = true; R.readNote = null; render();
+  try { const blob = await new Promise((ok, bad) => { const u = URL.createObjectURL(file), img = new Image(); img.onload = () => { const k = Math.min(1, 2000 / Math.max(img.width, img.height)), c = document.createElement("canvas"); c.width = img.width * k; c.height = img.height * k; c.getContext("2d").drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(u); c.toBlob(ok, "image/jpeg", 0.85); }; img.onerror = () => bad(new Error("That isn't a photo we can read")); img.src = u; });
+    const path = `menus/${v.id}/${today()}-${Date.now()}.jpg`; await DB.uploadPhoto(path, blob);
+    const tok = await DB.token(), r = await fetch("/api/read-menu", { method: "POST", headers: { "Content-Type": "application/json", Authorization: "Bearer " + tok }, body: JSON.stringify({ bucket: "visit-photos", path }) }), j = await r.json().catch(() => ({}));
+    if (!r.ok || j.error) throw new Error(j.error || "Couldn't read it");
+    Object.assign(R.prices, j.prices); R.menuPhoto = path; R.readNote = `${Object.keys(j.prices).length} prices read${j.legible && j.legible !== "good" ? ` (board ${j.legible} legible)` : ""}${j.notes ? ": " + j.notes : ""}. Check them, then save.`;
+  } catch (e) { R.readNote = "Not read: " + e.message; }
+  R.reading = false; render();
+}
+async function saveRec() {
+  const err = $("#recErr"), R = V.rec, v = venue(R.venue);
+  if (!v) { err.textContent = "Choose the café first."; return; }
+  const prices = {}; Object.entries(R.prices).forEach(([k, x]) => { const n = parseFloat(String(x).replace(/[£,\s]/g, "")); if (!isNaN(n) && n > 0 && n < 60) prices[k] = Math.round(n * 100) / 100; });
+  const scores = {}; Object.entries(R.scores).forEach(([k, x]) => { if (x !== undefined && x !== "") scores[k] = x; });
+  const hours = readHours();
+  if (!Object.keys(prices).length && !Object.keys(scores).length && !hours) { err.textContent = "Add at least one price, score or opening time."; return; }
+  try {
+    if (Object.keys(prices).length || Object.keys(scores).length) S.obs.push(await DB.addObservation({ venue_id: v.id, at: $("#recAt").value || today(), source: R.source, prices, scores, notes: $("#recNotes").value.trim() || null, by_name: ME.name || null, photos: R.menuPhoto ? [{ bucket: "visit-photos", path: R.menuPhoto, tag: "Menu board" }] : [] }));
+    if (hours) { Object.assign(v, await DB.updVenue(v.id, { hours: Object.assign({}, v.hours || {}, hours) })); }
+    toast(`Saved ${v.name}`); V.rec = { venue: null, source: R.source, scores: {}, prices: {}, hours: null, at: $("#recAt").value }; render();
+  } catch (x) { err.textContent = x.message; }
+}
+async function saveEdit(id) {
+  const g = k => $("#" + k).value.trim(), num = x => (x === "" ? null : +x);
+  const p = { name: g("e-name"), address: g("e-addr") || null, postcode: g("e-pc").toUpperCase() || null, lat: num(g("e-lat")), lng: num(g("e-lng")), google_rating: num(g("e-g")), website: g("e-web") || null, notes: g("e-notes") || null };
+  if (!p.name) { $("#e-err").textContent = "It needs a name."; return; }
+  if ([p.lat, p.lng, p.google_rating].some(x => x != null && isNaN(x))) { $("#e-err").textContent = "Check the numbers."; return; }
+  try { if (id) Object.assign(venue(id), await DB.updVenue(id, p)); else S.venues.push(...(await DB.addVenues([Object.assign({ area_id: S.area.id, included: true, kind: "independent" }, p)])));
+    $("#modal").remove(); toast("Saved"); render(); } catch (x) { $("#e-err").textContent = x.message; }
+}
+async function loadFsa() {
+  try { const r = await fetch(`data/${S.area.slug}.json`); if (!r.ok) throw new Error("There's no hygiene list for this area yet."); const j = await r.json();
+    const have = new Set(S.venues.map(v => v.fsa_id)); const rows = j.venues.filter(v => !have.has(v.fsaId)).map(v => ({ area_id: S.area.id, fsa_id: v.fsaId, name: v.name, address: v.address, postcode: v.postcode, lat: v.lat, lng: v.lng, kind: v.kind, included: v.included, hygiene: v.hygiene, hygiene_date: v.hygieneDate }));
+    if (!rows.length) { toast("Already loaded"); return; }
+    S.venues.push(...(await DB.addVenues(rows))); toast(`Loaded ${rows.length} food businesses`); render();
+  } catch (x) { toast(x.message); }
+}
+
+// Menu prices found online (delivery apps), stored as "delivery" so they guide visitors but never count in benchmarks.
+async function loadMenus() {
+  try { const r = await fetch(`data/${S.area.slug}-menus.json`); if (!r.ok) throw new Error("No online menus saved for this area yet."); const j = await r.json();
+    let added = 0, missing = [];
+    for (const m of j.menus) { const v = S.venues.find(x => x.fsa_id === m.fsaId); if (!v) { missing.push(m.name); continue; }
+      if (S.obs.some(o => o.venueId === v.id && o.source === "delivery" && o.at === j.read)) continue;
+      const notes = `${m.channel} menu, ${m.url}` + (m.notes ? ". " + Object.entries(m.notes).map(([k, t]) => `${(P.ITEM[k] || {}).t || k}: ${t}`).join("; ") : "");
+      S.obs.push(await DB.addObservation({ venue_id: v.id, at: j.read, source: "delivery", prices: m.prices, scores: {}, notes: notes.slice(0, 1000), by_name: "Online menu" })); added++; }
+    for (const c of j.checkOnVisit || []) { const v = S.venues.find(x => x.fsa_id === c.fsaId); if (v && !(v.notes || "").includes(c.why)) Object.assign(v, await DB.updVenue(v.id, { notes: ((v.notes ? v.notes + " " : "") + c.why).slice(0, 1000) })); }
+    toast(added ? `Loaded online prices for ${added} café${added > 1 ? "s" : ""}${missing.length ? `. Load the hygiene list first for ${missing.length} more` : ""}` : missing.length ? "Load the hygiene list first" : "Already loaded"); render();
+  } catch (x) { toast(x.message); }
+}
+
+/* ---------- start ---------- */
+function signin(msg) {
+  $("#root").innerHTML = `<div class="signin card"><h1 style="font-size:1.8rem">Patch admin</h1>${msg ? `<p class="err">${esc(msg)}</p>` : ""}<form id="si"><label class="f"><span>Email</span><input type="email" id="si-e" autocomplete="username" required></label><label class="f"><span>Password</span><input type="password" id="si-p" autocomplete="current-password" required></label><button class="btn" style="width:100%">Sign in</button></form><p class="xs mute" style="margin-top:12px"><a href="?demo=1">Open the demo</a></p></div>`;
+  $("#si").addEventListener("submit", async ev => { ev.preventDefault(); try { await DB.signIn($("#si-e").value.trim(), $("#si-p").value); boot(); } catch (x) { signin(x.message); } });
+}
+async function boot() {
+  try { DB = DB || await D.admin(); } catch (e) { $("#root").innerHTML = `<p class="card">Couldn't load. Check your connection and refresh.</p>`; return; }
+  ME = await DB.me(); if (!ME) return signin();
+  if (ME.notAdmin) { $("#root").innerHTML = `<div class="signin card"><h2>Not an admin</h2><p>${esc(ME.email)} isn't set up as a Patch admin.</p></div>`; return; }
+  [S.areas, S.requests] = await Promise.all([DB.areas(), DB.requests()]);
+  await loadArea(S.areas[0] && S.areas[0].id);
+  render();
+}
+window.__patch = { S, V, buildReport };
 boot();
+})();
 </script>
 </body>
 </html>

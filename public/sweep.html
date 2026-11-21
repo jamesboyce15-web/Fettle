@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Patch price sweep</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@500;700&display=swap">
+<link rel="stylesheet" href="patch.css">
+<style>
+.wrap{max-width:640px;padding-bottom:40px}
+.tally{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 16px}
+.tally div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px}.tally b{display:block;font-family:var(--serif);font-size:1.6rem;line-height:1.1}.tally span{font-size:.8rem;color:var(--mute)}
+.bar{margin:0 0 16px}
+.cafe{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin:0 0 10px}
+.cafe.done{opacity:.7}
+.cafe .top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin:0}
+.cafe h3{margin:0;font-size:1.05rem}.cafe .addr{font-size:.85rem;color:var(--mute)}
+.cafe .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.shoot{position:relative;overflow:hidden}.shoot input{position:absolute;inset:0;opacity:0;cursor:pointer;font-size:0}
+.msg{font-size:.88rem;margin:8px 0 0}
+.filter{display:flex;gap:6px;margin:0 0 12px;flex-wrap:wrap}.filter button{border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 12px;font-weight:600;cursor:pointer}
+.filter button[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.how{background:var(--tint);border-radius:14px;padding:12px 16px;margin:0 0 16px;font-size:.9rem}.how ol{margin:6px 0 0;padding-left:18px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top"><span class="brand">Patch<i>.</i></span><span class="sp"></span><span class="sm mute">Price sweep</span></header>
+  <div id="demo"></div>
+  <main id="app"><p class="mute">Loading…</p></main>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<script src="config.js"></script>
+<script src="patch-data.js"></script>
+<script>
+"use strict";
+const D = PatchData, $ = s => document.querySelector(s), Q = new URLSearchParams(location.search);
+const token = Q.get("s") || (D.DEMO ? "demo-sweep" : "");
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+const money = x => "£" + (+x).toFixed(2).replace(/\.00$/, "");
+let SW = null, F = "todo", BUSY = {}, MSG = {};
+function toast(t) { const el = $("#toast"); el.textContent = t; el.classList.add("on"); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove("on"), 2600); }
+const LABEL = { todo: "To do", sent: "Sent", approved: "Approved", retake: "Retake", skipped: "Skipped" };
+const CHIP = { todo: "", sent: "warn", approved: "good", retake: "bad", skipped: "" };
+
+function render() {
+  if (!SW) { $("#app").innerHTML = `<section class="card"><h1 style="font-size:1.8rem">This link doesn't work</h1><p>Ask whoever sent it for a new one.</p></section>`; return; }
+  const it = SW.items, by = s => it.filter(i => i.status === s).length, approved = by("approved"), sent = by("sent"), todo = by("todo") + by("retake"), total = it.length;
+  const shown = it.filter(i => F === "all" || (F === "todo" ? ["todo", "retake"].includes(i.status) : F === "done" ? !["todo", "retake"].includes(i.status) : true));
+  let h = `<h1 style="font-size:1.9rem;margin-bottom:4px">${esc(SW.name)}</h1><p class="sm mute" style="margin-top:0">${esc(SW.area)}${SW.sweeper ? ` · for ${esc(SW.sweeper)}` : ""}${SW.due ? ` · by ${new Date(SW.due + "T12:00:00Z").toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" })}` : ""}</p>`;
+  if (SW.status !== "open") h += `<p class="demo">This sweep is closed. Thank you!</p>`;
+  h += `<div class="tally"><div><b>${todo}</b><span>to do</span></div><div><b>${approved + sent}</b><span>sent${sent ? `, ${sent} being checked` : ""}</span></div><div><b>${money(approved * SW.rate)}</b><span>earned (${money(SW.rate)} each, once checked)</span></div></div>
+    <div class="bar"><i style="width:${total ? ((total - todo) / total) * 100 : 0}%"></i></div>
+    <details class="how"${approved + sent ? "" : " open"}><summary><b>How to do it</b></summary><ol><li>Walk in, find the menu board, and take one clear photo of all of it. You don't need to buy anything.</li><li>Straight on, not at an angle. Step back until the whole board fits. No people's faces.</li><li>We read the prices as soon as it's sent. If it says “retake”, try again while you're there.</li><li>Closed, or no board? Tap “Can't do it” and say why.</li></ol></details>
+    <div class="filter">${[["todo", `To do (${todo})`], ["done", `Done (${total - todo})`], ["all", "All"]].map(([k, t]) => `<button data-f="${k}" aria-pressed="${F === k}">${t}</button>`).join("")}</div>`;
+  h += shown.map(c => {
+    const map = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(c.name + " " + (c.postcode || ""))}`, can = SW.status === "open" && ["todo", "retake", "sent"].includes(c.status);
+    return `<article class="cafe ${["approved", "skipped"].includes(c.status) ? "done" : ""}" id="c-${c.id}"><div class="top"><div><h3>${esc(c.name)}</h3><div class="addr">${esc([c.address, c.postcode].filter(Boolean).join(", "))}</div></div><span class="chip ${CHIP[c.status]}">${LABEL[c.status]}</span></div>
+      ${c.status === "retake" && c.note ? `<p class="msg" style="color:var(--bad)"><b>Please retake:</b> ${esc(c.note)}</p>` : ""}${c.status === "skipped" && c.note ? `<p class="msg mute">${esc(c.note)}</p>` : ""}
+      ${c.status === "sent" ? `<p class="msg mute">${c.found ? `${c.found} prices read. We'll check it shortly.` : "Sent. We'll check it shortly."}</p>` : ""}
+      ${MSG[c.id] ? `<p class="msg" style="color:${MSG[c.id].bad ? "var(--bad)" : "var(--good)"}">${esc(MSG[c.id].t)}</p>` : ""}
+      ${can ? `<div class="acts">${BUSY[c.id] ? `<span class="btn sm" aria-busy="true">Sending…</span>` : `<label class="btn sm shoot">${c.status === "sent" ? "Send a better photo" : "Photograph the board"}<input type="file" accept="image/*" capture="environment" data-photo="${c.id}" aria-label="Photograph the menu board at ${esc(c.name)}"></label>`}<a class="btn q sm" href="${map}" target="_blank" rel="noopener">Map</a>${c.status !== "sent" ? `<button class="btn q sm" data-skip="${c.id}">Can't do it</button>` : ""}</div>` : ""}
+      <div id="skip-${c.id}"></div></article>`;
+  }).join("") || `<p class="mute">Nothing here.</p>`;
+  $("#app").innerHTML = h;
+}
+
+// Shrink on the phone (boards stay readable at 2000px), then send.
+function shrink(file) {
+  return new Promise((ok, bad) => { const url = URL.createObjectURL(file), img = new Image();
+    img.onload = () => { const k = Math.min(1, (D.DEMO ? 900 : 2000) / Math.max(img.width, img.height)), c = document.createElement("canvas"); c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+      c.getContext("2d").drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(url); c.toBlob(b => (b ? ok(b) : bad(new Error("Couldn't read that photo"))), "image/jpeg", D.DEMO ? 0.6 : 0.85); };
+    img.onerror = () => { URL.revokeObjectURL(url); bad(new Error("That isn't a photo we can read")); }; img.src = url; });
+}
+async function send(id, file) {
+  BUSY[id] = true; delete MSG[id]; render();
+  try { const r = await D.sweepUpload(token, id, await shrink(file)), c = SW.items.find(x => x.id === id);
+    c.status = "sent"; c.found = r.found || 0;
+    MSG[id] = !r.read ? { t: "Sent. We'll read it shortly." } : r.error ? { t: `Sent, but we couldn't read it: ${r.error}. A clearer photo would help.`, bad: true }
+      : r.found < 4 || r.legible === "poor" ? { t: `Only ${r.found} prices readable. Could you step back and take it straight on?`, bad: true } : { t: `Got it: ${r.found} prices read.${r.demo ? " (Demo: made-up readings.)" : ""}` };
+  } catch (e) { MSG[id] = { t: e.message, bad: true }; }
+  delete BUSY[id]; render(); const el = $("#c-" + id); if (el) el.scrollIntoView({ block: "nearest" });
+}
+document.addEventListener("change", e => { const t = e.target; if (t.dataset.photo && t.files.length) send(t.dataset.photo, t.files[0]); });
+document.addEventListener("click", async e => {
+  const t = e.target.closest("button"); if (!t) return; const d = t.dataset;
+  if (d.f) { F = d.f; return render(); }
+  if (d.skip) { $("#skip-" + d.skip).innerHTML = `<div style="margin-top:10px">${["Closed", "No menu board", "Not there any more", "Wouldn't let me"].map(r => `<button class="btn q sm" style="margin:0 6px 6px 0" data-why="${d.skip}" data-r="${esc(r)}">${r}</button>`).join("")}</div>`; return; }
+  if (d.why) { const ok = await D.rpc("sweep_skip", { p_token: token, p_item: d.why, p_reason: d.r }).catch(() => false);
+    if (ok) { const c = SW.items.find(x => x.id === d.why); c.status = "skipped"; c.note = d.r; toast("Marked: " + d.r.toLowerCase()); } else toast("Didn't save. Try again."); render(); }
+});
+(async () => {
+  if (D.DEMO) $("#demo").innerHTML = `<p class="demo"><b>Demo.</b> Made-up cafés. Photos stay in this browser and the “readings” are made up.</p>`;
+  try { SW = token ? await D.rpc("sweep_get", { p_token: token }) : null; } catch (e) { SW = null; }
+  render();
+})();
+</script>
+</body>
+</html>

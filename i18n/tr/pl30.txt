@@ -1,7 +1,0 @@
-0|Zapisz odpowiedzi dotyczące zdrowia w moim planie. {0}Nieobowiązkowe. Używamy ich tylko, by dopasować plan do Twojego gospodarstwa domowego, i nigdy ich nie udostępniamy. Jeśli zostawisz to pole puste, zapiszemy plan bez nich.{1}
-1|Zapisz moje odpowiedzi dotyczące zdrowia w moim planie. {0}Nieobowiązkowe. Jeśli zostawisz to pole puste, plan użyje ich teraz, ale ich nie zapiszemy.{1}
-2|Zapisz ich odpowiedzi dotyczące zdrowia w tym planie. {0}Tylko jeśli się na to zgodzili. Jeśli zostawisz to pole puste, plan użyje ich teraz, ale ich nie zapiszemy.{1}
-3|Zapisz odpowiedzi dotyczące zdrowia
-4|Zachowaj odpowiedzi dotyczące zdrowia w tym zapisanym planie, aby kroki związane ze zdrowiem były dostępne następnym razem. Nigdy ich nie udostępniamy. Odznacz, aby je usunąć.
-5|Twoje odpowiedzi dotyczące zdrowia zostaną zapisane w Twoim planie.
-6|Twoje odpowiedzi dotyczące zdrowia zostały usunięte z zapisanego planu. Pozostaną na tym ekranie, dopóki go nie zamkniesz.
