@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Patch · Check your prices</title>
+<meta name="description" content="Put in your prices and see straight away how they compare with salons and barbers near you. Free and private: no one else sees your figures.">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@500;700&display=swap">
+<link rel="stylesheet" href="patch.css">
+<style>
+.hero{padding:18px 0 4px}
+.sec{margin:26px 0}
+.svc{display:grid;grid-template-columns:1fr 110px 90px;gap:10px;align-items:center;padding:7px 0;border-bottom:1px solid var(--line)}
+.svc:last-child{border-bottom:0}
+.svc input{width:100%;border:1px solid var(--line);border-radius:9px;padding:8px;background:var(--card);font:inherit;text-align:right}
+.svc .lab small{display:block;color:var(--mute);font-size:.78rem}
+.ghead{display:grid;grid-template-columns:1fr 110px 90px;gap:10px;font-size:.78rem;color:var(--mute);margin-top:14px}
+.grp{font-family:"Space Grotesk",sans-serif;font-weight:700;margin:18px 0 2px}
+.res{display:grid;grid-template-columns:1.3fr .7fr 1.8fr;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.res:last-child{border-bottom:0}
+.res .p{font-weight:700;font-variant-numeric:tabular-nums}
+.res .note{grid-column:1/-1;font-size:.88rem;margin-top:-4px}
+.big{font-size:2rem;font-family:"Space Grotesk",sans-serif;font-weight:700;line-height:1}
+.mark{position:absolute;top:-3px;width:4px;height:16px;border-radius:2px;background:var(--accent2)}
+.tog{background:none;border:0;color:var(--accent2);font:inherit;text-decoration:underline;cursor:pointer;padding:0}
+@media(max-width:560px){.res{grid-template-columns:1fr .6fr}.res .range{grid-column:1/-1}.svc,.ghead{grid-template-columns:1fr 92px 70px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top"><a class="brand" href="./">Patch<i>.</i></a><span class="sp"></span><span class="sm mute">For independent salons and barbers</span></header>
+  <div id="demo"></div>
+  <main id="app"><p class="mute">Loading…</p></main>
+  <footer id="foot"></footer>
+</div>
+<script src="config.js"></script>
+<script src="patch-sectors.js"></script>
+<script src="patch-core.js"></script>
+<script src="patch-data.js"></script>
+<script>
+(function () {
+"use strict";
+const P = PatchCore, S = PatchSectors, D = PatchData, CFG = D.CFG, Q = new URLSearchParams(location.search);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const money = x => "£" + (Math.round(x * 100) % 100 ? (+x).toFixed(2) : Math.round(x)), pounds = x => "£" + Math.round(x).toLocaleString("en-GB");
+const slug = (Q.get("a") || (D.DEMO ? "demo-salons" : "stockport-salons")).toLowerCase();
+const $ = s => document.querySelector(s);
+let AREA = null, F = { venue: "", kind: "", all: false, prices: {}, week: {}, done: null };
+
+const stats = () => ((AREA.published || {}).stats || {}).prices || [];
+const statOf = k => stats().find(x => x.k === k) || {};
+const venueOf = text => (AREA.venues || []).find(x => `${x.name} (${x.postcode || ""})` === text || x.name.toLowerCase() === String(text).toLowerCase());
+const groups = () => F.all || !S.GROUPS_FOR[F.kind] ? S.GROUPS : S.GROUPS_FOR[F.kind];
+
+function form() {
+  const pub = AREA.published, n = (AREA.venues || []).length;
+  let h = `<section class="hero"><h1>How do your prices compare?</h1>
+    <p class="lede">Put in what you charge and see straight away where you sit against ${n ? n + " " : ""}salons and barbers in ${esc(AREA.name)}: the middle price, the usual range, and what closing the gap could be worth.</p>
+    <p class="sm mute">Free. Two minutes. No one else ever sees your prices or your name: they only go, unnamed, into the area figures once we've checked them.</p></section>`;
+  if (!pub) h += `<p class="card sm">We're still collecting prices in ${esc(AREA.name)}. Send yours and we'll email your comparison as soon as the area figures are ready.</p>`;
+  h += `<form id="pc" novalidate><section class="card sec"><h2>Your business</h2>
+    <label class="f"><span>Name</span><input id="venue" list="venues" autocomplete="off" placeholder="Start typing its name" value="${esc(F.venue)}"><datalist id="venues">${(AREA.venues || []).map(v => `<option value="${esc(v.name)} (${esc(v.postcode || "")})">`).join("")}</datalist></label>
+    <label class="f"><span>What you mostly do</span><select id="kind"><option value="">Choose</option>${[["hair", "Hair salon"], ["barber", "Barber"], ["nails", "Nails"], ["beauty", "Beauty, brows and lashes"], ["aesthetics", "Skin and aesthetics"]].map(([k, t]) => `<option value="${k}" ${F.kind === k ? "selected" : ""}>${t}</option>`).join("")}</select></label></section>`;
+  h += `<section class="card sec"><h2>Your prices</h2><p class="sm mute">Your normal price for the standard version, the one a new customer sees first: not an offer, not a children's or student price. If it depends on length or stylist, put the lowest. Leave blank what you don't do.</p>
+    ${F.kind ? groups().map(g => `<p class="grp">${esc(g)}</p><div class="ghead"><span></span><span style="text-align:right">Your price</span><span style="text-align:right">A week (optional)</span></div>
+      ${S.SALON_ITEMS.filter(i => i.g === g).map(i => { const st = statOf(i.k); return `<div class="svc"><span class="lab">${esc(i.t)}${st.median == null ? `<small>Not enough prices here yet: yours helps</small>` : ""}</span>
+        <input inputmode="decimal" data-p="${i.k}" value="${esc(F.prices[i.k] ?? "")}" placeholder="£" aria-label="${esc(i.t)}: your price"><input inputmode="numeric" data-w="${i.k}" value="${esc(F.week[i.k] ?? "")}" placeholder="–" aria-label="${esc(i.t)}: how many a week"></div>`; }).join("")}`).join("")
+      + `<p class="sm" style="margin-top:12px"><button type="button" class="tog" id="all">${F.all ? "Show only my usual services" : "Show every service"}</button></p>` : `<p class="mute">Choose what you mostly do, and we'll show the services to price.</p>`}
+    </section>`;
+  h += `<section class="card sec"><h2>Where to send your full report</h2>
+    <div class="grid" style="gap:0 12px"><label class="f"><span>Your name</span><input id="nm" autocomplete="name" maxlength="80"></label><label class="f"><span>Email</span><input id="em" type="email" autocomplete="email" maxlength="120"></label>
+    <label class="f"><span>You are the</span><select id="role"><option>Owner</option><option>Manager</option><option>Stylist or therapist</option><option>Other</option></select></label></div>
+    <label style="display:flex;gap:10px;align-items:flex-start;margin:6px 0 12px"><input type="checkbox" id="ok" style="margin-top:4px"><span class="sm">Patch can use my prices, without my name, in the area figures once they've been checked.</span></label>
+    <p class="sm mute">You'll see your comparison on this page straight away. We'll also email a fuller private report: how you show up on Google and in AI answers, and where you could fill quiet slots. We never share your figures with anyone.</p>
+    <p class="err" id="err" role="alert"></p><button class="btn big" id="go">Show me how I compare</button></section></form>`;
+  $("#app").innerHTML = h; bind();
+}
+function keep() {
+  document.querySelectorAll("[data-p]").forEach(i => { F.prices[i.dataset.p] = i.value.trim(); });
+  document.querySelectorAll("[data-w]").forEach(i => { F.week[i.dataset.w] = i.value.trim(); });
+  const v = $("#venue"); if (v) F.venue = v.value.trim();
+}
+function bind() {
+  $("#kind").addEventListener("change", e => { keep(); F.kind = e.target.value; form(); });
+  $("#venue").addEventListener("change", e => { const m = venueOf(e.target.value.trim()); F.venue = e.target.value.trim(); if (m && m.category && !F.kind) { keep(); F.kind = m.category; form(); } });
+  const a = $("#all"); if (a) a.addEventListener("click", () => { keep(); F.all = !F.all; form(); });
+  $("#pc").addEventListener("submit", submit);
+}
+const num = s => { const x = parseFloat(String(s || "").replace(/[£,\s]/g, "")); return isNaN(x) ? null : x; };
+async function submit(e) {
+  e.preventDefault(); keep();
+  const err = $("#err"), v = id => $("#" + id).value.trim(), m = venueOf(F.venue);
+  const prices = {}, week = {}, bad = [];
+  Object.entries(F.prices).forEach(([k, s]) => { if (!s) return; const x = num(s); if (x == null || x < 1 || x > 600) bad.push(S.ITEM[k].t); else prices[k] = Math.round(x * 100) / 100; });
+  Object.entries(F.week).forEach(([k, s]) => { const x = num(s); if (prices[k] != null && x != null && x >= 0 && x <= 500) week[k] = Math.round(x); });
+  if (!F.venue) { err.textContent = "Tell us which business is yours."; return; }
+  if (bad.length) { err.textContent = `${bad.join(", ")}: that price doesn't look right.`; return; }
+  if (!Object.keys(prices).length) { err.textContent = "Put in at least one price."; return; }
+  if (!v("nm")) { err.textContent = "Please tell us your name."; return; }
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v("em"))) { err.textContent = "Please check your email address."; return; }
+  if (!$("#ok").checked) { err.textContent = "Tick the box so we can use your prices, unnamed, in the area figures. That's the swap that keeps this free."; return; }
+  const b = $("#go"); b.disabled = true; b.textContent = "Comparing…"; err.textContent = "";
+  try {
+    const r = await D.rpc("price_check", { p_slug: AREA.slug, p_venue: m ? m.id : null, p_venue_text: m ? null : F.venue, p_name: v("nm"), p_email: v("em"), p_role: v("role"), p_prices: prices, p_per_week: week });
+    if (r !== "ok") throw new Error({ bad: "Please check your name, email and business.", none: "Those prices don't look right. Please check them.", many: "We've already had a few from this email today. We'll be in touch.", busy: "Lots of people checking right now. Please try again in an hour.", area: "We couldn't find that area." }[r] || "That didn't work. Please try again.");
+    F.done = { name: v("nm").split(/\s+/)[0], email: v("em"), venue: m ? m.name : F.venue, check: S.priceCheck(prices, stats(), week) };
+    result(); window.scrollTo(0, 0);
+  } catch (x) { err.textContent = x.message; b.disabled = false; b.textContent = "Show me how I compare"; }
+}
+function bar(i) {
+  if (i.median == null || i.low == null || i.high == null) return "";
+  const lo = Math.min(i.low, i.mine) * 0.9, hi = Math.max(i.high, i.mine) * 1.1, pc = x => Math.max(0, Math.min(100, ((x - lo) / (hi - lo)) * 100));
+  return `<div class="range" role="img" aria-label="Most charge ${money(i.low)} to ${money(i.high)}, middle ${money(i.median)}, you ${money(i.mine)}"><div class="track"></div><div class="band" style="left:${pc(i.low)}%;width:${pc(i.high) - pc(i.low)}%"></div><div class="med" style="left:${pc(i.median)}%"></div><div class="mark" style="left:${pc(i.mine)}%"></div></div>
+    <div class="xs mute">Most charge ${money(i.low)} to ${money(i.high)}</div>`;
+}
+function line(i) {
+  if (i.pos == null) return `Not enough ${esc(i.t.toLowerCase())} prices here yet to compare. Yours is one of the first: we'll tell you when there are.`;
+  const few = i.thin ? ` From ${i.n} businesses so far, so a first look.` : ` From ${i.n} businesses.`;
+  if (i.pos === "around") return `Right around the middle price of ${money(i.median)}.${few}`;
+  if (i.pos === "below") return `${money(-i.diff)} (${-i.pct}%) under the middle price of ${money(i.median)}.${i.gain ? ` Going halfway to the middle on ${F.week[i.k]} a week would be about <b>${pounds(i.gain)} a year</b>.` : ""}${few}`;
+  return `${money(i.diff)} (${i.pct}%) over the middle price of ${money(i.median)}. Fine if your reviews and finish back it up: we'll show you how you look on Google.${few}`;
+}
+function result() {
+  const c = F.done.check, cmp = c.items.filter(i => i.pos);
+  let h = `<section class="hero"><p class="sm mute">${esc(F.done.venue)} · ${esc(AREA.name)}</p><h1>Here's how you compare, ${esc(F.done.name)}</h1></section>`;
+  if (cmp.length) h += `<section class="card sec"><div class="grid"><div class="stat"><b>${c.below.length}</b><span>under the middle price</span></div><div class="stat"><b>${c.around.length}</b><span>around the middle</span></div><div class="stat"><b>${c.above.length}</b><span>over the middle</span></div>${c.gain ? `<div class="stat"><b>${pounds(c.gain)}</b><span>a year, going halfway to the middle where you're under</span></div>` : ""}</div></section>`;
+  h += `<section class="card sec"><h2>Service by service</h2><div class="key sm mute" style="margin-bottom:6px"><span>Shaded: where most businesses here are · grey line: the middle price · <span style="color:var(--accent2)">marker: you</span></span></div>
+    ${c.items.map(i => `<div class="res"><span>${esc(i.t)}</span><span class="p">${money(i.mine)}</span>${bar(i)}<span class="note">${line(i)}</span></div>`).join("")}</section>`;
+  h += `<section class="card sec"><h2>What happens next</h2><p>We'll check your prices and add them, without your name, to the ${esc(AREA.name)} figures. That makes every comparison here sharper, yours included.</p>
+    <p>Within a few working days we'll email <b>${esc(F.done.email)}</b> your fuller report: how you show up when people search Google or ask an AI assistant for ${F.kind === "barber" ? "a barber" : "a salon"} near them, and where you could fill quiet slots.</p>
+    <p class="sm mute">Prices are a guide, not advice. Middle price: half of businesses charge less, half more. Area figures use each business's normal entry price for the standard version of a service.</p></section>`;
+  $("#app").innerHTML = h;
+}
+async function boot() {
+  if (D.DEMO) $("#demo").innerHTML = `<p class="demo"><b>Demo.</b> Made-up salons and barbers. Nothing here is real, and what you send stays in this browser.</p>`;
+  try { AREA = await D.rpc("area_public", { p_slug: slug }); } catch (e) { AREA = null; }
+  if (!AREA || AREA.sector !== "salon") { $("#app").innerHTML = `<p class="card">We couldn't find that area.</p>`; return; }
+  P.useSector("salon"); document.title = `Patch · Check your prices in ${AREA.name}`;
+  const pre = Q.get("v") && (AREA.venues || []).find(x => x.id === Q.get("v"));
+  if (pre) { F.venue = `${pre.name} (${pre.postcode || ""})`; F.kind = pre.category || ""; }
+  $("#foot").innerHTML = `Area figures use only normal prices, one per business per service, and show only where at least ${S.TARGET.meaningful - 2} businesses have a price; under ${S.TARGET.meaningful} they're marked as a first look.${CFG.contactEmail ? ` Questions: ${esc(CFG.contactEmail)}.` : ""}`;
+  form();
+}
+boot();
+})();
+</script>
+</body>
+</html>

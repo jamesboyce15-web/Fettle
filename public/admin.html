@@ -83,10 +83,10 @@ function render() {
     <select id="areaSel" aria-label="Area" style="border:1px solid var(--line);border-radius:9px;padding:6px 8px;background:var(--card)">${S.areas.map(a => `<option value="${a.id}" ${S.area && a.id === S.area.id ? "selected" : ""}>${esc(a.name)}</option>`).join("")}</select>
     <button class="btn q sm" data-act="signout">${D.DEMO ? "Reset demo" : "Sign out"}</button></header>
     ${D.DEMO ? `<p class="demo"><b>Demo.</b> Made-up cafés, saved only in this browser. Try: open a request, build the report, then open the report link.</p>` : ""}
-    <nav class="nav">${nav("requests", "Report requests", nNew + nFound)}${nav("record", "Record a visit or menu")}${nav("sweeps", "Price sweeps")}${nav("cafes", "Cafés")}${nav("search", "Search and AI")}${nav("calendar", "Local calendar")}${nav("area", "Area page")}${nav("settings", "Costs")}${nav("emails", "Emails")}</nav>
+    <nav class="nav">${nav("requests", "Report requests", nNew + nFound)}${nav("record", "Record a visit or menu")}${nav("sweeps", "Price sweeps")}${nav("cafes", "Cafés")}${nav("search", "Search and AI")}${nav("calendar", "Local calendar")}${P.SECTOR === "salon" ? nav("coverage", "Coverage") : ""}${nav("area", "Area page")}${nav("settings", "Costs")}${nav("emails", "Emails")}</nav>
     <div id="main">${view()}</div>`;
 }
-function view() { try { return ({ requests: vRequests, record: vRecord, cafes: vCafes, search: vSearch, calendar: vCalendar, area: vArea, settings: vSettings, emails: vEmails, sweeps: vSweeps })[V.view](); } catch (e) { console.error(e); return `<p class="card err">${esc(e.message)}</p>`; } }
+function view() { try { return ({ requests: vRequests, record: vRecord, cafes: vCafes, search: vSearch, calendar: vCalendar, area: vArea, coverage: vCoverage, settings: vSettings, emails: vEmails, sweeps: vSweeps })[V.view](); } catch (e) { console.error(e); return `<p class="card err">${esc(e.message)}</p>`; } }
 function coverage(v) { const l = P.latest(S.obs, v.id); return { n: Object.keys(l.prices).length, visited: l.visited, last: l.lastAt }; }
 
 /* ---------- requests ---------- */
@@ -275,6 +275,25 @@ function vArea() {
     <div class="card"><p class="sm">${pub ? `Last published ${fmtD(S.area.published_at)}.` : "Not published yet."}</p><div class="row"><button class="btn" data-act="publish">Publish the area page</button><a class="btn q" href="./?a=${esc(S.area.slug)}${D.DEMO ? "&demo=1" : ""}" target="_blank" rel="noopener">View it</a></div></div></aside></div>`;
 }
 
+/* ---------- salon coverage: enough prices to mean something, and who to ask next ---------- */
+const pcUrl = id => `${location.protocol === "file:" ? "price-check.html" : location.origin + location.pathname.replace(/admin(\.html)?$/, "price-check")}?a=${encodeURIComponent(S.area.slug)}${id ? "&v=" + encodeURIComponent(id) : ""}${D.DEMO ? "&demo=1" : ""}`;
+function vCoverage() {
+  const PS = PatchSectors, inc = S.venues.filter(v => v.included), counts = {}, priced = new Set();
+  inc.forEach(v => { const l = P.latest(S.obs, v.id); Object.keys(l.prices).forEach(k => { counts[k] = (counts[k] || 0) + 1; }); if (Object.keys(l.prices).length) priced.add(v.id); });
+  const cov = PS.coverage(counts), ok = cov.filter(c => c.status === "meaningful" || c.status === "solid").length, next = PS.askNext(inc, priced, counts, 20);
+  const waiting = S.requests.filter(r => r.area_id === S.area.id && r.owner_state && r.owner_state.menuBoard && r.owner_state.menuBoard.via === "price-check" && !(r.venue_id && S.obs.some(o => o.venueId === r.venue_id && o.source === "owner" && o.at === r.owner_state.menuBoard.at)));
+  const chip = { solid: '<span class="chip good">Solid</span>', meaningful: '<span class="chip good">Enough</span>', thin: '<span class="chip warn">Thin</span>', none: '<span class="chip bad">No figure</span>' };
+  return `<div class="split"><section><div class="card"><h2>Enough prices to mean something</h2><p class="sm mute">We don't need every business: ${PS.TARGET.meaningful} per service is enough to show a figure plainly, ${PS.TARGET.solid} to call it solid. Under ${PS.TARGET.meaningful} it shows as a first look; under 3, not at all.</p>
+    <div class="grid"><div class="stat"><b>${ok} of ${cov.length}</b><span>services with enough</span></div><div class="stat"><b>${priced.size}</b><span>businesses with prices</span></div><div class="stat"><b>${cov.reduce((t, c) => t + c.need, 0)}</b><span>prices still needed</span></div><div class="stat"><b>${waiting.length}</b><span>price checks to look over</span></div></div>
+    <table class="t" style="margin-top:12px"><thead><tr><th>Service</th><th class="n">Businesses</th><th>Status</th><th class="n">Still need</th></tr></thead><tbody>
+    ${cov.map(c => `<tr><td>${esc(c.t)} <span class="xs mute">${esc(c.g)}</span></td><td class="n">${c.n}</td><td>${chip[c.status]}</td><td class="n">${c.need || ""}</td></tr>`).join("")}</tbody></table></div></section>
+    <aside class="panel"><div class="card"><h3>The price check</h3><p class="sm">Owners put in their prices and see straight away how they compare. Their prices wait under Report requests until you check them and press <b>Use these prices</b>.</p>
+      <p class="xs mute" style="word-break:break-all">${esc(pcUrl())}</p><div class="row"><button class="btn sm" data-copy="${esc(pcUrl())}">Copy the link</button><a class="btn q sm" href="${esc(pcUrl())}" target="_blank" rel="noopener">Open it</a></div>
+      ${S.area.published ? "" : `<p class="sm warn" style="margin-top:8px">The area page isn't published, so the price check can't compare yet: it takes prices and promises an email. Publish from Area page once the figures are checked.</p>`}</div>
+    <div class="card"><h3>Who to ask next</h3><p class="sm mute">No prices yet, and they do the services furthest from the target. Each link opens the price check with their name filled in.</p>
+      ${next.length ? next.map(x => `<div class="row" style="justify-content:space-between;border-bottom:1px solid var(--line);padding:6px 0"><span><b>${esc(x.v.name)}</b><br><span class="xs mute">${esc(x.v.category || "")}${x.v.postcode ? " · " + esc(x.v.postcode) : ""}${x.v.notes && /Books: ([^;.]+)/.test(x.v.notes) ? " · " + esc(x.v.notes.match(/Books: ([^;.]+)/)[1]) : ""}</span></span><button class="btn q sm" data-copy="${esc(pcUrl(x.v.id))}">Copy link</button></div>`).join("") : `<p class="sm">Every service has enough. Ask anyone now to keep figures fresh.</p>`}</div></aside></div>`;
+}
+
 /* ---------- costs per serving ---------- */
 /* ---------- price sweeps ---------- */
 const sweepUrl = tok => `${location.protocol === "file:" ? "sweep.html" : location.origin + location.pathname.replace(/admin(\.html)?$/, "sweep")}?s=${encodeURIComponent(tok)}${D.DEMO ? "&demo=1" : ""}`;
@@ -398,6 +417,7 @@ document.addEventListener("click", async e => {
       Object.assign(v, await DB.updVenue(v.id, { seo })); toast("Checked"); } catch (x) { toast(x.message); } return render(); }
   if (d.gbp) { const [id, k] = d.gbp.split("."), v = venue(id), seo = Object.assign({ at: today(), checks: {} }, v.seo || {}); seo.checks = Object.assign({}, seo.checks, { [k]: t.checked }); seo.at = today();
     try { Object.assign(v, await DB.updVenue(v.id, { seo })); } catch (x) { toast(x.message); } return; }
+  if (d.copy) { try { await navigator.clipboard.writeText(d.copy); toast("Link copied"); } catch (x) { toast(d.copy); } return; }
   if (d.delcal != null) { V.cal.splice(+d.delcal, 1); return render(); }
   if (d.delcost != null) { V.costs.splice(+d.delcost, 1); return render(); }
   const r = S.requests.find(x => x.id === V.req);

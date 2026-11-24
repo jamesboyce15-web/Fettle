@@ -59,7 +59,7 @@ function render() {
   const fw = st && st.prices.find(p => p.k === "flat_white");
   let h = `<section class="hero"><h1>How does your ${P.WORDS.place} compare with the ${P.WORDS.places} around you?</h1>
     <p class="lede">Prices, hygiene, opening hours and what customers find when they walk in, across ${venues.length} ${P.WORDS.places} in ${esc(A.name)}. Ask for a free, private report on your ${P.WORDS.place}: where you stand, and where you could save or charge more.</p>
-    <p class="cta"><a class="btn big" href="#start">See where you stand</a></p><p class="sm mute">Free. No public rankings: other ${P.WORDS.places} never see your figures.</p></section>`;
+    <p class="cta">${P.SECTOR === "salon" ? `<a class="btn big" href="price-check.html?a=${encodeURIComponent(A.slug)}${D.DEMO ? "&demo=1" : ""}">Check your prices in two minutes</a> <a class="btn q" href="#start">Or ask for a full report</a>` : `<a class="btn big" href="#start">See where you stand</a>`}</p><p class="sm mute">Free. No public rankings: other ${P.WORDS.places} never see your figures.</p></section>`;
   h += `<section class="sec"><div class="grid"><div class="stat"><b>${venues.length}</b><span>${P.WORDS.places} in ${esc(A.name)}</span></div><div class="stat"><b>${ind}</b><span>independent</span></div>
     ${fw && fw.median ? `<div class="stat"><b>${money(fw.median)}</b><span>typical flat white</span></div>` : ""}${P.SECTOR === "cafe" ? `<div class="stat"><b>${awaiting}</b><span>new or awaiting their first hygiene inspection</span></div>` : ""}</div></section>`;
   if (st && st.prices.some(p => p.median != null)) {

@@ -206,6 +206,40 @@ begin
 end $$;
 grant execute on function public.request_report(text, uuid, text, text, text, text, text, text) to anon, authenticated;
 
+-- A salon owner swaps their prices for an instant comparison (price-check.html). Their prices wait in the request's
+-- owner_state.menuBoard until an admin checks them and adds them ("Use these prices"); nothing counts before that.
+-- Prices: our service keys only, £1 to £600, at most 40. Same limits as a report request.
+create or replace function public.price_check(p_slug text, p_venue uuid, p_venue_text text, p_name text, p_email text, p_role text, p_prices jsonb, p_per_week jsonb)
+returns text language plpgsql security definer set search_path = public as $$
+declare aid uuid; em text := lower(trim(coalesce(p_email, ''))); pr jsonb := '{}'::jsonb; wk jsonb := '{}'::jsonb; k text; v jsonb;
+begin
+  select id into aid from public.areas where slug = lower(p_slug) and sector = 'salon';
+  if aid is null then return 'area'; end if;
+  if char_length(trim(coalesce(p_name, ''))) < 1 or em !~ '^[^@\s]+@[^@\s]+\.[^@\s]+$' then return 'bad'; end if;
+  if p_venue is not null and not exists (select 1 from public.venues where id = p_venue and area_id = aid) then p_venue := null; end if;
+  if p_venue is null and char_length(trim(coalesce(p_venue_text, ''))) < 1 then return 'bad'; end if;
+  if jsonb_typeof(p_prices) = 'object' then
+    for k, v in select * from jsonb_each(p_prices) loop
+      exit when (select count(*) from jsonb_object_keys(pr)) >= 40;
+      if k ~ '^[a-z_]{2,20}$' and jsonb_typeof(v) = 'number' and (v #>> '{}')::numeric between 1 and 600 then pr := pr || jsonb_build_object(k, round((v #>> '{}')::numeric, 2)); end if;
+    end loop;
+  end if;
+  if pr = '{}'::jsonb then return 'none'; end if;
+  if jsonb_typeof(p_per_week) = 'object' then
+    for k, v in select * from jsonb_each(p_per_week) loop
+      if pr ? k and jsonb_typeof(v) = 'number' and (v #>> '{}')::numeric between 0 and 500 then wk := wk || jsonb_build_object(k, round((v #>> '{}')::numeric)); end if;
+    end loop;
+  end if;
+  if (select count(*) from public.requests where email = em and created_at > now() - interval '1 day') >= 3 then return 'many'; end if;
+  if (select count(*) from public.requests where created_at > now() - interval '1 hour') >= 100 then return 'busy'; end if;
+  insert into public.requests (area_id, venue_id, venue_text, name, email, role, message, owner_state)
+  values (aid, p_venue, nullif(left(trim(coalesce(p_venue_text, '')), 120), ''), left(trim(p_name), 80), left(em, 120), nullif(left(p_role, 40), ''),
+          'Price check: sent ' || (select count(*) from jsonb_object_keys(pr)) || ' prices for a comparison',
+          jsonb_build_object('menuBoard', jsonb_build_object('at', current_date, 'prices', pr, 'perWeek', wk, 'via', 'price-check')));
+  return 'ok';
+end $$;
+grant execute on function public.price_check(text, uuid, text, text, text, text, jsonb, jsonb) to anon, authenticated;
+
 -- An owner opens their report by its secret link.
 create or replace function public.report_public(p_token uuid)
 returns jsonb language sql stable security definer set search_path = public as $$

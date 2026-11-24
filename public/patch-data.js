@@ -5,7 +5,7 @@
   const CFG = root.PATCH_CONFIG || {};
   const Q = new URLSearchParams(location.search);
   const DEMO = Q.has("demo") || !CFG.supabaseUrl;
-  const KEY = "patch-demo-db-v7";
+  const KEY = "patch-demo-db-v8";
   const uid = () => (crypto.randomUUID ? crypto.randomUUID() : "id-" + Math.random().toString(36).slice(2) + Date.now().toString(36));
   const clone = o => JSON.parse(JSON.stringify(o));
 
@@ -87,7 +87,25 @@
     const sweep_items = venues.filter(v => v.id !== "dv1").map((v, i) => ({ id: "si" + i, sweep_id: "sw1", venue_id: v.id, status: i < 3 ? "approved" : i < 5 ? "sent" : i === 5 ? "skipped" : "todo",
       note: i === 5 ? "Closed on Mondays" : null, taken_at: i < 5 ? new Date(Date.now() - (30 - i) * 3600e3).toISOString() : null, photo_path: null,
       read: i < 5 ? { prices: Object.fromEntries(Object.entries((observations.find(o => o.venue_id === v.id && o.source === "visit") || { prices: {} }).prices).slice(0, 9)), seen: {}, legible: i === 4 ? "partly" : "good", notes: i === 4 ? "Cake prices hidden behind the till" : null, demo: true } : null }));
-    return { areas: [area], venues, observations, requests, sweeps, sweep_items, admins: [{ user_id: "demo", name: "You" }] };
+    const sal = salonSeed(rnd, dd); venues.push(...sal.venues); observations.push(...sal.observations);
+    return { areas: [area, sal.area], venues, observations, requests, sweeps, sweep_items, admins: [{ user_id: "demo", name: "You" }] };
+  }
+  // A made-up salon area: some businesses priced, some not, so the price check and the coverage list have something to show.
+  function salonSeed(rnd, dd) {
+    const area = { id: "area-demo-salons", slug: "demo-salons", name: "Elm Park salons (demo)", sector: "salon", districts: ["EP1", "EP2"], bench: {}, calendar: [], costs: [], published: null, published_at: null };
+    const list = [["Fringe Benefits", "hair"], ["The Cutting Room", "hair"], ["Mane Street", "hair"], ["Curl Up & Dye", "hair"], ["Lather & Line", "hair"], ["Studio Nine Hair", "hair"], ["Parlour Rose", "hair"],
+      ["Blade Runners", "barber"], ["Short Back & Sides Co", "barber"], ["The Gentry Barbers", "barber"], ["Clipper Club", "barber"], ["Fade Street", "barber"], ["Old Town Barbers", "barber"],
+      ["Polished", "nails"], ["Ten Little Nails", "nails"], ["Gloss Box", "nails"], ["Lacquer Lounge", "nails"], ["Brow & Arrow", "beauty"], ["The Lash Loft", "beauty"], ["Glow Skin Studio", "aesthetics"]];
+    const base = { w_cut_blow: 40, w_dry_cut: 26, blow_dry: 24, root_tint: 37, full_colour: 50, half_hl: 60, balayage: 110, m_cut: 20, skin_fade: 21, beard: 13, cut_beard: 26, gel_mani: 29, biab: 35, pedicure: 28, brow_shape: 11, brow_lam: 38, lash_lift: 45 };
+    const offer = { hair: ["w_cut_blow", "w_dry_cut", "blow_dry", "root_tint", "full_colour", "half_hl", "balayage"], barber: ["m_cut", "skin_fade", "beard", "cut_beard"], nails: ["gel_mani", "biab", "pedicure"], beauty: ["brow_shape", "brow_lam", "lash_lift"], aesthetics: [] };
+    const venues = list.map(([n, c], i) => ({ id: "ds" + i, area_id: area.id, name: n, address: `${3 + i * 4} Market Row, Elm Park`, postcode: `EP${i % 2 ? 2 : 1} ${i + 2}CD`, category: c,
+      lat: 53.40 + (rnd() - 0.5) * 0.02, lng: -2.20 + (rnd() - 0.5) * 0.03, kind: "independent", included: true, hygiene: null }));
+    const observations = venues.filter((v, i) => i % 4 !== 3).map(v => ({ id: uid(), venue_id: v.id, at: dd(-6), source: "platform", scores: {}, notes: "Booking page (demo)", by_name: "Demo",
+      prices: Object.fromEntries(offer[v.category].filter(() => rnd() > 0.2).map(k => [k, Math.round(base[k] * (0.8 + rnd() * 0.4))])) }));
+    const K = root.PatchCore;
+    if (K && K.useSector && root.PatchSectors) { const was = K.SECTOR; K.useSector("salon");
+      area.published = { at: new Date().toISOString(), stats: K.areaStats(venues.map(toVenue), observations.map(toObs)) }; area.published_at = area.published.at; K.useSector(was); }
+    return { area, venues, observations };
   }
   function demoLoad() { try { const d = JSON.parse(localStorage.getItem(KEY)); if (d && d.areas) return d; } catch (e) {} const d = demoSeed(); demoSave(d); return d; }
   function demoSave(d) { try { localStorage.setItem(KEY, JSON.stringify(d)); } catch (e) {} }
@@ -102,10 +120,15 @@
   }
   function demoRpc(fn, b) {
     const d = demoLoad(), area = d.areas.find(a => a.slug === (b.p_slug || "demo")) || d.areas[0];
-    if (fn === "area_public") return { slug: area.slug, name: area.name, districts: area.districts, published: area.published, published_at: area.published_at,
-      venues: d.venues.filter(v => v.area_id === area.id && v.included).map(v => ({ id: v.id, name: v.name, postcode: v.postcode, kind: v.kind, hygiene: v.hygiene })).sort((a, c) => a.name.localeCompare(c.name)) };
+    if (fn === "area_public") return { slug: area.slug, name: area.name, sector: area.sector || "cafe", districts: area.districts, published: area.published, published_at: area.published_at,
+      venues: d.venues.filter(v => v.area_id === area.id && v.included).map(v => ({ id: v.id, name: v.name, postcode: v.postcode, kind: v.kind, category: v.category || null, hygiene: v.hygiene })).sort((a, c) => a.name.localeCompare(c.name)) };
     if (fn === "request_report") { if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(b.p_email || "") || !(b.p_name || "").trim()) return "bad";
       d.requests.unshift({ id: uid(), created_at: new Date().toISOString(), area_id: area.id, venue_id: b.p_venue, venue_text: b.p_venue_text, name: b.p_name, email: b.p_email.toLowerCase(), role: b.p_role, phone: b.p_phone, message: b.p_message, status: "new", token: "demo-" + Math.random().toString(36).slice(2, 10), report: null, report_at: null, founding_interest: false });
+      demoSave(d); return "ok"; }
+    if (fn === "price_check") { if (area.sector !== "salon") return "area"; if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(b.p_email || "") || !(b.p_name || "").trim()) return "bad";
+      const prices = Object.fromEntries(Object.entries(b.p_prices || {}).filter(([k, v]) => /^[a-z_]{2,20}$/.test(k) && +v >= 1 && +v <= 600)); if (!Object.keys(prices).length) return "none";
+      d.requests.unshift({ id: uid(), created_at: new Date().toISOString(), area_id: area.id, venue_id: b.p_venue, venue_text: b.p_venue_text, name: b.p_name, email: b.p_email.toLowerCase(), role: b.p_role,
+        message: `Price check: sent ${Object.keys(prices).length} prices for a comparison`, status: "new", token: "demo-" + Math.random().toString(36).slice(2), owner_state: { menuBoard: { at: new Date().toISOString().slice(0, 10), prices, perWeek: b.p_per_week || {}, via: "price-check" } } });
       demoSave(d); return "ok"; }
     if (fn === "report_public") { const r = d.requests.find(x => x.token === b.p_token && x.report); return r ? { report: r.report, report_at: r.report_at, name: r.name, founding: r.founding_interest } : null; }
     if (fn === "share_sales") { const r = d.requests.find(x => x.token === b.p_token && x.report); if (!r) return false; r.sales = b.p_sales; r.sales_at = new Date().toISOString(); demoSave(d); return true; }

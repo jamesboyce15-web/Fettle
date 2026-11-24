@@ -44,3 +44,21 @@ test("an area can switch between the café basket and salon services", () => {
   const st = P.areaStats(venues, obs).prices.find(p => p.k === "m_cut"); assert.equal(st.median, 19); assert.equal(st.thin, true);
   P.useSector("cafe"); assert.equal(P.ITEMS[0].k, "espresso"); assert.equal(P.MIN_N, 5); assert.equal(P.WORDS.place, "café");
 });
+
+test("a price check gives each service a place against the published figures, and what halfway is worth", () => {
+  const st = [{ k: "m_cut", median: 20, low: 16, high: 24, n: 21 }, { k: "skin_fade", median: 20, n: 4, thin: true }];
+  const c = S.priceCheck({ m_cut: 16, skin_fade: 20.5, beard: 13, nonsense: 5 }, st, { m_cut: 40 });
+  assert.equal(c.items.length, 3, "only our services");
+  assert.equal(c.below[0].k, "m_cut"); assert.equal(c.below[0].gain, 2 * 40 * 48);
+  assert.equal(c.around[0].k, "skin_fade"); assert.equal(c.around[0].thin, true);
+  assert.equal(c.noFigure[0].k, "beard"); assert.equal(c.gain, 3840);
+});
+
+test("coverage counts against the target, and the next to ask cover the thinnest services", () => {
+  const cov = S.coverage({ m_cut: 9, skin_fade: 5, beard: 3 });
+  assert.equal(cov.find(c => c.k === "m_cut").status, "solid"); assert.equal(cov.find(c => c.k === "skin_fade").status, "meaningful");
+  assert.equal(cov.find(c => c.k === "beard").need, 2); assert.equal(cov.find(c => c.k === "balayage").status, "none");
+  const vs = [{ id: "a", name: "A", category: "barber" }, { id: "b", name: "B", category: "hair" }, { id: "c", name: "C", category: "hair" }, { id: "d", name: "D" }];
+  const next = S.askNext(vs, new Set(["c"]), { m_cut: 9, skin_fade: 9, beard: 9, cut_beard: 9 });
+  assert.deepEqual(next.map(x => x.v.id), ["b"], "barber services are covered, C is already priced, D has no category");
+});

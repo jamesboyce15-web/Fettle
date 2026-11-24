@@ -86,6 +86,42 @@
     });
   }
 
-  const api = { SALON_ITEMS, ITEM, classify, entryPrices, benchmarks, normal };
+  // Which services each kind of business is asked about first. Anyone can show the rest.
+  const GROUPS_FOR = { hair: ["Hair"], barber: ["Barber"], nails: ["Nails"], beauty: ["Brows and lashes", "Beauty", "Nails"], aesthetics: ["Skin", "Beauty"] };
+  const GROUPS = [...new Set(SALON_ITEMS.map(i => i.g))];
+
+  // How many businesses a service needs before its figure means something: 5 to show it plainly, 8 to call it solid.
+  const TARGET = { meaningful: 5, solid: 8 };
+  function coverage(counts) {
+    return SALON_ITEMS.map(i => { const n = counts[i.k] || 0;
+      return { k: i.k, t: i.t, g: i.g, n, need: Math.max(0, TARGET.meaningful - n), status: n >= TARGET.solid ? "solid" : n >= TARGET.meaningful ? "meaningful" : n >= 3 ? "thin" : "none" }; });
+  }
+  // Who to ask next: businesses with no prices yet whose kind covers the services furthest from the target.
+  function askNext(venues, pricedIds, counts, n) {
+    const cov = Object.fromEntries(coverage(counts).map(c => [c.k, c]));
+    const want = kind => SALON_ITEMS.filter(i => (GROUPS_FOR[kind] || []).includes(i.g)).reduce((t, i) => t + cov[i.k].need, 0);
+    return venues.filter(v => v.included !== false && !pricedIds.has(v.id)).map(v => ({ v, score: want(v.category) }))
+      .filter(x => x.score > 0).sort((a, b) => b.score - a.score || String(a.v.name).localeCompare(String(b.v.name))).slice(0, n || 15);
+  }
+
+  // A business's own prices against the area's published figures: what the price-check page gives back for them.
+  // stats: the published area figures [{k, t, n, median, low, high, thin}]. perWeek: optional bookings a week, by service.
+  function priceCheck(mine, stats, perWeek) {
+    const S = Object.fromEntries((stats || []).map(x => [x.k, x])), wk = perWeek || {};
+    const items = Object.entries(mine || {}).filter(([k, p]) => ITEM[k] && +p > 0).map(([k, p]) => {
+      const st = S[k] || {}, m = st.median, price = +p;
+      if (m == null) return { k, t: ITEM[k].t, g: ITEM[k].g, mine: price, n: st.n || 0, pos: null };
+      const diff = Math.round((price - m) * 100) / 100, pct = Math.round((diff / m) * 100);
+      const pos = Math.abs(pct) <= 5 ? "around" : diff < 0 ? "below" : "above";
+      // Halfway to the middle, for the services they're under on, if they told us how many they do a week. 48 working weeks.
+      const gain = pos === "below" && +wk[k] > 0 ? Math.round((-diff / 2) * +wk[k] * 48) : null;
+      return { k, t: ITEM[k].t, g: ITEM[k].g, mine: price, n: st.n, thin: !!st.thin, median: m, low: st.low, high: st.high, diff, pct, pos, gain };
+    });
+    const by = p => items.filter(i => i.pos === p);
+    return { items, below: by("below"), around: by("around"), above: by("above"), noFigure: items.filter(i => i.pos == null),
+      gain: items.reduce((t, i) => t + (i.gain || 0), 0) };
+  }
+
+  const api = { SALON_ITEMS, ITEM, GROUPS, GROUPS_FOR, TARGET, classify, entryPrices, benchmarks, normal, coverage, askNext, priceCheck };
   root.PatchSectors = api; if (typeof module !== "undefined" && module.exports) module.exports = api;
 })(typeof window !== "undefined" ? window : globalThis);
