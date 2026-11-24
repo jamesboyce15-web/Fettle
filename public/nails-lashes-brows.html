@@ -31,6 +31,9 @@
 #join{max-width:40em}
 #join .grid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
 .note{font-size:.85rem;color:var(--mute);margin:10px 0 0}
+.asking{margin:6px 0 10px;padding-left:1.1em;font-weight:700}
+.ans{border-top:1px solid var(--line);padding:12px 0 2px}.ans .q{font-weight:800;font-size:1.05rem;margin:0 0 4px}.ans p{margin:0 0 6px}
+.ans .yes{background:var(--sign);padding:0 .3em;border-radius:3px;font-weight:800}
 .trades{list-style:none;padding:0;margin:0 0 12px;max-width:38em}.trades li{padding:12px 0;border-bottom:1px solid var(--line)}
 .trades a{font-weight:800;font-size:1.12rem;display:block}.trades span{color:var(--mute)}
 .fit{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px 40px;align-items:start}.fit>*{min-width:0}
@@ -84,13 +87,14 @@ Thanks, Jess<small>Made-up example</small></div></div>
     <li>We never promise ChatGPT will recommend you. You'll see screenshots of what it actually says.</li>
     <li>Leave any time by texting STOP. Your listings stay yours.</li></ul></section>
 
-  <section class="sec card" id="join"><h2>Get your free check</h2><p class="mute">We'll message you on WhatsApp within two working days with what AI says about your business. No obligation.</p>
+  <section class="sec card" id="join"><h2>Get your free check</h2><p class="mute">See what AI assistants say when your customers ask for someone like you. It takes about 20 seconds, and it's free.</p>
     <form id="sf" novalidate>
       <div class="grid" style="gap:0 14px">
         <label class="f"><span>Your name</span><input id="nm" autocomplete="name" maxlength="80"></label>
         <label class="f"><span>Business name</span><input id="bz" autocomplete="organization" maxlength="120"></label>
         <label class="f"><span>What you do</span><select id="tr"><option value="groomer">Dog grooming</option><option value="hair">Hairdressing</option><option value="barber">Barbering</option><option value="nails">Nails</option><option value="beauty">Beauty, brows or lashes</option><option value="valeting">Car valeting</option><option value="driving">Driving lessons</option><option value="tutor">Tutoring</option><option value="other">Something else</option></select></label>
-        <label class="f"><span>Town</span><input id="tw" maxlength="60" placeholder="e.g. Stockport"></label>
+        <label class="f"><span>Town</span><input id="tw" maxlength="60" placeholder="e.g. Stockport" autocomplete="address-level2"></label>
+        <label class="f"><span>Postcode area (optional)</span><input id="pd" maxlength="5" placeholder="e.g. SK4" autocapitalize="characters"></label>
         <label class="f"><span>WhatsApp number</span><input id="wa" type="tel" autocomplete="tel" maxlength="30" placeholder="07…"></label>
         <label class="f"><span>Email (optional)</span><input id="em" type="email" autocomplete="email" maxlength="120"></label></div>
       <label class="f"><span>Your Facebook page, Instagram or website (optional)</span><input id="lk" maxlength="300" placeholder="Paste a link"></label>
@@ -117,18 +121,42 @@ Thanks, Jess<small>Made-up example</small></div></div>
   if (!matchMedia("(prefers-reduced-motion: reduce)").matches) { let i = 0; const ask = $("#ask"), rep = $("#reply");
     setInterval(() => { if (document.hidden) return; i = (i + 1) % ASKS.length; ask.classList.add("swap"); rep.classList.add("swap");
       setTimeout(() => { const [t, pc, n, l] = ASKS[i]; $("#q_trade").textContent = t; $("#q_pc").textContent = pc; $("#r_name").textContent = n; $("#r_line").textContent = l; ask.classList.remove("swap"); rep.classList.remove("swap"); }, 380); }, 4200); }
+  // The free check, straight away: three questions customers ask, put to AI assistants with live web search.
+  async function runCheck(t, o) {
+    const later = `<h3>Thanks, ${esc(o.first)}.</h3><p>We'll message <b>${esc(fmtNum(o.num))}</b> on WhatsApp within two working days with what AI assistants say about ${esc(o.business)}.</p>`;
+    if (o.trade === "other") { t.innerHTML = later; return; }
+    const qs = K.searches({ trade: o.trade, town: o.town, districts: o.district ? [o.district] : [] }).slice(0, 3);
+    t.innerHTML = `<h3>Thanks, ${esc(o.first)}. Asking now…</h3><p>We're asking AI assistants what your customers ask:</p><ul class="asking">${qs.map(q => `<li>“${esc(q)}”</li>`).join("")}</ul><p class="mute sm" aria-live="polite">This usually takes 10 to 20 seconds. Keep this page open.</p>`;
+    let j = null;
+    try { j = D.DEMO ? await demoCheck(o, qs) : await (await fetch("/api/free-check", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ whatsapp: o.num, district: o.district }) })).json(); } catch (e) { j = null; }
+    if (!j || j.status !== "ok" || !(j.results || []).length) { t.innerHTML = later; return; }
+    const R = j.results, named = R.filter(x => x.named).length, byQ = {}; R.forEach(x => (byQ[x.q] = byQ[x.q] || []).push(x));
+    const web = R.some(x => /web/.test(x.engine)), srcs = [...new Set(R.flatMap(x => x.sources || []))].slice(0, 6);
+    t.innerHTML = `<h3>${named ? `You were named in ${named} of ${R.length} answers.` : `${esc(o.business)} wasn't named in any of ${R.length} answers.`}</h3>
+      <p>${named ? "That's a good start. Patch can help you get named more often, with your prices and a way to message you." : "That's normal for a business with only Facebook and word of mouth, and it's what Patch fixes."}</p>
+      ${Object.entries(byQ).map(([q, xs]) => `<div class="ans"><p class="q">“${esc(q)}”</p>${xs.map(x => `<p><b>${esc(x.engine.replace(" (web)", ""))}:</b> ${x.named ? `<span class="yes">named you</span>` : "didn't name you"}${x.names && x.names.length ? `. It named ${esc(listOf(x.names))}.` : "."}</p>`).join("")}</div>`).join("")}
+      ${srcs.length ? `<p class="sm">The answers came from: ${esc(srcs.join(", "))}. Those are the sites to be on.</p>` : ""}
+      <p class="xs mute">${web ? "Asked with live web search" : "Asked from what the AI already knows (no live search)"}, just now. Answers vary from day to day and between assistants.</p>
+      <p style="margin-top:16px"><b>Next:</b> we'll message <b>${esc(fmtNum(o.num))}</b> on WhatsApp within two working days to talk you through it. Setup is free.</p>`;
+  }
+  const fmtNum = n => /^44\d{10}$/.test(n) ? "0" + n.slice(2, 6) + " " + n.slice(6) : "+" + n;
+  const listOf = a => a.length < 2 ? a[0] || "" : a.slice(0, -1).join(", ") + " and " + a[a.length - 1];
+  // Demo: a made-up answer, so the flow can be tried without spending anything.
+  function demoCheck(o, qs) { return new Promise(r => setTimeout(() => r({ status: "ok", results: qs.map((q, i) => ({ q, engine: "Claude (web)", named: false, names: [["Bark & Bubble", "Happy Hounds Grooming", "The Groom Room SK"], ["Scruffs to Fluffs", "Bark & Bubble"], ["Tails Up Mobile", "Happy Hounds Grooming", "Bark & Bubble"]][i % 3], sources: ["yell.com", "facebook.com", "google.com"] })) }), 1500)); }
   $("#sf").addEventListener("submit", async e => {
     e.preventDefault(); const v = id => $("#" + id).value.trim(), err = $("#err"), num = K.waNumber(v("wa"));
     if (!v("nm")) { err.textContent = "Please tell us your name."; return; }
     if (!v("bz")) { err.textContent = "Please tell us the business name."; return; }
+    if (!v("tw")) { err.textContent = "Please tell us your town, so we can ask what your customers ask."; return; }
     if (!num) { err.textContent = "Please check your WhatsApp number."; return; }
+    if (v("pd") && !/^[A-Z]{1,2}\d[A-Z\d]?$/i.test(v("pd"))) { err.textContent = "The postcode area is the first part, like SK4. Or leave it empty."; return; }
     if (v("em") && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v("em"))) { err.textContent = "Please check your email, or leave it empty."; return; }
     const b = $("#go"); b.disabled = true; b.textContent = "Sending…"; err.textContent = "";
     try {
-      const r = await D.rpc("member_signup", { p_name: v("nm"), p_business: v("bz"), p_trade: v("tr"), p_town: v("tw"), p_whatsapp: num, p_email: v("em"), p_link: v("lk"), p_message: v("ms") });
+      const r = await D.rpc("member_signup", { p_name: v("nm"), p_business: v("bz"), p_trade: v("tr"), p_town: v("tw").replace(/\b\w/g, c => c.toUpperCase()), p_whatsapp: num, p_email: v("em"), p_link: v("lk"), p_message: v("ms") });
       if (r !== "ok") throw new Error({ bad: "Please check your name, business and number.", busy: "Lots of sign-ups right now. Please try again tomorrow." }[r] || "That didn't send. Please try again.");
       $("#sf").hidden = true; const t = $("#thanks"); t.hidden = false;
-      t.innerHTML = `<h3>Thanks, ${esc(v("nm").split(/\s+/)[0])}.</h3><p>We'll message <b>+${esc(num)}</b> on WhatsApp within two working days with what AI assistants say about ${esc(v("bz"))}.</p>`;
+      runCheck(t, { first: v("nm").split(/\s+/)[0], business: v("bz"), trade: v("tr"), town: v("tw"), district: v("pd").toUpperCase(), num });
     } catch (x) { err.textContent = x.message; b.disabled = false; b.textContent = "Get my free check"; }
   });
 })();

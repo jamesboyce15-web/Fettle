@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test tests/core.test.js tests/ops.test.js tests/insights.test.js tests/kits.test.js tests/server.test.js tests/ownerdoc.test.js tests/emails.test.js tests/sweep.test.js tests/sectors.test.js tests/offers.test.js tests/desk.test.js tests/trades.test.js",
+    "test": "node --test tests/core.test.js tests/ops.test.js tests/insights.test.js tests/kits.test.js tests/server.test.js tests/ownerdoc.test.js tests/emails.test.js tests/sweep.test.js tests/sectors.test.js tests/offers.test.js tests/desk.test.js tests/trades.test.js tests/freecheck.test.js",
     "test:browser": "node tests/browser/demo.test.cjs && node tests/browser/owner.test.cjs && node tests/browser/visit.test.cjs && node tests/browser/sweep.test.cjs && node tests/browser/pricecheck.test.cjs && node tests/browser/offers.test.cjs && node tests/browser/search.test.cjs && node tests/browser/ux.test.cjs && node tests/browser/nocafe.test.cjs && node tests/browser/desk.test.cjs && node tests/browser/week.test.cjs"
   },
   "devDependencies": {

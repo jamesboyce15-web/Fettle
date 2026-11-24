@@ -21,10 +21,15 @@ const over = p => p.evaluate(() => document.documentElement.scrollWidth - innerW
     ok(/You only pay when they do/.test(await p.textContent('h1')), 'the start page says the offer');
     ok(/Each enquiry[\s\S]*£4/.test(await p.textContent('body')) && /£29 a month/.test(await p.textContent('body')), 'prices are on the page');
     ok(await over(p) <= 0, 'start page fits a phone');
-    await p.fill('#nm', 'Jo Test'); await p.fill('#bz', 'Jo’s Dog Spa'); await p.fill('#wa', '123'); await p.click('#go');
+    await p.fill('#nm', 'Jo Test'); await p.fill('#bz', 'Jo’s Dog Spa'); await p.fill('#wa', '07700 900111'); await p.click('#go');
+    ok(/town/.test(await p.textContent('#err')), 'the town is needed for the check');
+    await p.fill('#tw', 'Stockport'); await p.fill('#wa', '123'); await p.click('#go');
     ok(/WhatsApp number/.test(await p.textContent('#err')), 'a bad number is caught');
-    await p.fill('#wa', '07700 900111'); await p.fill('#tw', 'Stockport'); await p.click('#go'); await p.waitForTimeout(200);
-    ok(/We'll message \+447700900111/.test(await p.textContent('#thanks')), 'sign-up thanks them with the number we will use');
+    await p.fill('#wa', '07700 900111'); await p.fill('#pd', 'SK4'); await p.click('#go'); await p.waitForTimeout(300);
+    ok(/Asking now/.test(await p.textContent('#thanks')) && /dog groomer near SK4/.test(await p.textContent('#thanks')), 'the free check starts at once, with the questions it is asking');
+    await p.waitForTimeout(1700); const th = await p.textContent('#thanks');
+    ok(/wasn't named in any of 3 answers/.test(th) && /It named Bark & Bubble/.test(th), 'the results show who was named instead');
+    ok(/yell\.com/.test(th) && /07700 900111/.test(th), 'with where the answers came from, and what happens next');
 
     // 1b. A trade page: its own question, and the sign-up starts on that trade.
     await p.goto(U + 'nails-lashes-brows.html?demo=1'); await p.waitForTimeout(200);

@@ -69,8 +69,11 @@
   // The searches a customer would type, for this business. {d}=district, {t}=town, {s}=main specialism or trade word.
   function searches(m) {
     if (Array.isArray(m.searches) && m.searches.filter(Boolean).length) return m.searches.map(q => clean(q, 120)).filter(Boolean);
-    const T = trade(m.trade), d = (m.districts || [])[0] || m.town || "", t = m.locality || m.town || "", s = (m.specialisms || [])[0] || T.one;
-    return T.searches.map(q => q.replace("{d}", d).replace("{t}", t).replace("{s}", s).replace(/\s+/g, " ").trim()).filter((q, i, a) => q && a.indexOf(q) === i);
+    // Templates needing a specialism ({s}) or postcode area ({d}) are skipped when the business hasn't given one.
+    const T = trade(m.trade), d = (m.districts || [])[0] || "", t = m.locality || m.town || "", s = (m.specialisms || [])[0] || "";
+    const cap = x => String(x).replace(/\b([a-z])([a-z]*)/g, (w, a, b) => a.toUpperCase() + b);
+    return T.searches.filter(q => (s || !/\{s\}/.test(q) || m.trade === "other") && (d || !/\{d\}/.test(q)))
+      .map(q => q.replace("{d}", d).replace("{t}", cap(t)).replace("{s}", s || T.one).replace(/\s+/g, " ").trim()).filter((q, i, a) => q && a.indexOf(q) === i);
   }
 
   /* ---------- enquiries ---------- */
