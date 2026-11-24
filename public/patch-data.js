@@ -5,7 +5,7 @@
   const CFG = root.PATCH_CONFIG || {};
   const Q = new URLSearchParams(location.search);
   const DEMO = Q.has("demo") || !CFG.supabaseUrl;
-  const KEY = "patch-demo-db-v9";
+  const KEY = "patch-demo-db-v10";
   const uid = () => (crypto.randomUUID ? crypto.randomUUID() : "id-" + Math.random().toString(36).slice(2) + Date.now().toString(36));
   const clone = o => JSON.parse(JSON.stringify(o));
 
@@ -68,6 +68,7 @@
       [["Bramble Café", "Moss Hill Café"], ["Bramble Café", "Oak & Oat"]], [["Brickworks Coffee", "Hollybank Coffee House"], ["Brickworks Coffee"]], [["Pebble Bakehouse", "Juniper & Rye"], ["Juniper & Rye", "Pebble Bakehouse"]]];
     area.geo = { at: dd(-5), engines: ["ChatGPT", "Claude"], prompts: Q.map(([q, theme]) => ({ q, theme })), answers: {} };
     Q.forEach(([q], i) => { area.geo.answers[q + "|ChatGPT"] = ANS[i][0]; area.geo.answers[q + "|Claude"] = ANS[i][1]; });
+    area.geo.sources = { [Q[0][0] + "|Claude"]: ["https://www.tripadvisor.co.uk/Restaurants-elm-park", "https://www.elmparknews.example/best-coffee", "https://www.google.com/maps"], [Q[1][0] + "|Claude"]: ["https://www.tripadvisor.co.uk/Restaurants-elm-park", "https://www.yell.com/s/cafes-elm+park.html"] };
     // Little Fig: a good visit six weeks ago, a slower one this month.
     const lf = observations.find(o => o.venue_id === "dv1"); lf.at = dd(-12); Object.assign(lf.scores, { wait: 9, clean: 4, friendly: 5, seats: 3, welcome: 3, coffee: 4, food: 4, value: 3, ambience: 4, drink_wait: 6, accuracy: true });
     observations.push({ id: uid(), venue_id: "dv1", at: dd(-44), source: "visit", prices: {}, scores: { wait: 3, clean: 5, friendly: 5, seats: 4, welcome: 5, coffee: 5, food: 5, value: 4, ambience: 5, drink_wait: 3, accuracy: true, wifi: true, card_only: false }, notes: "", by_name: "Demo" });
@@ -146,7 +147,7 @@
       const K = root.PatchCore, vs = d.venues.filter(x => x.area_id === a.id).map(toVenue), obs = d.observations.map(toObs), me = vs.find(x => x.id === v.id);
       const pos = K.position(me, vs, obs, 10), I = root.PatchInsights, near = K.nearest(me, vs, 10).map(x => x.v);
       return { name: r.name, emailOn: !r.briefing_off, state: r.owner_state || null, venue: { name: v.name, address: v.address || null, lat: v.lat, lng: v.lng, postcode: v.postcode, hygiene: v.hygiene, hygieneDate: v.hygiene_date },
-        area: { name: a.name, calendar: a.calendar || [], costs: a.costs || [], supplyBench: a.supply_bench || null }, geo: a.geo || null, seo: v.seo || null,
+        area: { name: a.name, sector: a.sector || "cafe", calendar: a.calendar || [], costs: a.costs || [], supplyBench: a.supply_bench || null }, geo: a.geo || null, seo: v.seo || null,
         rank: { visit: I ? I.rankTrend(me, vs, obs) : null, moves: K.priceMoves(me, vs, obs, 10), seoPeers: I ? near.map(x => x.seo && I.seoScore(x.seo.checks)).filter(Boolean).map(x => x.score) : [] },
         report: r.report || { quality: pos.quality, gaps: K.hoursGaps(near), venue: { hours: v.hours }, items: pos.items.map(i => ({ k: i.k, t: i.t, mine: i.mine, median: i.median, high: i.high, low: i.low, n: i.n, diff: i.diff })) },
         newNearby: K.newNearby(me, vs, 1).map(x => ({ name: x.v.name, d: x.d })) }; }

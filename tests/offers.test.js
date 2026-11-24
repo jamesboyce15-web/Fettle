@@ -43,3 +43,21 @@ test("salons are reminded of salon things", () => {
   assert.match(s, /Treatment licence/); assert.doesNotMatch(s, /Pavement|Gas safety|Allergen/);
   assert.match(O.DEFAULTS.cafe.map(x => x[0]).join("|"), /Energy contract/);
 });
+
+test("search: owner ticks merge with ours, the next moves come with points, and progress is kept", async () => {
+  const b2 = {}; b2.globalThis = b2; vm.createContext(b2);
+  for (const f of ["patch-insights.js", "patch-search.js"]) vm.runInContext(fs.readFileSync(new URL("../public/" + f, import.meta.url), "utf8"), b2);
+  const I = b2.PatchInsights, SR = b2.PatchSearch;
+  const ours = { at: "2026-10-01", checks: { gbp_hours: false, gbp_booking: false, site: true, menu: false } };
+  const m = SR.mergeChecks(ours, { gbp: { gbp_hours: true }, gbpAt: "2026-11-20" }, "salon");
+  assert.equal(m.checks.gbp_hours, true, "their newer tick wins"); assert.equal(m.checks.gbp_booking, false); assert.equal(m.checks.menu, false);
+  const nx = SR.nextMoves(m.checks, "salon", 3);
+  assert.equal(nx.moves[0].c.k, "gbp_booking", "the booking button is worth most"); assert.ok(nx.moves[0].pts > 0);
+  assert.ok(nx.moves.every(x => x.kind === "fix") || nx.moves.some(x => x.kind === "check"));
+  assert.equal(I.seoChecksFor("salon").some(c => c.k === "gbp_booking"), true); assert.equal(I.seoChecksFor("cafe").some(c => c.k === "gbp_booking"), false);
+  const h = []; SR.record(h, { at: "2026-10-01", score: 40, ai: 0 }); SR.record(h, { at: "2026-10-01", score: 40, ai: 0 }); SR.record(h, { at: "2026-11-01", score: 62, ai: 2 });
+  assert.equal(h.length, 2); const pr = SR.progress(h); assert.equal(pr.score.d, 22); assert.equal(pr.ai.d, 2);
+  const src = SR.aiSources({ sources: { a: ["https://www.treatwell.co.uk/x", "https://maps.google.com/y", "https://mysalon.co.uk/"], b: ["https://www.treatwell.co.uk/z"] } }, "mysalon.co.uk");
+  assert.equal(JSON.stringify(src.map(x => x.name)), JSON.stringify(["Treatwell"]), "Google and their own site left out"); assert.equal(src[0].n, 2);
+  assert.match(SR.themeSteps("dog-friendly", "cafe").join(" "), /Dogs allowed/);
+});

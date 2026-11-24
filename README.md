@@ -36,6 +36,7 @@ and `public/config.js` pointing at the live database. Secrets go into Cloudflare
 | `SUPABASE_URL`, `SUPABASE_ANON_KEY` | all `/api` functions (Fettle had these already) |
 | `SUPABASE_SERVICE_ROLE_KEY` (secret) | owners' documents, invoice photos, sweeps, emails, the daily job (Fettle had this already) |
 | `ANTHROPIC_API_KEY` (secret) | reading photos and menu boards (`READ_CLAUDE_MODEL` optional), AI answer checks |
+| `GEO_WEB_SEARCH` | `1` to have Claude search the web before answering the AI checks, and record which sites it read (turn on web search in the Anthropic Console first). Off: answers come from what the model already knows |
 | `OPENAI_API_KEY` (secret, optional) | ChatGPT in the AI answer checks |
 | `RESEND_API_KEY` (secret), `EMAIL_FROM` (or Fettle's `FROM_EMAIL`) | sending email, e.g. `Patch <hello@getfettle.co.uk>` |
 | `EMAIL_REPLY_TO`, `EMAIL_SIGNOFF`, `ADMIN_EMAIL`, `SITE_URL` | where replies go, the sign-off name, your daily round-up, the site's address |

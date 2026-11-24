@@ -149,26 +149,47 @@
 
   /* ================= search (SEO) ================= */
   // What makes a café easy to find on Google. Weights add up to 100. "site" checks come from reading their website; "gbp" from their Google profile.
+  // What makes a business easy to find on Google and for AI assistants. w: how much it counts. src: "gbp" is their Google
+  // Business Profile (checked by eye, by us or by them), "site" is read off their homepage. Each sector has its own list.
+  // why: the outcome, in their terms. how: where to look on Google to tick it.
   const SEO_CHECKS = [
-    { k: "gbp_hours", t: "Opening hours on Google", w: 12, src: "gbp", fix: "Add your opening hours to your Google Business Profile, including bank holidays." },
-    { k: "gbp_photos", t: "At least 10 recent photos on Google", w: 8, src: "gbp", fix: "Add photos of your food, drinks and inside: cafés with more photos get more clicks." },
-    { k: "gbp_reviews", t: "At least 50 Google reviews", w: 10, src: "gbp", fix: "Ask happy regulars for a Google review: a small card by the till with a QR code works." },
-    { k: "gbp_replies", t: "Replies to reviews", w: 6, src: "gbp", fix: "Reply to your reviews, good and bad. Patch drafts the replies for you." },
-    { k: "gbp_category", t: "Main category set to café or coffee shop", w: 6, src: "gbp", fix: "Set your Google main category to Café or Coffee shop, and add extras like Breakfast restaurant." },
-    { k: "site", t: "Has a website", w: 10, src: "site", fix: "Even a one-page site with your menu, hours and address helps you show up." },
-    { k: "https", t: "Website is secure (https)", w: 4, src: "site", fix: "Turn on https with your website host: it's usually free." },
-    { k: "mobile", t: "Website works on phones", w: 8, src: "site", fix: "Most people look you up on their phone. Ask your web person to make the site mobile-friendly." },
-    { k: "title", t: "Page title says what and where", w: 8, src: "site", fix: "Make your homepage title say what you are and where, like “Little Fig, café and bakery in Elm Park”." },
-    { k: "menu", t: "Menu on the website, as text", w: 10, src: "site", fix: "Put your menu on your website as text, not just a photo, so Google and AI tools can read it." },
-    { k: "schema", t: "Café details marked up for search engines", w: 8, src: "site", fix: "Add “structured data” for a café (name, address, hours) to your site. Patch can give your web person the snippet." },
-    { k: "nap", t: "Address and phone on the website", w: 10, src: "site", fix: "Put your full address and phone number on every page, the same as on Google." },
+    { k: "gbp_hours", t: "Opening hours on Google", w: 12, src: "gbp", fix: "Add your opening hours to your Google Business Profile, including bank holidays.", why: "Wrong or missing hours is the top reason people walk past or ring and give up.", how: "Search your name on Google: are your hours there, and right?" },
+    { k: "gbp_photos", t: "At least 10 recent photos on Google", w: 8, src: "gbp", fix: "Add photos of your food, drinks and inside: cafés with more photos get more clicks.", why: "Profiles with photos get far more requests for directions and website clicks.", how: "On your Google profile, tap Photos: are there 10 or more from this year?" },
+    { k: "gbp_reviews", t: "At least 50 Google reviews", w: 10, src: "gbp", fix: "Ask happy regulars for a Google review: a small card by the till with a QR code works.", why: "Review count is one of the biggest things Google and AI assistants use to pick who to suggest.", how: "The number next to your stars on Google." },
+    { k: "gbp_replies", t: "Replies to reviews", w: 6, src: "gbp", fix: "Reply to your reviews, good and bad. Patch drafts the replies for you.", why: "Replies show new customers you care, and Google notices active profiles.", how: "Have you replied to most reviews from the last three months?" },
+    { k: "gbp_category", t: "Main category set to café or coffee shop", w: 6, src: "gbp", fix: "Set your Google main category to Café or Coffee shop, and add extras like Breakfast restaurant.", why: "Your main category decides which searches you can show up for at all.", how: "Under your name on Google it says what you are. Is it Café or Coffee shop?" },
+    { k: "site", t: "Has a website", w: 10, src: "site", fix: "Even a one-page site with your menu, hours and address helps you show up.", why: "Google and AI assistants read websites to decide what you're good for." },
+    { k: "https", t: "Website is secure (https)", w: 4, src: "site", fix: "Turn on https with your website host: it's usually free.", why: "Browsers warn people off sites that aren't secure." },
+    { k: "mobile", t: "Website works on phones", w: 8, src: "site", fix: "Most people look you up on their phone. Ask your web person to make the site mobile-friendly.", why: "Most people looking for somewhere nearby are on their phone." },
+    { k: "title", t: "Page title says what and where", w: 8, src: "site", fix: "Make your homepage title say what you are and where, like “Little Fig, café and bakery in Elm Park”.", why: "It's the blue link people see on Google: what and where wins the click." },
+    { k: "menu", t: "Menu on the website, as text", w: 10, src: "site", fix: "Put your menu on your website as text, not just a photo, so Google and AI tools can read it.", why: "When someone asks for “good brunch near me”, AI can only suggest you if it can read that you do brunch." },
+    { k: "schema", t: "Café details marked up for search engines", w: 8, src: "site", fix: "Add “structured data” for a café (name, address, hours) to your site. Patch can give your web person the snippet.", why: "It hands Google and AI your name, address and hours in a form they can't misread." },
+    { k: "nap", t: "Address and phone on the website", w: 10, src: "site", fix: "Put your full address and phone number on every page, the same as on Google.", why: "Matching details everywhere tell Google you're the same, trustworthy business." },
   ];
-  function seoScore(checks) {
-    if (!checks) return null;
-    const known = SEO_CHECKS.filter(c => checks[c.k] === true || checks[c.k] === false);
+  const SEO_SALON = [
+    { k: "gbp_hours", t: "Opening hours on Google", w: 10, src: "gbp", fix: "Add your opening hours to your Google Business Profile, including late nights and bank holidays.", why: "People book around work: wrong hours send them to the salon that shows theirs.", how: "Search your name on Google: are your hours there, and right?" },
+    { k: "gbp_booking", t: "Book button on Google goes to your booking page", w: 12, src: "gbp", fix: "Add your booking link to your Google profile, so people can book straight from the search.", why: "Every step between finding you and booking loses customers. A Book button removes most of them.", how: "On your Google profile, is there a Book or Book online button? Does it open your booking page?" },
+    { k: "gbp_services", t: "Services and prices on Google", w: 8, src: "gbp", fix: "List your main services with prices on your Google profile.", why: "People compare prices before they book. Showing yours wins the ones who'd otherwise not ask.", how: "On your Google profile, tap Services: are your main ones listed with prices?" },
+    { k: "gbp_photos", t: "At least 10 recent photos of your work", w: 8, src: "gbp", fix: "Add photos of your work and your salon: before and afters, nails, colour, the space.", why: "For hair, nails and brows, photos of the work are what people choose on.", how: "On your Google profile, tap Photos: are there 10 or more from this year?" },
+    { k: "gbp_reviews", t: "At least 50 Google reviews", w: 10, src: "gbp", fix: "Ask happy clients for a Google review as they pay: a card by the till with a QR code works.", why: "Review count is one of the biggest things Google and AI assistants use to pick who to suggest.", how: "The number next to your stars on Google." },
+    { k: "gbp_replies", t: "Replies to reviews", w: 5, src: "gbp", fix: "Reply to your reviews, good and bad. Patch drafts the replies for you.", why: "Replies show new clients you care, and Google notices active profiles.", how: "Have you replied to most reviews from the last three months?" },
+    { k: "gbp_category", t: "Main category set to what you do", w: 6, src: "gbp", fix: "Set your Google main category to Hair salon, Barber shop, Nail salon or Beauty salon, and add the others you do.", why: "Your main category decides which searches you can show up for at all.", how: "Under your name on Google it says what you are. Is it right?" },
+    { k: "site", t: "Has a website", w: 8, src: "site", fix: "Even a one-page site with your services, prices, hours and booking link helps you show up.", why: "Google and AI assistants read websites to decide what you're good for." },
+    { k: "https", t: "Website is secure (https)", w: 3, src: "site", fix: "Turn on https with your website host: it's usually free.", why: "Browsers warn people off sites that aren't secure." },
+    { k: "mobile", t: "Website works on phones", w: 6, src: "site", fix: "Most people look you up on their phone. Ask your web person to make the site mobile-friendly.", why: "Most people looking for a salon nearby are on their phone." },
+    { k: "title", t: "Page title says what and where", w: 6, src: "site", fix: "Make your homepage title say what you do and where, like “Mane, hair salon in Heaton Moor”.", why: "It's the blue link people see on Google: what and where wins the click." },
+    { k: "menu", t: "Services and prices on the website, as text", w: 8, src: "site", fix: "Put your services and prices on your website as text, not just a photo or a booking widget.", why: "When someone asks for “balayage near me”, AI can only suggest you if it can read that you do balayage." },
+    { k: "booking", t: "Online booking link on the website", w: 6, src: "site", fix: "Put your Fresha, Treatwell, Booksy or other booking link on your homepage.", why: "People who can't book on the spot often don't come back." },
+    { k: "schema", t: "Salon details marked up for search engines", w: 4, src: "site", fix: "Add “structured data” for a salon (name, address, hours) to your site. Patch can give your web person the snippet.", why: "It hands Google and AI your name, address and hours in a form they can't misread." },
+    { k: "nap", t: "Address and phone on the website", w: 6, src: "site", fix: "Put your full address and phone number on every page, the same as on Google.", why: "Matching details everywhere tell Google you're the same, trustworthy business." },
+  ];
+  const seoChecksFor = sector => sector === "salon" ? SEO_SALON : SEO_CHECKS;
+  function seoScore(checks, sector) {
+    if (!checks) return null; const L = seoChecksFor(sector);
+    const known = L.filter(c => checks[c.k] === true || checks[c.k] === false);
     if (!known.length) return null;
-    const score = Math.round(SEO_CHECKS.reduce((t, c) => t + (checks[c.k] === true ? c.w : 0), 0) / known.reduce((t, c) => t + c.w, 0) * 100);
-    return { score, passed: known.filter(c => checks[c.k] === true).length, of: known.length, fails: SEO_CHECKS.filter(c => checks[c.k] === false).sort((a, b) => b.w - a.w) };
+    const score = Math.round(L.reduce((t, c) => t + (checks[c.k] === true ? c.w : 0), 0) / known.reduce((t, c) => t + c.w, 0) * 100);
+    return { score, passed: known.filter(c => checks[c.k] === true).length, of: known.length, fails: L.filter(c => checks[c.k] === false).sort((a, b) => b.w - a.w), unknown: L.filter(c => checks[c.k] == null) };
   }
 
   /* ================= AI answers (GEO) ================= */
@@ -317,7 +338,7 @@
   const fmt = s => new Date(s + (String(s).length === 10 ? "T12:00:00Z" : "")).toLocaleDateString("en-GB", { day: "numeric", month: "short" });
   const hourName = h => (h < 12 ? h + "am" : h === 12 ? "12pm" : h - 12 + "pm");
 
-  const api = { VISIT, VFIELDS, visitScore, visitPlace, SUPPLY, PRICE_BOOK, PRICE_BOOK_AT, PRICE_BOOK_NOTE, priceBook, packSize, classify, readInvoice, supplierFindings, SEO_CHECKS, seoScore, geoSummary, VDIMS, rankOnVisits, rankTrend, EFFORT, goldenThread, ord };
+  const api = { VISIT, VFIELDS, visitScore, visitPlace, SUPPLY, PRICE_BOOK, PRICE_BOOK_AT, PRICE_BOOK_NOTE, priceBook, packSize, classify, readInvoice, supplierFindings, SEO_CHECKS, SEO_SALON, seoChecksFor, seoScore, geoSummary, VDIMS, rankOnVisits, rankTrend, EFFORT, goldenThread, ord };
   // Always on the global too, so the server bundle (where `module` exists) can share these between files.
   root.PatchInsights = api; if (typeof module !== "undefined" && module.exports) module.exports = api;
 })(typeof window !== "undefined" ? window : globalThis);

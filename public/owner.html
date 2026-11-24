@@ -51,6 +51,9 @@ h1.hi{font-size:clamp(1.6rem,5vw,2.2rem);margin:0 0 4px}
 .pips{display:flex;gap:3px}.pips i{flex:1;height:10px;border-radius:3px;background:var(--line)}.pips i.me{background:var(--accent)}
 .check{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);font-size:.93rem}.check:last-child{border-bottom:0}
 .check .ok{color:var(--good);font-weight:700}.check .no{color:var(--bad);font-weight:700}
+.move{padding:12px 0;border-bottom:1px solid var(--line)}.move:last-child{border-bottom:0}.move .mh{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.move .mh b{flex:1 1 220px}.move p{margin:6px 0}
+.aiq{border-bottom:1px solid var(--line);padding:8px 0}.aiq summary{display:flex;gap:8px;justify-content:space-between;align-items:center;cursor:pointer;font-size:.93rem}.aiq[open] summary{margin-bottom:6px}
+.check .yn{display:flex;gap:4px;align-self:center}.check > .mute{color:var(--mute);font-weight:700}.up{color:var(--good);font-weight:600}
 .qtable{width:100%;border-collapse:collapse;font-size:.9rem}.qtable td,.qtable th{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}.qtable th{font-size:.72rem;text-transform:uppercase;color:var(--mute)}
 .days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;margin:0 0 14px}
 .day{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 2px;text-align:center;cursor:pointer;color:inherit;font:inherit}
@@ -102,6 +105,7 @@ details.more>summary{cursor:pointer;color:var(--accent2);font-weight:600;margin:
 <script src="patch-data.js"></script>
 <script src="patch-kits.js"></script>
 <script src="patch-offers.js"></script>
+<script src="patch-search.js"></script>
 <script src="vendor/qrcode.js"></script>
 <script>
 (function () {
@@ -124,10 +128,12 @@ function save(msg) { clearTimeout(saveT); saveT = setTimeout(async () => { try {
 /* ---------- what Patch knows, worked out once per render ---------- */
 function facts() {
   const invLines = (S.invoices || []).filter(x => x.at >= O.addD(today, -120)).flatMap(x => x.lines || []);
-  const suppliers = I.supplierFindings(invLines, W.area.supplyBench, S.priceCheck), seo = I.seoScore(W.seo && W.seo.checks), geo = I.geoSummary(W.geo, W.venue.name);
+  const merged = SR.mergeChecks(W.seo, S.seoOwn, P.SECTOR);
+  const suppliers = I.supplierFindings(invLines, W.area.supplyBench, S.priceCheck), seo = I.seoScore(merged.checks, P.SECTOR), geo = I.geoSummary(W.geo, W.venue.name);
+  if (seo || geo) { S.searchHistory = S.searchHistory || []; if (SR.record(S.searchHistory, { at: today, score: seo ? seo.score : null, ai: geo ? geo.mentions : null })) save(); }
   const thread = I.goldenThread({ today, report: W.report, suppliers, seo, geo, visitRank: W.rank && W.rank.visit, moves: (W.rank || {}).moves, state: S, venue: W.venue });
   const made = (S.changes || []).reduce((t, c) => t + (O.priceImpact(S, c, today).extra || 0), 0);
-  return { suppliers, seo, geo, thread, made, open: thread.filter(a => a.status !== "done" && a.status !== "skip") };
+  return { suppliers, seo, geo, merged, thread, made, open: thread.filter(a => a.status !== "done" && a.status !== "skip") };
 }
 
 /* ---------- shell ---------- */
@@ -192,14 +198,42 @@ function iRanking() {
     <p class="xs mute">Overall also counts your food hygiene rating. Other cafés are never named, and never see your scores.</p></section>`;
 }
 function iSearch(F) {
-  const s = F.seo, g = F.geo, peers = (W.rank && W.rank.seoPeers) || [];
-  const myRank = s ? 1 + peers.filter(x => x > s.score).length : null;
-  let h = `<section class="card"><h2>On Google</h2>${s ? `<p class="big">${s.score}<span style="font-size:1.1rem;color:var(--mute)">/100</span></p><p class="sm">${peers.length ? `${I.ord(myRank)} of ${peers.length + 1} cafés near you. The middle score nearby is ${Math.round(P.median(peers))}.` : ""} Checked ${W.seo.at ? dd(W.seo.at) : "recently"}.</p>
-    ${I.SEO_CHECKS.filter(c => W.seo.checks[c.k] === true || W.seo.checks[c.k] === false).sort((a, b) => (W.seo.checks[a.k] ? 1 : 0) - (W.seo.checks[b.k] ? 1 : 0) || b.w - a.w).map(c => `<div class="check"><span class="${W.seo.checks[c.k] ? "ok" : "no"}">${W.seo.checks[c.k] ? "✓" : "✗"}</span><span><b>${esc(c.t)}</b>${W.seo.checks[c.k] ? "" : `<br><span class="sm mute">${esc(c.fix)}</span>`}</span></div>`).join("")}`
-    : `<p class="mute">We haven't checked yet. Add your website under Settings.</p>`}</section>`;
-  h += `<section class="card"><h2>In AI answers</h2><p class="sm mute">When people ask ChatGPT, Claude and other assistants for a café near you, who do they suggest?</p>${g ? `<p class="big">${g.share}%</p><p class="sm">of answers mention you. ${I.ord(g.rank)} of ${g.of} cafés named.${g.leaders.length ? ` Most mentioned: ${g.leaders.map(l => `${esc(l.name)} (${l.share}%)`).join(", ")}.` : ""}</p>
-    <div style="overflow-x:auto"><table class="qtable"><thead><tr><th>Question</th><th>You</th><th>They suggest</th></tr></thead><tbody>${g.byPrompt.map(p => `<tr><td>${esc(p.q)}</td><td>${p.mentioned ? `<span class="chip good">${p.mentioned} of ${p.asked}</span>` : `<span class="chip bad">No</span>`}</td><td class="sm">${esc(p.top.join(", "))}</td></tr>`).join("")}</tbody></table></div>
-    <p class="xs mute">Asked ${g.at ? dd(g.at) : "recently"} of ${esc((g.engines || []).join(" and "))}. AI answers vary from day to day, so we ask each question more than once over time.</p>` : `<p class="mute">Not checked yet.</p>`}</section>`;
+  const s = F.seo, g = F.geo, ck = F.merged.checks, L = I.seoChecksFor(P.SECTOR), peers = (W.rank && W.rank.seoPeers) || [];
+  const pr = SR.progress(S.searchHistory), nx = SR.nextMoves(ck, P.SECTOR, 3), place = (W.area.name || "").replace(/\s*\(demo\)/, "").replace(/\s+(salons?|cafés?)$/i, "") || W.venue.postcode;
+  const myRank = s ? 1 + peers.filter(x => x > s.score).length : null, site = (S.settings || {}).website || "";
+  let h = `<section class="card"><h2>How easy you are to find</h2><div class="grid">
+    <div class="stat"><b>${s ? s.score + "/100" : "–"}</b><span>On Google${pr && pr.score && pr.score.d ? ` · <span class="${pr.score.d > 0 ? "up" : ""}">${pr.score.d > 0 ? "up" : "down"} ${Math.abs(pr.score.d)} since ${dd(pr.since)}</span>` : ""}${myRank && peers.length ? `<br>${I.ord(myRank)} of ${peers.length + 1} near you` : ""}</span></div>
+    <div class="stat"><b>${g ? `${g.mentions} of ${g.answers}` : "–"}</b><span>AI answers that name you${pr && pr.ai && pr.ai.d ? ` · ${pr.ai.d > 0 ? "up" : "down"} ${Math.abs(pr.ai.d)} since ${dd(pr.since)}` : ""}${g ? `<br>${I.ord(g.rank)} of ${g.of} named` : ""}</span></div></div></section>`;
+  // the next moves: the difference each makes, how to do it, and a way to say it's done that updates the score
+  if (nx.moves.length) h += `<section class="card"><h2>Your next ${nx.moves.length === 1 ? "move" : nx.moves.length + " moves"}</h2><p class="sm mute">Biggest difference first. Mark each one done and your score updates straight away.</p>
+    ${nx.moves.map(m => { const c = m.c, kit = kitFor({ key: "seo:" + c.k });
+      return `<div class="move"><div class="mh"><b>${esc(m.kind === "check" ? "Check: " + c.t.toLowerCase() : c.fix.split(/[.:]/)[0])}</b>${m.pts ? `<span class="chip good">+${m.pts} points</span>` : ""}<span class="chip">${c.src === "gbp" ? "Google profile · 5 min" : "Website"}</span></div>
+        <p class="sm">${esc(c.why || "")}${m.kind === "check" && c.how ? ` <span class="mute">${esc(c.how)}</span>` : ""}</p>
+        <div class="btns">${m.kind === "check" ? `<button class="btn sm" data-gbpown="${c.k}" data-val="1">Yes, it's there</button><button class="btn q sm" data-gbpown="${c.k}" data-val="0">Not yet</button>`
+          : c.src === "gbp" ? `${kit ? `<button class="btn q sm" data-kit="seo:${c.k}">${KIT_BTN[kit]}</button>` : ""}<button class="btn sm" data-gbpown="${c.k}" data-val="1">I've done it</button>`
+          : `${kit ? `<button class="btn q sm" data-kit="seo:${c.k}">${KIT_BTN[kit]}</button>` : ""}<button class="btn sm" data-act="sitecheck">I've changed it: check my site</button>`}</div></div>`; }).join("")}</section>`;
+  else if (s) h += `<section class="card"><h2>Nothing left on the list</h2><p class="sm">Everything we check is in place. We'll keep checking and tell you if anything slips, or if neighbours catch up.</p></section>`;
+  // AI answers: who they name, why, and what to do about each question they miss
+  h += `<section class="card"><h2>When people ask AI assistants</h2><p class="sm mute">Who do ChatGPT, Claude and others suggest when someone asks for ${P.SECTOR === "salon" ? "a salon or barber" : "a café"} in ${esc(place)}?</p>`;
+  if (g) {
+    const src = SR.aiSources(W.geo, site), listed = S.aiListed || {};
+    h += g.byPrompt.map(p => `<details class="aiq"${!p.mentioned && p.top.length ? "" : ""}><summary><span>“${esc(p.q)}”</span>${p.mentioned ? `<span class="chip good">Named you ${p.mentioned} of ${p.asked}</span>` : `<span class="chip bad">Not you</span>`}</summary>
+      <p class="sm">${p.top.length ? `They suggest ${esc(p.top.join(", "))}.` : "They didn't name anyone near you."}</p>${p.mentioned ? `<p class="sm">Keep it up: the steps below keep you there.</p>` : ""}
+      ${steps(SR.themeSteps(p.theme || p.q, P.SECTOR).map(x => esc(x.replace("{place}", place))))}</details>`).join("");
+    if (src.length) h += `<h3 style="margin-top:16px">Where AI assistants look</h3><p class="sm mute">The sites they read to answer those questions. Being on them, with the right details, is how you get named.</p>
+      ${src.map(x => `<label class="check"><input type="checkbox" data-ailisted="${esc(x.name)}" ${listed[x.name] ? "checked" : ""}><span><b>${esc(x.name)}</b> <span class="xs mute">read ${x.n} time${x.n === 1 ? "" : "s"}</span><br><span class="sm mute">${esc(x.how)}</span></span></label>`).join("")}`;
+    h += `<p class="xs mute">Asked ${g.at ? dd(g.at) : "recently"} of ${esc((g.engines || []).join(" and "))}. Answers vary from day to day, so we ask again each month and track the trend.</p>`;
+  } else h += `<p class="mute">We haven't asked yet. We'll ask this month and show you here who gets named, and what to do about it.</p>`;
+  h += `</section>`;
+  // the full list: tick what's true on Google; check the website yourself
+  h += `<section class="card"><h2>Everything we check</h2>
+    <div class="row" style="gap:8px;align-items:flex-end;flex-wrap:wrap;margin-bottom:6px"><label class="f" style="flex:1 1 220px;margin:0"><span>Your website</span><input id="site" value="${esc(site)}" placeholder="yourname.co.uk" inputmode="url"></label><button class="btn q sm" data-act="sitecheck">Check my website</button></div>
+    ${F.merged.at ? `<p class="xs mute">Last checked ${dd(F.merged.at)}.</p>` : ""}
+    <h3>Google profile</h3><p class="sm mute">Search your name on Google and tick what's true. Your score updates as you go.</p>
+    ${L.filter(c => c.src === "gbp").map(c => `<div class="check"><span class="${ck[c.k] ? "ok" : ck[c.k] === false ? "no" : "mute"}">${ck[c.k] ? "✓" : ck[c.k] === false ? "✗" : "?"}</span><span style="flex:1"><b>${esc(c.t)}</b><br><span class="sm mute">${esc(ck[c.k] ? c.why || "" : c.how || c.fix)}</span></span>
+      <span class="yn"><button class="btn ${ck[c.k] ? "" : "q"} sm" data-gbpown="${c.k}" data-val="1" aria-label="${esc(c.t)}: yes">Yes</button><button class="btn ${ck[c.k] === false ? "" : "q"} sm" data-gbpown="${c.k}" data-val="0" aria-label="${esc(c.t)}: not yet">No</button></span></div>`).join("")}
+    <h3 style="margin-top:14px">Website</h3>
+    ${L.filter(c => c.src === "site").map(c => `<div class="check"><span class="${ck[c.k] ? "ok" : ck[c.k] === false ? "no" : "mute"}">${ck[c.k] ? "✓" : ck[c.k] === false ? "✗" : "?"}</span><span><b>${esc(c.t)}</b><br><span class="sm mute">${esc(ck[c.k] ? c.why || "" : ck[c.k] === false ? c.fix : "Not checked yet")}</span></span></div>`).join("")}</section>`;
   return h;
 }
 // What's changed nearby since the last price sweep: who's put prices up, by how much, and whether you have.
@@ -338,8 +372,9 @@ async function handleFiles(kind, files) {
 
 /* ---------- kits: "help me do it" ---------- */
 const Kt = PatchKits;
-const kitFor = a => a.key.startsWith("rem:") ? "doc" : ({ "seo:gbp_reviews": "reviews", "seo:gbp_photos": "photos", "seo:gbp_hours": "hours", "seo:gbp_category": "category", "seo:menu": "menu", "seo:schema": "schema", "seo:title": "title", "seo:nap": "nap", "seo:site": "web", "seo:https": "web", "seo:mobile": "web" })[a.key] || null;
-const KIT_BTN = { doc: "Upload the paperwork", reviews: "Make my QR card", photos: "Show me what to shoot", hours: "Give me my hours", category: "Show me how", menu: "Write my menu", schema: "Get the code", title: "Write my title", nap: "Write it for me", web: "Write to my web person" };
+const SR = PatchSearch;
+const kitFor = a => a.key.startsWith("rem:") ? "doc" : ({ "seo:gbp_booking": "booking", "seo:gbp_services": "services", "seo:booking": "web", "seo:gbp_reviews": "reviews", "seo:gbp_photos": "photos", "seo:gbp_hours": "hours", "seo:gbp_category": "category", "seo:menu": "menu", "seo:schema": "schema", "seo:title": "title", "seo:nap": "nap", "seo:site": "web", "seo:https": "web", "seo:mobile": "web" })[a.key] || null;
+const KIT_BTN = { booking: "Show me how", services: "Write my list", doc: "Upload the paperwork", reviews: "Make my QR card", photos: "Show me what to shoot", hours: "Give me my hours", category: "Show me how", menu: "Write my menu", schema: "Get the code", title: "Write my title", nap: "Write it for me", web: "Write to my web person" };
 const BP = "https://business.google.com/";
 const box = (id, text, rows) => `<textarea class="kitbox" id="${id}" rows="${rows || Math.min(14, String(text).split("\n").length + 1)}" readonly>${esc(text)}</textarea><button class="btn q sm" data-copybox="${id}">Copy</button>`;
 const steps = a => `<ol class="kitsteps">${a.map(s => `<li>${s}</li>`).join("")}</ol>`;
@@ -350,7 +385,7 @@ function modal(title, body, key) {
 }
 function closeModal() { const m = $("#modal"); if (m) m.remove(); }
 function openKit(key) {
-  const a = facts().thread.find(x => x.key === key); if (!a) return; const kind = kitFor(a), v = W.venue, place = (W.area.name || "").replace(/\s*\(demo\)/, "") || v.postcode;
+  const a = facts().thread.find(x => x.key === key) || (/^seo:/.test(key) ? { key, t: "" } : null); if (!a) return; const kind = kitFor(a), v = W.venue, place = (W.area.name || "").replace(/\s*\(demo\)/, "") || v.postcode;
   closeModal();
   if (kind === "doc") return docModal(a);
   if (kind === "reviews") return reviewsModal(a);
@@ -359,6 +394,10 @@ function openKit(key) {
   if (kind === "hours") { const h = (W.report && W.report.venue && W.report.venue.hours) || null, bh = P.BANK_HOLIDAYS.filter(d => d >= today).slice(0, 4);
     return modal("Your hours, ready for Google", `${h ? box("k-hours", Kt.hoursText(h)) : `<p class="sm">We don't have your hours yet. Write them like this and paste them in:</p>${box("k-hours", Kt.hoursText({}))}`}
       ${steps([`Open <a href="${BP}" target="_blank" rel="noopener">Google Business Profile</a> (or search your café's name on Google while signed in)`, "Tap Edit profile, then Hours", "Copy each day across", `Add special hours for the next bank holidays: ${bh.map(d => dd(d)).join(", ")}`])}`, key); }
+  if (kind === "booking") return modal("Put a Book button on Google", `${steps([`Open <a href="${BP}" target="_blank" rel="noopener">Google Business Profile</a>, or search your name on Google while signed in`, "Tap <b>Edit profile</b>, then <b>Booking</b> (sometimes under Contact)", "Paste the link to your booking page: Fresha, Treatwell, Booksy or your own", "Some booking systems connect to Google for you: in Fresha, Treatwell or Booksy, look for <b>Reserve with Google</b> or <b>Google booking</b> in settings and switch it on"])}<p class="sm mute">Then search your name on Google from your phone: you should see a Book button within a day or two.</p>`, key);
+  if (kind === "services") { const its = (W.report && W.report.items || []).filter(i => i.mine != null), list = its.length ? its.map(i => `${i.t}: from £${(+i.mine).toFixed(0)}`).join("\n") : "Women's cut and blow-dry: from £\nMen's haircut: from £\nFull head colour: from £";
+    return modal("Your services, ready for Google", `${box("k-svc", list)}${steps([`Open <a href="${BP}" target="_blank" rel="noopener">Google Business Profile</a>`, "Tap <b>Edit services</b> (or <b>Services</b>)", "Add each service with its starting price. Use the names people search for: “Balayage”, “Gel nails”, “Skin fade”"])}`, key); }
+  if (kind === "category" && P.SECTOR === "salon") return modal("Set your Google category", `${steps([`Open <a href="${BP}" target="_blank" rel="noopener">Google Business Profile</a>`, "Tap Edit profile, then Business category", "Main category: what most of your takings are: <b>Hair salon</b>, <b>Barber shop</b>, <b>Nail salon</b> or <b>Beauty salon</b>", "Add the others that are true: Hairdresser, Eyebrow bar, Eyelash salon, Waxing hair removal service, Skin care clinic"])}<p class="sm mute">The main category decides most of what you show up for.</p>`, key);
   if (kind === "category") return modal("Set your Google category", `${steps([`Open <a href="${BP}" target="_blank" rel="noopener">Google Business Profile</a>`, "Tap Edit profile, then Business category", "Main category: <b>Coffee shop</b> (or <b>Café</b> if food is half your takings)", "Add extras that are true: Breakfast restaurant, Brunch restaurant, Bakery, Cake shop, Sandwich shop"])}<p class="sm mute">The main category decides most of what you show up for.</p>`, key);
   if (kind === "menu") { const items = ((W.report && W.report.items) || []).map(i => ({ t: i.t, mine: i.mine })), m = Kt.menuText(v.name, items);
     return modal("Your menu, written out", `<p class="sm">From the prices we have for you (${m.n}). Add your other items, then paste it onto your website's menu page. Text, not a photo, so Google and AI tools can read it.</p>
@@ -526,6 +565,7 @@ document.addEventListener("click", async e => {
   if (d.undo) { setAction(d.undo, "todo"); return render(); }
   if (d.done) { const a = facts().thread.find(x => x.key === d.done);
     if (a && a.done === "logprice") return priceModal(Object.assign({ key: a.key }, a.prefill));
+    if (/^seo:gbp_/.test(d.done)) return gbpOwn(d.done.slice(4), true);
     setAction(d.done, "done"); if (a && a.key.startsWith("rem:")) { const k = a.key.slice(4), own = (S.reminders || []).find(r => "r:" + r.id === k);
       if (own) { if (own.every) { const n = new Date((own.due || today) + "T12:00:00Z"); n.setUTCMonth(n.getUTCMonth() + +own.every); own.due = O.iso(n); } else own.done = true; } else { S.dismissed = S.dismissed || {}; S.dismissed[k] = today; } }
     return render(); }
@@ -548,6 +588,7 @@ document.addEventListener("click", async e => {
   if (d.replied) { const r = S.reviews.find(x => x.id === d.replied); r.replied = true; V.reply = null; save("Marked as replied"); return render(); }
   if (d.copy != null) { const el = $("#post" + d.copy); try { await navigator.clipboard.writeText(el.textContent); toast("Copied"); } catch (x) { const r = document.createRange(); r.selectNodeContents(el); getSelection().removeAllRanges(); getSelection().addRange(r); } return; }
   if (d.delprep) { S.prep.splice(+d.delprep, 1); save(); return render(); }
+  if (d.gbpown) return gbpOwn(d.gbpown, d.val === "1");
   switch (d.act) {
     case "addprep": S.prep.push({ name: "", perDay: "" }); return render();
     case "logchange": { const it = $("#pc-item").value.trim(), f = parseFloat($("#pc-from").value), to = parseFloat($("#pc-to").value);
@@ -555,10 +596,35 @@ document.addEventListener("click", async e => {
       S.changes = S.changes || []; S.changes.push({ id: O.uid(), item: it, k: (P.ITEMS.find(i => i.t.toLowerCase() === it.toLowerCase()) || {}).k, from: f, to, at: $("#pc-at").value || today });
       if (d.key) setAction(d.key, "done"); save("Logged. We'll track what it brings in."); const m = $("#modal"); if (m) m.remove(); return render(); }
     case "closemodal": return $("#modal").remove();
+    case "sitecheck": return siteCheck(t);
     case "addreview": { const txt = $("#rv-t").value.trim(); if (!txt) return; S.reviews = S.reviews || []; S.reviews.push({ id: O.uid(), at: today, rating: +$("#rv-r").value, author: $("#rv-a").value.trim(), text: txt }); save("Added"); return render(); }
     case "copyreply": try { await navigator.clipboard.writeText($("#replyText").value); toast("Copied"); } catch (x) { $("#replyText").select(); } return;
   }
 });
+/* search: their own Google ticks, and a website check they run, both update the score at once */
+const scoreNow = () => { const sc = I.seoScore(SR.mergeChecks(W.seo, S.seoOwn, P.SECTOR).checks, P.SECTOR); return sc ? sc.score : null; };
+function scoreToast(before, done) { const after = scoreNow(); toast(after != null && before != null && after > before ? `+${after - before} points: you're now on ${after}/100` : after != null && before != null && after < before ? `Noted. Your score is ${after}/100: the next moves show what to do` : done); }
+function gbpOwn(k, yes) {
+  const before = scoreNow(); S.seoOwn = S.seoOwn || {}; S.seoOwn.gbp = Object.assign({}, S.seoOwn.gbp, { [k]: yes }); S.seoOwn.gbpAt = today;
+  if (yes) { S.actions = S.actions || {}; if (S.actions["seo:" + k] || facts().thread.some(a => a.key === "seo:" + k)) S.actions["seo:" + k] = { status: "done", at: today }; }
+  closeModal(); save(); scoreToast(before, "Saved"); render();
+}
+async function siteCheck(btn) {
+  const inp = $("#site"), url = ((inp && inp.value) || S.settings.website || "").trim();
+  if (!url) { if (inp) { inp.focus(); toast("Put your website address in first"); } else { V.tab = "insights"; V.sub = "search"; render(); toast("Put your website address in first"); } return; }
+  S.settings.website = url; const before = scoreNow(); if (btn) { btn.disabled = true; btn.textContent = "Checking…"; }
+  try {
+    let j;
+    if (D.DEMO) { await new Promise(r => setTimeout(r, 300)); const c = Object.fromEntries(I.seoChecksFor(P.SECTOR).filter(x => x.src === "site").map(x => [x.k, x.k !== "schema"])); j = { ok: true, at: today, url, checks: c, note: "Demo: a made-up result." }; }
+    else { const r = await fetch("/api/owner-seo", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ t: token, url, sector: P.SECTOR, places: [(W.area.name || "").replace(/\s+(salons?|cafés?)$/i, ""), (W.venue.postcode || "").split(" ")[0]].filter(Boolean) }) });
+      j = await r.json().catch(() => ({})); if (!r.ok) throw new Error(j.error || "Couldn't check it just now"); }
+    const c = Object.assign({}, j.checks); delete c.title_text;
+    S.seoOwn = S.seoOwn || {}; S.seoOwn.site = { at: j.at || today, url: j.url || url, checks: c };
+    ["site", "https", "mobile", "title", "menu", "schema", "nap", "booking"].forEach(k => { if (c[k] === true && S.actions && facts().thread.some(a => a.key === "seo:" + k)) S.actions["seo:" + k] = { status: "done", at: today }; });
+    save(); scoreToast(before, j.note || "Checked. Nothing changed yet: these can take your web person a day or two");
+  } catch (e) { toast(e.message); }
+  render();
+}
 function priceModal(pre) {
   const m = document.createElement("div"); m.className = "modal"; m.id = "modal";
   m.innerHTML = `<div class="box" role="dialog" aria-modal="true" aria-labelledby="mt"><h2 id="mt">What did you change it to?</h2><p class="sm mute">We'll track what it brings in, from your sales.</p>${priceForm(pre)}<button class="btn q" data-act="closemodal" style="margin-left:6px">Cancel</button></div>`;
@@ -574,6 +640,8 @@ document.addEventListener("change", e => {
   if (t.id === "emailOn") { D.rpc("owner_email_pref", { p_token: token, p_on: t.checked }).then(ok => { W.emailOn = t.checked; toast(ok ? (t.checked ? "We'll email you on Mondays" : "No more Monday emails") : "Not saved"); }).catch(e => toast("Not saved: " + e.message)); return; }
   if (t.id === "k-phone") { S.settings.phone = t.value.trim(); save(); $("#k-schema").value = schemaFor(); return; }
   if (d.shot != null) { S.shots = S.shots || {}; S.shots[d.shot] = t.checked; save(); return; }
+  if (d.ailisted) { S.aiListed = S.aiListed || {}; S.aiListed[d.ailisted] = t.checked; save(t.checked ? "Good. Being there with the right details is what gets you named." : null); return; }
+  if (t.id === "site") { S.settings.website = t.value.trim(); save(); return; }
   if (d.set) { S.settings[d.set] = ["special", "website"].includes(d.set) ? t.value.trim() : +t.value || ""; save("Saved"); if (d.set !== "website") render(); return; }
   if (d.prep) { const [i, k] = d.prep.split("."); S.prep[+i][k] = k === "perDay" ? +t.value || "" : t.value; save("Saved"); return; }
   if (d.rem != null) { S.reminders[+d.rem].due = t.value || null; S.reminders[+d.rem].done = false; save("Saved"); }

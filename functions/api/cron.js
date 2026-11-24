@@ -29,7 +29,7 @@ export async function onRequestPost({ request, env }) {
     const rs = await rest(env, `requests?venue_id=not.is.null&owner_state=not.is.null&status=neq.not_now&briefing_off=is.false&or=(last_briefing_at.is.null,last_briefing_at.lt.${week})&select=id,name,email,token,venue_id,area_id,report,owner_state&limit=500`);
     if (rs.length) {
       const vs = await rest(env, `venues?id=in.(${[...new Set(rs.map(r => r.venue_id))].join(",")})&select=id,name,postcode,hygiene,hygiene_date,seo`);
-      const as = await rest(env, `areas?id=in.(${[...new Set(rs.map(r => r.area_id).filter(Boolean))].join(",")})&select=id,calendar,geo,rankings,supply_bench`);
+      const as = await rest(env, `areas?id=in.(${[...new Set(rs.map(r => r.area_id).filter(Boolean))].join(",")})&select=id,sector,calendar,geo,rankings,supply_bench`);
       for (const r of rs) {
         const v = vs.find(x => x.id === r.venue_id), a = as.find(x => x.id === r.area_id) || {}; if (!v) continue;
         try { const m = weeklyFor(r, v, a, day.iso, base, brand);

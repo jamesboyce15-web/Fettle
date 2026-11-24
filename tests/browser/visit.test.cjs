@@ -36,7 +36,7 @@ const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAgAAAAGCAIAAABxZ0isAAAAG0lEQVR
     await p.fill('[data-price=latte]', '99'); await p.click('[data-act=save]'); ok(/Latte: that price/.test(await p.textContent('#saveErr')), 'a silly price is caught');
     await p.fill('[data-price=latte]', '3.80'); await p.click('[data-act=save]'); await p.waitForTimeout(500);
     const done = await p.textContent('#app'); ok(/Saved: Little Fig/.test(done) && /1 photo, 2 prices/.test(done), 'saved: ' + done.replace(/\s+/g, ' ').slice(0, 120));
-    const db = await p.evaluate(() => JSON.parse(localStorage.getItem('patch-demo-db-v9')));
+    const db = await p.evaluate(() => JSON.parse(localStorage.getItem('patch-demo-db-v10')));
     const o = db.observations.filter(x => x.venue_id === 'dv1').pop();
     const v = db.venues.find(x => x.id === 'dv1');
     ok(o && o.photos.length === 1 && /^data:image\/jpeg/.test(o.photos[0].data) && o.scores.coffee === 5 && o.scores.toilets === 'na' && o.prices.flat_white === 3.6, 'the visit is stored with its photo, scores and prices');

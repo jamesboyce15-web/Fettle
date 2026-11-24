@@ -12,6 +12,6 @@ export async function onRequestPost({ request, env }) {
     clearTimeout(t);
     if (!safeUrl(r.url)) return json({ error: "The site redirected somewhere we can't check." }, 400);
     const html = (await r.text()).slice(0, 1500000);
-    return json({ ok: true, at: new Date().toISOString(), url: r.url, status: r.status, checks: siteChecks(html, r.url, Array.isArray(b.places) ? b.places.slice(0, 6) : []) });
+    return json({ ok: true, at: new Date().toISOString(), url: r.url, status: r.status, checks: siteChecks(html, r.url, Array.isArray(b.places) ? b.places.slice(0, 6) : [], b.sector === "salon" ? "salon" : "cafe") });
   } catch (e) { return json({ ok: true, at: new Date().toISOString(), url: u.href, checks: { site: false }, note: "The site didn't answer." }); }
 }

@@ -22,3 +22,10 @@ test("checks are for admins only", async () => {
   const r = await seo({ request: new Request("https://p.test/api/seo-check", { method: "POST", body: "{}" }), env: {} });
   assert.equal(r.status, 403);
 });
+
+test("salon website checks: services with prices, and a booking link", () => {
+  const html = `<title>Mane, hair salon in Heaton Moor</title><meta name="viewport" content="width=device-width"><p>Cut and blow-dry £45. Balayage from £120.</p><a href="https://www.fresha.com/a/mane">Book now</a><p>12 Shaw Rd, SK4 4AE · 0161 123 4567</p><script type="application/ld+json">{"@type":"HairSalon"}</script>`;
+  const c = siteChecks(html, "https://mane.example/", ["Heaton Moor"], "salon");
+  assert.equal(c.title, true); assert.equal(c.menu, true); assert.equal(c.booking, true); assert.equal(c.schema, true); assert.equal(c.nap, true);
+  const cafe = siteChecks(html, "https://mane.example/", ["Heaton Moor"], "cafe"); assert.equal(cafe.title, false, "a salon title isn't a café title"); assert.equal(cafe.booking, undefined);
+});

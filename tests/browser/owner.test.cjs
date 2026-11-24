@@ -31,7 +31,7 @@ const SHOTS = process.env.SHOTS;
     await p.click('[data-tab=insights]'); await p.waitForTimeout(150);
     ok(/of 11/.test(await p.textContent('#app')) && /\/100/.test(await p.textContent('#app')), 'insights: ranking on visits and the Google score up front');
     await p.click('[data-sub=ranking]'); ok(/Down from 1st/.test(await p.textContent('#app')) && /Most room to improve:<\/b>|Most room to improve:/.test(await p.textContent('#app')), 'ranking: the trend and the weakest point');
-    await p.click('[data-sub=""]'); await p.click('[data-sub=search]'); ok(/of answers mention you/.test(await p.textContent('#app')) && /Bramble Café/.test(await p.textContent('#app')), 'search and AI: who gets recommended instead');
+    await p.click('[data-sub=""]'); await p.click('[data-sub=search]'); ok(/AI answers that name you/.test(await p.textContent('#app')) && /Bramble Café/.test(await p.textContent('#app')) && /Your next/.test(await p.textContent('#app')), 'search and AI: next moves, and who gets recommended instead');
     await p.click('[data-sub=""]'); await p.click('[data-sub=suppliers]'); ok(/a year more than cafés like yours pay/.test(await p.textContent('#app')) && /Takeaway cups/.test(await p.textContent('#app')), 'suppliers: what they pay against typical');
     ok((await p.$$('details.pb')).length >= 18 && /Yorkshire Tea one-cup tea bags/.test(await p.textContent('#app')), 'suppliers: the seeded price list is there before any tea invoice');
     await p.click('details.pb[data-pb=tea] > summary'); await p.fill('[data-pc="tea.price"]', '95'); await p.click('[data-pcsave=tea]'); await p.waitForTimeout(450);
@@ -74,7 +74,7 @@ const SHOTS = process.env.SHOTS;
     await p.reload(); await p.waitForTimeout(500);
     ok(await p.evaluate(() => __owner.S.invoices.length === 7 && __owner.S.changes.length === 2), 'everything is still there after reloading');
     await p.click('[data-tab=upload]'); await p.click('details.more > summary'); await p.uncheck('#emailOn'); await p.waitForTimeout(150);
-    ok(await p.evaluate(() => JSON.parse(localStorage.getItem('patch-demo-db-v9')).requests.find(r => r.token === 'demo-owner').briefing_off === true), 'an owner can turn off the Monday email');
+    ok(await p.evaluate(() => JSON.parse(localStorage.getItem('patch-demo-db-v10')).requests.find(r => r.token === 'demo-owner').briefing_off === true), 'an owner can turn off the Monday email');
     ok(!errs.length, 'no page errors ' + errs.join(' | '));
   } catch (e) { console.log('FAIL ' + e.message); fail++; }
   await b.close(); srv.close(); console.log(`${pass} passed, ${fail} failed`); process.exit(fail ? 1 : 0);

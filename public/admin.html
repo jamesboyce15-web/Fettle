@@ -47,6 +47,7 @@
 <script src="patch-data.js"></script>
 <script src="patch-emails.js"></script>
 <script src="patch-offers.js"></script>
+<script src="patch-search.js"></script>
 <script>
 (function () {
 "use strict";
@@ -232,20 +233,20 @@ async function postcodeLoc(pc) {
 
 /* ---------- area page ---------- */
 const PROFILE = [["people", "People living here", "e.g. 68,000"], ["students", "Full-time students (%)", "e.g. 14"], ["over65", "Aged 65 and over (%)", "e.g. 13"], ["wfh", "Working mainly from home (%)", "e.g. 38"], ["families", "Households with children (%)", "e.g. 27"]];
-const GBP = PatchInsights.SEO_CHECKS.filter(c => c.src === "gbp");
+const GBPL = () => PatchInsights.seoChecksFor(P.SECTOR).filter(c => c.src === "gbp");
 function vSearch() {
   const I = PatchInsights, list = S.venues.filter(v => v.included).sort((a, b) => a.name.localeCompare(b.name)), geo = S.area.geo, prompts = V.prompts ?? ((geo && geo.prompts) || defaultPrompts()).map(p => p.q + (p.theme ? " | " + p.theme : "")).join("\n");
   V.prompts = prompts;
   return `<section class="card"><h2>On Google</h2><p class="sm mute">Website checks run by reading the café's homepage. Google profile checks: look the café up on Google Maps and tick what's true.</p>
-    <div style="overflow-x:auto"><table class="t"><thead><tr><th>Café</th><th>Website</th><th class="n">Score</th>${GBP.map(c => `<th title="${esc(c.t)}">${esc(c.t.replace(/ on Google| to reviews/g, "").slice(0, 16))}</th>`).join("")}<th></th></tr></thead><tbody>
-    ${list.map(v => { const s = v.seo || {}, sc = I.seoScore(s.checks); return `<tr><td><b>${esc(v.name)}</b>${s.at ? `<br><span class="xs mute">${fmtD(s.at)}</span>` : ""}</td><td><input data-web="${v.id}" value="${esc(v.website || "")}" placeholder="littlefig.co.uk" style="width:150px"></td><td class="n">${sc ? `<span class="chip ${sc.score >= 70 ? "good" : sc.score >= 45 ? "warn" : "bad"}">${sc.score}</span>` : "–"}</td>
-      ${GBP.map(c => `<td class="c" style="text-align:center"><input type="checkbox" data-gbp="${v.id}.${c.k}" ${(s.checks || {})[c.k] ? "checked" : ""} aria-label="${esc(c.t)}"></td>`).join("")}<td><button class="btn q sm" data-seocheck="${v.id}">Check website</button></td></tr>`; }).join("")}</tbody></table></div></section>
-    <section class="card"><h2>In AI answers</h2><p class="sm mute">The questions people ask, one per line. After a | add the short theme used in actions. We ask each AI assistant every question and record which cafés here it names.</p>
+    <div style="overflow-x:auto"><table class="t"><thead><tr><th>Café</th><th>Website</th><th class="n">Score</th>${GBPL().map(c => `<th title="${esc(c.t)}">${esc(c.t.replace(/ on Google| to reviews/g, "").slice(0, 16))}</th>`).join("")}<th></th></tr></thead><tbody>
+    ${list.map(v => { const s = v.seo || {}, sc = I.seoScore(s.checks, P.SECTOR); return `<tr><td><b>${esc(v.name)}</b>${s.at ? `<br><span class="xs mute">${fmtD(s.at)}</span>` : ""}</td><td><input data-web="${v.id}" value="${esc(v.website || "")}" placeholder="littlefig.co.uk" style="width:150px"></td><td class="n">${sc ? `<span class="chip ${sc.score >= 70 ? "good" : sc.score >= 45 ? "warn" : "bad"}">${sc.score}</span>` : "–"}</td>
+      ${GBPL().map(c => `<td class="c" style="text-align:center"><input type="checkbox" data-gbp="${v.id}.${c.k}" ${(s.checks || {})[c.k] ? "checked" : ""} aria-label="${esc(c.t)}"></td>`).join("")}<td><button class="btn q sm" data-seocheck="${v.id}">Check website</button></td></tr>`; }).join("")}</tbody></table></div></section>
+    <section class="card"><h2>In AI answers</h2><p class="sm mute">The questions people ask, one per line. After a | add the short theme used in actions. We ask each AI assistant every question and record which ${P.WORDS.places} here it names.</p>
     <label class="f"><textarea id="prompts" style="min-height:140px">${esc(prompts)}</textarea></label><div class="row"><button class="btn" data-act="geo">Ask the AI assistants</button><span class="sm mute">${geo ? `Last asked ${fmtD(geo.at)} of ${esc((geo.engines || []).join(" and "))}.` : "Not asked yet."}</span></div>
-    ${geo ? `<div style="overflow-x:auto;margin-top:12px"><table class="t"><thead><tr><th>Question</th>${(geo.engines || []).map(e => `<th>${esc(e)}</th>`).join("")}</tr></thead><tbody>${geo.prompts.map(p => `<tr><td>${esc(p.q)}</td>${geo.engines.map(e => `<td class="sm">${esc((geo.answers[p.q + "|" + e] || []).join(", ") || "None of ours")}</td>`).join("")}</tr>`).join("")}</tbody></table></div>` : ""}
+    ${geo ? `<div style="overflow-x:auto;margin-top:12px"><table class="t"><thead><tr><th>Question</th>${(geo.engines || []).map(e => `<th>${esc(e)}</th>`).join("")}</tr></thead><tbody>${geo.prompts.map(p => `<tr><td>${esc(p.q)}</td>${geo.engines.map(e => `<td class="sm">${esc((geo.answers[p.q + "|" + e] || []).join(", ") || "None of ours")}</td>`).join("")}</tr>`).join("")}</tbody></table></div>${(() => { const src = PatchSearch.aiSources(geo); return src.length ? `<p class="sm" style="margin-top:10px"><b>Sites the AI read to answer:</b> ${src.map(x => `${esc(x.name)} (${x.n})`).join(", ")}.</p>` : geo.web ? "" : `<p class="xs mute" style="margin-top:10px">Answers came from what the models already know. Set GEO_WEB_SEARCH=1 in Cloudflare (and turn on web search in the Anthropic Console) to have Claude search the web first, as people's assistants do, and see which sites it reads.</p>`; })()}` : ""}
     <p class="xs mute">Rankings, search scores and AI answers reach owners when you publish the area page.</p></section>`;
 }
-function defaultPrompts() { const a = S.area.name.replace(/\s*\(demo\)/, ""); return [["Where's the best coffee in " + a + "?", "best coffee"], ["Good brunch in " + a, "brunch"], ["Dog-friendly café in " + a, "dog-friendly"], ["Quiet café to work from in " + a, "laptop-friendly"], ["Best cake in " + a, "cake"]].map(([q, theme]) => ({ q, theme })); }
+function defaultPrompts() { const a = S.area.name.replace(/\s*\((demo)\)/, "").replace(/\s+(salons?|cafés?|cafes?)$/i, ""); return PatchSearch.defaultQuestions(P.SECTOR, a); }
 async function callCheck(path, body) {
   const tok = await DB.token(); if (!tok) throw new Error("In the demo, checks use made-up results.");
   const r = await fetch(path, { method: "POST", headers: { "Content-Type": "application/json", Authorization: "Bearer " + tok }, body: JSON.stringify(body) });
@@ -386,7 +387,7 @@ async function approveItem(id) {
 function computeRankings() {
   const I = PatchInsights, rankings = {}, at = new Date().toISOString();
   S.venues.filter(v => v.included && v.lat != null).forEach(v => { const near = P.nearest(v, S.venues, 10).map(x => x.v), pos = P.position(v, S.venues, S.obs, 10);
-    rankings[v.id] = { at, visit: I.rankTrend(v, S.venues, S.obs), seoPeers: near.map(x => x.seo && I.seoScore(x.seo.checks)).filter(Boolean).map(x => x.score),
+    rankings[v.id] = { at, visit: I.rankTrend(v, S.venues, S.obs), seoPeers: near.map(x => x.seo && I.seoScore(x.seo.checks, P.SECTOR)).filter(Boolean).map(x => x.score),
       moves: P.priceMoves(v, S.venues, S.obs, 10), prices: pos.items.map(i => ({ k: i.k, t: i.t, mine: i.mine, median: i.median, high: i.high, low: i.low, n: i.n, diff: i.diff })) }; });
   return rankings;
 }
@@ -451,7 +452,7 @@ document.addEventListener("click", async e => {
   if (d.inc) { const v = venue(d.inc); v.included = t.checked; try { await DB.updVenue(v.id, { included: v.included }); } catch (x) { toast(x.message); } return; }
   if (d.edit) return editModal(venue(d.edit));
   if (d.seocheck) { const v = venue(d.seocheck); if (!v.website) return toast("Add their website first");
-    try { const j = await callCheck("/api/seo-check", { url: v.website, places: [S.area.name, ...(S.area.districts || [])] }); const seo = { at: j.at, checks: Object.assign({}, (v.seo || {}).checks, j.checks) }; delete seo.checks.title_text;
+    try { const j = await callCheck("/api/seo-check", { url: v.website, places: [S.area.name.replace(/\s+(salons?|cafés?)$/i, ""), ...(S.area.districts || [])], sector: P.SECTOR }); const seo = { at: j.at, checks: Object.assign({}, (v.seo || {}).checks, j.checks) }; delete seo.checks.title_text;
       Object.assign(v, await DB.updVenue(v.id, { seo })); toast("Checked"); } catch (x) { toast(x.message); } return render(); }
   if (d.gbp) { const [id, k] = d.gbp.split("."), v = venue(id), seo = Object.assign({ at: today(), checks: {} }, v.seo || {}); seo.checks = Object.assign({}, seo.checks, { [k]: t.checked }); seo.at = today();
     try { Object.assign(v, await DB.updVenue(v.id, { seo })); } catch (x) { toast(x.message); } return; }
