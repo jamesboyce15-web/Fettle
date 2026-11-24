@@ -29,7 +29,7 @@
 </head>
 <body>
 <div class="wrap">
-  <header class="top"><a class="brand" href="./">Patch<i>.</i></a><span class="sp"></span><span class="sm mute">For independent salons and barbers</span></header>
+  <header class="top"><a class="brand" href="./" id="home">Patch<i>.</i></a><span class="sp"></span><span class="sm mute">For independent salons and barbers</span></header>
   <div id="demo"></div>
   <main id="app"><p class="mute">Loading…</p></main>
   <footer id="foot"></footer>
@@ -135,11 +135,12 @@ function result() {
 async function boot() {
   if (D.DEMO) $("#demo").innerHTML = `<p class="demo"><b>Demo.</b> Made-up salons and barbers. Nothing here is real, and what you send stays in this browser.</p>`;
   try { AREA = await D.rpc("area_public", { p_slug: slug }); } catch (e) { AREA = null; }
-  if (!AREA || AREA.sector !== "salon") { $("#app").innerHTML = `<p class="card">We couldn't find that area.</p>`; return; }
+  if (!AREA || AREA.sector !== "salon") { $("#app").innerHTML = `<p class="card">We couldn't find that area. Check the link${CFG.contactEmail ? `, or email <b>${esc(CFG.contactEmail)}</b>` : ""}.</p>`; return; }
+  $("#home").href = `./?a=${encodeURIComponent(AREA.slug)}${D.DEMO ? "&demo=1" : ""}`;
   P.useSector("salon"); document.title = `Patch · Check your prices in ${AREA.name}`;
   const pre = Q.get("v") && (AREA.venues || []).find(x => x.id === Q.get("v"));
   if (pre) { F.venue = `${pre.name} (${pre.postcode || ""})`; F.kind = pre.category || ""; }
-  $("#foot").innerHTML = `Area figures use only normal prices, one per business per service, and show only where at least ${S.TARGET.meaningful - 2} businesses have a price; under ${S.TARGET.meaningful} they're marked as a first look.${CFG.contactEmail ? ` Questions: ${esc(CFG.contactEmail)}.` : ""}`;
+  $("#foot").innerHTML = `Area figures use only normal prices, one per business per service, and show only where at least ${S.TARGET.meaningful - 2} businesses have a price; under ${S.TARGET.meaningful} they're marked as a first look.${CFG.contactEmail ? ` Questions: ${esc(CFG.contactEmail)}.` : ""} <a href="privacy.html">How we use your data</a>.`;
   form();
 }
 boot();

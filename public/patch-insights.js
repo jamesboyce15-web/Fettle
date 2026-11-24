@@ -301,7 +301,7 @@
     const perWeek = k => { const name = (P.ITEM[k] || {}).t; if (!name || !daysWithItems.length) return null; let n = 0; daysWithItems.forEach(d => Object.entries(st.sales.items[d]).forEach(([it, q]) => { if (it.includes(name.toLowerCase()) || name.toLowerCase().includes(it)) n += q; })); return n ? Math.round((n / daysWithItems.length) * 7) : null; };
     items.filter(i => i.mine != null && i.median != null && (!(st.changes || []).some(ch => ch.k === i.k) || (st.actions || {})["price:" + i.k])).forEach(i => {
       const wk = perWeek(i.k), lev = P.levers({ k: i.k, price: i.mine, cost: null, perWeek: wk || TYPICAL_WEEK[i.k] || 30 }, i, c.report.quality, null);
-      const mv = (c.moves || []).find(m => m.k === i.k && m.up >= 2), mvText = mv ? ` ${mv.up} of ${mv.n} cafés nearby have put theirs up since ${new Date(mv.since + "T12:00:00Z").toLocaleDateString("en-GB", { month: "long" })}.` : "";
+      const mv = (c.moves || []).find(m => m.k === i.k && m.up >= 2), mvText = mv ? ` ${mv.up} of ${mv.n} ${(root.PatchCore && root.PatchCore.WORDS.places) || "cafés"} nearby have put theirs up since ${new Date(mv.since + "T12:00:00Z").toLocaleDateString("en-GB", { month: "long" })}.` : "";
       if (lev.price) add({ key: "price:" + i.k, area: "Prices", t: `Raise your ${i.t.toLowerCase()} to ${P.money(lev.price.to)}`, why: `You charge ${P.money(i.mine)}. ${lev.price.text}${mvText}`, value: lev.price.perYear, estimate: !wk, effort: "quick", go: "insights:prices", done: "logprice", prefill: { k: i.k, item: i.t, from: i.mine, to: lev.price.to } });
     });
     // suppliers

@@ -13,6 +13,11 @@ body{padding-bottom:calc(78px + env(safe-area-inset-bottom,0px))}
 .wrap{max-width:760px}
 .top .who{font-size:.9rem;color:var(--mute);text-align:right;line-height:1.25}
 .top .who button{background:none;border:0;color:var(--accent2);font:inherit;font-size:.82rem;padding:0;cursor:pointer}
+.top .who .acct{text-align:right;color:var(--ink);line-height:1.25;padding:4px 0}.top .who .acct span{display:block;color:var(--mute);font-size:.8rem}.top .who .acct:hover span{color:var(--accent2)}
+.icard{position:relative;padding-right:34px!important}.icard::after{content:"›";position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:1.6rem;color:var(--mute)}.icard:hover{border-color:var(--accent2)}
+.item[data-go]{position:relative;padding-right:30px}.item[data-go]::after{content:"›";position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:1.4rem;color:var(--mute)}
+.act .linkbtn,.linkbtn{background:none;border:0;color:var(--mute)!important;font-weight:400!important;font:inherit;font-size:.85rem;text-decoration:underline;cursor:pointer;padding:6px 4px}
+.more-row{text-align:center;margin:10px 0 4px}
 h1.hi{font-size:clamp(1.6rem,5vw,2.2rem);margin:0 0 4px}
 .found{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0 18px}
 .found .stat b{font-size:1.7rem}
@@ -85,6 +90,9 @@ details.more>summary{cursor:pointer;color:var(--accent2);font-weight:600;margin:
 .modal .box{background:var(--card);border-radius:18px;max-width:520px;width:100%;padding:20px;max-height:90vh;overflow:auto}
 @media(min-width:900px){.wrap{max-width:1020px}.homegrid{display:grid;grid-template-columns:1.25fr 1fr;gap:22px;align-items:start}}
 @media(max-width:430px){.rk{grid-template-columns:110px 1fr 56px}.tabs button{font-size:.8rem}}
+.chips.sub button{font-size:.85rem;padding:6px 10px}.chips.sub .xs{opacity:.7}
+.box input{min-width:0}.box .small-in{width:64px;flex:0 0 auto}.box{overflow-x:hidden}
+details.acc{border-top:1px solid var(--line);padding:10px 0}details.acc summary{font-weight:700;cursor:pointer}
 </style>
 </head>
 <body>
@@ -148,7 +156,7 @@ function actionCard(a, compact) {
   const val = a.value ? `<span class="val">${pounds(a.value)} a year${a.estimate ? "*" : ""}</span>` : `<span class="val soft">${{ Google: "Helps you get found", "AI answers": "Helps you get recommended", Reviews: "Builds trust", Visit: "Better visits", Admin: "Keeps you covered", Sales: "Fills a quiet hour", "Opening hours": "New customers" }[a.area] || ""}</span>`;
   return `<article class="act ${a.status === "done" ? "done" : ""}" data-key="${esc(a.key)}"><div class="meta"><span class="area">${esc(a.area)}</span><span class="chip">${esc(I.EFFORT[a.effort])}</span>${a.status === "doing" ? '<span class="chip warn">Doing</span>' : a.status === "done" ? '<span class="chip good">Done</span>' : ""}${val}</div>
     <h3>${esc(a.t)}</h3><p>${esc(a.why)}</p>${a.status !== "done" && /^rem:/.test(a.key) && offersOn(a.t).length ? `<p class="sm" style="margin:-4px 0 8px"><span class="chip good">Deal to compare</span> ${esc(offersOn(a.t)[0].provider)}${offersOn(a.t)[0].rate ? `, from £${offersOn(a.t)[0].rate.from.toLocaleString("en-GB")} ${esc(offersOn(a.t)[0].rate.unit)}` : ""}</p>` : ""}${!compact && a.steps ? `<ul class="sm" style="margin:0 0 8px;padding-left:18px">${a.steps.map(s => `<li>${esc(s)}</li>`).join("")}</ul>` : ""}
-    <div class="btns">${a.status !== "done" ? `<button class="btn sm" data-done="${esc(a.key)}">Done</button>${a.status !== "doing" ? `<button class="btn q sm" data-doing="${esc(a.key)}">I'm on it</button>` : ""}` : `<button class="btn q sm" data-undo="${esc(a.key)}">Not done after all</button>`}${a.status !== "done" && kitFor(a) ? `<button class="btn q sm kitb" data-kit="${esc(a.key)}">${KIT_BTN[kitFor(a)]}</button>` : ""}<button class="btn q sm" data-go="${esc(a.go)}">See why</button>${!compact && a.status !== "done" ? `<button class="btn q sm" data-skip="${esc(a.key)}">Not for us</button>` : ""}</div></article>`;
+    <div class="btns">${a.status !== "done" ? `<button class="btn sm" data-done="${esc(a.key)}">Done</button>${a.status !== "doing" ? `<button class="btn q sm" data-doing="${esc(a.key)}">I'm on it</button>` : ""}` : `<button class="btn q sm" data-undo="${esc(a.key)}">Not done after all</button>`}${a.status !== "done" && kitFor(a) ? `<button class="btn q sm kitb" data-kit="${esc(a.key)}">${KIT_BTN[kitFor(a)]}</button>` : ""}<button class="btn q sm" data-go="${esc(a.go)}">See why</button>${!compact && a.status !== "done" ? `<button class="linkbtn" data-skip="${esc(a.key)}">Not for us</button>` : ""}</div></article>`;
 }
 
 /* ---------- home ---------- */
@@ -164,13 +172,18 @@ function vHome(F) {
 }
 
 /* ---------- actions: the golden thread ---------- */
+const GROUPS = [["all", "All"], ["money", "Prices and costs"], ["found", "Getting found"], ["paper", "Paperwork"], ["other", "Everything else"]];
+const groupOf = a => /^(Prices|Suppliers|Sales)$/.test(a.area) ? "money" : /^(Google|AI answers|Reviews)$/.test(a.area) ? "found" : a.area === "Admin" || /^rem:/.test(a.key) ? "paper" : "other";
 function vActions(F) {
-  const f = V.filter, list = F.thread.filter(a => f === "todo" ? a.status === "todo" || a.status === "doing" : f === "done" ? a.status === "done" : a.status === "skip");
-  const n = s => F.thread.filter(a => s === "todo" ? a.status === "todo" || a.status === "doing" : a.status === s).length;
+  const f = V.filter, g = V.group || "all", byStatus = F.thread.filter(a => f === "todo" ? a.status === "todo" || a.status === "doing" : f === "done" ? a.status === "done" : a.status === "skip");
+  const list = byStatus.filter(a => g === "all" || groupOf(a) === g), shown = V.allActs ? list : list.slice(0, 8);
+  const n = s => F.thread.filter(a => s === "todo" ? a.status === "todo" || a.status === "doing" : a.status === s).length, ng = k => byStatus.filter(a => k === "all" || groupOf(a) === k).length;
   return `<h2>Your actions</h2><p class="sm mute">Everything Patch finds becomes one list: what to do, why, and what it's worth. Most money first.</p>
     <div class="chips">${[["todo", "To do"], ["done", "Done"], ["skip", "Not for us"]].map(([k, t]) => `<button data-filter="${k}" aria-pressed="${f === k}">${t} (${n(k)})</button>`).join("")}</div>
-    ${list.length ? list.map(a => actionCard(a, false)).join("") : `<p class="empty">${f === "todo" ? "All done. Nice." : "Nothing here yet."}</p>`}
-    ${F.thread.some(a => a.estimate) ? `<p class="xs mute">* Estimated from a typical café's sales. Upload sales with item names for your own figures.</p>` : ""}`;
+    ${byStatus.length > 4 ? `<div class="chips sub" role="group" aria-label="Show">${GROUPS.filter(([k]) => k === "all" || ng(k)).map(([k, t]) => `<button data-group="${k}" aria-pressed="${g === k}">${t} <span class="xs">${ng(k)}</span></button>`).join("")}</div>` : ""}
+    ${shown.length ? shown.map(a => actionCard(a, false)).join("") : `<p class="empty">${f === "todo" ? (g === "all" ? "All done. Nice." : "Nothing here: try All.") : "Nothing here yet."}</p>`}
+    ${list.length > shown.length ? `<div class="more-row"><button class="btn q" data-act="allacts">Show ${list.length - shown.length} more</button></div>` : ""}
+    ${F.thread.some(a => a.estimate) ? `<p class="xs mute">* Estimated from a typical ${P.WORDS.place}'s sales. Upload sales with item names for your own figures.</p>` : ""}`;
 }
 
 /* ---------- insights ---------- */
@@ -180,12 +193,12 @@ function vInsights(F) {
   const unrep = (S.reviews || []).filter(r => +r.rating <= 3 && !r.replied).length, sup = F.suppliers.filter(s => s.perYear > 0);
   const card = (k, label, big, s) => `<button class="icard" data-sub="${k}"><small>${label}</small><b>${big}</b><span>${s}</span></button>`;
   return `<h2>Insights</h2><div class="cards">
-    ${card("ranking", "On our last visit", vr ? `${I.ord(vr.rank)} of ${vr.of}` : "Not visited yet", vr ? `Among the cafés nearest you, ${dd(vr.at)}${vr.before ? `. ${vr.rank < vr.before.rank ? "Up" : vr.rank > vr.before.rank ? "Down" : "Same as"} from ${I.ord(vr.before.rank)}` : ""}.` : "We'll visit soon.")}
-    ${card("search", "Google and AI", F.seo ? `${F.seo.score}/100` : "Not checked", `${F.geo ? `AI assistants mention you in ${F.geo.share}% of answers` : "AI answers not checked yet"}.`)}
+    ${card("ranking", "On our last visit", vr ? `${I.ord(vr.rank)} of ${vr.of}` : "Not visited yet", vr ? `Among the ${P.WORDS.places} nearest you, ${dd(vr.at)}${vr.before ? `. ${vr.rank < vr.before.rank ? "Up" : vr.rank > vr.before.rank ? "Down" : "Same as"} from ${I.ord(vr.before.rank)}` : ""}.` : "We'll visit soon.")}
+    ${card("search", "Google and AI", F.seo ? `${F.seo.score}/100` : "Not checked", `${F.geo ? `AI answers name you in ${F.geo.mentions} of ${F.geo.answers}` : "AI answers not checked yet"}. Your next moves inside.`)}
     ${card("prices", "Your prices", priced.length ? `${under} below` : "–", priced.length ? `of ${priced.length} items are below what your neighbours charge.` : "Send us your menu to compare.")}
-    ${card("suppliers", "Suppliers", sup.length ? pounds(sup.reduce((t, s) => t + s.perYear, 0)) : F.suppliers.length ? "On par" : I.priceBook().length + " prices", sup.length ? "a year more than cafés like yours pay." : F.suppliers.length ? "You're paying about what others do." : "What cafés pay for milk, beans, cups and more. Check yours.")}
+    ${card("suppliers", "Suppliers", sup.length ? pounds(sup.reduce((t, s) => t + s.perYear, 0)) : F.suppliers.length ? "On par" : I.priceBook().length + " prices", sup.length ? `a year more than ${P.WORDS.places} like yours pay.` : F.suppliers.length ? "You're paying about what others do." : P.SECTOR === "salon" ? "What salons pay for colour, nails and more. Check yours." : "What cafés pay for milk, beans, cups and more. Check yours.")}
     ${card("reviews", "Reviews", String((S.reviews || []).length), unrep ? `${unrep} waiting for a reply.` : "All replied to.")}
-    ${card("local", "Your area", String(P.calendarFor(ctx().calendar, ctx().district, today, 28).length), `things on locally in the next 4 weeks${(W.newNearby || []).length ? `, ${W.newNearby.length} new café${W.newNearby.length > 1 ? "s" : ""} nearby` : ""}.`)}</div>`;
+    ${card("local", "Your area", String(P.calendarFor(ctx().calendar, ctx().district, today, 28).length), `things on locally in the next 4 weeks${(W.newNearby || []).length ? `, ${W.newNearby.length} new ${W.newNearby.length > 1 ? P.WORDS.places : P.WORDS.place} nearby` : ""}.`)}</div>`;
 }
 function iRanking() {
   const vr = W.rank && W.rank.visit;
@@ -316,9 +329,18 @@ function vUpload() {
     <p class="sm" style="margin:8px 2px">${d.length ? `We have <b>${d.length} days</b> of sales, ${dd(d[0].date)} to ${dd(d[d.length - 1].date)}.` : "No sales yet."}</p></section>
     <section style="margin:14px 0">${zone("invoices", "Supplier invoices", "PDFs or CSV exports from your suppliers. Photos of paper invoices work too: we'll read them for you.", ".csv,.pdf,image/*")}
     ${inv.length ? `<div class="card uploads" style="margin-top:10px">${inv.slice(0, 12).map(x => `<div class="line"><span>${esc(x.name)}<br><span class="xs mute">${dd(x.at)}${x.supplier ? " · " + esc(x.supplier) : ""}</span></span><span class="sm" style="text-align:right">${x.status === "queued" ? '<span class="chip warn">Being read</span>' : `${(x.lines || []).length} lines${x.found ? `<br><span class="xs mute">${esc(x.found)}</span>` : ""}`}</span></div>`).join("")}</div>` : ""}</section>
-    <section style="margin:14px 0"><div class="drop"><b>Your menu board</b><span class="sm mute">A photo of your board or printed menu keeps your comparison right when you change prices.${S.menuBoard ? ` Last sent ${dd(S.menuBoard.at)}.` : ""}</span><br><label class="btn q sm">Choose a photo<input type="file" accept="image/*,.pdf" id="menuIn"></label><div id="menuRead"></div></div></section>
-    <section style="margin:14px 0"><div class="drop"><b>Renewals and certificates</b><span class="sm mute">Insurance, gas safety, fire risk, EICR, PAT, pest control, pavement licence. We read the dates and remind you in time.</span><br><button class="btn q sm" data-adddoc="1">Add one</button></div>${docsList()}</section>
-    <details class="more card"><summary>Settings</summary>${settingsBox()}</details>`;
+    <section style="margin:14px 0"><div class="drop"><b>${P.SECTOR === "salon" ? "Your price list" : "Your menu board"}</b><span class="sm mute">${P.SECTOR === "salon" ? "A photo or screenshot of your price list" : "A photo of your board or printed menu"} keeps your comparison right when you change prices.${S.menuBoard ? ` Last sent ${dd(S.menuBoard.at)}.` : ""}</span><br><label class="btn q sm">Choose a photo<input type="file" accept="image/*,.pdf" id="menuIn"></label><div id="menuRead"></div></div></section>
+    <section style="margin:14px 0"><div class="drop"><b>Renewals and certificates</b><span class="sm mute">${P.SECTOR === "salon" ? "Insurance, treatment licence, fire risk, EICR, PAT, energy and card machine contracts" : "Insurance, gas safety, fire risk, EICR, PAT, pest control, pavement licence, energy and card machine contracts"}. We read the dates, remind you in time, and show you a better deal where there is one.</span><br><button class="btn q sm" data-adddoc="1">Add one</button></div>${docsList()}</section>
+    <p class="sm mute" style="text-align:center">Settings, reminders and help are under your name, top right.</p>`;
+}
+/* settings, reminders and help, under their name */
+function accountModal() {
+  closeModal(); const c = D.CFG.contactEmail || "";
+  modal("Settings and help", `<details class="acc" open><summary>Settings</summary>${settingsBox()}</details>
+    <details class="acc"><summary>Your link</summary><p class="sm">This page opens from your private link: anyone with it can see your figures, so keep it to yourself. Bookmark it, or on your phone use <b>Share</b>, then <b>Add to Home Screen</b>, to open Patch like an app.</p><button class="btn q sm" data-act="copylink">Copy my link</button></details>
+    <details class="acc"><summary>How Patch works</summary><ul class="sm" style="padding-left:18px"><li><b>Home</b>: the next few things worth doing, and what's going on this week.</li><li><b>Actions</b>: everything we've found, as one list, most money first. Mark them done and we track what they bring in.</li><li><b>Insights</b>: how you compare: prices, suppliers, Google and AI, reviews, your area.</li>${P.SECTOR === "cafe" ? "<li><b>Plan</b>: your week ahead, from your sales: takings, staff and prep.</li>" : ""}<li><b>Upload</b>: sales, invoices, your ${P.SECTOR === "salon" ? "price list" : "menu"}, and renewals. The more you add, the sharper it gets.</li></ul>
+      <p class="sm">Other ${P.WORDS.places} never see your figures, and you never see theirs by name.</p></details>
+    <details class="acc"><summary>Help and contact</summary><p class="sm">Stuck, or something looks wrong? Email us and we'll sort it:</p><p><b style="user-select:all">${esc(c)}</b></p><p class="sm"><a href="privacy.html" target="_blank" rel="noopener">How we use your data</a></p></details>`);
 }
 function settingsBox() {
   return `<label class="sm" style="display:flex;gap:8px;align-items:center;margin-top:10px"><input type="checkbox" id="emailOn" ${W.emailOn === false ? "" : "checked"}> Email me my week every Monday morning</label>
@@ -393,7 +415,7 @@ function openKit(key) {
     <ol class="kitsteps">${Kt.PHOTO_SHOTS.map(([t, h], i) => `<li><label><input type="checkbox" data-shot="${i}" ${(S.shots || {})[i] ? "checked" : ""}> <b>${esc(t)}</b></label><br><span class="sm mute">${esc(h)}</span></li>`).join("")}</ol>`, key);
   if (kind === "hours") { const h = (W.report && W.report.venue && W.report.venue.hours) || null, bh = P.BANK_HOLIDAYS.filter(d => d >= today).slice(0, 4);
     return modal("Your hours, ready for Google", `${h ? box("k-hours", Kt.hoursText(h)) : `<p class="sm">We don't have your hours yet. Write them like this and paste them in:</p>${box("k-hours", Kt.hoursText({}))}`}
-      ${steps([`Open <a href="${BP}" target="_blank" rel="noopener">Google Business Profile</a> (or search your café's name on Google while signed in)`, "Tap Edit profile, then Hours", "Copy each day across", `Add special hours for the next bank holidays: ${bh.map(d => dd(d)).join(", ")}`])}`, key); }
+      ${steps([`Open <a href="${BP}" target="_blank" rel="noopener">Google Business Profile</a> (or search your name on Google while signed in)`, "Tap Edit profile, then Hours", "Copy each day across", `Add special hours for the next bank holidays: ${bh.map(d => dd(d)).join(", ")}`])}`, key); }
   if (kind === "booking") return modal("Put a Book button on Google", `${steps([`Open <a href="${BP}" target="_blank" rel="noopener">Google Business Profile</a>, or search your name on Google while signed in`, "Tap <b>Edit profile</b>, then <b>Booking</b> (sometimes under Contact)", "Paste the link to your booking page: Fresha, Treatwell, Booksy or your own", "Some booking systems connect to Google for you: in Fresha, Treatwell or Booksy, look for <b>Reserve with Google</b> or <b>Google booking</b> in settings and switch it on"])}<p class="sm mute">Then search your name on Google from your phone: you should see a Book button within a day or two.</p>`, key);
   if (kind === "services") { const its = (W.report && W.report.items || []).filter(i => i.mine != null), list = its.length ? its.map(i => `${i.t}: from £${(+i.mine).toFixed(0)}`).join("\n") : "Women's cut and blow-dry: from £\nMen's haircut: from £\nFull head colour: from £";
     return modal("Your services, ready for Google", `${box("k-svc", list)}${steps([`Open <a href="${BP}" target="_blank" rel="noopener">Google Business Profile</a>`, "Tap <b>Edit services</b> (or <b>Services</b>)", "Add each service with its starting price. Use the names people search for: “Balayage”, “Gel nails”, “Skin fade”"])}`, key); }
@@ -422,7 +444,7 @@ function schemaFor() { const v = W.venue; return Kt.schemaJson({ name: v.name, a
 function reviewsModal(a) {
   const link = S.settings.reviewLink || "";
   modal("Your review QR card", `<p class="sm">A card by the till does most of the asking for you. First, your review link:</p>
-    ${steps([`Open <a href="${BP}" target="_blank" rel="noopener">Google Business Profile</a>, or search your café on Google while signed in`, "Tap <b>Ask for reviews</b> (sometimes <b>Get more reviews</b>)", "Copy the link: it starts <b>https://g.page/r/</b>"])}
+    ${steps([`Open <a href="${BP}" target="_blank" rel="noopener">Google Business Profile</a>, or search your name on Google while signed in`, "Tap <b>Ask for reviews</b> (sometimes <b>Get more reviews</b>)", "Copy the link: it starts <b>https://g.page/r/</b>"])}
     <label class="f"><span>Your review link</span><input id="k-rl" value="${esc(link)}" inputmode="url" placeholder="https://g.page/r/…/review"></label><p class="err" id="k-rlerr"></p>
     <div class="btns"><button class="btn sm" data-k="rl-make">Make my card</button>${D.DEMO ? `<button class="btn q sm" data-k="rl-demo">Use a demo link</button>` : ""}</div><div id="k-card">${link ? "" : ""}</div>`, a.key);
   if (link) makeCard(link);
@@ -584,6 +606,7 @@ document.addEventListener("click", async e => {
     if (!I.packSize(v("pack"), I.SUPPLY[k].unit)) { err.textContent = `We can't tell how much is in “${v("pack")}”. Try something like 6 x 1L, 1kg or box of 1000.`; return; }
     S.priceCheck = S.priceCheck || {}; S.priceCheck[k] = { price, pack: v("pack").trim(), weekly: parseFloat(v("weekly")) || I.SUPPLY[k].wk, at: today }; V.pb = k; save("Compared"); return render(); }
   if (d.pcclear) { delete (S.priceCheck || {})[d.pcclear]; V.pb = d.pcclear; save("Cleared"); return render(); }
+  if (d.group) { V.group = d.group; V.allActs = false; return render(); }
   if (d.reply) { V.reply = d.reply; return render(); }
   if (d.replied) { const r = S.reviews.find(x => x.id === d.replied); r.replied = true; V.reply = null; save("Marked as replied"); return render(); }
   if (d.copy != null) { const el = $("#post" + d.copy); try { await navigator.clipboard.writeText(el.textContent); toast("Copied"); } catch (x) { const r = document.createRange(); r.selectNodeContents(el); getSelection().removeAllRanges(); getSelection().addRange(r); } return; }
@@ -596,6 +619,9 @@ document.addEventListener("click", async e => {
       S.changes = S.changes || []; S.changes.push({ id: O.uid(), item: it, k: (P.ITEMS.find(i => i.t.toLowerCase() === it.toLowerCase()) || {}).k, from: f, to, at: $("#pc-at").value || today });
       if (d.key) setAction(d.key, "done"); save("Logged. We'll track what it brings in."); const m = $("#modal"); if (m) m.remove(); return render(); }
     case "closemodal": return $("#modal").remove();
+    case "account": return accountModal();
+    case "allacts": V.allActs = true; return render();
+    case "copylink": try { await navigator.clipboard.writeText(location.href); toast("Link copied: keep it somewhere safe"); } catch (x) { toast(location.href); } return;
     case "sitecheck": return siteCheck(t);
     case "addreview": { const txt = $("#rv-t").value.trim(); if (!txt) return; S.reviews = S.reviews || []; S.reviews.push({ id: O.uid(), at: today, rating: +$("#rv-r").value, author: $("#rv-a").value.trim(), text: txt }); save("Added"); return render(); }
     case "copyreply": try { await navigator.clipboard.writeText($("#replyText").value); toast("Copied"); } catch (x) { $("#replyText").select(); } return;
@@ -655,7 +681,7 @@ async function boot() {
   if (!token) { $("#app").innerHTML = `<p class="card">Open Patch from the link in your email.</p>`; return; }
   try { W = await D.rpc("owner_get", { p_token: token }); } catch (e) { W = null; }
   if (W && W.area) P.useSector(W.area.sector);
-  if (!W || !W.venue) { $("#app").innerHTML = `<p class="card">We couldn't find your café. Use the link from your email.</p>`; return; }
+  if (!W || !W.venue) { $("#app").innerHTML = `<p class="card">We couldn't find your business from this link. Use the link from your email, or ask us for a new one: ${esc(D.CFG.contactEmail || "")}</p>`; return; }
   W.area = W.area || { name: "", calendar: [], costs: [] };
   // After a price sweep, the area's latest comparison is fresher than the report snapshot.
   if (W.rank && W.rank.prices && W.rank.prices.length) W.report = Object.assign({}, W.report || {}, { items: W.rank.prices });
@@ -664,7 +690,7 @@ async function boot() {
   if (!S.reminders) S.reminders = defs.map(([t, every]) => ({ id: O.uid(), t, every, due: null }));
   else if (!S.remDefaults2) { const have = new Set(S.reminders.map(r => r.t)); defs.filter(([t]) => /energy|card machine|waste/i.test(t) && !have.has(t)).forEach(([t, every]) => S.reminders.push({ id: O.uid(), t, every, due: null })); S.remDefaults2 = true; }
   try { OFFERS = (await D.rpc("offers_public", { p_token: token })) || []; } catch (e) { OFFERS = []; }
-  $("#who").innerHTML = `<b>${esc(W.venue.name)}</b><br>${esc(W.area.name)}`; document.title = `${W.venue.name} · Patch`; $("#tabs").hidden = false;
+  $("#who").innerHTML = `<button class="acct" data-act="account" aria-haspopup="dialog"><b>${esc(W.venue.name)}</b><span>${esc(W.area.name)} · Settings and help ›</span></button>`; document.title = `${W.venue.name} · Patch`; $("#tabs").hidden = false;
   render();
 }
 window.__owner = { get S() { return S; }, V, facts: () => facts() };

@@ -14,7 +14,7 @@
 .nav button{background:none;border:0;padding:8px 12px;border-radius:9px;font-weight:600;color:var(--mute);cursor:pointer}
 .nav button[aria-current=page]{background:var(--tint);color:var(--accent2)}
 .nav .n{background:var(--accent);color:var(--accent-ink);border-radius:999px;font-size:.72rem;padding:0 7px;margin-left:4px}
-.split{display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:16px;align-items:start}
+.split{display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:16px;align-items:start}.split>*{min-width:0}
 .panel{position:sticky;top:12px}
 .t tbody tr.click{cursor:pointer}.t tbody tr.click:hover{background:var(--tint)}.t tr.sel{background:var(--tint)}
 .prices{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:0 12px}
@@ -56,7 +56,7 @@ const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": 
 const $ = s => document.querySelector(s), money = P.money;
 const today = () => new Date().toISOString().slice(0, 10);
 const fmtD = s => s ? new Date(s).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) : "";
-const ago = s => { const d = (Date.now() - new Date(s)) / 864e5; return d < 1 ? "today" : Math.round(d) + " days ago"; };
+const ago = s => { const d = (Date.now() - new Date(s)) / 864e5; const n = Math.round(d); return d < 1 ? "today" : n === 1 ? "yesterday" : n + " days ago"; };
 function toast(t) { const el = $("#toast"); el.textContent = t; el.classList.add("on"); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove("on"), 2600); }
 const reportUrl = tok => `${location.protocol === "file:" ? "report.html" : location.origin + location.pathname.replace(/admin(\.html)?$/, "report")}?t=${encodeURIComponent(tok)}${D.DEMO ? "&demo=1" : ""}`;
 const ownerUrl = tok => `${location.protocol === "file:" ? "owner.html" : location.origin + location.pathname.replace(/admin(\.html)?$/, "owner")}?t=${encodeURIComponent(tok)}${D.DEMO ? "&demo=1" : ""}`;

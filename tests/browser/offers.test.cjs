@@ -19,7 +19,7 @@ const SHOTS = process.env.SHOTS;
       S.docs = (S.docs || []).concat({ id: 'd1', rid: r.id, title: r.t, name: 'schedule.pdf', at: '2025-12-01', premium: 512, insurer: 'Acme Mutual' }); });
     const rems = await p.evaluate(() => window.__owner.S.reminders.map(r => r.t));
     ok(rems.some(t => /Energy contract/.test(t)) && rems.some(t => /Card machine/.test(t)), 'energy and card contracts are added to their reminders');
-    await p.click('[data-tab=actions]'); await p.waitForTimeout(200);
+    await p.click('[data-tab=actions]'); await p.click('[data-act=allacts]').catch(() => {}); await p.waitForTimeout(200);
     const card = await p.$('article[data-key^="rem:r:"]:has-text("Insurance")');
     ok(!!card && /Deal to compare/.test(await card.textContent()) && /from £380 a year/.test(await card.textContent()), 'the renewal shows a deal to compare, with its checked price');
     await card.$eval('[data-kit]', e => e.click()); await p.waitForTimeout(200);
@@ -31,7 +31,7 @@ const SHOTS = process.env.SHOTS;
     await p.click('[data-offer="of1"]'); await p.waitForTimeout(200);
     const clicks = await p.evaluate(() => JSON.parse(localStorage.getItem('patch-demo-db-v10')).offer_clicks.length); ok(clicks === 1, 'the click is counted');
     await p.evaluate(() => { const S = window.__owner.S, r = S.reminders.find(x => /card machine/i.test(x.t)); r.due = new Date(Date.now() + 5 * 864e5).toISOString().slice(0, 10); });
-    await p.click('.modal [data-act=closemodal]'); await p.click('[data-tab=home]'); await p.click('[data-tab=actions]'); await p.waitForTimeout(200);
+    await p.click('.modal [data-act=closemodal]'); await p.click('[data-tab=home]'); await p.click('[data-tab=actions]'); await p.click('[data-act=allacts]').catch(() => {}); await p.waitForTimeout(200);
     const cardC = await p.$('article[data-key^="rem:r:"]:has-text("Card machine")');
     ok(!!cardC && /TapRight/.test(await cardC.textContent()) && !/1\.39/.test(await cardC.textContent()), 'a price not checked for weeks is not shown');
 

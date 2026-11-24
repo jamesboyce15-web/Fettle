@@ -27,7 +27,7 @@
 </head>
 <body>
 <div class="wrap">
-  <header class="top"><a class="brand" href="./">Patch<i>.</i></a><span class="sp"></span><span class="sm mute">For independent café owners</span></header>
+  <header class="top"><a class="brand" href="./">Patch<i>.</i></a><span class="sp"></span><span class="sm mute" id="tag">For independent businesses</span></header>
   <div id="demo"></div>
   <main id="app"><p class="mute">Loading…</p></main>
   <footer id="foot"></footer>
@@ -51,16 +51,16 @@ function range(item) {
   if (item.median == null || item.low == null) return "";
   const lo = item.low * 0.9, hi = item.high * 1.1, pc = x => Math.max(0, Math.min(100, ((x - lo) / (hi - lo)) * 100));
   return `<div class="range" aria-label="Most ${P.WORDS.places} charge between ${money(item.low)} and ${money(item.high)}"><div class="track"></div><div class="band" style="left:${pc(item.low)}%;width:${pc(item.high) - pc(item.low)}%"></div><div class="med" style="left:${pc(item.median)}%"></div></div>
-    <div class="xs mute" style="display:flex;justify-content:space-between"><span>${money(item.low)}</span><span>${money(item.high)}</span></div>`;
+    <div class="xs mute">Most charge ${money(item.low)} to ${money(item.high)}</div>`;
 }
 function render() {
   const A = AREA, pub = A.published || null, st = pub && pub.stats, venues = A.venues || [];
   const ind = venues.filter(v => v.kind !== "chain").length, awaiting = st ? st.awaiting : venues.filter(v => v.hygiene === "AwaitingInspection").length;
   const fw = st && st.prices.find(p => p.k === "flat_white");
   let h = `<section class="hero"><h1>How does your ${P.WORDS.place} compare with the ${P.WORDS.places} around you?</h1>
-    <p class="lede">Prices, hygiene, opening hours and what customers find when they walk in, across ${venues.length} ${P.WORDS.places} in ${esc(A.name)}. Ask for a free, private report on your ${P.WORDS.place}: where you stand, and where you could save or charge more.</p>
+    <p class="lede">${P.SECTOR === "salon" ? "Prices, reviews and how easy you are to find and book" : "Prices, hygiene, opening hours and what customers find when they walk in"}, across ${venues.length} ${P.WORDS.places} in ${esc(placeOf(A.name))}. Ask for a free, private report on your ${P.WORDS.place}: where you stand, and where you could save or charge more.</p>
     <p class="cta">${P.SECTOR === "salon" ? `<a class="btn big" href="price-check.html?a=${encodeURIComponent(A.slug)}${D.DEMO ? "&demo=1" : ""}">Check your prices in two minutes</a> <a class="btn q" href="#start">Or ask for a full report</a>` : `<a class="btn big" href="#start">See where you stand</a>`}</p><p class="sm mute">Free. No public rankings: other ${P.WORDS.places} never see your figures.</p></section>`;
-  h += `<section class="sec"><div class="grid"><div class="stat"><b>${venues.length}</b><span>${P.WORDS.places} in ${esc(A.name)}</span></div><div class="stat"><b>${ind}</b><span>independent</span></div>
+  h += `<section class="sec"><div class="grid"><div class="stat"><b>${venues.length}</b><span>${P.WORDS.places} in ${esc(placeOf(A.name))}</span></div>${ind < venues.length ? `<div class="stat"><b>${ind}</b><span>independent</span></div>` : ""}
     ${fw && fw.median ? `<div class="stat"><b>${money(fw.median)}</b><span>typical flat white</span></div>` : ""}${P.SECTOR === "cafe" ? `<div class="stat"><b>${awaiting}</b><span>new or awaiting their first hygiene inspection</span></div>` : ""}</div></section>`;
   if (st && st.prices.some(p => p.median != null)) {
     h += `<section class="sec card"><h2>What ${P.WORDS.places} here charge</h2><p class="sm mute">The middle price, and the range most ${P.WORDS.places} fall within. From ${st.priced} ${P.WORDS.places}' menus${pub.at ? `, ${fmtD(pub.at)}` : ""}.</p>
@@ -115,13 +115,15 @@ async function submit(e) {
     t.innerHTML = `<h3>Thanks, ${esc(v("nm").split(/\s+/)[0])}.</h3><p>We'll email your report on ${esc(match ? match.name : cafe)} to <b>${esc(v("em"))}</b> within a few working days.</p>${D.DEMO ? `<p class="sm">In the demo, open the <a href="admin.html?demo=1">admin page</a> to see your request and build the report.</p>` : ""}`;
   } catch (x) { err.textContent = x.message; b.disabled = false; b.textContent = "Get my free report"; }
 }
+const placeOf = n => String(n || "").replace(/\s+(salons?|caf[eé]s?)(?=\s*(\(demo\))?$)/i, "");
 async function boot() {
-  if (D.DEMO) document.getElementById("demo").innerHTML = `<p class="demo"><b>Demo.</b> A made-up area with made-up ${P.WORDS.places}. Nothing here is real.</p>`;
-  document.getElementById("foot").innerHTML = `Food hygiene ratings from the Food Standards Agency. Contains public sector information licensed under the Open Government Licence v3.0. Area figures are only shown where we have at least ${P.MIN_N} ${P.WORDS.places}.${CFG.contactEmail ? ` Questions: <a href="mailto:${esc(CFG.contactEmail)}">${esc(CFG.contactEmail)}</a>.` : ""} <a href="admin.html${D.DEMO ? "?demo=1" : ""}">Admin</a>${D.DEMO ? ` · <a href="owner.html?demo=1">An owner's home (demo)</a>` : ""}`;
   try { AREA = await D.rpc("area_public", { p_slug: slug }); } catch (e) { AREA = null; }
   if (AREA) P.useSector(AREA.sector);
-  if (!AREA) { document.getElementById("app").innerHTML = `<p class="card">We couldn't find that area.</p>`; return; }
-  document.title = `Patch · Cafés in ${AREA.name}`;
+  if (D.DEMO) document.getElementById("demo").innerHTML = `<p class="demo"><b>Demo.</b> A made-up area with made-up ${P.WORDS.places}. Nothing here is real.</p>`;
+  document.getElementById("tag").textContent = `For independent ${P.SECTOR === "salon" ? "salons and barbers" : "café owners"}`;
+  document.getElementById("foot").innerHTML = `${P.SECTOR === "cafe" ? "Food hygiene ratings from the Food Standards Agency. Contains public sector information licensed under the Open Government Licence v3.0. " : ""}Area figures are only shown where we have at least ${P.MIN_N} ${P.WORDS.places}.${CFG.contactEmail ? ` Questions: <a href="mailto:${esc(CFG.contactEmail)}">${esc(CFG.contactEmail)}</a>.` : ""} <a href="privacy.html">Privacy</a> · <a href="admin.html${D.DEMO ? "?demo=1" : ""}">Admin</a>${D.DEMO ? ` · <a href="owner.html?demo=1">An owner's home (demo)</a>` : ""}`;
+  if (!AREA) { document.getElementById("app").innerHTML = `<p class="card">We couldn't find that area. Check the link, or email us${CFG.contactEmail ? ` at <b>${esc(CFG.contactEmail)}</b>` : ""} and we'll point you to yours.</p>`; return; }
+  document.title = `Patch · ${P.SECTOR === "salon" ? "Salons and barbers" : "Cafés"} in ${placeOf(AREA.name)}`;
   render();
 }
 boot();

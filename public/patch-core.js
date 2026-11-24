@@ -151,7 +151,7 @@
     const cost = num(row.cost), price = num(row.price), wk = num(row.perWeek) || 0, b = num(bench);
     if (cost != null && b != null && cost > b * 1.08) {
       const per = round2(cost - b);
-      out.saving = { per, perYear: Math.round(per * wk * 52), text: `You pay about ${pence(cost)} a serving. Similar cafés can get it for about ${pence(b)}.` };
+      out.saving = { per, perYear: Math.round(per * wk * 52), text: `You pay about ${pence(cost)} a serving. Similar ${api.WORDS.places} can get it for about ${pence(b)}.` };
       out.perYear += out.saving.perYear;
     }
     if (price != null && pos && pos.median != null) {
@@ -161,7 +161,7 @@
       if (target - price >= 0.1 && !out.saving) {
         const exGain = (target - price) / (1 + v);
         out.price = { from: price, to: target, perYear: Math.round(exGain * wk * 52),
-          text: `Nearby cafés charge ${money(pos.median)} on average${q != null && q >= 0.85 ? `, and the dearer ones ${money(pos.high)}` : ""}. At ${money(target)} you'd still be ${target <= pos.median ? "at or below most of them" : "below the dearest"}.` };
+          text: `Nearby ${api.WORDS.places} charge ${money(pos.median)} on average${q != null && q >= 0.85 ? `, and the dearer ones ${money(pos.high)}` : ""}. At ${money(target)} you'd still be ${target <= pos.median ? "at or below most of them" : "below the dearest"}.` };
         out.perYear += out.price.perYear;
       }
     }
