@@ -11,22 +11,50 @@
 <link rel="preload" href="fonts/schibsted.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="patch.css">
 <style>
-/* The hero is the customer's own question: who near this postcode? */
-.ask{font-size:clamp(2.55rem,8.6vw,4.4rem);line-height:1.04;font-weight:800;letter-spacing:-.03em;margin:28px 0 0;max-width:14em;text-wrap:balance}
+/* The hero: the customer's question, the AI's answer, and the WhatsApp message it turns into. */
+.hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);grid-template-areas:"ask chat" "pitch chat";gap:16px 44px;align-items:center;margin:14px 0 0}
+@media(max-width:760px){.top{padding:14px 0 8px}.hero{margin:4px 0 0}.ai{padding:12px 14px}.ping{padding:10px 14px}.ai .go{margin-top:8px}.pitch h1{font-size:1.24rem}.pitch .cta{margin-top:12px}}
+.ask{grid-area:ask}.chat{grid-area:chat}.pitch{grid-area:pitch;align-self:start}
+.hero>*{min-width:0}
+.ask{font-size:clamp(2.2rem,7.6vw,4rem);line-height:1.04;font-weight:800;letter-spacing:-.03em;margin:0;text-wrap:balance}
 .ask .pc{font-size:.92em}
-.ask .who,.ask .pc{transition:opacity .35s}
-.ask.swap .who,.ask.swap .pc,.reply.swap{opacity:0}
-.reply{margin:22px 0 0;max-width:34em;padding:2px 0 2px 18px;border-left:3px solid var(--ink);font-size:1.12rem;transition:opacity .35s}
-.reply b{font-weight:800}
-.reply .go{display:inline-block;margin-top:8px;color:var(--wa);font-weight:800;text-decoration:underline;text-underline-offset:.2em}
-.hero-foot{margin:34px 0 0;max-width:36em}
-.hero-foot h1{font-size:clamp(1.45rem,3.6vw,2rem);line-height:1.2;letter-spacing:-.015em;margin:0 0 10px}
-.steps{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:26px 30px;counter-reset:s}
-.steps li{counter-increment:s}
-.steps li::before{content:counter(s);display:block;font-size:2.4rem;font-weight:800;line-height:1;margin:0 0 8px;color:var(--ink)}
-.steps b{display:block;font-size:1.08rem;margin:0 0 4px}
-.steps span{color:var(--mute)}
-.costs{max-width:34em}.costs .board li{padding:14px 0}.costs .pr{font-size:1.4rem}
+.ask .who,.ask .pc,.chat .swapme{transition:opacity .35s}
+.ask.swap .who,.ask.swap .pc,.chat.swap .swapme{opacity:0}
+.pitch h1{font-size:clamp(1.3rem,3.4vw,1.85rem);line-height:1.2;letter-spacing:-.015em;margin:18px 0 0}
+.pitch .cta{margin:16px 0 0}
+.pitch .lede{margin:14px 0 0;font-size:1.05rem;color:var(--mute)}
+.chat{display:flex;flex-direction:column;gap:8px;max-width:27em}
+.ai{background:var(--card);border:1px solid var(--line);border-radius:14px 14px 14px 4px;padding:14px 16px;box-shadow:0 1px 0 var(--line)}
+.ai .hd,.ping .hd{display:flex;align-items:center;gap:8px;font-size:.8rem;font-weight:700;color:var(--mute);margin:0 0 6px}
+.ai .hd i{width:18px;height:18px;border-radius:5px;background:var(--ink);display:inline-block;position:relative}
+.ai .hd i::after{content:"";position:absolute;inset:5px;border-radius:2px;background:var(--sign)}
+.ai .hd em{margin-left:auto;font-style:normal;font-weight:700;font-size:.72rem;border:1px solid var(--line);border-radius:4px;padding:0 5px}
+.ai p{margin:0;font-size:1rem;line-height:1.45}.ai b{font-weight:800}
+.ai .go{display:inline-flex;align-items:center;gap:6px;margin-top:10px;background:var(--wa);color:#fff;border-radius:999px;padding:5px 12px;font-size:.85rem;font-weight:800;pointer-events:none}
+.ping{align-self:flex-end;width:92%;background:#e8f8ee;color:#14201b;border:1px solid #bfe5cc;border-radius:14px 14px 4px 14px;padding:12px 14px}
+.ping .hd{color:#2c6b45}.ping .hd i{width:18px;height:18px;border-radius:50%;background:var(--wa);display:inline-block}
+.ping p{margin:0;font-size:.95rem;line-height:1.45}
+.flow{font-size:.8rem;color:var(--mute);font-weight:700;align-self:center;margin:-2px 0}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .ping{background:#163223;color:#e3f4ea;border-color:#245238}:root:not([data-theme="light"]) .ping .hd{color:#8fd6aa}}
+:root[data-theme="dark"] .ping{background:#163223;color:#e3f4ea;border-color:#245238}:root[data-theme="dark"] .ping .hd{color:#8fd6aa}
+@media(max-width:760px){.hero{grid-template-columns:1fr;grid-template-areas:"ask" "chat" "pitch";gap:14px}.chat{max-width:none}.pitch h1{margin-top:4px}}
+/* How it works: a tinted band, each step on its own card with its number on a small sign plate. */
+.band{background:var(--tint);margin:48px calc(50% - 50vw);padding:36px max(20px,calc(50vw - 430px))}
+.band h2{margin-bottom:16px}
+.steps{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;counter-reset:s}
+.steps li{counter-increment:s;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+.steps li::before{content:counter(s);display:inline-grid;place-items:center;width:30px;height:30px;border-radius:6px;background:var(--sign);color:var(--sign-ink);font-weight:800;box-shadow:inset 0 0 0 2px var(--ink);margin:0 0 10px}
+.steps b{display:block;font-size:1.04rem;margin:0 0 4px}
+.steps span{color:var(--mute);font-size:.95rem}
+.costs{max-width:36em}.costs .board li{padding:14px 0}.costs .pr{font-size:1.4rem}
+.costs .board li.main{background:var(--sign-soft);border:2px solid var(--sign);border-radius:10px;padding:14px 14px;margin:6px 0}
+.costs .board li.main .ld{opacity:.35}
+html{scroll-behavior:smooth}
+/* On phones, once the main button has scrolled away (and until the form is on screen), a slim bar keeps it in reach. */
+.stick{display:none}
+@media(max-width:760px){.stick{display:block;position:fixed;left:0;right:0;bottom:0;z-index:30;padding:10px max(16px,env(safe-area-inset-left,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-right,0px));background:var(--bg);border-top:1px solid var(--line);transform:translateY(110%);transition:transform .2s}
+  .stick.on{transform:none}.stick .btn{width:100%}}
+@media (prefers-reduced-motion:reduce){.stick{transition:none}}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 .fair{max-width:36em;padding-left:1.1em}.fair li{margin:0 0 8px}
 #join{max-width:40em}
 #join .grid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
@@ -46,15 +74,17 @@
 </head>
 <body>
 <div class="wrap">
-  <header class="top"><a class="brand" href="./">Patch<i>.</i></a><span class="sp"></span><a class="sm" href="prices" id="pricesLink">Local prices</a></header>
+  <header class="top"><a class="brand" href="./">Patch<i>.</i></a><span class="sp"></span><a class="sm" href="#costs">Pricing</a></header>
   <div id="demo"></div>
-  <section aria-label="What your customers are asking">
+  <section class="hero" aria-label="What your customers are asking">
     <!--T:hero--><p class="ask" id="ask"><span class="who">Who's a good <span id="q_trade">BIAB nail tech</span> near</span> <span class="pc" id="q_pc">SK4</span>?</p>
-    <div class="reply" id="reply"><b id="r_name">Polished by Priya</b>, <span id="r_line">Heaton Moor. Home studio, BIAB £35, infills every 3 weeks.</span><br><span class="go">Send an enquiry on WhatsApp</span></div>
-    <p class="note">A made-up example of what an AI assistant can answer when your details are where it looks. Patch can't make it pick you; it gives it everything it needs to.</p>
-    <div class="hero-foot"><h1>Nail, lash and brow techs: get found by AI, and fill your diary from WhatsApp.</h1>
-      <p class="lede">When someone asks ChatGPT or Google for BIAB or a lash lift near them, Patch makes sure the answer can be you, with your prices and one tap to WhatsApp you. Keep working from your phone the way you do now.</p><!--/T:hero-->
-      <p style="margin:22px 0 0"><a class="btn big" href="#join">Get your free check</a></p></div>
+    <div class="chat" id="chat" aria-label="A made-up example">
+      <div class="ai"><p class="hd"><i></i>AI assistant<em>Made-up example</em></p><p class="swapme"><b id="r_name">Polished by Priya</b>, <span id="r_line">Heaton Moor. Home studio, BIAB £35, infills every 3 weeks.</span></p><span class="go">Send an enquiry on WhatsApp</span></div>
+      <div class="ping"><p class="hd"><i></i>One tap later, in your WhatsApp</p><p class="swapme" id="r_msg">Hi Polished by Priya, I found you on Google. BIAB please, Thursday evening if you can. SK4.</p></div>
+    </div>
+    <div class="pitch"><h1>Nail, lash and brow techs: get found by AI, and fill your diary from WhatsApp.</h1>
+      <p class="cta"><a class="btn big" href="#join">Get your free check</a></p>
+      <p class="lede">When someone asks ChatGPT or Google for BIAB or a lash lift near them, Patch makes sure the answer can be you, with your prices and one tap to WhatsApp you. Keep working from your phone the way you do now.</p></div><!--/T:hero-->
   </section>
 
   <!--T:trade--><section class="sec"><h2>Made for how nail, lash and brow techs work</h2><div class="fit">
@@ -70,21 +100,21 @@ Thanks, Jess<small>Made-up example</small></div></div>
     <div><h3>Know what other techs charge</h3><p>Once five nail, lash and brow techs in your town are on Patch, you'll see the local range for BIAB, gels, lifts and brows. Never another business's own prices, and never yours to them.</p></div></div>
     <p class="mute" style="margin-top:22px">Also for <a href="dog-groomers">dog groomers</a> and <a href="mobile-hairdressers">mobile hairdressers and barbers</a>.</p></section><!--/T:trade-->
 
-  <section class="sec"><h2>How it works</h2><ol class="steps">
-    <li><b>We check what AI says about you</b><span>We ask ChatGPT, Gemini and Google what your customers ask, and send you the screenshots. Free.</span></li>
+  <section class="band" id="how"><h2>How it works</h2><ol class="steps">
+    <li><b>See what AI says about you</b><span>We ask AI assistants what your customers ask and show you the answers in about 20 seconds. Free.</span></li>
     <li><b>Fifteen minutes on WhatsApp</b><span>Tell us your services, prices and area. We set up Google, Bing, Apple and Yelp in your name, and a page AI can read.</span></li>
     <li><b>Enquiries arrive as WhatsApp messages</b><span>Customers answer your questions first, so you have what you need to reply.</span></li>
     <li><b>Customers come back</b><span>Patch tells you who's due and writes the reminder. You tap send from your own phone.</span></li></ol></section>
 
-  <section class="sec costs"><h2>What it costs</h2><ul class="board">
+  <section class="sec costs" id="costs"><h2>What it costs</h2><ul class="board">
     <li><span class="nm">Setup<small>We do the work. Listings are in your name, so they stay yours.</small></span><span class="ld"></span><span class="pr">£0</span></li>
-    <li><span class="nm">Each enquiry<small>Your first 3 are free. Never more than £29 a month, or £19 if you're one of the first 20 in your town.</small></span><span class="ld"></span><span class="pr">£4</span></li>
+    <li class="main"><span class="nm">Each enquiry, pay as you go<small>Your first 3 are free. Never more than £29 a month, or £19 if you're one of the first 20 in your town.</small></span><span class="ld"></span><span class="pr">£4</span></li>
     <li><span class="nm">Plus, if you want it<small>Unlimited enquiries, rebooking reminders, review requests and a local price check.</small></span><span class="ld"></span><span class="pr">£39<span class="sm mute" style="font-weight:700"> a month</span></span></li></ul></section>
 
   <section class="sec"><h2>Fair play</h2><ul class="fair">
     <li>Only enquiries sent through your Patch page count. Calls, DMs and walk-ins are never charged.</li>
     <li>Reply VOID to remove any enquiry that wasn't real.</li>
-    <li>We never promise ChatGPT will recommend you. You'll see screenshots of what it actually says.</li>
+    <li>We never promise ChatGPT will recommend you: no one can make it. We give it everything it needs, and you'll see what it actually says.</li>
     <li>Leave any time by texting STOP. Your listings stay yours.</li></ul></section>
 
   <section class="sec card" id="join"><h2>Get your free check</h2><p class="mute">See what AI assistants say when your customers ask for someone like you. It takes about 20 seconds, and it's free.</p>
@@ -103,6 +133,7 @@ Thanks, Jess<small>Made-up example</small></div></div>
       <button class="btn big" id="go">Get my free check</button></form><div id="thanks" hidden></div></section>
   <footer class="foot sm mute" id="foot"></footer>
 </div>
+<div class="stick" id="stick" aria-hidden="true"><a class="btn" href="#join" tabindex="-1">Get your free check</a></div>
 <!--T:pre--><script>window.PATCH_TRADE = "nails";</script><!--/T:pre--><script src="config.js"></script>
 <script src="patch-desk.js"></script>
 <script src="patch-data.js"></script>
@@ -112,18 +143,17 @@ Thanks, Jess<small>Made-up example</small></div></div>
   const D = PatchData, K = PatchDesk, CFG = D.CFG, $ = s => document.querySelector(s), esc = K.esc;
   // Old links to an area's figures (/?a=…) now live at /prices.
   const q = new URLSearchParams(location.search); if (q.get("a")) { location.replace("prices" + location.search); return; }
-  if (D.DEMO) $("#pricesLink").href = "prices?demo=1";
   if (D.DEMO) $("#demo").innerHTML = `<p class="demo"><b>Demo.</b> Sign-ups are kept in this browser. See them in <a href="members.html?demo=1">admin</a>, or open <a href="b.html?b=paws-and-polish-demo&demo=1">a made-up groomer's page</a>.</p>`;
   $("#foot").innerHTML = `${CFG.contactEmail ? `Questions: <b>${esc(CFG.contactEmail)}</b> · ` : ""}<a href="prices${D.DEMO ? "?demo=1" : ""}">Local prices</a> · <a href="price-check${D.DEMO ? "?demo=1" : ""}">Check your prices</a> · <a href="privacy">Privacy</a>`;
   // The hero's one moment of motion: the same question, asked of different trades and postcodes. Made-up businesses.
-  const ASKS = /*T:asks*/[["BIAB nail tech","SK4","Polished by Priya","Heaton Moor. Home studio, BIAB £35, infills every 3 weeks."],["lash tech","SK3","Lash Room SK3","Edgeley. Lash lift and tint £45."],["nail tech","SK8","Nailed It Cheadle","Cheadle. Gel manicure £28, evenings and Saturdays."]]/*/T:asks*/;
+  const ASKS = /*T:asks*/[["BIAB nail tech","SK4","Polished by Priya","Heaton Moor. Home studio, BIAB £35, infills every 3 weeks.","Hi Polished by Priya, I found you on Google. BIAB please, Thursday evening if you can. SK4."],["lash tech","SK3","Lash Room SK3","Edgeley. Lash lift and tint £45.","Hi Lash Room SK3, I found you on ChatGPT. Lash lift and tint before a wedding on the 14th? SK3."],["nail tech","SK8","Nailed It Cheadle","Cheadle. Gel manicure £28, evenings and Saturdays.","Hi Nailed It Cheadle, I found you on Gemini. Gel manicure, Saturday morning? SK8."]]/*/T:asks*/;
   if (window.PATCH_TRADE) $("#tr").value = window.PATCH_TRADE;
-  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) { let i = 0; const ask = $("#ask"), rep = $("#reply");
-    setInterval(() => { if (document.hidden) return; i = (i + 1) % ASKS.length; ask.classList.add("swap"); rep.classList.add("swap");
-      setTimeout(() => { const [t, pc, n, l] = ASKS[i]; $("#q_trade").textContent = t; $("#q_pc").textContent = pc; $("#r_name").textContent = n; $("#r_line").textContent = l; ask.classList.remove("swap"); rep.classList.remove("swap"); }, 380); }, 4200); }
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) { let i = 0; const ask = $("#ask"), chat = $("#chat");
+    setInterval(() => { if (document.hidden) return; i = (i + 1) % ASKS.length; ask.classList.add("swap"); chat.classList.add("swap");
+      setTimeout(() => { const [t, pc, n, l, msg] = ASKS[i]; $("#q_trade").textContent = t; $("#q_pc").textContent = pc; $("#r_name").textContent = n; $("#r_line").textContent = l; $("#r_msg").textContent = msg; ask.classList.remove("swap"); chat.classList.remove("swap"); }, 380); }, 5200); }
   // The free check, straight away: three questions customers ask, put to AI assistants with live web search.
   async function runCheck(t, o) {
-    const later = `<h3>Thanks, ${esc(o.first)}.</h3><p>We'll message <b>${esc(fmtNum(o.num))}</b> on WhatsApp within two working days with what AI assistants say about ${esc(o.business)}.</p>`;
+    const later = `<h3>Thanks, ${esc(o.first)}.</h3><p>We'll message <b>${esc(fmtNum(o.num))}</b> on WhatsApp within one working day with what AI assistants say about ${esc(o.business)}.</p>`;
     if (o.trade === "other") { t.innerHTML = later; return; }
     const qs = K.searches({ trade: o.trade, town: o.town, districts: o.district ? [o.district] : [] }).slice(0, 3);
     t.innerHTML = `<h3>Thanks, ${esc(o.first)}. Asking now…</h3><p>We're asking AI assistants what your customers ask:</p><ul class="asking">${qs.map(q => `<li>“${esc(q)}”</li>`).join("")}</ul><p class="mute sm" aria-live="polite">This usually takes 10 to 20 seconds. Keep this page open.</p>`;
@@ -137,12 +167,16 @@ Thanks, Jess<small>Made-up example</small></div></div>
       ${Object.entries(byQ).map(([q, xs]) => `<div class="ans"><p class="q">“${esc(q)}”</p>${xs.map(x => `<p><b>${esc(x.engine.replace(" (web)", ""))}:</b> ${x.named ? `<span class="yes">named you</span>` : "didn't name you"}${x.names && x.names.length ? `. It named ${esc(listOf(x.names))}.` : "."}</p>`).join("")}</div>`).join("")}
       ${srcs.length ? `<p class="sm">The answers came from: ${esc(srcs.join(", "))}. Those are the sites to be on.</p>` : ""}
       <p class="xs mute">${web ? "Asked with live web search" : "Asked from what the AI already knows (no live search)"}, just now. Answers vary from day to day and between assistants.</p>
-      <p style="margin-top:16px"><b>Next:</b> we'll message <b>${esc(fmtNum(o.num))}</b> on WhatsApp within two working days to talk you through it. Setup is free.</p>`;
+      <p style="margin-top:16px"><b>Next:</b> we'll message <b>${esc(fmtNum(o.num))}</b> on WhatsApp within one working day to talk you through it. Setup is free.</p>`;
   }
   const fmtNum = n => /^44\d{10}$/.test(n) ? "0" + n.slice(2, 6) + " " + n.slice(6) : "+" + n;
   const listOf = a => a.length < 2 ? a[0] || "" : a.slice(0, -1).join(", ") + " and " + a[a.length - 1];
   // Demo: a made-up answer, so the flow can be tried without spending anything.
   function demoCheck(o, qs) { return new Promise(r => setTimeout(() => r({ status: "ok", results: qs.map((q, i) => ({ q, engine: "Claude (web)", named: false, names: [["Bark & Bubble", "Happy Hounds Grooming", "The Groom Room SK"], ["Scruffs to Fluffs", "Bark & Bubble"], ["Tails Up Mobile", "Happy Hounds Grooming", "Bark & Bubble"]][i % 3], sources: ["yell.com", "facebook.com", "google.com"] })) }), 1500)); }
+  // The phone bar: shown when neither the main button nor the form is on screen.
+  if ("IntersectionObserver" in window) { const seen = new Map(), bar = $("#stick"), hero = $(".pitch .btn"), form = $("#join");
+    const io = new IntersectionObserver(es => { es.forEach(x => seen.set(x.target, x.isIntersecting)); const show = !seen.get(hero) && !seen.get(form) && hero.getBoundingClientRect().top < 0; bar.classList.toggle("on", show); bar.setAttribute("aria-hidden", show ? "false" : "true"); bar.querySelector("a").tabIndex = show ? 0 : -1; });
+    io.observe(hero); io.observe(form); }
   $("#sf").addEventListener("submit", async e => {
     e.preventDefault(); const v = id => $("#" + id).value.trim(), err = $("#err"), num = K.waNumber(v("wa"));
     if (!v("nm")) { err.textContent = "Please tell us your name."; return; }
