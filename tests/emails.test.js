@@ -12,6 +12,9 @@ test("the emails say the right things and escape what owners typed", () => {
   const r = E.reportReady({ name: "Jess <b>Patel</b>", cafe: "Fig & Co", reportUrl: "https://p/report?t=abc", foundingPrice: 59 });
   assert.equal(r.subject, "Your Patch report for Fig & Co"); assert.match(r.text, /^Hi Jess,/); assert.match(r.text, /https:\/\/p\/report\?t=abc/); assert.match(r.text, /£59 a month/);
   assert.ok(r.html.includes("Fig &amp; Co") && !r.html.includes("<b>Patel"));
+  assert.ok(/10 salons nearest you/.test(r.text) && !/caf[eé]/i.test(r.text + r.html), "salon wording by default, no café");
+  assert.match(E.reportReady({ name: "Jess", cafe: "Fig", reportUrl: "x", sector: "cafe" }).text, /10 cafés nearest you/);
+  for (const k of Object.keys(E.SAMPLES)) assert.ok(!/caf[eé]/i.test(E.SAMPLES[k]().text), "no café in sample " + k);
   const w = E.weekly({ name: "Jess", cafe: "Little Fig", items: [{ t: "About £6,850 expected this week", s: "Busiest: Saturday." }], ownerUrl: "https://p/owner?t=x", unsubUrl: "https://p/api/unsubscribe?t=x", actions: { n: 3, value: 1200 } });
   assert.match(w.subject, /This week at Little Fig: About £6,850/); assert.match(w.text, /Stop these emails: https:\/\/p\/api\/unsubscribe\?t=x/); assert.match(w.text, /£1,200 a year/);
   for (const k of Object.keys(E.SAMPLES)) { const m = E.SAMPLES[k](); assert.ok(m.subject && m.text && m.html.startsWith("<!doctype html>"), k); }

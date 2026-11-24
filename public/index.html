@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Patch · How your salon compares</title>
-<meta name="description" content="How your salon or barbers compares with the ones around you: prices, reviews and how easy you are to find and book on Google and in AI answers. Free, private and specific to you.">
+<title>Patch · Get picked when AI books</title>
+<meta name="description" content="When ChatGPT, Google or Claude pick a salon or barber, they show a price, a rating and a time to book. Patch shows where you stand on each against the salons near you, and the next move to get picked. Free and private.">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@500;700&display=swap">
 <link rel="stylesheet" href="patch.css">
@@ -57,9 +57,18 @@ function render() {
   const A = AREA, pub = A.published || null, st = pub && pub.stats, venues = A.venues || [];
   const ind = venues.filter(v => v.kind !== "chain").length, awaiting = st ? st.awaiting : venues.filter(v => v.hygiene === "AwaitingInspection").length;
   const fw = st && st.prices.find(p => p.k === "flat_white");
-  let h = `<section class="hero"><h1>How does your ${P.WORDS.place} compare with the ${P.WORDS.places} around you?</h1>
-    <p class="lede">${P.SECTOR === "salon" ? "Prices, reviews and how easy you are to find and book" : "Prices, hygiene, opening hours and what customers find when they walk in"}, across ${venues.length} ${P.WORDS.places} in ${esc(placeOf(A.name))}. Ask for a free, private report on your ${P.WORDS.place}: where you stand, and where you could save or charge more.</p>
-    <p class="cta">${P.SECTOR === "salon" ? `<a class="btn big" href="price-check.html?a=${encodeURIComponent(A.slug)}${D.DEMO ? "&demo=1" : ""}">Check your prices in two minutes</a> <a class="btn q" href="#start">Or ask for a full report</a>` : `<a class="btn big" href="#start">See where you stand</a>`}</p><p class="sm mute">Free. No public rankings: other ${P.WORDS.places} never see your figures.</p></section>`;
+  const SAL = P.SECTOR === "salon", pc = `price-check.html?a=${encodeURIComponent(A.slug)}${D.DEMO ? "&demo=1" : ""}`;
+  let h = SAL ? `<section class="hero"><h1>Get picked when AI books.</h1>
+    <p class="lede">Ask ChatGPT, Google or Claude for “a haircut under £25 near me” and it now answers with two or three places, a price, a rating and a time you can book. Patch shows where your salon stands on each of those against the ${venues.length} ${P.WORDS.places} in ${esc(placeOf(A.name))}, and the next move that gets you into that answer.</p>
+    <p class="cta"><a class="btn big" href="${pc}">Check your prices in two minutes</a> <a class="btn q" href="#start">Or ask for a full report</a></p><p class="sm mute">Free. Keep the booking system you use now: Fresha, Booksy, Treatwell or your own. Other ${P.WORDS.places} never see your figures.</p></section>
+    <section class="sec card"><h2>What an AI answer shows a customer</h2><p class="sm mute">And what Patch checks for you on each.</p><ol class="how">
+    <li><b>Your price</b><span class="mute">Where your cut, colour or treatment sits against the ${P.WORDS.places} near you. Too high and you're left out of “under £25”; too low and you're giving money away.</span></li>
+    <li><b>Your rating and reviews</b><span class="mute">How your Google rating and number of reviews compare locally, and how to get more.</span></li>
+    <li><b>Whether it can book you</b><span class="mute">Is your booking page linked to Google, with every service and price listed? AI can only offer a time if it can see your diary.</span></li>
+    <li><b>Whether it names you at all</b><span class="mute">We ask the AI assistants what people near you ask, and tell you which ${P.WORDS.places} they name and which websites they read.</span></li></ol></section>`
+  : `<section class="hero"><h1>How does your ${P.WORDS.place} compare with the ${P.WORDS.places} around you?</h1>
+    <p class="lede">Prices, hygiene, opening hours and what customers find when they walk in, across ${venues.length} ${P.WORDS.places} in ${esc(placeOf(A.name))}. Ask for a free, private report on your ${P.WORDS.place}: where you stand, and where you could save or charge more.</p>
+    <p class="cta"><a class="btn big" href="#start">See where you stand</a></p><p class="sm mute">Free. No public rankings: other ${P.WORDS.places} never see your figures.</p></section>`;
   h += `<section class="sec"><div class="grid"><div class="stat"><b>${venues.length}</b><span>${P.WORDS.places} in ${esc(placeOf(A.name))}</span></div>${ind < venues.length ? `<div class="stat"><b>${ind}</b><span>independent</span></div>` : ""}
     ${fw && fw.median ? `<div class="stat"><b>${money(fw.median)}</b><span>typical flat white</span></div>` : ""}${P.SECTOR === "cafe" ? `<div class="stat"><b>${awaiting}</b><span>new or awaiting their first hygiene inspection</span></div>` : ""}</div></section>`;
   if (st && st.prices.some(p => p.median != null)) {
@@ -86,7 +95,11 @@ function render() {
   if (cal.length) h += `<section class="sec card"><h2>Coming up locally</h2><p class="sm mute">What will make trade busier or quieter over the next few weeks.</p>${cal.slice(0, 10).map(e => `<div class="ev"><span class="d">${dm(e.start)}${e.end && e.end !== e.start ? "–" + dm(e.end) : ""}</span><span><b>${esc(e.title)}</b> <span class="chip ${e.effect === "busier" ? "good" : e.effect === "quieter" ? "warn" : ""}">${esc(P.CAL_TYPES[e.type] || "")}</span>${e.districts && e.districts.length ? `<span class="xs mute"> ${esc(e.districts.join(", "))}</span>` : ""}${e.note ? `<br><span class="sm mute">${esc(e.note)}</span>` : ""}</span></div>`).join("")}</section>`;
   const pr = pub && pub.profile;
   if (pr && (pr.people || pr.wfh || pr.students)) h += `<section class="sec card"><h2>Who's on your doorstep</h2><div class="grid">${[["people", "people live here", ""], ["wfh", "work mainly from home", "%"], ["students", "are full-time students", "%"], ["over65", "are 65 or over", "%"], ["families", "of households have children", "%"]].filter(([k]) => pr[k]).map(([k, t, u]) => `<div class="stat"><b>${esc(pr[k])}${u}</b><span>${t}</span></div>`).join("")}</div>${pr.source ? `<p class="xs mute" style="margin-top:8px">Source: ${esc(pr.source)}.</p>` : ""}</section>`;
-  h += `<section class="sec"><h2>How it works</h2><ol class="how">
+  h += SAL ? `<section class="sec"><h2>How it works</h2><ol class="how">
+    <li><b>Check your prices</b><span class="mute">Tell us what you charge for a few services. You'll see straight away where you sit against the ${P.WORDS.places} near you.</span></li>
+    <li><b>Get your free report</b><span class="mute">Your prices service by service against your nearest ${P.WORDS.places}, and what we'd change first to get picked more often.</span></li>
+    <li><b>Get one move a week</b><span class="mute">If it's useful, Patch checks your listings, reviews and AI answers every week and sends the next thing to do, then whether it worked. It also reminds you about insurance and other renewals. Founding ${P.WORDS.places} pay £${CFG.foundingPrice} a month for the first 12 months.</span></li></ol></section>`
+  : `<section class="sec"><h2>How it works</h2><ol class="how">
     <li><b>Ask for your free report</b><span class="mute">Pick your ${P.WORDS.place} below. We'll check your menu, prices and opening hours against the 10 ${P.WORDS.places} nearest you.</span></li>
     <li><b>See where you stand</b><span class="mute">A private report: item by item against your neighbours, plus a calculator that shows where you could save on supplies or charge a little more and still be competitive.</span></li>
     <li><b>Keep it up to date</b><span class="mute">If it's useful, we track your patch every month and tell you what's changed: new openings, price moves, local events. Founding places are £${CFG.foundingPrice} a month for the first 12 months.</span></li></ol></section>`;
@@ -94,7 +107,7 @@ function render() {
     <label class="f"><span>Your ${P.WORDS.place}</span><input id="cafe" list="cafes" autocomplete="off" placeholder="Start typing its name"><datalist id="cafes">${venues.map(v => `<option value="${esc(v.name)} (${esc(v.postcode || "")})">`).join("")}</datalist></label>
     <div class="grid" style="gap:0 12px"><label class="f"><span>Your name</span><input id="nm" autocomplete="name" maxlength="80"></label><label class="f"><span>Email</span><input id="em" type="email" autocomplete="email" maxlength="120"></label>
     <label class="f"><span>You are the</span><select id="role"><option>Owner</option><option>Manager</option><option>Other</option></select></label><label class="f"><span>Phone (optional)</span><input id="ph" type="tel" maxlength="30"></label></div>
-    <label class="f"><span>Anything you'd most like to know? (optional)</span><textarea id="msg" maxlength="1000" placeholder="For example: am I charging enough for brunch?"></textarea></label>
+    <label class="f"><span>Anything you'd most like to know? (optional)</span><textarea id="msg" maxlength="1000" placeholder="${SAL ? "For example: am I charging enough for balayage?" : "For example: am I charging enough for brunch?"}"></textarea></label>
     <p class="sm mute">We use these details only to send your report. We never share your figures with other ${P.WORDS.places}.</p><p class="err" id="err" role="alert"></p>
     <button class="btn big" id="go">Get my free report</button></form><div id="thanks" hidden></div></section>`;
   document.getElementById("app").innerHTML = h;

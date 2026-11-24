@@ -13,7 +13,7 @@ export async function onRequestPost({ request, env }) {
   if (!r) return json({ error: "No such request" }, 404);
   if (!r.report) return json({ error: "Save their report first" }, 409);
   const [v] = r.venue_id ? await rest(env, `venues?id=eq.${r.venue_id}&select=name`) : [];
-  const base = new URL(request.url).origin, m = globalThis.PatchEmails.reportReady({ name: r.name, cafe: (v && v.name) || r.venue_text || "your café", reportUrl: `${base}/report?t=${r.token}`, brand: env.BRAND || "Patch", from: env.EMAIL_SIGNOFF || "James", foundingPrice: +env.FOUNDING_PRICE || 59 });
+  const base = new URL(request.url).origin, m = globalThis.PatchEmails.reportReady({ name: r.name, cafe: (v && v.name) || r.venue_text || "your salon", reportUrl: `${base}/report?t=${r.token}`, brand: env.BRAND || "Patch", from: env.EMAIL_SIGNOFF || "James", foundingPrice: +env.FOUNDING_PRICE || 59 });
   const sent = await sendEmail(env, Object.assign({ to: r.email, kind: "report", requestId: r.id, key: "report-" + r.id + "-" + (b.again ? Date.now() : "1") }, m));
   if (sent.status === "sent" && r.status === "new") await rest(env, `requests?id=eq.${r.id}`, { method: "PATCH", headers: { Prefer: "return=minimal" }, body: JSON.stringify({ status: "report_sent" }) });
   return json({ status: sent.status, error: sent.error, dryRun: dryRun(env), subject: m.subject, text: m.text });

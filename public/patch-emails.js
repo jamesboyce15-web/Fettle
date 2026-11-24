@@ -19,12 +19,16 @@
   const first = name => String(name || "").trim().split(/\s+/)[0] || "there";
 
   // 1. When James has built an owner's free report.
+  // o.sector: "salon" (the default) or "cafe".
   function reportReady(o) {
+    const cafe = o.sector === "cafe", one = cafe ? "café" : "salon";
+    const what = cafe ? `It shows how your prices, opening hours and hygiene rating compare with the 10 cafés nearest you, item by item, and where you could save on supplies or charge a little more and still be good value.`
+      : `It shows how your prices compare with the 10 salons nearest you, service by service, and what we'd change first so you get picked more often when people search or ask an AI assistant for a salon near them.`;
     const subject = `Your Patch report for ${o.cafe}`;
     const offer = o.foundingPrice ? `If it's useful, we're taking 10 founding members at £${o.foundingPrice} a month for the first year, with a fresh report every month. There's a button at the end of the report.` : "";
-    const text = `Hi ${first(o.name)},\n\nYour report for ${o.cafe} is ready. It shows how your prices, opening hours and hygiene rating compare with the 10 cafés nearest you, item by item, and where you could save on supplies or charge a little more and still be good value.\n\nYour report: ${o.reportUrl}\n\nIt's private: no other café sees your figures, so please don't share the link.${offer ? "\n\n" + offer : ""}\n\nIf anything looks wrong, just reply to this email.\n\n${o.from || "James"}\n${o.brand || "Patch"}`;
-    const html = shell(o.brand || "Patch", `Your report for ${o.cafe} is ready`, `<p>Hi ${esc(first(o.name))},</p><p>Your report for <b>${esc(o.cafe)}</b> is ready. It shows how your prices, opening hours and hygiene rating compare with the 10 cafés nearest you, item by item, and where you could save on supplies or charge a little more and still be good value.</p>
-      ${button(o.reportUrl, "Open your report")}<p style="color:${MUTE};font-size:14px">It's private: no other café sees your figures, so please don't share the link.</p>${offer ? `<p>${esc(offer)}</p>` : ""}<p>If anything looks wrong, just reply to this email.</p><p>${esc(o.from || "James")}<br>${esc(o.brand || "Patch")}</p>`,
+    const text = `Hi ${first(o.name)},\n\nYour report for ${o.cafe} is ready. ${what}\n\nYour report: ${o.reportUrl}\n\nIt's private: no other ${one} sees your figures, so please don't share the link.${offer ? "\n\n" + offer : ""}\n\nIf anything looks wrong, just reply to this email.\n\n${o.from || "James"}\n${o.brand || "Patch"}`;
+    const html = shell(o.brand || "Patch", `Your report for ${o.cafe} is ready`, `<p>Hi ${esc(first(o.name))},</p><p>Your report for <b>${esc(o.cafe)}</b> is ready. ${esc(what)}</p>
+      ${button(o.reportUrl, "Open your report")}<p style="color:${MUTE};font-size:14px">It's private: no other ${one} sees your figures, so please don't share the link.</p>${offer ? `<p>${esc(offer)}</p>` : ""}<p>If anything looks wrong, just reply to this email.</p><p>${esc(o.from || "James")}<br>${esc(o.brand || "Patch")}</p>`,
       `You're getting this because you asked for a report on ${esc(o.cafe)}. We won't email you again about it unless you join.`);
     return { subject, text, html };
   }
@@ -46,7 +50,7 @@
   function adminDigest(o) {
     const reqs = o.requests || [], fnd = o.founding || [];
     const subject = `Patch: ${[reqs.length ? `${reqs.length} new report request${reqs.length > 1 ? "s" : ""}` : "", fnd.length ? `${fnd.length} want a founding place` : ""].filter(Boolean).join(", ")}`;
-    const line = r => `${r.name} (${r.cafe || "café not picked"})${r.role ? ", " + r.role : ""}`;
+    const line = r => `${r.name} (${r.cafe || "place not picked"})${r.role ? ", " + r.role : ""}`;
     const text = (reqs.length ? `New report requests:\n${reqs.map(r => "• " + line(r)).join("\n")}\n\n` : "") + (fnd.length ? `Want a founding place:\n${fnd.map(r => "• " + line(r) + (r.message ? `: “${r.message}”` : "")).join("\n")}\n\n` : "") + `Admin: ${o.adminUrl}`;
     const html = shell("Patch", subject, `${reqs.length ? `<p><b>New report requests</b></p><ul>${reqs.map(r => `<li>${esc(line(r))}</li>`).join("")}</ul>` : ""}${fnd.length ? `<p><b>Want a founding place</b></p><ul>${fnd.map(r => `<li>${esc(line(r))}${r.message ? `: “${esc(r.message)}”` : ""}</li>`).join("")}</ul>` : ""}${button(o.adminUrl, "Open admin")}`, "Sent to Patch admins.");
     return { subject, text, html };
@@ -54,10 +58,10 @@
 
   // Made-up examples, for previewing the wording in admin.
   const SAMPLES = {
-    reportReady: () => reportReady({ name: "Jess Patel", cafe: "Little Fig", reportUrl: "https://example.com/report?t=…", brand: "Patch", from: "James", foundingPrice: 59 }),
-    weekly: () => weekly({ name: "Jess Patel", cafe: "Little Fig", ownerUrl: "https://example.com/owner?t=…", unsubUrl: "https://example.com/api/unsubscribe?t=…", brand: "Patch", actions: { n: 6, value: 2140 },
-      items: [{ t: "About £6,850 expected this week", s: "Busiest: Saturday, around 11am. Up 4% on last week.", tone: "" }, { t: "Didsbury Arts Festival on Saturday", s: "Usually busier: think about an extra pair of hands from 10.", tone: "good" }, { t: "Insurance renewal", s: "Due 1 December.", tone: "" }] }),
-    adminDigest: () => adminDigest({ adminUrl: "https://example.com/admin", requests: [{ name: "Sam Okafor", cafe: "Bean Coffee", role: "Owner" }], founding: [{ name: "Jess Patel", cafe: "Little Fig", message: "Can we talk next week?" }] }),
+    reportReady: () => reportReady({ name: "Jess Patel", cafe: "Mane Street", reportUrl: "https://example.com/report?t=…", brand: "Patch", from: "James", foundingPrice: 59 }),
+    weekly: () => weekly({ name: "Leah Byrne", cafe: "Mane Street", ownerUrl: "https://example.com/owner?t=…", unsubUrl: "https://example.com/api/unsubscribe?t=…", brand: "Patch", actions: { n: 6, value: 2140 },
+      items: [{ t: "Add your prices to Google", s: "3 of the 5 salons nearest you list prices on Google; you don't yet. It takes about 10 minutes.", tone: "warn" }, { t: "You were named by ChatGPT", s: "For “hairdresser in Heaton Moor”, up from not named last week.", tone: "good" }, { t: "Insurance renewal", s: "Due 1 December. Two quotes to compare are in Patch.", tone: "" }] }),
+    adminDigest: () => adminDigest({ adminUrl: "https://example.com/admin", requests: [{ name: "Sam Okafor", cafe: "Fade Lab", role: "Owner" }], founding: [{ name: "Leah Byrne", cafe: "Mane Street", message: "Can we talk next week?" }] }),
   };
 
   const api = { reportReady, weekly, adminDigest, SAMPLES };
