@@ -29,7 +29,7 @@ const SHOTS = process.env.SHOTS;
     ok(/don't give insurance advice/.test(m) && /may be paid by them/.test(m), 'the regulation line and the disclosure');
     if (SHOTS) await p.screenshot({ path: SHOTS + '/offer.png', fullPage: true });
     await p.click('[data-offer="of1"]'); await p.waitForTimeout(200);
-    const clicks = await p.evaluate(() => JSON.parse(localStorage.getItem('patch-demo-db-v12')).offer_clicks.length); ok(clicks === 1, 'the click is counted');
+    const clicks = await p.evaluate(() => JSON.parse(localStorage.getItem('patch-demo-db-v13')).offer_clicks.length); ok(clicks === 1, 'the click is counted');
     await p.evaluate(() => { const S = window.__owner.S, r = S.reminders.find(x => /card machine/i.test(x.t)); r.due = new Date(Date.now() + 5 * 864e5).toISOString().slice(0, 10); });
     await p.click('.modal [data-act=closemodal]'); await p.click('[data-tab=home]'); await p.click('[data-tab=actions]'); await p.click('[data-act=allacts]').catch(() => {}); await p.waitForTimeout(200);
     const cardC = await p.$('article[data-key^="rem:r:"]:has-text("Card machine")');

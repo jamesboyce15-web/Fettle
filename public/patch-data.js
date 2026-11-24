@@ -5,7 +5,7 @@
   const CFG = root.PATCH_CONFIG || {};
   const Q = new URLSearchParams(location.search);
   const DEMO = Q.has("demo") || !CFG.supabaseUrl;
-  const KEY = "patch-demo-db-v12";
+  const KEY = "patch-demo-db-v13";
   const uid = () => (crypto.randomUUID ? crypto.randomUUID() : "id-" + Math.random().toString(36).slice(2) + Date.now().toString(36));
   const clone = o => JSON.parse(JSON.stringify(o));
 
@@ -96,7 +96,7 @@
       { id: "of3", kind: "card", sectors: ["cafe", "salon"], provider: "TapRight Payments (demo)", headline: "No monthly fee, next-day payouts", url: "https://example.com/demo-card", rate_from: 1.39, rate_unit: "% a transaction", checked_at: dd(-70), commission: "Share of fees (made up)", network: "Demo", live: true, notes: "Price is stale on purpose: it shouldn't show." },
       { id: "of4", kind: "pat", sectors: ["cafe"], provider: "Not live yet (demo)", headline: "", url: null, live: false, commission: "", network: "", notes: "Waiting on their link" }];
     const desk = deskSeed(dd);
-    return { areas: [sal.area, area], venues, observations, requests, sweeps, sweep_items, offers, offer_clicks: [], admins: [{ user_id: "demo", name: "You" }], members: desk.members, enquiries: desk.enquiries };
+    return { areas: [sal.area, area], venues, observations, requests, sweeps, sweep_items, offers, offer_clicks: [], admins: [{ user_id: "demo", name: "You" }], members: desk.members, enquiries: desk.enquiries, bookings: desk.bookings };
   }
   // Front desk: a made-up dog groomer that's live with enquiries coming in, one being set up, and a new sign-up.
   function deskSeed(dd) {
@@ -111,19 +111,25 @@
       searches: [], plan: "ppe", founding: true, listings: { profile: dd(-40), page: dd(-38), gbp: dd(-37), bing: dd(-36), facebook: dd(-36), before: dd(-40) },
       checks: [{ at: dd(-40), engine: "ChatGPT", q: "dog groomer near SK4", named: false, prices: false, contact: false, notes: "Named 3 others" }, { at: dd(-40), engine: "Google AI", q: "dog groomer near SK4", named: false, prices: false, contact: false, notes: "" }, { at: dd(-40), engine: "ChatGPT", q: "cockapoo groomer in Heaton Moor", named: false, prices: false, contact: false, notes: "" },
         { at: dd(-2), engine: "ChatGPT", q: "dog groomer near SK4", named: true, prices: true, contact: true, notes: "Second of three" }, { at: dd(-2), engine: "Google AI", q: "dog groomer near SK4", named: true, prices: true, contact: true, notes: "" }, { at: dd(-2), engine: "ChatGPT", q: "cockapoo groomer in Heaton Moor", named: false, prices: false, contact: false, notes: "" }],
-      signup: null, admin_notes: "Founding member. Prefers messages after 6pm.", preview_token: "demo-preview-1", created_at: ts(-41), live_at: ts(-38), updated_at: ts(-3) };
+      signup: null, admin_notes: "Founding member. Prefers messages after 6pm.", preview_token: "demo-preview-1", owner_token: "demo-desk", rebook_weeks: 6, review_url: "https://g.page/r/example-paws/review", review_target: "google", created_at: ts(-41), live_at: ts(-38), updated_at: ts(-3) };
     const shine = { id: "dm2", slug: "shine-on-valeting-demo", status: "setup", name: "Shine On Valeting", trade: "valeting", owner_name: "Dan Price (made up)", whatsapp: "447700900456", town: "Stockport", locality: "Bramhall", districts: ["SK7"], mobile: true,
       services: [{ name: "Mini valet", price: 30 }, { name: "Full valet", price: 95, from: true }], faqs: [], specialisms: ["Dog hair removal"], listings: { profile: dd(-1) }, checks: [], plan: "ppe", founding: true, preview_token: "demo-preview-2", created_at: ts(-3), updated_at: ts(-1) };
     const lead = { id: "dm3", slug: "fluff-and-buff-stockport-demo", status: "lead", name: "Fluff & Buff", trade: "groomer", owner_name: "Priya (made up)", whatsapp: "447700900789", town: "Stockport", services: [], faqs: [], specialisms: [], districts: [], listings: {}, checks: [],
       signup: { at: ts(-1), link: "https://www.facebook.com/example-fluff", message: "Mostly word of mouth, want more weekday bookings" }, preview_token: "demo-preview-3", created_at: ts(-1), updated_at: ts(-1) };
     const ans = [["Cockapoo", "Medium", "chatgpt"], ["Shih Tzu", "Small", "google"], ["Labradoodle", "Large", "google"], ["Cockapoo", "Medium", "facebook"], ["Border Terrier", "Small", "chatgpt"], ["Cavapoo", "Small", "google"], ["Springer Spaniel", "Medium", "friend"], ["Cockapoo", "Medium", "google"], ["Bichon Frise", "Small", "chatgpt"]];
     const day = [-33, -26, -19, -12, -9, -6, -4, -2, -1];
-    const enquiries = ans.map(([breed, size, source], i) => ({ id: "de" + i, member_id: paws.id, at: ts(day[i]), source, answers: { breed, size, service: size === "Large" ? "Full groom, large dog" : "Full groom, cockapoo or medium dog", when: i % 2 ? "Saturday morning" : "Any weekday", district: i % 3 ? "SK4" : "SK5" }, voided: i === 6, void_reason: i === 6 ? "Existing customer" : null }));
+    const enquiries = ans.map(([breed, size, source], i) => ({ id: "de" + i, member_id: paws.id, at: ts(day[i]), source, answers: { breed, size, service: size === "Large" ? "Full groom, large dog" : "Full groom, cockapoo or medium dog", when: i % 2 ? "Saturday morning" : "Any weekday", district: i % 3 ? "SK4" : "SK5" }, voided: i === 6, void_reason: i === 6 ? "Existing customer" : null, outcome: i <= 4 ? (i === 3 ? "not_booked" : "booked") : null }));
+    // Bookings: the older enquiries that booked, regulars from before Patch, and one rebooked after a reminder.
+    const day0 = n => ts(n).slice(0, 10), names = ["Amy", "Tom", "Priya", "", "Jess"];
+    const bookings = enquiries.filter(e => e.outcome === "booked").map((e, i) => ({ id: "db" + i, member_id: paws.id, enquiry_id: e.id, parent_id: null, source: "enquiry", on_date: day0(day[+e.id.slice(2)] + 4), label: [names[+e.id.slice(2)], e.answers.breed].filter(Boolean).join(" · "), service: e.answers.service, rebook_weeks: null, reminded_at: null, review_asked_at: i < 2 ? ts(day[+e.id.slice(2)] + 4) : null, created_at: e.at }));
+    bookings.push({ id: "dbr1", member_id: paws.id, enquiry_id: null, parent_id: null, source: "owner", on_date: day0(-40), label: "Mel · Labradoodle", service: "Full groom, large dog", rebook_weeks: 6, reminded_at: null, review_asked_at: ts(-40), created_at: ts(-40) });
+    bookings.push({ id: "dbr2", member_id: paws.id, enquiry_id: null, parent_id: null, source: "owner", on_date: day0(-50), label: "Chris · Shih Tzu", service: "Full groom, small dog", rebook_weeks: 6, reminded_at: ts(-9), review_asked_at: ts(-50), created_at: ts(-50) });
+    bookings.push({ id: "dbr3", member_id: paws.id, enquiry_id: null, parent_id: "dbr2", source: "rebook", on_date: day0(-1), label: "Chris · Shih Tzu", service: "Full groom, small dog", rebook_weeks: 6, reminded_at: null, review_asked_at: null, created_at: ts(-8) });
     // Five more made-up Stockport groomers, so the local price ranges have enough to show.
     const more = [["Bark & Bubble", "Edgeley", 38, 44, 52], ["The Groom Room SK", "Cheadle Hulme", 42, 48, 60], ["Happy Hounds Grooming", "Reddish", 35, 42, 50], ["Scruffs to Fluffs", "Hazel Grove", 40, 46, 58], ["Tails Up Mobile", "Marple", 45, 50, 62]]
       .map(([name, loc, s1, s2, s3], i) => ({ id: "dmx" + i, slug: D0.slugify(name) + "-demo", status: "live", name: name + "", trade: "groomer", owner_name: "Made up", whatsapp: "4477009002" + (10 + i), town: "Stockport", locality: loc, districts: [], mobile: i % 2 === 0,
         services: [{ name: "Full groom, small dog", price: s1 }, { name: "Full groom, cockapoo or medium dog", price: s2 }, { name: "Full groom, large dog", price: s3 }, { name: "Nail clip", price: 8 + i }], faqs: [], specialisms: [], listings: {}, checks: [], plan: "ppe", preview_token: "demo-px-" + i, created_at: ts(-20), live_at: ts(-20), updated_at: ts(-20) }));
-    return { members: [paws, shine, lead].concat(more), enquiries };
+    return { members: [paws, shine, lead].concat(more), enquiries, bookings };
   }
   // A made-up salon area: some businesses priced, some not, so the price check and the coverage list have something to show.
   function salonSeed(rnd, dd) {
@@ -192,6 +198,23 @@
   }
   function demoRpc(fn, b) {
     const d = demoLoad(), area = d.areas.find(a => a.slug === (b.p_slug || "demo")) || d.areas[0];
+    if (fn === "desk_owner_get") { const m = (d.members || []).find(x => x.owner_token && x.owner_token === b.p_token && ["setup", "live", "paused"].includes(x.status)); if (!m) return null;
+      const keep = ["id", "slug", "status", "name", "trade", "town", "plan", "founding", "per_enquiry", "cap", "plus_price", "services", "rebook_weeks", "review_url", "review_target", "facebook"], mm = {}; keep.forEach(k => mm[k] = clone(m[k] ?? null)); mm.owner_name = String(m.owner_name || "").split(" ")[0];
+      return { member: mm, enquiries: clone((d.enquiries || []).filter(e => e.member_id === m.id).map(e => ({ id: e.id, member_id: e.member_id, at: e.at, source: e.source, answers: e.answers, voided: !!e.voided, outcome: e.outcome || null }))), bookings: clone((d.bookings || []).filter(x => x.member_id === m.id)) }; }
+    if (fn === "desk_owner_act") { const m = (d.members || []).find(x => x.owner_token && x.owner_token === b.p_token && ["setup", "live", "paused"].includes(x.status)); if (!m) return "none";
+      d.bookings = d.bookings || []; const now = new Date().toISOString(), a = b.p_action, today = now.slice(0, 10);
+      if (["booked", "not_booked", "undo"].includes(a)) { const e = (d.enquiries || []).find(x => x.id === b.p_id && x.member_id === m.id); if (!e) return "none";
+        d.bookings = d.bookings.filter(x => !(x.enquiry_id === e.id && x.source === "enquiry")); e.outcome = a === "undo" ? null : a; e.outcome_at = a === "undo" ? null : now;
+        if (a === "booked") { const an = e.answers || {}; d.bookings.push({ id: uid(), member_id: m.id, enquiry_id: e.id, parent_id: null, source: "enquiry", on_date: b.p_date || today, label: (b.p_text || [an.cname, an.breed || an.car || an.subject].filter(Boolean).join(" · ")).slice(0, 120), service: an.service || null, rebook_weeks: b.p_weeks || null, reminded_at: null, review_asked_at: null, created_at: now }); }
+        demoSave(d); return "ok"; }
+      if (["reminded", "review_asked", "weeks", "rebooked", "not_coming", "delete"].includes(a)) { const x = d.bookings.find(y => y.id === b.p_id && y.member_id === m.id); if (!x) return "none";
+        if (a === "reminded") x.reminded_at = now; else if (a === "review_asked") x.review_asked_at = now; else if (a === "weeks") x.rebook_weeks = b.p_weeks; else if (a === "not_coming") { x.rebook_weeks = null; x.reminded_at = x.reminded_at || now; }
+        else if (a === "delete") d.bookings = d.bookings.filter(y => y.id !== x.id);
+        else if (!d.bookings.some(y => y.parent_id === x.id)) d.bookings.push({ id: uid(), member_id: m.id, enquiry_id: null, parent_id: x.id, source: "rebook", on_date: b.p_date || today, label: x.label, service: x.service, rebook_weeks: x.rebook_weeks, reminded_at: null, review_asked_at: null, created_at: now });
+        demoSave(d); return "ok"; }
+      if (a === "add") { d.bookings.push({ id: uid(), member_id: m.id, enquiry_id: null, parent_id: null, source: "owner", on_date: b.p_date || today, label: (b.p_text || "").slice(0, 120) || null, service: null, rebook_weeks: b.p_weeks || null, reminded_at: null, review_asked_at: null, created_at: now }); demoSave(d); return "ok"; }
+      if (a === "settings") { if (b.p_weeks) m.rebook_weeks = b.p_weeks; if (b.p_text != null) m.review_url = !String(b.p_text).trim() ? null : /^https:\/\//i.test(b.p_text) ? String(b.p_text).trim() : m.review_url; demoSave(d); return "ok"; }
+      return "bad"; }
     if (fn === "member_public") { const m = (d.members || []).find(x => x.slug === String(b.p_slug || "").toLowerCase() && (x.status === "live" || (b.p_preview && x.preview_token === b.p_preview && x.status !== "lead"))); if (!m) return null;
       const c = clone(m); ["email", "listings", "checks", "signup", "admin_notes", "preview_token", "plan", "founding", "per_enquiry", "cap", "plus_price", "searches"].forEach(k => delete c[k]); c.owner_name = String(c.owner_name || "").split(" ")[0]; return c; }
     if (fn === "enquiry_add") { const m = (d.members || []).find(x => x.slug === b.p_slug && x.status === "live"); if (!m) return "none";
@@ -282,9 +305,10 @@
       async saveMember(m) { d.members = d.members || []; const now = new Date().toISOString(), r = m.id && d.members.find(x => x.id === m.id);
         if (d.members.some(x => x.slug === m.slug && x.id !== m.id)) throw new Error("Another business already has that web address.");
         const live = m.status === "live" && !(r && r.live_at) ? { live_at: now } : {};
-        if (r) Object.assign(r, clone(m), { updated_at: now }, live); else d.members.push(Object.assign({ id: uid(), preview_token: uid(), created_at: now, listings: {}, checks: [] }, clone(m), { updated_at: now }, live)); save(); return clone(r || d.members[d.members.length - 1]); },
+        if (r) Object.assign(r, clone(m), { updated_at: now }, live); else d.members.push(Object.assign({ id: uid(), preview_token: uid(), owner_token: uid(), created_at: now, listings: {}, checks: [] }, clone(m), { updated_at: now }, live)); save(); return clone(r || d.members[d.members.length - 1]); },
       async enquiries() { return clone(d.enquiries || []); },
       async updEnquiry(id, p) { return upd("enquiries", id, p); },
+      async bookings() { return clone(d.bookings || []); },
       async token() { return null; },
       async emailLog() { return []; },
       async sweeps(areaId) { return clone((d.sweeps || []).filter(x => x.area_id === areaId)); },
@@ -333,11 +357,12 @@
       async saveOffer(o) { const c = Object.assign({}, o); delete c.created_at; return c.id ? ok(await sb.from("offers").update(c).eq("id", c.id).select().single()) : ok(await sb.from("offers").insert(c).select().single()); },
       async offerClicks() { return ok(await sb.from("offer_clicks").select("*").gte("at", new Date(Date.now() - 90 * 864e5).toISOString()).limit(5000)); },
       async members() { return ok(await sb.from("members").select("*").order("created_at", { ascending: false }).limit(2000)); },
-      async saveMember(m) { const c = Object.assign({}, m); ["created_at", "updated_at", "live_at", "preview_token"].forEach(k => delete c[k]);
+      async saveMember(m) { const c = Object.assign({}, m); ["created_at", "updated_at", "live_at", "preview_token", "owner_token"].forEach(k => delete c[k]);
         const r = c.id ? await sb.from("members").update(c).eq("id", c.id).select().single() : await sb.from("members").insert(c).select().single();
         if (r.error && /duplicate|unique/i.test(r.error.message)) throw new Error("Another business already has that web address."); return ok(r); },
       async enquiries() { return ok(await sb.from("enquiries").select("*").gte("at", new Date(Date.now() - 400 * 864e5).toISOString()).order("at").limit(20000)); },
       async updEnquiry(id, p) { return ok(await sb.from("enquiries").update(p).eq("id", id).select().single()); },
+      async bookings() { return ok(await sb.from("bookings").select("*").gte("on_date", new Date(Date.now() - 400 * 864e5).toISOString().slice(0, 10)).order("on_date").limit(20000)); },
       async emailLog() { return ok(await sb.from("email_log").select("*").order("at", { ascending: false }).limit(50)); },
       async uploadPhoto(path, blob) { ok(await sb.storage.from("visit-photos").upload(path, blob, { contentType: blob.type || "image/jpeg", upsert: false })); return { path }; },
       async photoUrl(ph) { if (!ph.path) return ph.data || null; const r = await sb.storage.from("visit-photos").createSignedUrl(ph.path, 3600); return r.error ? null : r.data.signedUrl; },

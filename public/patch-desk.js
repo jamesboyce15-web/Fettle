@@ -133,6 +133,44 @@
     return services(m).filter(s => s.price != null && !s.from).map(s => { const o = L[svcKey(s.name)]; return o && o.ok ? { name: s.name, mine: s.price, median: o.median, low: o.low, high: o.high, n: o.n } : null; }).filter(Boolean);
   }
 
+  /* ---------- bookings, rebook reminders, review requests ---------- */
+  // How often customers usually come back, by trade (weeks). The owner's own figure wins; null = no reminders.
+  const REBOOK = { groomer: 6, hair: 8, barber: 4, nails: 3, beauty: 6, valeting: 8, driving: null, tutor: null, other: null };
+  const AGAIN = { groomer: "next groom", barber: "next cut", hair: "next appointment", nails: "next appointment", beauty: "next appointment", valeting: "next valet" };
+  const DAY = 864e5, iso = d => new Date(d).toISOString().slice(0, 10), addDays = (d, n) => iso(Date.parse(String(d).slice(0, 10) + "T12:00:00Z") + n * DAY);
+  const weeksFor = (m, b) => b && b.rebook_weeks != null ? +b.rebook_weeks : m.rebook_weeks != null ? +m.rebook_weeks : REBOOK[m.trade] ?? null;
+  // A booking is the latest in its line if nothing was rebooked from it.
+  function latest(bookings) { const kids = new Set((bookings || []).map(b => b.parent_id).filter(Boolean)); return (bookings || []).filter(b => !kids.has(b.id)); }
+  // Customers due back within a week (or up to four weeks overdue), not yet reminded.
+  function dueReminders(m, bookings, today) {
+    today = today || iso(Date.now());
+    return latest(bookings).filter(b => b.member_id === m.id && !b.reminded_at).map(b => { const w = b.source === "owner" && b.rebook_weeks == null ? weeksFor(m, null) : weeksFor(m, b); return w ? Object.assign({}, b, { weeks: w, due: addDays(b.on_date, w * 7) }) : null; })
+      .filter(b => b && b.due <= addDays(today, 7) && b.due >= addDays(today, -28)).sort((a, c) => a.due.localeCompare(c.due));
+  }
+  // Every visit in the last 3 days that hasn't been asked: everyone, the same way (Google's rules and UK law).
+  const dueReviews = (m, bookings, today) => { today = today || iso(Date.now()); return (bookings || []).filter(b => b.member_id === m.id && !b.review_asked_at && b.on_date <= today && b.on_date >= addDays(today, -3)); };
+  // Enquiries the owner hasn't said yes or no to (last 60 days).
+  const toMark = (m, enquiries, today) => { const from = addDays(today || iso(Date.now()), -60); return (enquiries || []).filter(e => e.member_id === m.id && !e.voided && !e.outcome && String(e.at).slice(0, 10) >= from).sort((a, b) => String(b.at).localeCompare(String(a.at))); };
+  const who = b => clean(String(b.label || "").split("·")[0]);
+  const what = b => { const p = String(b.label || "").split("·").map(x => clean(x)); return p[1] || ""; };
+  const nice = d => new Date(String(d).slice(0, 10) + "T12:00:00Z").toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long" });
+  // The messages the owner sends from their own WhatsApp: they choose the chat, so Patch never needs the customer's number.
+  function reminderText(m, b) {
+    const pet = what(b), again = AGAIN[m.trade] || "next appointment", due = b.due || addDays(b.on_date, (weeksFor(m, b) || 6) * 7);
+    const subject = m.trade === "groomer" ? (pet ? `your ${pet.toLowerCase()}'s ${again}` : `your dog's ${again}`) : `your ${again}`;
+    return `Hi${who(b) ? " " + who(b) : ""}, just a reminder that ${subject} is due around ${nice(due)}. Want me to book you in? Reply with a day that suits.\n\n${first(m.owner_name) !== "there" ? first(m.owner_name) + ", " : ""}${clean(m.name, 80)}\n(Reply STOP if you'd rather not get reminders.)`;
+  }
+  // Exactly the same for every customer: no rating asked for, no suggested wording, nothing offered.
+  function reviewText(m) { const url = m.review_url || (m.review_target === "facebook" ? m.facebook : "") || ""; return `Thanks for coming to ${clean(m.name, 80)}. If you have a minute, a review helps other people find us${url ? ": " + url : "."}\n\nThank you!`; }
+  const waShare = text => "https://wa.me/?text=" + encodeURIComponent(text);
+  // Month figures: enquiries, how many booked, rebookings and reminders.
+  function bookingStats(m, enquiries, bookings, month) {
+    const e = (enquiries || []).filter(x => x.member_id === m.id && !x.voided && String(x.at).slice(0, 7) === month), marked = e.filter(x => x.outcome);
+    const bk = (bookings || []).filter(x => x.member_id === m.id && String(x.on_date).slice(0, 7) === month);
+    return { enquiries: e.length, marked: marked.length, booked: e.filter(x => x.outcome === "booked").length, conversion: marked.length ? Math.round(100 * e.filter(x => x.outcome === "booked").length / marked.length) : null,
+      visits: bk.length, rebooked: bk.filter(x => x.source === "rebook").length, reminded: (bookings || []).filter(x => x.member_id === m.id && String(x.reminded_at || "").slice(0, 7) === month).length };
+  }
+
   /* ---------- AI checks ---------- */
   // checks: [{at, engine, q, named, prices, contact, notes}]. The first day's checks are "before"; the latest day's are "now".
   function aiSummary(checks) {
@@ -176,19 +214,21 @@
       + (m.hours ? `\nHours: ${clean(m.hours, 200)}\n` : "") + `\nEnquiries come to this WhatsApp number. Customers will be asked: ${T.questions.map(q => q.t.replace(/\?$/, "").toLowerCase()).join(", ")}, when, and their area.`;
   }
   // The monthly report: what came in, what AI says now, the bill, one thing to do.
-  function reportMessage(m, enquiries, checks, month, members) {
+  function reportMessage(m, enquiries, checks, month, members, bookings) {
     const b = bill(m, enquiries, month), src = bySource((enquiries || []).filter(e => e.member_id === m.id && String(e.at).slice(0, 7) === month)), s = aiSummary(checks);
     const label = new Date(month + "-15T12:00:00Z").toLocaleDateString("en-GB", { month: "long" });
     const srcTxt = Object.entries(src).sort((a, c) => c[1] - a[1]).map(([k, n]) => `${n} from ${SOURCE[k].replace("Google or Google Maps", "Google").replace("A friend or family", "friends").replace("Somewhere else", "elsewhere")}`).join(", ");
     const ai = s ? (s.days > 1 ? `AI assistants named you in ${s.now.named} of ${s.now.n} searches, up from ${s.before.named} of ${s.before.n} when we started.` : `AI assistants named you in ${s.now.named} of ${s.now.n} searches.`).replace("up from", s.now.named < s.before.named ? "down from" : s.now.named === s.before.named ? "the same as" : "up from") : "";
     const money2 = n => "£" + (+n).toFixed(2).replace(/\.00$/, "");
     const billTxt = b.plus ? `Bill: ${money2(b.amount)} (Plus).` : b.charged ? `Bill: ${money2(b.amount)} (${b.charged} at ${money2(b.per)}${b.capped ? `, capped at ${money2(b.cap)}` : ""}${b.free ? `, and ${b.free} free` : ""}).` : b.free ? `Bill: £0. ${b.free} of your free enquiries used, ${b.freeLeft} left.` : "Bill: £0.";
+    const bs = bookings ? bookingStats(m, enquiries, bookings, month) : null;
+    const bookTxt = bs && (bs.booked || bs.rebooked) ? `${bs.booked ? `${bs.booked} became booking${bs.booked === 1 ? "" : "s"}` : ""}${bs.booked && bs.rebooked ? ", and " : ""}${bs.rebooked ? `${bs.rebooked} customer${bs.rebooked === 1 ? "" : "s"} rebooked after a reminder` : ""}.\n` : "";
     const cmp = members ? compareLocal(m, members) : [], c0 = cmp.sort((a, c) => Math.abs(c.mine - c.median) / c.median - Math.abs(a.mine - a.median) / a.median)[0];
     const priceTxt = c0 ? `\nLocal prices: ${c0.name} is ${money(c0.mine)} with you; most ${trade(m.trade).one}s in ${clean(m.town)} charge ${money(c0.low)}–${money(c0.high)} (${c0.n} on Patch).\n` : "";
     // Review advice follows Google's rules and UK law: ask every customer the same way, one at a time after their visit;
     // never only the happy ones, never tell them what to write, never offer anything for it. The owner's own replies are theirs to word.
     const todo = (m.listings || {}).reviews ? "Reply to your newest Google reviews, saying in your own words what you did (\"Bella's first full groom\"). AI reads replies too." : "After every appointment, send that customer your Google review link, the same short message each time. Ask everyone, not just regulars.";
-    return `Hi ${first(m.owner_name)}, your ${label} with Patch:\n\n${b.counted ? `${b.counted} enquir${b.counted === 1 ? "y" : "ies"}${srcTxt ? ` (${srcTxt})` : ""}.` : "No enquiries through Patch this month."}${b.voided ? ` ${b.voided} voided.` : ""}\n${ai ? ai + "\n" : ""}${priceTxt}${billTxt}\n\nOne thing to do: ${todo}\n\nReply VOID with the date to remove any enquiry that wasn't real. Reply STOP to leave at any time.`;
+    return `Hi ${first(m.owner_name)}, your ${label} with Patch:\n\n${b.counted ? `${b.counted} enquir${b.counted === 1 ? "y" : "ies"}${srcTxt ? ` (${srcTxt})` : ""}.` : "No enquiries through Patch this month."}${b.voided ? ` ${b.voided} voided.` : ""}\n${bookTxt}${ai ? ai + "\n" : ""}${priceTxt}${billTxt}\n\nOne thing to do: ${todo}\n\nReply VOID with the date to remove any enquiry that wasn't real. Reply STOP to leave at any time.`;
   }
 
   /* ---------- the public page ---------- */
@@ -288,6 +328,7 @@ setTimeout(go,150);});})();`;
   function publicMember(m) { return { slug: m.slug, name: m.name, trade: m.trade, owner_name: first(m.owner_name) }; }
 
   const api = { SOURCES, SOURCE, AI_SOURCES, TRADES, trade, COMMON_END, PRICES, SETUP, waNumber, waLink, slugify, services, priceRange, faqs, placeLine, searches,
-    cleanAnswers, compose, bill, bySource, MIN_PEERS, localPrices, compareLocal, aiSummary, setupProgress, openerMessage, summaryMessage, reportMessage, schema, pageHtml, publicMember, ENQ_SCRIPT, esc, money };
+    cleanAnswers, compose, bill, bySource, MIN_PEERS, localPrices, compareLocal,
+    REBOOK, weeksFor, latest, dueReminders, dueReviews, toMark, reminderText, reviewText, waShare, bookingStats, addDays, aiSummary, setupProgress, openerMessage, summaryMessage, reportMessage, schema, pageHtml, publicMember, ENQ_SCRIPT, esc, money };
   root.PatchDesk = api; if (typeof module !== "undefined" && module.exports) module.exports = api;
 })(typeof window !== "undefined" ? window : globalThis);

@@ -50,9 +50,10 @@ const STATUS = { lead: "New sign-up", setup: "Setting up", live: "Live", paused:
 const ENGINES = ["ChatGPT", "Google AI", "Gemini", "Claude", "Copilot", "Perplexity"];
 const base = () => location.protocol === "file:" ? "" : location.origin + location.pathname.replace(/members(\.html)?$/, "");
 const pageUrl = m => D.DEMO ? `${base()}b.html?b=${encodeURIComponent(m.slug)}&demo=1` : `${location.origin}/b/${m.slug}`;
+const ownerUrl = m => D.DEMO ? `${base()}my.html?t=${encodeURIComponent(m.owner_token || "")}&demo=1` : `${location.origin}/my?t=${m.owner_token}`;
 const previewUrl = m => D.DEMO ? `${base()}b.html?b=${encodeURIComponent(m.slug)}&p=${encodeURIComponent(m.preview_token || "")}&demo=1` : `${location.origin}/b/${m.slug}?p=${m.preview_token}`;
 
-let DB, ME, S = { members: [], enq: [] };
+let DB, ME, S = { members: [], enq: [], book: [] };
 const V = { filter: "active", sel: null, tab: "profile", month: thisMonth(), ed: null, dirty: false };
 const mem = id => S.members.find(m => m.id === id);
 const enqOf = (id, month) => S.enq.filter(e => e.member_id === id && (!month || String(e.at).slice(0, 7) === month));
@@ -69,15 +70,15 @@ function render() {
     <a class="btn q sm" href="admin${D.DEMO ? ".html?demo=1" : ""}">Prices</a><button class="btn q sm" data-act="new">Add a business</button><button class="btn q sm" data-act="signout">${D.DEMO ? "Reset demo" : "Sign out"}</button></header>
     ${D.DEMO ? `<p class="demo"><b>Demo.</b> Made-up businesses, saved only in this browser. Open Paws &amp; Polish, then its page, and send an enquiry.</p>` : ""}
     <div class="stats"><div class="stat"><b>${live.length}</b><span>live</span></div><div class="stat"><b>${leads}</b><span>new sign-up${leads === 1 ? "" : "s"} to contact</span></div>
-      <div class="stat"><b>${monthEnq.length}</b><span>enquiries this month${monthEnq.length ? `, ${ai} from AI` : ""}</span></div><div class="stat"><b>${gbp(billed)}</b><span>to bill for ${esc(monthName(V.month))}</span></div></div>
+      <div class="stat"><b>${monthEnq.length}</b><span>enquiries this month${monthEnq.length ? `, ${ai} from AI, ${monthEnq.filter(e => e.outcome === "booked").length} booked` : ""}</span></div><div class="stat"><b>${gbp(billed)}</b><span>to bill for ${esc(monthName(V.month))}</span></div></div>
     <div class="row" style="margin:0 0 12px"><div class="seg">${seg("active", "Current")}${seg("lead", "Sign-ups")}${seg("setup", "Setting up")}${seg("live", "Live")}${seg("all", "All")}</div><span class="sp"></span>
       <label class="sm">Month <select id="month" style="border:1px solid var(--line);border-radius:8px;padding:5px">${months.map(x => `<option value="${x}" ${x === V.month ? "selected" : ""}>${esc(monthName(x, true))}</option>`).join("")}</select></label></div>
-    <div class="split"><div style="min-width:0"><section class="card" style="padding:0;overflow:auto">${list.length ? `<table class="t"><thead><tr><th>Business</th><th>Status</th><th>Setup</th><th>AI named</th><th>Enquiries</th><th>Bill</th></tr></thead><tbody>
-      ${list.map(m => { const b = K.bill(m, S.enq, V.month), p = K.setupProgress(m), s = K.aiSummary(m.checks);
+    <div class="split"><div style="min-width:0"><section class="card" style="padding:0;overflow:auto">${list.length ? `<table class="t"><thead><tr><th>Business</th><th>Status</th><th>Setup</th><th>AI named</th><th>Enquiries</th><th>Booked</th><th>Bill</th></tr></thead><tbody>
+      ${list.map(m => { const b = K.bill(m, S.enq, V.month), p = K.setupProgress(m), s = K.aiSummary(m.checks), bs = K.bookingStats(m, S.enq, S.book, V.month);
         return `<tr class="click ${m.id === V.sel ? "sel" : ""}" data-sel="${m.id}"><td><b>${esc(m.name)}</b><br><span class="xs mute">${esc(K.trade(m.trade).t)}${m.town ? " · " + esc(m.locality || m.town) : ""}${m.founding ? " · founding" : ""}</span></td>
           <td><span class="chip ${m.status === "live" ? "good" : m.status === "lead" ? "warn" : ""}">${STATUS[m.status]}</span></td><td class="sm">${p.done}/${p.of}</td>
           <td class="sm">${s ? `${s.now.named}/${s.now.n}${s.days > 1 ? ` <span class="xs mute">was ${s.before.named}/${s.before.n}</span>` : ""}` : '<span class="mute">Not checked</span>'}</td>
-          <td class="sm">${b.total ? b.counted + (b.voided ? ` <span class="xs mute">+${b.voided} void</span>` : "") : '<span class="mute">0</span>'}</td><td class="sm">${["live", "paused"].includes(m.status) ? gbp(b.amount) + (b.free ? ` <span class="xs mute">${b.free} free</span>` : "") : ""}</td></tr>`; }).join("")}</tbody></table>`
+          <td class="sm">${b.total ? b.counted + (b.voided ? ` <span class="xs mute">+${b.voided} void</span>` : "") : '<span class="mute">0</span>'}</td><td class="sm">${bs.booked || bs.rebooked ? `${bs.booked}${bs.rebooked ? ` <span class="xs mute">+${bs.rebooked} rebooked</span>` : ""}` : '<span class="mute">0</span>'}</td><td class="sm">${["live", "paused"].includes(m.status) ? gbp(b.amount) + (b.free ? ` <span class="xs mute">${b.free} free</span>` : "") : ""}</td></tr>`; }).join("")}</tbody></table>`
       : `<p class="mute" style="padding:16px">Nothing here yet. Sign-ups arrive from the <a href="./${D.DEMO ? "?demo=1" : ""}">home page</a>.</p>`}</section>
     ${localSection()}</div><aside class="panel" id="panel">${V.ed ? panel() : `<div class="card"><p class="mute">Choose a business, or add one.</p></div>`}</aside></div>`;
 }
@@ -97,7 +98,7 @@ function panel() {
   const m = V.ed, tab = (k, t) => `<button data-tab="${k}" aria-pressed="${V.tab === k}">${t}</button>`;
   const saved = m.id && mem(m.id);
   return `<div class="card"><div class="row"><h2 style="margin:0">${esc(m.name || "New business")}</h2><span class="sp"></span>${saved ? `<span class="chip ${m.status === "live" ? "good" : ""}">${STATUS[saved.status]}</span>` : ""}</div>
-    ${saved ? `<p class="sm" style="margin:6px 0 10px"><a href="${esc(previewUrl(saved))}" target="_blank" rel="noopener">Preview the page</a>${saved.status === "live" ? ` · <a href="${esc(pageUrl(saved))}" target="_blank" rel="noopener">Live page</a> · <button class="linkbtn" data-act="copylink">Copy its link</button>` : ""}${saved.whatsapp ? ` · <a href="${esc(K.waLink(saved.whatsapp))}" target="_blank" rel="noopener">WhatsApp them</a>` : ""}</p>` : ""}
+    ${saved ? `<p class="sm" style="margin:6px 0 10px"><a href="${esc(previewUrl(saved))}" target="_blank" rel="noopener">Preview the page</a>${saved.status === "live" ? ` · <a href="${esc(pageUrl(saved))}" target="_blank" rel="noopener">Live page</a> · <button class="linkbtn" data-act="copylink">Copy its link</button>` : ""}${saved.whatsapp ? ` · <a href="${esc(K.waLink(saved.whatsapp))}" target="_blank" rel="noopener">WhatsApp them</a>` : ""}${saved.owner_token && saved.status !== "lead" ? ` · <a href="${esc(ownerUrl(saved))}" target="_blank" rel="noopener">Their weekly page</a>` : ""}</p>` : ""}
     ${m.signup ? `<p class="sm" style="background:var(--tint);border-radius:8px;padding:8px">Signed up ${esc(fmtD(m.signup.at))}${m.signup.link ? `: <a href="${esc(/^https?:/.test(m.signup.link) ? m.signup.link : "https://" + m.signup.link)}" target="_blank" rel="noopener noreferrer">${esc(m.signup.link)}</a>` : ""}${m.signup.message ? `<br>“${esc(m.signup.message)}”` : ""}</p>` : ""}
     <div class="seg" style="margin:0 0 12px">${tab("profile", "Profile")}${saved ? tab("setup", "Setup") + tab("ai", "AI checks") + tab("enq", "Enquiries") + tab("msgs", "Messages") : ""}</div>
     ${({ profile: pProfile, setup: pSetup, ai: pAi, enq: pEnq, msgs: pMsgs })[saved ? V.tab : "profile"](m)}</div>`;
@@ -155,13 +156,14 @@ function pEnq(m) {
   const b = K.bill(m, S.enq, V.month), list = enqOf(m.id).slice().reverse(), T = K.trade(m.trade);
   const sum = a => [a.service, a.breed || a.car || a.subject, a.size, a.when, a.district].filter(Boolean).join(" · ");
   return `<div class="stats"><div class="stat"><b>${b.counted}</b><span>in ${esc(monthName(V.month))}${b.voided ? `, ${b.voided} voided` : ""}</span></div><div class="stat"><b>${gbp(b.amount)}</b><span>${b.plus ? "Plus" : `${b.charged} at ${gbp(b.per)}${b.capped ? ", capped" : ""}${b.free ? `, ${b.free} free` : ""}`}</span></div><div class="stat"><b>${b.freeLeft}</b><span>free enquiries left</span></div></div>
-    ${list.length ? `<table class="t"><thead><tr><th>When</th><th>Found on</th><th>What</th><th></th></tr></thead><tbody>${list.map(e => `<tr${e.voided ? ' style="opacity:.55"' : ""}><td class="sm">${esc(fmtD(e.at))}</td><td class="sm">${esc(K.SOURCE[e.source] || "Not said")}</td><td class="sm">${esc(sum(e.answers || {}))}${e.voided ? `<br><span class="xs">Voided${e.void_reason ? ": " + esc(e.void_reason) : ""}</span>` : ""}</td>
+    ${list.length ? `<table class="t"><thead><tr><th>When</th><th>Found on</th><th>What</th><th></th></tr></thead><tbody>${list.map(e => `<tr${e.voided ? ' style="opacity:.55"' : ""}><td class="sm">${esc(fmtD(e.at))}</td><td class="sm">${esc(K.SOURCE[e.source] || "Not said")}</td><td class="sm">${esc(sum(e.answers || {}))}${e.voided ? `<br><span class="xs">Voided${e.void_reason ? ": " + esc(e.void_reason) : ""}</span>` : e.outcome ? `<br><span class="chip ${e.outcome === "booked" ? "good" : ""}">${e.outcome === "booked" ? "Booked" : "Didn't book"}</span>` : ""}</td>
       <td>${e.voided ? `<button class="btn q sm" data-act="unvoid" data-id="${e.id}">Restore</button>` : `<select id="vr_${e.id}" aria-label="Why void it" style="border:1px solid var(--line);border-radius:7px;padding:4px;font-size:.8rem;max-width:110px"><option>Not real or spam</option><option>Duplicate</option><option>Existing customer</option><option>Owner asked</option></select> <button class="btn q sm" data-act="void" data-id="${e.id}">Void</button>`}</td></tr>`).join("")}</tbody></table>` : `<p class="sm mute">No enquiries yet. Each one is counted when a customer taps Send on the ${esc(T.one)}'s page.</p>`}
     <p class="xs mute" style="margin-top:10px">Void anything the owner says wasn't real: spam, duplicates, existing customers. Voided enquiries are never charged and don't use a free one.</p>`;
 }
 function pMsgs(m) {
   const live = `Hi ${String(m.owner_name || "").split(" ")[0] || "there"}, your Patch page is live: ${pageUrl(m)}\n\nPut this link as the website on your Google profile, and as the button on your Facebook page ("Send WhatsApp message" or "Book now"). Enquiries will arrive here on WhatsApp with the details already filled in.\n\nYour first ${K.PRICES.free} enquiries are free.`;
-  const msgs = [["opener", "Free check: the first message", K.openerMessage(m, m.checks, (ME && ME.name) || "James")], ["summary", "“Here's what we'll tell the world”", K.summaryMessage(m)], ["live", "Your page is live", live], ["report", `Monthly report: ${monthName(V.month)}`, K.reportMessage(m, S.enq, m.checks, V.month, S.members)]];
+  const week = `Hi ${String(m.owner_name || "").split(" ")[0] || "there"}, here's your private Patch page: ${ownerUrl(m)}\n\nSave it to your home screen. Each week it shows:\n• enquiries to mark as booked or not\n• customers due back, with a reminder ready to send from your WhatsApp\n• who to ask for a review\n\nIt takes a couple of minutes, and Patch never sees your customers' numbers. Please don't share the link.`;
+  const msgs = [["opener", "Free check: the first message", K.openerMessage(m, m.checks, (ME && ME.name) || "James")], ["summary", "“Here's what we'll tell the world”", K.summaryMessage(m)], ["live", "Your page is live", live], ["week", "Their private weekly page", week], ["report", `Monthly report: ${monthName(V.month)}`, K.reportMessage(m, S.enq, m.checks, V.month, S.members, S.book)]];
   return `<p class="sm mute">Nothing is sent from here. Copy a message, or open it in WhatsApp and press send yourself.</p>${msgs.map(([k, t, txt]) => `<h3 style="margin:14px 0 6px">${esc(t)}</h3><textarea class="msg" id="msg_${k}" aria-label="${esc(t)}">${esc(txt)}</textarea>
     <div class="row"><button class="btn q sm" data-act="copymsg" data-k="${k}">Copy</button>${m.whatsapp ? `<a class="btn q sm" data-wa="${k}" href="${esc(K.waLink(m.whatsapp, txt))}" target="_blank" rel="noopener">Open in WhatsApp</a>` : '<span class="xs mute">Add their WhatsApp number to open it there.</span>'}</div>`).join("")}`;
 }
@@ -245,7 +247,7 @@ async function askAi(b) {
 async function boot() {
   DB = await D.admin(); ME = await DB.me();
   if (!ME || ME.notAdmin) return signIn(ME && ME.notAdmin);
-  try { [S.members, S.enq] = await Promise.all([DB.members(), DB.enquiries()]); } catch (e) { $("#root").innerHTML = `<div class="card err">Couldn't load: ${esc(e.message)}. If this is new, the database may need the front-desk tables (supabase/schema.sql).</div>`; return; }
+  try { [S.members, S.enq, S.book] = await Promise.all([DB.members(), DB.enquiries(), DB.bookings().catch(() => [])]); } catch (e) { $("#root").innerHTML = `<div class="card err">Couldn't load: ${esc(e.message)}. If this is new, the database may need the front-desk tables (supabase/schema.sql).</div>`; return; }
   const want = new URLSearchParams(location.search).get("m"); if (want && mem(want)) { V.sel = want; V.ed = clone(mem(want)); }
   render();
 }

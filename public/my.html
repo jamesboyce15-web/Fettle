@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Your week · Patch</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@500;700&display=swap">
+<link rel="stylesheet" href="patch.css">
+<style>
+.wrap{max-width:680px}
+.item{border-top:1px solid var(--line);padding:12px 0}.item:first-of-type{border-top:0}
+.item .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px}
+.wa{display:inline-flex;align-items:center;gap:6px;background:#128c4a;color:#fff;border-radius:10px;padding:9px 14px;font-weight:600;text-decoration:none}
+.mini{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end;margin-top:8px;padding:10px;background:var(--tint);border-radius:10px}
+.mini label{display:flex;flex-direction:column;gap:3px;font-size:.85rem;font-weight:600}
+.mini input{border:1px solid var(--line);border-radius:8px;padding:7px;font:inherit;background:var(--card);color:var(--ink)}
+.count{display:inline-grid;place-items:center;min-width:24px;height:24px;border-radius:12px;background:var(--accent);color:var(--accent-ink);font-size:.8rem;padding:0 7px;margin-left:6px;vertical-align:2px}
+.linkbtn{background:none;border:0;padding:0;color:var(--accent2);text-decoration:underline;cursor:pointer;font:inherit}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+</style>
+</head>
+<body>
+<div class="wrap"><div id="root"><p class="mute" style="padding:20px">Loading…</p></div></div>
+<div class="toast" id="toast" role="status"></div>
+<script src="config.js"></script>
+<script src="patch-desk.js"></script>
+<script src="patch-data.js"></script>
+<script>
+// The owner's private page: which enquiries booked, who's due back, who to ask for a review. Every message opens in the
+// owner's own WhatsApp and they choose the chat, so Patch never needs (or keeps) customers' numbers, and it costs nothing.
+(function () {
+"use strict";
+const D = PatchData, K = PatchDesk, esc = K.esc, $ = s => document.querySelector(s);
+const Q = new URLSearchParams(location.search), token = Q.get("t") || (D.DEMO ? "demo-desk" : "");
+const today = () => new Date().toISOString().slice(0, 10), month = () => today().slice(0, 7);
+const fmt = d => new Date(String(d).slice(0, 10) + "T12:00:00Z").toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" });
+const ago = d => { const n = Math.round((Date.parse(today()) - Date.parse(String(d).slice(0, 10))) / 864e5); return n <= 0 ? "today" : n === 1 ? "yesterday" : `${n} days ago`; };
+function toast(t) { const el = $("#toast"); el.textContent = t; el.classList.add("on"); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove("on"), 2400); }
+let R = null; const open = {};
+
+async function load() {
+  if (!token) return fail("This link is missing its code. Use the link Patch sent you.");
+  try { R = await D.rpc("desk_owner_get", { p_token: token }); } catch (e) { return fail("Couldn't load. Please try again in a minute."); }
+  if (!R) return fail("We can't find your page. Use the latest link Patch sent you, or message us.");
+  render();
+}
+function fail(t) { $("#root").innerHTML = `<header class="top"><a class="brand" href="./">Patch<i>.</i></a></header><div class="card"><p>${esc(t)}</p></div>`; }
+async function act(action, id, extra) {
+  const r = await D.rpc("desk_owner_act", Object.assign({ p_token: token, p_action: action, p_id: id || null, p_date: null, p_weeks: null, p_text: null }, extra || {}));
+  if (r !== "ok") { toast(r === "bad" ? "Please check the date and weeks." : "That didn't save. Please try again."); return false; }
+  R = await D.rpc("desk_owner_get", { p_token: token }); render(); return true;
+}
+
+function render() {
+  const m = R.member, E = R.enquiries, B = R.bookings, mk = K.toMark(m, E), rev = K.dueReviews(m, B), due = K.dueReminders(m, B), st = K.bookingStats(m, E, B, month());
+  const wk = K.weeksFor(m, null), bill = K.bill(m, E, month()), T = K.trade(m.trade);
+  const sum = a => [a.service, a.breed || a.car || a.subject, a.size, a.when ? "wants " + a.when.charAt(0).toLowerCase() + a.when.slice(1) : "", a.district].filter(Boolean).join(" · ");
+  const num = n => n ? `<span class="count">${n}</span>` : "";
+  let h = `<header class="top"><a class="brand" href="./">Patch<i>.</i></a><span class="sp"></span>${m.status === "live" ? `<a class="sm" href="${D.DEMO ? `b.html?b=${encodeURIComponent(m.slug)}&demo=1` : "/b/" + m.slug}" target="_blank" rel="noopener">Your page</a>` : ""}</header>
+    ${D.DEMO ? `<p class="demo"><b>Demo.</b> A made-up groomer's private page. Buttons open WhatsApp with the message written; nothing is sent until you press send there.</p>` : ""}
+    <h1 style="margin:4px 0 2px">${esc(m.name)}</h1><p class="mute" style="margin:0 0 14px">Hi ${esc(m.owner_name || "there")}, here's your week.</p>`;
+
+  // 1. Did these book?
+  h += `<section class="card"><h2>Did these book?${num(mk.length)}</h2>${mk.length ? mk.map(e => `<div class="item"><b>${esc(e.answers.cname || (e.answers.breed ? "A " + e.answers.breed.toLowerCase() : e.answers.car || "Someone"))}</b> <span class="xs mute">${esc(ago(e.at))}${e.source ? " · found you on " + esc((K.SOURCE[e.source] || "").replace(" or Google Maps", "")) : ""}</span><br><span class="sm">${esc(sum(e.answers || {}))}</span>
+      ${open["b" + e.id] ? `<div class="mini"><label>Appointment<input type="date" id="d_${e.id}" value="${today()}"></label>${wk || T.questions.length ? `<label>Due back in (weeks)<input type="number" id="w_${e.id}" min="1" max="52" value="${wk || ""}" style="width:90px"></label>` : ""}<button class="btn sm" data-act="booked" data-id="${e.id}">Save</button><button class="btn q sm" data-open="b${e.id}">Cancel</button></div>`
+        : `<div class="row"><button class="btn sm" data-open="b${e.id}">Booked</button><button class="btn q sm" data-act="not_booked" data-id="${e.id}">Didn't book</button></div>`}</div>`).join("")
+    : `<p class="sm mute">Nothing to mark. New enquiries from your page show here.</p>`}</section>`;
+
+  // 2. Reviews: everyone who visited in the last few days.
+  const rt = K.reviewText(m);
+  h += `<section class="card"><h2>Ask for a review${num(rev.length)}</h2><p class="xs mute" style="margin-top:0">Everyone who came in the last 3 days. Ask every customer the same way: Google and UK law don't allow asking only happy customers, suggesting what to write, or offering anything for a review.</p>
+    ${!m.review_url ? `<p class="sm"><b>Add your Google review link below</b> so the message can include it.</p>` : ""}
+    ${rev.length ? rev.map(b => `<div class="item"><b>${esc(b.label || "A customer")}</b> <span class="xs mute">came in ${esc(ago(b.on_date))}</span>
+      <div class="row"><a class="wa" href="${esc(K.waShare(rt))}" target="_blank" rel="noopener" data-sent="review_asked" data-id="${b.id}">Send review request</a><button class="linkbtn sm" data-act="review_asked" data-id="${b.id}">Already asked</button></div></div>`).join("")
+    : `<p class="sm mute">No one to ask right now.</p>`}</section>`;
+
+  // 3. Due back.
+  h += `<section class="card"><h2>Due back soon${num(due.length)}</h2><p class="xs mute" style="margin-top:0">Customers due in the next week, or a little overdue. The reminder opens in your WhatsApp; you pick the customer and send.</p>
+    ${due.length ? due.map(b => `<div class="item"><b>${esc(b.label || "A customer")}</b> <span class="xs mute">last in ${esc(fmt(b.on_date))} · due ${esc(fmt(b.due))}${b.due < today() ? " (overdue)" : ""}</span>
+      <div class="row"><a class="wa" href="${esc(K.waShare(K.reminderText(m, b)))}" target="_blank" rel="noopener" data-sent="reminded" data-id="${b.id}">Send reminder</a><button class="btn q sm" data-open="r${b.id}">Booked again</button><button class="linkbtn sm" data-act="not_coming" data-id="${b.id}">Not coming back</button></div>
+      ${open["r" + b.id] ? `<div class="mini"><label>New appointment<input type="date" id="rd_${b.id}" value="${today()}"></label><button class="btn sm" data-act="rebooked" data-id="${b.id}">Save</button></div>` : ""}</div>`).join("")
+    : `<p class="sm mute">No one due this week.</p>`}</section>`;
+
+  // 4. Booked from a reminder, waiting: rebooked customers also flow in here automatically. Add regulars from before Patch.
+  h += `<section class="card"><h2>Add a regular</h2><p class="sm mute" style="margin-top:0">Customers from before Patch, so they get reminders too.</p>
+    <div class="mini" style="margin-top:0"><label style="flex:1;min-width:160px">Name${m.trade === "groomer" ? " · dog" : ""}<input id="ad_label" maxlength="120" placeholder="${m.trade === "groomer" ? "Sue · Cockapoo" : "Sue"}"></label><label>Last visit<input type="date" id="ad_date" value="${today()}"></label><label>Every (weeks)<input type="number" id="ad_w" min="1" max="52" value="${wk || 6}" style="width:80px"></label><button class="btn sm" data-act="add">Add</button></div></section>`;
+
+  // 5. This month.
+  h += `<section class="card"><h2>This month</h2><div class="stats">
+    <div class="stat"><b>${st.enquiries}</b><span>enquiries</span></div><div class="stat"><b>${st.booked}</b><span>booked${st.conversion != null ? ` (${st.conversion}% of those marked)` : ""}</span></div>
+    <div class="stat"><b>${st.rebooked}</b><span>rebooked after a reminder</span></div><div class="stat"><b>${bill.plus ? "Plus" : "£" + bill.amount}</b><span>${bill.plus ? "flat monthly" : bill.freeLeft ? `so far · ${bill.freeLeft} free left` : "so far this month"}</span></div></div></section>`;
+
+  // 6. Settings.
+  h += `<section class="card"><h2>Settings</h2><div class="mini" style="margin-top:0"><label>Customers usually come back every (weeks)<input type="number" id="s_w" min="1" max="52" value="${esc(m.rebook_weeks || wk || "")}" style="width:90px"></label>
+    <label style="flex:1;min-width:220px">Your Google review link<input id="s_url" value="${esc(m.review_url || "")}" placeholder="https://g.page/r/…/review" maxlength="500"></label><button class="btn sm" data-act="settings">Save</button></div>
+    <p class="xs mute">Find your review link in Google: search your business name, choose “Ask for reviews” (or “Get more reviews”) and copy the link.</p></section>
+    <p class="xs mute" style="text-align:center;margin:18px 0">This page is private to you: don't share its link. Messages open in your own WhatsApp and you choose who they go to; Patch never sees your customers' numbers. <a href="privacy">Privacy</a></p>`;
+  $("#root").innerHTML = h;
+}
+
+document.addEventListener("click", async e => {
+  const o = e.target.closest("[data-open]"); if (o) { open[o.dataset.open] = !open[o.dataset.open]; return render(); }
+  // A WhatsApp button: let the link open WhatsApp, and note that it was sent.
+  const s = e.target.closest("[data-sent]"); if (s) { setTimeout(() => act(s.dataset.sent, s.dataset.id).then(ok => ok && toast(s.dataset.sent === "reminded" ? "Reminder noted" : "Review request noted")), 400); return; }
+  const b = e.target.closest("[data-act]"); if (!b) return; const a = b.dataset.act, id = b.dataset.id; b.disabled = true;
+  if (a === "booked") { const w = $("#w_" + id); if (await act("booked", id, { p_date: $("#d_" + id).value || null, p_weeks: w && w.value ? +w.value : null })) { delete open["b" + id]; toast("Booked. Well done!"); } }
+  else if (a === "rebooked") { if (await act("rebooked", id, { p_date: $("#rd_" + id).value || null })) toast("Rebooked"); }
+  else if (a === "add") { const l = $("#ad_label").value.trim(); if (!l) { toast("Add their name"); b.disabled = false; return; } if (await act("add", null, { p_text: l, p_date: $("#ad_date").value || null, p_weeks: +$("#ad_w").value || null })) toast("Added. They'll show here when they're due."); }
+  else if (a === "settings") { const u = $("#s_url").value.trim(); if (u && !/^https:\/\//i.test(u)) { toast("The review link should start with https://"); b.disabled = false; return; } if (await act("settings", null, { p_weeks: +$("#s_w").value || null, p_text: u })) toast("Saved"); }
+  else await act(a, id);
+  b.disabled = false;
+});
+load();
+})();
+</script>
+</body>
+</html>

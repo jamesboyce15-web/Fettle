@@ -8,5 +8,6 @@ Disallow: /sweep
 
 Allow: /b/
 Disallow: /members
+Disallow: /my
 
 Sitemap: https://getfettle.co.uk/sitemap.xml

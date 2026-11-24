@@ -532,3 +532,92 @@ returns table (slug text, updated_at timestamptz) language sql stable security d
   select slug, updated_at from public.members where status = 'live' order by slug;
 $$;
 grant execute on function public.members_live() to anon, authenticated;
+-- Bookings (Nov 2026): did an enquiry book, when, and when the customer is due back. The owner's private page (owner_token)
+-- marks bookings and the reminders and review requests they send from their own WhatsApp. Customers' numbers are never stored.
+alter table public.members add column if not exists owner_token uuid not null default gen_random_uuid();
+create unique index if not exists members_owner_token_idx on public.members(owner_token);
+alter table public.members add column if not exists rebook_weeks int check (rebook_weeks between 1 and 52);
+alter table public.members add column if not exists review_url text check (char_length(review_url) <= 500);
+alter table public.members add column if not exists review_target text not null default 'google' check (review_target in ('google','facebook','other'));
+alter table public.enquiries add column if not exists outcome text check (outcome in ('booked','not_booked'));
+alter table public.enquiries add column if not exists outcome_at timestamptz;
+create table if not exists public.bookings (
+  id              uuid primary key default gen_random_uuid(),
+  member_id       uuid not null references public.members(id) on delete cascade,
+  enquiry_id      uuid references public.enquiries(id) on delete set null,
+  parent_id       uuid references public.bookings(id) on delete set null,
+  source          text not null default 'enquiry' check (source in ('enquiry','rebook','owner')),
+  on_date         date not null,
+  label           text check (char_length(label) <= 120),
+  service         text check (char_length(service) <= 120),
+  rebook_weeks    int check (rebook_weeks between 1 and 52),
+  reminded_at     timestamptz,
+  review_asked_at timestamptz,
+  created_at      timestamptz not null default now()
+);
+create index if not exists bookings_member_idx on public.bookings(member_id, on_date);
+create index if not exists bookings_parent_idx on public.bookings(parent_id);
+create index if not exists bookings_enquiry_idx on public.bookings(enquiry_id);
+alter table public.bookings enable row level security;
+drop policy if exists "admins all" on public.bookings; create policy "admins all" on public.bookings for all to authenticated using ((select public.is_admin())) with check ((select public.is_admin()));
+
+-- The owner's page: their business, recent enquiries and bookings. Only with their private link.
+create or replace function public.desk_owner_get(p_token uuid)
+returns jsonb language sql stable security definer set search_path = public as $$
+  select jsonb_build_object(
+    'member', jsonb_build_object('id', m.id, 'slug', m.slug, 'status', m.status, 'name', m.name, 'trade', m.trade, 'owner_name', split_part(coalesce(m.owner_name, ''), ' ', 1),
+      'town', m.town, 'plan', m.plan, 'founding', m.founding, 'per_enquiry', m.per_enquiry, 'cap', m.cap, 'plus_price', m.plus_price,
+      'services', m.services, 'rebook_weeks', m.rebook_weeks, 'review_url', m.review_url, 'review_target', m.review_target, 'facebook', m.facebook),
+    'enquiries', coalesce((select jsonb_agg(jsonb_build_object('id', e.id, 'member_id', e.member_id, 'at', e.at, 'source', e.source, 'answers', e.answers, 'voided', e.voided, 'outcome', e.outcome) order by e.at)
+      from public.enquiries e where e.member_id = m.id and e.at > now() - interval '400 days'), '[]'::jsonb),
+    'bookings', coalesce((select jsonb_agg(to_jsonb(b) order by b.on_date) from public.bookings b where b.member_id = m.id and b.on_date > current_date - 400), '[]'::jsonb))
+  from public.members m where m.owner_token = p_token and m.status in ('setup','live','paused');
+$$;
+grant execute on function public.desk_owner_get(uuid) to anon, authenticated;
+
+-- What the owner does from their page. Each action checks the record belongs to the business the link is for.
+create or replace function public.desk_owner_act(p_token uuid, p_action text, p_id uuid default null, p_date date default null, p_weeks int default null, p_text text default null)
+returns text language plpgsql security definer set search_path = public as $$
+declare mid uuid; e record; b record; lbl text; nid uuid;
+begin
+  select id into mid from public.members where owner_token = p_token and status in ('setup','live','paused');
+  if mid is null then return 'none'; end if;
+  if p_weeks is not null and (p_weeks < 1 or p_weeks > 52) then return 'bad'; end if;
+  if p_date is not null and (p_date < current_date - 400 or p_date > current_date + 400) then return 'bad'; end if;
+  if p_action in ('booked','not_booked','undo') then
+    select * into e from public.enquiries where id = p_id and member_id = mid; if not found then return 'none'; end if;
+    delete from public.bookings where enquiry_id = e.id and source = 'enquiry';
+    if p_action = 'undo' then update public.enquiries set outcome = null, outcome_at = null where id = e.id; return 'ok'; end if;
+    update public.enquiries set outcome = p_action, outcome_at = now() where id = e.id;
+    if p_action = 'booked' then
+      lbl := left(nullif(trim(concat_ws(' · ', nullif(e.answers->>'cname', ''), nullif(coalesce(e.answers->>'breed', e.answers->>'car', e.answers->>'subject'), ''))), ''), 120);
+      insert into public.bookings (member_id, enquiry_id, source, on_date, label, service, rebook_weeks)
+        values (mid, e.id, 'enquiry', coalesce(p_date, current_date), coalesce(left(nullif(trim(p_text), ''), 120), lbl), left(e.answers->>'service', 120), p_weeks);
+    end if;
+    return 'ok';
+  elsif p_action in ('reminded','review_asked','weeks','rebooked','not_coming','delete') then
+    select * into b from public.bookings where id = p_id and member_id = mid; if not found then return 'none'; end if;
+    if p_action = 'reminded' then update public.bookings set reminded_at = now() where id = b.id;
+    elsif p_action = 'review_asked' then update public.bookings set review_asked_at = now() where id = b.id;
+    elsif p_action = 'weeks' then update public.bookings set rebook_weeks = p_weeks where id = b.id;
+    elsif p_action = 'not_coming' then update public.bookings set rebook_weeks = null, reminded_at = coalesce(reminded_at, now()) where id = b.id;
+    elsif p_action = 'delete' then delete from public.bookings where id = b.id;
+    else
+      if exists (select 1 from public.bookings where parent_id = b.id) then return 'ok'; end if;
+      insert into public.bookings (member_id, parent_id, source, on_date, label, service, rebook_weeks)
+        values (mid, b.id, 'rebook', coalesce(p_date, current_date), b.label, b.service, b.rebook_weeks) returning id into nid;
+    end if;
+    return 'ok';
+  elsif p_action = 'add' then
+    if (select count(*) from public.bookings where member_id = mid and created_at > now() - interval '1 day') >= 200 then return 'busy'; end if;
+    insert into public.bookings (member_id, source, on_date, label, rebook_weeks) values (mid, 'owner', coalesce(p_date, current_date), left(nullif(trim(p_text), ''), 120), p_weeks);
+    return 'ok';
+  elsif p_action = 'settings' then
+    update public.members set rebook_weeks = coalesce(p_weeks, rebook_weeks),
+      review_url = case when p_text is null then review_url when trim(p_text) = '' then null when p_text ~* '^https://' then left(trim(p_text), 500) else review_url end where id = mid;
+    return 'ok';
+  end if;
+  return 'bad';
+end $$;
+revoke all on function public.desk_owner_act(uuid, text, uuid, date, int, text) from public;
+grant execute on function public.desk_owner_act(uuid, text, uuid, date, int, text) to anon, authenticated;

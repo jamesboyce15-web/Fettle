@@ -76,6 +76,29 @@ test("local prices come from businesses' own lists, and only show from five", ()
   assert.match(K.reportMessage(Object.assign(me, { owner_name: "Sam" }), [], [], "2026-11", all), /most dog groomers in Stockport charge £42–£48 \(5 on Patch\)/);
 });
 
+test("bookings: who's due back, who to ask for a review, and the month's figures", () => {
+  const m = { id: "m1", name: "Paws & Polish", trade: "groomer", owner_name: "Sarah", rebook_weeks: null, review_url: "https://g.page/r/x/review" };
+  const T = "2026-11-24", B = [
+    { id: "a", member_id: "m1", source: "enquiry", on_date: "2026-10-15", label: "Amy · Cockapoo" },                  // due 26 Nov (6 weeks): in the next week
+    { id: "b", member_id: "m1", source: "owner", on_date: "2026-09-01", label: "Tom · Pug", rebook_weeks: 6 },          // due 13 Oct: too long ago
+    { id: "c", member_id: "m1", source: "owner", on_date: "2026-10-01", label: "Mel", rebook_weeks: 6 },                // rebooked below, so not due
+    { id: "c2", member_id: "m1", source: "rebook", parent_id: "c", on_date: "2026-11-23", label: "Mel", rebook_weeks: 6 },
+    { id: "d", member_id: "m1", source: "owner", on_date: "2026-10-14", label: "Jo", rebook_weeks: 6, reminded_at: "2026-11-20" },
+    { id: "e", member_id: "m1", source: "owner", on_date: "2026-11-01", label: "Sue", rebook_weeks: 3 },                // due 22 Nov: 2 days overdue
+    { id: "x", member_id: "other", source: "owner", on_date: "2026-10-15", label: "Not mine" }];
+  const due = K.dueReminders(m, B, T); assert.deepEqual(due.map(b => b.id), ["e", "a"], "soonest first, rebooked and reminded ones left out");
+  assert.equal(due[1].due, "2026-11-26"); assert.equal(K.REBOOK.groomer, 6); assert.equal(K.weeksFor({ trade: "driving" }, null), null, "no reminders unless it fits the trade");
+  const rt = K.reminderText(m, due[1]); assert.match(rt, /^Hi Amy, just a reminder that your cockapoo's next groom is due around Thursday 26 November/); assert.match(rt, /Reply STOP/); assert.match(rt, /Sarah, Paws & Polish/);
+  assert.deepEqual(K.dueReviews(m, B, T).map(b => b.id), ["c2"], "everyone who came in the last 3 days");
+  const rv = K.reviewText(m); assert.match(rv, /g\.page\/r\/x\/review/); assert.doesNotMatch(rv, /5|star|mention|happy|discount|free/i, "no rating, wording or reward suggested");
+  assert.equal(K.reviewText(Object.assign({}, m, { name: "Other" })).replace("Other", "Paws & Polish"), rv, "the same message for every customer");
+  assert.match(K.waShare("Hi & bye"), /^https:\/\/wa\.me\/\?text=Hi%20%26%20bye$/, "the owner picks the chat: no number needed");
+  const E = [{ id: "1", member_id: "m1", at: "2026-11-02T10:00:00Z", outcome: "booked" }, { id: "2", member_id: "m1", at: "2026-11-03T10:00:00Z", outcome: "not_booked" }, { id: "3", member_id: "m1", at: "2026-11-04T10:00:00Z" }, { id: "4", member_id: "m1", at: "2026-11-05T10:00:00Z", voided: true }];
+  const st = K.bookingStats(m, E, B, "2026-11"); assert.deepEqual([st.enquiries, st.booked, st.conversion, st.rebooked, st.visits, st.reminded], [3, 1, 50, 1, 2, 1]);
+  assert.deepEqual(K.toMark(m, E, T).map(e => e.id), ["3"]);
+  assert.match(K.reportMessage(Object.assign({ id: "m1" }, m), E, [], "2026-11", null, B), /1 became booking, and 1 customer rebooked after a reminder\./);
+});
+
 // The server routes, with the database faked.
 function fakeDb(handler) { const calls = []; globalThis.fetch = async (url, o) => { calls.push({ url: String(url), body: o && o.body ? JSON.parse(o.body) : null }); const r = handler(String(url), o && o.body ? JSON.parse(o.body) : null); return new Response(JSON.stringify(r), { status: 200, headers: { "Content-Type": "application/json" } }); }; return calls; }
 const env = { SUPABASE_URL: "https://db.test", SUPABASE_ANON_KEY: "anon", ASSETS: { fetch: async () => new Response("<h1>404</h1>") } };
