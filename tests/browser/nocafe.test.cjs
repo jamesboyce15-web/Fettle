@@ -11,7 +11,7 @@ const RE = /caf[eé]s?\b|coffee|latte|espresso|croissant|brunch|cake|milk|food h
   const ctx = await b.newContext({ viewport: { width: 390, height: 844 } }); await ctx.route('**fonts.g*/**', r => r.fulfill({ body: '' }));
   const p = await ctx.newPage(); p.on('pageerror', e => errs.push(e.message));
   const grab = async name => { const t = await p.innerText('body'); const m = t.match(RE); if (m) found[name] = [...new Set(m.map(x => x.toLowerCase()))].join(', ') + '  «' + (t.match(new RegExp('.{0,50}(' + m[0] + ').{0,40}', 'i')) || [''])[0].replace(/\n/g, ' ') + '»'; };
-  for (const u of ['?demo=1', 'price-check.html?demo=1', 'report.html?demo=1', 'privacy.html', '404.html']) { await p.goto(U + u); await p.waitForTimeout(500); await grab(u); }
+  for (const u of ['?demo=1', 'prices.html?demo=1', 'price-check.html?demo=1', 'report.html?demo=1', 'privacy.html', '404.html']) { await p.goto(U + u); await p.waitForTimeout(500); await grab(u); }
   await p.goto(U + 'owner.html?demo=1'); await p.waitForTimeout(800); await grab('owner home');
   for (const t of ['actions', 'insights', 'plan', 'upload']) { await p.click(`[data-tab=${t}]`); await p.click('[data-act=allacts]', { timeout: 1000 }).catch(() => {}); await p.waitForTimeout(200); await grab('owner ' + t); }
   await p.click('[data-tab=insights]'); const subs = await p.$$eval('[data-sub]', es => [...new Set(es.map(e => e.dataset.sub).filter(Boolean))]);

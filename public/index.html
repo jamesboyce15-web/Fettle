@@ -3,143 +3,104 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Patch · Get picked when AI books</title>
-<meta name="description" content="When ChatGPT, Google or Claude pick a salon or barber, they show a price, a rating and a time to book. Patch shows where you stand on each against the salons near you, and the next move to get picked. Free and private.">
+<title>Patch · Get found by AI. Enquiries land in your WhatsApp.</title>
+<meta name="description" content="For one-person local businesses: dog groomers, mobile hairdressers, valeters, driving instructors, tutors. Patch gets you found on ChatGPT and Google, sends enquiries to your WhatsApp, and only charges when they arrive. Free setup, no contract.">
+<link rel="canonical" href="https://getfettle.co.uk/">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@500;700&display=swap">
 <link rel="stylesheet" href="patch.css">
 <style>
-.hero{padding:18px 0 8px}
-.cta{margin:18px 0 6px}
-.sec{margin:34px 0}
-.itemrow{display:grid;grid-template-columns:1.2fr 0.7fr 2fr;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
-.itemrow:last-child{border-bottom:0}
-.itemrow .p{font-variant-numeric:tabular-nums;font-weight:700}
-.hyg{display:grid;grid-template-columns:150px 1fr 40px;gap:10px;align-items:center;margin:6px 0;font-size:.92rem}
-.how{counter-reset:s;list-style:none;padding:0;margin:0}
-.how li{counter-increment:s;position:relative;padding:0 0 14px 46px}
+.hero{padding:18px 0 8px}.hero h1{font-size:clamp(1.9rem,5vw,2.8rem);line-height:1.1;margin:6px 0 10px;text-wrap:balance}
+.chat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;max-width:440px;font-size:.95rem}
+.chat .q{background:var(--tint);border-radius:12px 12px 4px 12px;padding:8px 12px;margin:0 0 8px auto;max-width:85%;width:fit-content}
+.chat .a{border:1px solid var(--line);border-radius:12px 12px 12px 4px;padding:10px 12px;max-width:92%}
+.chat .wa{background:#e7f6ec;border-radius:12px 12px 4px 12px;padding:8px 12px;margin:8px 0 0 auto;max-width:85%;width:fit-content;white-space:pre-line}
+.price{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.price .card{margin:0}
+.price b.big{font:700 1.8rem "Space Grotesk",sans-serif;display:block}
+.two{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:20px;align-items:center}
+.how{counter-reset:s;list-style:none;padding:0;margin:0}.how li{counter-increment:s;position:relative;padding:0 0 14px 46px}.how li b{display:block}
 .how li::before{content:counter(s);position:absolute;left:0;top:0;width:32px;height:32px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-weight:700}
-.how b{display:block}
-.ev{display:flex;gap:12px;padding:8px 0;border-bottom:1px solid var(--line)}.ev:last-child{border-bottom:0}
-.ev .d{flex:0 0 74px;font-weight:700;color:var(--accent2)}
-@media(max-width:560px){.itemrow{grid-template-columns:1fr 0.6fr}.itemrow .range{grid-column:1/-1}.hyg{grid-template-columns:110px 1fr 34px}}
+.price{margin-bottom:16px}
+@media(max-width:760px){.two{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header class="top"><a class="brand" href="./">Patch<i>.</i></a><span class="sp"></span><a class="sm" href="start">Run it on your own? Get found by AI</a><span class="sm mute" id="tag">For independent businesses</span></header>
+  <header class="top"><a class="brand" href="./">Patch<i>.</i></a><span class="sp"></span><a class="sm" href="prices" id="pricesLink">Local prices</a></header>
   <div id="demo"></div>
-  <main id="app"><p class="mute">Loading…</p></main>
-  <footer id="foot"></footer>
+  <section class="hero two">
+    <div><h1>Get found by AI. Enquiries land in your WhatsApp. You only pay when they do.</h1>
+      <p class="lede">More and more people ask ChatGPT or Google “who's a good dog groomer near me?” instead of asking around. Patch makes sure the answer can include you, with your real prices, and one tap to message you.</p>
+      <p class="cta"><a class="btn big" href="#join">Get your free check</a></p>
+      <p class="sm mute">Free setup. No app to learn. No contract. Keep taking bookings the way you do now.</p></div>
+    <div class="chat" aria-label="An example">
+      <p class="q">Cockapoo groomer near SK4, under £50?</p>
+      <div class="a"><b>Paws &amp; Polish</b>, Heaton Moor. Mobile, cockapoo specialist. Full groom £45. <u>Send an enquiry</u></div>
+      <p class="wa">Hi Paws &amp; Polish, I found you on ChatGPT.
+I'd like: Full groom.
+My dog: Cockapoo, 3, medium.
+When: Saturday morning. Area: SK4.</p>
+      <p class="xs mute" style="margin:8px 0 0">An example. Patch can't make an AI assistant pick you, but it gives it everything it needs to.</p></div>
+  </section>
+
+  <section class="sec"><h2>How it works</h2><ol class="how">
+    <li><b>We check what AI says about you, free</b><span class="mute">We ask ChatGPT, Gemini and Google the questions your customers ask and send you the screenshots: are you named, are your prices right, can people reach you?</span></li>
+    <li><b>15 minutes on WhatsApp, then we do the rest</b><span class="mute">Tell us your services, prices and area (or we read them off your Facebook page). We set up Google, Bing, Apple and Yelp in your name, a page AI can read, and your enquiry link.</span></li>
+    <li><b>Enquiries arrive as normal WhatsApp messages</b><span class="mute">Customers answer your questions first (for a groomer: breed, size, coat, when), so the message has everything you need to reply.</span></li>
+    <li><b>One message a month</b><span class="mute">What came in and from where, what AI says about you now, your bill, and one thing to do next. Change a price by texting us; we update it everywhere.</span></li></ol></section>
+
+  <section class="sec"><h2>What it costs</h2><div class="price">
+    <div class="card"><span class="chip">Setup</span><b class="big">£0</b><p class="sm">We do the work. Your listings are set up in your name, so they stay yours.</p></div>
+    <div class="card"><span class="chip">Enquiries</span><b class="big">£4 each</b><p class="sm">Your first 3 are free. Never more than <b>£29 a month</b>, however many arrive. Founding members in each town: never more than <b>£19</b>.</p></div>
+    <div class="card"><span class="chip">Plus, optional</span><b class="big">£39 a month</b><p class="sm">Unlimited enquiries, rebooking reminders, review requests, online booking set up if you want it, and a local price check.</p></div></div></section>
+
+  <section class="sec card"><h2>Fair play</h2><ul>
+    <li>Only enquiries sent through your Patch page count. Calls, DMs and walk-ins are never charged.</li>
+    <li>Reply VOID to remove any enquiry that wasn't real. No questions asked.</li>
+    <li>We never promise ChatGPT will recommend you. We show you screenshots of what it actually says.</li>
+    <li>Leave any time by texting STOP. Your Google, Bing, Apple and Yelp listings stay yours.</li></ul></section>
+
+  <section class="sec card" id="join"><h2>Get your free check</h2><p class="sm mute">We'll message you on WhatsApp within two working days with what AI says about your business. No obligation.</p>
+    <form id="sf" novalidate>
+      <div class="grid" style="gap:0 12px">
+        <label class="f"><span>Your name</span><input id="nm" autocomplete="name" maxlength="80"></label>
+        <label class="f"><span>Business name</span><input id="bz" autocomplete="organization" maxlength="120"></label>
+        <label class="f"><span>What you do</span><select id="tr"><option value="groomer">Dog grooming</option><option value="hair">Hairdressing</option><option value="barber">Barbering</option><option value="nails">Nails</option><option value="beauty">Beauty, brows or lashes</option><option value="valeting">Car valeting</option><option value="driving">Driving lessons</option><option value="tutor">Tutoring</option><option value="other">Something else</option></select></label>
+        <label class="f"><span>Town</span><input id="tw" maxlength="60" placeholder="e.g. Stockport"></label>
+        <label class="f"><span>WhatsApp number</span><input id="wa" type="tel" autocomplete="tel" maxlength="30" placeholder="07…"></label>
+        <label class="f"><span>Email (optional)</span><input id="em" type="email" autocomplete="email" maxlength="120"></label></div>
+      <label class="f"><span>Your Facebook page, Instagram or website (optional)</span><input id="lk" maxlength="300" placeholder="Paste a link"></label>
+      <label class="f"><span>Anything we should know? (optional)</span><textarea id="ms" maxlength="1000" placeholder="e.g. mostly word of mouth, want more weekday bookings"></textarea></label>
+      <p class="sm mute">We use these details only to send your check and talk about Patch. <a href="privacy">Privacy</a>.</p><p class="err" id="err" role="alert"></p>
+      <button class="btn big" id="go">Get my free check</button></form><div id="thanks" hidden></div></section>
+  <footer class="foot sm mute" id="foot"></footer>
 </div>
-<div class="toast" id="toast" role="status"></div>
 <script src="config.js"></script>
-<script src="patch-sectors.js"></script>
-<script src="patch-core.js"></script>
+<script src="patch-desk.js"></script>
 <script src="patch-data.js"></script>
 <script>
 (function () {
-"use strict";
-const P = PatchCore, D = PatchData, CFG = D.CFG, Q = new URLSearchParams(location.search);
-const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-const money = P.money, slug = (Q.get("a") || (D.DEMO ? "demo-salons" : CFG.defaultArea) || "").toLowerCase();
-const fmtD = s => s ? new Date(s).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) : "";
-const HYG = [["5", "5: Very good"], ["4", "4: Good"], ["3", "3: Generally satisfactory"], ["2", "2: Improvement necessary"], ["1", "1: Major improvement necessary"], ["0", "0: Urgent improvement necessary"], ["AwaitingInspection", "Awaiting first inspection"]];
-let AREA = null;
-
-function range(item) {
-  if (item.median == null || item.low == null) return "";
-  const lo = item.low * 0.9, hi = item.high * 1.1, pc = x => Math.max(0, Math.min(100, ((x - lo) / (hi - lo)) * 100));
-  return `<div class="range" aria-label="Most ${P.WORDS.places} charge between ${money(item.low)} and ${money(item.high)}"><div class="track"></div><div class="band" style="left:${pc(item.low)}%;width:${pc(item.high) - pc(item.low)}%"></div><div class="med" style="left:${pc(item.median)}%"></div></div>
-    <div class="xs mute">Most charge ${money(item.low)} to ${money(item.high)}</div>`;
-}
-function render() {
-  const A = AREA, pub = A.published || null, st = pub && pub.stats, venues = A.venues || [];
-  const ind = venues.filter(v => v.kind !== "chain").length, awaiting = st ? st.awaiting : venues.filter(v => v.hygiene === "AwaitingInspection").length;
-  const fw = st && st.prices.find(p => p.k === "flat_white");
-  const SAL = P.SECTOR === "salon", pc = `price-check.html?a=${encodeURIComponent(A.slug)}${D.DEMO ? "&demo=1" : ""}`;
-  let h = SAL ? `<section class="hero"><h1>Get picked when AI books.</h1>
-    <p class="lede">Ask ChatGPT, Google or Claude for “a haircut under £25 near me” and it now answers with two or three places, a price, a rating and a time you can book. Patch shows where your salon stands on each of those against the ${venues.length} ${P.WORDS.places} in ${esc(placeOf(A.name))}, and the next move that gets you into that answer.</p>
-    <p class="cta"><a class="btn big" href="${pc}">Check your prices in two minutes</a> <a class="btn q" href="#start">Or ask for a full report</a></p><p class="sm mute">Free. Keep the booking system you use now: Fresha, Booksy, Treatwell or your own. Other ${P.WORDS.places} never see your figures.</p></section>
-    <section class="sec card"><h2>What an AI answer shows a customer</h2><p class="sm mute">And what Patch checks for you on each.</p><ol class="how">
-    <li><b>Your price</b><span class="mute">Where your cut, colour or treatment sits against the ${P.WORDS.places} near you. Too high and you're left out of “under £25”; too low and you're giving money away.</span></li>
-    <li><b>Your rating and reviews</b><span class="mute">How your Google rating and number of reviews compare locally, and how to get more.</span></li>
-    <li><b>Whether it can book you</b><span class="mute">Is your booking page linked to Google, with every service and price listed? AI can only offer a time if it can see your diary.</span></li>
-    <li><b>Whether it names you at all</b><span class="mute">We ask the AI assistants what people near you ask, and tell you which ${P.WORDS.places} they name and which websites they read.</span></li></ol></section>`
-  : `<section class="hero"><h1>How does your ${P.WORDS.place} compare with the ${P.WORDS.places} around you?</h1>
-    <p class="lede">Prices, hygiene, opening hours and what customers find when they walk in, across ${venues.length} ${P.WORDS.places} in ${esc(placeOf(A.name))}. Ask for a free, private report on your ${P.WORDS.place}: where you stand, and where you could save or charge more.</p>
-    <p class="cta"><a class="btn big" href="#start">See where you stand</a></p><p class="sm mute">Free. No public rankings: other ${P.WORDS.places} never see your figures.</p></section>`;
-  h += `<section class="sec"><div class="grid"><div class="stat"><b>${venues.length}</b><span>${P.WORDS.places} in ${esc(placeOf(A.name))}</span></div>${ind < venues.length ? `<div class="stat"><b>${ind}</b><span>independent</span></div>` : ""}
-    ${fw && fw.median ? `<div class="stat"><b>${money(fw.median)}</b><span>typical flat white</span></div>` : ""}${P.SECTOR === "cafe" ? `<div class="stat"><b>${awaiting}</b><span>new or awaiting their first hygiene inspection</span></div>` : ""}</div></section>`;
-  if (st && st.prices.some(p => p.median != null)) {
-    h += `<section class="sec card"><h2>What ${P.WORDS.places} here charge</h2><p class="sm mute">The middle price, and the range most ${P.WORDS.places} fall within. From ${st.priced} ${P.WORDS.places}' menus${pub.at ? `, ${fmtD(pub.at)}` : ""}.</p>
-      ${st.prices.filter(p => p.median != null).map(p => `<div class="itemrow"><span>${esc(p.t)}${p.thin ? ` <span class="xs mute">(${p.n} only)</span>` : ""}</span><span class="p">${money(p.median)}</span>${range(p)}</div>`).join("")}</section>`;
-  } else h += `<section class="sec card"><h2>What ${P.WORDS.places} here charge</h2><p class="mute">We're collecting menus and visiting ${P.WORDS.places} in ${esc(A.name)} now. Typical prices appear here once we have at least ${P.MIN_N} ${P.WORDS.places} for each item.</p></section>`;
-  if (st && st.scores.some(s => s.median != null)) {
-    h += `<section class="sec card"><h2>What customers find inside</h2><p class="sm mute">From our visits to ${st.visited} ${P.WORDS.places}. Middle figures only.</p><div class="grid">
-      ${st.scores.filter(s => s.median != null).map(s => `<div class="stat"><b>${s.k === "wait" ? Math.round(s.median) + " min" : s.median}</b><span>${esc(s.t)}${s.k === "wait" ? "" : " (" + esc(s.unit) + ")"}</span></div>`).join("")}
-      ${st.wifi != null ? `<div class="stat"><b>${st.wifi}%</b><span>have wifi</span></div>` : ""}${st.cardOnly != null ? `<div class="stat"><b>${st.cardOnly}%</b><span>take cards only</span></div>` : ""}</div></section>`;
-  }
-  if (st && st.gaps) {
-    const g = st.gaps;
-    h += `<section class="sec card"><h2>When ${P.WORDS.places} here are open</h2><p class="sm mute">From the opening hours of ${g.known} ${P.WORDS.places}.</p><div class="grid">
-      <div class="stat"><b>${g.before8}%</b><span>open before 8am on weekdays</span></div><div class="stat"><b>${g.after5}%</b><span>open after 5pm on weekdays</span></div>
-      <div class="stat"><b>${g.sunday}%</b><span>open on Sundays</span></div><div class="stat"><b>${g.sundayAfter3}%</b><span>open after 3pm on Sundays</span></div></div></section>`;
-  }
-  const hyg = {}; (st ? Object.entries(st.hygiene) : venues.map(v => [v.hygiene || "Unknown", 1])).forEach(([k, n]) => hyg[k] = (hyg[k] || 0) + (st ? n : 1));
-  const tot = Object.values(hyg).reduce((a, b) => a + b, 0) || 1;
-  if (P.SECTOR === "cafe") h += `<section class="sec card"><h2>Food hygiene ratings</h2><p class="sm mute">From the Food Standards Agency, for every ${P.WORDS.place} in the area.</p>
-    ${HYG.filter(([k]) => hyg[k]).map(([k, t]) => `<div class="hyg"><span>${esc(t)}</span><div class="bar"><i style="width:${(hyg[k] / tot) * 100}%"></i></div><span class="n">${hyg[k]}</span></div>`).join("")}</section>`;
-  const cal = pub ? (pub.calendar || []).filter(e => (e.end || e.start) >= new Date().toISOString().slice(0, 10)) : [];
-  const dm = s => new Date(s).toLocaleDateString("en-GB", { day: "numeric", month: "short" });
-  if (cal.length) h += `<section class="sec card"><h2>Coming up locally</h2><p class="sm mute">What will make trade busier or quieter over the next few weeks.</p>${cal.slice(0, 10).map(e => `<div class="ev"><span class="d">${dm(e.start)}${e.end && e.end !== e.start ? "–" + dm(e.end) : ""}</span><span><b>${esc(e.title)}</b> <span class="chip ${e.effect === "busier" ? "good" : e.effect === "quieter" ? "warn" : ""}">${esc(P.CAL_TYPES[e.type] || "")}</span>${e.districts && e.districts.length ? `<span class="xs mute"> ${esc(e.districts.join(", "))}</span>` : ""}${e.note ? `<br><span class="sm mute">${esc(e.note)}</span>` : ""}</span></div>`).join("")}</section>`;
-  const pr = pub && pub.profile;
-  if (pr && (pr.people || pr.wfh || pr.students)) h += `<section class="sec card"><h2>Who's on your doorstep</h2><div class="grid">${[["people", "people live here", ""], ["wfh", "work mainly from home", "%"], ["students", "are full-time students", "%"], ["over65", "are 65 or over", "%"], ["families", "of households have children", "%"]].filter(([k]) => pr[k]).map(([k, t, u]) => `<div class="stat"><b>${esc(pr[k])}${u}</b><span>${t}</span></div>`).join("")}</div>${pr.source ? `<p class="xs mute" style="margin-top:8px">Source: ${esc(pr.source)}.</p>` : ""}</section>`;
-  h += SAL ? `<section class="sec"><h2>How it works</h2><ol class="how">
-    <li><b>Check your prices</b><span class="mute">Tell us what you charge for a few services. You'll see straight away where you sit against the ${P.WORDS.places} near you.</span></li>
-    <li><b>Get your free report</b><span class="mute">Your prices service by service against your nearest ${P.WORDS.places}, and what we'd change first to get picked more often.</span></li>
-    <li><b>Get one move a week</b><span class="mute">If it's useful, Patch checks your listings, reviews and AI answers every week and sends the next thing to do, then whether it worked. It also reminds you about insurance and other renewals. Founding ${P.WORDS.places} pay £${CFG.foundingPrice} a month for the first 12 months.</span></li></ol></section>`
-  : `<section class="sec"><h2>How it works</h2><ol class="how">
-    <li><b>Ask for your free report</b><span class="mute">Pick your ${P.WORDS.place} below. We'll check your menu, prices and opening hours against the 10 ${P.WORDS.places} nearest you.</span></li>
-    <li><b>See where you stand</b><span class="mute">A private report: item by item against your neighbours, plus a calculator that shows where you could save on supplies or charge a little more and still be competitive.</span></li>
-    <li><b>Keep it up to date</b><span class="mute">If it's useful, we track your patch every month and tell you what's changed: new openings, price moves, local events. Founding places are £${CFG.foundingPrice} a month for the first 12 months.</span></li></ol></section>`;
-  h += `<section class="sec card" id="start"><h2>Get your free report</h2><form id="rq" novalidate>
-    <label class="f"><span>Your ${P.WORDS.place}</span><input id="cafe" list="cafes" autocomplete="off" placeholder="Start typing its name"><datalist id="cafes">${venues.map(v => `<option value="${esc(v.name)} (${esc(v.postcode || "")})">`).join("")}</datalist></label>
-    <div class="grid" style="gap:0 12px"><label class="f"><span>Your name</span><input id="nm" autocomplete="name" maxlength="80"></label><label class="f"><span>Email</span><input id="em" type="email" autocomplete="email" maxlength="120"></label>
-    <label class="f"><span>You are the</span><select id="role"><option>Owner</option><option>Manager</option><option>Other</option></select></label><label class="f"><span>Phone (optional)</span><input id="ph" type="tel" maxlength="30"></label></div>
-    <label class="f"><span>Anything you'd most like to know? (optional)</span><textarea id="msg" maxlength="1000" placeholder="${SAL ? "For example: am I charging enough for balayage?" : "For example: am I charging enough for brunch?"}"></textarea></label>
-    <p class="sm mute">We use these details only to send your report. We never share your figures with other ${P.WORDS.places}.</p><p class="err" id="err" role="alert"></p>
-    <button class="btn big" id="go">Get my free report</button></form><div id="thanks" hidden></div></section>`;
-  document.getElementById("app").innerHTML = h;
-  document.getElementById("rq").addEventListener("submit", submit);
-}
-async function submit(e) {
-  e.preventDefault();
-  const v = id => document.getElementById(id).value.trim(), err = document.getElementById("err"), cafe = v("cafe");
-  const match = AREA.venues.find(x => `${x.name} (${x.postcode || ""})` === cafe || x.name.toLowerCase() === cafe.toLowerCase());
-  if (!cafe) { err.textContent = `Tell us which ${P.WORDS.place} is yours.`; return; }
-  if (!v("nm")) { err.textContent = "Please tell us your name."; return; }
-  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v("em"))) { err.textContent = "Please check your email address."; return; }
-  const b = document.getElementById("go"); b.disabled = true; b.textContent = "Sending…"; err.textContent = "";
-  try {
-    const r = await D.rpc("request_report", { p_slug: AREA.slug, p_venue: match ? match.id : null, p_venue_text: match ? null : cafe, p_name: v("nm"), p_email: v("em"), p_role: v("role"), p_phone: v("ph"), p_message: v("msg") });
-    if (r !== "ok") throw new Error({ bad: "Please check your name and email.", many: "We've already got a few requests from this email today. We'll be in touch.", busy: "Lots of requests right now. Please try again in an hour.", area: "We couldn't find this area." }[r] || "That didn't send. Please try again.");
-    document.getElementById("rq").hidden = true; const t = document.getElementById("thanks"); t.hidden = false;
-    t.innerHTML = `<h3>Thanks, ${esc(v("nm").split(/\s+/)[0])}.</h3><p>We'll email your report on ${esc(match ? match.name : cafe)} to <b>${esc(v("em"))}</b> within a few working days.</p>${D.DEMO ? `<p class="sm">In the demo, open the <a href="admin.html?demo=1">admin page</a> to see your request and build the report.</p>` : ""}`;
-  } catch (x) { err.textContent = x.message; b.disabled = false; b.textContent = "Get my free report"; }
-}
-const placeOf = n => String(n || "").replace(/\s+(salons?|caf[eé]s?)(?=\s*(\(demo\))?$)/i, "");
-async function boot() {
-  try { AREA = await D.rpc("area_public", { p_slug: slug }); } catch (e) { AREA = null; }
-  if (AREA) P.useSector(AREA.sector);
-  if (D.DEMO) document.getElementById("demo").innerHTML = `<p class="demo"><b>Demo.</b> A made-up area with made-up ${P.WORDS.places}. Nothing here is real.</p>`;
-  document.getElementById("tag").textContent = `For independent ${P.SECTOR === "salon" ? "salons and barbers" : "café owners"}`;
-  document.getElementById("foot").innerHTML = `${P.SECTOR === "cafe" ? "Food hygiene ratings from the Food Standards Agency. Contains public sector information licensed under the Open Government Licence v3.0. " : ""}Area figures are only shown where we have at least ${P.MIN_N} ${P.WORDS.places}.${CFG.contactEmail ? ` Questions: <a href="mailto:${esc(CFG.contactEmail)}">${esc(CFG.contactEmail)}</a>.` : ""} <a href="privacy.html">Privacy</a> · <a href="admin.html${D.DEMO ? "?demo=1" : ""}">Admin</a>${D.DEMO ? ` · <a href="owner.html?demo=1">An owner's home (demo)</a>` : ""}`;
-  if (!AREA) { document.getElementById("app").innerHTML = `<p class="card">We couldn't find that area. Check the link, or email us${CFG.contactEmail ? ` at <b>${esc(CFG.contactEmail)}</b>` : ""} and we'll point you to yours.</p>`; return; }
-  document.title = `Patch · ${P.SECTOR === "salon" ? "Salons and barbers" : "Cafés"} in ${placeOf(AREA.name)}`;
-  render();
-}
-boot();
+  "use strict";
+  const D = PatchData, K = PatchDesk, CFG = D.CFG, $ = s => document.querySelector(s), esc = K.esc;
+  // Old links to an area's figures (/?a=…) now live at /prices.
+  const q = new URLSearchParams(location.search); if (q.get("a")) { location.replace("prices" + location.search); return; }
+  if (D.DEMO) $("#pricesLink").href = "prices?demo=1";
+  if (D.DEMO) $("#demo").innerHTML = `<p class="demo"><b>Demo.</b> Sign-ups are kept in this browser. See them in <a href="members.html?demo=1">admin</a>, or open <a href="b.html?b=paws-and-polish-demo&demo=1">a made-up groomer's page</a>.</p>`;
+  $("#foot").innerHTML = `${CFG.contactEmail ? `Questions: <b>${esc(CFG.contactEmail)}</b> · ` : ""}<a href="prices${D.DEMO ? "?demo=1" : ""}">Local prices</a> · <a href="price-check${D.DEMO ? "?demo=1" : ""}">Check your prices</a> · <a href="privacy">Privacy</a>`;
+  $("#sf").addEventListener("submit", async e => {
+    e.preventDefault(); const v = id => $("#" + id).value.trim(), err = $("#err"), num = K.waNumber(v("wa"));
+    if (!v("nm")) { err.textContent = "Please tell us your name."; return; }
+    if (!v("bz")) { err.textContent = "Please tell us the business name."; return; }
+    if (!num) { err.textContent = "Please check your WhatsApp number."; return; }
+    if (v("em") && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v("em"))) { err.textContent = "Please check your email, or leave it empty."; return; }
+    const b = $("#go"); b.disabled = true; b.textContent = "Sending…"; err.textContent = "";
+    try {
+      const r = await D.rpc("member_signup", { p_name: v("nm"), p_business: v("bz"), p_trade: v("tr"), p_town: v("tw"), p_whatsapp: num, p_email: v("em"), p_link: v("lk"), p_message: v("ms") });
+      if (r !== "ok") throw new Error({ bad: "Please check your name, business and number.", busy: "Lots of sign-ups right now. Please try again tomorrow." }[r] || "That didn't send. Please try again.");
+      $("#sf").hidden = true; const t = $("#thanks"); t.hidden = false;
+      t.innerHTML = `<h3>Thanks, ${esc(v("nm").split(/\s+/)[0])}.</h3><p>We'll message <b>+${esc(num)}</b> on WhatsApp within two working days with what AI assistants say about ${esc(v("bz"))}.</p>`;
+    } catch (x) { err.textContent = x.message; b.disabled = false; b.textContent = "Get my free check"; }
+  });
 })();
 </script>
 </body>

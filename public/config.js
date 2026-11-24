@@ -8,4 +8,6 @@ window.PATCH_CONFIG = {
   defaultArea: "stockport-salons",
   foundingPrice: 59,
   fullPrice: 89,
+  // Sales uploads, the local calendar and cost changes in reports: off while the core is prices and the front desk.
+  extras: false,
 };

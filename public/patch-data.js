@@ -100,6 +100,7 @@
   }
   // Front desk: a made-up dog groomer that's live with enquiries coming in, one being set up, and a new sign-up.
   function deskSeed(dd) {
+    const D0 = root.PatchDesk || { slugify: x => String(x).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") };
     const ts = n => new Date(Date.now() + n * 864e5).toISOString();
     const paws = { id: "dm1", slug: "paws-and-polish-demo", status: "live", name: "Paws & Polish", trade: "groomer", owner_name: "Sarah Jones (made up)", whatsapp: "447700900123", email: "sarah@example.com",
       facebook: "https://www.facebook.com/example-paws", town: "Stockport", locality: "Heaton Moor", districts: ["SK4", "SK5"], area_text: "Heaton Moor, Heaton Chapel, Heaton Mersey and Reddish (SK4 and SK5)", mobile: true,
@@ -118,7 +119,11 @@
     const ans = [["Cockapoo", "Medium", "chatgpt"], ["Shih Tzu", "Small", "google"], ["Labradoodle", "Large", "google"], ["Cockapoo", "Medium", "facebook"], ["Border Terrier", "Small", "chatgpt"], ["Cavapoo", "Small", "google"], ["Springer Spaniel", "Medium", "friend"], ["Cockapoo", "Medium", "google"], ["Bichon Frise", "Small", "chatgpt"]];
     const day = [-33, -26, -19, -12, -9, -6, -4, -2, -1];
     const enquiries = ans.map(([breed, size, source], i) => ({ id: "de" + i, member_id: paws.id, at: ts(day[i]), source, answers: { breed, size, service: size === "Large" ? "Full groom, large dog" : "Full groom, cockapoo or medium dog", when: i % 2 ? "Saturday morning" : "Any weekday", district: i % 3 ? "SK4" : "SK5" }, voided: i === 6, void_reason: i === 6 ? "Existing customer" : null }));
-    return { members: [paws, shine, lead], enquiries };
+    // Five more made-up Stockport groomers, so the local price ranges have enough to show.
+    const more = [["Bark & Bubble", "Edgeley", 38, 44, 52], ["The Groom Room SK", "Cheadle Hulme", 42, 48, 60], ["Happy Hounds Grooming", "Reddish", 35, 42, 50], ["Scruffs to Fluffs", "Hazel Grove", 40, 46, 58], ["Tails Up Mobile", "Marple", 45, 50, 62]]
+      .map(([name, loc, s1, s2, s3], i) => ({ id: "dmx" + i, slug: D0.slugify(name) + "-demo", status: "live", name: name + "", trade: "groomer", owner_name: "Made up", whatsapp: "4477009002" + (10 + i), town: "Stockport", locality: loc, districts: [], mobile: i % 2 === 0,
+        services: [{ name: "Full groom, small dog", price: s1 }, { name: "Full groom, cockapoo or medium dog", price: s2 }, { name: "Full groom, large dog", price: s3 }, { name: "Nail clip", price: 8 + i }], faqs: [], specialisms: [], listings: {}, checks: [], plan: "ppe", preview_token: "demo-px-" + i, created_at: ts(-20), live_at: ts(-20), updated_at: ts(-20) }));
+    return { members: [paws, shine, lead].concat(more), enquiries };
   }
   // A made-up salon area: some businesses priced, some not, so the price check and the coverage list have something to show.
   function salonSeed(rnd, dd) {

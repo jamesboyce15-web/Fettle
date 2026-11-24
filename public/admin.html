@@ -60,7 +60,7 @@ const ago = s => { const d = (Date.now() - new Date(s)) / 864e5; const n = Math.
 function toast(t) { const el = $("#toast"); el.textContent = t; el.classList.add("on"); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove("on"), 2600); }
 const reportUrl = tok => `${location.protocol === "file:" ? "report.html" : location.origin + location.pathname.replace(/admin(\.html)?$/, "report")}?t=${encodeURIComponent(tok)}${D.DEMO ? "&demo=1" : ""}`;
 const ownerUrl = tok => `${location.protocol === "file:" ? "owner.html" : location.origin + location.pathname.replace(/admin(\.html)?$/, "owner")}?t=${encodeURIComponent(tok)}${D.DEMO ? "&demo=1" : ""}`;
-const STATUS = { new: "New", report_sent: "Report sent", founding: "Founding member", not_now: "Not now" };
+const STATUS = { new: "New", report_sent: "Report sent", founding: "Wants setting up", not_now: "Not now" };
 
 let DB, ME, S = { areas: [], area: null, venues: [], obs: [], requests: [] };
 const V = { view: "requests", req: null, q: "", all: false, rec: { venue: null, source: "visit", scores: {}, prices: {}, hours: null }, cal: [], costs: [], profile: {}, draft: null };
@@ -81,13 +81,16 @@ function render() {
   const nNew = S.requests.filter(r => r.status === "new" && (!S.area || r.area_id === S.area.id)).length;
   const nFound = S.requests.filter(r => r.founding_interest && r.status !== "founding").length;
   const nav = (v, t, n) => `<button data-nav="${v}" ${V.view === v ? 'aria-current="page"' : ""}>${t}${n ? `<span class="n">${n}</span>` : ""}</button>`;
-  $("#root").innerHTML = `<header class="top"><a class="brand" href="./${D.DEMO ? "?demo=1" : ""}">Patch<i>.</i></a><span class="chip">Admin</span><span class="sp"></span>
+  $("#root").innerHTML = `<header class="top"><a class="brand" href="./${D.DEMO ? "?demo=1" : ""}">Patch<i>.</i></a><span class="chip">Prices</span><span class="sp"></span>
     <select id="areaSel" aria-label="Area" style="border:1px solid var(--line);border-radius:9px;padding:6px 8px;background:var(--card)">${S.areas.map(a => `<option value="${a.id}" ${S.area && a.id === S.area.id ? "selected" : ""}>${esc(a.name)}</option>`).join("")}</select>
-    <a class="btn q sm" href="members${D.DEMO ? ".html?demo=1" : ""}">Front desk</a><button class="btn q sm" data-act="signout">${D.DEMO ? "Reset demo" : "Sign out"}</button></header>
+    <a class="btn sm" href="members${D.DEMO ? ".html?demo=1" : ""}">Front desk</a><button class="btn q sm" data-act="signout">${D.DEMO ? "Reset demo" : "Sign out"}</button></header>
     ${D.DEMO ? `<p class="demo"><b>Demo.</b> Made-up cafés, saved only in this browser. Try: open a request, build the report, then open the report link.</p>` : ""}
-    <nav class="nav">${nav("requests", "Report requests", nNew + nFound)}${nav("record", "Record a visit or menu")}${nav("sweeps", "Price sweeps")}${nav("cafes", "Cafés")}${nav("search", "Search and AI")}${nav("calendar", "Local calendar")}${P.SECTOR === "salon" ? nav("coverage", "Coverage") : ""}${nav("area", "Area page")}${nav("offers", "Offers")}${nav("settings", "Costs")}${nav("emails", "Emails")}</nav>
+    <nav class="nav">${nav("requests", "Report requests", nNew + nFound)}${nav("record", "Record prices")}${nav("sweeps", "Price sweeps")}${P.SECTOR === "salon" ? nav("coverage", "Coverage") : ""}${nav("cafes", P.SECTOR === "salon" ? "Businesses" : "Cafés")}${nav("area", "Area page")}${nav("emails", "Emails")}
+      ${LATER.includes(V.view) || V.later ? LATER_NAV.map(([k, t]) => nav(k, t)).join("") : ""}<button data-act="later" class="xs" style="margin-left:auto" aria-expanded="${!!(V.later || LATER.includes(V.view))}">${V.later || LATER.includes(V.view) ? "Hide later" : "Later ›"}</button></nav>
     <div id="main">${view()}</div>`;
 }
+// The core is prices and the front desk. These still work, but stay out of the way until they're needed.
+const LATER_NAV = [["search", "Search and AI"], ["calendar", "Local calendar"], ["offers", "Offers"], ["settings", "Costs"]], LATER = LATER_NAV.map(x => x[0]);
 function view() { try { return ({ requests: vRequests, record: vRecord, cafes: vCafes, search: vSearch, calendar: vCalendar, area: vArea, coverage: vCoverage, offers: vOffers, settings: vSettings, emails: vEmails, sweeps: vSweeps })[V.view](); } catch (e) { console.error(e); return `<p class="card err">${esc(e.message)}</p>`; } }
 function coverage(v) { const l = P.latest(S.obs, v.id); return { n: Object.keys(l.prices).length, visited: l.visited, last: l.lastAt }; }
 
@@ -96,13 +99,13 @@ function vRequests() {
   const list = S.requests.filter(r => !S.area || r.area_id === S.area.id), r = S.requests.find(x => x.id === V.req);
   return `<div class="split"><section class="card" style="padding:0;overflow:auto">${list.length ? `<table class="t"><thead><tr><th>Asked</th><th>Who</th><th>Café</th><th>Status</th></tr></thead><tbody>
     ${list.map(x => { const v = venue(x.venue_id); return `<tr class="click ${x.id === V.req ? "sel" : ""}" data-req="${x.id}"><td class="sm">${esc(ago(x.created_at))}</td><td><b>${esc(x.name)}</b><br><span class="xs mute">${esc(x.role || "")} · ${esc(x.email)}</span></td>
-      <td>${esc(v ? v.name : x.venue_text || "Not said")}${v ? "" : ' <span class="chip warn">Not linked</span>'}</td><td><span class="chip ${x.status === "new" ? "warn" : x.status === "founding" ? "good" : ""}">${STATUS[x.status]}</span>${x.founding_interest && x.status !== "founding" ? '<br><span class="chip good">Wants a founding place</span>' : ""}</td></tr>`; }).join("")}</tbody></table>`
+      <td>${esc(v ? v.name : x.venue_text || "Not said")}${v ? "" : ' <span class="chip warn">Not linked</span>'}</td><td><span class="chip ${x.status === "new" ? "warn" : x.status === "founding" ? "good" : ""}">${STATUS[x.status]}</span>${x.founding_interest && x.status !== "founding" ? '<br><span class="chip good">Wants the front desk</span>' : ""}</td></tr>`; }).join("")}</tbody></table>`
     : `<p class="mute" style="padding:16px">No requests yet. They arrive from the area page.</p>`}</section><aside class="panel">${r ? reqPanel(r) : `<div class="card"><p class="mute">Choose a request.</p></div>`}</aside></div>`;
 }
 function reqPanel(r) {
   const v = venue(r.venue_id);
   let h = `<div class="card"><h2 style="margin:0 0 4px">${esc(r.name)}</h2><p class="sm mute">${esc(r.role || "")} · <a href="mailto:${esc(r.email)}">${esc(r.email)}</a>${r.phone ? ` · ${esc(r.phone)}` : ""}</p>
-    ${r.message ? `<p>“${esc(r.message)}”</p>` : ""}${r.founding_interest ? `<p class="chip good">Wants a founding place</p>${r.founding_message ? `<p class="sm">“${esc(r.founding_message)}”</p>` : ""}` : ""}
+    ${r.message ? `<p>“${esc(r.message)}”</p>` : ""}${r.founding_interest ? `<p class="chip good">Wants the front desk</p>${r.founding_message ? `<p class="sm">“${esc(r.founding_message)}”</p>` : ""}` : ""}
     <label class="f"><span>Their café</span><select data-rq="venue_id"><option value="">${esc(r.venue_text || "Choose")}</option>${S.venues.filter(x => x.included).sort((a, b) => a.name.localeCompare(b.name)).map(x => `<option value="${x.id}" ${x.id === r.venue_id ? "selected" : ""}>${esc(x.name)} (${esc(x.postcode || "")})</option>`).join("")}</select></label>
     <label class="f"><span>Status</span><select data-rq="status">${Object.entries(STATUS).map(([k, t]) => `<option value="${k}" ${r.status === k ? "selected" : ""}>${t}</option>`).join("")}</select></label>
     <label class="f"><span>Your notes</span><textarea data-rq="admin_notes">${esc(r.admin_notes || "")}</textarea></label>`;
@@ -121,7 +124,7 @@ function reqPanel(r) {
 }
 function mailto(r, v) {
   const first = (r.name || "").split(/\s+/)[0] || "there";
-  const body = `Hi ${first},\n\nHere's your free Patch report for ${v.name}: how you compare with the 10 cafés nearest you, item by item, and a calculator to see where you could save or charge more.\n\n${reportUrl(r.token)}\n\nIt's private: no other café sees your figures.\n\nIf it's useful, we're taking 10 founding members at £${CFG.foundingPrice} a month for the first year, with a fresh report every month. There's a button at the end of the report.\n\nThanks`;
+  const body = `Hi ${first},\n\nHere's your free Patch report for ${v.name}: how you compare with the 10 cafés nearest you, item by item, and a calculator to see where you could save or charge more.\n\n${reportUrl(r.token)}\n\nIt's private: no other café sees your figures.\n\nIf you'd like to be found by AI too, with enquiries straight to your WhatsApp, there's a button at the end of the report. Setup is free and there's no contract.\n\nThanks`;
   return `mailto:${encodeURIComponent(r.email)}?subject=${encodeURIComponent("Your Patch report for " + v.name)}&body=${encodeURIComponent(body)}`;
 }
 
@@ -274,7 +277,7 @@ function vArea() {
     <aside class="panel"><div class="card"><h3>Who lives and works here</h3><p class="sm mute">From the 2021 Census and ONS (build a custom area at ons.gov.uk for these postcodes). Shown on the area page and in reports.</p>
     ${PROFILE.map(([k, t, u]) => `<label class="f"><span>${t}</span><input data-prof="${k}" value="${esc(V.profile[k] ?? "")}" placeholder="${u}"></label>`).join("")}
     <label class="f"><span>Source</span><input data-prof="source" value="${esc(V.profile.source || "")}" placeholder="Census 2021, ONS"></label><button class="btn q sm" data-act="saveprofile">Save</button></div>
-    <div class="card"><p class="sm">${pub ? `Last published ${fmtD(S.area.published_at)}.` : "Not published yet."}</p><div class="row"><button class="btn" data-act="publish">Publish the area page</button><a class="btn q" href="./?a=${esc(S.area.slug)}${D.DEMO ? "&demo=1" : ""}" target="_blank" rel="noopener">View it</a></div></div></aside></div>`;
+    <div class="card"><p class="sm">${pub ? `Last published ${fmtD(S.area.published_at)}.` : "Not published yet."}</p><div class="row"><button class="btn" data-act="publish">Publish the area page</button><a class="btn q" href="prices?a=${esc(S.area.slug)}${D.DEMO ? "&demo=1" : ""}" target="_blank" rel="noopener">View it</a></div></div></aside></div>`;
 }
 
 /* ---------- salon coverage: enough prices to mean something, and who to ask next ---------- */
@@ -439,6 +442,7 @@ function vSettings() {
 
 /* ---------- events ---------- */
 document.addEventListener("click", async e => {
+  if (e.target.closest('[data-act="later"]')) { V.later = !(V.later || LATER.includes(V.view)); if (!V.later && LATER.includes(V.view)) V.view = "requests"; return render(); }
   const t = e.target.closest("button,a,tr[data-req],tr[data-sw],input[type=checkbox]"); if (!t) return; const d = t.dataset;
   if (d.nav) { V.view = d.nav; if (d.nav === "sweeps") V.sw = null; return render(); }
   if (d.sw !== undefined) { if (!d.sw) { V.sw = null; await loadSweeps(); return render(); } return openSweep(d.sw); }

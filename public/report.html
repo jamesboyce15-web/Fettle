@@ -60,6 +60,8 @@
 (function () {
 "use strict";
 const P = PatchCore, D = PatchData, CFG = D.CFG, Q = new URLSearchParams(location.search), token = Q.get("t") || (D.DEMO ? "demo-salon" : "");
+// Sales uploads, the local calendar and cost changes come later; ?extras=1 (or extras in config.js) shows them.
+const EXTRAS = !!CFG.extras || Q.has("extras");
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const money = P.money, fmtD = s => s ? new Date(s).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) : "";
 const pounds = n => "£" + Math.round(n).toLocaleString("en-GB");
@@ -108,10 +110,10 @@ function render() {
   }
   const cal = (s.calendar || []).filter(e => (e.end || e.start) >= new Date().toISOString().slice(0, 10));
   const dm = x => new Date(x).toLocaleDateString("en-GB", { day: "numeric", month: "short" });
-  if (cal.length) h += `<section class="card"><h2>Coming up near you</h2>${cal.slice(0, 8).map(e => `<div class="fx"><span><b>${esc(e.title)}</b> <span class="chip ${e.effect === "busier" ? "good" : e.effect === "quieter" ? "warn" : ""}">${esc(P.CAL_TYPES[e.type] || "")}</span>${e.note ? `<br><span class="sm mute">${esc(e.note)}</span>` : ""}</span><span class="sm mute" style="white-space:nowrap">${dm(e.start)}${e.end && e.end !== e.start ? "–" + dm(e.end) : ""}</span></div>`).join("")}</section>`;
+  if (EXTRAS && cal.length) h += `<section class="card"><h2>Coming up near you</h2>${cal.slice(0, 8).map(e => `<div class="fx"><span><b>${esc(e.title)}</b> <span class="chip ${e.effect === "busier" ? "good" : e.effect === "quieter" ? "warn" : ""}">${esc(P.CAL_TYPES[e.type] || "")}</span>${e.note ? `<br><span class="sm mute">${esc(e.note)}</span>` : ""}</span><span class="sm mute" style="white-space:nowrap">${dm(e.start)}${e.end && e.end !== e.start ? "–" + dm(e.end) : ""}</span></div>`).join("")}</section>`;
   const moved = (s.costs || []).filter(c => c.at >= P.BENCH_DATE);
-  if (moved.length) h += `<section class="card"><h2>Costs that have moved</h2>${moved.map(c => `<div class="fx"><span>${esc((P.COST_INPUTS[c.k] || {}).t || c.k)} ${c.pct > 0 ? "up" : "down"} ${Math.abs(c.pct)}%${c.source ? `<br><span class="xs mute">${esc(c.source)}</span>` : ""}</span><span class="sm mute">since ${dm(c.at)}</span></div>`).join("")}<p class="sm mute">Already included in the costs per serving in the calculator below.</p></section>`;
-  h += `<section class="card noprint" id="sales"><h2>Your sales, hour by hour</h2><p class="sm mute">Export your sales from your till as a CSV file (most tills have this under reports or transactions: Square, SumUp, Zettle, Lightspeed, Epos Now and others) and drop it here. We'll show your busy and quiet hours, and how local events and holidays change your takings. The file is read in this browser and isn't uploaded.</p>
+  if (EXTRAS && moved.length) h += `<section class="card"><h2>Costs that have moved</h2>${moved.map(c => `<div class="fx"><span>${esc((P.COST_INPUTS[c.k] || {}).t || c.k)} ${c.pct > 0 ? "up" : "down"} ${Math.abs(c.pct)}%${c.source ? `<br><span class="xs mute">${esc(c.source)}</span>` : ""}</span><span class="sm mute">since ${dm(c.at)}</span></div>`).join("")}<p class="sm mute">Already included in the costs per serving in the calculator below.</p></section>`;
+  if (EXTRAS) h += `<section class="card noprint" id="sales"><h2>Your sales, hour by hour</h2><p class="sm mute">Export your sales from your till as a CSV file (most tills have this under reports or transactions: Square, SumUp, Zettle, Lightspeed, Epos Now and others) and drop it here. We'll show your busy and quiet hours, and how local events and holidays change your takings. The file is read in this browser and isn't uploaded.</p>
     <div class="drop"><input type="file" id="salesFile" accept=".csv,text/csv"><p class="xs mute" style="margin:8px 0 0">At least a few weeks of sales works best. Item-by-item or sale-by-sale exports both work.</p></div><div id="salesOut"></div></section>`;
   h += `<section class="card found noprint" id="found"></section>`;
   document.getElementById("app").innerHTML = h;
@@ -132,10 +134,10 @@ function drawCalc() {
 }
 function drawFound() {
   const el = document.getElementById("found");
-  if (R.founding) { el.innerHTML = `<h2>Thanks. We'll be in touch about your founding place.</h2>`; return; }
-  el.innerHTML = `<h2>Want this every month?</h2><p>We're taking 10 founding members in ${esc(R.report.area.name)} at <b>£${CFG.foundingPrice} a month for the first 12 months</b> (then £${CFG.fullPrice}). A fresh report each month, alerts when a ${P.WORDS.place} opens near you or a neighbour changes prices, local events worth planning for, and this calculator kept up to date.</p>
-    <label class="f"><span>Anything you'd like us to know? (optional)</span><textarea id="fmsg" maxlength="1000"></textarea></label><p class="err" id="ferr"></p>
-    <button class="btn big" id="fgo">I'd like a founding place</button><p class="xs mute" style="margin-top:8px">Nothing to pay now. We'll email you to set it up.</p>`;
+  if (R.founding) { el.innerHTML = `<h2>Thanks. We'll be in touch to set you up.</h2><p class="sm">Usually within two working days.</p>`; return; }
+  el.innerHTML = `<h2>Get found by AI, with enquiries to your WhatsApp</h2><p>When someone asks ChatGPT or Google for a ${P.WORDS.place} near them, Patch makes sure the answer can include you, with your real prices and one tap to message you. <b>Setup is free.</b> Your first 3 enquiries are free, then £4 each, never more than £29 a month (£19 for the first 20 in ${esc(R.report.area.name)}). No contract, and your prices stay in this comparison.</p>
+    <label class="f"><span>Anything you'd like us to know? (optional)</span><textarea id="fmsg" maxlength="1000" placeholder="e.g. the best number to WhatsApp you on"></textarea></label><p class="err" id="ferr"></p>
+    <button class="btn big" id="fgo">Set me up</button><p class="xs mute" style="margin-top:8px">Nothing to pay now. We'll get in touch to set it up.</p>`;
   document.getElementById("fgo").addEventListener("click", async () => {
     const b = document.getElementById("fgo"); b.disabled = true;
     try { const ok = await D.rpc("founding_interest", { p_token: token, p_message: document.getElementById("fmsg").value }); if (!ok) throw new Error("We couldn't find this report."); R.founding = true; drawFound(); }
@@ -186,7 +188,7 @@ document.addEventListener("input", e => {
   const pos = e.target.selectionStart, id = e.target.dataset.c; drawCalc(); const el = document.querySelector(`[data-c="${id}"]`); if (el) { el.focus(); try { el.setSelectionRange(pos, pos); } catch (x) {} }
 });
 async function boot() {
-  if (!token) { document.getElementById("app").innerHTML = `<div class="card"><p>This link is missing its code. Open the report from the link in your email.</p><p class="sm">Haven't asked for one yet? <a href="./">See your area and ask for a free report</a>.${CFG.contactEmail ? ` Or email <b>${esc(CFG.contactEmail)}</b>.` : ""}</p></div>`; return; }
+  if (!token) { document.getElementById("app").innerHTML = `<div class="card"><p>This link is missing its code. Open the report from the link in your email.</p><p class="sm">Haven't asked for one yet? <a href="prices">See your area and ask for a free report</a>.${CFG.contactEmail ? ` Or email <b>${esc(CFG.contactEmail)}</b>.` : ""}</p></div>`; return; }
   try { R = await D.rpc("report_public", { p_token: token }); } catch (e) { R = null; }
   if (R && R.report && R.report.area) P.useSector(R.report.area.sector);
   if (D.DEMO) document.getElementById("demo").innerHTML = `<p class="demo"><b>Demo.</b> Made-up ${P.WORDS.places}. Nothing here is real.</p>`;

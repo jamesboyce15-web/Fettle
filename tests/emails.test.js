@@ -10,7 +10,7 @@ const E = globalThis.PatchEmails;
 
 test("the emails say the right things and escape what owners typed", () => {
   const r = E.reportReady({ name: "Jess <b>Patel</b>", cafe: "Fig & Co", reportUrl: "https://p/report?t=abc", foundingPrice: 59 });
-  assert.equal(r.subject, "Your Patch report for Fig & Co"); assert.match(r.text, /^Hi Jess,/); assert.match(r.text, /https:\/\/p\/report\?t=abc/); assert.match(r.text, /£59 a month/);
+  assert.equal(r.subject, "Your Patch report for Fig & Co"); assert.match(r.text, /^Hi Jess,/); assert.match(r.text, /https:\/\/p\/report\?t=abc/); assert.match(r.text, /found by AI/);
   assert.ok(r.html.includes("Fig &amp; Co") && !r.html.includes("<b>Patel"));
   assert.ok(/10 salons nearest you/.test(r.text) && !/caf[eé]/i.test(r.text + r.html), "salon wording by default, no café");
   assert.match(E.reportReady({ name: "Jess", cafe: "Fig", reportUrl: "x", sector: "cafe" }).text, /10 cafés nearest you/);

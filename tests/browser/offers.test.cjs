@@ -36,7 +36,7 @@ const SHOTS = process.env.SHOTS;
     ok(!!cardC && /TapRight/.test(await cardC.textContent()) && !/1\.39/.test(await cardC.textContent()), 'a price not checked for weeks is not shown');
 
     const a = await ctx.newPage(); a.on('pageerror', e => errs.push(e.message)); await a.setViewportSize({ width: 1200, height: 900 });
-    await a.goto(U + 'admin.html?demo=1&area=area-demo'); await a.waitForTimeout(500); await a.click('[data-nav=offers]'); await a.waitForTimeout(300);
+    await a.goto(U + 'admin.html?demo=1&area=area-demo'); await a.waitForTimeout(500); await a.click('[data-act=later]'); await a.click('[data-nav=offers]'); await a.waitForTimeout(300);
     const t = await a.textContent('#main');
     ok(/Shopfront Cover/.test(t) && /hidden from owners/.test(t), 'admin sees the offers, and which price is too old to show');
     ok(/1\s*1 owners/.test(t.replace(/\s+/g, ' ')) || /1 owners/.test(t), 'admin sees the click');

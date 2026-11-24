@@ -65,23 +65,32 @@ function render() {
   const list = S.members.filter(m => V.filter === "all" ? true : V.filter === "active" ? !["left"].includes(m.status) : m.status === V.filter);
   const months = [...new Set([thisMonth()].concat(S.enq.map(e => String(e.at).slice(0, 7))))].sort().reverse().slice(0, 13);
   const seg = (k, t) => `<button data-filter="${k}" aria-pressed="${V.filter === k}">${t}</button>`;
-  $("#root").innerHTML = `<header class="top"><a class="brand" href="start${D.DEMO ? "?demo=1" : ""}">Patch<i>.</i></a><span class="chip">Front desk</span><span class="sp"></span>
-    <a class="btn q sm" href="admin${D.DEMO ? ".html?demo=1" : ""}">Areas and salons</a><button class="btn q sm" data-act="new">Add a business</button><button class="btn q sm" data-act="signout">${D.DEMO ? "Reset demo" : "Sign out"}</button></header>
+  $("#root").innerHTML = `<header class="top"><a class="brand" href="./${D.DEMO ? "?demo=1" : ""}">Patch<i>.</i></a><span class="chip">Front desk</span><span class="sp"></span>
+    <a class="btn q sm" href="admin${D.DEMO ? ".html?demo=1" : ""}">Prices</a><button class="btn q sm" data-act="new">Add a business</button><button class="btn q sm" data-act="signout">${D.DEMO ? "Reset demo" : "Sign out"}</button></header>
     ${D.DEMO ? `<p class="demo"><b>Demo.</b> Made-up businesses, saved only in this browser. Open Paws &amp; Polish, then its page, and send an enquiry.</p>` : ""}
     <div class="stats"><div class="stat"><b>${live.length}</b><span>live</span></div><div class="stat"><b>${leads}</b><span>new sign-up${leads === 1 ? "" : "s"} to contact</span></div>
       <div class="stat"><b>${monthEnq.length}</b><span>enquiries this month${monthEnq.length ? `, ${ai} from AI` : ""}</span></div><div class="stat"><b>${gbp(billed)}</b><span>to bill for ${esc(monthName(V.month))}</span></div></div>
     <div class="row" style="margin:0 0 12px"><div class="seg">${seg("active", "Current")}${seg("lead", "Sign-ups")}${seg("setup", "Setting up")}${seg("live", "Live")}${seg("all", "All")}</div><span class="sp"></span>
       <label class="sm">Month <select id="month" style="border:1px solid var(--line);border-radius:8px;padding:5px">${months.map(x => `<option value="${x}" ${x === V.month ? "selected" : ""}>${esc(monthName(x, true))}</option>`).join("")}</select></label></div>
-    <div class="split"><section class="card" style="padding:0;overflow:auto">${list.length ? `<table class="t"><thead><tr><th>Business</th><th>Status</th><th>Setup</th><th>AI named</th><th>Enquiries</th><th>Bill</th></tr></thead><tbody>
+    <div class="split"><div style="min-width:0"><section class="card" style="padding:0;overflow:auto">${list.length ? `<table class="t"><thead><tr><th>Business</th><th>Status</th><th>Setup</th><th>AI named</th><th>Enquiries</th><th>Bill</th></tr></thead><tbody>
       ${list.map(m => { const b = K.bill(m, S.enq, V.month), p = K.setupProgress(m), s = K.aiSummary(m.checks);
         return `<tr class="click ${m.id === V.sel ? "sel" : ""}" data-sel="${m.id}"><td><b>${esc(m.name)}</b><br><span class="xs mute">${esc(K.trade(m.trade).t)}${m.town ? " · " + esc(m.locality || m.town) : ""}${m.founding ? " · founding" : ""}</span></td>
           <td><span class="chip ${m.status === "live" ? "good" : m.status === "lead" ? "warn" : ""}">${STATUS[m.status]}</span></td><td class="sm">${p.done}/${p.of}</td>
           <td class="sm">${s ? `${s.now.named}/${s.now.n}${s.days > 1 ? ` <span class="xs mute">was ${s.before.named}/${s.before.n}</span>` : ""}` : '<span class="mute">Not checked</span>'}</td>
           <td class="sm">${b.total ? b.counted + (b.voided ? ` <span class="xs mute">+${b.voided} void</span>` : "") : '<span class="mute">0</span>'}</td><td class="sm">${["live", "paused"].includes(m.status) ? gbp(b.amount) + (b.free ? ` <span class="xs mute">${b.free} free</span>` : "") : ""}</td></tr>`; }).join("")}</tbody></table>`
-      : `<p class="mute" style="padding:16px">Nothing here yet. Sign-ups arrive from the <a href="start${D.DEMO ? "?demo=1" : ""}">start page</a>.</p>`}</section>
-    <aside class="panel" id="panel">${V.ed ? panel() : `<div class="card"><p class="mute">Choose a business, or add one.</p></div>`}</aside></div>`;
+      : `<p class="mute" style="padding:16px">Nothing here yet. Sign-ups arrive from the <a href="./${D.DEMO ? "?demo=1" : ""}">home page</a>.</p>`}</section>
+    ${localSection()}</div><aside class="panel" id="panel">${V.ed ? panel() : `<div class="card"><p class="mute">Choose a business, or add one.</p></div>`}</aside></div>`;
 }
 const monthName = (m, yr) => new Date(m + "-15T12:00:00Z").toLocaleDateString("en-GB", yr ? { month: "long", year: "numeric" } : { month: "long" });
+
+// Price data from the front desk: every business's price list, grouped by trade and town. Ranges once 5 businesses list a service.
+function localSection() {
+  const groups = {}; S.members.filter(m => ["live", "setup", "paused"].includes(m.status) && m.town).forEach(m => { const k = m.trade + "|" + m.town.trim().toLowerCase(); (groups[k] = groups[k] || { trade: m.trade, town: m.town.trim(), n: 0 }).n++; });
+  const gs = Object.values(groups); if (!gs.length) return "";
+  return `<section class="card" style="margin-top:14px"><h2 style="margin:0 0 4px">Local prices from the front desk</h2><p class="sm mute" style="margin:0 0 10px">Every business's price list adds to Patch's price data. A range shows once ${K.MIN_PEERS} businesses list the same service; until then, just the count.</p>
+    ${gs.map(g => { const L = K.localPrices(S.members, g.trade, g.town), rows = Object.values(L).sort((a, b) => b.n - a.n);
+      return `<h3 style="margin:10px 0 4px">${esc(K.trade(g.trade).t)}s in ${esc(g.town)} <span class="xs mute">${g.n} on Patch</span></h3>${rows.length ? `<table class="t"><tbody>${rows.map(o => `<tr><td class="sm">${esc(o.name)}</td><td class="sm" style="text-align:right">${o.ok ? `${gbp(o.low)}–${gbp(o.high)} <span class="xs mute">middle ${gbp(o.median)}</span>` : `<span class="mute">${o.n} of ${K.MIN_PEERS}</span>`}</td></tr>`).join("")}</tbody></table>` : `<p class="sm mute">No prices yet.</p>`}`; }).join("")}</section>`;
+}
 
 /* ---------- the panel ---------- */
 function panel() {
@@ -94,8 +103,11 @@ function panel() {
     ${({ profile: pProfile, setup: pSetup, ai: pAi, enq: pEnq, msgs: pMsgs })[saved ? V.tab : "profile"](m)}</div>`;
 }
 const inp = (k, t, o) => { o = o || {}; const v = V.ed[k]; return `<label class="f"><span>${esc(t)}</span>${o.area ? `<textarea data-f="${k}" maxlength="${o.max || 1200}" ${o.ph ? `placeholder="${esc(o.ph)}"` : ""}>${esc(v ?? "")}</textarea>` : `<input data-f="${k}" value="${esc(Array.isArray(v) ? v.join(", ") : v ?? "")}" maxlength="${o.max || 120}" ${o.ph ? `placeholder="${esc(o.ph)}"` : ""} ${o.type ? `type="${o.type}"` : ""}>`}</label>`; };
+// What other businesses of the same trade in the same town charge for a service of the same name.
+const localHint = (L, s) => { const o = L[String(s.name || "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim()]; if (!o) return "";
+  return `<p class="xs mute" style="margin:-3px 0 7px">${o.ok ? `Local: most charge ${gbp(o.low)}–${gbp(o.high)}, middle ${gbp(o.median)} (${o.n} on Patch)` : `${o.n} other${o.n === 1 ? "" : "s"} on Patch list this; ranges show from ${K.MIN_PEERS}`}</p>`; };
 function pProfile(m) {
-  const T = K.trade(m.trade), sv = m.services || [], fq = m.faqs || [];
+  const T = K.trade(m.trade), sv = m.services || [], fq = m.faqs || [], L = K.localPrices(S.members, m.trade, m.town, m.id);
   return `<div class="two">${inp("name", "Business name")}${inp("owner_name", "Owner's name")}
     <label class="f"><span>What they do</span><select data-f="trade">${Object.entries(K.TRADES).map(([k, t]) => `<option value="${k}" ${m.trade === k ? "selected" : ""}>${esc(t.t)}</option>`).join("")}</select></label>
     <label class="f"><span>Status</span><select data-f="status">${Object.entries(STATUS).map(([k, t]) => `<option value="${k}" ${m.status === k ? "selected" : ""}>${t}</option>`).join("")}</select></label>
@@ -109,7 +121,7 @@ function pProfile(m) {
     ${inp("specialisms", "Good at (commas): the words customers search", { max: 300, ph: T.one === "dog groomer" ? "Cockapoos and doodles, nervous dogs, hand stripping" : "" })}
     ${inp("hours", "Hours", { max: 300, ph: "Tuesday to Saturday, 8am to 5pm" })}
     <h3 style="margin:14px 0 6px">Services and prices</h3>${sv.length ? `<div class="svc xs mute"><span>Service</span><span>Price £</span><span class="from">From</span><span class="note">Note</span><span></span></div>` : ""}
-    ${sv.map((s, i) => `<div class="svc"><input data-sv="${i}" data-k="name" value="${esc(s.name || "")}" maxlength="80" aria-label="Service"><input data-sv="${i}" data-k="price" value="${esc(s.price ?? "")}" inputmode="decimal" aria-label="Price"><label class="from" style="text-align:center"><input type="checkbox" data-sv="${i}" data-k="from" ${s.from ? "checked" : ""} aria-label="From price"></label><input class="note" data-sv="${i}" data-k="note" value="${esc(s.note || "")}" maxlength="120" aria-label="Note"><button class="x" data-act="delsv" data-i="${i}" aria-label="Remove">×</button></div>`).join("")}
+    ${sv.map((s, i) => `<div class="svc"><input data-sv="${i}" data-k="name" value="${esc(s.name || "")}" maxlength="80" aria-label="Service"><input data-sv="${i}" data-k="price" value="${esc(s.price ?? "")}" inputmode="decimal" aria-label="Price"><label class="from" style="text-align:center"><input type="checkbox" data-sv="${i}" data-k="from" ${s.from ? "checked" : ""} aria-label="From price"></label><input class="note" data-sv="${i}" data-k="note" value="${esc(s.note || "")}" maxlength="120" aria-label="Note"><button class="x" data-act="delsv" data-i="${i}" aria-label="Remove">×</button></div>${localHint(L, s)}`).join("")}
     <div class="row"><button class="btn q sm" data-act="addsv">Add a service</button>${!sv.length && T.services.length ? `<button class="btn q sm" data-act="starters">Start from a typical ${esc(T.one)} list</button>` : ""}</div>
     <h3 style="margin:14px 0 6px">Questions people ask</h3><p class="xs mute" style="margin:0 0 6px">Only questions with the owner's own answer show on the page.</p>
     ${fq.map((f, i) => `<div class="faq"><div><input data-fq="${i}" data-k="q" value="${esc(f.q || "")}" maxlength="160" aria-label="Question"><textarea data-fq="${i}" data-k="a" maxlength="600" rows="2" style="margin-top:4px" placeholder="Their answer" aria-label="Answer">${esc(f.a || "")}</textarea></div><button class="x" data-act="delfq" data-i="${i}" aria-label="Remove">×</button></div>`).join("")}
@@ -149,7 +161,7 @@ function pEnq(m) {
 }
 function pMsgs(m) {
   const live = `Hi ${String(m.owner_name || "").split(" ")[0] || "there"}, your Patch page is live: ${pageUrl(m)}\n\nPut this link as the website on your Google profile, and as the button on your Facebook page ("Send WhatsApp message" or "Book now"). Enquiries will arrive here on WhatsApp with the details already filled in.\n\nYour first ${K.PRICES.free} enquiries are free.`;
-  const msgs = [["opener", "Free check: the first message", K.openerMessage(m, m.checks, (ME && ME.name) || "James")], ["summary", "“Here's what we'll tell the world”", K.summaryMessage(m)], ["live", "Your page is live", live], ["report", `Monthly report: ${monthName(V.month)}`, K.reportMessage(m, S.enq, m.checks, V.month)]];
+  const msgs = [["opener", "Free check: the first message", K.openerMessage(m, m.checks, (ME && ME.name) || "James")], ["summary", "“Here's what we'll tell the world”", K.summaryMessage(m)], ["live", "Your page is live", live], ["report", `Monthly report: ${monthName(V.month)}`, K.reportMessage(m, S.enq, m.checks, V.month, S.members)]];
   return `<p class="sm mute">Nothing is sent from here. Copy a message, or open it in WhatsApp and press send yourself.</p>${msgs.map(([k, t, txt]) => `<h3 style="margin:14px 0 6px">${esc(t)}</h3><textarea class="msg" id="msg_${k}" aria-label="${esc(t)}">${esc(txt)}</textarea>
     <div class="row"><button class="btn q sm" data-act="copymsg" data-k="${k}">Copy</button>${m.whatsapp ? `<a class="btn q sm" data-wa="${k}" href="${esc(K.waLink(m.whatsapp, txt))}" target="_blank" rel="noopener">Open in WhatsApp</a>` : '<span class="xs mute">Add their WhatsApp number to open it there.</span>'}</div>`).join("")}`;
 }

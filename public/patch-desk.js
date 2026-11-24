@@ -113,6 +113,26 @@
   }
   function bySource(list) { const o = {}; (list || []).filter(e => !e.voided).forEach(e => { const k = SOURCE[e.source] ? e.source : "other"; o[k] = (o[k] || 0) + 1; }); return o; }
 
+  /* ---------- local prices, from businesses' own price lists ---------- */
+  // The front desk's half of Patch's price data. Ranges are only shown from MIN_PEERS or more businesses (never one named
+  // business's price to another), matching the area pages. Services match on their name, so starter lists keep names in line.
+  const MIN_PEERS = 5;
+  const svcKey = n => clean(n).toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+  const median = a => { const b = a.slice().sort((x, y) => x - y), m = b.length >> 1; return b.length % 2 ? b[m] : (b[m - 1] + b[m]) / 2; };
+  const pct = (a, q) => { const b = a.slice().sort((x, y) => x - y), i = (b.length - 1) * q, lo = Math.floor(i), hi = Math.ceil(i); return b[lo] + (b[hi] - b[lo]) * (i - lo); };
+  function localPrices(members, tradeKey, town, exceptId) {
+    const out = {}, t = svcKey(town);
+    (members || []).filter(m => m && m.trade === tradeKey && svcKey(m.town) === t && m.id !== exceptId && ["live", "setup", "paused"].includes(m.status))
+      .forEach(m => { const seen = new Set(); services(m).forEach(s => { if (s.price == null || s.price <= 0 || s.from) return; const k = svcKey(s.name); if (!k || seen.has(k)) return; seen.add(k); (out[k] = out[k] || { name: s.name, prices: [] }).prices.push(s.price); }); });
+    Object.values(out).forEach(o => { o.n = o.prices.length; o.ok = o.n >= MIN_PEERS; if (o.ok) { o.median = median(o.prices); o.low = Math.round(pct(o.prices, 0.25)); o.high = Math.round(pct(o.prices, 0.75)); } delete o.prices; });
+    return out;
+  }
+  // This business's services against the local figures: only where there are enough others.
+  function compareLocal(m, members) {
+    const L = localPrices(members, m.trade, m.town, m.id);
+    return services(m).filter(s => s.price != null && !s.from).map(s => { const o = L[svcKey(s.name)]; return o && o.ok ? { name: s.name, mine: s.price, median: o.median, low: o.low, high: o.high, n: o.n } : null; }).filter(Boolean);
+  }
+
   /* ---------- AI checks ---------- */
   // checks: [{at, engine, q, named, prices, contact, notes}]. The first day's checks are "before"; the latest day's are "now".
   function aiSummary(checks) {
@@ -156,15 +176,17 @@
       + (m.hours ? `\nHours: ${clean(m.hours, 200)}\n` : "") + `\nEnquiries come to this WhatsApp number. Customers will be asked: ${T.questions.map(q => q.t.replace(/\?$/, "").toLowerCase()).join(", ")}, when, and their area.`;
   }
   // The monthly report: what came in, what AI says now, the bill, one thing to do.
-  function reportMessage(m, enquiries, checks, month) {
+  function reportMessage(m, enquiries, checks, month, members) {
     const b = bill(m, enquiries, month), src = bySource((enquiries || []).filter(e => e.member_id === m.id && String(e.at).slice(0, 7) === month)), s = aiSummary(checks);
     const label = new Date(month + "-15T12:00:00Z").toLocaleDateString("en-GB", { month: "long" });
     const srcTxt = Object.entries(src).sort((a, c) => c[1] - a[1]).map(([k, n]) => `${n} from ${SOURCE[k].replace("Google or Google Maps", "Google").replace("A friend or family", "friends").replace("Somewhere else", "elsewhere")}`).join(", ");
     const ai = s ? (s.days > 1 ? `AI assistants named you in ${s.now.named} of ${s.now.n} searches, up from ${s.before.named} of ${s.before.n} when we started.` : `AI assistants named you in ${s.now.named} of ${s.now.n} searches.`).replace("up from", s.now.named < s.before.named ? "down from" : s.now.named === s.before.named ? "the same as" : "up from") : "";
     const money2 = n => "£" + (+n).toFixed(2).replace(/\.00$/, "");
     const billTxt = b.plus ? `Bill: ${money2(b.amount)} (Plus).` : b.charged ? `Bill: ${money2(b.amount)} (${b.charged} at ${money2(b.per)}${b.capped ? `, capped at ${money2(b.cap)}` : ""}${b.free ? `, and ${b.free} free` : ""}).` : b.free ? `Bill: £0. ${b.free} of your free enquiries used, ${b.freeLeft} left.` : "Bill: £0.";
+    const cmp = members ? compareLocal(m, members) : [], c0 = cmp.sort((a, c) => Math.abs(c.mine - c.median) / c.median - Math.abs(a.mine - a.median) / a.median)[0];
+    const priceTxt = c0 ? `\nLocal prices: ${c0.name} is ${money(c0.mine)} with you; most ${trade(m.trade).one}s in ${clean(m.town)} charge ${money(c0.low)}–${money(c0.high)} (${c0.n} on Patch).\n` : "";
     const todo = (m.listings || {}).reviews ? "Ask your happiest regular this month for a Google review that mentions what you did for them." : "Send your last 5 customers your Google review link. Reviews are the biggest thing AI reads.";
-    return `Hi ${first(m.owner_name)}, your ${label} with Patch:\n\n${b.counted ? `${b.counted} enquir${b.counted === 1 ? "y" : "ies"}${srcTxt ? ` (${srcTxt})` : ""}.` : "No enquiries through Patch this month."}${b.voided ? ` ${b.voided} voided.` : ""}\n${ai ? ai + "\n" : ""}${billTxt}\n\nOne thing to do: ${todo}\n\nReply VOID with the date to remove any enquiry that wasn't real. Reply STOP to leave at any time.`;
+    return `Hi ${first(m.owner_name)}, your ${label} with Patch:\n\n${b.counted ? `${b.counted} enquir${b.counted === 1 ? "y" : "ies"}${srcTxt ? ` (${srcTxt})` : ""}.` : "No enquiries through Patch this month."}${b.voided ? ` ${b.voided} voided.` : ""}\n${ai ? ai + "\n" : ""}${priceTxt}${billTxt}\n\nOne thing to do: ${todo}\n\nReply VOID with the date to remove any enquiry that wasn't real. Reply STOP to leave at any time.`;
   }
 
   /* ---------- the public page ---------- */
@@ -246,7 +268,7 @@ ${fq.length ? `<section class="card"><h2>Questions people ask</h2><dl style="mar
 <p class="err" id="enqErr" role="alert"></p><p><button class="cta" type="submit">Send on WhatsApp</button></p>
 <p class="note">Your message goes from your own WhatsApp, so ${esc(clean(m.name, 80))} sees your number and replies there. Patch keeps a copy of your answers (not your number) so the business knows the page is working. <a href="/privacy">Privacy</a>.</p></form>
 <noscript>${plain ? `<p><a class="cta" href="${esc(plain)}">Message on WhatsApp</a></p>` : ""}</noscript></section>
-<p class="foot">${updated ? `Updated ${esc(updated)}. ` : ""}Page by <a href="/start">Patch</a>, which helps small local businesses get found.</p></main>
+<p class="foot">${updated ? `Updated ${esc(updated)}. ` : ""}Page by <a href="/">Patch</a>, which helps small local businesses get found.</p></main>
 <script src="${opts.base || "/"}patch-desk.js"></script><script>window.PATCH_MEMBER=${jsonLd(publicMember(m))};${ENQ_SCRIPT}</script></body></html>`;
   }
   // The page's only script: tidy the answers, record the enquiry (so it's counted before WhatsApp opens), open WhatsApp.
@@ -264,6 +286,6 @@ setTimeout(go,150);});})();`;
   function publicMember(m) { return { slug: m.slug, name: m.name, trade: m.trade, owner_name: first(m.owner_name) }; }
 
   const api = { SOURCES, SOURCE, AI_SOURCES, TRADES, trade, COMMON_END, PRICES, SETUP, waNumber, waLink, slugify, services, priceRange, faqs, placeLine, searches,
-    cleanAnswers, compose, bill, bySource, aiSummary, setupProgress, openerMessage, summaryMessage, reportMessage, schema, pageHtml, publicMember, ENQ_SCRIPT, esc, money };
+    cleanAnswers, compose, bill, bySource, MIN_PEERS, localPrices, compareLocal, aiSummary, setupProgress, openerMessage, summaryMessage, reportMessage, schema, pageHtml, publicMember, ENQ_SCRIPT, esc, money };
   root.PatchDesk = api; if (typeof module !== "undefined" && module.exports) module.exports = api;
 })(typeof window !== "undefined" ? window : globalThis);

@@ -25,7 +25,7 @@
     const what = cafe ? `It shows how your prices, opening hours and hygiene rating compare with the 10 cafés nearest you, item by item, and where you could save on supplies or charge a little more and still be good value.`
       : `It shows how your prices compare with the 10 salons nearest you, service by service, and what we'd change first so you get picked more often when people search or ask an AI assistant for a salon near them.`;
     const subject = `Your Patch report for ${o.cafe}`;
-    const offer = o.foundingPrice ? `If it's useful, we're taking 10 founding members at £${o.foundingPrice} a month for the first year, with a fresh report every month. There's a button at the end of the report.` : "";
+    const offer = o.offer === false ? "" : `If you'd like to be found by AI too, with enquiries straight to your WhatsApp, there's a button at the end of the report. Setup is free and there's no contract.`;
     const text = `Hi ${first(o.name)},\n\nYour report for ${o.cafe} is ready. ${what}\n\nYour report: ${o.reportUrl}\n\nIt's private: no other ${one} sees your figures, so please don't share the link.${offer ? "\n\n" + offer : ""}\n\nIf anything looks wrong, just reply to this email.\n\n${o.from || "James"}\n${o.brand || "Patch"}`;
     const html = shell(o.brand || "Patch", `Your report for ${o.cafe} is ready`, `<p>Hi ${esc(first(o.name))},</p><p>Your report for <b>${esc(o.cafe)}</b> is ready. ${esc(what)}</p>
       ${button(o.reportUrl, "Open your report")}<p style="color:${MUTE};font-size:14px">It's private: no other ${one} sees your figures, so please don't share the link.</p>${offer ? `<p>${esc(offer)}</p>` : ""}<p>If anything looks wrong, just reply to this email.</p><p>${esc(o.from || "James")}<br>${esc(o.brand || "Patch")}</p>`,

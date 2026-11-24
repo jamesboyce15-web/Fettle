@@ -17,7 +17,7 @@
   "use strict";
   const D = PatchData, K = PatchDesk, q = new URLSearchParams(location.search), slug = (q.get("b") || "").toLowerCase(), prev = q.get("p");
   let m = null; try { m = await D.rpc("member_public", { p_slug: slug, p_preview: prev || null }); } catch (e) { m = null; }
-  if (!m) { document.body.innerHTML = `<main style="font:16px system-ui,sans-serif;max-width:60ch;margin:10vh auto;padding:0 16px"><h1>We can't find that page</h1><p>It may not be live yet. <a href="start${D.DEMO ? "?demo=1" : ""}">About Patch</a></p></main>`; return; }
+  if (!m) { document.body.innerHTML = `<main style="font:16px system-ui,sans-serif;max-width:60ch;margin:10vh auto;padding:0 16px"><h1>We can't find that page</h1><p>It may not be live yet. <a href="./${D.DEMO ? "?demo=1" : ""}">About Patch</a></p></main>`; return; }
   const html = K.pageHtml(m, { url: location.origin + "/b/" + m.slug, preview: !!prev, demo: D.DEMO, base: "" });
   const doc = new DOMParser().parseFromString(html, "text/html");
   document.title = doc.title; document.head.querySelectorAll("style").forEach(x => x.remove());

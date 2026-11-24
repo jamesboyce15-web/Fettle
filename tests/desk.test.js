@@ -62,6 +62,20 @@ test("the page AI reads: real prices as text, schema.org, FAQs with answers only
   assert.ok(raw.every(x => !x.includes("<")), "schema can't break out of its tag"); assert.equal(ld[0].description, "</script><b>hi</b>");
 });
 
+test("local prices come from businesses' own lists, and only show from five", () => {
+  const mk = (i, p, extra) => Object.assign({ id: "g" + i, status: "live", trade: "groomer", town: "Stockport", services: [{ name: "Full groom, medium dog", price: p }, { name: "Large", price: 60, from: true }] }, extra || {});
+  const four = [40, 42, 45, 50].map((p, i) => mk(i, p));
+  let L = K.localPrices(four, "groomer", "stockport");
+  assert.equal(L["full groom medium dog"].n, 4); assert.equal(L["full groom medium dog"].ok, false); assert.equal(L["full groom medium dog"].median, undefined, "no figures from four");
+  assert.ok(!L["large"], "'from' prices aren't used");
+  const all = four.concat([mk(4, 48), mk(5, 99, { town: "Leeds" }), mk(6, 99, { trade: "barber" }), mk(7, 99, { status: "lead" })]);
+  L = K.localPrices(all, "groomer", "Stockport"); const o = L["full groom medium dog"];
+  assert.equal(o.n, 5, "other towns, trades and sign-ups not counted"); assert.ok(o.ok); assert.equal(o.median, 45); assert.equal(o.low, 42); assert.equal(o.high, 48);
+  const me = mk(9, 55); const c = K.compareLocal(me, all.concat([me]));
+  assert.equal(c.length, 1); assert.equal(c[0].mine, 55); assert.equal(c[0].n, 5, "a business isn't compared with itself");
+  assert.match(K.reportMessage(Object.assign(me, { owner_name: "Sam" }), [], [], "2026-11", all), /most dog groomers in Stockport charge £42–£48 \(5 on Patch\)/);
+});
+
 // The server routes, with the database faked.
 function fakeDb(handler) { const calls = []; globalThis.fetch = async (url, o) => { calls.push({ url: String(url), body: o && o.body ? JSON.parse(o.body) : null }); const r = handler(String(url), o && o.body ? JSON.parse(o.body) : null); return new Response(JSON.stringify(r), { status: 200, headers: { "Content-Type": "application/json" } }); }; return calls; }
 const env = { SUPABASE_URL: "https://db.test", SUPABASE_ANON_KEY: "anon", ASSETS: { fetch: async () => new Response("<h1>404</h1>") } };
@@ -85,5 +99,5 @@ test("/api/enquiry keeps only the trade's answers and records it", async () => {
 test("the sitemap lists live business pages", async () => {
   fakeDb(() => [{ slug: "paws-and-polish", updated_at: "2026-11-20T10:00:00Z" }]);
   const t = await (await sitemap({ request: new Request("https://x.test/sitemap.xml"), env })).text();
-  assert.match(t, /<loc>https:\/\/x.test\/b\/paws-and-polish<\/loc><lastmod>2026-11-20<\/lastmod>/); assert.match(t, /\/start</);
+  assert.match(t, /<loc>https:\/\/x.test\/b\/paws-and-polish<\/loc><lastmod>2026-11-20<\/lastmod>/); assert.match(t, /\/prices</);
 });

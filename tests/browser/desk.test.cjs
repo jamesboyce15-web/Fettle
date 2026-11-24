@@ -17,7 +17,7 @@ const over = p => p.evaluate(() => document.documentElement.scrollWidth - innerW
     const p = await ctx.newPage(); p.on('pageerror', e => errs.push(e.message)); p.setDefaultTimeout(5000);
 
     // 1. The start page and a sign-up.
-    await p.goto(U + 'start.html?demo=1'); await p.waitForTimeout(200);
+    await p.goto(U + '?demo=1'); await p.waitForTimeout(200);
     ok(/You only pay when they do/.test(await p.textContent('h1')), 'the start page says the offer');
     ok(/£4 each/.test(await p.textContent('body')) && /£29 a month/.test(await p.textContent('body')), 'prices are on the page');
     ok(await over(p) <= 0, 'start page fits a phone');

@@ -136,7 +136,7 @@ async function boot() {
   if (D.DEMO) $("#demo").innerHTML = `<p class="demo"><b>Demo.</b> Made-up salons and barbers. Nothing here is real, and what you send stays in this browser.</p>`;
   try { AREA = await D.rpc("area_public", { p_slug: slug }); } catch (e) { AREA = null; }
   if (!AREA || AREA.sector !== "salon") { $("#app").innerHTML = `<p class="card">We couldn't find that area. Check the link${CFG.contactEmail ? `, or email <b>${esc(CFG.contactEmail)}</b>` : ""}.</p>`; return; }
-  $("#home").href = `./?a=${encodeURIComponent(AREA.slug)}${D.DEMO ? "&demo=1" : ""}`;
+  $("#home").href = `prices?a=${encodeURIComponent(AREA.slug)}${D.DEMO ? "&demo=1" : ""}`;
   P.useSector("salon"); document.title = `Patch · Check your prices in ${AREA.name}`;
   const pre = Q.get("v") && (AREA.venues || []).find(x => x.id === Q.get("v"));
   if (pre) { F.venue = `${pre.name} (${pre.postcode || ""})`; F.kind = pre.category || ""; }
