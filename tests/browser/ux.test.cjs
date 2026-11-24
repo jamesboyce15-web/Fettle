@@ -12,7 +12,7 @@ let pass = 0, fail = 0; const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL 
     const ctx = await b.newContext({ viewport: { width: 375, height: 800 } }); await ctx.route('**fonts.g*/**', r => r.fulfill({ body: '' }));
     const p = await ctx.newPage(); p.on('pageerror', e => errs.push(e.message));
     const wide = async () => p.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
-    const pages = ['?demo=1', 'prices.html?a=demo-salons&demo=1', 'price-check.html?demo=1', 'members.html?demo=1', 'my.html?demo=1', 'b.html?b=paws-and-polish-demo&demo=1', 'owner.html?demo=1', 'report.html?demo=1', 'visit.html?demo=1', 'sweep.html?demo=1', 'privacy.html', 'nowhere'];
+    const pages = ['?demo=1', 'prices.html?a=demo-salons&demo=1', 'price-check.html?demo=1', 'members.html?demo=1', 'my.html?demo=1', 'dog-groomers.html?demo=1', 'nails-lashes-brows.html?demo=1', 'mobile-hairdressers.html?demo=1', 'b.html?b=paws-and-polish-demo&demo=1', 'owner.html?demo=1', 'report.html?demo=1', 'visit.html?demo=1', 'sweep.html?demo=1', 'privacy.html', 'nowhere'];
     for (const u of pages) { await p.goto(U + u); await p.waitForTimeout(400); const w = await wide(); ok(w <= 1, `${u}: fits a phone (${w}px over)`); if (!/sweep|b\.html/.test(u)) ok(!!(await p.$('a.brand')), `${u}: the logo leads home`); }
     await p.goto(U + 'admin.html?demo=1'); await p.waitForTimeout(500);
     for (const n of await p.$$eval('[data-nav]', es => es.map(e => e.dataset.nav))) { await p.click(`[data-nav=${n}]`); await p.waitForTimeout(150); const w = await wide(); ok(w <= 1, `admin ${n}: fits a phone (${w}px over)`); }

@@ -26,6 +26,12 @@ const over = p => p.evaluate(() => document.documentElement.scrollWidth - innerW
     await p.fill('#wa', '07700 900111'); await p.fill('#tw', 'Stockport'); await p.click('#go'); await p.waitForTimeout(200);
     ok(/We'll message \+447700900111/.test(await p.textContent('#thanks')), 'sign-up thanks them with the number we will use');
 
+    // 1b. A trade page: its own question, and the sign-up starts on that trade.
+    await p.goto(U + 'nails-lashes-brows.html?demo=1'); await p.waitForTimeout(200);
+    ok(/BIAB nail tech/.test(await p.textContent('#ask')) && await p.$eval('#tr', e => e.value) === 'nails', 'the nails page asks its own question and presets the sign-up');
+    ok(await over(p) <= 0, 'trade page fits a phone');
+    await p.goto(U + 'dog-groomers.html?demo=1'); await p.waitForTimeout(200); ok(await p.$eval('#tr', e => e.value) === 'groomer', 'the groomers page presets dog grooming');
+
     // 2. The live groomer's page, as a customer sees it.
     await p.goto(U + 'b.html?b=paws-and-polish-demo&demo=1'); await p.waitForTimeout(300);
     const body = await p.textContent('body');

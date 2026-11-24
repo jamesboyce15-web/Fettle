@@ -1,0 +1,137 @@
+<!-- Built from index.html by scripts/build-trades.mjs: edit those, not this file. -->
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!--T:head--><title>Patch for mobile hairdressers and barbers: get found by AI, enquiries to your WhatsApp</title>
+<meta name="description" content="For mobile and home-based hairdressers and barbers. Patch gets you found on ChatGPT and Google by people who want you to come to them, sends enquiries to your WhatsApp, and reminds clients when they&#39;re due. Free setup, £4 an enquiry, no contract.">
+<link rel="canonical" href="https://getfettle.co.uk/mobile-hairdressers">
+<!--/T:head-->
+<link rel="preload" href="fonts/schibsted.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="patch.css">
+<style>
+/* The hero is the customer's own question: who near this postcode? */
+.ask{font-size:clamp(2.55rem,8.6vw,4.4rem);line-height:1.04;font-weight:800;letter-spacing:-.03em;margin:28px 0 0;max-width:14em;text-wrap:balance}
+.ask .pc{font-size:.92em}
+.ask .who,.ask .pc{transition:opacity .35s}
+.ask.swap .who,.ask.swap .pc,.reply.swap{opacity:0}
+.reply{margin:22px 0 0;max-width:34em;padding:2px 0 2px 18px;border-left:3px solid var(--ink);font-size:1.12rem;transition:opacity .35s}
+.reply b{font-weight:800}
+.reply .go{display:inline-block;margin-top:8px;color:var(--wa);font-weight:800;text-decoration:underline;text-underline-offset:.2em}
+.hero-foot{margin:34px 0 0;max-width:36em}
+.hero-foot h1{font-size:clamp(1.45rem,3.6vw,2rem);line-height:1.2;letter-spacing:-.015em;margin:0 0 10px}
+.steps{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:26px 30px;counter-reset:s}
+.steps li{counter-increment:s}
+.steps li::before{content:counter(s);display:block;font-size:2.4rem;font-weight:800;line-height:1;margin:0 0 8px;color:var(--ink)}
+.steps b{display:block;font-size:1.08rem;margin:0 0 4px}
+.steps span{color:var(--mute)}
+.costs{max-width:34em}.costs .board li{padding:14px 0}.costs .pr{font-size:1.4rem}
+.fair{max-width:36em;padding-left:1.1em}.fair li{margin:0 0 8px}
+#join{max-width:40em}
+#join .grid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.note{font-size:.85rem;color:var(--mute);margin:10px 0 0}
+.trades{list-style:none;padding:0;margin:0 0 12px;max-width:38em}.trades li{padding:12px 0;border-bottom:1px solid var(--line)}
+.trades a{font-weight:800;font-size:1.12rem;display:block}.trades span{color:var(--mute)}
+.fit{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px 40px;align-items:start}.fit>*{min-width:0}
+@media(max-width:720px){.fit{grid-template-columns:1fr}}
+.fit h3{font-size:1.15rem;margin:0 0 6px}.fit p{color:var(--mute);max-width:32em}
+.qs{margin:8px 0 0;padding-left:1.1em}.qs li{margin:0 0 3px}
+.bubble{background:#dcf8c6;color:#14201b;border-radius:12px 12px 4px 12px;padding:12px 14px;white-space:pre-line;font-size:.98rem;max-width:26em;box-shadow:0 1px 0 rgba(0,0,0,.08)}
+.bubble small{display:block;text-align:right;color:#5d6f62;font-size:.75rem;margin-top:4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top"><a class="brand" href="./">Patch<i>.</i></a><span class="sp"></span><a class="sm" href="prices" id="pricesLink">Local prices</a></header>
+  <div id="demo"></div>
+  <section aria-label="What your customers are asking">
+    <!--T:hero--><p class="ask" id="ask"><span class="who">Who's a good <span id="q_trade">mobile hairdresser</span> near</span> <span class="pc" id="q_pc">SK4</span>?</p>
+    <div class="reply" id="reply"><b id="r_name">Cut Above at Home</b>, <span id="r_line">Heaton Moor. Comes to you. Cut and blow-dry £38.</span><br><span class="go">Send an enquiry on WhatsApp</span></div>
+    <p class="note">A made-up example of what an AI assistant can answer when your details are where it looks. Patch can't make it pick you; it gives it everything it needs to.</p>
+    <div class="hero-foot"><h1>Mobile hairdressers and barbers: get found by people who want you to come to them.</h1>
+      <p class="lede">When someone asks ChatGPT or Google for a hairdresser who visits, Patch makes sure the answer can be you, with your prices and one tap to WhatsApp you. No salon software needed.</p><!--/T:hero-->
+      <p style="margin:22px 0 0"><a class="btn big" href="#join">Get your free check</a></p></div>
+  </section>
+
+  <!--T:trade--><section class="sec"><h2>Made for how mobile hairdressers and barbers work</h2><div class="fit">
+    <div><h3>Every enquiry has what you'd ask first</h3><p>Before WhatsApp opens, your customer answers:</p>
+      <ul class="qs"><li>What would you like</li><li>Your hair now</li><li>When are you looking</li><li>Your postcode area</li></ul></div>
+    <div><p class="sm mute" style="margin:0 0 6px">What lands in your WhatsApp:</p><div class="bubble">Hi Hair by Hannah, I found you on ChatGPT.
+I&#39;d like: Cut and blow-dry.
+My hair is shoulder length, coloured.
+When: A weekday morning.
+Area: SK6.
+Thanks, Liz<small>Made-up example</small></div></div>
+    <div><h3>Regulars come back on time</h3><p>Patch tells you when each client is due (every 8 weeks unless you say otherwise) and writes the reminder. You tap send from your own phone, so it costs nothing and comes from you.</p></div>
+    <div><h3>Know what other hairdressers charge</h3><p>Once five mobile hairdressers and barbers in your town are on Patch, you'll see the local range for cuts, colour and fades. Never another business's own prices, and never yours to them.</p></div></div>
+    <p class="mute" style="margin-top:22px">Also for <a href="dog-groomers">dog groomers</a> and <a href="nails-lashes-brows">nail, lash and brow techs</a>.</p></section><!--/T:trade-->
+
+  <section class="sec"><h2>How it works</h2><ol class="steps">
+    <li><b>We check what AI says about you</b><span>We ask ChatGPT, Gemini and Google what your customers ask, and send you the screenshots. Free.</span></li>
+    <li><b>Fifteen minutes on WhatsApp</b><span>Tell us your services, prices and area. We set up Google, Bing, Apple and Yelp in your name, and a page AI can read.</span></li>
+    <li><b>Enquiries arrive as WhatsApp messages</b><span>Customers answer your questions first, so you have what you need to reply.</span></li>
+    <li><b>Customers come back</b><span>Patch tells you who's due and writes the reminder. You tap send from your own phone.</span></li></ol></section>
+
+  <section class="sec costs"><h2>What it costs</h2><ul class="board">
+    <li><span class="nm">Setup<small>We do the work. Listings are in your name, so they stay yours.</small></span><span class="ld"></span><span class="pr">£0</span></li>
+    <li><span class="nm">Each enquiry<small>Your first 3 are free. Never more than £29 a month, or £19 if you're one of the first 20 in your town.</small></span><span class="ld"></span><span class="pr">£4</span></li>
+    <li><span class="nm">Plus, if you want it<small>Unlimited enquiries, rebooking reminders, review requests and a local price check.</small></span><span class="ld"></span><span class="pr">£39<span class="sm mute" style="font-weight:700"> a month</span></span></li></ul></section>
+
+  <section class="sec"><h2>Fair play</h2><ul class="fair">
+    <li>Only enquiries sent through your Patch page count. Calls, DMs and walk-ins are never charged.</li>
+    <li>Reply VOID to remove any enquiry that wasn't real.</li>
+    <li>We never promise ChatGPT will recommend you. You'll see screenshots of what it actually says.</li>
+    <li>Leave any time by texting STOP. Your listings stay yours.</li></ul></section>
+
+  <section class="sec card" id="join"><h2>Get your free check</h2><p class="mute">We'll message you on WhatsApp within two working days with what AI says about your business. No obligation.</p>
+    <form id="sf" novalidate>
+      <div class="grid" style="gap:0 14px">
+        <label class="f"><span>Your name</span><input id="nm" autocomplete="name" maxlength="80"></label>
+        <label class="f"><span>Business name</span><input id="bz" autocomplete="organization" maxlength="120"></label>
+        <label class="f"><span>What you do</span><select id="tr"><option value="groomer">Dog grooming</option><option value="hair">Hairdressing</option><option value="barber">Barbering</option><option value="nails">Nails</option><option value="beauty">Beauty, brows or lashes</option><option value="valeting">Car valeting</option><option value="driving">Driving lessons</option><option value="tutor">Tutoring</option><option value="other">Something else</option></select></label>
+        <label class="f"><span>Town</span><input id="tw" maxlength="60" placeholder="e.g. Stockport"></label>
+        <label class="f"><span>WhatsApp number</span><input id="wa" type="tel" autocomplete="tel" maxlength="30" placeholder="07…"></label>
+        <label class="f"><span>Email (optional)</span><input id="em" type="email" autocomplete="email" maxlength="120"></label></div>
+      <label class="f"><span>Your Facebook page, Instagram or website (optional)</span><input id="lk" maxlength="300" placeholder="Paste a link"></label>
+      <label class="f"><span>Anything we should know? (optional)</span><textarea id="ms" maxlength="1000" placeholder="e.g. mostly word of mouth, want more weekday bookings"></textarea></label>
+      <p class="sm mute">We use these details only to send your check and talk about Patch. <a href="privacy">Privacy</a>.</p><p class="err" id="err" role="alert"></p>
+      <button class="btn big" id="go">Get my free check</button></form><div id="thanks" hidden></div></section>
+  <footer class="foot sm mute" id="foot"></footer>
+</div>
+<!--T:pre--><script>window.PATCH_TRADE = "hair";</script><!--/T:pre--><script src="config.js"></script>
+<script src="patch-desk.js"></script>
+<script src="patch-data.js"></script>
+<script>
+(function () {
+  "use strict";
+  const D = PatchData, K = PatchDesk, CFG = D.CFG, $ = s => document.querySelector(s), esc = K.esc;
+  // Old links to an area's figures (/?a=…) now live at /prices.
+  const q = new URLSearchParams(location.search); if (q.get("a")) { location.replace("prices" + location.search); return; }
+  if (D.DEMO) $("#pricesLink").href = "prices?demo=1";
+  if (D.DEMO) $("#demo").innerHTML = `<p class="demo"><b>Demo.</b> Sign-ups are kept in this browser. See them in <a href="members.html?demo=1">admin</a>, or open <a href="b.html?b=paws-and-polish-demo&demo=1">a made-up groomer's page</a>.</p>`;
+  $("#foot").innerHTML = `${CFG.contactEmail ? `Questions: <b>${esc(CFG.contactEmail)}</b> · ` : ""}<a href="prices${D.DEMO ? "?demo=1" : ""}">Local prices</a> · <a href="price-check${D.DEMO ? "?demo=1" : ""}">Check your prices</a> · <a href="privacy">Privacy</a>`;
+  // The hero's one moment of motion: the same question, asked of different trades and postcodes. Made-up businesses.
+  const ASKS = /*T:asks*/[["mobile hairdresser","SK4","Cut Above at Home","Heaton Moor. Comes to you. Cut and blow-dry £38."],["home hairdresser","SK6","Hair by Hannah","Marple. Cuts and colour at your kitchen table. Root colour £40."],["mobile barber","SK2","Fade to You","Edgeley. Skin fades at home, £22."]]/*/T:asks*/;
+  if (window.PATCH_TRADE) $("#tr").value = window.PATCH_TRADE;
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) { let i = 0; const ask = $("#ask"), rep = $("#reply");
+    setInterval(() => { if (document.hidden) return; i = (i + 1) % ASKS.length; ask.classList.add("swap"); rep.classList.add("swap");
+      setTimeout(() => { const [t, pc, n, l] = ASKS[i]; $("#q_trade").textContent = t; $("#q_pc").textContent = pc; $("#r_name").textContent = n; $("#r_line").textContent = l; ask.classList.remove("swap"); rep.classList.remove("swap"); }, 380); }, 4200); }
+  $("#sf").addEventListener("submit", async e => {
+    e.preventDefault(); const v = id => $("#" + id).value.trim(), err = $("#err"), num = K.waNumber(v("wa"));
+    if (!v("nm")) { err.textContent = "Please tell us your name."; return; }
+    if (!v("bz")) { err.textContent = "Please tell us the business name."; return; }
+    if (!num) { err.textContent = "Please check your WhatsApp number."; return; }
+    if (v("em") && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v("em"))) { err.textContent = "Please check your email, or leave it empty."; return; }
+    const b = $("#go"); b.disabled = true; b.textContent = "Sending…"; err.textContent = "";
+    try {
+      const r = await D.rpc("member_signup", { p_name: v("nm"), p_business: v("bz"), p_trade: v("tr"), p_town: v("tw"), p_whatsapp: num, p_email: v("em"), p_link: v("lk"), p_message: v("ms") });
+      if (r !== "ok") throw new Error({ bad: "Please check your name, business and number.", busy: "Lots of sign-ups right now. Please try again tomorrow." }[r] || "That didn't send. Please try again.");
+      $("#sf").hidden = true; const t = $("#thanks"); t.hidden = false;
+      t.innerHTML = `<h3>Thanks, ${esc(v("nm").split(/\s+/)[0])}.</h3><p>We'll message <b>+${esc(num)}</b> on WhatsApp within two working days with what AI assistants say about ${esc(v("bz"))}.</p>`;
+    } catch (x) { err.textContent = x.message; b.disabled = false; b.textContent = "Get my free check"; }
+  });
+})();
+</script>
+</body>
+</html>

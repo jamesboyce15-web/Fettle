@@ -3,9 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Patch · Get found by AI. Enquiries land in your WhatsApp.</title>
+<!--T:head--><title>Patch · Get found by AI. Enquiries land in your WhatsApp.</title>
 <meta name="description" content="For one-person local businesses: dog groomers, mobile hairdressers, valeters, driving instructors, tutors. Patch gets you found on ChatGPT and Google, sends enquiries to your WhatsApp, and only charges when they arrive. Free setup, no contract.">
 <link rel="canonical" href="https://getfettle.co.uk/">
+<!--/T:head-->
 <link rel="preload" href="fonts/schibsted.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="patch.css">
 <style>
@@ -29,6 +30,14 @@
 #join{max-width:40em}
 #join .grid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
 .note{font-size:.85rem;color:var(--mute);margin:10px 0 0}
+.trades{list-style:none;padding:0;margin:0 0 12px;max-width:38em}.trades li{padding:12px 0;border-bottom:1px solid var(--line)}
+.trades a{font-weight:800;font-size:1.12rem;display:block}.trades span{color:var(--mute)}
+.fit{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px 40px;align-items:start}.fit>*{min-width:0}
+@media(max-width:720px){.fit{grid-template-columns:1fr}}
+.fit h3{font-size:1.15rem;margin:0 0 6px}.fit p{color:var(--mute);max-width:32em}
+.qs{margin:8px 0 0;padding-left:1.1em}.qs li{margin:0 0 3px}
+.bubble{background:#dcf8c6;color:#14201b;border-radius:12px 12px 4px 12px;padding:12px 14px;white-space:pre-line;font-size:.98rem;max-width:26em;box-shadow:0 1px 0 rgba(0,0,0,.08)}
+.bubble small{display:block;text-align:right;color:#5d6f62;font-size:.75rem;margin-top:4px}
 </style>
 </head>
 <body>
@@ -36,18 +45,24 @@
   <header class="top"><a class="brand" href="./">Patch<i>.</i></a><span class="sp"></span><a class="sm" href="prices" id="pricesLink">Local prices</a></header>
   <div id="demo"></div>
   <section aria-label="What your customers are asking">
-    <p class="ask" id="ask"><span class="who">Who's a good <span id="q_trade">dog groomer</span> near</span> <span class="pc" id="q_pc">SK4</span>?</p>
+    <!--T:hero--><p class="ask" id="ask"><span class="who">Who's a good <span id="q_trade">dog groomer</span> near</span> <span class="pc" id="q_pc">SK4</span>?</p>
     <div class="reply" id="reply"><b id="r_name">Paws &amp; Polish</b>, <span id="r_line">Heaton Moor. Mobile, good with cockapoos and nervous dogs. Full groom £45.</span><br><span class="go">Send an enquiry on WhatsApp</span></div>
     <p class="note">An example of what an AI assistant can answer when your details are where it looks. Patch can't make it pick you; it gives it everything it needs to.</p>
     <div class="hero-foot"><h1>Get found by AI. Enquiries land in your WhatsApp. You only pay when they do.</h1>
-      <p class="lede">For one-person businesses: groomers, mobile hairdressers, valeters, instructors, tutors. We set it up, you keep working the way you do now.</p>
+      <p class="lede">For one-person businesses: dog groomers, nail, lash and brow techs, mobile hairdressers and barbers. We set it up, you keep working the way you do now.</p><!--/T:hero-->
       <p style="margin:22px 0 0"><a class="btn big" href="#join">Get your free check</a></p></div>
   </section>
+
+  <!--T:trade--><section class="sec"><h2>Made for one-person trades</h2><ul class="trades">
+    <li><a href="dog-groomers">Dog groomers</a><span>Enquiries arrive with breed, size and coat. Regulars reminded every 6 weeks.</span></li>
+    <li><a href="nails-lashes-brows">Nail, lash and brow techs</a><span>Fill your diary from WhatsApp. Infills and lifts reminded on time.</span></li>
+    <li><a href="mobile-hairdressers">Mobile hairdressers and barbers</a><span>Get found by people who want you to come to them.</span></li></ul>
+    <p class="mute">Something else? Sign up anyway: it works for most businesses that take appointments.</p></section><!--/T:trade-->
 
   <section class="sec"><h2>How it works</h2><ol class="steps">
     <li><b>We check what AI says about you</b><span>We ask ChatGPT, Gemini and Google what your customers ask, and send you the screenshots. Free.</span></li>
     <li><b>Fifteen minutes on WhatsApp</b><span>Tell us your services, prices and area. We set up Google, Bing, Apple and Yelp in your name, and a page AI can read.</span></li>
-    <li><b>Enquiries arrive as WhatsApp messages</b><span>Customers answer your questions first (breed, size, when), so you have what you need to reply.</span></li>
+    <li><b>Enquiries arrive as WhatsApp messages</b><span>Customers answer your questions first, so you have what you need to reply.</span></li>
     <li><b>Customers come back</b><span>Patch tells you who's due and writes the reminder. You tap send from your own phone.</span></li></ol></section>
 
   <section class="sec costs"><h2>What it costs</h2><ul class="board">
@@ -76,7 +91,7 @@
       <button class="btn big" id="go">Get my free check</button></form><div id="thanks" hidden></div></section>
   <footer class="foot sm mute" id="foot"></footer>
 </div>
-<script src="config.js"></script>
+<!--T:pre--><!--/T:pre--><script src="config.js"></script>
 <script src="patch-desk.js"></script>
 <script src="patch-data.js"></script>
 <script>
@@ -89,10 +104,11 @@
   if (D.DEMO) $("#demo").innerHTML = `<p class="demo"><b>Demo.</b> Sign-ups are kept in this browser. See them in <a href="members.html?demo=1">admin</a>, or open <a href="b.html?b=paws-and-polish-demo&demo=1">a made-up groomer's page</a>.</p>`;
   $("#foot").innerHTML = `${CFG.contactEmail ? `Questions: <b>${esc(CFG.contactEmail)}</b> · ` : ""}<a href="prices${D.DEMO ? "?demo=1" : ""}">Local prices</a> · <a href="price-check${D.DEMO ? "?demo=1" : ""}">Check your prices</a> · <a href="privacy">Privacy</a>`;
   // The hero's one moment of motion: the same question, asked of different trades and postcodes. Made-up businesses.
-  const ASKS = [["dog groomer", "SK4", "Paws & Polish", "Heaton Moor. Mobile, good with cockapoos and nervous dogs. Full groom £45."],
-    ["mobile hairdresser", "M20", "Cut Above at Home", "Didsbury. Comes to you. Cut and blow-dry £38."],
-    ["car valeter", "SK7", "Shine On", "Bramhall. Mobile, removes dog hair. Full valet from £95."],
-    ["maths tutor", "SK8", "Numbers with Nadia", "Cheadle. GCSE and A level, online or at home. £35 an hour."]];
+  const ASKS = /*T:asks*/[["dog groomer", "SK4", "Paws & Polish", "Heaton Moor. Mobile, good with cockapoos and nervous dogs. Full groom £45."],
+    ["BIAB nail tech", "SK4", "Polished by Priya", "Heaton Moor. Home studio, BIAB £35, infills every 3 weeks."],
+    ["mobile hairdresser", "SK6", "Hair by Hannah", "Marple. Cuts and colour at your kitchen table. Cut and blow-dry £38."],
+    ["mobile barber", "SK2", "Fade to You", "Edgeley. Skin fades at home, £22."]]/*/T:asks*/;
+  if (window.PATCH_TRADE) $("#tr").value = window.PATCH_TRADE;
   if (!matchMedia("(prefers-reduced-motion: reduce)").matches) { let i = 0; const ask = $("#ask"), rep = $("#reply");
     setInterval(() => { if (document.hidden) return; i = (i + 1) % ASKS.length; ask.classList.add("swap"); rep.classList.add("swap");
       setTimeout(() => { const [t, pc, n, l] = ASKS[i]; $("#q_trade").textContent = t; $("#q_pc").textContent = pc; $("#r_name").textContent = n; $("#r_line").textContent = l; ask.classList.remove("swap"); rep.classList.remove("swap"); }, 380); }, 4200); }

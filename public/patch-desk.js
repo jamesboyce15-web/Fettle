@@ -87,8 +87,11 @@
     const found = source && SOURCE[source] && source !== "other" && source !== "friend" ? ` I found you on ${SOURCE[source].replace(" or Google Maps", "")}.` : "";
     parts.push(`Hi ${clean(m.name, 80)},${found}`);
     if (a.service) parts.push(`I'd like: ${a.service}.`);
-    const facts = qs.filter(q => q.k !== "service" && a[q.k]).map(q => (q.k === "breed" || q.k === "car" || q.k === "subject") ? a[q.k] : `${q.t.replace(/\?$/, "").toLowerCase()}: ${a[q.k]}`);
-    if (facts.length) parts.push((m.trade === "groomer" ? "My dog: " : "") + facts.join(", ") + ".");
+    // Read like a person wrote it: "Cockapoo, medium, 3 years, coat a bit matted".
+    const low = v => /^[A-Z](?![A-Z])/.test(v) ? v[0].toLowerCase() + v.slice(1) : v;
+    const say = { breed: v => v, car: v => v, subject: v => v, size: low, age: v => v, coat: v => "coat " + low(v), gearbox: low, before: v => "lessons so far: " + low(v), where: v => low(v), level: v => v, hair: v => "my hair is " + low(v) };
+    const facts = qs.filter(q => q.k !== "service" && a[q.k]).map(q => say[q.k] ? say[q.k](a[q.k]) : `${q.t.replace(/\?$/, "").toLowerCase()}: ${a[q.k]}`);
+    if (facts.length) { const f = facts.join(", "); parts.push(m.trade === "groomer" ? "My dog: " + f + "." : f[0].toUpperCase() + f.slice(1) + "."); }
     if (a.when) parts.push(`When: ${a.when}.`);
     if (a.district) parts.push(`Area: ${a.district}.`);
     if (a.notes) parts.push(a.notes);
