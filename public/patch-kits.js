@@ -71,12 +71,16 @@
   const DOCS = [
     { match: /insurance/i, kind: "insurance", label: "insurance renewal", every: 12, ask: "the renewal notice or schedule", value: true },
     { match: /fire/i, kind: "fire", label: "fire risk assessment", every: 12, ask: "the assessment" },
-    { match: /gas/i, kind: "gas", label: "gas safety certificate", every: 12, ask: "the certificate" },
+    { match: /gas safety|gas check/i, kind: "gas", label: "gas safety certificate", every: 12, ask: "the certificate" },
     { match: /pest/i, kind: "pest", label: "pest control report", every: 3, ask: "the visit report" },
     { match: /allergen/i, kind: "allergen", label: "allergen information", every: 6, ask: "your allergen sheet" },
     { match: /pavement/i, kind: "pavement", label: "pavement licence", every: 12, ask: "the licence" },
     { match: /eicr|electrical installation/i, kind: "eicr", label: "electrical installation report (EICR)", every: 60, ask: "the report" },
     { match: /portable|pat\b/i, kind: "pat", label: "PAT test record", every: 12, ask: "the test record" },
+    { match: /energy|electricity contract|gas supply/i, kind: "energy", label: "energy contract", every: 12, ask: "the contract or a recent bill with the end date", value: true },
+    { match: /card (machine|payment)|merchant/i, kind: "card", label: "card machine contract", every: 12, ask: "the contract or a monthly statement", value: true },
+    { match: /waste|bin collection/i, kind: "waste", label: "waste collection contract", every: 12, ask: "the contract or waste transfer note" },
+    { match: /treatment licen|skin piercing|special treatment/i, kind: "licence", label: "treatment licence or registration", every: 12, ask: "the licence or registration certificate" },
   ];
   const docFor = title => DOCS.find(d => d.match.test(title || "")) || { kind: "other", label: "document", every: 12, ask: "the document" };
   const MONTHS = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
@@ -124,6 +128,10 @@
     if (kind === "eicr") return ["Book a qualified electrician (NICEIC or NAPIT)", "Fix anything marked C1 or C2 straight away"];
     if (kind === "fire") return ["Walk through it with whoever does it: exits, alarms, extinguishers, training", "Update it if anything changed: layout, equipment, staff"];
     if (kind === "pest") return ["Keep the report with your food safety records", "Fix anything they flagged before the next visit"];
+    if (kind === "energy") return ["Compare prices two or three months before the contract ends: the best fixed rates go early", "If you don't, you'll likely move onto out-of-contract rates, which cost more", "Ask any broker how much commission is in the price"];
+    if (kind === "card") return ["Pull last month's statement: what you took on card, and the total fees", "Compare the fees as a share of takings, plus any monthly charge", "Check the notice period and any exit fee before you switch"];
+    if (kind === "waste") return ["Check how often they collect against how full the bins are", "Ask for a quote on the same bins and collections"];
+    if (kind === "licence") return ["Check with your council: some areas license nails, massage and skin treatments", "Renew before it lapses: working without one can mean a fine"];
     return ["Book it in before it's due", "Keep the paperwork with your records"];
   }
 

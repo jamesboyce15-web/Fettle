@@ -46,6 +46,7 @@
 <script src="patch-insights.js"></script>
 <script src="patch-data.js"></script>
 <script src="patch-emails.js"></script>
+<script src="patch-offers.js"></script>
 <script>
 (function () {
 "use strict";
@@ -83,10 +84,10 @@ function render() {
     <select id="areaSel" aria-label="Area" style="border:1px solid var(--line);border-radius:9px;padding:6px 8px;background:var(--card)">${S.areas.map(a => `<option value="${a.id}" ${S.area && a.id === S.area.id ? "selected" : ""}>${esc(a.name)}</option>`).join("")}</select>
     <button class="btn q sm" data-act="signout">${D.DEMO ? "Reset demo" : "Sign out"}</button></header>
     ${D.DEMO ? `<p class="demo"><b>Demo.</b> Made-up cafés, saved only in this browser. Try: open a request, build the report, then open the report link.</p>` : ""}
-    <nav class="nav">${nav("requests", "Report requests", nNew + nFound)}${nav("record", "Record a visit or menu")}${nav("sweeps", "Price sweeps")}${nav("cafes", "Cafés")}${nav("search", "Search and AI")}${nav("calendar", "Local calendar")}${P.SECTOR === "salon" ? nav("coverage", "Coverage") : ""}${nav("area", "Area page")}${nav("settings", "Costs")}${nav("emails", "Emails")}</nav>
+    <nav class="nav">${nav("requests", "Report requests", nNew + nFound)}${nav("record", "Record a visit or menu")}${nav("sweeps", "Price sweeps")}${nav("cafes", "Cafés")}${nav("search", "Search and AI")}${nav("calendar", "Local calendar")}${P.SECTOR === "salon" ? nav("coverage", "Coverage") : ""}${nav("area", "Area page")}${nav("offers", "Offers")}${nav("settings", "Costs")}${nav("emails", "Emails")}</nav>
     <div id="main">${view()}</div>`;
 }
-function view() { try { return ({ requests: vRequests, record: vRecord, cafes: vCafes, search: vSearch, calendar: vCalendar, area: vArea, coverage: vCoverage, settings: vSettings, emails: vEmails, sweeps: vSweeps })[V.view](); } catch (e) { console.error(e); return `<p class="card err">${esc(e.message)}</p>`; } }
+function view() { try { return ({ requests: vRequests, record: vRecord, cafes: vCafes, search: vSearch, calendar: vCalendar, area: vArea, coverage: vCoverage, offers: vOffers, settings: vSettings, emails: vEmails, sweeps: vSweeps })[V.view](); } catch (e) { console.error(e); return `<p class="card err">${esc(e.message)}</p>`; } }
 function coverage(v) { const l = P.latest(S.obs, v.id); return { n: Object.keys(l.prices).length, visited: l.visited, last: l.lastAt }; }
 
 /* ---------- requests ---------- */
@@ -294,6 +295,43 @@ function vCoverage() {
       ${next.length ? next.map(x => `<div class="row" style="justify-content:space-between;border-bottom:1px solid var(--line);padding:6px 0"><span><b>${esc(x.v.name)}</b><br><span class="xs mute">${esc(x.v.category || "")}${x.v.postcode ? " · " + esc(x.v.postcode) : ""}${x.v.notes && /Books: ([^;.]+)/.test(x.v.notes) ? " · " + esc(x.v.notes.match(/Books: ([^;.]+)/)[1]) : ""}</span></span><button class="btn q sm" data-copy="${esc(pcUrl(x.v.id))}">Copy link</button></div>`).join("") : `<p class="sm">Every service has enough. Ask anyone now to keep figures fresh.</p>`}</div></aside></div>`;
 }
 
+/* ---------- partner offers beside renewals ---------- */
+const OFFER_FIELDS = [["provider", "Provider", "e.g. Simply Business"], ["headline", "What owners see (one line)", "e.g. Compare cover from several insurers in one form"], ["url", "Your affiliate or referral link (https://…)", "From the network once you're accepted"],
+  ["rate_from", "From price (optional)", "e.g. 380"], ["rate_unit", "Price is per", "a year, a month, % a transaction"], ["rate_note", "What the price is for", "e.g. salon, £1m public liability"], ["checked_at", "Price checked on", "YYYY-MM-DD"],
+  ["regulator_note", "Their regulation line (optional: we add our own for insurance and energy)", ""], ["commission", "What we're paid (only you see this)", "e.g. 10%, capped at £100"], ["network", "Network", "CJ, Awin, Partnerize, direct"], ["notes", "Notes", ""]];
+async function loadOffers() { try { [S.offers, S.offerClicks] = await Promise.all([DB.offers(), DB.offerClicks()]); } catch (e) { S.offers = []; S.offerClicks = []; toast(e.message); } if (V.view === "offers") render(); }
+function vOffers() {
+  if (!S.offers) { loadOffers(); return `<p class="mute">Loading…</p>`; }
+  const Of = PatchOffers, today = new Date().toISOString().slice(0, 10), sum = Object.fromEntries(Of.clickSummary(S.offers, S.offerClicks, new Date(Date.now() - 30 * 864e5).toISOString()).map(x => [x.id, x]));
+  const warn = o => [o.live && !o.url ? "Live but no link: owners won't see it" : "", o.rate_from != null && (!o.checked_at || o.checked_at < new Date(Date.now() - Of.RATE_DAYS * 864e5).toISOString().slice(0, 10)) ? `Price not checked in ${Of.RATE_DAYS} days: hidden from owners` : ""].filter(Boolean);
+  const ed = V.offerEdit;
+  let h = `<div class="split"><section><div class="card"><div class="row" style="justify-content:space-between"><h2 style="margin:0">Offers beside renewals</h2><button class="btn sm" data-act="newoffer">Add an offer</button></div>
+    <p class="sm mute">When an owner's renewal or contract comes up, Patch shows these to compare, with what they paid last time. Every one says we may be paid. A price shows only if you've checked it in the last ${Of.RATE_DAYS} days.</p>
+    <table class="t"><thead><tr><th>Provider</th><th>For</th><th>Shows</th><th class="n">Clicks, 30 days</th><th></th></tr></thead><tbody>
+    ${S.offers.map(o => `<tr><td><b>${esc(o.provider)}</b><br><span class="xs mute">${esc(o.commission || "")}${o.network ? " · " + esc(o.network) : ""}</span>${warn(o).map(w => `<br><span class="xs" style="color:var(--bad)">${esc(w)}</span>`).join("")}</td>
+      <td>${esc((Of.KINDS[o.kind] || {}).t || o.kind)}<br><span class="xs mute">${esc((o.sectors || []).join(", "))}</span></td><td>${o.live && o.url ? '<span class="chip good">Live</span>' : '<span class="chip">Off</span>'}${o.rate_from != null ? `<br><span class="xs mute">from £${esc(o.rate_from)} ${esc(o.rate_unit || "")}</span>` : ""}</td>
+      <td class="n">${(sum[o.id] || {}).clicks || 0}<br><span class="xs mute">${(sum[o.id] || {}).owners || 0} owners</span></td><td><button class="btn q sm" data-editoffer="${o.id}">Edit</button></td></tr>`).join("") || `<tr><td colspan="5" class="mute">No offers yet.</td></tr>`}</tbody></table></div></section>
+    <aside class="panel">`;
+  if (ed) h += `<div class="card"><h3>${ed.id ? "Edit " + esc(ed.provider) : "New offer"}</h3>
+    <label class="f"><span>For</span><select id="of-kind">${Object.entries(Of.KINDS).map(([k, v]) => `<option value="${k}" ${ed.kind === k ? "selected" : ""}>${esc(v.t)}</option>`).join("")}</select></label>
+    <p class="sm" style="margin:4px 0 10px">${["cafe", "salon"].map(x => `<label style="margin-right:14px"><input type="checkbox" data-ofsec="${x}" ${(ed.sectors || []).includes(x) ? "checked" : ""}> ${x === "cafe" ? "Cafés" : "Salons and barbers"}</label>`).join("")}</p>
+    ${OFFER_FIELDS.map(([k, t, ph]) => `<label class="f"><span>${esc(t)}</span><input data-of="${k}" value="${esc(ed[k] ?? "")}" placeholder="${esc(ph)}"></label>`).join("")}
+    <p class="sm"><button class="btn q sm" data-act="offerchecked">Price checked today</button></p>
+    <label style="display:flex;gap:8px;align-items:center;margin:8px 0"><input type="checkbox" id="of-live" ${ed.live ? "checked" : ""}> Show it to owners</label><p class="err" id="of-err"></p>
+    <div class="row"><button class="btn" data-act="saveoffer">Save</button><button class="btn q" data-act="canceloffer">Cancel</button></div></div>`;
+  h += `<div class="card"><h3>Before an offer goes live</h3><ul class="sm" style="padding-left:18px;margin:0">
+    <li>Join their scheme and use the link they give you. Only offers with a link show.</li>
+    <li>Insurance: we only point to the insurer or broker, who is FCA-authorised and does the arranging. No "best cover" claims. Check with them that their scheme covers a link like ours.</li>
+    <li>Energy: brokers must tell owners their commission before they sign (Ofgem). Pick ones who show it up front.</li>
+    <li>Only add a "from" price you've seen on their site for a business like ours, and re-check it monthly.</li></ul></div></aside></div>`;
+  return h;
+}
+function readOffer() {
+  const o = Object.assign({}, V.offerEdit); o.kind = $("#of-kind").value; o.sectors = [...document.querySelectorAll("[data-ofsec]")].filter(i => i.checked).map(i => i.dataset.ofsec);
+  document.querySelectorAll("[data-of]").forEach(i => { const v = i.value.trim(); o[i.dataset.of] = v === "" ? null : v; }); o.live = $("#of-live").checked;
+  if (o.rate_from != null) o.rate_from = +String(o.rate_from).replace(/[£,\s%]/g, ""); return o;
+}
+
 /* ---------- costs per serving ---------- */
 /* ---------- price sweeps ---------- */
 const sweepUrl = tok => `${location.protocol === "file:" ? "sweep.html" : location.origin + location.pathname.replace(/admin(\.html)?$/, "sweep")}?s=${encodeURIComponent(tok)}${D.DEMO ? "&demo=1" : ""}`;
@@ -417,11 +455,23 @@ document.addEventListener("click", async e => {
       Object.assign(v, await DB.updVenue(v.id, { seo })); toast("Checked"); } catch (x) { toast(x.message); } return render(); }
   if (d.gbp) { const [id, k] = d.gbp.split("."), v = venue(id), seo = Object.assign({ at: today(), checks: {} }, v.seo || {}); seo.checks = Object.assign({}, seo.checks, { [k]: t.checked }); seo.at = today();
     try { Object.assign(v, await DB.updVenue(v.id, { seo })); } catch (x) { toast(x.message); } return; }
+  if (d.editoffer) { V.offerEdit = Object.assign({}, S.offers.find(o => o.id === d.editoffer)); return render(); }
   if (d.copy) { try { await navigator.clipboard.writeText(d.copy); toast("Link copied"); } catch (x) { toast(d.copy); } return; }
   if (d.delcal != null) { V.cal.splice(+d.delcal, 1); return render(); }
   if (d.delcost != null) { V.costs.splice(+d.delcost, 1); return render(); }
   const r = S.requests.find(x => x.id === V.req);
   switch (d.act) {
+    case "newoffer": V.offerEdit = { kind: "insurance", sectors: ["cafe", "salon"], live: false }; return render();
+    case "canceloffer": V.offerEdit = null; return render();
+    case "offerchecked": { V.offerEdit = readOffer(); V.offerEdit.checked_at = new Date().toISOString().slice(0, 10); return render(); }
+    case "saveoffer": { const o = readOffer(), err = $("#of-err");
+      if (!o.provider) { err.textContent = "Give the provider's name."; return; }
+      if (o.url && !/^https:\/\/[^\s]+$/.test(o.url)) { err.textContent = "The link must start with https://"; return; }
+      if (o.rate_from != null && !(o.rate_from >= 0)) { err.textContent = "The from price should be a number."; return; }
+      if (o.checked_at && !/^\d{4}-\d{2}-\d{2}$/.test(o.checked_at)) { err.textContent = "Checked date as YYYY-MM-DD."; return; }
+      if (!o.sectors.length) { err.textContent = "Pick cafés, salons or both."; return; }
+      if (o.live && !o.url) { err.textContent = "Add their link before switching it on."; return; }
+      try { const r = await DB.saveOffer(o); S.offers = S.offers.filter(x => x.id !== r.id).concat(r); V.offerEdit = null; toast("Saved"); } catch (x) { err.textContent = x.message; } return render(); }
     case "signout": if (D.DEMO) { await DB.reset(); location.reload(); return; } await DB.signOut(); ME = null; return boot();
     case "build": V.draft = { id: r.id, snap: buildReport(r) }; return render();
     case "canceldraft": V.draft = null; return render();

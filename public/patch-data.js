@@ -5,7 +5,7 @@
   const CFG = root.PATCH_CONFIG || {};
   const Q = new URLSearchParams(location.search);
   const DEMO = Q.has("demo") || !CFG.supabaseUrl;
-  const KEY = "patch-demo-db-v8";
+  const KEY = "patch-demo-db-v9";
   const uid = () => (crypto.randomUUID ? crypto.randomUUID() : "id-" + Math.random().toString(36).slice(2) + Date.now().toString(36));
   const clone = o => JSON.parse(JSON.stringify(o));
 
@@ -88,7 +88,13 @@
       note: i === 5 ? "Closed on Mondays" : null, taken_at: i < 5 ? new Date(Date.now() - (30 - i) * 3600e3).toISOString() : null, photo_path: null,
       read: i < 5 ? { prices: Object.fromEntries(Object.entries((observations.find(o => o.venue_id === v.id && o.source === "visit") || { prices: {} }).prices).slice(0, 9)), seen: {}, legible: i === 4 ? "partly" : "good", notes: i === 4 ? "Cake prices hidden behind the till" : null, demo: true } : null }));
     const sal = salonSeed(rnd, dd); venues.push(...sal.venues); observations.push(...sal.observations);
-    return { areas: [area, sal.area], venues, observations, requests, sweeps, sweep_items, admins: [{ user_id: "demo", name: "You" }] };
+    // Made-up partner offers, so the renewal flow can be tried. Real ones go in from admin once you've joined each scheme.
+    const offers = [
+      { id: "of1", kind: "insurance", sectors: ["cafe", "salon"], provider: "Shopfront Cover (demo)", headline: "Compare cover from several insurers in one form", url: "https://example.com/demo-insurance", rate_from: 380, rate_unit: "a year", rate_note: "café or salon, public and employers' liability", checked_at: dd(-5), commission: "10% of the first premium, capped at £100 (made up)", network: "Demo", live: true, notes: "" },
+      { id: "of2", kind: "energy", sectors: ["cafe", "salon"], provider: "Brightline Energy (demo)", headline: "Fixed business rates, commission shown before you sign", url: "https://example.com/demo-energy", rate_from: null, rate_unit: "a year", checked_at: null, commission: "£40 a switch (made up)", network: "Demo", live: true, notes: "" },
+      { id: "of3", kind: "card", sectors: ["cafe", "salon"], provider: "TapRight Payments (demo)", headline: "No monthly fee, next-day payouts", url: "https://example.com/demo-card", rate_from: 1.39, rate_unit: "% a transaction", checked_at: dd(-70), commission: "Share of fees (made up)", network: "Demo", live: true, notes: "Price is stale on purpose: it shouldn't show." },
+      { id: "of4", kind: "pat", sectors: ["cafe"], provider: "Not live yet (demo)", headline: "", url: null, live: false, commission: "", network: "", notes: "Waiting on their link" }];
+    return { areas: [area, sal.area], venues, observations, requests, sweeps, sweep_items, offers, offer_clicks: [], admins: [{ user_id: "demo", name: "You" }] };
   }
   // A made-up salon area: some businesses priced, some not, so the price check and the coverage list have something to show.
   function salonSeed(rnd, dd) {
@@ -130,6 +136,10 @@
       d.requests.unshift({ id: uid(), created_at: new Date().toISOString(), area_id: area.id, venue_id: b.p_venue, venue_text: b.p_venue_text, name: b.p_name, email: b.p_email.toLowerCase(), role: b.p_role,
         message: `Price check: sent ${Object.keys(prices).length} prices for a comparison`, status: "new", token: "demo-" + Math.random().toString(36).slice(2), owner_state: { menuBoard: { at: new Date().toISOString().slice(0, 10), prices, perWeek: b.p_per_week || {}, via: "price-check" } } });
       demoSave(d); return "ok"; }
+    if (fn === "offers_public") { const r = d.requests.find(x => x.token === b.p_token), a = r && d.areas.find(x => x.id === r.area_id); if (!a) return [];
+      return (d.offers || []).filter(o => o.live && o.url && o.sectors.includes(a.sector || "cafe")).map(o => { const c = Object.assign({}, o); delete c.url; delete c.commission; delete c.network; delete c.notes; return c; }); }
+    if (fn === "offer_go") { const r = d.requests.find(x => x.token === b.p_token), o = r && (d.offers || []).find(x => x.id === b.p_offer && x.live); if (!o) return null;
+      d.offer_clicks = d.offer_clicks || []; d.offer_clicks.push({ id: uid(), offer_id: o.id, request_id: r.id, at: new Date().toISOString() }); demoSave(d); return null; }
     if (fn === "report_public") { const r = d.requests.find(x => x.token === b.p_token && x.report); return r ? { report: r.report, report_at: r.report_at, name: r.name, founding: r.founding_interest } : null; }
     if (fn === "share_sales") { const r = d.requests.find(x => x.token === b.p_token && x.report); if (!r) return false; r.sales = b.p_sales; r.sales_at = new Date().toISOString(); demoSave(d); return true; }
     if (fn === "owner_get") { const r = d.requests.find(x => x.token === b.p_token); if (!r || !r.venue_id) return null; const v = d.venues.find(x => x.id === r.venue_id), a = d.areas.find(x => x.id === r.area_id);
@@ -184,6 +194,9 @@
       async updRequest(id, p) { return upd("requests", id, p); },
       async updArea(id, p) { return upd("areas", id, p); },
       async reset() { localStorage.removeItem(KEY); },
+      async offers() { return clone(d.offers || []); },
+      async saveOffer(o) { d.offers = d.offers || []; const r = o.id && d.offers.find(x => x.id === o.id); if (r) Object.assign(r, clone(o)); else d.offers.push(Object.assign({ id: uid(), created_at: new Date().toISOString() }, clone(o))); save(); return clone(r || d.offers[d.offers.length - 1]); },
+      async offerClicks() { return clone(d.offer_clicks || []); },
       async token() { return null; },
       async emailLog() { return []; },
       async sweeps(areaId) { return clone((d.sweeps || []).filter(x => x.area_id === areaId)); },
@@ -228,6 +241,9 @@
       async updSweep(id, p) { return ok(await sb.from("sweeps").update(p).eq("id", id).select().single()); },
       async updSweepItem(id, p) { return ok(await sb.from("sweep_items").update(p).eq("id", id).select().single()); },
       async sweepPhotoUrl(it) { if (!it.photo_path) return null; const r = await sb.storage.from("sweep-photos").createSignedUrl(it.photo_path, 3600); return r.error ? null : r.data.signedUrl; },
+      async offers() { return ok(await sb.from("offers").select("*").order("kind").order("provider")); },
+      async saveOffer(o) { const c = Object.assign({}, o); delete c.created_at; return c.id ? ok(await sb.from("offers").update(c).eq("id", c.id).select().single()) : ok(await sb.from("offers").insert(c).select().single()); },
+      async offerClicks() { return ok(await sb.from("offer_clicks").select("*").gte("at", new Date(Date.now() - 90 * 864e5).toISOString()).limit(5000)); },
       async emailLog() { return ok(await sb.from("email_log").select("*").order("at", { ascending: false }).limit(50)); },
       async uploadPhoto(path, blob) { ok(await sb.storage.from("visit-photos").upload(path, blob, { contentType: blob.type || "image/jpeg", upsert: false })); return { path }; },
       async photoUrl(ph) { if (!ph.path) return ph.data || null; const r = await sb.storage.from("visit-photos").createSignedUrl(ph.path, 3600); return r.error ? null : r.data.signedUrl; },

@@ -240,6 +240,63 @@ begin
 end $$;
 grant execute on function public.price_check(text, uuid, text, text, text, text, jsonb, jsonb) to anon, authenticated;
 
+-- Partner offers shown beside renewals and contracts (patch-offers.js). Admins only: the link and what we're paid stay here.
+create table if not exists public.offers (
+  id             uuid primary key default gen_random_uuid(),
+  kind           text not null check (kind in ('insurance','energy','card','waste','pat','eicr','fire','gas','pest')),
+  sectors        text[] not null default '{cafe,salon}',
+  provider       text not null check (char_length(provider) between 1 and 80),
+  headline       text check (char_length(headline) <= 160),
+  url            text check (url ~ '^https://' and char_length(url) <= 600),
+  rate_from      numeric(10,2) check (rate_from >= 0),
+  rate_unit      text check (char_length(rate_unit) <= 30),
+  rate_note      text check (char_length(rate_note) <= 120),
+  checked_at     date,
+  regulator_note text check (char_length(regulator_note) <= 400),
+  commission     text check (char_length(commission) <= 300),   -- what we're paid, for us only
+  network        text check (char_length(network) <= 80),       -- CJ, Awin, Partnerize, direct...
+  live           boolean not null default false,
+  notes          text check (char_length(notes) <= 1000),
+  created_at     timestamptz not null default now()
+);
+alter table public.offers enable row level security;
+create table if not exists public.offer_clicks (
+  id          uuid primary key default gen_random_uuid(),
+  offer_id    uuid not null references public.offers(id) on delete cascade,
+  request_id  uuid references public.requests(id) on delete set null,
+  at          timestamptz not null default now()
+);
+alter table public.offer_clicks enable row level security;
+create index if not exists offer_clicks_offer_idx on public.offer_clicks(offer_id, at desc);
+do $$ begin
+  drop policy if exists "admins all" on public.offers; create policy "admins all" on public.offers for all to authenticated using ((select public.is_admin())) with check ((select public.is_admin()));
+  drop policy if exists "admins all" on public.offer_clicks; create policy "admins all" on public.offer_clicks for all to authenticated using ((select public.is_admin())) with check ((select public.is_admin()));
+end $$;
+
+-- The live offers an owner can see: no link, nothing about what we're paid.
+create or replace function public.offers_public(p_token uuid)
+returns jsonb language sql stable security definer set search_path = public as $$
+  select coalesce(jsonb_agg(jsonb_build_object('id', o.id, 'kind', o.kind, 'sectors', o.sectors, 'provider', o.provider, 'headline', o.headline, 'live', true,
+           'rate_from', o.rate_from, 'rate_unit', o.rate_unit, 'rate_note', o.rate_note, 'checked_at', o.checked_at, 'regulator_note', o.regulator_note) order by o.provider), '[]'::jsonb)
+  from public.offers o, public.requests r join public.areas a on a.id = r.area_id
+  where r.token = p_token and r.status <> 'not_now' and o.live and o.url is not null and a.sector = any(o.sectors);
+$$;
+grant execute on function public.offers_public(uuid) to anon, authenticated;
+
+-- An owner clicks through: count it, hand back the link. At most 20 clicks an hour per owner are counted.
+create or replace function public.offer_go(p_token uuid, p_offer uuid)
+returns text language plpgsql security definer set search_path = public as $$
+declare rid uuid; u text;
+begin
+  select r.id into rid from public.requests r where r.token = p_token and r.status <> 'not_now';
+  if rid is null then return null; end if;
+  select o.url into u from public.offers o join public.requests r on r.id = rid join public.areas a on a.id = r.area_id where o.id = p_offer and o.live and a.sector = any(o.sectors);
+  if u is null then return null; end if;
+  if (select count(*) from public.offer_clicks where request_id = rid and at > now() - interval '1 hour') < 20 then insert into public.offer_clicks (offer_id, request_id) values (p_offer, rid); end if;
+  return u;
+end $$;
+grant execute on function public.offer_go(uuid, uuid) to anon, authenticated;
+
 -- An owner opens their report by its secret link.
 create or replace function public.report_public(p_token uuid)
 returns jsonb language sql stable security definer set search_path = public as $$

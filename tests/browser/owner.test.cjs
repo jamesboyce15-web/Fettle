@@ -74,7 +74,7 @@ const SHOTS = process.env.SHOTS;
     await p.reload(); await p.waitForTimeout(500);
     ok(await p.evaluate(() => __owner.S.invoices.length === 7 && __owner.S.changes.length === 2), 'everything is still there after reloading');
     await p.click('[data-tab=upload]'); await p.click('details.more > summary'); await p.uncheck('#emailOn'); await p.waitForTimeout(150);
-    ok(await p.evaluate(() => JSON.parse(localStorage.getItem('patch-demo-db-v8')).requests.find(r => r.token === 'demo-owner').briefing_off === true), 'an owner can turn off the Monday email');
+    ok(await p.evaluate(() => JSON.parse(localStorage.getItem('patch-demo-db-v9')).requests.find(r => r.token === 'demo-owner').briefing_off === true), 'an owner can turn off the Monday email');
     ok(!errs.length, 'no page errors ' + errs.join(' | '));
   } catch (e) { console.log('FAIL ' + e.message); fail++; }
   await b.close(); srv.close(); console.log(`${pass} passed, ${fail} failed`); process.exit(fail ? 1 : 0);

@@ -101,6 +101,7 @@ details.more>summary{cursor:pointer;color:var(--accent2);font-weight:600;margin:
 <script src="patch-insights.js"></script>
 <script src="patch-data.js"></script>
 <script src="patch-kits.js"></script>
+<script src="patch-offers.js"></script>
 <script src="vendor/qrcode.js"></script>
 <script>
 (function () {
@@ -140,7 +141,7 @@ function render() {
 function actionCard(a, compact) {
   const val = a.value ? `<span class="val">${pounds(a.value)} a year${a.estimate ? "*" : ""}</span>` : `<span class="val soft">${{ Google: "Helps you get found", "AI answers": "Helps you get recommended", Reviews: "Builds trust", Visit: "Better visits", Admin: "Keeps you covered", Sales: "Fills a quiet hour", "Opening hours": "New customers" }[a.area] || ""}</span>`;
   return `<article class="act ${a.status === "done" ? "done" : ""}" data-key="${esc(a.key)}"><div class="meta"><span class="area">${esc(a.area)}</span><span class="chip">${esc(I.EFFORT[a.effort])}</span>${a.status === "doing" ? '<span class="chip warn">Doing</span>' : a.status === "done" ? '<span class="chip good">Done</span>' : ""}${val}</div>
-    <h3>${esc(a.t)}</h3><p>${esc(a.why)}</p>${!compact && a.steps ? `<ul class="sm" style="margin:0 0 8px;padding-left:18px">${a.steps.map(s => `<li>${esc(s)}</li>`).join("")}</ul>` : ""}
+    <h3>${esc(a.t)}</h3><p>${esc(a.why)}</p>${a.status !== "done" && /^rem:/.test(a.key) && offersOn(a.t).length ? `<p class="sm" style="margin:-4px 0 8px"><span class="chip good">Deal to compare</span> ${esc(offersOn(a.t)[0].provider)}${offersOn(a.t)[0].rate ? `, from £${offersOn(a.t)[0].rate.from.toLocaleString("en-GB")} ${esc(offersOn(a.t)[0].rate.unit)}` : ""}</p>` : ""}${!compact && a.steps ? `<ul class="sm" style="margin:0 0 8px;padding-left:18px">${a.steps.map(s => `<li>${esc(s)}</li>`).join("")}</ul>` : ""}
     <div class="btns">${a.status !== "done" ? `<button class="btn sm" data-done="${esc(a.key)}">Done</button>${a.status !== "doing" ? `<button class="btn q sm" data-doing="${esc(a.key)}">I'm on it</button>` : ""}` : `<button class="btn q sm" data-undo="${esc(a.key)}">Not done after all</button>`}${a.status !== "done" && kitFor(a) ? `<button class="btn q sm kitb" data-kit="${esc(a.key)}">${KIT_BTN[kitFor(a)]}</button>` : ""}<button class="btn q sm" data-go="${esc(a.go)}">See why</button>${!compact && a.status !== "done" ? `<button class="btn q sm" data-skip="${esc(a.key)}">Not for us</button>` : ""}</div></article>`;
 }
 
@@ -409,6 +410,25 @@ function makeCard(url) {
 const fit = (g, t, max) => { let s = String(t); while (g.measureText(s).width > max && s.length > 4) s = s.slice(0, -2) + "…"; return s; };
 function stars(g, cx, cy, n, r) { g.fillStyle = "#f2b01e"; for (let i = 0; i < n; i++) { const x = cx + (i - (n - 1) / 2) * r * 2.6; g.beginPath(); for (let k = 0; k < 10; k++) { const a = Math.PI / 2 * 3 + k * Math.PI / 5, rr = k % 2 ? r * 0.45 : r; g.lineTo(x + Math.cos(a) * rr, cy + Math.sin(a) * rr); } g.closePath(); g.fill(); } }
 
+/* partner offers beside renewals: compare, with the disclosure, and the click counted on the way out */
+let OFFERS = [];
+const Of = PatchOffers, offersOn = title => { const k = Of.kindOf(title); return k ? Of.offersFor(OFFERS, k, P.SECTOR, O.iso(new Date())) : []; };
+function offerBlock(title, last) {
+  const list = offersOn(title); if (!list.length) return "";
+  return `<div class="card" style="background:var(--tint);border:0;margin:10px 0"><p class="sm" style="margin:0 0 6px"><b>Worth comparing before it renews</b></p>
+    ${list.slice(0, 3).map(o => { const pi = Of.pitch(o, last); return `<div style="padding:6px 0;border-top:1px solid var(--line)"><p class="sm" style="margin:0 0 4px"><b>${esc(o.provider)}</b></p>${pi.lines.map(l => `<p class="sm" style="margin:0 0 4px">${esc(l)}</p>`).join("")}
+      <button class="btn sm" data-offer="${esc(o.id)}">${esc(pi.verb)} with ${esc(o.provider)}</button>${pi.note ? `<p class="xs mute" style="margin:6px 0 0">${esc(pi.note)}</p>` : ""}</div>`; }).join("")}
+    <p class="xs mute" style="margin:6px 0 0">${esc(Of.DISCLOSURE)}</p></div>`;
+}
+async function goOffer(id, btn) {
+  if (btn) { btn.disabled = true; btn.textContent = "Opening…"; }
+  try { const u = await D.rpc("offer_go", { p_token: token, p_offer: id });
+    if (u && /^https:\/\//.test(u)) { location.href = u; return; }
+    toast(D.DEMO ? "In the demo, this would open their quote page." : "That deal isn't available any more.");
+  } catch (e) { toast(e.message); }
+  if (btn) { btn.disabled = false; btn.textContent = "Try again"; }
+}
+
 /* renewals and certificates */
 let DOC = null;
 const dY = x => new Date(x + "T12:00:00Z").toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
@@ -419,7 +439,7 @@ function docModal(a, rid) {
   DOC = { key: a ? a.key : null, rid: rem ? rem.id : null, title: rem ? rem.t : "Document", kind: d.kind, facts: {}, file: null };
   modal(rem ? rem.t : "Add a renewal or certificate", `${!rem ? `<label class="f"><span>What is it?</span><select id="k-docrem">${(S.reminders || []).map(r => `<option value="${r.id}">${esc(r.t)}</option>`).join("")}</select></label>` : ""}
     <p class="sm">Upload ${esc(d.ask)} as a PDF or a photo. We'll read the dates${d.kind === "insurance" ? " and what you paid" : ""}, set your next reminder, and keep it with your records.</p>
-    ${rem ? steps(Kt.renewalSteps(d.kind, last)) : ""}${last ? `<p class="sm mute">Last one: ${esc(last.name)}, added ${dd(last.at)}${last.due ? `, next due ${dY(last.due)}` : ""}${last.premium ? `, ${gbp(last.premium)}` : ""}.</p>` : ""}
+    ${rem ? steps(Kt.renewalSteps(d.kind, last)) : ""}${rem ? offerBlock(rem.t, last) : ""}${last ? `<p class="sm mute">Last one: ${esc(last.name)}, added ${dd(last.at)}${last.due ? `, next due ${dY(last.due)}` : ""}${last.premium ? `, ${gbp(last.premium)}` : ""}.</p>` : ""}
     <label class="drop" style="display:block"><b>Choose the file</b><br><span class="sm mute">PDF, or a clear photo of the page with the dates</span><input type="file" id="k-docfile" accept=".pdf,application/pdf,image/*" style="display:block;margin:8px auto 0"></label>
     <div id="k-docfacts"></div>`, null);
   if (!rem) $("#k-docrem").addEventListener("change", e => { const r = S.reminders.find(x => x.id === e.target.value); DOC.rid = r.id; DOC.title = r.t; DOC.kind = Kt.docFor(r.t).kind; });
@@ -509,6 +529,7 @@ document.addEventListener("click", async e => {
     setAction(d.done, "done"); if (a && a.key.startsWith("rem:")) { const k = a.key.slice(4), own = (S.reminders || []).find(r => "r:" + r.id === k);
       if (own) { if (own.every) { const n = new Date((own.due || today) + "T12:00:00Z"); n.setUTCMonth(n.getUTCMonth() + +own.every); own.due = O.iso(n); } else own.done = true; } else { S.dismissed = S.dismissed || {}; S.dismissed[k] = today; } }
     return render(); }
+  if (d.offer) return goOffer(d.offer, t);
   if (d.kit) return openKit(d.kit);
   if (d.adddoc) return docModal(null);
   if (d.opendoc) return openDoc(d.opendoc);
@@ -571,7 +592,10 @@ async function boot() {
   // After a price sweep, the area's latest comparison is fresher than the report snapshot.
   if (W.rank && W.rank.prices && W.rank.prices.length) W.report = Object.assign({}, W.report || {}, { items: W.rank.prices });
   S = W.state || {}; S.settings = Object.assign({ perStaffHour: 60, minStaff: 1, special: "", website: "" }, S.settings || {}); S.prep = S.prep || [];
-  if (!S.reminders) S.reminders = O.DEFAULT_REMINDERS.map(([t, every]) => ({ id: O.uid(), t, every, due: null }));
+  const defs = PatchOffers.DEFAULTS[P.SECTOR] || O.DEFAULT_REMINDERS;
+  if (!S.reminders) S.reminders = defs.map(([t, every]) => ({ id: O.uid(), t, every, due: null }));
+  else if (!S.remDefaults2) { const have = new Set(S.reminders.map(r => r.t)); defs.filter(([t]) => /energy|card machine|waste/i.test(t) && !have.has(t)).forEach(([t, every]) => S.reminders.push({ id: O.uid(), t, every, due: null })); S.remDefaults2 = true; }
+  try { OFFERS = (await D.rpc("offers_public", { p_token: token })) || []; } catch (e) { OFFERS = []; }
   $("#who").innerHTML = `<b>${esc(W.venue.name)}</b><br>${esc(W.area.name)}`; document.title = `${W.venue.name} · Patch`; $("#tabs").hidden = false;
   render();
 }
