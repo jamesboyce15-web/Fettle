@@ -34,6 +34,7 @@
 </div>
 <div class="toast" id="toast" role="status"></div>
 <script src="config.js"></script>
+<script src="patch-sectors.js"></script>
 <script src="patch-core.js"></script>
 <script src="patch-data.js"></script>
 <script>
@@ -49,36 +50,36 @@ let AREA = null;
 function range(item) {
   if (item.median == null || item.low == null) return "";
   const lo = item.low * 0.9, hi = item.high * 1.1, pc = x => Math.max(0, Math.min(100, ((x - lo) / (hi - lo)) * 100));
-  return `<div class="range" aria-label="Most cafés charge between ${money(item.low)} and ${money(item.high)}"><div class="track"></div><div class="band" style="left:${pc(item.low)}%;width:${pc(item.high) - pc(item.low)}%"></div><div class="med" style="left:${pc(item.median)}%"></div></div>
+  return `<div class="range" aria-label="Most ${P.WORDS.places} charge between ${money(item.low)} and ${money(item.high)}"><div class="track"></div><div class="band" style="left:${pc(item.low)}%;width:${pc(item.high) - pc(item.low)}%"></div><div class="med" style="left:${pc(item.median)}%"></div></div>
     <div class="xs mute" style="display:flex;justify-content:space-between"><span>${money(item.low)}</span><span>${money(item.high)}</span></div>`;
 }
 function render() {
   const A = AREA, pub = A.published || null, st = pub && pub.stats, venues = A.venues || [];
   const ind = venues.filter(v => v.kind !== "chain").length, awaiting = st ? st.awaiting : venues.filter(v => v.hygiene === "AwaitingInspection").length;
   const fw = st && st.prices.find(p => p.k === "flat_white");
-  let h = `<section class="hero"><h1>How does your café compare with the cafés around you?</h1>
-    <p class="lede">Prices, hygiene, opening hours and what customers find when they walk in, across ${venues.length} cafés in ${esc(A.name)}. Ask for a free, private report on your café: where you stand, and where you could save or charge more.</p>
-    <p class="cta"><a class="btn big" href="#start">See where you stand</a></p><p class="sm mute">Free. No public rankings: other cafés never see your figures.</p></section>`;
-  h += `<section class="sec"><div class="grid"><div class="stat"><b>${venues.length}</b><span>cafés in ${esc(A.name)}</span></div><div class="stat"><b>${ind}</b><span>independent</span></div>
-    ${fw && fw.median ? `<div class="stat"><b>${money(fw.median)}</b><span>typical flat white</span></div>` : ""}<div class="stat"><b>${awaiting}</b><span>new or awaiting their first hygiene inspection</span></div></div></section>`;
+  let h = `<section class="hero"><h1>How does your ${P.WORDS.place} compare with the ${P.WORDS.places} around you?</h1>
+    <p class="lede">Prices, hygiene, opening hours and what customers find when they walk in, across ${venues.length} ${P.WORDS.places} in ${esc(A.name)}. Ask for a free, private report on your ${P.WORDS.place}: where you stand, and where you could save or charge more.</p>
+    <p class="cta"><a class="btn big" href="#start">See where you stand</a></p><p class="sm mute">Free. No public rankings: other ${P.WORDS.places} never see your figures.</p></section>`;
+  h += `<section class="sec"><div class="grid"><div class="stat"><b>${venues.length}</b><span>${P.WORDS.places} in ${esc(A.name)}</span></div><div class="stat"><b>${ind}</b><span>independent</span></div>
+    ${fw && fw.median ? `<div class="stat"><b>${money(fw.median)}</b><span>typical flat white</span></div>` : ""}${P.SECTOR === "cafe" ? `<div class="stat"><b>${awaiting}</b><span>new or awaiting their first hygiene inspection</span></div>` : ""}</div></section>`;
   if (st && st.prices.some(p => p.median != null)) {
-    h += `<section class="sec card"><h2>What cafés here charge</h2><p class="sm mute">The middle price, and the range most cafés fall within. From ${st.priced} cafés' menus${pub.at ? `, ${fmtD(pub.at)}` : ""}.</p>
-      ${st.prices.filter(p => p.median != null).map(p => `<div class="itemrow"><span>${esc(p.t)}</span><span class="p">${money(p.median)}</span>${range(p)}</div>`).join("")}</section>`;
-  } else h += `<section class="sec card"><h2>What cafés here charge</h2><p class="mute">We're collecting menus and visiting cafés in ${esc(A.name)} now. Typical prices appear here once we have at least 5 cafés for each item.</p></section>`;
+    h += `<section class="sec card"><h2>What ${P.WORDS.places} here charge</h2><p class="sm mute">The middle price, and the range most ${P.WORDS.places} fall within. From ${st.priced} ${P.WORDS.places}' menus${pub.at ? `, ${fmtD(pub.at)}` : ""}.</p>
+      ${st.prices.filter(p => p.median != null).map(p => `<div class="itemrow"><span>${esc(p.t)}${p.thin ? ` <span class="xs mute">(${p.n} only)</span>` : ""}</span><span class="p">${money(p.median)}</span>${range(p)}</div>`).join("")}</section>`;
+  } else h += `<section class="sec card"><h2>What ${P.WORDS.places} here charge</h2><p class="mute">We're collecting menus and visiting ${P.WORDS.places} in ${esc(A.name)} now. Typical prices appear here once we have at least ${P.MIN_N} ${P.WORDS.places} for each item.</p></section>`;
   if (st && st.scores.some(s => s.median != null)) {
-    h += `<section class="sec card"><h2>What customers find inside</h2><p class="sm mute">From our visits to ${st.visited} cafés. Middle figures only.</p><div class="grid">
+    h += `<section class="sec card"><h2>What customers find inside</h2><p class="sm mute">From our visits to ${st.visited} ${P.WORDS.places}. Middle figures only.</p><div class="grid">
       ${st.scores.filter(s => s.median != null).map(s => `<div class="stat"><b>${s.k === "wait" ? Math.round(s.median) + " min" : s.median}</b><span>${esc(s.t)}${s.k === "wait" ? "" : " (" + esc(s.unit) + ")"}</span></div>`).join("")}
       ${st.wifi != null ? `<div class="stat"><b>${st.wifi}%</b><span>have wifi</span></div>` : ""}${st.cardOnly != null ? `<div class="stat"><b>${st.cardOnly}%</b><span>take cards only</span></div>` : ""}</div></section>`;
   }
   if (st && st.gaps) {
     const g = st.gaps;
-    h += `<section class="sec card"><h2>When cafés here are open</h2><p class="sm mute">From the opening hours of ${g.known} cafés.</p><div class="grid">
+    h += `<section class="sec card"><h2>When ${P.WORDS.places} here are open</h2><p class="sm mute">From the opening hours of ${g.known} ${P.WORDS.places}.</p><div class="grid">
       <div class="stat"><b>${g.before8}%</b><span>open before 8am on weekdays</span></div><div class="stat"><b>${g.after5}%</b><span>open after 5pm on weekdays</span></div>
       <div class="stat"><b>${g.sunday}%</b><span>open on Sundays</span></div><div class="stat"><b>${g.sundayAfter3}%</b><span>open after 3pm on Sundays</span></div></div></section>`;
   }
   const hyg = {}; (st ? Object.entries(st.hygiene) : venues.map(v => [v.hygiene || "Unknown", 1])).forEach(([k, n]) => hyg[k] = (hyg[k] || 0) + (st ? n : 1));
   const tot = Object.values(hyg).reduce((a, b) => a + b, 0) || 1;
-  h += `<section class="sec card"><h2>Food hygiene ratings</h2><p class="sm mute">From the Food Standards Agency, for every café in the area.</p>
+  if (P.SECTOR === "cafe") h += `<section class="sec card"><h2>Food hygiene ratings</h2><p class="sm mute">From the Food Standards Agency, for every ${P.WORDS.place} in the area.</p>
     ${HYG.filter(([k]) => hyg[k]).map(([k, t]) => `<div class="hyg"><span>${esc(t)}</span><div class="bar"><i style="width:${(hyg[k] / tot) * 100}%"></i></div><span class="n">${hyg[k]}</span></div>`).join("")}</section>`;
   const cal = pub ? (pub.calendar || []).filter(e => (e.end || e.start) >= new Date().toISOString().slice(0, 10)) : [];
   const dm = s => new Date(s).toLocaleDateString("en-GB", { day: "numeric", month: "short" });
@@ -86,15 +87,15 @@ function render() {
   const pr = pub && pub.profile;
   if (pr && (pr.people || pr.wfh || pr.students)) h += `<section class="sec card"><h2>Who's on your doorstep</h2><div class="grid">${[["people", "people live here", ""], ["wfh", "work mainly from home", "%"], ["students", "are full-time students", "%"], ["over65", "are 65 or over", "%"], ["families", "of households have children", "%"]].filter(([k]) => pr[k]).map(([k, t, u]) => `<div class="stat"><b>${esc(pr[k])}${u}</b><span>${t}</span></div>`).join("")}</div>${pr.source ? `<p class="xs mute" style="margin-top:8px">Source: ${esc(pr.source)}.</p>` : ""}</section>`;
   h += `<section class="sec"><h2>How it works</h2><ol class="how">
-    <li><b>Ask for your free report</b><span class="mute">Pick your café below. We'll check your menu, prices and opening hours against the 10 cafés nearest you.</span></li>
+    <li><b>Ask for your free report</b><span class="mute">Pick your ${P.WORDS.place} below. We'll check your menu, prices and opening hours against the 10 ${P.WORDS.places} nearest you.</span></li>
     <li><b>See where you stand</b><span class="mute">A private report: item by item against your neighbours, plus a calculator that shows where you could save on supplies or charge a little more and still be competitive.</span></li>
     <li><b>Keep it up to date</b><span class="mute">If it's useful, we track your patch every month and tell you what's changed: new openings, price moves, local events. Founding places are £${CFG.foundingPrice} a month for the first 12 months.</span></li></ol></section>`;
   h += `<section class="sec card" id="start"><h2>Get your free report</h2><form id="rq" novalidate>
-    <label class="f"><span>Your café</span><input id="cafe" list="cafes" autocomplete="off" placeholder="Start typing its name"><datalist id="cafes">${venues.map(v => `<option value="${esc(v.name)} (${esc(v.postcode || "")})">`).join("")}</datalist></label>
+    <label class="f"><span>Your ${P.WORDS.place}</span><input id="cafe" list="cafes" autocomplete="off" placeholder="Start typing its name"><datalist id="cafes">${venues.map(v => `<option value="${esc(v.name)} (${esc(v.postcode || "")})">`).join("")}</datalist></label>
     <div class="grid" style="gap:0 12px"><label class="f"><span>Your name</span><input id="nm" autocomplete="name" maxlength="80"></label><label class="f"><span>Email</span><input id="em" type="email" autocomplete="email" maxlength="120"></label>
     <label class="f"><span>You are the</span><select id="role"><option>Owner</option><option>Manager</option><option>Other</option></select></label><label class="f"><span>Phone (optional)</span><input id="ph" type="tel" maxlength="30"></label></div>
     <label class="f"><span>Anything you'd most like to know? (optional)</span><textarea id="msg" maxlength="1000" placeholder="For example: am I charging enough for brunch?"></textarea></label>
-    <p class="sm mute">We use these details only to send your report. We never share your figures with other cafés.</p><p class="err" id="err" role="alert"></p>
+    <p class="sm mute">We use these details only to send your report. We never share your figures with other ${P.WORDS.places}.</p><p class="err" id="err" role="alert"></p>
     <button class="btn big" id="go">Get my free report</button></form><div id="thanks" hidden></div></section>`;
   document.getElementById("app").innerHTML = h;
   document.getElementById("rq").addEventListener("submit", submit);
@@ -103,7 +104,7 @@ async function submit(e) {
   e.preventDefault();
   const v = id => document.getElementById(id).value.trim(), err = document.getElementById("err"), cafe = v("cafe");
   const match = AREA.venues.find(x => `${x.name} (${x.postcode || ""})` === cafe || x.name.toLowerCase() === cafe.toLowerCase());
-  if (!cafe) { err.textContent = "Tell us which café is yours."; return; }
+  if (!cafe) { err.textContent = `Tell us which ${P.WORDS.place} is yours.`; return; }
   if (!v("nm")) { err.textContent = "Please tell us your name."; return; }
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v("em"))) { err.textContent = "Please check your email address."; return; }
   const b = document.getElementById("go"); b.disabled = true; b.textContent = "Sending…"; err.textContent = "";
@@ -115,9 +116,10 @@ async function submit(e) {
   } catch (x) { err.textContent = x.message; b.disabled = false; b.textContent = "Get my free report"; }
 }
 async function boot() {
-  if (D.DEMO) document.getElementById("demo").innerHTML = `<p class="demo"><b>Demo.</b> A made-up area with made-up cafés. Nothing here is real.</p>`;
-  document.getElementById("foot").innerHTML = `Food hygiene ratings from the Food Standards Agency. Contains public sector information licensed under the Open Government Licence v3.0. Area figures are only shown where we have at least ${P.MIN_N} cafés.${CFG.contactEmail ? ` Questions: <a href="mailto:${esc(CFG.contactEmail)}">${esc(CFG.contactEmail)}</a>.` : ""} <a href="admin.html${D.DEMO ? "?demo=1" : ""}">Admin</a>${D.DEMO ? ` · <a href="owner.html?demo=1">An owner's home (demo)</a>` : ""}`;
+  if (D.DEMO) document.getElementById("demo").innerHTML = `<p class="demo"><b>Demo.</b> A made-up area with made-up ${P.WORDS.places}. Nothing here is real.</p>`;
+  document.getElementById("foot").innerHTML = `Food hygiene ratings from the Food Standards Agency. Contains public sector information licensed under the Open Government Licence v3.0. Area figures are only shown where we have at least ${P.MIN_N} ${P.WORDS.places}.${CFG.contactEmail ? ` Questions: <a href="mailto:${esc(CFG.contactEmail)}">${esc(CFG.contactEmail)}</a>.` : ""} <a href="admin.html${D.DEMO ? "?demo=1" : ""}">Admin</a>${D.DEMO ? ` · <a href="owner.html?demo=1">An owner's home (demo)</a>` : ""}`;
   try { AREA = await D.rpc("area_public", { p_slug: slug }); } catch (e) { AREA = null; }
+  if (AREA) P.useSector(AREA.sector);
   if (!AREA) { document.getElementById("app").innerHTML = `<p class="card">We couldn't find that area.</p>`; return; }
   document.title = `Patch · Cafés in ${AREA.name}`;
   render();

@@ -40,6 +40,7 @@
 <div class="wrap"><div id="root"><p class="mute" style="padding:20px">Loading…</p></div></div>
 <div class="toast" id="toast" role="status"></div>
 <script src="config.js"></script>
+<script src="patch-sectors.js"></script>
 <script src="patch-core.js"></script>
 <script src="patch-ops.js"></script>
 <script src="patch-insights.js"></script>
@@ -66,6 +67,7 @@ const venue = id => S.venues.find(v => v.id === id);
 async function loadArea(id) {
   S.area = S.areas.find(a => a.id === id) || S.areas[0];
   if (!S.area) { S.venues = []; S.obs = []; return; }
+  P.useSector(S.area.sector);
   [S.venues, S.obs] = await Promise.all([DB.venues(S.area.id), DB.observations(S.area.id)]);
   V.cal = clone(S.area.calendar || []); V.costs = clone(S.area.costs || []); V.profile = clone(S.area.profile || {});
 }
@@ -125,7 +127,7 @@ function mailto(r, v) {
 function buildReport(r) {
   const v = venue(r.venue_id), pos = P.position(v, S.venues, S.obs, 10), area = P.areaStats(S.venues, S.obs);
   const nearV = pos.near.map(x => x.v);
-  const snap = { at: new Date().toISOString(), area: { name: S.area.name, slug: S.area.slug },
+  const snap = { at: new Date().toISOString(), area: { name: S.area.name, slug: S.area.slug, sector: S.area.sector || "cafe" },
     venue: { name: v.name, address: v.address, postcode: v.postcode, hygiene: v.hygiene, hygieneDate: v.hygieneDate, hours: v.hours || null },
     quality: pos.quality, me: { scores: pos.me.scores, visited: pos.me.visited, lastAt: pos.me.lastAt },
     near: pos.near.map(x => ({ name: x.v.name, d: x.d, hygiene: x.v.hygiene, kind: x.v.kind })),
@@ -200,7 +202,7 @@ function vCafes() {
   if (q) list = S.venues.filter(x => (x.name + " " + (x.postcode || "") + " " + (x.address || "")).toLowerCase().includes(q));
   list = list.slice().sort((a, b) => (b.included - a.included) || a.name.localeCompare(b.name));
   const inc = S.venues.filter(x => x.included).length, noLoc = S.venues.filter(x => x.included && x.lat == null).length;
-  return `<div class="row" style="margin-bottom:10px"><h2 style="margin:0">Cafés</h2><span class="chip">${inc} included</span><span class="sp"></span>
+  return `<div class="row" style="margin-bottom:10px"><h2 style="margin:0">${P.WORDS.places[0].toUpperCase() + P.WORDS.places.slice(1)}</h2><span class="chip">${inc} included</span><span class="sp"></span>
     ${noLoc ? `<button class="btn q sm" data-act="locate">Find ${noLoc} missing locations</button>` : ""}<button class="btn q sm" data-act="addcafe">Add a café</button>${!D.DEMO ? `<button class="btn q sm" data-act="loadmenus">Load online menu prices</button><button class="btn q sm" data-act="loadfsa">Load the hygiene list</button>` : ""}</div>
     <p class="sm mute">Cafés come from the Food Standards Agency list. Only cafés with “café” or “coffee” in their name are included at first: search for bakeries, delis and brunch places and tick them in.</p>
     <div class="row" style="margin-bottom:10px"><input type="search" id="q" value="${esc(V.q)}" placeholder="Search every food business in the area" style="flex:1 1 260px;max-width:420px;border:1px solid var(--line);border-radius:9px;padding:8px 10px;background:var(--card)">
@@ -318,7 +320,7 @@ function sweepDetail(sw) {
 }
 async function approveItem(id) {
   const sw = S.sweeps.find(x => x.id === V.sw), it = V.swItems.find(x => x.id === id), prices = {}, err = [];
-  document.querySelectorAll(`[data-swp^="${id}."]`).forEach(inp => { const k = inp.dataset.swp.split(".")[1], v = inp.value.trim(); if (!v) return; const x = parseFloat(v.replace(/[£,\s]/g, "")); if (isNaN(x) || x < 0.05 || x > 40) err.push(P.ITEM[k].t); else prices[k] = Math.round(x * 100) / 100; });
+  document.querySelectorAll(`[data-swp^="${id}."]`).forEach(inp => { const k = inp.dataset.swp.split(".")[1], v = inp.value.trim(); if (!v) return; const x = parseFloat(v.replace(/[£,\s]/g, "")); if (isNaN(x) || x < 0.05 || x > P.MAX_PRICE) err.push(P.ITEM[k].t); else prices[k] = Math.round(x * 100) / 100; });
   if (err.length) return toast("Check: " + err.join(", ")); if (!Object.keys(prices).length) return toast("No prices to save: ask for a retake instead");
   try { const o = await DB.addObservation({ venue_id: it.venue_id, at: String(it.taken_at || new Date().toISOString()).slice(0, 10), source: "menu", prices, scores: {}, notes: `${sw.name}: menu board photo${sw.sweeper ? " by " + sw.sweeper : ""}`.slice(0, 1000), by_name: (ME && ME.name) || null, photos: it.photo_path ? [{ bucket: "sweep-photos", path: it.photo_path, tag: "Menu board" }] : [] });
     S.obs.push(o); Object.assign(it, await DB.updSweepItem(id, { status: "approved", approved_at: new Date().toISOString(), observation_id: o.id })); toast(`Approved: ${Object.keys(prices).length} prices`); render(); } catch (x) { toast(x.message); }

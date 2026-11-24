@@ -19,6 +19,7 @@ create table if not exists public.areas (
   slug          text not null unique check (slug ~ '^[a-z0-9-]{2,60}$'),
   name          text not null check (char_length(name) between 1 and 80),
   districts     text[] not null default '{}',
+  sector        text not null default 'cafe' check (sector in ('cafe','salon')),   -- what's compared: a café basket or salon services
   bench         jsonb not null default '{}'::jsonb,   -- cost per serving estimates, by item
   calendar      jsonb not null default '[]'::jsonb,   -- local events, holidays, roadworks
   costs         jsonb not null default '[]'::jsonb,   -- cost changes: milk, beans, cups
@@ -42,6 +43,7 @@ create table if not exists public.venues (
   lat            double precision,
   lng            double precision,
   kind           text not null default 'independent' check (kind in ('independent','chain')),
+  category       text check (char_length(category) <= 30),   -- salons: hair, barber, nails, beauty, aesthetics
   included       boolean not null default true,
   hygiene        text check (char_length(hygiene) <= 30),
   hygiene_date   date,
@@ -61,7 +63,7 @@ create table if not exists public.observations (
   id          uuid primary key default gen_random_uuid(),
   venue_id    uuid not null references public.venues(id) on delete cascade,
   at          date not null default current_date,
-  source      text not null check (source in ('menu','visit','website','owner','delivery')),
+  source      text not null check (source in ('menu','visit','website','owner','delivery','platform')),
   prices      jsonb not null default '{}'::jsonb,
   scores      jsonb not null default '{}'::jsonb,
   notes       text check (char_length(notes) <= 1000),
@@ -179,8 +181,8 @@ end $$;
 -- The public area page: the published snapshot, and the list of cafés to pick yours from (names and postcodes only).
 create or replace function public.area_public(p_slug text)
 returns jsonb language sql stable security definer set search_path = public as $$
-  select jsonb_build_object('slug', a.slug, 'name', a.name, 'districts', a.districts, 'published', a.published, 'published_at', a.published_at,
-    'venues', coalesce((select jsonb_agg(jsonb_build_object('id', v.id, 'name', v.name, 'postcode', v.postcode, 'kind', v.kind, 'hygiene', v.hygiene) order by v.name)
+  select jsonb_build_object('slug', a.slug, 'name', a.name, 'sector', a.sector, 'districts', a.districts, 'published', a.published, 'published_at', a.published_at,
+    'venues', coalesce((select jsonb_agg(jsonb_build_object('id', v.id, 'name', v.name, 'postcode', v.postcode, 'kind', v.kind, 'category', v.category, 'hygiene', v.hygiene) order by v.name)
                         from public.venues v where v.area_id = a.id and v.included), '[]'::jsonb))
   from public.areas a where a.slug = lower(p_slug);
 $$;
@@ -237,7 +239,7 @@ create or replace function public.owner_get(p_token uuid)
 returns jsonb language sql stable security definer set search_path = public as $$
   select jsonb_build_object('name', r.name, 'state', r.owner_state, 'report', r.report, 'emailOn', not r.briefing_off,
     'venue', (select jsonb_build_object('name', v.name, 'address', v.address, 'lat', v.lat, 'lng', v.lng, 'postcode', v.postcode, 'hygiene', v.hygiene, 'hygieneDate', v.hygiene_date) from public.venues v where v.id = r.venue_id),
-    'area', (select jsonb_build_object('name', a.name, 'calendar', a.calendar, 'costs', a.costs, 'supplyBench', a.supply_bench) from public.areas a where a.id = r.area_id),
+    'area', (select jsonb_build_object('name', a.name, 'sector', a.sector, 'calendar', a.calendar, 'costs', a.costs, 'supplyBench', a.supply_bench) from public.areas a where a.id = r.area_id),
     'geo', (select a.geo from public.areas a where a.id = r.area_id),
     'rank', (select a.rankings -> (r.venue_id::text) from public.areas a where a.id = r.area_id),
     'seo', (select v.seo from public.venues v where v.id = r.venue_id),
@@ -261,6 +263,11 @@ grant execute on function public.owner_put(uuid, jsonb) to anon, authenticated;
 alter table public.venues add column if not exists google_url text check (char_length(google_url) <= 500);
 alter table public.venues add column if not exists google_reviews integer check (google_reviews >= 0);
 alter table public.observations add column if not exists photos jsonb not null default '[]'::jsonb;
+-- Salons (Nov 2026): an area's sector, a venue's category, and prices read from booking-platform pages.
+alter table public.areas add column if not exists sector text not null default 'cafe' check (sector in ('cafe','salon'));
+alter table public.venues add column if not exists category text check (char_length(category) <= 30);
+alter table public.observations drop constraint if exists observations_source_check;
+alter table public.observations add constraint observations_source_check check (source in ('menu','visit','website','owner','delivery','platform'));
 alter table public.observations drop constraint if exists observations_source_check;
 alter table public.observations add constraint observations_source_check check (source in ('menu','visit','website','owner','delivery'));
 
@@ -291,7 +298,7 @@ create policy "admins remove visit photos" on storage.objects for delete to auth
 -- The sweeper's list, from their private link: cafés, where they are, and what's done. No prices, no other data.
 create or replace function public.sweep_get(p_token uuid)
 returns jsonb language sql stable security definer set search_path = public as $$
-  select jsonb_build_object('name', s.name, 'sweeper', s.sweeper, 'rate', s.rate, 'due', s.due, 'status', s.status, 'area', a.name,
+  select jsonb_build_object('name', s.name, 'sweeper', s.sweeper, 'rate', s.rate, 'due', s.due, 'status', s.status, 'area', a.name, 'sector', a.sector,
     'items', coalesce((select jsonb_agg(jsonb_build_object('id', i.id, 'name', v.name, 'address', v.address, 'postcode', v.postcode, 'lat', v.lat, 'lng', v.lng,
         'status', i.status, 'note', i.note, 'taken_at', i.taken_at, 'found', coalesce(jsonb_array_length(jsonb_path_query_array(i.read, '$.prices.keyvalue()')), 0)) order by v.postcode, v.name)
       from public.sweep_items i join public.venues v on v.id = i.venue_id where i.sweep_id = s.id), '[]'::jsonb))

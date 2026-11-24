@@ -28,7 +28,19 @@
   ];
   const DAYS = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
   const DAYNAME = { mon: "Monday", tue: "Tuesday", wed: "Wednesday", thu: "Thursday", fri: "Friday", sat: "Saturday", sun: "Sunday" };
-  const MIN_N = 5; // never show an area figure made from fewer than 5 cafés
+  let MIN_N = 5; // never show an area figure made from fewer than 5 cafés (salons: 3, marked thin under 5)
+
+  /* ---------- sectors ---------- */
+  // An area is cafés or salons. The pages all read P.ITEMS, so switching sector swaps the basket in place.
+  const CAFE_ITEMS = ITEMS.slice();
+  const SECTORS = { cafe: { place: "café", places: "cafés", maxPrice: 40, minN: 5 }, salon: { place: "salon", places: "salons and barbers", maxPrice: 600, minN: 3 } };
+  let SECTOR = "cafe";
+  function useSector(s) {
+    s = SECTORS[s] ? s : "cafe"; const PS = root.PatchSectors;
+    const list = s === "salon" && PS ? PS.SALON_ITEMS.map(i => ({ k: i.k, t: i.t, g: i.g })) : CAFE_ITEMS;
+    ITEMS.splice(0, ITEMS.length, ...list); Object.keys(ITEM).forEach(k => delete ITEM[k]); ITEMS.forEach(i => { ITEM[i.k] = i; });
+    SECTOR = s; MIN_N = SECTORS[s].minN; api.MIN_N = MIN_N; api.SECTOR = s; api.WORDS = SECTORS[s]; api.MAX_PRICE = SECTORS[s].maxPrice; return s;
+  }
 
   /* ---------- small sums ---------- */
   const num = v => (v === "" || v == null || isNaN(+v) ? null : +v);
@@ -75,7 +87,7 @@
     const inc = venues.filter(v => v.included !== false), ind = inc.filter(v => v.kind !== "chain");
     const L = Object.fromEntries(inc.map(v => [v.id, latest(observations, v.id)]));
     const prices = ITEMS.map(i => { const xs = inc.map(v => L[v.id].prices[i.k]).filter(x => x != null);
-      return { k: i.k, t: i.t, n: xs.length, median: xs.length >= MIN_N ? round2(median(xs)) : null, low: xs.length >= MIN_N ? round2(quantile(xs, 0.1)) : null, high: xs.length >= MIN_N ? round2(quantile(xs, 0.9)) : null }; });
+      return { k: i.k, t: i.t, n: xs.length, thin: xs.length >= MIN_N && xs.length < 5, median: xs.length >= MIN_N ? round2(median(xs)) : null, low: xs.length >= MIN_N ? round2(quantile(xs, 0.1)) : null, high: xs.length >= MIN_N ? round2(quantile(xs, 0.9)) : null }; });
     const scores = SCORES.map(s => { const xs = inc.map(v => num(L[v.id].scores[s.k])).filter(x => x != null);
       return Object.assign({}, s, { n: xs.length, median: xs.length >= MIN_N ? round2(median(xs)) : null }); });
     const yes = k => { const xs = inc.map(v => L[v.id].scores[k]).filter(x => x === true || x === false); return xs.length >= MIN_N ? Math.round((xs.filter(Boolean).length / xs.length) * 100) : null; };
@@ -304,7 +316,7 @@
   const salesShare = p => ({ from: p.from, to: p.to, days: p.days.length, avgDay: p.avgDay, avgSale: p.avgSale, grid: p.grid, byDow: p.byDow });
 
   const BENCH_DATE = "2026-11-01"; // when the starting costs per serving were set
-  const api = { BENCH_DATE, BANK_HOLIDAYS, CAL_TYPES, calendarFor, COST_INPUTS, benchAfter, parseCSV, parseWhen, readSales, salesPattern, salesVsCalendar, salesShare, DOW, ITEMS, ITEM, BENCH, SCORES, DAYS, DAYNAME, MIN_N, quantile, median, boardPrice, miles, latest, nearest, areaStats, hoursGaps, position, quality, margin, levers, calculator, newNearby, priceMoves, money, pence };
+  const api = { SECTORS, useSector, SECTOR: "cafe", WORDS: SECTORS.cafe, MAX_PRICE: 40, BENCH_DATE, BANK_HOLIDAYS, CAL_TYPES, calendarFor, COST_INPUTS, benchAfter, parseCSV, parseWhen, readSales, salesPattern, salesVsCalendar, salesShare, DOW, ITEMS, ITEM, BENCH, SCORES, DAYS, DAYNAME, MIN_N, quantile, median, boardPrice, miles, latest, nearest, areaStats, hoursGaps, position, quality, margin, levers, calculator, newNearby, priceMoves, money, pence };
   // Always on the global too, so the server bundle (where `module` exists) can share these between files.
   root.PatchCore = api; if (typeof module !== "undefined" && module.exports) module.exports = api;
 })(typeof window !== "undefined" ? window : globalThis);

@@ -95,6 +95,7 @@ details.more>summary{cursor:pointer;color:var(--accent2);font-weight:600;margin:
 </nav>
 <div class="toast" id="toast" role="status"></div>
 <script src="config.js"></script>
+<script src="patch-sectors.js"></script>
 <script src="patch-core.js"></script>
 <script src="patch-ops.js"></script>
 <script src="patch-insights.js"></script>
@@ -475,7 +476,7 @@ async function readMenu(file) {
     <div class="pcheck" style="grid-template-columns:repeat(auto-fill,minmax(130px,1fr))">${P.ITEMS.map(i => `<label class="f"><span>${esc(i.t)}</span><input inputmode="decimal" data-mb="${i.k}" value="${MENU.prices[i.k] ?? ""}" placeholder="£"></label>`).join("")}</div><p class="err" id="mbErr"></p><button class="btn sm" data-k="mb-save">Send to Patch</button>`;
 }
 function saveMenu() {
-  const prices = {}, bad = []; document.querySelectorAll("[data-mb]").forEach(i => { const v = i.value.trim(); if (!v) return; const x = parseFloat(v.replace(/[£,\s]/g, "")); if (isNaN(x) || x < 0.05 || x > 40) bad.push(P.ITEM[i.dataset.mb].t); else prices[i.dataset.mb] = Math.round(x * 100) / 100; });
+  const prices = {}, bad = []; document.querySelectorAll("[data-mb]").forEach(i => { const v = i.value.trim(); if (!v) return; const x = parseFloat(v.replace(/[£,\s]/g, "")); if (isNaN(x) || x < 0.05 || x > P.MAX_PRICE) bad.push(P.ITEM[i.dataset.mb].t); else prices[i.dataset.mb] = Math.round(x * 100) / 100; });
   if (bad.length) { $("#mbErr").textContent = "Check: " + bad.join(", "); return; } if (!Object.keys(prices).length) { $("#mbErr").textContent = "Add at least one price."; return; }
   S.menuBoard = { at: today, prices, path: MENU && MENU.path, used: false }; save("Sent. We'll update your comparison."); render();
 }
@@ -564,6 +565,7 @@ async function boot() {
   if (D.DEMO) $("#demo").innerHTML = `<p class="demo"><b>Demo.</b> A made-up café with made-up figures. Changes stay in this browser.</p>`;
   if (!token) { $("#app").innerHTML = `<p class="card">Open Patch from the link in your email.</p>`; return; }
   try { W = await D.rpc("owner_get", { p_token: token }); } catch (e) { W = null; }
+  if (W && W.area) P.useSector(W.area.sector);
   if (!W || !W.venue) { $("#app").innerHTML = `<p class="card">We couldn't find your café. Use the link from your email.</p>`; return; }
   W.area = W.area || { name: "", calendar: [], costs: [] };
   // After a price sweep, the area's latest comparison is fresher than the report snapshot.

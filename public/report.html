@@ -53,6 +53,7 @@
   <footer id="foot"></footer>
 </div>
 <script src="config.js"></script>
+<script src="patch-sectors.js"></script>
 <script src="patch-core.js"></script>
 <script src="patch-data.js"></script>
 <script>
@@ -68,14 +69,14 @@ let R = null, rows = [];
 function bar(i) {
   if (i.median == null) return `<span class="sm mute">Not enough nearby prices yet</span>`;
   const xs = i.peers.map(p => p.price).concat(i.mine != null ? [i.mine] : []), lo = Math.min(...xs) * 0.95, hi = Math.max(...xs) * 1.05, pc = x => Math.max(0, Math.min(100, ((x - lo) / (hi - lo || 1)) * 100));
-  return `<div class="range" role="img" aria-label="Nearby cafés mostly charge ${money(i.low)} to ${money(i.high)}, middle ${money(i.median)}${i.mine != null ? `; you charge ${money(i.mine)}` : ""}"><div class="track"></div>
+  return `<div class="range" role="img" aria-label="Nearby ${P.WORDS.places} mostly charge ${money(i.low)} to ${money(i.high)}, middle ${money(i.median)}${i.mine != null ? `; you charge ${money(i.mine)}` : ""}"><div class="track"></div>
     <div class="band" style="left:${pc(i.low)}%;width:${pc(i.high) - pc(i.low)}%"></div><div class="med" style="left:${pc(i.median)}%"></div>${i.mine != null ? `<div class="me" style="left:${pc(i.mine)}%"></div>` : ""}</div>`;
 }
 function itemNote(i) {
   if (i.mine == null || i.median == null) return i.mine == null && i.median != null ? `Nearby middle price ${money(i.median)}. We don't have yours yet.` : "";
   const d = i.diff, n = i.peers.length;
-  if (Math.abs(d) < 0.05) return `In line with the middle of the ${n} cafés near you.`;
-  return d < 0 ? `${P.pence(-d)} below the middle price of ${money(i.median)}. ${i.cheaperThan} of ${n} nearby cafés charge more.` : `${P.pence(d)} above the middle price of ${money(i.median)}. ${n - i.cheaperThan} of ${n} nearby cafés charge more or the same.`;
+  if (Math.abs(d) < 0.05) return `In line with the middle of the ${n} ${P.WORDS.places} near you.`;
+  return d < 0 ? `${P.pence(-d)} below the middle price of ${money(i.median)}. ${i.cheaperThan} of ${n} nearby ${P.WORDS.places} charge more.` : `${P.pence(d)} above the middle price of ${money(i.median)}. ${n - i.cheaperThan} of ${n} nearby ${P.WORDS.places} charge more or the same.`;
 }
 
 function render() {
@@ -83,11 +84,11 @@ function render() {
   const below = priced.filter(i => i.diff <= -0.05).length, above = priced.filter(i => i.diff >= 0.05).length;
   const far = s.near.length ? s.near[s.near.length - 1].d : 0;
   let h = `<section class="head"><p class="sm mute">Your Patch report · ${fmtD(s.at)}</p><h1>${esc(v.name)}</h1>
-    <p class="lede">How you compare with the ${s.near.length} cafés nearest you, all within ${far.toFixed(1)} miles, in ${esc(s.area.name)}.</p></section>`;
+    <p class="lede">How you compare with the ${s.near.length} ${P.WORDS.places} nearest you, all within ${far.toFixed(1)} miles, in ${esc(s.area.name)}.</p></section>`;
   h += `<section class="card"><div id="headline"></div></section>`;
   if ((s.actions || []).length) h += `<section class="card"><h2>What we'd look at first</h2><ol class="acts">${s.actions.map(a => `<li>${esc(a)}</li>`).join("")}</ol></section>`;
   h += `<section class="card"><h2>Your prices against your neighbours</h2><p class="sm mute">${priced.length ? `You're below the middle price on ${below} item${below === 1 ? "" : "s"}, and above it on ${above}.` : "We need your prices to compare them."}</p>
-    <div class="key"><span><i style="width:26px;height:11px;border-radius:6px;background:var(--tint)"></i>Where most nearby cafés are</span><span><i style="width:2px;height:14px;background:var(--mute)"></i>Middle price</span><span><i style="width:14px;height:14px;border-radius:50%;background:var(--accent)"></i>You</span></div>
+    <div class="key"><span><i style="width:26px;height:11px;border-radius:6px;background:var(--tint)"></i>Where most nearby ${P.WORDS.places} are</span><span><i style="width:2px;height:14px;background:var(--mute)"></i>Middle price</span><span><i style="width:14px;height:14px;border-radius:50%;background:var(--accent)"></i>You</span></div>
     ${s.items.filter(i => i.median != null || i.mine != null).map(i => `<div class="prow"><span>${esc(i.t)}</span><span class="p">${i.mine != null ? money(i.mine) : "–"}</span>${bar(i)}<span class="note">${esc(itemNote(i))}</span>
       ${i.peers.length ? `<details><summary>The ${i.peers.length} nearby prices</summary><table class="t"><tbody>${i.peers.slice().sort((a, b) => a.price - b.price).map(p => `<tr><td>${esc(p.name)}</td><td class="n">${p.d.toFixed(1)} mi</td><td class="n">${money(p.price)}</td></tr>`).join("")}</tbody></table></details>` : ""}</div>`).join("")}</section>`;
   if (s.me.visited) {
@@ -97,12 +98,14 @@ function render() {
   }
   if (s.gaps) h += `<section class="card"><h2>When your neighbours are open</h2><div class="grid"><div class="stat"><b>${s.gaps.before8}%</b><span>open before 8am on weekdays</span></div><div class="stat"><b>${s.gaps.after5}%</b><span>open after 5pm on weekdays</span></div><div class="stat"><b>${s.gaps.sunday}%</b><span>open on Sundays</span></div></div>
     ${v.hours ? `<p class="sm mute" style="margin-top:10px">Your hours as we have them: ${P.DAYS.map(d => `${P.DAYNAME[d].slice(0, 3)} ${v.hours[d] ? v.hours[d].join("–") : v.hours[d] === null ? "closed" : "?"}`).join(", ")}.</p>` : ""}</section>`;
+  if (P.SECTOR === "cafe") {
   const hyg = s.near.reduce((m, x) => (m[x.hygiene] = (m[x.hygiene] || 0) + 1, m), {});
   h += `<section class="card"><h2>Food hygiene</h2><p>Your rating: <b>${esc(v.hygiene === "AwaitingInspection" ? "awaiting inspection" : v.hygiene || "not known")}</b>${v.hygieneDate ? `, from ${fmtD(v.hygieneDate)}` : ""}. Near you: ${Object.entries(hyg).sort().reverse().map(([k, n]) => `${n} rated ${k === "AwaitingInspection" ? "awaiting" : esc(k)}`).join(", ")}.</p>
     ${s.newNearby.length ? `<p><b>New nearby:</b> ${s.newNearby.map(x => `${esc(x.name)} (${x.d.toFixed(1)} mi)`).join(", ")}. These are waiting for a first inspection, which usually means newly opened or new owners.</p>` : ""}</section>`;
   h += `<section class="card"><h2>Where you could save, or charge more</h2><p class="sm mute">Put in what one serving costs you and how many you sell in a week. For each item we check first whether you could buy it cheaper, and if not, whether you could charge a little more and still be competitive. Your figures stay in this browser.</p>
     <div id="calcBody"></div>
     <p class="xs mute">Margin is worked out after 20% VAT. Costs start as typical figures for a café like yours: change them to yours. This is information to help you decide, not financial advice.</p></section>`;
+  }
   const cal = (s.calendar || []).filter(e => (e.end || e.start) >= new Date().toISOString().slice(0, 10));
   const dm = x => new Date(x).toLocaleDateString("en-GB", { day: "numeric", month: "short" });
   if (cal.length) h += `<section class="card"><h2>Coming up near you</h2>${cal.slice(0, 8).map(e => `<div class="fx"><span><b>${esc(e.title)}</b> <span class="chip ${e.effect === "busier" ? "good" : e.effect === "quieter" ? "warn" : ""}">${esc(P.CAL_TYPES[e.type] || "")}</span>${e.note ? `<br><span class="sm mute">${esc(e.note)}</span>` : ""}</span><span class="sm mute" style="white-space:nowrap">${dm(e.start)}${e.end && e.end !== e.start ? "–" + dm(e.end) : ""}</span></div>`).join("")}</section>`;
@@ -112,7 +115,7 @@ function render() {
     <div class="drop"><input type="file" id="salesFile" accept=".csv,text/csv"><p class="xs mute" style="margin:8px 0 0">At least a few weeks of sales works best. Item-by-item or sale-by-sale exports both work.</p></div><div id="salesOut"></div></section>`;
   h += `<section class="card found noprint" id="found"></section>`;
   document.getElementById("app").innerHTML = h;
-  drawCalc(); drawFound();
+  if (document.getElementById("calcBody")) drawCalc(); drawFound();
 }
 function drawCalc() {
   const s = R.report, pos = { items: s.items, quality: s.quality };
@@ -130,7 +133,7 @@ function drawCalc() {
 function drawFound() {
   const el = document.getElementById("found");
   if (R.founding) { el.innerHTML = `<h2>Thanks. We'll be in touch about your founding place.</h2>`; return; }
-  el.innerHTML = `<h2>Want this every month?</h2><p>We're taking 10 founding members in ${esc(R.report.area.name)} at <b>£${CFG.foundingPrice} a month for the first 12 months</b> (then £${CFG.fullPrice}). A fresh report each month, alerts when a café opens near you or a neighbour changes prices, local events worth planning for, and this calculator kept up to date.</p>
+  el.innerHTML = `<h2>Want this every month?</h2><p>We're taking 10 founding members in ${esc(R.report.area.name)} at <b>£${CFG.foundingPrice} a month for the first 12 months</b> (then £${CFG.fullPrice}). A fresh report each month, alerts when a ${P.WORDS.place} opens near you or a neighbour changes prices, local events worth planning for, and this calculator kept up to date.</p>
     <label class="f"><span>Anything you'd like us to know? (optional)</span><textarea id="fmsg" maxlength="1000"></textarea></label><p class="err" id="ferr"></p>
     <button class="btn big" id="fgo">I'd like a founding place</button><p class="xs mute" style="margin-top:8px">Nothing to pay now. We'll email you to set it up.</p>`;
   document.getElementById("fgo").addEventListener("click", async () => {
@@ -163,7 +166,7 @@ function drawSales(res) {
   h += `<h3 style="margin-top:18px">By day of the week</h3>${DOWS.map(d => { const x = p.byDow.find(y => y.dow === d); return x && x.avg != null ? `<div class="fx"><span>${P.DOW[d]}</span><span style="flex:1;margin:8px 12px 0"><span class="bar" style="display:block"><i style="width:${(x.avg / Math.max(...p.byDow.map(y => y.avg || 0))) * 100}%"></i></span></span><span class="sm">${money(x.avg)}</span></div>` : ""; }).join("")}`;
   if (fx.length) h += `<h3 style="margin-top:18px">What local happenings did to your takings</h3><p class="sm mute">Each against the same weekdays without it.</p>${fx.map(f => `<div class="fx"><span>${esc(f.title)} <span class="xs mute">(${f.days} day${f.days === 1 ? "" : "s"})</span></span><span class="chip ${f.pct >= 5 ? "good" : f.pct <= -5 ? "warn" : ""}">${f.pct > 0 ? "+" : ""}${f.pct}%</span></div>`).join("")}`;
   else h += `<p class="sm mute" style="margin-top:12px">Once your file covers a few weeks with local events or holidays in them, we'll show what each one did to your takings.</p>`;
-  h += `<div class="card" style="margin:16px 0 0;background:var(--tint);border:0"><label style="display:flex;gap:10px;align-items:flex-start"><input type="checkbox" id="shareSales" style="margin-top:4px;width:18px;height:18px"><span>Share these totals with Patch, so your next report can compare your busy hours with your neighbours'. We only get average takings by weekday and hour, never single sales, and never show them to another café.</span></label><p class="sm" id="shareMsg"></p></div>`;
+  h += `<div class="card" style="margin:16px 0 0;background:var(--tint);border:0"><label style="display:flex;gap:10px;align-items:flex-start"><input type="checkbox" id="shareSales" style="margin-top:4px;width:18px;height:18px"><span>Share these totals with Patch, so your next report can compare your busy hours with your neighbours'. We only get average takings by weekday and hour, never single sales, and never show them to another ${P.WORDS.place}.</span></label><p class="sm" id="shareMsg"></p></div>`;
   out.innerHTML = h;
   document.getElementById("shareSales").addEventListener("change", async e => {
     if (!e.target.checked) return; const m = document.getElementById("shareMsg");
@@ -183,10 +186,11 @@ document.addEventListener("input", e => {
   const pos = e.target.selectionStart, id = e.target.dataset.c; drawCalc(); const el = document.querySelector(`[data-c="${id}"]`); if (el) { el.focus(); try { el.setSelectionRange(pos, pos); } catch (x) {} }
 });
 async function boot() {
-  if (D.DEMO) document.getElementById("demo").innerHTML = `<p class="demo"><b>Demo.</b> Made-up cafés. Nothing here is real.</p>`;
+  if (D.DEMO) document.getElementById("demo").innerHTML = `<p class="demo"><b>Demo.</b> Made-up ${P.WORDS.places}. Nothing here is real.</p>`;
   document.getElementById("foot").innerHTML = `Prices as we saw them on menus and visits. Food hygiene ratings from the Food Standards Agency; contains public sector information licensed under the Open Government Licence v3.0. This report is private to you.`;
   if (!token) { document.getElementById("app").innerHTML = `<p class="card">This link is missing its code. Use the link from your email.</p>`; return; }
   try { R = await D.rpc("report_public", { p_token: token }); } catch (e) { R = null; }
+  if (R && R.report && R.report.area) P.useSector(R.report.area.sector);
   if (!R || !R.report) { document.getElementById("app").innerHTML = `<p class="card">We couldn't find this report. Check the link in your email${CFG.contactEmail ? `, or write to <a href="mailto:${esc(CFG.contactEmail)}">${esc(CFG.contactEmail)}</a>` : ""}.</p>`; return; }
   let saved = null; try { saved = JSON.parse(localStorage.getItem(KEY)); } catch (e) {}
   const b0 = P.benchAfter(R.report.bench || P.BENCH, R.report.costs, P.BENCH_DATE);

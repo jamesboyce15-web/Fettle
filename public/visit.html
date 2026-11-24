@@ -52,6 +52,7 @@
 <div class="dock" id="dock" hidden></div>
 <div class="toast" id="toast" role="status"></div>
 <script src="config.js"></script>
+<script src="patch-sectors.js"></script>
 <script src="patch-core.js"></script>
 <script src="patch-ops.js"></script>
 <script src="patch-insights.js"></script>
@@ -157,7 +158,7 @@ async function save(btn) {
   if (Number.isNaN(rating)) { err.textContent = "The Google rating should be between 1 and 5."; return; }
   if (Number.isNaN(reviews)) { err.textContent = "The number of Google reviews should be a number."; return; }
   const url = String(g.url ?? v.googleUrl ?? "").trim(); if (url && !/^https:\/\/(www\.)?(google\.[a-z.]+\/maps|maps\.google\.[a-z.]+|maps\.app\.goo\.gl|goo\.gl\/maps|g\.page)\b/i.test(url)) { err.textContent = "That doesn't look like a Google Maps link."; return; }
-  const prices = {}; for (const i of P.ITEMS) { const x = numOr(F.prices[i.k], 0.2, 40); if (Number.isNaN(x)) { err.textContent = `${i.t}: that price doesn't look right.`; return; } if (x != null) prices[i.k] = x; }
+  const prices = {}; for (const i of P.ITEMS) { const x = numOr(F.prices[i.k], 0.2, P.MAX_PRICE); if (Number.isNaN(x)) { err.textContent = `${i.t}: that price doesn't look right.`; return; } if (x != null) prices[i.k] = x; }
   btn.disabled = true; btn.textContent = F.photos.length ? "Sending photos…" : "Saving…";
   try {
     const photos = [];
@@ -212,6 +213,7 @@ async function boot() {
   try { DB = DB || await D.admin(); ME = await DB.me(); if (!ME) return signin(); if (ME.notAdmin) return signin("That account can't record visits.");
     const areas = await DB.areas(), want = new URLSearchParams(location.search).get("area");
     AREA = areas.find(a => a.slug === want) || areas.find(a => a.slug === (D.CFG.defaultArea || "")) || areas[0];
+    if (AREA) P.useSector(AREA.sector);
     [VENUES, OBS] = await Promise.all([DB.venues(AREA.id), DB.observations(AREA.id)]);
     if (D.DEMO) $("#demo").innerHTML = `<p class="demo"><b>Demo.</b> Made-up cafés in ${esc(AREA.name)}. What you save stays in this browser.</p>`;
     restore(); const pre = new URLSearchParams(location.search).get("v"); if (pre && VENUES.some(v => v.id === pre)) F.venue = pre;
