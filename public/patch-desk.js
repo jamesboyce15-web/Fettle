@@ -153,7 +153,7 @@
     ["yelp", "Yelp", "Free listing; Yelp licenses its data to ChatGPT. Link the Patch page."],
     ["facebook", "Facebook page points to the Patch page", "Button: Send WhatsApp message or Book now, with the Patch link. Prices in the About text, not only in photos."],
     ["instagram", "Instagram bio link", "If they use it."],
-    ["reviews", "Review requests going out", "After each visit, a WhatsApp with their Google review link."],
+    ["reviews", "Review requests going out", "After every visit, the same WhatsApp to every customer with their Google review link. Not only happy ones, no suggested wording, nothing offered in return: Google and UK law ban all three."],
     ["before", "First AI check recorded", "The 'before' screenshots and named / not named, for the report."]];
   function setupProgress(m) { const l = m.listings || {}; const done = SETUP.filter(([k]) => l[k]).length; return { done, of: SETUP.length, next: (SETUP.find(([k]) => !l[k]) || [])[1] || null }; }
 
@@ -185,7 +185,9 @@
     const billTxt = b.plus ? `Bill: ${money2(b.amount)} (Plus).` : b.charged ? `Bill: ${money2(b.amount)} (${b.charged} at ${money2(b.per)}${b.capped ? `, capped at ${money2(b.cap)}` : ""}${b.free ? `, and ${b.free} free` : ""}).` : b.free ? `Bill: £0. ${b.free} of your free enquiries used, ${b.freeLeft} left.` : "Bill: £0.";
     const cmp = members ? compareLocal(m, members) : [], c0 = cmp.sort((a, c) => Math.abs(c.mine - c.median) / c.median - Math.abs(a.mine - a.median) / a.median)[0];
     const priceTxt = c0 ? `\nLocal prices: ${c0.name} is ${money(c0.mine)} with you; most ${trade(m.trade).one}s in ${clean(m.town)} charge ${money(c0.low)}–${money(c0.high)} (${c0.n} on Patch).\n` : "";
-    const todo = (m.listings || {}).reviews ? "Ask your happiest regular this month for a Google review that mentions what you did for them." : "Send your last 5 customers your Google review link. Reviews are the biggest thing AI reads.";
+    // Review advice follows Google's rules and UK law: ask every customer the same way, one at a time after their visit;
+    // never only the happy ones, never tell them what to write, never offer anything for it. The owner's own replies are theirs to word.
+    const todo = (m.listings || {}).reviews ? "Reply to your newest Google reviews, saying in your own words what you did (\"Bella's first full groom\"). AI reads replies too." : "After every appointment, send that customer your Google review link, the same short message each time. Ask everyone, not just regulars.";
     return `Hi ${first(m.owner_name)}, your ${label} with Patch:\n\n${b.counted ? `${b.counted} enquir${b.counted === 1 ? "y" : "ies"}${srcTxt ? ` (${srcTxt})` : ""}.` : "No enquiries through Patch this month."}${b.voided ? ` ${b.voided} voided.` : ""}\n${ai ? ai + "\n" : ""}${priceTxt}${billTxt}\n\nOne thing to do: ${todo}\n\nReply VOID with the date to remove any enquiry that wasn't real. Reply STOP to leave at any time.`;
   }
 

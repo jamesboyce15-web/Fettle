@@ -41,7 +41,7 @@ test("the AI before-and-after, and the messages James sends", () => {
   const s = K.aiSummary(checks); assert.deepEqual([s.before.named, s.before.n, s.now.named, s.now.n, s.now.prices], [0, 2, 1, 2, 1]); assert.equal(K.aiSummary([]), null);
   const enq = [{ id: "1", member_id: "m1", at: "2026-11-03T10:00:00Z", source: "chatgpt" }, { id: "2", member_id: "m1", at: "2026-11-04T10:00:00Z", source: "google", voided: true }];
   const r = K.reportMessage(M, enq, checks, "2026-11");
-  assert.match(r, /^Hi Sarah, your November with Patch/); assert.match(r, /1 enquiry \(1 from ChatGPT\)\. 1 voided\./); assert.match(r, /named you in 1 of 2 searches, up from 0 of 2/); assert.match(r, /Bill: £0\. 1 of your free/); assert.match(r, /STOP/);
+  assert.match(r, /^Hi Sarah, your November with Patch/); assert.doesNotMatch(r, /happiest|mention/i, "review advice never targets happy customers or suggests wording"); assert.match(r, /1 enquiry \(1 from ChatGPT\)\. 1 voided\./); assert.match(r, /named you in 1 of 2 searches, up from 0 of 2/); assert.match(r, /Bill: £0\. 1 of your free/); assert.match(r, /STOP/);
   assert.match(K.openerMessage(M, checks, "James"), /You were named in 1/); assert.match(K.openerMessage(M, [], "Jo"), /I'm Jo from Patch/);
   const sm = K.summaryMessage(M); assert.match(sm, /Full groom, medium dog: £45/); assert.match(sm, /Large dog: from £55/); assert.match(sm, /breed, size/);
   assert.deepEqual(K.searches(M).slice(0, 2), ["dog groomer near SK4", "dog groomer in Heaton Moor"]); assert.deepEqual(K.searches(Object.assign({}, M, { searches: ["my own"] })), ["my own"]);
