@@ -6,63 +6,64 @@
 <title>Patch · Get found by AI. Enquiries land in your WhatsApp.</title>
 <meta name="description" content="For one-person local businesses: dog groomers, mobile hairdressers, valeters, driving instructors, tutors. Patch gets you found on ChatGPT and Google, sends enquiries to your WhatsApp, and only charges when they arrive. Free setup, no contract.">
 <link rel="canonical" href="https://getfettle.co.uk/">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@500;700&display=swap">
+<link rel="preload" href="fonts/schibsted.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="patch.css">
 <style>
-.hero{padding:18px 0 8px}.hero h1{font-size:clamp(1.9rem,5vw,2.8rem);line-height:1.1;margin:6px 0 10px;text-wrap:balance}
-.chat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;max-width:440px;font-size:.95rem}
-.chat .q{background:var(--tint);border-radius:12px 12px 4px 12px;padding:8px 12px;margin:0 0 8px auto;max-width:85%;width:fit-content}
-.chat .a{border:1px solid var(--line);border-radius:12px 12px 12px 4px;padding:10px 12px;max-width:92%}
-.chat .wa{background:#e7f6ec;border-radius:12px 12px 4px 12px;padding:8px 12px;margin:8px 0 0 auto;max-width:85%;width:fit-content;white-space:pre-line}
-.price{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.price .card{margin:0}
-.price b.big{font:700 1.8rem "Space Grotesk",sans-serif;display:block}
-.two{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:20px;align-items:center}
-.how{counter-reset:s;list-style:none;padding:0;margin:0}.how li{counter-increment:s;position:relative;padding:0 0 14px 46px}.how li b{display:block}
-.how li::before{content:counter(s);position:absolute;left:0;top:0;width:32px;height:32px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-weight:700}
-.price{margin-bottom:16px}
-@media(max-width:760px){.two{grid-template-columns:1fr}}
+/* The hero is the customer's own question: who near this postcode? */
+.ask{font-size:clamp(2.55rem,8.6vw,4.4rem);line-height:1.04;font-weight:800;letter-spacing:-.03em;margin:28px 0 0;max-width:14em;text-wrap:balance}
+.ask .pc{font-size:.92em}
+.ask .who,.ask .pc{transition:opacity .35s}
+.ask.swap .who,.ask.swap .pc,.reply.swap{opacity:0}
+.reply{margin:22px 0 0;max-width:34em;padding:2px 0 2px 18px;border-left:3px solid var(--ink);font-size:1.12rem;transition:opacity .35s}
+.reply b{font-weight:800}
+.reply .go{display:inline-block;margin-top:8px;color:var(--wa);font-weight:800;text-decoration:underline;text-underline-offset:.2em}
+.hero-foot{margin:34px 0 0;max-width:36em}
+.hero-foot h1{font-size:clamp(1.45rem,3.6vw,2rem);line-height:1.2;letter-spacing:-.015em;margin:0 0 10px}
+.steps{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:26px 30px;counter-reset:s}
+.steps li{counter-increment:s}
+.steps li::before{content:counter(s);display:block;font-size:2.4rem;font-weight:800;line-height:1;margin:0 0 8px;color:var(--ink)}
+.steps b{display:block;font-size:1.08rem;margin:0 0 4px}
+.steps span{color:var(--mute)}
+.costs{max-width:34em}.costs .board li{padding:14px 0}.costs .pr{font-size:1.4rem}
+.fair{max-width:36em;padding-left:1.1em}.fair li{margin:0 0 8px}
+#join{max-width:40em}
+#join .grid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.note{font-size:.85rem;color:var(--mute);margin:10px 0 0}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header class="top"><a class="brand" href="./">Patch<i>.</i></a><span class="sp"></span><a class="sm" href="prices" id="pricesLink">Local prices</a></header>
   <div id="demo"></div>
-  <section class="hero two">
-    <div><h1>Get found by AI. Enquiries land in your WhatsApp. You only pay when they do.</h1>
-      <p class="lede">More and more people ask ChatGPT or Google “who's a good dog groomer near me?” instead of asking around. Patch makes sure the answer can include you, with your real prices, and one tap to message you.</p>
-      <p class="cta"><a class="btn big" href="#join">Get your free check</a></p>
-      <p class="sm mute">Free setup. No app to learn. No contract. Keep taking bookings the way you do now.</p></div>
-    <div class="chat" aria-label="An example">
-      <p class="q">Cockapoo groomer near SK4, under £50?</p>
-      <div class="a"><b>Paws &amp; Polish</b>, Heaton Moor. Mobile, cockapoo specialist. Full groom £45. <u>Send an enquiry</u></div>
-      <p class="wa">Hi Paws &amp; Polish, I found you on ChatGPT.
-I'd like: Full groom.
-My dog: Cockapoo, 3, medium.
-When: Saturday morning. Area: SK4.</p>
-      <p class="xs mute" style="margin:8px 0 0">An example. Patch can't make an AI assistant pick you, but it gives it everything it needs to.</p></div>
+  <section aria-label="What your customers are asking">
+    <p class="ask" id="ask"><span class="who">Who's a good <span id="q_trade">dog groomer</span> near</span> <span class="pc" id="q_pc">SK4</span>?</p>
+    <div class="reply" id="reply"><b id="r_name">Paws &amp; Polish</b>, <span id="r_line">Heaton Moor. Mobile, good with cockapoos and nervous dogs. Full groom £45.</span><br><span class="go">Send an enquiry on WhatsApp</span></div>
+    <p class="note">An example of what an AI assistant can answer when your details are where it looks. Patch can't make it pick you; it gives it everything it needs to.</p>
+    <div class="hero-foot"><h1>Get found by AI. Enquiries land in your WhatsApp. You only pay when they do.</h1>
+      <p class="lede">For one-person businesses: groomers, mobile hairdressers, valeters, instructors, tutors. We set it up, you keep working the way you do now.</p>
+      <p style="margin:22px 0 0"><a class="btn big" href="#join">Get your free check</a></p></div>
   </section>
 
-  <section class="sec"><h2>How it works</h2><ol class="how">
-    <li><b>We check what AI says about you, free</b><span class="mute">We ask ChatGPT, Gemini and Google the questions your customers ask and send you the screenshots: are you named, are your prices right, can people reach you?</span></li>
-    <li><b>15 minutes on WhatsApp, then we do the rest</b><span class="mute">Tell us your services, prices and area (or we read them off your Facebook page). We set up Google, Bing, Apple and Yelp in your name, a page AI can read, and your enquiry link.</span></li>
-    <li><b>Enquiries arrive as normal WhatsApp messages</b><span class="mute">Customers answer your questions first (for a groomer: breed, size, coat, when), so the message has everything you need to reply.</span></li>
-    <li><b>One message a month</b><span class="mute">What came in and from where, what AI says about you now, your bill, and one thing to do next. Change a price by texting us; we update it everywhere.</span></li></ol></section>
+  <section class="sec"><h2>How it works</h2><ol class="steps">
+    <li><b>We check what AI says about you</b><span>We ask ChatGPT, Gemini and Google what your customers ask, and send you the screenshots. Free.</span></li>
+    <li><b>Fifteen minutes on WhatsApp</b><span>Tell us your services, prices and area. We set up Google, Bing, Apple and Yelp in your name, and a page AI can read.</span></li>
+    <li><b>Enquiries arrive as WhatsApp messages</b><span>Customers answer your questions first (breed, size, when), so you have what you need to reply.</span></li>
+    <li><b>Customers come back</b><span>Patch tells you who's due and writes the reminder. You tap send from your own phone.</span></li></ol></section>
 
-  <section class="sec"><h2>What it costs</h2><div class="price">
-    <div class="card"><span class="chip">Setup</span><b class="big">£0</b><p class="sm">We do the work. Your listings are set up in your name, so they stay yours.</p></div>
-    <div class="card"><span class="chip">Enquiries</span><b class="big">£4 each</b><p class="sm">Your first 3 are free. Never more than <b>£29 a month</b>, however many arrive. Founding members in each town: never more than <b>£19</b>.</p></div>
-    <div class="card"><span class="chip">Plus, optional</span><b class="big">£39 a month</b><p class="sm">Unlimited enquiries, rebooking reminders, review requests, online booking set up if you want it, and a local price check.</p></div></div></section>
+  <section class="sec costs"><h2>What it costs</h2><ul class="board">
+    <li><span class="nm">Setup<small>We do the work. Listings are in your name, so they stay yours.</small></span><span class="ld"></span><span class="pr">£0</span></li>
+    <li><span class="nm">Each enquiry<small>Your first 3 are free. Never more than £29 a month, or £19 if you're one of the first 20 in your town.</small></span><span class="ld"></span><span class="pr">£4</span></li>
+    <li><span class="nm">Plus, if you want it<small>Unlimited enquiries, rebooking reminders, review requests and a local price check.</small></span><span class="ld"></span><span class="pr">£39<span class="sm mute" style="font-weight:700"> a month</span></span></li></ul></section>
 
-  <section class="sec card"><h2>Fair play</h2><ul>
+  <section class="sec"><h2>Fair play</h2><ul class="fair">
     <li>Only enquiries sent through your Patch page count. Calls, DMs and walk-ins are never charged.</li>
-    <li>Reply VOID to remove any enquiry that wasn't real. No questions asked.</li>
-    <li>We never promise ChatGPT will recommend you. We show you screenshots of what it actually says.</li>
-    <li>Leave any time by texting STOP. Your Google, Bing, Apple and Yelp listings stay yours.</li></ul></section>
+    <li>Reply VOID to remove any enquiry that wasn't real.</li>
+    <li>We never promise ChatGPT will recommend you. You'll see screenshots of what it actually says.</li>
+    <li>Leave any time by texting STOP. Your listings stay yours.</li></ul></section>
 
-  <section class="sec card" id="join"><h2>Get your free check</h2><p class="sm mute">We'll message you on WhatsApp within two working days with what AI says about your business. No obligation.</p>
+  <section class="sec card" id="join"><h2>Get your free check</h2><p class="mute">We'll message you on WhatsApp within two working days with what AI says about your business. No obligation.</p>
     <form id="sf" novalidate>
-      <div class="grid" style="gap:0 12px">
+      <div class="grid" style="gap:0 14px">
         <label class="f"><span>Your name</span><input id="nm" autocomplete="name" maxlength="80"></label>
         <label class="f"><span>Business name</span><input id="bz" autocomplete="organization" maxlength="120"></label>
         <label class="f"><span>What you do</span><select id="tr"><option value="groomer">Dog grooming</option><option value="hair">Hairdressing</option><option value="barber">Barbering</option><option value="nails">Nails</option><option value="beauty">Beauty, brows or lashes</option><option value="valeting">Car valeting</option><option value="driving">Driving lessons</option><option value="tutor">Tutoring</option><option value="other">Something else</option></select></label>
@@ -87,6 +88,14 @@ When: Saturday morning. Area: SK4.</p>
   if (D.DEMO) $("#pricesLink").href = "prices?demo=1";
   if (D.DEMO) $("#demo").innerHTML = `<p class="demo"><b>Demo.</b> Sign-ups are kept in this browser. See them in <a href="members.html?demo=1">admin</a>, or open <a href="b.html?b=paws-and-polish-demo&demo=1">a made-up groomer's page</a>.</p>`;
   $("#foot").innerHTML = `${CFG.contactEmail ? `Questions: <b>${esc(CFG.contactEmail)}</b> · ` : ""}<a href="prices${D.DEMO ? "?demo=1" : ""}">Local prices</a> · <a href="price-check${D.DEMO ? "?demo=1" : ""}">Check your prices</a> · <a href="privacy">Privacy</a>`;
+  // The hero's one moment of motion: the same question, asked of different trades and postcodes. Made-up businesses.
+  const ASKS = [["dog groomer", "SK4", "Paws & Polish", "Heaton Moor. Mobile, good with cockapoos and nervous dogs. Full groom £45."],
+    ["mobile hairdresser", "M20", "Cut Above at Home", "Didsbury. Comes to you. Cut and blow-dry £38."],
+    ["car valeter", "SK7", "Shine On", "Bramhall. Mobile, removes dog hair. Full valet from £95."],
+    ["maths tutor", "SK8", "Numbers with Nadia", "Cheadle. GCSE and A level, online or at home. £35 an hour."]];
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) { let i = 0; const ask = $("#ask"), rep = $("#reply");
+    setInterval(() => { if (document.hidden) return; i = (i + 1) % ASKS.length; ask.classList.add("swap"); rep.classList.add("swap");
+      setTimeout(() => { const [t, pc, n, l] = ASKS[i]; $("#q_trade").textContent = t; $("#q_pc").textContent = pc; $("#r_name").textContent = n; $("#r_line").textContent = l; ask.classList.remove("swap"); rep.classList.remove("swap"); }, 380); }, 4200); }
   $("#sf").addEventListener("submit", async e => {
     e.preventDefault(); const v = id => $("#" + id).value.trim(), err = $("#err"), num = K.waNumber(v("wa"));
     if (!v("nm")) { err.textContent = "Please tell us your name."; return; }

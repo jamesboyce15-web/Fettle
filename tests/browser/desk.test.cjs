@@ -19,7 +19,7 @@ const over = p => p.evaluate(() => document.documentElement.scrollWidth - innerW
     // 1. The start page and a sign-up.
     await p.goto(U + '?demo=1'); await p.waitForTimeout(200);
     ok(/You only pay when they do/.test(await p.textContent('h1')), 'the start page says the offer');
-    ok(/£4 each/.test(await p.textContent('body')) && /£29 a month/.test(await p.textContent('body')), 'prices are on the page');
+    ok(/Each enquiry[\s\S]*£4/.test(await p.textContent('body')) && /£29 a month/.test(await p.textContent('body')), 'prices are on the page');
     ok(await over(p) <= 0, 'start page fits a phone');
     await p.fill('#nm', 'Jo Test'); await p.fill('#bz', 'Jo’s Dog Spa'); await p.fill('#wa', '123'); await p.click('#go');
     ok(/WhatsApp number/.test(await p.textContent('#err')), 'a bad number is caught');
@@ -29,7 +29,7 @@ const over = p => p.evaluate(() => document.documentElement.scrollWidth - innerW
     // 2. The live groomer's page, as a customer sees it.
     await p.goto(U + 'b.html?b=paws-and-polish-demo&demo=1'); await p.waitForTimeout(300);
     const body = await p.textContent('body');
-    ok(/Paws & Polish/.test(await p.textContent('h1')) && /£45/.test(body) && /Cockapoos and doodles/.test(body), 'the page shows name, prices and specialisms as text');
+    ok(/Paws & Polish/.test(await p.textContent('h1')) && /£45/.test(body) && /cockapoos and doodles/i.test(body), 'the page shows name, prices and specialisms as text');
     ok((await p.$$('script[type="application/ld+json"]')).length === 2, 'schema.org data is on the page');
     ok(!/Sarah Jones/.test(body), 'only the owner\'s first name is shown');
     ok(await over(p) <= 0, 'business page fits a phone');
@@ -54,7 +54,7 @@ const over = p => p.evaluate(() => document.documentElement.scrollWidth - innerW
     await a.click('[data-sel=dm1]'); await a.waitForTimeout(100);
     await a.click('[data-tab=enq]'); await a.waitForTimeout(100);
     const enqTxt = await a.textContent('#panel');
-    ok(/ChatGPT/.test(enqTxt) && /Cockapoo · Medium · Saturday morning/.test(enqTxt.replace(/\s+/g, ' ')) || /Cockapoo/.test(enqTxt), 'the customer\'s enquiry is counted in admin');
+    ok(/ChatGPT/.test(enqTxt) && /Cockapoo, Medium, Saturday morning/.test(enqTxt.replace(/\s+/g, ' ')) || /Cockapoo/.test(enqTxt), 'the customer\'s enquiry is counted in admin');
     const before = await a.$eval('#panel .stats .stat:nth-child(2) b', e => e.textContent);
     await a.click('[data-act=void] >> nth=0'); await a.waitForTimeout(150);
     const after = await a.$eval('#panel .stats .stat:nth-child(2) b', e => e.textContent);

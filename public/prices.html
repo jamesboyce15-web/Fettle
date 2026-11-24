@@ -5,8 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Patch · Local prices</title>
 <meta name="description" content="When ChatGPT, Google or Claude pick a salon or barber, they show a price, a rating and a time to book. Patch shows where you stand on each against the salons near you, and the next move to get picked. Free and private.">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@500;700&display=swap">
+<link rel="preload" href="fonts/schibsted.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="patch.css">
 <style>
 .hero{padding:18px 0 8px}
@@ -14,7 +13,7 @@
 .sec{margin:34px 0}
 .itemrow{display:grid;grid-template-columns:1.2fr 0.7fr 2fr;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
 .itemrow:last-child{border-bottom:0}
-.itemrow .p{font-variant-numeric:tabular-nums;font-weight:700}
+.itemrow .p{font-weight:800;font-size:1.08rem}
 .hyg{display:grid;grid-template-columns:150px 1fr 40px;gap:10px;align-items:center;margin:6px 0;font-size:.92rem}
 .how{counter-reset:s;list-style:none;padding:0;margin:0}
 .how li{counter-increment:s;position:relative;padding:0 0 14px 46px}
@@ -64,7 +63,7 @@ function render() {
   : `<section class="hero"><h1>How does your ${P.WORDS.place} compare with the ${P.WORDS.places} around you?</h1>
     <p class="lede">Prices, hygiene, opening hours and what customers find when they walk in, across ${venues.length} ${P.WORDS.places} in ${esc(placeOf(A.name))}. Ask for a free, private report on your ${P.WORDS.place}: where you stand, and where you could save or charge more.</p>
     <p class="cta"><a class="btn big" href="#start">See where you stand</a></p><p class="sm mute">Free. No public rankings: other ${P.WORDS.places} never see your figures.</p></section>`;
-  h += `<section class="sec"><div class="grid"><div class="stat"><b>${venues.length}</b><span>${P.WORDS.places} in ${esc(placeOf(A.name))}</span></div>${ind < venues.length ? `<div class="stat"><b>${ind}</b><span>independent</span></div>` : ""}
+  if (!SAL) h += `<section class="sec"><div class="grid"><div class="stat"><b>${venues.length}</b><span>${P.WORDS.places} in ${esc(placeOf(A.name))}</span></div>${ind < venues.length ? `<div class="stat"><b>${ind}</b><span>independent</span></div>` : ""}
     ${fw && fw.median ? `<div class="stat"><b>${money(fw.median)}</b><span>typical flat white</span></div>` : ""}${P.SECTOR === "cafe" ? `<div class="stat"><b>${awaiting}</b><span>new or awaiting their first hygiene inspection</span></div>` : ""}</div></section>`;
   if (st && st.prices.some(p => p.median != null)) {
     h += `<section class="sec card"><h2>What ${P.WORDS.places} here charge</h2><p class="sm mute">The middle price, and the range most ${P.WORDS.places} fall within. From ${st.priced} ${P.WORDS.places}' menus${pub.at ? `, ${fmtD(pub.at)}` : ""}.</p>

@@ -30,14 +30,14 @@ let pass = 0, fail = 0; const ok = (c, m) => { console.log((c ? 'PASS ' : 'FAIL 
     const nRev = (await p.$$('[data-sent=review_asked]')).length; await p.click('[data-sent=review_asked] >> nth=0'); await p.waitForTimeout(900);
     ok((await p.$$('[data-sent=review_asked]')).length === nRev - 1, 'sending it notes that this customer was asked');
     // 3. reminder
-    ok(/Mel · Labradoodle/.test(await txt()), 'a regular due back is listed');
+    ok(/Mel, Labradoodle/.test(await txt()), 'a regular due back is listed');
     const rm = decodeURIComponent(await p.getAttribute('[data-sent=reminded] >> nth=0', 'href'));
     ok(/Hi Mel, just a reminder that your labradoodle's next groom is due/.test(rm) && /Reply STOP/.test(rm), 'the reminder is written for them: ' + rm.split('\n')[0].slice(0, 80));
     await p.click('[data-open^=r] >> nth=0'); await p.click('[data-act=rebooked]'); await p.waitForTimeout(300);
-    ok(!/Mel · Labradoodle/.test((await txt()).split('Due back soon')[1].split('Add a regular')[0]), 'booking them again takes them off the due list');
+    ok(!/Mel, Labradoodle/.test((await txt()).split('Due back soon')[1].split('Add a regular')[0]), 'booking them again takes them off the due list');
     // 4. add a regular from before Patch, due now
     await p.fill('#ad_label', 'Sue · Bichon'); await p.fill('#ad_date', new Date(Date.now() - 42 * 864e5).toISOString().slice(0, 10)); await p.fill('#ad_w', '6'); await p.click('[data-act=add]'); await p.waitForTimeout(300);
-    ok(/Sue · Bichon/.test((await txt()).split('Due back soon')[1]), 'a regular added from before Patch shows when due');
+    ok(/Sue, Bichon/.test((await txt()).split('Due back soon')[1]), 'a regular added from before Patch shows when due');
     // 5. settings
     await p.fill('#s_url', 'http://not-secure'); await p.click('[data-act=settings]'); await p.waitForTimeout(200); ok(/https/.test(await p.textContent('#toast')), 'review link must be https');
     ok(/rebooked after a reminder/.test(await txt()) && /\b[1-9]\b/.test((await txt()).split('This month')[1]), 'this month shows bookings and rebookings');

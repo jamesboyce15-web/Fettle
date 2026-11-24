@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex">
 <title>Patch admin · Front desk</title>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@500;700&display=swap">
+<link rel="preload" href="fonts/schibsted.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="patch.css">
 <style>
 .wrap{max-width:1220px}
+body{font-size:15.5px}
 .split{display:grid;grid-template-columns:minmax(0,1fr) 520px;gap:16px;align-items:start}.split>*{min-width:0}
 .panel{position:sticky;top:12px;max-height:calc(100vh - 24px);overflow:auto}
 .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
@@ -66,7 +66,7 @@ function render() {
   const list = S.members.filter(m => V.filter === "all" ? true : V.filter === "active" ? !["left"].includes(m.status) : m.status === V.filter);
   const months = [...new Set([thisMonth()].concat(S.enq.map(e => String(e.at).slice(0, 7))))].sort().reverse().slice(0, 13);
   const seg = (k, t) => `<button data-filter="${k}" aria-pressed="${V.filter === k}">${t}</button>`;
-  $("#root").innerHTML = `<header class="top"><a class="brand" href="./${D.DEMO ? "?demo=1" : ""}">Patch<i>.</i></a><span class="chip">Front desk</span><span class="sp"></span>
+  $("#root").innerHTML = `<header class="top"><a class="brand" href="./${D.DEMO ? "?demo=1" : ""}">Patch<i>.</i></a><span class="mute sm" style="font-weight:700">Front desk</span><span class="sp"></span>
     <a class="btn q sm" href="admin${D.DEMO ? ".html?demo=1" : ""}">Prices</a><button class="btn q sm" data-act="new">Add a business</button><button class="btn q sm" data-act="signout">${D.DEMO ? "Reset demo" : "Sign out"}</button></header>
     ${D.DEMO ? `<p class="demo"><b>Demo.</b> Made-up businesses, saved only in this browser. Open Paws &amp; Polish, then its page, and send an enquiry.</p>` : ""}
     <div class="stats"><div class="stat"><b>${live.length}</b><span>live</span></div><div class="stat"><b>${leads}</b><span>new sign-up${leads === 1 ? "" : "s"} to contact</span></div>
@@ -75,7 +75,7 @@ function render() {
       <label class="sm">Month <select id="month" style="border:1px solid var(--line);border-radius:8px;padding:5px">${months.map(x => `<option value="${x}" ${x === V.month ? "selected" : ""}>${esc(monthName(x, true))}</option>`).join("")}</select></label></div>
     <div class="split"><div style="min-width:0"><section class="card" style="padding:0;overflow:auto">${list.length ? `<table class="t"><thead><tr><th>Business</th><th>Status</th><th>Setup</th><th>AI named</th><th>Enquiries</th><th>Booked</th><th>Bill</th></tr></thead><tbody>
       ${list.map(m => { const b = K.bill(m, S.enq, V.month), p = K.setupProgress(m), s = K.aiSummary(m.checks), bs = K.bookingStats(m, S.enq, S.book, V.month);
-        return `<tr class="click ${m.id === V.sel ? "sel" : ""}" data-sel="${m.id}"><td><b>${esc(m.name)}</b><br><span class="xs mute">${esc(K.trade(m.trade).t)}${m.town ? " · " + esc(m.locality || m.town) : ""}${m.founding ? " · founding" : ""}</span></td>
+        return `<tr class="click ${m.id === V.sel ? "sel" : ""}" data-sel="${m.id}"><td><b>${esc(m.name)}</b><br><span class="xs mute">${esc(K.trade(m.trade).t)}${m.town ? ", " + esc(m.locality || m.town) : ""}${m.founding ? ", founding" : ""}</span></td>
           <td><span class="chip ${m.status === "live" ? "good" : m.status === "lead" ? "warn" : ""}">${STATUS[m.status]}</span></td><td class="sm">${p.done}/${p.of}</td>
           <td class="sm">${s ? `${s.now.named}/${s.now.n}${s.days > 1 ? ` <span class="xs mute">was ${s.before.named}/${s.before.n}</span>` : ""}` : '<span class="mute">Not checked</span>'}</td>
           <td class="sm">${b.total ? b.counted + (b.voided ? ` <span class="xs mute">+${b.voided} void</span>` : "") : '<span class="mute">0</span>'}</td><td class="sm">${bs.booked || bs.rebooked ? `${bs.booked}${bs.rebooked ? ` <span class="xs mute">+${bs.rebooked} rebooked</span>` : ""}` : '<span class="mute">0</span>'}</td><td class="sm">${["live", "paused"].includes(m.status) ? gbp(b.amount) + (b.free ? ` <span class="xs mute">${b.free} free</span>` : "") : ""}</td></tr>`; }).join("")}</tbody></table>`
@@ -98,7 +98,7 @@ function panel() {
   const m = V.ed, tab = (k, t) => `<button data-tab="${k}" aria-pressed="${V.tab === k}">${t}</button>`;
   const saved = m.id && mem(m.id);
   return `<div class="card"><div class="row"><h2 style="margin:0">${esc(m.name || "New business")}</h2><span class="sp"></span>${saved ? `<span class="chip ${m.status === "live" ? "good" : ""}">${STATUS[saved.status]}</span>` : ""}</div>
-    ${saved ? `<p class="sm" style="margin:6px 0 10px"><a href="${esc(previewUrl(saved))}" target="_blank" rel="noopener">Preview the page</a>${saved.status === "live" ? ` · <a href="${esc(pageUrl(saved))}" target="_blank" rel="noopener">Live page</a> · <button class="linkbtn" data-act="copylink">Copy its link</button>` : ""}${saved.whatsapp ? ` · <a href="${esc(K.waLink(saved.whatsapp))}" target="_blank" rel="noopener">WhatsApp them</a>` : ""}${saved.owner_token && saved.status !== "lead" ? ` · <a href="${esc(ownerUrl(saved))}" target="_blank" rel="noopener">Their weekly page</a>` : ""}</p>` : ""}
+    ${saved ? `<p class="sm" style="margin:6px 0 10px"><a href="${esc(previewUrl(saved))}" target="_blank" rel="noopener">Preview the page</a>${saved.status === "live" ? `, <a href="${esc(pageUrl(saved))}" target="_blank" rel="noopener">Live page</a> · <button class="linkbtn" data-act="copylink">Copy its link</button>` : ""}${saved.whatsapp ? ` · <a href="${esc(K.waLink(saved.whatsapp))}" target="_blank" rel="noopener">WhatsApp them</a>` : ""}${saved.owner_token && saved.status !== "lead" ? ` · <a href="${esc(ownerUrl(saved))}" target="_blank" rel="noopener">Their weekly page</a>` : ""}</p>` : ""}
     ${m.signup ? `<p class="sm" style="background:var(--tint);border-radius:8px;padding:8px">Signed up ${esc(fmtD(m.signup.at))}${m.signup.link ? `: <a href="${esc(/^https?:/.test(m.signup.link) ? m.signup.link : "https://" + m.signup.link)}" target="_blank" rel="noopener noreferrer">${esc(m.signup.link)}</a>` : ""}${m.signup.message ? `<br>“${esc(m.signup.message)}”` : ""}</p>` : ""}
     <div class="seg" style="margin:0 0 12px">${tab("profile", "Profile")}${saved ? tab("setup", "Setup") + tab("ai", "AI checks") + tab("enq", "Enquiries") + tab("msgs", "Messages") : ""}</div>
     ${({ profile: pProfile, setup: pSetup, ai: pAi, enq: pEnq, msgs: pMsgs })[saved ? V.tab : "profile"](m)}</div>`;
@@ -154,7 +154,7 @@ function pAi(m) {
 }
 function pEnq(m) {
   const b = K.bill(m, S.enq, V.month), list = enqOf(m.id).slice().reverse(), T = K.trade(m.trade);
-  const sum = a => [a.service, a.breed || a.car || a.subject, a.size, a.when, a.district].filter(Boolean).join(" · ");
+  const sum = a => [a.service, a.breed || a.car || a.subject, a.size, a.when, a.district].filter(Boolean).join(", ");
   return `<div class="stats"><div class="stat"><b>${b.counted}</b><span>in ${esc(monthName(V.month))}${b.voided ? `, ${b.voided} voided` : ""}</span></div><div class="stat"><b>${gbp(b.amount)}</b><span>${b.plus ? "Plus" : `${b.charged} at ${gbp(b.per)}${b.capped ? ", capped" : ""}${b.free ? `, ${b.free} free` : ""}`}</span></div><div class="stat"><b>${b.freeLeft}</b><span>free enquiries left</span></div></div>
     ${list.length ? `<table class="t"><thead><tr><th>When</th><th>Found on</th><th>What</th><th></th></tr></thead><tbody>${list.map(e => `<tr${e.voided ? ' style="opacity:.55"' : ""}><td class="sm">${esc(fmtD(e.at))}</td><td class="sm">${esc(K.SOURCE[e.source] || "Not said")}</td><td class="sm">${esc(sum(e.answers || {}))}${e.voided ? `<br><span class="xs">Voided${e.void_reason ? ": " + esc(e.void_reason) : ""}</span>` : e.outcome ? `<br><span class="chip ${e.outcome === "booked" ? "good" : ""}">${e.outcome === "booked" ? "Booked" : "Didn't book"}</span>` : ""}</td>
       <td>${e.voided ? `<button class="btn q sm" data-act="unvoid" data-id="${e.id}">Restore</button>` : `<select id="vr_${e.id}" aria-label="Why void it" style="border:1px solid var(--line);border-radius:7px;padding:4px;font-size:.8rem;max-width:110px"><option>Not real or spam</option><option>Duplicate</option><option>Existing customer</option><option>Owner asked</option></select> <button class="btn q sm" data-act="void" data-id="${e.id}">Void</button>`}</td></tr>`).join("")}</tbody></table>` : `<p class="sm mute">No enquiries yet. Each one is counted when a customer taps Send on the ${esc(T.one)}'s page.</p>`}

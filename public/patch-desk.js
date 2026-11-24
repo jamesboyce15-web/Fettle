@@ -151,8 +151,11 @@
   const dueReviews = (m, bookings, today) => { today = today || iso(Date.now()); return (bookings || []).filter(b => b.member_id === m.id && !b.review_asked_at && b.on_date <= today && b.on_date >= addDays(today, -3)); };
   // Enquiries the owner hasn't said yes or no to (last 60 days).
   const toMark = (m, enquiries, today) => { const from = addDays(today || iso(Date.now()), -60); return (enquiries || []).filter(e => e.member_id === m.id && !e.voided && !e.outcome && String(e.at).slice(0, 10) >= from).sort((a, b) => String(b.at).localeCompare(String(a.at))); };
-  const who = b => clean(String(b.label || "").split("·")[0]);
-  const what = b => { const p = String(b.label || "").split("·").map(x => clean(x)); return p[1] || ""; };
+  // Labels are "name · dog" (or "name, dog" when typed by the owner).
+  const parts = l => String(l || "").split(/\s*[·,]\s*/).map(x => clean(x)).filter(Boolean);
+  const who = b => parts(b.label)[0] || "";
+  const what = b => parts(b.label)[1] || "";
+  const labelText = l => parts(l).join(", ");
   const nice = d => new Date(String(d).slice(0, 10) + "T12:00:00Z").toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long" });
   // The messages the owner sends from their own WhatsApp: they choose the chat, so Patch never needs the customer's number.
   function reminderText(m, b) {
@@ -276,40 +279,52 @@ ${opts.preview || m.status !== "live" ? '<meta name="robots" content="noindex">'
 <meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(desc)}"><meta property="og:type" content="business.business">${url ? `<meta property="og:url" content="${esc(url)}">` : ""}
 ${schema(m, url).map(o => `<script type="application/ld+json">${jsonLd(o)}</script>`).join("")}
 <style>
-:root{--bg:#f6f4ef;--card:#fff;--ink:#1c2420;--mute:#5d6863;--line:#dfe3dc;--accent:#1f6b4f;--accent-ink:#fff;--wa:#128c4a}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
-main{max-width:720px;margin:0 auto;padding:20px max(16px,env(safe-area-inset-left)) 40px max(16px,env(safe-area-inset-right))}
-h1{font-size:1.75rem;line-height:1.2;margin:8px 0 4px;text-wrap:balance}h2{font-size:1.15rem;margin:0 0 10px}
-.sub{color:var(--mute);margin:0 0 14px}.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin:14px 0}
-.tags{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0;padding:0;list-style:none}.tags li{background:#e9f1ec;color:var(--accent);border-radius:999px;padding:3px 10px;font-size:.88rem}
-table{width:100%;border-collapse:collapse}td{padding:8px 0;border-top:1px solid var(--line);vertical-align:top}td.p{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums;font-weight:600;padding-left:12px}
-td small{display:block;color:var(--mute)}dt{font-weight:600;margin-top:10px}dd{margin:2px 0 0;color:var(--ink)}
-.cta{display:inline-flex;align-items:center;gap:8px;background:var(--wa);color:#fff;border:0;border-radius:12px;padding:13px 18px;font:600 1rem system-ui,sans-serif;text-decoration:none;cursor:pointer}
-.cta.ghost{background:transparent;color:var(--accent);border:1px solid var(--line)}
-form .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px 14px}.fld{display:flex;flex-direction:column;gap:4px;min-width:0}.fld.wide{grid-column:1/-1}
-label{font-size:.9rem;font-weight:600}input,select,textarea{font:inherit;padding:10px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);width:100%}
-.note{font-size:.85rem;color:var(--mute)}.err{color:#a3261b;font-weight:600}.foot{font-size:.8rem;color:var(--mute);text-align:center;margin-top:24px}.foot a{color:inherit}
-a{color:var(--accent)}.banner{background:#fff6d6;border:1px solid #ecd98a;border-radius:10px;padding:8px 12px;font-size:.9rem}
+@font-face{font-family:"Schibsted Grotesk";src:url("${opts.base || "/"}fonts/schibsted.woff2") format("woff2");font-weight:400 900;font-display:swap}
+:root{--bg:#fbfbf9;--card:#fff;--ink:#1d2731;--mute:#5d6872;--line:#e2e5e8;--sign:#ffd447;--wa:#1d8f4e;--link:#1d4e7a;color-scheme:light}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 "Schibsted Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+main{max-width:680px;margin:0 auto;padding:28px max(20px,env(safe-area-inset-left)) 44px max(20px,env(safe-area-inset-right))}
+a{color:var(--link);text-underline-offset:.18em}:focus-visible{outline:3px solid var(--sign);outline-offset:2px;box-shadow:0 0 0 5px var(--ink)}
+h1{font-size:clamp(2.1rem,8vw,3rem);line-height:1.05;font-weight:800;letter-spacing:-.028em;margin:6px 0 12px;text-wrap:balance}
+h2{font-size:1.3rem;font-weight:800;letter-spacing:-.01em;margin:0 0 12px}
+section{margin:38px 0 0}p{margin:0 0 12px}
+.kind{font-weight:700;color:var(--mute);margin:0}
+.pc{display:inline-block;background:var(--sign);font-weight:800;border-radius:5px;padding:0 .35em;box-shadow:inset 0 0 0 2px var(--ink);margin:0 4px 4px 0;font-size:.95em;white-space:nowrap}
+.about{font-size:1.1rem;max-width:34em}.good{max-width:34em}
+.cta{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--wa);color:#fff;border:0;border-radius:8px;padding:14px 22px;font:800 1.05rem "Schibsted Grotesk",system-ui,sans-serif;text-decoration:none;cursor:pointer}
+.cta:hover{filter:brightness(.94)}
+.board{list-style:none;margin:0;padding:0}.board li{display:flex;align-items:baseline;gap:10px;padding:11px 0;border-bottom:1px solid var(--line)}.board li:last-child{border-bottom:0}
+.board .nm{min-width:0;font-weight:700}.board .nm small{display:block;font-weight:400;color:var(--mute);font-size:.86rem}
+.board .ld{flex:1;min-width:18px;border-bottom:2px dotted var(--mute);opacity:.5;transform:translateY(-.3em)}.board .pr{font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap;font-size:1.08rem}
+dl{margin:0;display:grid;grid-template-columns:max-content 1fr;gap:10px 22px}dt{font-weight:800}dd{margin:0}
+@media(max-width:480px){dl{grid-template-columns:1fr;gap:2px}dd{margin-bottom:10px}}
+.faq dt{margin-top:14px}.faq dd{color:var(--ink)}
+.form{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px}
+form .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px 16px}.fld{display:flex;flex-direction:column;gap:5px;min-width:0}.fld.wide{grid-column:1/-1}
+label{font-size:.92rem;font-weight:700}input,select,textarea{font:inherit;padding:10px 12px;border:2px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);width:100%}
+input:focus,select:focus,textarea:focus{border-color:var(--ink);outline:none}
+.note{font-size:.86rem;color:var(--mute)}.err{color:#b42318;font-weight:700}.err:empty{display:none}
+.foot{font-size:.82rem;color:var(--mute);margin-top:40px}.foot a{color:inherit}
+.banner{background:#fff3c4;border-left:4px solid var(--sign);border-radius:0 6px 6px 0;padding:9px 14px;font-size:.9rem;margin:0 0 18px}
 </style></head><body><main>
 ${opts.preview ? `<p class="banner"><b>Preview.</b> ${m.status === "live" ? "This page is live." : "Not live yet: only people with this link can see it, and search engines are told to skip it."}</p>` : ""}
 ${opts.demo ? `<p class="banner"><b>Demo.</b> A made-up business. Sending opens WhatsApp to a made-up number.</p>` : ""}
-<header><p class="sub" style="margin:0">${esc(placeLine(m))}</p><h1>${esc(clean(m.name, 120))}</h1>
-${m.about ? `<p>${esc(clean(m.about, 1200))}</p>` : ""}
-${m.specialisms && m.specialisms.length ? `<ul class="tags" aria-label="Specialisms">${m.specialisms.map(s => `<li>${esc(clean(s, 60))}</li>`).join("")}</ul>` : ""}
-<p style="margin:16px 0 0"><a class="cta" href="#enquire">Send an enquiry on WhatsApp</a></p></header>
-${sv.length ? `<section class="card" id="prices"><h2>Services and prices</h2><table>${sv.map(s => `<tr><td>${esc(s.name)}${s.note ? `<small>${esc(s.note)}</small>` : ""}</td><td class="p">${s.price != null ? (s.from ? "from " : "") + esc(money(s.price)) : "Ask"}</td></tr>`).join("")}</table>${updated ? `<p class="note">Prices checked ${esc(new Date(updated + "T12:00:00Z").toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }))}.</p>` : ""}</section>` : ""}
-<section class="card"><h2>Where and when</h2><dl style="margin:0">
-${m.area_text || (m.districts && m.districts.length) ? `<dt>Area covered</dt><dd>${esc(clean(m.area_text, 300) || m.districts.join(", "))}</dd>` : ""}
-${!m.mobile && (m.street || m.postcode) ? `<dt>Address</dt><dd>${esc([m.street, m.locality || m.town, m.postcode].filter(Boolean).join(", "))}</dd>` : m.mobile ? `<dt>How it works</dt><dd>Mobile: comes to you.</dd>` : ""}
+<header><p class="kind">${esc(placeLine(m))}</p><h1>${esc(clean(m.name, 120))}</h1>
+${m.about ? `<p class="about">${esc(clean(m.about, 1200))}</p>` : ""}
+${m.specialisms && m.specialisms.length ? `<p class="good"><b>Good with</b> ${esc(listWords(m.specialisms.map(x => clean(x, 60)).map(x => /^[A-Z][a-z]/.test(x) ? x[0].toLowerCase() + x.slice(1) : x)))}.</p>` : ""}
+<p style="margin:20px 0 0"><a class="cta" href="#enquire">Send an enquiry on WhatsApp</a></p></header>
+${sv.length ? `<section id="prices"><h2>Prices</h2><ul class="board">${sv.map(s => `<li><span class="nm">${esc(s.name)}${s.note ? `<small>${esc(s.note)}</small>` : ""}</span><span class="ld"></span><span class="pr">${s.price != null ? (s.from ? "from " : "") + esc(money(s.price)) : "Ask"}</span></li>`).join("")}</ul>${updated ? `<p class="note" style="margin-top:10px">Prices checked ${esc(new Date(updated + "T12:00:00Z").toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }))}.</p>` : ""}</section>` : ""}
+<section><h2>Where and when</h2><dl>
+${m.area_text || (m.districts && m.districts.length) ? `<dt>Area</dt><dd>${(m.districts || []).length ? `<span>${m.districts.map(d => `<span class="pc">${esc(clean(d, 8))}</span>`).join("")}</span><br>` : ""}${m.area_text ? esc(clean(m.area_text, 300)) : ""}</dd>` : ""}
+${!m.mobile && (m.street || m.postcode) ? `<dt>Address</dt><dd>${esc([m.street, m.locality || m.town, m.postcode].filter(Boolean).join(", "))}</dd>` : m.mobile ? `<dt>Comes to you</dt><dd>Mobile, so there's no shop to visit.</dd>` : ""}
 <dt>Hours</dt><dd>${esc(clean(m.hours, 300) || "By appointment")}</dd>
-<dt>Contact</dt><dd>WhatsApp${num ? ` or call <a href="tel:+${num}">${esc(/^44\d{10}$/.test(num) ? "0" + num.slice(2, 6) + " " + num.slice(6) : "+" + num)}</a>` : ""}</dd></dl></section>
-${fq.length ? `<section class="card"><h2>Questions people ask</h2><dl style="margin:0">${fq.map(f => `<dt>${esc(f.q)}</dt><dd>${esc(f.a)}</dd>`).join("")}</dl></section>` : ""}
-<section class="card" id="enquire"><h2>Ask about an appointment</h2><p class="note" style="margin-top:0">Fill this in and tap Send. WhatsApp opens with your message written, ready to send to ${esc(first(m.owner_name) !== "there" ? first(m.owner_name) : clean(m.name, 80))}.</p>
+<dt>Contact</dt><dd>WhatsApp${num ? `, or call <a href="tel:+${num}">${esc(/^44\d{10}$/.test(num) ? "0" + num.slice(2, 6) + " " + num.slice(6) : "+" + num)}</a>` : ""}</dd></dl></section>
+${fq.length ? `<section><h2>Questions people ask</h2><dl class="faq" style="display:block">${fq.map(f => `<dt>${esc(f.q)}</dt><dd>${esc(f.a)}</dd>`).join("")}</dl></section>` : ""}
+<section id="enquire"><h2>Ask about an appointment</h2><div class="form"><p class="note" style="margin-top:0">Fill this in and tap Send. WhatsApp opens with your message written, ready to send to ${esc(first(m.owner_name) !== "there" ? first(m.owner_name) : clean(m.name, 80))}.</p>
 <form id="enq" novalidate data-slug="${esc(m.slug)}" data-num="${esc(num || "")}"><div class="grid">${qs.map(field).join("")}
 <div class="fld"><label for="q_source">Where did you find us?</label><select id="q_source" name="source"><option value="">Choose</option>${SOURCES.map(([k, t]) => `<option value="${k}">${esc(t)}</option>`).join("")}</select></div></div>
-<p class="err" id="enqErr" role="alert"></p><p><button class="cta" type="submit">Send on WhatsApp</button></p>
-<p class="note">Your message goes from your own WhatsApp, so ${esc(clean(m.name, 80))} sees your number and replies there. Patch keeps a copy of your answers (not your number) so the business knows the page is working. <a href="/privacy">Privacy</a>.</p></form>
-<noscript>${plain ? `<p><a class="cta" href="${esc(plain)}">Message on WhatsApp</a></p>` : ""}</noscript></section>
+<p class="err" id="enqErr" role="alert"></p><p style="margin:18px 0 12px"><button class="cta" type="submit">Send on WhatsApp</button></p>
+<p class="note" style="margin:0">Your message goes from your own WhatsApp, so ${esc(clean(m.name, 80))} sees your number and replies there. Patch keeps a copy of your answers (not your number) so the business knows the page is working. <a href="/privacy">Privacy</a>.</p></form>
+<noscript>${plain ? `<p><a class="cta" href="${esc(plain)}">Message on WhatsApp</a></p>` : ""}</noscript></div></section>
 <p class="foot">${updated ? `Updated ${esc(updated)}. ` : ""}Page by <a href="/">Patch</a>, which helps small local businesses get found.</p></main>
 <script src="${opts.base || "/"}patch-desk.js"></script><script>window.PATCH_MEMBER=${jsonLd(publicMember(m))};${ENQ_SCRIPT}</script></body></html>`;
   }
@@ -324,11 +339,12 @@ if(window.PatchDeskSend){Promise.resolve(window.PatchDeskSend(body)).then(go,go)
 try{fetch("/api/enquiry",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body),keepalive:true}).catch(function(){});}catch(x){}
 setTimeout(go,150);});})();`;
 
+  const listWords = a => a.length < 2 ? (a[0] || "") : a.slice(0, -1).join(", ") + (a.some(x => / and /.test(x)) ? ", and " : " and ") + a[a.length - 1];
   // What the page needs to compose messages in the browser: public fields only.
   function publicMember(m) { return { slug: m.slug, name: m.name, trade: m.trade, owner_name: first(m.owner_name) }; }
 
   const api = { SOURCES, SOURCE, AI_SOURCES, TRADES, trade, COMMON_END, PRICES, SETUP, waNumber, waLink, slugify, services, priceRange, faqs, placeLine, searches,
     cleanAnswers, compose, bill, bySource, MIN_PEERS, localPrices, compareLocal,
-    REBOOK, weeksFor, latest, dueReminders, dueReviews, toMark, reminderText, reviewText, waShare, bookingStats, addDays, aiSummary, setupProgress, openerMessage, summaryMessage, reportMessage, schema, pageHtml, publicMember, ENQ_SCRIPT, esc, money };
+    REBOOK, weeksFor, latest, labelText, dueReminders, dueReviews, toMark, reminderText, reviewText, waShare, bookingStats, addDays, aiSummary, setupProgress, openerMessage, summaryMessage, reportMessage, schema, pageHtml, publicMember, ENQ_SCRIPT, esc, money };
   root.PatchDesk = api; if (typeof module !== "undefined" && module.exports) module.exports = api;
 })(typeof window !== "undefined" ? window : globalThis);

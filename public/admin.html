@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex">
 <title>Patch admin</title>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@500;700&display=swap">
+<link rel="preload" href="fonts/schibsted.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="patch.css">
 <style>
+body{font-size:15.5px}
 .wrap{max-width:1180px}
 .nav{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 16px;border-bottom:1px solid var(--line);padding-bottom:8px}
 .nav button{background:none;border:0;padding:8px 12px;border-radius:9px;font-weight:600;color:var(--mute);cursor:pointer}
@@ -81,7 +81,7 @@ function render() {
   const nNew = S.requests.filter(r => r.status === "new" && (!S.area || r.area_id === S.area.id)).length;
   const nFound = S.requests.filter(r => r.founding_interest && r.status !== "founding").length;
   const nav = (v, t, n) => `<button data-nav="${v}" ${V.view === v ? 'aria-current="page"' : ""}>${t}${n ? `<span class="n">${n}</span>` : ""}</button>`;
-  $("#root").innerHTML = `<header class="top"><a class="brand" href="./${D.DEMO ? "?demo=1" : ""}">Patch<i>.</i></a><span class="chip">Prices</span><span class="sp"></span>
+  $("#root").innerHTML = `<header class="top"><a class="brand" href="./${D.DEMO ? "?demo=1" : ""}">Patch<i>.</i></a><span class="mute sm" style="font-weight:700">Prices</span><span class="sp"></span>
     <select id="areaSel" aria-label="Area" style="border:1px solid var(--line);border-radius:9px;padding:6px 8px;background:var(--card)">${S.areas.map(a => `<option value="${a.id}" ${S.area && a.id === S.area.id ? "selected" : ""}>${esc(a.name)}</option>`).join("")}</select>
     <a class="btn sm" href="members${D.DEMO ? ".html?demo=1" : ""}">Front desk</a><button class="btn q sm" data-act="signout">${D.DEMO ? "Reset demo" : "Sign out"}</button></header>
     ${D.DEMO ? `<p class="demo"><b>Demo.</b> Made-up cafés, saved only in this browser. Try: open a request, build the report, then open the report link.</p>` : ""}
