@@ -417,3 +417,118 @@ grant execute on function public.owner_email_pref(uuid, boolean) to anon, authen
 
 insert into public.areas (slug, name, districts) values ('didsbury-chorlton-withington', 'Didsbury, Chorlton and Withington', '{M20,M21}')
 on conflict (slug) do nothing;
+-- Front desk (Nov 2026): sole traders' pages, enquiries that open the owner's WhatsApp, pay-per-enquiry bills.
+create table if not exists public.members (
+  id            uuid primary key default gen_random_uuid(),
+  slug          text not null unique check (slug ~ '^[a-z0-9][a-z0-9-]{1,58}[a-z0-9]$'),
+  status        text not null default 'lead' check (status in ('lead','setup','live','paused','left')),
+  name          text not null check (char_length(name) between 1 and 120),
+  trade         text not null default 'other' check (trade in ('groomer','hair','barber','nails','beauty','valeting','driving','tutor','other')),
+  owner_name    text check (char_length(owner_name) <= 80),
+  whatsapp      text check (whatsapp ~ '^[1-9][0-9]{9,14}$'),
+  email         text check (char_length(email) <= 120),
+  facebook      text check (char_length(facebook) <= 300),
+  instagram     text check (char_length(instagram) <= 300),
+  website       text check (char_length(website) <= 300),
+  google_url    text check (char_length(google_url) <= 500),
+  town          text check (char_length(town) <= 60),
+  locality      text check (char_length(locality) <= 60),
+  districts     text[] not null default '{}',
+  area_text     text check (char_length(area_text) <= 300),
+  mobile        boolean not null default false,
+  street        text check (char_length(street) <= 120),
+  postcode      text check (char_length(postcode) <= 10),
+  about         text check (char_length(about) <= 1200),
+  specialisms   text[] not null default '{}',
+  services      jsonb not null default '[]'::jsonb check (jsonb_typeof(services) = 'array' and pg_column_size(services) < 20000),
+  faqs          jsonb not null default '[]'::jsonb check (jsonb_typeof(faqs) = 'array' and pg_column_size(faqs) < 20000),
+  hours         text check (char_length(hours) <= 300),
+  searches      text[] not null default '{}',
+  plan          text not null default 'ppe' check (plan in ('ppe','plus')),
+  founding      boolean not null default false,
+  per_enquiry   numeric(6,2),
+  cap           numeric(6,2),
+  plus_price    numeric(6,2),
+  listings      jsonb not null default '{}'::jsonb,
+  checks        jsonb not null default '[]'::jsonb check (jsonb_typeof(checks) = 'array'),
+  signup        jsonb,
+  admin_notes   text check (char_length(admin_notes) <= 4000),
+  preview_token uuid not null default gen_random_uuid(),
+  created_at    timestamptz not null default now(),
+  live_at       timestamptz,
+  updated_at    timestamptz not null default now()
+);
+create table if not exists public.enquiries (
+  id          uuid primary key default gen_random_uuid(),
+  member_id   uuid not null references public.members(id) on delete cascade,
+  at          timestamptz not null default now(),
+  source      text check (source in ('chatgpt','google','gemini','claude','other_ai','facebook','instagram','friend','other')),
+  answers     jsonb not null default '{}'::jsonb check (jsonb_typeof(answers) = 'object' and pg_column_size(answers) < 4000),
+  voided      boolean not null default false,
+  void_reason text check (char_length(void_reason) <= 200)
+);
+create index if not exists enquiries_member_idx on public.enquiries(member_id, at);
+alter table public.members enable row level security;
+alter table public.enquiries enable row level security;
+drop policy if exists "admins all" on public.members; create policy "admins all" on public.members for all to authenticated using ((select public.is_admin())) with check ((select public.is_admin()));
+drop policy if exists "admins all" on public.enquiries; create policy "admins all" on public.enquiries for all to authenticated using ((select public.is_admin())) with check ((select public.is_admin()));
+
+create or replace function public.members_touch() returns trigger language plpgsql set search_path = public as $$
+begin new.updated_at := now(); if new.status = 'live' and new.live_at is null then new.live_at := now(); end if; return new; end $$;
+drop trigger if exists members_touch on public.members;
+create trigger members_touch before insert or update on public.members for each row execute function public.members_touch();
+
+-- The public page: only what a customer should see. Live pages for everyone; a page being set up only with its preview link.
+create or replace function public.member_public(p_slug text, p_preview uuid default null)
+returns jsonb language sql stable security definer set search_path = public as $$
+  select jsonb_build_object('id', m.id, 'slug', m.slug, 'status', m.status, 'name', m.name, 'trade', m.trade, 'owner_name', split_part(coalesce(m.owner_name, ''), ' ', 1),
+    'whatsapp', m.whatsapp, 'facebook', m.facebook, 'instagram', m.instagram, 'website', m.website, 'google_url', m.google_url,
+    'town', m.town, 'locality', m.locality, 'districts', m.districts, 'area_text', m.area_text, 'mobile', m.mobile, 'street', case when m.mobile then null else m.street end,
+    'postcode', case when m.mobile then null else m.postcode end, 'about', m.about, 'specialisms', m.specialisms, 'services', m.services, 'faqs', m.faqs, 'hours', m.hours,
+    'updated_at', m.updated_at, 'live_at', m.live_at)
+  from public.members m where m.slug = lower(p_slug) and (m.status = 'live' or (p_preview is not null and m.preview_token = p_preview and m.status in ('setup','live','paused')));
+$$;
+grant execute on function public.member_public(text, uuid) to anon, authenticated;
+
+-- An enquiry from the page, recorded the moment the customer taps Send (before WhatsApp opens). No customer contact details are kept.
+-- Limits: 40 a day per business, and the same answers twice within 10 minutes count once.
+create or replace function public.enquiry_add(p_slug text, p_source text, p_answers jsonb)
+returns text language plpgsql security definer set search_path = public as $$
+declare mid uuid; src text := case when p_source in ('chatgpt','google','gemini','claude','other_ai','facebook','instagram','friend','other') then p_source else null end;
+begin
+  select id into mid from public.members where slug = lower(p_slug) and status = 'live';
+  if mid is null then return 'none'; end if;
+  if jsonb_typeof(p_answers) <> 'object' or pg_column_size(p_answers) > 3500 then return 'bad'; end if;
+  if (select count(*) from public.enquiries where member_id = mid and at > now() - interval '1 day') >= 40 then return 'busy'; end if;
+  if exists (select 1 from public.enquiries where member_id = mid and answers = p_answers and at > now() - interval '10 minutes') then return 'ok'; end if;
+  insert into public.enquiries (member_id, source, answers) values (mid, src, p_answers);
+  return 'ok';
+end $$;
+revoke all on function public.enquiry_add(text, text, jsonb) from public;
+grant execute on function public.enquiry_add(text, text, jsonb) to anon, authenticated;
+
+-- Sign-up from /start: a lead for James to follow up. 60 a day across the site; one open lead per WhatsApp number.
+create or replace function public.member_signup(p_name text, p_business text, p_trade text, p_town text, p_whatsapp text, p_email text, p_link text, p_message text)
+returns text language plpgsql security definer set search_path = public as $$
+declare base text; s text; n int := 1; tr text := case when p_trade in ('groomer','hair','barber','nails','beauty','valeting','driving','tutor') then p_trade else 'other' end;
+begin
+  if coalesce(trim(p_name), '') = '' or coalesce(trim(p_business), '') = '' or p_whatsapp !~ '^[1-9][0-9]{9,14}$' then return 'bad'; end if;
+  if (select count(*) from public.members where created_at > now() - interval '1 day' and status = 'lead') >= 60 then return 'busy'; end if;
+  if exists (select 1 from public.members where whatsapp = p_whatsapp and status = 'lead') then return 'ok'; end if;
+  base := trim(both '-' from left(regexp_replace(regexp_replace(lower(replace(p_business, '&', ' and ') || '-' || coalesce(p_town, '')), '[''’‘`]', '', 'g'), '[^a-z0-9]+', '-', 'g'), 50));
+  if char_length(base) < 3 then base := 'business-' || substr(md5(random()::text), 1, 6); end if;
+  s := base; while exists (select 1 from public.members where slug = s) loop n := n + 1; s := base || '-' || n; end loop;
+  insert into public.members (slug, status, name, trade, owner_name, whatsapp, email, town, signup)
+  values (s, 'lead', left(trim(p_business), 120), tr, left(trim(p_name), 80), p_whatsapp, nullif(left(trim(lower(coalesce(p_email, ''))), 120), ''), nullif(left(trim(coalesce(p_town, '')), 60), ''),
+    jsonb_build_object('at', now(), 'link', left(coalesce(p_link, ''), 300), 'message', left(coalesce(p_message, ''), 1000)));
+  return 'ok';
+end $$;
+revoke all on function public.member_signup(text, text, text, text, text, text, text, text) from public;
+grant execute on function public.member_signup(text, text, text, text, text, text, text, text) to anon, authenticated;
+
+-- For the sitemap: live pages only.
+create or replace function public.members_live()
+returns table (slug text, updated_at timestamptz) language sql stable security definer set search_path = public as $$
+  select slug, updated_at from public.members where status = 'live' order by slug;
+$$;
+grant execute on function public.members_live() to anon, authenticated;

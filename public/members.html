@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Patch admin · Front desk</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@500;700&display=swap">
+<link rel="stylesheet" href="patch.css">
+<style>
+.wrap{max-width:1220px}
+.split{display:grid;grid-template-columns:minmax(0,1fr) 520px;gap:16px;align-items:start}.split>*{min-width:0}
+.panel{position:sticky;top:12px;max-height:calc(100vh - 24px);overflow:auto}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:9px;overflow:hidden;flex-wrap:wrap}
+.seg button{background:var(--card);border:0;border-left:1px solid var(--line);padding:7px 12px;cursor:pointer;font:inherit}
+.seg button:first-child{border-left:0}.seg button[aria-pressed=true]{background:var(--accent);color:var(--accent-ink)}
+.t tbody tr.click{cursor:pointer}.t tbody tr.click:hover,.t tr.sel{background:var(--tint)}
+.svc{display:grid;grid-template-columns:minmax(0,1fr) 80px 54px minmax(0,.8fr) 30px;gap:6px;align-items:center;margin:0 0 6px}
+.faq{display:grid;grid-template-columns:minmax(0,1fr) 30px;gap:6px;margin:0 0 8px}
+.svc input,.faq input,.faq textarea{border:1px solid var(--line);border-radius:8px;padding:6px;background:var(--card);width:100%;font:inherit;font-size:.9rem}
+.x{background:none;border:0;color:var(--mute);cursor:pointer;font-size:1.1rem}
+.chk{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-top:1px solid var(--line)}.chk input{margin-top:4px}
+.msg{width:100%;min-height:170px;font:inherit;font-size:.9rem;border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--bg)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:0 0 14px}
+.signin{max-width:380px;margin:12vh auto}
+.tick{display:flex;gap:8px;align-items:center;margin:4px 0 12px;font-weight:600;font-size:.92rem}.tick input{width:auto;margin:0}
+.linkbtn{background:none;border:0;padding:0;color:var(--accent2);text-decoration:underline;cursor:pointer;font:inherit}
+@media(max-width:1080px){.split{grid-template-columns:1fr}.panel{position:static;max-height:none}}
+@media(max-width:520px){.two{grid-template-columns:1fr}.svc{grid-template-columns:1fr 70px 30px}.svc .from,.svc .note{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap"><div id="root"><p class="mute" style="padding:20px">Loading…</p></div></div>
+<div class="toast" id="toast" role="status"></div>
+<script src="config.js"></script>
+<script src="patch-desk.js"></script>
+<script src="patch-data.js"></script>
+<script>
+(function () {
+"use strict";
+const D = PatchData, K = PatchDesk, CFG = D.CFG, esc = K.esc, $ = s => document.querySelector(s);
+const clone = o => JSON.parse(JSON.stringify(o)), today = () => new Date().toISOString().slice(0, 10), thisMonth = () => today().slice(0, 7);
+const fmtD = s => s ? new Date(s).toLocaleDateString("en-GB", { day: "numeric", month: "short" }) : "";
+const gbp = n => "£" + (+n).toFixed(2).replace(/\.00$/, "");
+function toast(t) { const el = $("#toast"); el.textContent = t; el.classList.add("on"); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove("on"), 2600); }
+const STATUS = { lead: "New sign-up", setup: "Setting up", live: "Live", paused: "Paused", left: "Left" };
+const ENGINES = ["ChatGPT", "Google AI", "Gemini", "Claude", "Copilot", "Perplexity"];
+const base = () => location.protocol === "file:" ? "" : location.origin + location.pathname.replace(/members(\.html)?$/, "");
+const pageUrl = m => D.DEMO ? `${base()}b.html?b=${encodeURIComponent(m.slug)}&demo=1` : `${location.origin}/b/${m.slug}`;
+const previewUrl = m => D.DEMO ? `${base()}b.html?b=${encodeURIComponent(m.slug)}&p=${encodeURIComponent(m.preview_token || "")}&demo=1` : `${location.origin}/b/${m.slug}?p=${m.preview_token}`;
+
+let DB, ME, S = { members: [], enq: [] };
+const V = { filter: "active", sel: null, tab: "profile", month: thisMonth(), ed: null, dirty: false };
+const mem = id => S.members.find(m => m.id === id);
+const enqOf = (id, month) => S.enq.filter(e => e.member_id === id && (!month || String(e.at).slice(0, 7) === month));
+
+/* ---------- list ---------- */
+function render() {
+  const live = S.members.filter(m => m.status === "live"), monthEnq = S.enq.filter(e => !e.voided && String(e.at).slice(0, 7) === V.month);
+  const ai = monthEnq.filter(e => K.AI_SOURCES.includes(e.source)).length, billed = S.members.reduce((t, m) => t + (["live", "paused"].includes(m.status) ? K.bill(m, S.enq, V.month).amount : 0), 0);
+  const leads = S.members.filter(m => m.status === "lead").length;
+  const list = S.members.filter(m => V.filter === "all" ? true : V.filter === "active" ? !["left"].includes(m.status) : m.status === V.filter);
+  const months = [...new Set([thisMonth()].concat(S.enq.map(e => String(e.at).slice(0, 7))))].sort().reverse().slice(0, 13);
+  const seg = (k, t) => `<button data-filter="${k}" aria-pressed="${V.filter === k}">${t}</button>`;
+  $("#root").innerHTML = `<header class="top"><a class="brand" href="start${D.DEMO ? "?demo=1" : ""}">Patch<i>.</i></a><span class="chip">Front desk</span><span class="sp"></span>
+    <a class="btn q sm" href="admin${D.DEMO ? ".html?demo=1" : ""}">Areas and salons</a><button class="btn q sm" data-act="new">Add a business</button><button class="btn q sm" data-act="signout">${D.DEMO ? "Reset demo" : "Sign out"}</button></header>
+    ${D.DEMO ? `<p class="demo"><b>Demo.</b> Made-up businesses, saved only in this browser. Open Paws &amp; Polish, then its page, and send an enquiry.</p>` : ""}
+    <div class="stats"><div class="stat"><b>${live.length}</b><span>live</span></div><div class="stat"><b>${leads}</b><span>new sign-up${leads === 1 ? "" : "s"} to contact</span></div>
+      <div class="stat"><b>${monthEnq.length}</b><span>enquiries this month${monthEnq.length ? `, ${ai} from AI` : ""}</span></div><div class="stat"><b>${gbp(billed)}</b><span>to bill for ${esc(monthName(V.month))}</span></div></div>
+    <div class="row" style="margin:0 0 12px"><div class="seg">${seg("active", "Current")}${seg("lead", "Sign-ups")}${seg("setup", "Setting up")}${seg("live", "Live")}${seg("all", "All")}</div><span class="sp"></span>
+      <label class="sm">Month <select id="month" style="border:1px solid var(--line);border-radius:8px;padding:5px">${months.map(x => `<option value="${x}" ${x === V.month ? "selected" : ""}>${esc(monthName(x, true))}</option>`).join("")}</select></label></div>
+    <div class="split"><section class="card" style="padding:0;overflow:auto">${list.length ? `<table class="t"><thead><tr><th>Business</th><th>Status</th><th>Setup</th><th>AI named</th><th>Enquiries</th><th>Bill</th></tr></thead><tbody>
+      ${list.map(m => { const b = K.bill(m, S.enq, V.month), p = K.setupProgress(m), s = K.aiSummary(m.checks);
+        return `<tr class="click ${m.id === V.sel ? "sel" : ""}" data-sel="${m.id}"><td><b>${esc(m.name)}</b><br><span class="xs mute">${esc(K.trade(m.trade).t)}${m.town ? " · " + esc(m.locality || m.town) : ""}${m.founding ? " · founding" : ""}</span></td>
+          <td><span class="chip ${m.status === "live" ? "good" : m.status === "lead" ? "warn" : ""}">${STATUS[m.status]}</span></td><td class="sm">${p.done}/${p.of}</td>
+          <td class="sm">${s ? `${s.now.named}/${s.now.n}${s.days > 1 ? ` <span class="xs mute">was ${s.before.named}/${s.before.n}</span>` : ""}` : '<span class="mute">Not checked</span>'}</td>
+          <td class="sm">${b.total ? b.counted + (b.voided ? ` <span class="xs mute">+${b.voided} void</span>` : "") : '<span class="mute">0</span>'}</td><td class="sm">${["live", "paused"].includes(m.status) ? gbp(b.amount) + (b.free ? ` <span class="xs mute">${b.free} free</span>` : "") : ""}</td></tr>`; }).join("")}</tbody></table>`
+      : `<p class="mute" style="padding:16px">Nothing here yet. Sign-ups arrive from the <a href="start${D.DEMO ? "?demo=1" : ""}">start page</a>.</p>`}</section>
+    <aside class="panel" id="panel">${V.ed ? panel() : `<div class="card"><p class="mute">Choose a business, or add one.</p></div>`}</aside></div>`;
+}
+const monthName = (m, yr) => new Date(m + "-15T12:00:00Z").toLocaleDateString("en-GB", yr ? { month: "long", year: "numeric" } : { month: "long" });
+
+/* ---------- the panel ---------- */
+function panel() {
+  const m = V.ed, tab = (k, t) => `<button data-tab="${k}" aria-pressed="${V.tab === k}">${t}</button>`;
+  const saved = m.id && mem(m.id);
+  return `<div class="card"><div class="row"><h2 style="margin:0">${esc(m.name || "New business")}</h2><span class="sp"></span>${saved ? `<span class="chip ${m.status === "live" ? "good" : ""}">${STATUS[saved.status]}</span>` : ""}</div>
+    ${saved ? `<p class="sm" style="margin:6px 0 10px"><a href="${esc(previewUrl(saved))}" target="_blank" rel="noopener">Preview the page</a>${saved.status === "live" ? ` · <a href="${esc(pageUrl(saved))}" target="_blank" rel="noopener">Live page</a> · <button class="linkbtn" data-act="copylink">Copy its link</button>` : ""}${saved.whatsapp ? ` · <a href="${esc(K.waLink(saved.whatsapp))}" target="_blank" rel="noopener">WhatsApp them</a>` : ""}</p>` : ""}
+    ${m.signup ? `<p class="sm" style="background:var(--tint);border-radius:8px;padding:8px">Signed up ${esc(fmtD(m.signup.at))}${m.signup.link ? `: <a href="${esc(/^https?:/.test(m.signup.link) ? m.signup.link : "https://" + m.signup.link)}" target="_blank" rel="noopener noreferrer">${esc(m.signup.link)}</a>` : ""}${m.signup.message ? `<br>“${esc(m.signup.message)}”` : ""}</p>` : ""}
+    <div class="seg" style="margin:0 0 12px">${tab("profile", "Profile")}${saved ? tab("setup", "Setup") + tab("ai", "AI checks") + tab("enq", "Enquiries") + tab("msgs", "Messages") : ""}</div>
+    ${({ profile: pProfile, setup: pSetup, ai: pAi, enq: pEnq, msgs: pMsgs })[saved ? V.tab : "profile"](m)}</div>`;
+}
+const inp = (k, t, o) => { o = o || {}; const v = V.ed[k]; return `<label class="f"><span>${esc(t)}</span>${o.area ? `<textarea data-f="${k}" maxlength="${o.max || 1200}" ${o.ph ? `placeholder="${esc(o.ph)}"` : ""}>${esc(v ?? "")}</textarea>` : `<input data-f="${k}" value="${esc(Array.isArray(v) ? v.join(", ") : v ?? "")}" maxlength="${o.max || 120}" ${o.ph ? `placeholder="${esc(o.ph)}"` : ""} ${o.type ? `type="${o.type}"` : ""}>`}</label>`; };
+function pProfile(m) {
+  const T = K.trade(m.trade), sv = m.services || [], fq = m.faqs || [];
+  return `<div class="two">${inp("name", "Business name")}${inp("owner_name", "Owner's name")}
+    <label class="f"><span>What they do</span><select data-f="trade">${Object.entries(K.TRADES).map(([k, t]) => `<option value="${k}" ${m.trade === k ? "selected" : ""}>${esc(t.t)}</option>`).join("")}</select></label>
+    <label class="f"><span>Status</span><select data-f="status">${Object.entries(STATUS).map(([k, t]) => `<option value="${k}" ${m.status === k ? "selected" : ""}>${t}</option>`).join("")}</select></label>
+    ${inp("whatsapp", "WhatsApp number", { ph: "07… or +44…", type: "tel" })}${inp("email", "Email", { type: "email" })}
+    ${inp("town", "Town", { ph: "Stockport" })}${inp("locality", "Neighbourhood", { ph: "Heaton Moor" })}
+    ${inp("districts", "Postcode areas (commas)", { ph: "SK4, SK5" })}${inp("slug", "Web address: /b/…", { max: 60, ph: "made from the name if empty" })}</div>
+    <label class="tick"><input type="checkbox" data-f="mobile" ${m.mobile ? "checked" : ""}> <span>Mobile: goes to customers (the address isn't shown)</span></label>
+    ${inp("area_text", "Area covered, in their words", { max: 300, ph: "Heaton Moor, Heaton Chapel and Reddish" })}
+    ${m.mobile ? "" : `<div class="two">${inp("street", "Street address")}${inp("postcode", "Postcode", { max: 10 })}</div>`}
+    ${inp("about", "About, in 2 or 3 sentences", { area: true, ph: "What they do, how, and why people come back. Plain words." })}
+    ${inp("specialisms", "Good at (commas): the words customers search", { max: 300, ph: T.one === "dog groomer" ? "Cockapoos and doodles, nervous dogs, hand stripping" : "" })}
+    ${inp("hours", "Hours", { max: 300, ph: "Tuesday to Saturday, 8am to 5pm" })}
+    <h3 style="margin:14px 0 6px">Services and prices</h3>${sv.length ? `<div class="svc xs mute"><span>Service</span><span>Price £</span><span class="from">From</span><span class="note">Note</span><span></span></div>` : ""}
+    ${sv.map((s, i) => `<div class="svc"><input data-sv="${i}" data-k="name" value="${esc(s.name || "")}" maxlength="80" aria-label="Service"><input data-sv="${i}" data-k="price" value="${esc(s.price ?? "")}" inputmode="decimal" aria-label="Price"><label class="from" style="text-align:center"><input type="checkbox" data-sv="${i}" data-k="from" ${s.from ? "checked" : ""} aria-label="From price"></label><input class="note" data-sv="${i}" data-k="note" value="${esc(s.note || "")}" maxlength="120" aria-label="Note"><button class="x" data-act="delsv" data-i="${i}" aria-label="Remove">×</button></div>`).join("")}
+    <div class="row"><button class="btn q sm" data-act="addsv">Add a service</button>${!sv.length && T.services.length ? `<button class="btn q sm" data-act="starters">Start from a typical ${esc(T.one)} list</button>` : ""}</div>
+    <h3 style="margin:14px 0 6px">Questions people ask</h3><p class="xs mute" style="margin:0 0 6px">Only questions with the owner's own answer show on the page.</p>
+    ${fq.map((f, i) => `<div class="faq"><div><input data-fq="${i}" data-k="q" value="${esc(f.q || "")}" maxlength="160" aria-label="Question"><textarea data-fq="${i}" data-k="a" maxlength="600" rows="2" style="margin-top:4px" placeholder="Their answer" aria-label="Answer">${esc(f.a || "")}</textarea></div><button class="x" data-act="delfq" data-i="${i}" aria-label="Remove">×</button></div>`).join("")}
+    <div class="row"><button class="btn q sm" data-act="addfq">Add a question</button>${!fq.length && T.faqs.length ? `<button class="btn q sm" data-act="startfaqs">Add the usual ${esc(T.one)} questions</button>` : ""}</div>
+    <h3 style="margin:14px 0 6px">Links</h3><div class="two">${inp("facebook", "Facebook page", { max: 300 })}${inp("instagram", "Instagram", { max: 300 })}${inp("website", "Website", { max: 300 })}${inp("google_url", "Google Business Profile link", { max: 500 })}</div>
+    ${inp("searches", "Searches to check in AI (commas; empty = the usual ones)", { max: 600, ph: K.searches(Object.assign({}, m, { searches: [] })).join(", ") })}
+    <h3 style="margin:14px 0 6px">Plan</h3><div class="two"><label class="f"><span>Plan</span><select data-f="plan"><option value="ppe" ${m.plan !== "plus" ? "selected" : ""}>Pay per enquiry (£${K.PRICES.per}, cap £${m.founding ? K.PRICES.founding_cap : K.PRICES.cap})</option><option value="plus" ${m.plan === "plus" ? "selected" : ""}>Plus (£${K.PRICES.plus} a month)</option></select></label>
+      <label class="tick" style="padding-top:18px"><input type="checkbox" data-f="founding" ${m.founding ? "checked" : ""}> <span>Founding member (cap £${K.PRICES.founding_cap})</span></label></div>
+    ${inp("admin_notes", "Your notes (private)", { area: true, max: 4000 })}
+    <p class="err" id="perr"></p><div class="row"><button class="btn" data-act="save">Save</button>${V.dirty ? '<span class="chip warn">Not saved</span>' : ""}<span class="sp"></span><button class="btn q sm" data-act="close">Close</button></div>`;
+}
+function pSetup(m) {
+  const l = m.listings || {}, p = K.setupProgress(m);
+  return `<p class="sm">${p.done} of ${p.of} done.${p.next ? ` Next: <b>${esc(p.next)}</b>.` : " All done."}</p>${K.SETUP.map(([k, t, how]) => `<label class="chk"><input type="checkbox" data-ls="${k}" ${l[k] ? "checked" : ""}><span><b>${esc(t)}</b>${l[k] ? ` <span class="xs mute">${esc(fmtD(l[k]))}</span>` : ""}<br><span class="sm mute">${esc(how)}</span></span></label>`).join("")}
+    <p class="xs mute" style="margin-top:10px">Set every listing up in the owner's name, with their email, so it stays theirs if they leave. Use the Patch page as the website or booking link.</p>`;
+}
+function pAi(m) {
+  const s = K.aiSummary(m.checks), qs = K.searches(m), byDay = {};
+  (m.checks || []).forEach((c, i) => (byDay[String(c.at).slice(0, 10)] = byDay[String(c.at).slice(0, 10)] || []).push([c, i]));
+  const yes = b => b ? '<span class="chip good">Yes</span>' : '<span class="chip">No</span>';
+  return `${s ? `<div class="stats"><div class="stat"><b>${s.before.named}/${s.before.n}</b><span>named at the start (${esc(fmtD(s.before.at))})</span></div><div class="stat"><b>${s.now.named}/${s.now.n}</b><span>named now (${esc(fmtD(s.now.at))})</span></div><div class="stat"><b>${s.now.prices}/${s.now.n}</b><span>with the right prices</span></div></div>` : `<p class="sm">No checks yet. Ask the searches below in ChatGPT, Google and Gemini (signed out, or in a private window), take screenshots, and record each one. The first day is the “before”.</p>`}
+    <div class="card" style="background:var(--tint)"><h3 style="margin:0 0 8px">Record a check</h3><div class="two">
+      <label class="f"><span>Assistant</span><select id="ck_engine">${ENGINES.map(e => `<option>${e}</option>`).join("")}</select></label><label class="f"><span>Date</span><input id="ck_at" type="date" value="${today()}"></label></div>
+      <label class="f"><span>Search</span><input id="ck_q" list="ck_qs" value="${esc(qs[0] || "")}" maxlength="120"><datalist id="ck_qs">${qs.map(q => `<option value="${esc(q)}">`).join("")}</datalist></label>
+      <div class="row sm"><label><input type="checkbox" id="ck_named"> Named</label><label><input type="checkbox" id="ck_prices"> Prices right</label><label><input type="checkbox" id="ck_contact"> Way to contact shown</label></div>
+      <label class="f"><span>Notes</span><input id="ck_notes" maxlength="200" placeholder="e.g. named 3 others: …"></label>
+      <div class="row"><button class="btn sm" data-act="addcheck">Add</button>${D.DEMO ? "" : `<button class="btn q sm" data-act="askai">Ask now</button>`}<span class="xs mute">Asking now uses the AI keys in the site's settings; the answers come from the models, so also check by hand.</span></div></div>
+    ${Object.keys(byDay).sort().reverse().map(d => `<h3 style="margin:14px 0 6px">${esc(fmtD(d))}</h3><table class="t"><thead><tr><th>Assistant</th><th>Search</th><th>Named</th><th>Prices</th><th>Contact</th><th></th></tr></thead><tbody>${byDay[d].map(([c, i]) => `<tr><td class="sm">${esc(c.engine)}</td><td class="sm">${esc(c.q)}${c.notes ? `<br><span class="xs mute">${esc(c.notes)}</span>` : ""}</td><td>${yes(c.named)}</td><td>${yes(c.prices)}</td><td>${yes(c.contact)}</td><td><button class="x" data-act="delcheck" data-i="${i}" aria-label="Remove">×</button></td></tr>`).join("")}</tbody></table>`).join("")}`;
+}
+function pEnq(m) {
+  const b = K.bill(m, S.enq, V.month), list = enqOf(m.id).slice().reverse(), T = K.trade(m.trade);
+  const sum = a => [a.service, a.breed || a.car || a.subject, a.size, a.when, a.district].filter(Boolean).join(" · ");
+  return `<div class="stats"><div class="stat"><b>${b.counted}</b><span>in ${esc(monthName(V.month))}${b.voided ? `, ${b.voided} voided` : ""}</span></div><div class="stat"><b>${gbp(b.amount)}</b><span>${b.plus ? "Plus" : `${b.charged} at ${gbp(b.per)}${b.capped ? ", capped" : ""}${b.free ? `, ${b.free} free` : ""}`}</span></div><div class="stat"><b>${b.freeLeft}</b><span>free enquiries left</span></div></div>
+    ${list.length ? `<table class="t"><thead><tr><th>When</th><th>Found on</th><th>What</th><th></th></tr></thead><tbody>${list.map(e => `<tr${e.voided ? ' style="opacity:.55"' : ""}><td class="sm">${esc(fmtD(e.at))}</td><td class="sm">${esc(K.SOURCE[e.source] || "Not said")}</td><td class="sm">${esc(sum(e.answers || {}))}${e.voided ? `<br><span class="xs">Voided${e.void_reason ? ": " + esc(e.void_reason) : ""}</span>` : ""}</td>
+      <td>${e.voided ? `<button class="btn q sm" data-act="unvoid" data-id="${e.id}">Restore</button>` : `<select id="vr_${e.id}" aria-label="Why void it" style="border:1px solid var(--line);border-radius:7px;padding:4px;font-size:.8rem;max-width:110px"><option>Not real or spam</option><option>Duplicate</option><option>Existing customer</option><option>Owner asked</option></select> <button class="btn q sm" data-act="void" data-id="${e.id}">Void</button>`}</td></tr>`).join("")}</tbody></table>` : `<p class="sm mute">No enquiries yet. Each one is counted when a customer taps Send on the ${esc(T.one)}'s page.</p>`}
+    <p class="xs mute" style="margin-top:10px">Void anything the owner says wasn't real: spam, duplicates, existing customers. Voided enquiries are never charged and don't use a free one.</p>`;
+}
+function pMsgs(m) {
+  const live = `Hi ${String(m.owner_name || "").split(" ")[0] || "there"}, your Patch page is live: ${pageUrl(m)}\n\nPut this link as the website on your Google profile, and as the button on your Facebook page ("Send WhatsApp message" or "Book now"). Enquiries will arrive here on WhatsApp with the details already filled in.\n\nYour first ${K.PRICES.free} enquiries are free.`;
+  const msgs = [["opener", "Free check: the first message", K.openerMessage(m, m.checks, (ME && ME.name) || "James")], ["summary", "“Here's what we'll tell the world”", K.summaryMessage(m)], ["live", "Your page is live", live], ["report", `Monthly report: ${monthName(V.month)}`, K.reportMessage(m, S.enq, m.checks, V.month)]];
+  return `<p class="sm mute">Nothing is sent from here. Copy a message, or open it in WhatsApp and press send yourself.</p>${msgs.map(([k, t, txt]) => `<h3 style="margin:14px 0 6px">${esc(t)}</h3><textarea class="msg" id="msg_${k}" aria-label="${esc(t)}">${esc(txt)}</textarea>
+    <div class="row"><button class="btn q sm" data-act="copymsg" data-k="${k}">Copy</button>${m.whatsapp ? `<a class="btn q sm" data-wa="${k}" href="${esc(K.waLink(m.whatsapp, txt))}" target="_blank" rel="noopener">Open in WhatsApp</a>` : '<span class="xs mute">Add their WhatsApp number to open it there.</span>'}</div>`).join("")}`;
+}
+
+/* ---------- edits ---------- */
+function readForm() {
+  const m = V.ed; if (!m) return;
+  document.querySelectorAll("[data-f]").forEach(el => { const k = el.dataset.f;
+    if (el.type === "checkbox") m[k] = el.checked; else if (["districts", "specialisms", "searches"].includes(k)) m[k] = el.value.split(",").map(x => x.trim()).filter(Boolean); else m[k] = el.value; });
+  document.querySelectorAll("[data-sv]").forEach(el => { const s = m.services[+el.dataset.sv]; if (!s) return; s[el.dataset.k] = el.type === "checkbox" ? el.checked : el.value; });
+  document.querySelectorAll("[data-fq]").forEach(el => { const f = m.faqs[+el.dataset.fq]; if (f) f[el.dataset.k] = el.value; });
+}
+async function save() {
+  readForm(); const m = V.ed, err = $("#perr");
+  const row = clone(m); row.name = String(row.name || "").trim(); if (!row.name) { err.textContent = "Add the business name."; return; }
+  if (row.whatsapp) { const n = K.waNumber(row.whatsapp); if (!n) { err.textContent = "That WhatsApp number doesn't look right."; return; } row.whatsapp = n; } else row.whatsapp = null;
+  row.slug = K.slugify(row.slug || [row.name, row.locality || row.town].filter(Boolean).join(" ")); if (row.slug.length < 3) { err.textContent = "Choose a longer web address."; return; }
+  row.services = (row.services || []).filter(s => String(s.name || "").trim()).map(s => { const p = String(s.price ?? "").replace(/[£,\s]/g, ""); const o = { name: String(s.name).trim() }; if (p !== "" && !isNaN(+p)) o.price = +p; if (s.from) o.from = true; if (String(s.note || "").trim()) o.note = String(s.note).trim(); return o; });
+  if (row.services.some(s => s.price != null && (s.price < 0 || s.price > 5000))) { err.textContent = "Check the prices."; return; }
+  row.faqs = (row.faqs || []).filter(f => String(f.q || "").trim()).map(f => ({ q: String(f.q).trim(), a: String(f.a || "").trim() }));
+  if (row.status === "live" && !row.whatsapp) { err.textContent = "Add their WhatsApp number before the page goes live."; return; }
+  ["email", "town", "locality", "area_text", "street", "postcode", "about", "hours", "facebook", "instagram", "website", "google_url", "owner_name", "admin_notes"].forEach(k => { row[k] = String(row[k] ?? "").trim() || null; });
+  ["facebook", "instagram", "website", "google_url"].forEach(k => { if (row[k] && !/^https?:\/\//.test(row[k])) row[k] = "https://" + row[k]; });
+  try { const s = await DB.saveMember(row); const i = S.members.findIndex(x => x.id === s.id); if (i >= 0) S.members[i] = s; else S.members.unshift(s); V.sel = s.id; V.ed = clone(s); V.dirty = false; toast("Saved"); renderKeep(); }
+  catch (e) { err.textContent = e.message; }
+}
+// Changes that save at once (checklist ticks, checks): onto the saved copy, keeping any unsaved profile edits.
+async function patch(p) {
+  const m = mem(V.sel); if (!m) return; readForm();
+  try { const s = await DB.saveMember(Object.assign(clone(m), p)); Object.assign(m, s); Object.assign(V.ed, p); renderKeep(); } catch (e) { toast(e.message); }
+}
+function renderKeep() { const y = scrollY, py = ($("#panel") || {}).scrollTop || 0; render(); scrollTo(0, y); const pn = $("#panel"); if (pn) pn.scrollTop = py; }
+
+// Typing marks the profile as unsaved without redrawing (a redraw would lose the cursor).
+document.addEventListener("input", e => { const t = e.target; if (!t.closest("#panel") || !(t.dataset.f || t.dataset.sv || t.dataset.fq)) return;
+  if (!V.dirty) { V.dirty = true; const sv = document.querySelector('[data-act="save"]'); if (sv && !sv.nextElementSibling.classList.contains("chip")) sv.insertAdjacentHTML("afterend", '<span class="chip warn">Not saved</span>'); } });
+document.addEventListener("change", async e => {
+  const t = e.target;
+  if (t.id === "month") { V.month = t.value; return renderKeep(); }
+  if (t.dataset.f === "trade" || t.dataset.f === "mobile" || t.dataset.f === "founding") { readForm(); V.dirty = true; return renderKeep(); }
+  if (t.dataset.ls) { const l = Object.assign({}, (mem(V.sel) || {}).listings); if (t.checked) l[t.dataset.ls] = today(); else delete l[t.dataset.ls]; return patch({ listings: l }); }
+});
+document.addEventListener("click", async e => {
+  const f = e.target.closest("[data-filter]"); if (f) { V.filter = f.dataset.filter; return render(); }
+  const tb = e.target.closest("[data-tab]"); if (tb) { readForm(); V.tab = tb.dataset.tab; return renderKeep(); }
+  const r = e.target.closest("[data-sel]"); if (r) { if (V.dirty && !confirmLeave()) return; const m = mem(r.dataset.sel); V.sel = m.id; V.ed = clone(m); V.dirty = false; V.tab = m.status === "lead" ? "msgs" : "profile"; return render(); }
+  const b = e.target.closest("[data-act]"); if (!b) return; const a = b.dataset.act, m = V.ed;
+  if (a === "signout") { if (D.DEMO) { await DB.reset(); location.reload(); } else { await DB.signOut(); location.reload(); } return; }
+  if (a === "new") { V.sel = null; V.ed = { status: "setup", trade: "groomer", name: "", services: [], faqs: [], specialisms: [], districts: [], listings: {}, checks: [], plan: "ppe", founding: true, mobile: false }; V.tab = "profile"; V.dirty = true; return render(); }
+  if (a === "close") { if (V.dirty && !confirmLeave()) return; V.sel = null; V.ed = null; V.dirty = false; return render(); }
+  if (a === "save") return save();
+  if (a === "addsv") { readForm(); m.services = (m.services || []).concat([{ name: "", price: "" }]); V.dirty = true; return renderKeep(); }
+  if (a === "delsv") { readForm(); m.services.splice(+b.dataset.i, 1); V.dirty = true; return renderKeep(); }
+  if (a === "starters") { readForm(); m.services = K.trade(m.trade).services.map(([name, price]) => ({ name, price })); V.dirty = true; toast("Typical prices added: change them to theirs"); return renderKeep(); }
+  if (a === "addfq") { readForm(); m.faqs = (m.faqs || []).concat([{ q: "", a: "" }]); V.dirty = true; return renderKeep(); }
+  if (a === "delfq") { readForm(); m.faqs.splice(+b.dataset.i, 1); V.dirty = true; return renderKeep(); }
+  if (a === "startfaqs") { readForm(); m.faqs = K.trade(m.trade).faqs.map(([q]) => ({ q, a: "" })); V.dirty = true; return renderKeep(); }
+  if (a === "copylink") return copy(pageUrl(mem(V.sel)));
+  if (a === "copymsg") return copy($("#msg_" + b.dataset.k).value);
+  if (a === "addcheck") { const q = $("#ck_q").value.trim(); if (!q) return toast("Add the search");
+    const c = { at: $("#ck_at").value || today(), engine: $("#ck_engine").value, q, named: $("#ck_named").checked, prices: $("#ck_prices").checked, contact: $("#ck_contact").checked, notes: $("#ck_notes").value.trim() };
+    const checks = (mem(V.sel).checks || []).concat([c]), l = Object.assign({}, mem(V.sel).listings); if (!l.before) l.before = c.at; return patch({ checks, listings: l }); }
+  if (a === "delcheck") { const checks = (mem(V.sel).checks || []).slice(); checks.splice(+b.dataset.i, 1); return patch({ checks }); }
+  if (a === "askai") return askAi(b);
+  if (a === "void" || a === "unvoid") { const reason = a === "void" ? (document.getElementById("vr_" + b.dataset.id) || {}).value : null;
+    try { const x = await DB.updEnquiry(b.dataset.id, a === "void" ? { voided: true, void_reason: (reason || "Owner said it wasn't real").slice(0, 200) } : { voided: false, void_reason: null }); const i = S.enq.findIndex(y => y.id === x.id); S.enq[i] = x; renderKeep(); } catch (x) { toast(x.message); } return; }
+});
+document.addEventListener("click", e => { const w = e.target.closest("[data-wa]"); if (w) { const t = $("#msg_" + w.dataset.wa); if (t) w.href = K.waLink(V.ed.whatsapp, t.value); } }, true);
+const confirmLeave = () => { const el = $("#perr"); if (el) el.textContent = "You have changes that aren't saved. Save, or press Close twice to drop them."; if (V._warned) { V._warned = false; return true; } V._warned = true; return false; };
+async function copy(t) { try { await navigator.clipboard.writeText(t); toast("Copied"); } catch (e) { toast("Couldn't copy: select the text and copy it"); } }
+async function askAi(b) {
+  const m = mem(V.sel), qs = K.searches(m).slice(0, 5); b.disabled = true; b.textContent = "Asking…";
+  try { const tok = await DB.token(), r = await fetch("/api/geo-check", { method: "POST", headers: { "Content-Type": "application/json", Authorization: "Bearer " + tok }, body: JSON.stringify({ prompts: qs.map(q => ({ q, theme: "" })), venues: [m.name] }) }), j = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(j.error || "Couldn't ask"); const g = j.geo, at = g.at, add = [];
+    g.prompts.forEach(p => g.engines.forEach(en => { const named = (g.answers[p.q + "|" + en] || []).length > 0; add.push({ at, engine: en, q: p.q, named, prices: false, contact: false, notes: "Asked by Patch" + ((g.sources || {})[p.q + "|" + en] ? ": read " + g.sources[p.q + "|" + en].slice(0, 3).map(u => { try { return new URL(u).hostname.replace(/^www\./, ""); } catch (x) { return ""; } }).filter(Boolean).join(", ") : "") }); }));
+    const l = Object.assign({}, m.listings); if (!l.before) l.before = at; await patch({ checks: (m.checks || []).concat(add), listings: l }); toast(`Asked ${add.length} times${j.errors && j.errors.length ? "; some failed" : ""}`);
+  } catch (e) { toast(e.message); } finally { const x = document.querySelector('[data-act="askai"]'); if (x) { x.disabled = false; x.textContent = "Ask now"; } }
+}
+
+/* ---------- start ---------- */
+async function boot() {
+  DB = await D.admin(); ME = await DB.me();
+  if (!ME || ME.notAdmin) return signIn(ME && ME.notAdmin);
+  try { [S.members, S.enq] = await Promise.all([DB.members(), DB.enquiries()]); } catch (e) { $("#root").innerHTML = `<div class="card err">Couldn't load: ${esc(e.message)}. If this is new, the database may need the front-desk tables (supabase/schema.sql).</div>`; return; }
+  const want = new URLSearchParams(location.search).get("m"); if (want && mem(want)) { V.sel = want; V.ed = clone(mem(want)); }
+  render();
+}
+function signIn(notAdmin) {
+  $("#root").innerHTML = `<form class="card signin" id="si"><h1 style="margin-top:0">Patch admin</h1>${notAdmin ? `<p class="err">That account isn't an admin.</p>` : ""}<label class="f"><span>Email</span><input id="se" type="email" autocomplete="username"></label><label class="f"><span>Password</span><input id="sp" type="password" autocomplete="current-password"></label><p class="err" id="serr"></p><button class="btn big">Sign in</button></form>`;
+  $("#si").addEventListener("submit", async e => { e.preventDefault(); try { await DB.signIn($("#se").value, $("#sp").value); boot(); } catch (x) { $("#serr").textContent = x.message; } });
+}
+boot();
+})();
+</script>
+</body>
+</html>

@@ -5,3 +5,8 @@ Disallow: /report
 Disallow: /visit
 Disallow: /api/
 Disallow: /sweep
+
+Allow: /b/
+Disallow: /members
+
+Sitemap: https://getfettle.co.uk/sitemap.xml

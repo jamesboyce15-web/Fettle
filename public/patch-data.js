@@ -5,7 +5,7 @@
   const CFG = root.PATCH_CONFIG || {};
   const Q = new URLSearchParams(location.search);
   const DEMO = Q.has("demo") || !CFG.supabaseUrl;
-  const KEY = "patch-demo-db-v11";
+  const KEY = "patch-demo-db-v12";
   const uid = () => (crypto.randomUUID ? crypto.randomUUID() : "id-" + Math.random().toString(36).slice(2) + Date.now().toString(36));
   const clone = o => JSON.parse(JSON.stringify(o));
 
@@ -95,7 +95,30 @@
       { id: "of2", kind: "energy", sectors: ["cafe", "salon"], provider: "Brightline Energy (demo)", headline: "Fixed business rates, commission shown before you sign", url: "https://example.com/demo-energy", rate_from: null, rate_unit: "a year", checked_at: null, commission: "£40 a switch (made up)", network: "Demo", live: true, notes: "" },
       { id: "of3", kind: "card", sectors: ["cafe", "salon"], provider: "TapRight Payments (demo)", headline: "No monthly fee, next-day payouts", url: "https://example.com/demo-card", rate_from: 1.39, rate_unit: "% a transaction", checked_at: dd(-70), commission: "Share of fees (made up)", network: "Demo", live: true, notes: "Price is stale on purpose: it shouldn't show." },
       { id: "of4", kind: "pat", sectors: ["cafe"], provider: "Not live yet (demo)", headline: "", url: null, live: false, commission: "", network: "", notes: "Waiting on their link" }];
-    return { areas: [sal.area, area], venues, observations, requests, sweeps, sweep_items, offers, offer_clicks: [], admins: [{ user_id: "demo", name: "You" }] };
+    const desk = deskSeed(dd);
+    return { areas: [sal.area, area], venues, observations, requests, sweeps, sweep_items, offers, offer_clicks: [], admins: [{ user_id: "demo", name: "You" }], members: desk.members, enquiries: desk.enquiries };
+  }
+  // Front desk: a made-up dog groomer that's live with enquiries coming in, one being set up, and a new sign-up.
+  function deskSeed(dd) {
+    const ts = n => new Date(Date.now() + n * 864e5).toISOString();
+    const paws = { id: "dm1", slug: "paws-and-polish-demo", status: "live", name: "Paws & Polish", trade: "groomer", owner_name: "Sarah Jones (made up)", whatsapp: "447700900123", email: "sarah@example.com",
+      facebook: "https://www.facebook.com/example-paws", town: "Stockport", locality: "Heaton Moor", districts: ["SK4", "SK5"], area_text: "Heaton Moor, Heaton Chapel, Heaton Mersey and Reddish (SK4 and SK5)", mobile: true,
+      about: "One-woman mobile dog grooming from a fitted van outside your home. Calm, one dog at a time, no cages. City & Guilds qualified, eight years grooming.",
+      specialisms: ["Cockapoos and doodles", "Nervous and older dogs", "Hand stripping"], hours: "Tuesday to Saturday, 8am to 5pm",
+      services: [{ name: "Full groom, small dog", price: 40 }, { name: "Full groom, cockapoo or medium dog", price: 45 }, { name: "Full groom, large dog", price: 55, from: true }, { name: "Bath, brush and tidy", price: 30 }, { name: "Puppy introduction (under 6 months)", price: 25, note: "A short, gentle first groom" }, { name: "Nail clip", price: 10 }],
+      faqs: [{ q: "Do you groom nervous or anxious dogs?", a: "Yes. One dog at a time in a quiet van, with breaks whenever they need them." }, { q: "Can you deal with a matted coat?", a: "Light matting, yes. Heavy matting is shaved off for the dog's comfort, and I'll talk you through it first." }, { q: "How long does a full groom take?", a: "Around 90 minutes for a cockapoo." }, { q: "Do you need water or power from me?", a: "No. The van has its own." }],
+      searches: [], plan: "ppe", founding: true, listings: { profile: dd(-40), page: dd(-38), gbp: dd(-37), bing: dd(-36), facebook: dd(-36), before: dd(-40) },
+      checks: [{ at: dd(-40), engine: "ChatGPT", q: "dog groomer near SK4", named: false, prices: false, contact: false, notes: "Named 3 others" }, { at: dd(-40), engine: "Google AI", q: "dog groomer near SK4", named: false, prices: false, contact: false, notes: "" }, { at: dd(-40), engine: "ChatGPT", q: "cockapoo groomer in Heaton Moor", named: false, prices: false, contact: false, notes: "" },
+        { at: dd(-2), engine: "ChatGPT", q: "dog groomer near SK4", named: true, prices: true, contact: true, notes: "Second of three" }, { at: dd(-2), engine: "Google AI", q: "dog groomer near SK4", named: true, prices: true, contact: true, notes: "" }, { at: dd(-2), engine: "ChatGPT", q: "cockapoo groomer in Heaton Moor", named: false, prices: false, contact: false, notes: "" }],
+      signup: null, admin_notes: "Founding member. Prefers messages after 6pm.", preview_token: "demo-preview-1", created_at: ts(-41), live_at: ts(-38), updated_at: ts(-3) };
+    const shine = { id: "dm2", slug: "shine-on-valeting-demo", status: "setup", name: "Shine On Valeting", trade: "valeting", owner_name: "Dan Price (made up)", whatsapp: "447700900456", town: "Stockport", locality: "Bramhall", districts: ["SK7"], mobile: true,
+      services: [{ name: "Mini valet", price: 30 }, { name: "Full valet", price: 95, from: true }], faqs: [], specialisms: ["Dog hair removal"], listings: { profile: dd(-1) }, checks: [], plan: "ppe", founding: true, preview_token: "demo-preview-2", created_at: ts(-3), updated_at: ts(-1) };
+    const lead = { id: "dm3", slug: "fluff-and-buff-stockport-demo", status: "lead", name: "Fluff & Buff", trade: "groomer", owner_name: "Priya (made up)", whatsapp: "447700900789", town: "Stockport", services: [], faqs: [], specialisms: [], districts: [], listings: {}, checks: [],
+      signup: { at: ts(-1), link: "https://www.facebook.com/example-fluff", message: "Mostly word of mouth, want more weekday bookings" }, preview_token: "demo-preview-3", created_at: ts(-1), updated_at: ts(-1) };
+    const ans = [["Cockapoo", "Medium", "chatgpt"], ["Shih Tzu", "Small", "google"], ["Labradoodle", "Large", "google"], ["Cockapoo", "Medium", "facebook"], ["Border Terrier", "Small", "chatgpt"], ["Cavapoo", "Small", "google"], ["Springer Spaniel", "Medium", "friend"], ["Cockapoo", "Medium", "google"], ["Bichon Frise", "Small", "chatgpt"]];
+    const day = [-33, -26, -19, -12, -9, -6, -4, -2, -1];
+    const enquiries = ans.map(([breed, size, source], i) => ({ id: "de" + i, member_id: paws.id, at: ts(day[i]), source, answers: { breed, size, service: size === "Large" ? "Full groom, large dog" : "Full groom, cockapoo or medium dog", when: i % 2 ? "Saturday morning" : "Any weekday", district: i % 3 ? "SK4" : "SK5" }, voided: i === 6, void_reason: i === 6 ? "Existing customer" : null }));
+    return { members: [paws, shine, lead], enquiries };
   }
   // A made-up salon area: some businesses priced, some not, so the price check and the coverage list have something to show.
   function salonSeed(rnd, dd) {
@@ -164,6 +187,14 @@
   }
   function demoRpc(fn, b) {
     const d = demoLoad(), area = d.areas.find(a => a.slug === (b.p_slug || "demo")) || d.areas[0];
+    if (fn === "member_public") { const m = (d.members || []).find(x => x.slug === String(b.p_slug || "").toLowerCase() && (x.status === "live" || (b.p_preview && x.preview_token === b.p_preview && x.status !== "lead"))); if (!m) return null;
+      const c = clone(m); ["email", "listings", "checks", "signup", "admin_notes", "preview_token", "plan", "founding", "per_enquiry", "cap", "plus_price", "searches"].forEach(k => delete c[k]); c.owner_name = String(c.owner_name || "").split(" ")[0]; return c; }
+    if (fn === "enquiry_add") { const m = (d.members || []).find(x => x.slug === b.p_slug && x.status === "live"); if (!m) return "none";
+      d.enquiries = d.enquiries || []; d.enquiries.push({ id: uid(), member_id: m.id, at: new Date().toISOString(), source: b.p_source || null, answers: b.p_answers || {}, voided: false }); demoSave(d); return "ok"; }
+    if (fn === "member_signup") { if (!(b.p_name || "").trim() || !(b.p_business || "").trim() || !/^[1-9]\d{9,14}$/.test(b.p_whatsapp || "")) return "bad";
+      const D = root.PatchDesk, base = (D ? D.slugify(b.p_business + " " + (b.p_town || "")) : "lead") || "lead"; let sl = base, n = 1; while ((d.members || []).some(x => x.slug === sl)) sl = base + "-" + (++n);
+      d.members = d.members || []; d.members.push({ id: uid(), slug: sl, status: "lead", name: b.p_business.trim(), trade: b.p_trade || "other", owner_name: b.p_name.trim(), whatsapp: b.p_whatsapp, email: b.p_email || null, town: b.p_town || null,
+        services: [], faqs: [], specialisms: [], districts: [], listings: {}, checks: [], signup: { at: new Date().toISOString(), link: b.p_link || "", message: b.p_message || "" }, preview_token: uid(), created_at: new Date().toISOString(), updated_at: new Date().toISOString() }); demoSave(d); return "ok"; }
     if (fn === "area_public") return { slug: area.slug, name: area.name, sector: area.sector || "cafe", districts: area.districts, published: area.published, published_at: area.published_at,
       venues: d.venues.filter(v => v.area_id === area.id && v.included).map(v => ({ id: v.id, name: v.name, postcode: v.postcode, kind: v.kind, category: v.category || null, hygiene: v.hygiene })).sort((a, c) => a.name.localeCompare(c.name)) };
     if (fn === "request_report") { if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(b.p_email || "") || !(b.p_name || "").trim()) return "bad";
@@ -242,6 +273,13 @@
       async offers() { return clone(d.offers || []); },
       async saveOffer(o) { d.offers = d.offers || []; const r = o.id && d.offers.find(x => x.id === o.id); if (r) Object.assign(r, clone(o)); else d.offers.push(Object.assign({ id: uid(), created_at: new Date().toISOString() }, clone(o))); save(); return clone(r || d.offers[d.offers.length - 1]); },
       async offerClicks() { return clone(d.offer_clicks || []); },
+      async members() { return clone(d.members || []); },
+      async saveMember(m) { d.members = d.members || []; const now = new Date().toISOString(), r = m.id && d.members.find(x => x.id === m.id);
+        if (d.members.some(x => x.slug === m.slug && x.id !== m.id)) throw new Error("Another business already has that web address.");
+        const live = m.status === "live" && !(r && r.live_at) ? { live_at: now } : {};
+        if (r) Object.assign(r, clone(m), { updated_at: now }, live); else d.members.push(Object.assign({ id: uid(), preview_token: uid(), created_at: now, listings: {}, checks: [] }, clone(m), { updated_at: now }, live)); save(); return clone(r || d.members[d.members.length - 1]); },
+      async enquiries() { return clone(d.enquiries || []); },
+      async updEnquiry(id, p) { return upd("enquiries", id, p); },
       async token() { return null; },
       async emailLog() { return []; },
       async sweeps(areaId) { return clone((d.sweeps || []).filter(x => x.area_id === areaId)); },
@@ -289,6 +327,12 @@
       async offers() { return ok(await sb.from("offers").select("*").order("kind").order("provider")); },
       async saveOffer(o) { const c = Object.assign({}, o); delete c.created_at; return c.id ? ok(await sb.from("offers").update(c).eq("id", c.id).select().single()) : ok(await sb.from("offers").insert(c).select().single()); },
       async offerClicks() { return ok(await sb.from("offer_clicks").select("*").gte("at", new Date(Date.now() - 90 * 864e5).toISOString()).limit(5000)); },
+      async members() { return ok(await sb.from("members").select("*").order("created_at", { ascending: false }).limit(2000)); },
+      async saveMember(m) { const c = Object.assign({}, m); ["created_at", "updated_at", "live_at", "preview_token"].forEach(k => delete c[k]);
+        const r = c.id ? await sb.from("members").update(c).eq("id", c.id).select().single() : await sb.from("members").insert(c).select().single();
+        if (r.error && /duplicate|unique/i.test(r.error.message)) throw new Error("Another business already has that web address."); return ok(r); },
+      async enquiries() { return ok(await sb.from("enquiries").select("*").gte("at", new Date(Date.now() - 400 * 864e5).toISOString()).order("at").limit(20000)); },
+      async updEnquiry(id, p) { return ok(await sb.from("enquiries").update(p).eq("id", id).select().single()); },
       async emailLog() { return ok(await sb.from("email_log").select("*").order("at", { ascending: false }).limit(50)); },
       async uploadPhoto(path, blob) { ok(await sb.storage.from("visit-photos").upload(path, blob, { contentType: blob.type || "image/jpeg", upsert: false })); return { path }; },
       async photoUrl(ph) { if (!ph.path) return ph.data || null; const r = await sb.storage.from("visit-photos").createSignedUrl(ph.path, 3600); return r.error ? null : r.data.signedUrl; },

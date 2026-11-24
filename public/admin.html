@@ -83,7 +83,7 @@ function render() {
   const nav = (v, t, n) => `<button data-nav="${v}" ${V.view === v ? 'aria-current="page"' : ""}>${t}${n ? `<span class="n">${n}</span>` : ""}</button>`;
   $("#root").innerHTML = `<header class="top"><a class="brand" href="./${D.DEMO ? "?demo=1" : ""}">Patch<i>.</i></a><span class="chip">Admin</span><span class="sp"></span>
     <select id="areaSel" aria-label="Area" style="border:1px solid var(--line);border-radius:9px;padding:6px 8px;background:var(--card)">${S.areas.map(a => `<option value="${a.id}" ${S.area && a.id === S.area.id ? "selected" : ""}>${esc(a.name)}</option>`).join("")}</select>
-    <button class="btn q sm" data-act="signout">${D.DEMO ? "Reset demo" : "Sign out"}</button></header>
+    <a class="btn q sm" href="members${D.DEMO ? ".html?demo=1" : ""}">Front desk</a><button class="btn q sm" data-act="signout">${D.DEMO ? "Reset demo" : "Sign out"}</button></header>
     ${D.DEMO ? `<p class="demo"><b>Demo.</b> Made-up cafés, saved only in this browser. Try: open a request, build the report, then open the report link.</p>` : ""}
     <nav class="nav">${nav("requests", "Report requests", nNew + nFound)}${nav("record", "Record a visit or menu")}${nav("sweeps", "Price sweeps")}${nav("cafes", "Cafés")}${nav("search", "Search and AI")}${nav("calendar", "Local calendar")}${P.SECTOR === "salon" ? nav("coverage", "Coverage") : ""}${nav("area", "Area page")}${nav("offers", "Offers")}${nav("settings", "Costs")}${nav("emails", "Emails")}</nav>
     <div id="main">${view()}</div>`;

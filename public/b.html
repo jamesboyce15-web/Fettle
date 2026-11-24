@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Patch</title>
+</head>
+<body>
+<p style="font:16px system-ui,sans-serif;padding:20px;color:#5d6863">Loading…</p>
+<!-- The demo (and preview) version of a business page: the same HTML the server sends from /b/<slug>, built in the browser. -->
+<script src="config.js"></script>
+<script src="patch-desk.js"></script>
+<script src="patch-data.js"></script>
+<script>
+(async function () {
+  "use strict";
+  const D = PatchData, K = PatchDesk, q = new URLSearchParams(location.search), slug = (q.get("b") || "").toLowerCase(), prev = q.get("p");
+  let m = null; try { m = await D.rpc("member_public", { p_slug: slug, p_preview: prev || null }); } catch (e) { m = null; }
+  if (!m) { document.body.innerHTML = `<main style="font:16px system-ui,sans-serif;max-width:60ch;margin:10vh auto;padding:0 16px"><h1>We can't find that page</h1><p>It may not be live yet. <a href="start${D.DEMO ? "?demo=1" : ""}">About Patch</a></p></main>`; return; }
+  const html = K.pageHtml(m, { url: location.origin + "/b/" + m.slug, preview: !!prev, demo: D.DEMO, base: "" });
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  document.title = doc.title; document.head.querySelectorAll("style").forEach(x => x.remove());
+  doc.head.querySelectorAll("style, script[type='application/ld+json'], meta[name=description]").forEach(x => document.head.appendChild(x));
+  document.body.innerHTML = doc.body.innerHTML;
+  window.PATCH_MEMBER = K.publicMember(m);
+  // In the demo the enquiry is kept in this browser; live, the page posts it to /api/enquiry.
+  if (D.DEMO) window.PatchDeskSend = b => D.rpc("enquiry_add", { p_slug: b.slug, p_source: b.source || null, p_answers: K.cleanAnswers(m.trade, b.answers).answers });
+  new Function(K.ENQ_SCRIPT)();
+})();
+</script>
+</body>
+</html>

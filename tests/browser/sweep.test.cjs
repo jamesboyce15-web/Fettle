@@ -35,7 +35,7 @@ const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAgAAAAGCAIAAABxZ0isAAAAG0lEQVR
     const re = await a.getAttribute('[data-swre]', 'data-swre'); await a.fill(`#rt-${re}`, 'Board cut off on the right'); await a.click(`[data-swre="${re}"]`); await a.waitForTimeout(200);
     ok(/retake/.test(await a.textContent('#main')), 'a blurry one goes back for a retake');
     await a.click('[data-act=updowners]'); await a.waitForTimeout(300);
-    const rk = await a.evaluate(() => JSON.parse(localStorage.getItem('patch-demo-db-v11')).areas.find(x => x.id === 'area-demo').rankings.dv1);
+    const rk = await a.evaluate(() => JSON.parse(localStorage.getItem('patch-demo-db-v12')).areas.find(x => x.id === 'area-demo').rankings.dv1);
     ok(rk && rk.moves && rk.moves.length && rk.prices.length === 12, 'owners are updated with prices and what has moved');
     await a.click('[data-nav=sweeps]'); await a.fill('#sw-who', 'Sam'); await a.click('[data-act=newsweep]'); await a.waitForTimeout(300);
     const lk = await a.$('input[aria-label="The sweep link"]'); if (!lk) console.log('DEBUG', await a.textContent('#main').then(t => t.slice(0, 300)));
@@ -47,7 +47,7 @@ const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAgAAAAGCAIAAABxZ0isAAAAG0lEQVR
     ok(/What's changed nearby since/.test(await o.textContent('#app')) && /of \d+ put it up/.test(await o.textContent('#app')), 'and the detail is in Insights, Prices');
     await o.click('[data-tab=upload]'); await o.setInputFiles('#menuIn', { name: 'm.png', mimeType: 'image/png', buffer: PNG }); await o.waitForTimeout(200);
     await o.fill('[data-mb=flat_white]', '3.60'); await o.click('[data-k=mb-save]'); await o.waitForTimeout(450);
-    ok(await o.evaluate(() => JSON.parse(localStorage.getItem('patch-demo-db-v11')).requests.find(r => r.token === 'demo-owner').owner_state.menuBoard.prices.flat_white === 3.6), 'an owner can send their own menu board');
+    ok(await o.evaluate(() => JSON.parse(localStorage.getItem('patch-demo-db-v12')).requests.find(r => r.token === 'demo-owner').owner_state.menuBoard.prices.flat_white === 3.6), 'an owner can send their own menu board');
     ok(errs.length === 0, 'no page errors ' + errs.join('; '));
   } catch (e) { ok(false, 'crashed: ' + e.message); }
   await b.close(); srv.close(); console.log(`${pass} passed, ${fail} failed`); process.exit(fail ? 1 : 0);
