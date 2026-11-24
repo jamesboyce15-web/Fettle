@@ -12,30 +12,37 @@ const over = p => p.evaluate(() => document.documentElement.scrollWidth - innerW
 (async () => {
   await new Promise(r => srv.listen(PORT, r)); const b = await chromium.launch(), errs = [];
   try {
-    const ctx = await b.newContext({ viewport: { width: 390, height: 844 } }); await ctx.route('**fonts.g*/**', r => r.fulfill({ body: '' }));
+    const ctx = await b.newContext({ viewport: { width: 390, height: 844 }, colorScheme: 'dark' }); await ctx.route('**fonts.g*/**', r => r.fulfill({ body: '' }));
     let wa = null; await ctx.route('https://wa.me/**', r => { wa = r.request().url(); r.fulfill({ body: 'whatsapp' }); });
     const p = await ctx.newPage(); p.on('pageerror', e => errs.push(e.message)); p.setDefaultTimeout(5000);
 
-    // 1. The start page and a sign-up.
-    await p.goto(U + '?demo=1'); await p.waitForTimeout(200);
-    ok(/You only pay when they do/.test(await p.textContent('h1')), 'the start page says the offer');
+    // 1. The home page: the one-line check runs first, then the sign-up.
+    await p.goto(U + '?demo=1'); await p.waitForTimeout(250);
+    ok(/You only pay when they do/.test(await p.textContent('h1')), 'the home page says the offer');
     ok(/Each enquiry[\s\S]*£4/.test(await p.textContent('body')) && /£29 a month/.test(await p.textContent('body')), 'prices are on the page');
-    ok(await over(p) <= 0, 'start page fits a phone');
-    await p.fill('#nm', 'Jo Test'); await p.fill('#bz', 'Jo’s Dog Spa'); await p.fill('#wa', '07700 900111'); await p.click('#go');
-    ok(/town/.test(await p.textContent('#err')), 'the town is needed for the check');
-    await p.fill('#tw', 'Stockport'); await p.fill('#wa', '123'); await p.click('#go');
+    ok(await over(p) <= 0, 'home page fits a phone');
+    ok((await p.$eval('#cgo', e => e.getBoundingClientRect().bottom)) <= 660, 'the check button is in the first screen on a phone');
+    ok(/Who's a good dog groomer near SK4\?/.test(await p.textContent('#m_q')) && /Amy/.test(await p.textContent('#w_from')), 'the phone shows the question, the answer and the WhatsApp enquiry');
+    ok(await p.$eval('html', e => getComputedStyle(document.body).backgroundColor) === 'rgb(250, 249, 246)', 'the page is light, even when the phone is in dark mode');
+    await p.click('[data-t="1"]'); ok(/BIAB/.test(await p.textContent('#tp_msg')) && /nails-lashes-brows/.test(await p.getAttribute('#tp_a', 'href')), 'the trade tabs swap the enquiry');
+    await p.fill('#cq', 'Jo’s Dog Spa'); await p.click('#cgo'); await p.waitForTimeout(150);
+    ok(/after a comma/.test(await p.textContent('#res')), 'the town is needed for the check');
+    await p.fill('#cq', 'Jo’s Dog Spa, sk4'); await p.click('#cgo'); await p.waitForTimeout(250);
+    ok(/Asking now/.test(await p.textContent('#res')) && /dog groomer near SK4/.test(await p.textContent('#res')), 'the check starts at once, with the questions it is asking');
+    await p.waitForTimeout(1700); const th = await p.textContent('#res');
+    ok(/wasn't named in any of 3 answers/.test(th) && /It named Bark & Bubble/.test(th) && /yell\.com/.test(th), 'the results show who was named instead, and where the answers came from');
+    ok(!!(await p.$('#sf #wa')), 'then it asks for name and WhatsApp, to get set up');
+    await p.fill('#nm', 'Jo Test'); await p.fill('#wa', '123'); await p.click('#go');
     ok(/WhatsApp number/.test(await p.textContent('#err')), 'a bad number is caught');
-    await p.fill('#wa', '07700 900111'); await p.fill('#pd', 'SK4'); await p.click('#go'); await p.waitForTimeout(300);
-    ok(/Asking now/.test(await p.textContent('#thanks')) && /dog groomer near SK4/.test(await p.textContent('#thanks')), 'the free check starts at once, with the questions it is asking');
-    await p.waitForTimeout(1700); const th = await p.textContent('#thanks');
-    ok(/wasn't named in any of 3 answers/.test(th) && /It named Bark & Bubble/.test(th), 'the results show who was named instead');
-    ok(/yell\.com/.test(th) && /07700 900111/.test(th), 'with where the answers came from, and what happens next');
+    await p.fill('#wa', '07700 900111'); await p.click('#go'); await p.waitForTimeout(300);
+    ok(/We'll message <b>07700 900111<\/b>|We'll message 07700 900111/.test(await p.innerHTML('#thanks')) || /07700 900111/.test(await p.textContent('#thanks')), 'sign-up thanks them with the number we will use');
 
-    // 1b. A trade page: its own question, and the sign-up starts on that trade.
-    await p.goto(U + 'nails-lashes-brows.html?demo=1'); await p.waitForTimeout(200);
-    ok(/BIAB nail tech/.test(await p.textContent('#ask')) && await p.$eval('#tr', e => e.value) === 'nails', 'the nails page asks its own question and presets the sign-up');
+    // 1b. A trade page: its own question, and the check starts on that trade.
+    await p.goto(U + 'nails-lashes-brows.html?demo=1'); await p.waitForTimeout(250);
+    ok(/BIAB nail tech/.test(await p.textContent('#ask')) && await p.$eval('#ctr', e => e.value) === 'nails', 'the nails page asks its own question and presets the check');
+    ok(/Polished by Priya/.test(await p.textContent('#r_name')), "the phone shows the trade's own example");
     ok(await over(p) <= 0, 'trade page fits a phone');
-    await p.goto(U + 'dog-groomers.html?demo=1'); await p.waitForTimeout(200); ok(await p.$eval('#tr', e => e.value) === 'groomer', 'the groomers page presets dog grooming');
+    await p.goto(U + 'dog-groomers.html?demo=1'); await p.waitForTimeout(200); ok(await p.$eval('#ctr', e => e.value) === 'groomer', 'the groomers page presets dog grooming');
 
     // 2. The live groomer's page, as a customer sees it.
     await p.goto(U + 'b.html?b=paws-and-polish-demo&demo=1'); await p.waitForTimeout(300);
@@ -89,7 +96,7 @@ const over = p => p.evaluate(() => document.documentElement.scrollWidth - innerW
     await a.fill('[data-f=locality]', 'Edgeley'); await a.selectOption('[data-f=status]', 'live'); await a.click('[data-act=save]'); await a.waitForTimeout(200);
     ok(/Live page/.test(await a.textContent('#panel')), 'saved as live, with a public page link');
     const live = await a.getAttribute('a:has-text("Live page")', 'href');
-    ok(/b=jos-dog-spa-stockport&/.test(live), 'its web address was made from the name at sign-up: ' + live.split('b=')[1]);
+    ok(/b=jos-dog-spa-sk4&/.test(live), 'its web address was made from the name at sign-up: ' + live.split('b=')[1]);
     await p.goto(live); await p.waitForTimeout(300); ok(/Full groom/.test(await p.textContent('body')), 'the new page is live with its prices');
 
     ok(!errs.length, 'no page errors' + (errs.length ? ': ' + errs.join(' | ') : ''));

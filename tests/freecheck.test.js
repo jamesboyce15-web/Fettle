@@ -25,26 +25,38 @@ function fake(member, opts = {}) {
   return calls;
 }
 const req = b => new Request("https://x.test/api/free-check", { method: "POST", body: JSON.stringify(b), headers: { "CF-Connecting-IP": "1.2.3.4" } });
+const post = async b => (await freeCheck({ request: req(b), env })).json();
 const M = { id: "m1", name: "Paws & Polish", trade: "groomer", town: "Stockport", districts: [], checks: [], listings: {} };
 
-test("asks three customer questions, says who was named, and saves it as the 'before'", async () => {
-  const calls = fake(M), j = await (await freeCheck({ request: req({ whatsapp: "07700 900123", district: "sk4" }), env })).json();
-  assert.equal(j.status, "ok"); assert.equal(j.results.length, 3);
-  assert.equal(j.results[0].q, "dog groomer near SK4"); assert.ok(j.results[0].named); assert.ok(!j.results[1].named);
-  assert.deepEqual(j.results[1].names, ["Bark & Bubble", "Happy Hounds"]); assert.deepEqual(j.results[0].sources, ["yell.com"]); assert.equal(j.results[0].engine, "Claude (web)");
-  const save = calls.find(c => c.method === "PATCH"); assert.equal(save.body.checks.length, 3); assert.ok(save.body.listings.before); assert.deepEqual(save.body.districts, ["SK4"]);
+test("runs before sign-up: three customer questions, who was named, where the answers came from", async () => {
+  const calls = fake(null), j = await post({ business: "Paws & Polish", trade: "groomer", town: "Stockport", district: "sk4" });
+  assert.equal(j.status, "ok"); assert.equal(j.results.length, 3); assert.ok(j.sig);
+  assert.deepEqual(j.results.map(r => r.q), ["dog groomer near SK4", "dog groomer in Stockport", "mobile dog groomer Stockport"]);
+  assert.ok(j.results[0].named); assert.ok(!j.results[1].named); assert.deepEqual(j.results[1].names, ["Bark & Bubble", "Happy Hounds"]);
+  assert.deepEqual(j.results[0].sources, ["yell.com"]); assert.equal(j.results[0].engine, "Claude (web)");
   assert.ok(!calls.some(c => c.url.includes("anthropic") && JSON.stringify(c.body).includes("Paws")), "the business's own name is never put in the question");
+  assert.ok(!calls.some(c => c.method === "PATCH"), "nothing is saved before sign-up");
 });
-test("falls back to no web search if it isn't switched on, and says so", async () => {
-  fake(M, { noSearch: true }); const j = await (await freeCheck({ request: req({ whatsapp: "07700900123" }), env })).json();
-  assert.equal(j.status, "ok"); assert.equal(j.results[0].engine, "Claude");
+test("a postcode area alone is enough; bad input is refused", async () => {
+  fake(null); let j = await post({ business: "Paws", trade: "groomer", district: "SK4" }); assert.equal(j.status, "ok"); assert.deepEqual(j.results.map(r => r.q), ["dog groomer near SK4", "dog groomer in SK4", "mobile dog groomer SK4"]);
+  for (const b of [{ business: "", trade: "groomer", town: "Stockport" }, { business: "X", trade: "nope", town: "Stockport" }, { business: "X", trade: "other", town: "Stockport" }, { business: "X", trade: "groomer" }, { business: "X", trade: "groomer", town: "<script>" }])
+    assert.equal((await freeCheck({ request: req(b), env })).status, 400, JSON.stringify(b));
 });
-test("only for a real sign-up, once a day, within limits", async () => {
-  fake(null); assert.equal((await freeCheck({ request: req({ whatsapp: "07700900123" }), env })).status, 404);
+test("after sign-up, the answers are kept, but only if they're the ones we ran", async () => {
+  fake(null); const run = await post({ business: "Paws & Polish", trade: "groomer", town: "Stockport", district: "SK4" });
+  const save = { business: "Paws & Polish", trade: "groomer", town: "Stockport", district: "SK4", results: run.results };
+  let calls = fake(M); let j = await post({ whatsapp: "07700900123", save, sig: run.sig });
+  assert.ok(j.saved); const p = calls.find(c => c.method === "PATCH"); assert.equal(p.body.checks.length, 3); assert.ok(p.body.listings.before); assert.deepEqual(p.body.districts, ["SK4"]);
+  calls = fake(M); const forged = JSON.parse(JSON.stringify(save)); forged.results[1].named = true;
+  assert.equal((await freeCheck({ request: req({ whatsapp: "07700900123", save: forged, sig: run.sig }), env })).status, 400, "changed answers are refused");
+  assert.ok(!calls.some(c => c.method === "PATCH"));
+  fake(null); assert.equal((await freeCheck({ request: req({ whatsapp: "07700900123", save, sig: run.sig }), env })).status, 404, "needs a real sign-up");
+});
+test("falls back to no web search if it isn't switched on, and says so; respects the limits", async () => {
+  fake(null, { noSearch: true }); let j = await post({ business: "Paws", trade: "groomer", town: "Stockport" }); assert.equal(j.results[0].engine, "Claude");
+  fake(null, { limit: true }); j = await post({ business: "Paws", trade: "groomer", town: "Stockport" }); assert.equal(j.status, "later");
+  j = await (await freeCheck({ request: req({ business: "Paws", trade: "groomer", town: "Stockport" }), env: Object.assign({}, env, { ANTHROPIC_API_KEY: "" }) })).json(); assert.equal(j.status, "later");
   fake(Object.assign({}, M, { checks: [{ at: new Date().toISOString().slice(0, 10), free: true, q: "x", engine: "Claude", named: false }] }));
-  let j = await (await freeCheck({ request: req({ whatsapp: "07700900123" }), env })).json(); assert.ok(j.cached); assert.equal(j.results.length, 1);
-  fake(M, { limit: true }); j = await (await freeCheck({ request: req({ whatsapp: "07700900123" }), env })).json(); assert.equal(j.status, "later");
-  fake(Object.assign({}, M, { trade: "other" })); j = await (await freeCheck({ request: req({ whatsapp: "07700900123" }), env })).json(); assert.equal(j.status, "later");
-  assert.equal((await freeCheck({ request: req({ whatsapp: "123" }), env })).status, 400);
-  j = await (await freeCheck({ request: req({ whatsapp: "07700900123" }), env: Object.assign({}, env, { ANTHROPIC_API_KEY: "" }) })).json(); assert.equal(j.status, "later");
+  j = await post({ whatsapp: "07700900123" }); assert.ok(j.cached);
+  fake(M); j = await post({ whatsapp: "07700900123" }); assert.equal(j.status, "ok"); assert.equal(j.results.length, 3, "a sign-up with no check gets one run for it");
 });

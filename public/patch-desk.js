@@ -72,7 +72,7 @@
     // Templates needing a specialism ({s}) or postcode area ({d}) are skipped when the business hasn't given one.
     const T = trade(m.trade), d = (m.districts || [])[0] || "", t = m.locality || m.town || "", s = (m.specialisms || [])[0] || "";
     const cap = x => String(x).replace(/\b([a-z])([a-z]*)/g, (w, a, b) => a.toUpperCase() + b);
-    return T.searches.filter(q => (s || !/\{s\}/.test(q) || m.trade === "other") && (d || !/\{d\}/.test(q)))
+    return T.searches.filter(q => (s || !/\{s\}/.test(q) || m.trade === "other") && (d || !/\{d\}/.test(q)) && (t || !/\{t\}/.test(q)))
       .map(q => q.replace("{d}", d).replace("{t}", cap(t)).replace("{s}", s || T.one).replace(/\s+/g, " ").trim()).filter((q, i, a) => q && a.indexOf(q) === i);
   }
 
