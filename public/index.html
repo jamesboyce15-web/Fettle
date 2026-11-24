@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Patch · How your café compares</title>
-<meta name="description" content="How your café compares with the cafés around you: prices, hygiene, opening hours and what customers see. Free, private and specific to your café.">
+<title>Patch · How your salon compares</title>
+<meta name="description" content="How your salon or barbers compares with the ones around you: prices, reviews and how easy you are to find and book on Google and in AI answers. Free, private and specific to you.">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@500;700&display=swap">
 <link rel="stylesheet" href="patch.css">
@@ -42,7 +42,7 @@
 "use strict";
 const P = PatchCore, D = PatchData, CFG = D.CFG, Q = new URLSearchParams(location.search);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-const money = P.money, slug = (Q.get("a") || (D.DEMO ? "demo" : CFG.defaultArea) || "").toLowerCase();
+const money = P.money, slug = (Q.get("a") || (D.DEMO ? "demo-salons" : CFG.defaultArea) || "").toLowerCase();
 const fmtD = s => s ? new Date(s).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) : "";
 const HYG = [["5", "5: Very good"], ["4", "4: Good"], ["3", "3: Generally satisfactory"], ["2", "2: Improvement necessary"], ["1", "1: Major improvement necessary"], ["0", "0: Urgent improvement necessary"], ["AwaitingInspection", "Awaiting first inspection"]];
 let AREA = null;

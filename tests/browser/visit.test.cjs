@@ -36,12 +36,12 @@ const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAgAAAAGCAIAAABxZ0isAAAAG0lEQVR
     await p.fill('[data-price=latte]', '99'); await p.click('[data-act=save]'); ok(/Latte: that price/.test(await p.textContent('#saveErr')), 'a silly price is caught');
     await p.fill('[data-price=latte]', '3.80'); await p.click('[data-act=save]'); await p.waitForTimeout(500);
     const done = await p.textContent('#app'); ok(/Saved: Little Fig/.test(done) && /1 photo, 2 prices/.test(done), 'saved: ' + done.replace(/\s+/g, ' ').slice(0, 120));
-    const db = await p.evaluate(() => JSON.parse(localStorage.getItem('patch-demo-db-v10')));
+    const db = await p.evaluate(() => JSON.parse(localStorage.getItem('patch-demo-db-v11')));
     const o = db.observations.filter(x => x.venue_id === 'dv1').pop();
     const v = db.venues.find(x => x.id === 'dv1');
     ok(o && o.photos.length === 1 && /^data:image\/jpeg/.test(o.photos[0].data) && o.scores.coffee === 5 && o.scores.toilets === 'na' && o.prices.flat_white === 3.6, 'the visit is stored with its photo, scores and prices');
     ok(v.google_rating === 4.6 && v.google_reviews === 212 && v.google_url === 'https://maps.app.goo.gl/abc123', 'Google details are stored on the café');
-    await p.goto(U + 'admin.html?demo=1'); await p.waitForTimeout(500); await p.click('button:has-text("Record a visit or menu")');
+    await p.goto(U + 'admin.html?demo=1&area=area-demo'); await p.waitForTimeout(500); await p.click('button:has-text("Record a visit or menu")');
     ok(/Open the visit form/.test(await p.textContent('#root')), 'admin links to the visit form');
     ok(errs.length === 0, 'no page errors ' + errs.join('; '));
   } catch (e) { ok(false, 'crashed: ' + e.message); }

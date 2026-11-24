@@ -13,7 +13,7 @@ const SHOTS = process.env.SHOTS;
   try {
     const ctx = await b.newContext({ viewport: { width: 390, height: 844 } }); await ctx.route('**fonts.g*/**', r => r.fulfill({ body: '' }));
     const p = await ctx.newPage(); p.on('pageerror', e => errs.push(e.message));
-    await p.goto(U + 'owner.html?demo=1'); await p.waitForTimeout(600);
+    await p.goto(U + 'owner.html?demo=1&t=demo-owner'); await p.waitForTimeout(600);
     await p.click('[data-tab=insights]'); await p.click('[data-sub=search]'); await p.waitForTimeout(150);
     const score = async () => +((await p.textContent('#app')).match(/(\d+)\/100/) || [])[1];
     const t0 = await p.textContent('#app'), s0 = await score();

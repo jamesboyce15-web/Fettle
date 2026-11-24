@@ -611,7 +611,7 @@ async function boot() {
   ME = await DB.me(); if (!ME) return signin();
   if (ME.notAdmin) { $("#root").innerHTML = `<div class="signin card"><h2>Not an admin</h2><p>${esc(ME.email)} isn't set up as a Patch admin.</p></div>`; return; }
   [S.areas, S.requests] = await Promise.all([DB.areas(), DB.requests()]);
-  await loadArea(S.areas[0] && S.areas[0].id);
+  { const want = new URLSearchParams(location.search).get("area"); await loadArea((S.areas.find(a => a.id === want || a.slug === want) || S.areas[0] || {}).id); }
   render();
 }
 window.__patch = { S, V, buildReport };

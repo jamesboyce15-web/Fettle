@@ -59,7 +59,7 @@
 <script>
 (function () {
 "use strict";
-const P = PatchCore, D = PatchData, CFG = D.CFG, Q = new URLSearchParams(location.search), token = Q.get("t") || (D.DEMO ? "demo-owner" : "");
+const P = PatchCore, D = PatchData, CFG = D.CFG, Q = new URLSearchParams(location.search), token = Q.get("t") || (D.DEMO ? "demo-salon" : "");
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const money = P.money, fmtD = s => s ? new Date(s).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) : "";
 const pounds = n => "£" + Math.round(n).toLocaleString("en-GB");
@@ -186,11 +186,11 @@ document.addEventListener("input", e => {
   const pos = e.target.selectionStart, id = e.target.dataset.c; drawCalc(); const el = document.querySelector(`[data-c="${id}"]`); if (el) { el.focus(); try { el.setSelectionRange(pos, pos); } catch (x) {} }
 });
 async function boot() {
-  if (D.DEMO) document.getElementById("demo").innerHTML = `<p class="demo"><b>Demo.</b> Made-up ${P.WORDS.places}. Nothing here is real.</p>`;
-  document.getElementById("foot").innerHTML = `Prices as we saw them on menus, visits and booking pages. Food hygiene ratings from the Food Standards Agency; contains public sector information licensed under the Open Government Licence v3.0. This report is private to you. <a href="privacy.html">How we use your data</a>.`;
   if (!token) { document.getElementById("app").innerHTML = `<div class="card"><p>This link is missing its code. Open the report from the link in your email.</p><p class="sm">Haven't asked for one yet? <a href="./">See your area and ask for a free report</a>.${CFG.contactEmail ? ` Or email <b>${esc(CFG.contactEmail)}</b>.` : ""}</p></div>`; return; }
   try { R = await D.rpc("report_public", { p_token: token }); } catch (e) { R = null; }
   if (R && R.report && R.report.area) P.useSector(R.report.area.sector);
+  if (D.DEMO) document.getElementById("demo").innerHTML = `<p class="demo"><b>Demo.</b> Made-up ${P.WORDS.places}. Nothing here is real.</p>`;
+  document.getElementById("foot").innerHTML = `Prices as we saw them on ${P.SECTOR === "salon" ? "price lists and booking pages" : "menus, visits and booking pages. Food hygiene ratings from the Food Standards Agency; contains public sector information licensed under the Open Government Licence v3.0"}. This report is private to you. <a href="privacy.html">How we use your data</a>.`;
   if (!R || !R.report) { document.getElementById("app").innerHTML = `<p class="card">We couldn't find this report. Check the link in your email${CFG.contactEmail ? `, or write to <a href="mailto:${esc(CFG.contactEmail)}">${esc(CFG.contactEmail)}</a>` : ""}.</p>`; return; }
   let saved = null; try { saved = JSON.parse(localStorage.getItem(KEY)); } catch (e) {}
   const b0 = P.benchAfter(R.report.bench || P.BENCH, R.report.costs, P.BENCH_DATE);

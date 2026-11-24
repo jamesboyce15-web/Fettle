@@ -142,7 +142,7 @@
     const dm = s => new Date(s + "T12:00:00Z").toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long" });
     K.calendarFor(calendar, district, from, days || 14).forEach(e => {
       const sp = settings && settings.special ? ` This week's special: ${settings.special}.` : "";
-      if (e.type === "event") out.push({ key: "ev:" + e.start + e.title, when: e.start, for: e.title, text: `${e.title} is on ${dm(e.start)}. Come and find us at ${cafe}: coffee to warm you up and something good to eat.${sp}` });
+      if (e.type === "event") out.push({ key: "ev:" + e.start + e.title, when: e.start, for: e.title, text: `${e.title} is on ${dm(e.start)}. ${root.PatchCore && root.PatchCore.SECTOR === "salon" ? `Want to look your best for it? Book in at ${cafe}: we still have a few slots that week.` : `Come and find us at ${cafe}: coffee to warm you up and something good to eat.`}${sp}` });
       else if (e.type === "bank") out.push({ key: "bank:" + e.start, when: e.start, for: "Bank holiday", text: `Bank holiday ${dm(e.start)}: we're open [your hours]. Pop in for a slow coffee.`, todo: `Update your hours on Google for ${dm(e.start)}` });
       else if (e.type === "roadworks") out.push({ key: "rw:" + e.start, when: e.start, for: e.title, text: `Heads up: there are roadworks on ${e.title.replace(/^roadworks:?\s*/i, "")} from ${dm(e.start)}. We're still open as usual, and it's worth the detour.${sp}` });
       else if (e.type === "school") out.push({ key: "sch:" + e.start, when: e.start, for: e.title, text: `${e.title} start ${dm(e.start)}. Bring the kids in: we're here all holidays.${sp}` });

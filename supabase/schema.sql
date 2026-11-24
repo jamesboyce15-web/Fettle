@@ -184,7 +184,7 @@ returns jsonb language sql stable security definer set search_path = public as $
   select jsonb_build_object('slug', a.slug, 'name', a.name, 'sector', a.sector, 'districts', a.districts, 'published', a.published, 'published_at', a.published_at,
     'venues', coalesce((select jsonb_agg(jsonb_build_object('id', v.id, 'name', v.name, 'postcode', v.postcode, 'kind', v.kind, 'category', v.category, 'hygiene', v.hygiene) order by v.name)
                         from public.venues v where v.area_id = a.id and v.included), '[]'::jsonb))
-  from public.areas a where a.slug = lower(p_slug);
+  from public.areas a where a.slug = lower(p_slug) and a.sector = 'salon';   -- Patch is public for salons only; café areas stay in admin
 $$;
 grant execute on function public.area_public(text) to anon, authenticated;
 

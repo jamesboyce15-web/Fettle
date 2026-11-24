@@ -1,7 +1,10 @@
 # Patch
 
-How an independent café compares with the cafés around it: prices, hygiene, opening hours and what customers find,
-plus a calculator that shows where an owner could save on supplies or charge a little more and stay competitive.
+How an independent salon, barber or beauty business compares with the ones around it: prices, reviews, and how easy it
+is to find and book on Google and in AI answers, with the next moves worth making and what each is worth.
+
+Patch started with cafés. The café code (visit scoring, the café basket and supplier price book, margins) is still here
+and still tested, but nothing public shows it: area pages only open for salon areas, and the demo is a salon.
 
 - `public/index.html` the public area page, with one call to action: ask for a free report.
 - `public/report.html?t=…` an owner's private report and margin calculator.

@@ -13,7 +13,7 @@ const SHOTS = process.env.SHOTS;
   try {
     const ctx = await b.newContext({ viewport: { width: 390, height: 844 } }); await ctx.route('**fonts.g*/**', r => r.fulfill({ body: '' }));
     const p = await ctx.newPage(); p.on('pageerror', e => errs.push(e.message));
-    await p.goto(U + 'owner.html?demo=1'); await p.waitForTimeout(600);
+    await p.goto(U + 'owner.html?demo=1&t=demo-owner'); await p.waitForTimeout(600);
     // Make the insurance renewal due soon, with last year's premium on file.
     await p.evaluate(() => { const S = window.__owner.S, r = S.reminders.find(x => /insurance/i.test(x.t)); r.due = new Date(Date.now() + 10 * 864e5).toISOString().slice(0, 10);
       S.docs = (S.docs || []).concat({ id: 'd1', rid: r.id, title: r.t, name: 'schedule.pdf', at: '2025-12-01', premium: 512, insurer: 'Acme Mutual' }); });
@@ -29,14 +29,14 @@ const SHOTS = process.env.SHOTS;
     ok(/don't give insurance advice/.test(m) && /may be paid by them/.test(m), 'the regulation line and the disclosure');
     if (SHOTS) await p.screenshot({ path: SHOTS + '/offer.png', fullPage: true });
     await p.click('[data-offer="of1"]'); await p.waitForTimeout(200);
-    const clicks = await p.evaluate(() => JSON.parse(localStorage.getItem('patch-demo-db-v10')).offer_clicks.length); ok(clicks === 1, 'the click is counted');
+    const clicks = await p.evaluate(() => JSON.parse(localStorage.getItem('patch-demo-db-v11')).offer_clicks.length); ok(clicks === 1, 'the click is counted');
     await p.evaluate(() => { const S = window.__owner.S, r = S.reminders.find(x => /card machine/i.test(x.t)); r.due = new Date(Date.now() + 5 * 864e5).toISOString().slice(0, 10); });
     await p.click('.modal [data-act=closemodal]'); await p.click('[data-tab=home]'); await p.click('[data-tab=actions]'); await p.click('[data-act=allacts]').catch(() => {}); await p.waitForTimeout(200);
     const cardC = await p.$('article[data-key^="rem:r:"]:has-text("Card machine")');
     ok(!!cardC && /TapRight/.test(await cardC.textContent()) && !/1\.39/.test(await cardC.textContent()), 'a price not checked for weeks is not shown');
 
     const a = await ctx.newPage(); a.on('pageerror', e => errs.push(e.message)); await a.setViewportSize({ width: 1200, height: 900 });
-    await a.goto(U + 'admin.html?demo=1'); await a.waitForTimeout(500); await a.click('[data-nav=offers]'); await a.waitForTimeout(300);
+    await a.goto(U + 'admin.html?demo=1&area=area-demo'); await a.waitForTimeout(500); await a.click('[data-nav=offers]'); await a.waitForTimeout(300);
     const t = await a.textContent('#main');
     ok(/Shopfront Cover/.test(t) && /hidden from owners/.test(t), 'admin sees the offers, and which price is too old to show');
     ok(/1\s*1 owners/.test(t.replace(/\s+/g, ' ')) || /1 owners/.test(t), 'admin sees the click');

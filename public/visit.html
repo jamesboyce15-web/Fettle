@@ -212,7 +212,8 @@ function signin(msg) {
 async function boot() {
   try { DB = DB || await D.admin(); ME = await DB.me(); if (!ME) return signin(); if (ME.notAdmin) return signin("That account can't record visits.");
     const areas = await DB.areas(), want = new URLSearchParams(location.search).get("area");
-    AREA = areas.find(a => a.slug === want) || areas.find(a => a.slug === (D.CFG.defaultArea || "")) || areas[0];
+    // The visit form scores cafés, so it opens on a café area unless asked for another.
+    AREA = areas.find(a => a.slug === want || a.id === want) || areas.find(a => (a.sector || "cafe") === "cafe") || areas[0];
     if (AREA) P.useSector(AREA.sector);
     [VENUES, OBS] = await Promise.all([DB.venues(AREA.id), DB.observations(AREA.id)]);
     if (D.DEMO) $("#demo").innerHTML = `<p class="demo"><b>Demo.</b> Made-up cafés in ${esc(AREA.name)}. What you save stays in this browser.</p>`;

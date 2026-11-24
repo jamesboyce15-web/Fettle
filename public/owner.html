@@ -118,7 +118,7 @@ details.acc{border-top:1px solid var(--line);padding:10px 0}details.acc summary{
 <script>
 (function () {
 "use strict";
-const P = PatchCore, O = PatchOps, I = PatchInsights, D = PatchData, Q = new URLSearchParams(location.search), token = Q.get("t") || (D.DEMO ? "demo-owner" : "");
+const P = PatchCore, O = PatchOps, I = PatchInsights, D = PatchData, Q = new URLSearchParams(location.search), token = Q.get("t") || (D.DEMO ? "demo-salon" : "");
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const $ = s => document.querySelector(s), money = P.money, pounds = n => "£" + Math.round(n || 0).toLocaleString("en-GB");
 const today = O.iso(new Date());
@@ -196,7 +196,7 @@ function vInsights(F) {
     ${card("ranking", "On our last visit", vr ? `${I.ord(vr.rank)} of ${vr.of}` : "Not visited yet", vr ? `Among the ${P.WORDS.places} nearest you, ${dd(vr.at)}${vr.before ? `. ${vr.rank < vr.before.rank ? "Up" : vr.rank > vr.before.rank ? "Down" : "Same as"} from ${I.ord(vr.before.rank)}` : ""}.` : "We'll visit soon.")}
     ${card("search", "Google and AI", F.seo ? `${F.seo.score}/100` : "Not checked", `${F.geo ? `AI answers name you in ${F.geo.mentions} of ${F.geo.answers}` : "AI answers not checked yet"}. Your next moves inside.`)}
     ${card("prices", "Your prices", priced.length ? `${under} below` : "–", priced.length ? `of ${priced.length} items are below what your neighbours charge.` : "Send us your menu to compare.")}
-    ${card("suppliers", "Suppliers", sup.length ? pounds(sup.reduce((t, s) => t + s.perYear, 0)) : F.suppliers.length ? "On par" : I.priceBook().length + " prices", sup.length ? `a year more than ${P.WORDS.places} like yours pay.` : F.suppliers.length ? "You're paying about what others do." : P.SECTOR === "salon" ? "What salons pay for colour, nails and more. Check yours." : "What cafés pay for milk, beans, cups and more. Check yours.")}
+    ${P.SECTOR === "salon" ? card("suppliers", "Suppliers", (S.invoices || []).length ? String((S.invoices || []).length) : "–", (S.invoices || []).length ? "invoices in. What you spend, and with whom." : "Upload invoices to see what you spend.") : card("suppliers", "Suppliers", sup.length ? pounds(sup.reduce((t, s) => t + s.perYear, 0)) : F.suppliers.length ? "On par" : I.priceBook().length + " prices", sup.length ? `a year more than ${P.WORDS.places} like yours pay.` : F.suppliers.length ? "You're paying about what others do." : P.SECTOR === "salon" ? "What salons pay for colour, nails and more. Check yours." : "What cafés pay for milk, beans, cups and more. Check yours.")}
     ${card("reviews", "Reviews", String((S.reviews || []).length), unrep ? `${unrep} waiting for a reply.` : "All replied to.")}
     ${card("local", "Your area", String(P.calendarFor(ctx().calendar, ctx().district, today, 28).length), `things on locally in the next 4 weeks${(W.newNearby || []).length ? `, ${W.newNearby.length} new ${W.newNearby.length > 1 ? P.WORDS.places : P.WORDS.place} nearby` : ""}.`)}</div>`;
 }
@@ -271,6 +271,13 @@ function priceForm(pre) {
     <label class="f" style="flex:0 0 150px"><span>From</span><input id="pc-at" type="date" value="${today}"></label></div><p class="err" id="pc-err"></p><button class="btn" data-act="logchange" data-key="${esc(pre.key || "")}">Log it</button>`;
 }
 function iSuppliers(F) {
+  if (P.SECTOR === "salon") { const inv = S.invoices || [], since = O.iso(new Date(Date.now() - 90 * 864e5)), by = {};
+    inv.filter(x => x.at >= since).forEach(x => (x.lines || []).forEach(l => { const k = x.supplier || "Unknown supplier"; by[k] = (by[k] || 0) + (+l.total || 0); }));
+    const tot = Object.values(by).reduce((t, v) => t + v, 0);
+    return `<section class="card"><h2>What you spend with suppliers</h2>${tot ? `<p class="big">${pounds(tot)}</p><p class="sm mute">in the last 90 days, from ${inv.filter(x => x.at >= since).length} invoices</p>
+      ${Object.entries(by).sort((a, b) => b[1] - a[1]).map(([k, v]) => `<div class="itemrow"><span>${esc(k)}</span><b>${pounds(v)}</b></div>`).join("")}` : `<p>Upload a few supplier invoices and we'll show what you spend, and with whom.</p>`}
+      <p class="sm" style="margin-top:12px">Next: we're putting together what salons typically pay trade for colour, developer, nails and everyday products. As soon as it's checked, we'll compare your invoices line by line and show where you could save.</p>
+      <button class="btn q sm" data-tab-go="upload">Upload invoices</button></section>`; }
   const inv = S.invoices || [], tot = F.suppliers.reduce((t, s) => t + s.perYear, 0), book = I.priceBook(W.area.supplyBench), mine = Object.fromEntries(F.suppliers.map(s => [s.k, s]));
   const a1 = u => (/^[aeiou]/.test(u) ? "an " : "a ") + esc(u);
   const pp = x => (x < 1 ? (Math.round(x * 1000) / 10).toString().replace(/\.0$/, "") + "p" : money(x));
